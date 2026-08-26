@@ -14,4 +14,12 @@
 - [x] Implement interactive image zoom / lightbox and wide media breakout for architecture diagrams (§ 5)
   - Created `DiagramFigure.astro` component with modal zoom, keyboard escape, click-outside dismissal, and full-res raw PNG link.
   - Added `.media-breakout` utilities in `src/styles/global.css` allowing figures and video players to expand cleanly on wide viewports.
-  - Applied to `speechbubbles-architecture.png` and verified build and responsiveness.
+  - Applied to speechBubbles architecture and streaming-pipeline diagrams; verified build and responsiveness.
+
+## EMR Records (Engineering Decisions With Reasoning)
+
+### 2026-08-26: Replacing raw `<a class="...">` inside `<Callout>` slots with markdown link syntax
+
+**Decision**: Use Markdown `[text](/url)` syntax inside component slots (such as `<Callout>`) rather than nesting raw HTML `<a>` tags with explicit class attributes.
+
+**Reasoning**: Astro's MDX compiler expects either fully-formed JSX expressions or pure markdown content within a component slot. Mixing raw HTML anchor tags with class attributes inside a slot can introduce ambiguous AST parsing paths and surface as `UnknownContentCollectionError` at `content/runtime.js:436:33`. Markdown links render through the same prose pipeline regardless of nesting depth, so the runtime constraint becomes simpler. The visual styling for the link is preserved (or amplified) through the surrounding `.prose a` rules in `src/styles/global.css`.

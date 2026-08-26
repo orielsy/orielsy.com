@@ -128,9 +128,9 @@ When fed ambient room noise, HVAC hum, or silence, Whisper’s decoder attempts 
 To achieve broadcast-reliable output, the system implements **Two-Stage Defense Gating**:
 
 <DiagramFigure 
-  src="/projects/speechbubbles/architecture.png"
-  alt="speechBubbles Streaming Inference & Gating Pipeline"
-  caption="Two-Stage Gating Architecture: Backend Voice Activity Detection (PyAnnote) combined with client-side probability thresholding."
+  src="/projects/speechbubbles/pipeline.jpg"
+  alt="SpeechBubbles Streaming Audio Pipeline"
+  caption="End-to-end audio pipeline: Browser microphone capture → Web Audio API downsampling → Python WebSocket ingestion → PyAnnote VAD silence gating → local Whisper inference → Electron overlay rendering."
 />
 
 ### Layer 1: Backend Voice Activity Gating (PyAnnote VAD)
