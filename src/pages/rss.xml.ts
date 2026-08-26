@@ -4,7 +4,7 @@ import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
   const research = await getCollection('research', ({ data }) => {
-    return data.status === 'published';
+    return data.published;
   });
 
   const sortedResearch = research.sort(

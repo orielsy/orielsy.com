@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import TableOfContents from '../components/TableOfContents.astro';
+import ContentStatus from '../components/ContentStatus.astro';
 import type { CollectionEntry } from 'astro:content';
 
 export interface Props {
@@ -8,10 +9,13 @@ export interface Props {
   headings: { depth: number; slug: string; text: string }[];
   prevEntry?: CollectionEntry<'research'>;
   nextEntry?: CollectionEntry<'research'>;
+  published?: boolean;
 }
 
-const { entry, headings, prevEntry, nextEntry } = Astro.props;
+const { entry, headings, prevEntry, nextEntry, published = false } = Astro.props;
 const { data, id } = entry;
+const statusTitle = 'Research in Progress';
+const statusDescription = 'This research entry is still being developed and is not publicly available yet.';
 
 const formattedPubDate = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
@@ -29,10 +33,15 @@ const formattedUpdateDate = data.updatedDate
 ---
 
 <BaseLayout
-  title={data.title}
-  description={data.description}
-  articleDate={data.pubDate.toISOString()}
-  type="article"
+  title={published ? data.title : statusTitle}
+  description={published ? data.description : statusDescription}
+  image={published ? data.heroImage : undefined}
+  imageAlt={published ? data.title : undefined}
+  articleDate={published ? data.pubDate.toISOString() : undefined}
+  modifiedDate={published && data.updatedDate ? data.updatedDate.toISOString() : undefined}
+  type={published ? 'article' : 'website'}
+  schemaType={published ? 'article' : 'webpage'}
+  noindex={!published}
 >
   <article class="w-full">
     <!-- Back to research -->
@@ -50,6 +59,8 @@ const formattedUpdateDate = data.updatedDate
 
     <!-- Article Header -->
     <header class="pb-8 border-b border-[var(--border-subtle)]">
+      {published ? (
+        <>
       <div class="flex flex-wrap items-center gap-2.5 mb-4 text-xs font-mono">
         <span class="px-2.5 py-0.5 rounded font-medium border border-[var(--border-subtle)] bg-[var(--bg-secondary)] text-[var(--accent)]">
           {data.type}
@@ -121,51 +132,67 @@ const formattedUpdateDate = data.updatedDate
           Last revised: {formattedUpdateDate}
         </div>
       )}
+        </>
+      ) : (
+        <div class="pt-4">
+          <div class="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold mb-3">
+            {statusTitle}
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-bold tracking-tight text-[var(--text-primary)] leading-tight">
+            {data.title}
+          </h1>
+        </div>
+      )}
     </header>
+    {published ? (
+      <>
+        <!-- Table of contents if headings present -->
+        <TableOfContents headings={headings} />
 
-    <!-- Table of contents if headings present -->
-    <TableOfContents headings={headings} />
-
-    <!-- Article Content -->
-    <div class="prose max-w-none pt-6">
-      <slot />
-    </div>
-
-    <!-- Article Footer / Navigation -->
-    <footer class="mt-16 pt-8 border-t border-[var(--border-subtle)]">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          {prevEntry ? (
-            <a
-              href={`/research/${prevEntry.id}`}
-              class="group flex flex-col text-left"
-            >
-              <span class="text-[11px] font-mono text-[var(--text-muted)] group-hover:text-[var(--accent)]">
-                &larr; Previous Work
-              </span>
-              <span class="text-xs sm:text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors line-clamp-1">
-                {prevEntry.data.title}
-              </span>
-            </a>
-          ) : <div />}
+        <!-- Article Content -->
+        <div class="prose max-w-none pt-6">
+          <slot />
         </div>
 
-        <div>
-          {nextEntry ? (
-            <a
-              href={`/research/${nextEntry.id}`}
-              class="group flex flex-col text-right sm:items-end"
-            >
-              <span class="text-[11px] font-mono text-[var(--text-muted)] group-hover:text-[var(--accent)]">
-                Next Work &rarr;
-              </span>
-              <span class="text-xs sm:text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors line-clamp-1">
-                {nextEntry.data.title}
-              </span>
-            </a>
-          ) : <div />}
-        </div>
-      </div>
-    </footer>
+        <!-- Article Footer / Navigation -->
+        <footer class="mt-16 pt-8 border-t border-[var(--border-subtle)]">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              {prevEntry ? (
+                <a
+                  href={`/research/${prevEntry.id}`}
+                  class="group flex flex-col text-left"
+                >
+                  <span class="text-[11px] font-mono text-[var(--text-muted)] group-hover:text-[var(--accent)]">
+                    &larr; Previous Work
+                  </span>
+                  <span class="text-xs sm:text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors line-clamp-1">
+                    {prevEntry.data.title}
+                  </span>
+                </a>
+              ) : <div />}
+            </div>
+
+            <div>
+              {nextEntry ? (
+                <a
+                  href={`/research/${nextEntry.id}`}
+                  class="group flex flex-col text-right sm:items-end"
+                >
+                  <span class="text-[11px] font-mono text-[var(--text-muted)] group-hover:text-[var(--accent)]">
+                    Next Work &rarr;
+                  </span>
+                  <span class="text-xs sm:text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors line-clamp-1">
+                    {nextEntry.data.title}
+                  </span>
+                </a>
+              ) : <div />}
+            </div>
+          </div>
+        </footer>
+      </>
+    ) : (
+      <ContentStatus kind="research" />
+    )}
   </article>
 </BaseLayout>

@@ -3,11 +3,13 @@ title: "speechBubbles: Real-Time AI Broadcast Overlay & Captioning Engine"
 summary: "A desktop live-broadcast graphics engine and local speech-to-text platform built with Vue 3, Pinia, Electron, and a local Whisper streaming WebSocket backend for OBS Studio overlays."
 date: 2026-07-15
 status: "Prototype"
+published: true
 role: "Creator & Lead Architect"
 technologies: ["Electron", "Vue 3", "Pinia", "FastAPI", "Python", "Whisper", "PyAnnote VAD", "Web Audio API", "OBS Studio", "Vite"]
 architecture: "Multi-Process Audio Pipeline, Streaming WebSocket Inference & Transparent GPU Overlays"
 problem: "Live streaming broadcasters and presenters need real-time subtitles, lower-third credential banners, and topic graphics, but cloud transcription introduces latency, ongoing subscription costs, and privacy exposure."
 solution: "Built a decoupled broadcast graphics platform combining an Electron/Vue 3 transparent overlay shell with a local Python FastAPI/Whisper streaming engine that composites directly over OBS video feeds."
+github: "https://github.com/orielsy/speechBubbles"
 demo: "/videos/speechbubbles-demo.mp4"
 featured: true
 associatedResearch: "/research/real-time-speech-audio-pipeline-desktop-ui"

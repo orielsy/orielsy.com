@@ -7,6 +7,7 @@ export interface Props {
 
 const { entry } = Astro.props;
 const { data, id } = entry;
+const isPublished = data.published;
 
 const statusStyles: Record<string, string> = {
   'Active': 'text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/50 dark:bg-emerald-950/30',
@@ -19,21 +20,41 @@ const statusStyles: Record<string, string> = {
 const statusBadge = statusStyles[data.status] || 'text-[var(--text-secondary)] border-[var(--border-subtle)] bg-[var(--bg-secondary)]';
 ---
 
-<article data-project-status={data.status} class="project-item group relative flex flex-col p-6 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-strong)] transition-all duration-150">
+<article
+  data-project-status={data.status}
+  data-project-published={isPublished ? 'true' : 'false'}
+  aria-disabled={!isPublished ? 'true' : undefined}
+  class:list={[
+    'project-item group relative flex flex-col p-6 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] transition-all duration-150',
+    isPublished && 'hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-strong)]',
+    !isPublished && 'opacity-75',
+  ]}
+>
   <div class="flex items-center justify-between gap-2 mb-3">
+    {!isPublished && (
+      <span class="px-2 py-0.5 rounded text-[11px] font-mono font-medium border text-[var(--accent)] border-[var(--accent-border)] bg-[var(--accent-subtle)]">
+        Project in Progress
+      </span>
+    )}
+    {isPublished && (
     <span class:list={['px-2 py-0.5 rounded text-[11px] font-mono font-medium border', statusBadge]}>
       {data.status}
     </span>
+    )}
     {data.role && (
       <span class="text-xs font-mono text-[var(--text-muted)]">{data.role}</span>
     )}
   </div>
 
   <h3 class="text-lg sm:text-xl font-semibold tracking-tight text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors mb-2">
-    <a href={`/projects/${id}`} class="focus:outline-none">
-      <span class="absolute inset-0" aria-hidden="true"></span>
-      {data.title}
-    </a>
+    {isPublished ? (
+      <a href={`/projects/${id}`} class="focus:outline-none">
+        <span class="absolute inset-0" aria-hidden="true"></span>
+        {data.title}
+      </a>
+    ) : (
+      <span>{data.title}</span>
+    )}
   </h3>
 
   <p class="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-5">
@@ -57,7 +78,7 @@ const statusBadge = statusStyles[data.status] || 'text-[var(--text-secondary)] b
     </div>
 
     <div class="flex items-center gap-3 text-xs font-mono">
-      {data.github && (
+      {isPublished && data.github && (
         <a
           href={data.github}
           target="_blank"
@@ -71,7 +92,7 @@ const statusBadge = statusStyles[data.status] || 'text-[var(--text-secondary)] b
           </svg>
         </a>
       )}
-      {data.demo && (
+      {isPublished && data.demo && (
         <a
           href={data.demo}
           target="_blank"

@@ -7,14 +7,14 @@ export async function getStaticPaths() {
 
   return projectEntries.map((entry) => ({
     params: { slug: entry.id },
-    props: { entry },
+    props: { entry, published: entry.data.published },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, published } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<ProjectLayout entry={entry}>
-  <Content />
+<ProjectLayout entry={entry} published={published}>
+  {published && <Content />}
 </ProjectLayout>

@@ -1,6 +1,6 @@
 # Tasks: Site Foundation & Information Architecture
 
-- **Status:** In Progress
+- **Status:** Completed
 - **Feature Directory:** `specs/001-site-foundation/`
 
 ---

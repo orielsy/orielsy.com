@@ -8,11 +8,25 @@ export interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   articleDate?: string;
+  modifiedDate?: string;
   type?: 'website' | 'article';
+  schemaType?: 'website' | 'person' | 'article' | 'webpage';
+  noindex?: boolean;
 }
 
-const { title, description, image, articleDate, type = 'website' } = Astro.props;
+const {
+  title,
+  description,
+  image,
+  imageAlt,
+  articleDate,
+  modifiedDate,
+  type = 'website',
+  schemaType = 'webpage',
+  noindex = false,
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -22,8 +36,12 @@ const { title, description, image, articleDate, type = 'website' } = Astro.props
       title={title}
       description={description}
       image={image}
+      imageAlt={imageAlt}
       articleDate={articleDate}
+      modifiedDate={modifiedDate}
       type={type}
+      schemaType={schemaType}
+      noindex={noindex}
     />
   </head>
   <body class="min-h-screen flex flex-col selection:bg-[var(--accent)] selection:text-white">

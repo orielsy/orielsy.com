@@ -1,0 +1,32 @@
+---
+export interface Props {
+  kind: 'research' | 'project';
+}
+
+const { kind } = Astro.props;
+const isResearch = kind === 'research';
+const label = isResearch ? 'Research in Progress' : 'Project in Progress';
+const message = isResearch
+  ? 'This research entry is still being developed and is not publicly available yet.'
+  : 'This project is still being developed and its public case study is not available yet.';
+const browseHref = isResearch ? '/research' : '/projects';
+const browseLabel = isResearch ? 'Browse published research' : 'Browse published projects';
+---
+
+<section class="my-12 p-8 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/40 text-center" aria-labelledby="content-status-heading">
+  <div class="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold mb-3">
+    {label}
+  </div>
+  <h2 id="content-status-heading" class="text-xl font-semibold tracking-tight text-[var(--text-primary)] mb-3">
+    Not published yet
+  </h2>
+  <p class="max-w-xl mx-auto text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
+    {message}
+  </p>
+  <a
+    href={browseHref}
+    class="inline-flex items-center px-3 py-1.5 rounded border border-[var(--border-subtle)] bg-[var(--bg-card)] text-xs font-mono text-[var(--text-primary)] hover:border-[var(--border-strong)] transition-colors"
+  >
+    {browseLabel} &rarr;
+  </a>
+</section>

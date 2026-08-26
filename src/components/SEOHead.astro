@@ -3,55 +3,102 @@ export interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   articleDate?: string;
+  modifiedDate?: string;
   type?: 'website' | 'article';
+  schemaType?: 'website' | 'person' | 'article' | 'webpage';
+  noindex?: boolean;
 }
 
 const {
   title = 'Orielsy Diaz — Senior Frontend Engineer & UI Architect',
   description = 'Personal website, technical research, UI architecture explorations, and applied AI systems by Orielsy Diaz.',
-  image = '/og-image.png',
+  image,
+  imageAlt,
   articleDate,
+  modifiedDate,
   type = 'website',
+  schemaType = 'webpage',
+  noindex = false,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://orielsy.com');
+const siteUrl = Astro.site || new URL('https://orielsy.com');
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 const formattedTitle = title === 'Orielsy Diaz' ? title : `${title} | Orielsy Diaz`;
-const ogImageUrl = new URL(image, Astro.site || 'https://orielsy.com').toString();
+const ogImageUrl = image ? new URL(image, siteUrl).toString() : undefined;
+const socialImageAlt = image ? imageAlt || title : undefined;
 
-const jsonLd = type === 'article'
-  ? {
+const author = {
+  '@type': 'Person',
+  name: 'Orielsy Diaz',
+  url: siteUrl.toString(),
+};
+
+function buildStructuredData() {
+  if (schemaType === 'website') {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Orielsy Diaz',
+      url: siteUrl.toString(),
+      description: description,
+    };
+  }
+
+  if (schemaType === 'person') {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Orielsy Diaz',
+      url: siteUrl.toString(),
+      description: description,
+      jobTitle: 'Senior Frontend Engineer & UI Architect',
+    };
+  }
+
+  if (schemaType === 'article') {
+    return {
       '@context': 'https://schema.org',
       '@type': 'TechArticle',
       headline: title,
       description: description,
-      datePublished: articleDate,
-      author: {
-        '@type': 'Person',
-        name: 'Orielsy Diaz',
-        url: 'https://orielsy.com',
+      ...(articleDate ? { datePublished: articleDate } : {}),
+      ...(modifiedDate ? { dateModified: modifiedDate } : {}),
+      ...(ogImageUrl ? { image: ogImageUrl } : {}),
+      author,
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': canonicalURL.toString(),
       },
       url: canonicalURL.toString(),
-    }
-  : {
-      '@context': 'https://schema.org',
+    };
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    url: canonicalURL.toString(),
+    description: description,
+    isPartOf: {
       '@type': 'WebSite',
       name: 'Orielsy Diaz',
-      url: 'https://orielsy.com',
-      description: description,
-      author: {
-        '@type': 'Person',
-        name: 'Orielsy Diaz',
-        jobTitle: 'Senior Frontend Engineer & UI Architect',
-      },
-    };
+      url: siteUrl.toString(),
+    },
+  };
+}
+
+const jsonLd = buildStructuredData();
 ---
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="canonical" href={canonicalURL} />
+<link rel="sitemap" href="/sitemap-index.xml" />
 <link rel="alternate" type="application/rss+xml" title="Orielsy Diaz — Research & Writing" href="/rss.xml" />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
 <meta name="generator" content={Astro.generator} />
 
 <!-- Primary Meta Tags -->
@@ -65,15 +112,19 @@ const jsonLd = type === 'article'
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={formattedTitle} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={ogImageUrl} />
+{ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+{socialImageAlt && <meta property="og:image:alt" content={socialImageAlt} />}
 <meta property="og:site_name" content="Orielsy Diaz" />
+{type === 'article' && articleDate && <meta property="article:published_time" content={articleDate} />}
+{type === 'article' && modifiedDate && <meta property="article:modified_time" content={modifiedDate} />}
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={canonicalURL} />
-<meta property="twitter:title" content={formattedTitle} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={ogImageUrl} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={formattedTitle} />
+<meta name="twitter:description" content={description} />
+{ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+{socialImageAlt && <meta name="twitter:image:alt" content={socialImageAlt} />}
 
 <!-- Structured Data -->
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

@@ -4,18 +4,14 @@ import ArticleCard from '../components/ArticleCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { getCollection } from 'astro:content';
 
-const allResearch = await getCollection('research', ({ data }) => {
-  return data.status === 'published';
-});
+const allResearch = await getCollection('research');
 
 const recentResearch = allResearch
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const allProjects = await getCollection('projects');
 const recentProjects = allProjects
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 2);
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const explorationAreas = [
   {
@@ -44,6 +40,7 @@ const explorationAreas = [
 <BaseLayout
   title="Orielsy Diaz"
   description="Senior Frontend Engineer & UI Architect. Research, systems architecture, and applied AI explorations."
+  schemaType="website"
 >
   <!-- Hero / Positioning Section -->
   <section class="pb-12 pt-2 sm:pt-6 border-b border-[var(--border-subtle)]">
