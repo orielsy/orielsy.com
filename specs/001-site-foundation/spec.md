@@ -56,3 +56,14 @@ The site's typography system uses a custom `.prose` class defined in `src/styles
 2. **Override Pattern:** A prose block that should fill its parent column width uses the two-class combination `prose max-w-none`. The companion rule `.prose.max-w-none { max-width: none }` resolves the override via higher specificity (0,2,0 vs 0,1,0) — the `.max-w-none` utility *alone* does not override `.prose`.
 
 Use `prose max-w-none` on prose containers nested inside an explicit width-bounded parent (e.g. `<div class="max-w-3xl">`). Omit it when the implicit 68ch cap is desired.
+
+---
+
+## 5. Media & Diagram Presentation Policy
+
+Technical architecture diagrams, workflow maps, and video demonstrations require high visual legibility. To prevent micro-details from being crushed inside narrow text columns, the site enforces the following presentation standards:
+
+1. **Wide Breakout Containers**: Media figures (diagrams, complex tables, video players) may break out of the standard reading column width up to `max-w-5xl` to provide sufficient canvas for multi-tier system diagrams.
+2. **Interactive Zoom / Lightbox**: High-resolution architecture images must support click-to-expand / lightbox viewing with keyboard escape handling, click-outside dismissal, and a direct full-resolution link.
+3. **Structured Captioning & Metadata**: Every diagram figure must include a semantic `<figcaption>` or caption bar with high-contrast metadata describing the system flow.
+4. **Zero Layout Shift & Accessibility**: Video elements must specify aspect ratios (`aspect-video`) and poster thumbnails; images must provide descriptive `alt` text and `loading="lazy"`.

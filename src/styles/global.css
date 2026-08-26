@@ -87,6 +87,20 @@
   max-width: none;
 }
 
+/* Media breakout container for architectural diagrams and video players */
+.media-breakout {
+  width: 100%;
+  max-width: 54rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 1024px) {
+  .media-breakout {
+    max-width: 58rem;
+  }
+}
+
 .prose h1, .prose h2, .prose h3, .prose h4 {
   color: var(--text-primary);
   font-weight: 600;

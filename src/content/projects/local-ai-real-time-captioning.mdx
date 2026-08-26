@@ -15,8 +15,9 @@ heroImage: "/projects/speechbubbles/hero.jpg"
 ---
 
 import Callout from '../../components/Callout.astro';
+import DiagramFigure from '../../components/DiagramFigure.astro';
 
-<div class="my-8 rounded-lg overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-card)]">
+<div class="my-8 rounded-lg overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-card)] media-breakout">
   <video 
     controls 
     poster="/projects/speechbubbles/hero.jpg"
@@ -44,17 +45,11 @@ The system is structured as two decoupled tiers:
 
 ## Architectural Breakdown
 
-<div class="my-6 rounded-lg overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-card)]">
-  <img 
-    src="/projects/speechbubbles/architecture.png" 
-    alt="speechBubbles System Architecture: Audio Capture, Local Streaming Server, Electron Desktop Client, and OBS Studio Compositing"
-    class="w-full h-auto"
-    loading="lazy"
-  />
-  <div class="p-3 text-xs font-mono text-[var(--text-muted)] text-center border-t border-[var(--border-subtle)]">
-    System Architecture: Decoupled multi-process pipeline isolating audio capture, streaming WebSockets, local Whisper STT inference, and OBS Studio video compositing.
-  </div>
-</div>
+<DiagramFigure 
+  src="/projects/speechbubbles/architecture.png"
+  alt="speechBubbles System Architecture"
+  caption="System Architecture: Decoupled multi-process pipeline isolating audio capture, streaming WebSockets, local Whisper STT inference, and OBS Studio video compositing."
+/>
 
 ---
 
