@@ -11,7 +11,9 @@ pnpm install
 npm run dev
 ```
 
-- `npm run dev` starts the local Astro development server.
+- `npm run dev` clears Astro's generated `.astro/` cache and starts the local development server. This prevents stale collection metadata from hiding frontmatter changes such as public concept-draft badges.
+- `npm run start` applies the same cache reset before starting Astro.
+- `npm run reset:astro` manually clears only the ignored generated Astro cache when using a custom Astro command.
 - `npm run build` creates the production site in `dist/` without publishing it.
 - `git push` updates the source repository only. It does not build, validate, or deploy the production site.
 

@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "reset:astro": "node scripts/reset-astro-cache.mjs",
     "dev": "astro dev",
+    "predev": "npm run reset:astro",
     "start": "astro dev",
+    "prestart": "npm run reset:astro",
     "build": "astro build",
     "live": "npm run build && gh-pages -d dist -b gh-pages --dotfiles --nojekyll",
     "preview": "astro preview",
