@@ -5,12 +5,13 @@ import ProjectCard from '../components/ProjectCard.astro';
 import { getCollection } from 'astro:content';
 
 const allResearch = await getCollection('research');
-
-const recentResearch = allResearch
+const publishedResearch = allResearch.filter((entry) => entry.data.published);
+const recentResearch = publishedResearch
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const allProjects = await getCollection('projects');
-const recentProjects = allProjects
+const publishedProjects = allProjects.filter((entry) => entry.data.published);
+const recentProjects = publishedProjects
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const explorationAreas = [
@@ -131,7 +132,7 @@ const explorationAreas = [
         href="/research"
         class="text-xs font-mono text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors flex items-center gap-1"
       >
-        <span>View all ({allResearch.length})</span>
+        <span>View all ({publishedResearch.length})</span>
         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
@@ -160,7 +161,7 @@ const explorationAreas = [
         href="/projects"
         class="text-xs font-mono text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors flex items-center gap-1"
       >
-        <span>View all ({allProjects.length})</span>
+        <span>View all ({publishedProjects.length})</span>
         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>

@@ -12,7 +12,7 @@ Full Research and Project entry content is public only when its frontmatter expl
 
 Published entries appear as active cards on the home page and Research and Projects listings, in the Research RSS feed, and on their normal detail routes.
 
-Unpublished entries remain visible in the home page and Research and Projects listings as disabled cards labeled “Research in Progress” or “Project in Progress”; they are excluded from RSS. Their stable direct routes remain available as noindex status pages that show the same progress state without rendering unfinished body content, metadata, or promotional links.
+Unpublished entries remain visible in the Research and Projects listings as disabled cards labeled “Research in Progress” or “Project in Progress,” but are omitted from the home page. They are excluded from RSS. Their stable direct routes remain available as noindex status pages that show the same progress state without rendering unfinished body content, metadata, or promotional links.
 
 The `status` field remains a lifecycle label for the work. It is not a substitute for the publication gate.
 

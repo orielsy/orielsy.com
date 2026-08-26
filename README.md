@@ -64,7 +64,7 @@ Astro's sitemap integration emits `sitemap-index.xml` and its numbered sitemap f
 Research and Project entries use an explicit `published` flag. It defaults to `false`, so new entries remain disabled until they are reviewed and deliberately enabled.
 
 - Published entries appear as active cards on the home page and collection listings, in RSS, and on their full detail routes.
-- Unpublished entries remain visible in the home page and collection listings as disabled “Research in Progress” or “Project in Progress” cards, but are omitted from RSS.
+- Unpublished entries remain visible in the Research and Projects collection listings as disabled “Research in Progress” or “Project in Progress” cards, but are omitted from the home page and RSS.
 - A direct link to an unpublished entry shows a small in-progress notice instead of the unfinished body, and is marked `noindex, nofollow`.
 
 Lifecycle fields such as `status` describe the work itself; `published` controls whether the authored content is public.
