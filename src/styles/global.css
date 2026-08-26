@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
     --bg-primary: #fafafa;
@@ -186,7 +188,7 @@
 }
 
 .prose pre {
-  background-color: var(--code-bg) !important;
+  background-color: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
   padding: 1rem;
@@ -195,6 +197,16 @@
   line-height: 1.6;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+}
+
+/* Shiki dual-theme support for class-based dark mode (html.dark) */
+html.dark .astro-code,
+html.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
 .prose img {
