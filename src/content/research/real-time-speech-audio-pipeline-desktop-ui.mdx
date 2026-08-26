@@ -28,23 +28,11 @@ Unlike batch transcription—where a static media file is uploaded, processed se
 3. **Acoustic Gating & Silence Detection**: Preventing decoder hallucinations during natural pauses in human speech.
 4. **Fluid UI Compositing**: Rendering animated overlay graphics at 60fps without thread contention or UI jitter.
 
-```text
-+-----------------------------------------------------------------------------------------+
-|                                STREAMING INFERENCE PIPELINE                             |
-|                                                                                         |
-|   Microphone         Web Audio API              FastAPI / WebSocket       Local Whisper |
-|  [48 kHz Stereo] --> [Downsample to 16 kHz] --> [Sliding PCM Buffer] ---> [Worker Thread|
-|                      [Convert Float32->Int16]             |               [model.transcribe]
-|                                                           v                      |      |
-|                                                  [PyAnnote VAD Gating]           |      |
-|                                                  (Suppress Silence)              v      |
-|                                                                        [JSON Token Segments]
-|                                                                                  |      |
-|                                 Electron Overlay Window                          v      |
-|                                [Double-buffered rAF Animation] <-----------------+      |
-|                                [Chroma-keyed OBS Video Feed]                            |
-+-----------------------------------------------------------------------------------------+
-```
+<DiagramFigure
+  src="/projects/speechbubbles/pipeline_v3.png"
+  alt="SpeechBubbles Real-Time Audio Pipeline"
+  caption="High-fidelity diagram of the real-time streaming pipeline: Microphone capture → Web Audio API downsampling → FastAPI WebSocket ingestion → PyAnnote VAD silence gating → local Whisper inference → Electron overlay rendering. Click image to expand to full resolution."
+/>
 
 ---
 
