@@ -5,7 +5,7 @@
 
 ## 1. Technical strategy
 
-Add fail-closed `published` and independent `draft` fields to both content collection schemas. Home-page queries select published entries only, while collection-page queries retain all entries. Pass publication and draft state into the card and detail-layout components so the presentation can distinguish public concept drafts from disabled status entries.
+Add fail-closed `published` and independent `draft` fields to both content collection schemas. Home-page and primary collection-page queries select published entries only, while Research and Projects collection pages separately surface unpublished summaries beneath those results. Pass publication and draft state into the card and detail-layout components so the presentation can distinguish public concept drafts from direct status routes for unpublished entries.
 
 Published detail routes render the existing layouts normally, with a concept-draft notice when `draft: true`. Unpublished routes reuse those layouts with status-only content, suppressed metadata and links, and `noindex, nofollow` output. RSS applies the `published: true` predicate; the sitemap applies the same publication predicate.
 

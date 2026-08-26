@@ -9,9 +9,9 @@
 - [x] Add a fail-closed `published` field to Research and Project collection schemas
 - [x] Add an independent public concept-draft field to Research and Project collection schemas
 - [x] Classify authored and placeholder entries with explicit publication state
-- [x] Keep unpublished entries visible only in collection listings
+- [x] Keep unpublished entries separate from published results while preserving direct status routes
 - [x] Add public concept-draft badges and detail-page explanations
-- [x] Disable unfinished cards and suppress their detail, repository, and demo links
+- [x] Preserve status-only rendering for direct unpublished routes
 - [x] Render safe status pages for direct unpublished routes
 - [x] Add `noindex, nofollow` metadata to unpublished routes
 - [x] Limit RSS output to published Research entries

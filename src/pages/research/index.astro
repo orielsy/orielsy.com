@@ -5,12 +5,17 @@ import { getCollection } from 'astro:content';
 
 const allResearch = await getCollection('research');
 
-const sortedResearch = allResearch.sort(
+const publishedResearch = allResearch.filter((entry) => entry.data.published);
+const sortedResearch = publishedResearch.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const unpublishedResearch = allResearch.filter((entry) => !entry.data.published);
+const sortedUnpublishedResearch = unpublishedResearch.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-const allTags = Array.from(new Set(allResearch.flatMap((item) => item.data.tags)));
-const allTypes = Array.from(new Set(allResearch.map((item) => item.data.type)));
+const allTags = Array.from(new Set(publishedResearch.flatMap((item) => item.data.tags)));
+const allTypes = Array.from(new Set(publishedResearch.map((item) => item.data.type)));
 ---
 
 <BaseLayout
@@ -38,10 +43,10 @@ const allTypes = Array.from(new Set(allResearch.map((item) => item.data.type)));
           data-filter="all"
           class="filter-btn px-2.5 py-1 rounded border border-[var(--accent)] bg-[var(--accent)] text-white text-[11px] font-medium transition-colors cursor-pointer"
         >
-          All ({allResearch.length})
+          All ({publishedResearch.length})
         </button>
         {allTypes.map((t) => {
-          const count = allResearch.filter((r) => r.data.type === t).length;
+          const count = publishedResearch.filter((r) => r.data.type === t).length;
           return (
             <button
               type="button"
@@ -72,11 +77,29 @@ const allTypes = Array.from(new Set(allResearch.map((item) => item.data.type)));
         <p class="text-xs font-mono text-[var(--text-muted)]">No published research articles yet.</p>
       </div>
     )}
+
+    {sortedUnpublishedResearch.length > 0 && (
+      <section class="mt-12 pt-8 border-t border-[var(--border-subtle)]" aria-labelledby="research-in-progress-heading">
+        <header class="mb-5">
+          <h2 id="research-in-progress-heading" class="text-xl sm:text-2xl font-semibold tracking-tight text-[var(--text-primary)] mb-2">
+            Research in Progress
+          </h2>
+          <p class="text-sm text-[var(--text-secondary)] leading-relaxed max-w-2xl">
+            Early ideas and unfinished explorations are shown here for context. These entries are not published as finished research and do not link to detail pages.
+          </p>
+        </header>
+        <div class="space-y-4" id="unpublished-articles-list">
+          {sortedUnpublishedResearch.map((entry) => (
+            <ArticleCard entry={entry} showTags={true} />
+          ))}
+        </div>
+      </section>
+    )}
   </div>
 
   <script>
     const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
-    const articles = document.querySelectorAll<HTMLElement>('.article-item');
+    const articles = document.querySelectorAll<HTMLElement>('#articles-list .article-item');
     const emptyState = document.getElementById('no-filtered-results');
 
     filterButtons.forEach((btn) => {

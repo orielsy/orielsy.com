@@ -4,7 +4,12 @@ import ProjectCard from '../../components/ProjectCard.astro';
 import { getCollection } from 'astro:content';
 
 const allProjects = await getCollection('projects');
-const sortedProjects = allProjects.sort(
+const publishedProjects = allProjects.filter((entry) => entry.data.published);
+const sortedProjects = publishedProjects.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const unpublishedProjects = allProjects.filter((entry) => !entry.data.published);
+const sortedUnpublishedProjects = unpublishedProjects.sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 ---
@@ -33,10 +38,10 @@ const sortedProjects = allProjects.sort(
           data-filter="all"
           class="project-filter-btn px-2.5 py-1 rounded border border-[var(--accent)] bg-[var(--accent)] text-white text-[11px] font-medium transition-colors cursor-pointer"
         >
-          All ({allProjects.length})
+          All ({publishedProjects.length})
         </button>
-        {Array.from(new Set(allProjects.map((p) => p.data.status))).map((status) => {
-          const count = allProjects.filter((p) => p.data.status === status).length;
+        {Array.from(new Set(publishedProjects.map((p) => p.data.status))).map((status) => {
+          const count = publishedProjects.filter((p) => p.data.status === status).length;
           return (
             <button
               type="button"
@@ -67,11 +72,29 @@ const sortedProjects = allProjects.sort(
         <p class="text-xs font-mono text-[var(--text-muted)]">No published projects yet.</p>
       </div>
     )}
+
+    {sortedUnpublishedProjects.length > 0 && (
+      <section class="mt-12 pt-8 border-t border-[var(--border-subtle)]" aria-labelledby="projects-in-progress-heading">
+        <header class="mb-5">
+          <h2 id="projects-in-progress-heading" class="text-xl sm:text-2xl font-semibold tracking-tight text-[var(--text-primary)] mb-2">
+            Projects in Progress
+          </h2>
+          <p class="text-sm text-[var(--text-secondary)] leading-relaxed max-w-2xl">
+            Early ideas and unfinished implementations are shown here for context. These entries are not published as finished projects and do not link to detail pages.
+          </p>
+        </header>
+        <div class="space-y-6" id="unpublished-projects-list">
+          {sortedUnpublishedProjects.map((project) => (
+            <ProjectCard entry={project} />
+          ))}
+        </div>
+      </section>
+    )}
   </div>
 
   <script>
     const filterButtons = document.querySelectorAll<HTMLButtonElement>('.project-filter-btn');
-    const projects = document.querySelectorAll<HTMLElement>('.project-item');
+    const projects = document.querySelectorAll<HTMLElement>('#projects-list .project-item');
     const emptyState = document.getElementById('no-filtered-projects');
 
     filterButtons.forEach((btn) => {

@@ -22,12 +22,10 @@ Keep authored Research and Project content visible in the appropriate catalogs w
 ### 2.2 Catalog behavior
 
 - The home listing must include published entries only.
-- Research and Projects collection listings must include both published and unpublished entries.
+- Research and Projects collection listings must place published entries in the primary results section and may show unpublished entries in a separate in-progress section beneath it.
 - Published entries must render active links to their detail routes.
 - Published entries with `draft: true` must render a `Concept Draft` badge and public-ideation explanation.
-- Unpublished Research entries must render a disabled card labeled `Research in Progress`.
-- Unpublished Project entries must render a disabled card labeled `Project in Progress`.
-- Unpublished cards must not expose detail, repository, or demo links.
+- Unpublished Research and Project entries must render non-clickable summary cards in the separate in-progress section, without presenting them as published work.
 
 ### 2.3 Detail-route behavior
 
@@ -40,7 +38,7 @@ Keep authored Research and Project content visible in the appropriate catalogs w
 ### 2.4 Distribution behavior
 
 - RSS must contain Research entries with `published: true`, including public concept drafts.
-- Publication status must not remove entries from the source collection or catalog counts.
+- Publication status must not remove entries from the source collection or direct status routes.
 
 ## 3. Non-goals
 
@@ -52,7 +50,7 @@ Keep authored Research and Project content visible in the appropriate catalogs w
 
 - New entries default to unpublished.
 - The home page shows only published entries.
-- Collection pages show all entries with the correct enabled, concept-draft, or disabled presentation.
+- Collection pages show published entries with the correct enabled or concept-draft presentation.
 - Published concept-draft detail routes render their body with the public-ideation explanation.
 - Published detail routes retain full content.
 - Unpublished detail routes contain status messaging only and are not indexable.

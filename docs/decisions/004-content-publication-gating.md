@@ -12,13 +12,13 @@ Full Research and Project entry content is public only when its frontmatter expl
 
 Published entries, including public concept drafts with `draft: true`, appear as active cards on the home page and Research and Projects listings, in the Research RSS feed, and on their normal detail routes. Public concept drafts add a `Concept Draft` badge and an explanation that the idea was quickly jotted down and is being developed in public.
 
-Unpublished entries remain visible in the Research and Projects listings as disabled cards labeled “Research in Progress” or “Project in Progress,” but are omitted from the home page. They are excluded from RSS. Their stable direct routes remain available as noindex status pages that show the same progress state without rendering unfinished body content, metadata, or promotional links.
+Unpublished entries are omitted from the home page and RSS. Research and Projects listings show them as non-clickable cards in separate in-progress sections beneath the published entries, without presenting them as finished work. Their stable direct routes remain available as noindex status pages that show the same progress state without rendering unfinished body content, metadata, or promotional links.
 
 The `status` field remains a lifecycle label for the work. It is not a substitute for the publication gate or the public-draft maturity label. `published: false` always takes precedence over `draft: true`; such entries render status-only pages.
 
 ## Current classification
 
-The AI-as-UI essay, context-engineering note, and specification-driven note are public concept drafts. The real-time speech architecture article and speechBubbles project are published without the draft label. The Adaptive AI Runtime, Documentation-Driven Adaptive UX, and Repository Context Engine entries remain unpublished because their content identifies them as conceptual placeholders or active-development case studies.
+The AI-as-UI essay is a public concept draft. The real-time speech architecture article and speechBubbles project are published without the draft label. The context-engineering note and specification-driven note, along with the Adaptive AI Runtime, Documentation-Driven Adaptive UX, and Repository Context Engine entries, remain unpublished because their content is not yet polished enough to present as public work or identifies them as conceptual placeholders or active-development case studies. They may appear as non-clickable summaries in the collection pages' in-progress sections.
 
 ## Reasoning
 

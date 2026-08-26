@@ -64,6 +64,6 @@ Astro's sitemap integration emits `sitemap-index.xml` and its numbered sitemap f
 Research and Project entries use an explicit `published` flag. It defaults to `false`, so new entries remain disabled until they are reviewed and deliberately enabled.
 - A published entry may also set `draft: true` to identify a public concept draft. Public concept drafts appear on the home page and collection listings, in RSS, and on their full detail routes with a `Concept Draft` badge and an explanation that the work is being developed in public.
 - Published entries without `draft: true` appear as regular active cards on the home page and collection listings, in RSS, and on their full detail routes.
-- Unpublished entries remain visible in the Research and Projects collection listings as disabled “Research in Progress” or “Project in Progress” cards, but are omitted from the home page and RSS.
-- A direct link to an unpublished entry shows a small in-progress notice instead of the unfinished body, and is marked `noindex, nofollow`.
+- Unpublished entries are omitted from the home page and RSS, but appear as non-clickable cards in a separate in-progress section beneath the published entries on the Research and Projects collection listings.
+- An existing direct link to an unpublished entry shows a small in-progress notice instead of the unfinished body, and is marked `noindex, nofollow`.
 Lifecycle fields such as `status` describe the work itself. `published` controls whether authored content is public, while `draft` describes the maturity of content that is already public. `published: false` takes precedence over `draft`.

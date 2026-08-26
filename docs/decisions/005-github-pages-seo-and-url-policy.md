@@ -7,7 +7,7 @@
 
 `https://orielsy.com` is the canonical public identity for the site. Astro's `site` configuration, canonical tags, sitemap URLs, RSS URLs, Open Graph URLs, and structured-data URLs must resolve to this apex HTTPS origin. `www.orielsy.com` is an alternate hostname that may be configured for GitHub Pages redirects to the apex; it is not a canonical URL. The default GitHub Pages `*.github.io` hostname is only an infrastructure/DNS target and must not appear in internal links or page metadata.
 
-The site remains a static Astro publication published manually to GitHub Pages from the `gh-pages` branch. The generated sitemap index (`sitemap-index.xml`) is the supported sitemap entry point. Unpublished Research and Project entries can retain direct status pages for the publication-gating experience, but those pages are noindex, are not internally linked as content, and are excluded from the sitemap.
+The site remains a static Astro publication published manually to GitHub Pages from the `gh-pages` branch. The generated sitemap index (`sitemap-index.xml`) is the supported sitemap entry point. Unpublished Research and Project entries can retain direct status pages for the publication-gating experience, but those pages are noindex and excluded from the sitemap. Collection pages may surface these entries as separate non-clickable in-progress cards without treating them as published content.
 
 ## DNS and HTTPS
 
@@ -32,7 +32,7 @@ Existing published slugs are preserved even when a title changes. New slugs must
 If a URL genuinely must move, keep the old path as a static compatibility/redirect page or add an Astro redirect mapping that produces a static redirect artifact for GitHub Pages. Never silently delete a published URL with backlinks or search history. No generalized redirect system is needed until a real move exists.
 ## Internal linking
 
-Global navigation connects Research, Projects, and About. The homepage links only published Research and Project entries through their cards; collection pages may also show unpublished entries as disabled status cards without content links. Published Research pages provide sequential Research navigation, and genuine relationships are expressed directly where they exist: the speechBubbles Research article links to its Project case study, and that Project links back to the associated Research. About remains a biographical surface with global navigation rather than an automatically generated list of unrelated work; curated About links can be added when a deliberate selection exists.
+Global navigation connects Research, Projects, and About. The homepage and the primary collection sections link only published Research and Project entries through their cards; separate in-progress sections may show unpublished summaries without links. Published Research pages provide sequential Research navigation, and genuine relationships are expressed directly where they exist: the speechBubbles Research article links to its Project case study, and that Project links back to the associated Research. About remains a biographical surface with global navigation rather than an automatically generated list of unrelated work; curated About links can be added when a deliberate selection exists.
 
 ## Static HTML and interactive demos
 
