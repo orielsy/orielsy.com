@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "live": "npm run build && gh-pages -d dist -b gh-pages",
+    "live": "npm run build && gh-pages -d dist -b gh-pages --dotfiles --nojekyll",
     "preview": "astro preview",
     "astro": "astro"
   },
