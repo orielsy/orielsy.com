@@ -1,0 +1,74 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const pathname = new URL(Astro.request.url).pathname;
+
+const navItems = [
+  { href: '/research', label: 'Research' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/about', label: 'About' },
+];
+
+function isActive(href: string): boolean {
+  if (href === '/') return pathname === '/';
+  return pathname.startsWith(href);
+}
+---
+
+<header class="sticky top-0 z-40 w-full backdrop-blur-md bg-[var(--bg-primary)]/95 border-b border-[var(--border-subtle)] transition-colors">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between sm:h-16 py-3 sm:py-0 gap-3 sm:gap-0">
+      
+      <!-- Top Row on Mobile: Brand + Theme Toggle -->
+      <div class="flex items-center justify-between w-full sm:w-auto">
+        <a href="/" class="group flex items-center gap-2.5 text-decoration-none">
+          <span class="w-2.5 h-2.5 rounded-full bg-[var(--accent)] group-hover:scale-125 transition-transform duration-200" aria-hidden="true"></span>
+          <div class="flex flex-col">
+            <span class="text-sm sm:text-base font-semibold tracking-tight text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors">
+              Orielsy Diaz
+            </span>
+            <span class="text-[10px] sm:text-[11px] font-mono text-[var(--text-muted)] tracking-tight">
+              UI Architecture &bull; Applied AI
+            </span>
+          </div>
+        </a>
+
+        <!-- Mobile-only Theme Toggle position -->
+        <div class="sm:hidden">
+          <ThemeToggle />
+        </div>
+      </div>
+
+      <!-- Navigation Row (Line-breaks below brand on mobile, inline on sm+) -->
+      <nav class="flex items-center justify-between sm:justify-end gap-1 sm:gap-4 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-[var(--border-subtle)]/60 sm:border-transparent" aria-label="Main Navigation">
+        <ul class="flex items-center gap-1 sm:gap-2 w-full sm:w-auto justify-between sm:justify-start">
+          {navItems.map((item) => {
+            const active = isActive(item.href);
+            return (
+              <li class="flex-1 sm:flex-initial text-center">
+                <a
+                  href={item.href}
+                  class:list={[
+                    'block sm:inline-block px-3 py-1.5 rounded text-xs sm:text-sm font-mono transition-colors text-center',
+                    active
+                      ? 'text-[var(--text-primary)] font-semibold bg-[var(--bg-secondary)] border border-[var(--border-subtle)]'
+                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]/50',
+                  ]}
+                  aria-current={active ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+
+        <!-- Desktop Theme Toggle -->
+        <div class="hidden sm:flex pl-3 border-l border-[var(--border-subtle)] items-center">
+          <ThemeToggle />
+        </div>
+      </nav>
+
+    </div>
+  </div>
+</header>

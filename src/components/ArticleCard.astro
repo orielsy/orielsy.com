@@ -1,0 +1,66 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  entry: CollectionEntry<'research'>;
+  showTags?: boolean;
+}
+
+const { entry, showTags = true } = Astro.props;
+const { data, id } = entry;
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+}).format(data.pubDate);
+
+// Map type to a badge color or style
+const typeBadgeStyles: Record<string, string> = {
+  'Architecture Exploration': 'text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/30',
+  'Research Note': 'text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/50 dark:bg-emerald-950/30',
+  'Article': 'text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-900/60 bg-purple-50/50 dark:bg-purple-950/30',
+  'Experiment': 'text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-900/60 bg-amber-50/50 dark:bg-amber-950/30',
+  'Essay': 'text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-900/60 bg-rose-50/50 dark:bg-rose-950/30',
+  'Field Note': 'text-cyan-600 dark:text-cyan-400 border-cyan-200 dark:border-cyan-900/60 bg-cyan-50/50 dark:bg-cyan-950/30',
+};
+
+const badgeClass = typeBadgeStyles[data.type] || 'text-[var(--text-secondary)] border-[var(--border-subtle)] bg-[var(--bg-secondary)]';
+---
+
+<article data-article-type={data.type} class="article-item group relative flex flex-col p-5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-strong)] transition-all duration-150">
+  <div class="flex flex-wrap items-center justify-between gap-2 mb-2 text-xs font-mono">
+    <div class="flex items-center gap-2">
+      <span class:list={['px-2 py-0.5 rounded text-[11px] font-medium border', badgeClass]}>
+        {data.type}
+      </span>
+      {data.readingTime && (
+        <span class="text-[var(--text-muted)] text-[11px]">&bull; {data.readingTime}</span>
+      )}
+    </div>
+    <time datetime={data.pubDate.toISOString()} class="text-[var(--text-muted)] text-[11px]">
+      {formattedDate}
+    </time>
+  </div>
+
+  <h3 class="text-base sm:text-lg font-semibold tracking-tight text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors mb-2">
+    <a href={`/research/${id}`} class="focus:outline-none">
+      <span class="absolute inset-0" aria-hidden="true"></span>
+      {data.title}
+    </a>
+  </h3>
+
+  <p class="text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-2 leading-relaxed mb-4">
+    {data.description}
+  </p>
+
+  {showTags && data.tags && data.tags.length > 0 && (
+    <div class="mt-auto pt-3 border-t border-[var(--border-subtle)] flex flex-wrap gap-1.5 z-10">
+      {data.tags.map((tag) => (
+        <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--bg-secondary)] text-[var(--text-muted)] border border-[var(--border-subtle)]">
+          #{tag}
+        </span>
+      ))}
+    </div>
+  )}
+</article>

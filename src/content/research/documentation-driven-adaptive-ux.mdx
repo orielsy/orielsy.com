@@ -1,0 +1,71 @@
+---
+title: "Documentation-Driven Adaptive UX"
+description: "Transforming static enterprise documentation, release notes, and implementation guides into dynamic, contextual UI annotations and intelligent inline affordances."
+pubDate: 2026-08-15
+type: "Architecture Exploration"
+tags: ["ui-architecture", "context-engineering", "adaptive-ux", "enterprise-ui"]
+status: "published"
+featured: true
+readingTime: "6 min read"
+demo: "https://orielsy.com/research/documentation-driven-adaptive-ux"
+---
+
+import Callout from '../../components/Callout.astro';
+
+<Callout type="note" title="ARCHITECTURAL EXPLORATION PLACEHOLDER">
+  This article outlines the conceptual architecture for documentation-driven adaptive user interfaces. Code reference implementations and evaluation datasets will be linked as development progresses.
+</Callout>
+
+## The Problem: The Documentation / Interface Disconnect
+
+In enterprise ecosystems, product teams produce extensive technical documentation, release notes, patch bulletins, and implementation runbooks. However, this knowledge lives in external portals (Confluence, Notion, developer portals) disconnected from the active application interface.
+
+Users are forced to:
+1. Context-switch out of their active workflow to locate answers.
+2. Search through fragmented release notes to discover newly shipped features.
+3. Guess configuration constraints that are documented elsewhere.
+
+```text
+Current Workflow:
+[User in App]  ---> (Confusion / Blocker) ---> [Leaves App] ---> [Search Wiki / Docs] ---> [Return to App]
+
+Documentation-Driven Adaptive UX:
+[Structured Docs] ---> [Semantic Knowledge Ingestion] ---> [Adaptive UI Controller]
+                                                                     |
+                                                       +-------------+-------------+
+                                                       |             |             |
+                                                       v             v             v
+                                                 Contextual     Inline Feature   Adaptive
+                                                  Badges &        Discovery      Tooltips &
+                                                  Warnings         Prompts       Guidance
+```
+
+---
+
+## Architectural Principles
+
+### 1. Granular Structured Knowledge Fragments
+
+Rather than treating documentation as monolithic markdown pages, the system parses documentation into discrete semantic fragments tagged with metadata:
+
+- **Target Route / Component Selector**: Which views or DOM subtrees the guidance applies to.
+- **Trigger Conditions**: User role, feature flag state, error frequency, or telemetry thresholds.
+- **Recency & Version**: Associated software release or patch version.
+- **Interactivity Payload**: Actionable shortcuts (e.g. pre-filling form state or enabling a setting).
+
+### 2. Context Engineering for Interfaces
+
+Similar to how context engineering prevents prompt bloat in AI agents, adaptive UX enforces strict relevance budgets:
+* Never dump all available tips or guides at once.
+* Surface information only at the moment of cognitive need.
+* Decay notifications automatically once the interaction pattern is established.
+
+<Callout type="architecture" title="SURFACING RELEVANCE AT THE POINT OF INTERACTION">
+  By indexing structured product documentation alongside UI component state, the client runtime can evaluate whether a user is attempting an outdated workflow and proactively surface the modern alternative inline.
+</Callout>
+
+---
+
+## Integration with Local Runtimes
+
+When paired with a lightweight browser-local inference engine (e.g., WebGPU-based extraction), the UI can evaluate user intent from freeform search inputs or repeated navigation patterns and map them directly to documented features without sending telemetry to remote servers.

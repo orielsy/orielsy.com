@@ -1,0 +1,65 @@
+---
+title: "Local AI Real-Time Captioning Platform"
+summary: "An on-device, zero-latency desktop captioning engine capturing ambient and system audio with locally hosted speech-to-text models and transparent native overlays."
+date: 2026-07-15
+status: "Prototype"
+role: "Creator & Lead Architect"
+technologies: ["Electron", "Node.js", "C++ / ONNX", "Web Audio API", "Whisper / Speech-to-Text", "Tailwind CSS"]
+architecture: "Multi-Process Audio Pipeline & Transparent GPU Window Overlay"
+problem: "Cloud transcription tools introduce network latency, subscription costs, and privacy vulnerabilities when processing confidential system and microphone audio."
+solution: "Built a fully local desktop client leveraging quantized on-device speech-to-text inference with sub-200ms streaming chunk processing."
+demo: "https://orielsy.com/projects/local-ai-real-time-captioning"
+featured: true
+associatedResearch: "/research/adaptive-ai-runtime-enterprise-ui"
+---
+
+import Callout from '../../components/Callout.astro';
+
+<Callout type="note" title="PROJECT CASE STUDY PLACEHOLDER">
+  This entry describes the architectural design and system breakdown of the local desktop captioning platform. Additional performance benchmarks and demonstration videos will be linked as updates are published.
+</Callout>
+
+## System Architecture
+
+The application is structured around a decoupled multi-process architecture to isolate continuous real-time audio capture, heavy neural inference, and UI rendering.
+
+```text
++-------------------+      PCM Stream      +------------------------+
+| Audio Loopback    | -------------------> | Inference Worker       |
+| (Microphone /     |                      | (Whisper STT / ONNX)   |
+|  System Audio)    |                      +------------------------+
++-------------------+                                  |
+                                                       | Streaming Text Tokens
+                                                       v
+                                           +------------------------+
+                                           | Overlay Window (GPU)   |
+                                           | (Frameless Transparent |
+                                           |  Electron Renderer)    |
+                                           +------------------------+
+```
+
+---
+
+## Core Engineering Highlights
+
+### 1. Zero Cloud Dependency & Data Privacy
+Unlike cloud-based transcription services, all speech recognition runs entirely on local machine silicon. No audio packets or transcribed text ever leave the user's workstation, ensuring compliance with strict enterprise privacy requirements.
+
+### 2. Multi-Process Audio Buffer Management
+Audio processing is isolated from the main UI thread. A dedicated worker thread buffers incoming 16kHz mono PCM chunks, applies Voice Activity Detection (VAD) to trim silence, and passes non-silent audio frames to the quantized speech-to-text inference engine.
+
+<Callout type="warning" title="INFERENCE CLASSIFICATION">
+  Note: The core transcription engine utilizes dedicated speech-to-text (STT) neural models (e.g. Whisper / Conformer architectures), not a generative large language model (LLM). This minimizes memory overhead and eliminates hallucinations during rapid verbatim transcription.
+</Callout>
+
+### 3. Transparent Desktop Overlay
+The user interface is implemented as a click-through, always-on-top transparent desktop window. Using hardware-accelerated CSS rendering, transcription tokens stream smoothly with minimal CPU usage.
+
+---
+
+## Technical Stack & Primitives
+
+- **Desktop Shell**: Electron with context-isolated IPC channels.
+- **Audio Capture**: CoreAudio / WASAPI native audio loopback bindings.
+- **Speech Recognition Engine**: Locally hosted quantized speech-to-text model runtimes (ONNX / GGML).
+- **Frontend Layer**: HTML5 / TypeScript / Tailwind CSS with GPU composite layers.

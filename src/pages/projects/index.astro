@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const sortedProjects = allProjects.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout
+  title="Selected Projects & Implementations"
+  description="Selected public projects, prototypes, experiments, and reference implementations by Orielsy Diaz."
+>
+  <div class="max-w-4xl">
+    <!-- Header -->
+    <header class="pb-8 border-b border-[var(--border-subtle)] mb-8">
+      <div class="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold mb-2">
+        Software & Systems
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--text-primary)] mb-3">
+        Selected Projects
+      </h1>
+      <p class="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed max-w-2xl">
+        Prototypes, developer tools, and architectural implementations exploring client-side AI runtimes, multi-process desktop systems, and modern UI platforms.
+      </p>
+      <!-- Status Filter -->
+      <div class="flex flex-wrap items-center gap-2 mt-6 pt-4 border-t border-[var(--border-subtle)] text-xs font-mono" id="project-filter-container">
+        <span class="text-[var(--text-muted)] text-[11px]">STATUS:</span>
+        <button
+          type="button"
+          data-filter="all"
+          class="project-filter-btn px-2.5 py-1 rounded border border-[var(--accent)] bg-[var(--accent)] text-white text-[11px] font-medium transition-colors cursor-pointer"
+        >
+          All ({allProjects.length})
+        </button>
+        {Array.from(new Set(allProjects.map((p) => p.data.status))).map((status) => {
+          const count = allProjects.filter((p) => p.data.status === status).length;
+          return (
+            <button
+              type="button"
+              data-filter={status}
+              class="project-filter-btn px-2.5 py-1 rounded bg-[var(--bg-secondary)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-[11px] transition-colors cursor-pointer"
+            >
+              {status} ({count})
+            </button>
+          );
+        })}
+      </div>
+    </header>
+
+    <!-- Projects Grid -->
+    <div class="space-y-6" id="projects-list">
+      {sortedProjects.map((project) => (
+        <ProjectCard entry={project} />
+      ))}
+    </div>
+
+    <!-- Empty filtered state -->
+    <div id="no-filtered-projects" class="hidden p-12 text-center border border-[var(--border-subtle)] rounded-lg bg-[var(--bg-card)] mt-4">
+      <p class="text-xs font-mono text-[var(--text-muted)]">No projects found matching this status filter.</p>
+    </div>
+
+    {sortedProjects.length === 0 && (
+      <div class="p-12 text-center border border-[var(--border-subtle)] rounded-lg bg-[var(--bg-card)]">
+        <p class="text-xs font-mono text-[var(--text-muted)]">No published projects yet.</p>
+      </div>
+    )}
+  </div>
+
+  <script>
+    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.project-filter-btn');
+    const projects = document.querySelectorAll<HTMLElement>('.project-item');
+    const emptyState = document.getElementById('no-filtered-projects');
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+
+        // Update active button state
+        filterButtons.forEach((b) => {
+          b.classList.remove('bg-[var(--accent)]', 'text-white', 'border-[var(--accent)]', 'font-medium');
+          b.classList.add('bg-[var(--bg-secondary)]', 'border-[var(--border-subtle)]', 'text-[var(--text-secondary)]');
+        });
+
+        btn.classList.add('bg-[var(--accent)]', 'text-white', 'border-[var(--accent)]', 'font-medium');
+        btn.classList.remove('bg-[var(--bg-secondary)]', 'border-[var(--border-subtle)]', 'text-[var(--text-secondary)]');
+
+        let visibleCount = 0;
+        projects.forEach((proj) => {
+          const status = proj.getAttribute('data-project-status');
+          if (filter === 'all' || status === filter) {
+            proj.style.display = 'flex';
+            visibleCount++;
+          } else {
+            proj.style.display = 'none';
+          }
+        });
+
+        if (emptyState) {
+          emptyState.classList.toggle('hidden', visibleCount > 0);
+        }
+      });
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,62 @@
+---
+title: "Repository Context Engine for Coding Agents"
+summary: "A Model Context Protocol (MCP) server that indexes codebase architectural patterns, component prop contracts, and ADRs to feed targeted context to autonomous coding agents."
+date: 2026-08-01
+status: "In Progress"
+role: "Architect & Lead Developer"
+technologies: ["TypeScript", "Model Context Protocol (MCP)", "Node.js", "AST Analysis", "Vector Indexing"]
+architecture: "Dual AST & Semantic Graph Index with JIT MCP Tool Dispatch"
+problem: "Autonomous coding agents frequently pollute their context windows with irrelevant files, leading to hallucinated dependencies and architectural deviations."
+solution: "Engineered a local MCP daemon that exposes granular AST inspection, architectural constraint queries, and component interfaces via standard protocol tools."
+demo: "https://orielsy.com/projects/context-engine-coding-agents"
+featured: true
+associatedResearch: "/research/context-engineering-software-development"
+---
+
+import Callout from '../../components/Callout.astro';
+
+<Callout type="note" title="PROJECT CASE STUDY PLACEHOLDER">
+  This project is currently in active development. Architecture schematics, tool schemas, and local benchmark results will be updated as the implementation reaches public alpha.
+</Callout>
+
+## System Overview
+
+The Context Engine operates as a local background daemon adhering to Anthropic's **Model Context Protocol (MCP)** specification. When a coding agent (e.g., Warp, Claude Code, Cursor) attaches to the repository, the engine establishes an IPC connection and exposes domain-specific tools.
+
+```text
++---------------------+        MCP JSON-RPC        +------------------------+
+| Coding Agent Client | <------------------------> | Repository MCP Daemon  |
+| (Warp / Agent CLI)  |                            +------------------------+
++---------------------+                                        |
+                                         +---------------------+---------------------+
+                                         |                                           |
+                                         v                                           v
+                              +--------------------+                      +--------------------+
+                              | AST Prop Analyzer  |                      | Architecture ADR   |
+                              | & Type Extractor   |                      | Semantic Index     |
+                              +--------------------+                      +--------------------+
+```
+
+---
+
+## Key Capabilities
+
+### 1. Granular Interface Inspection
+Instead of forcing an agent to read entire 1,000-line component implementation files, the engine provides `get_component_interface`, which returns only:
+- Exported TypeScript interfaces and prop types.
+- Allowed design system variant tokens.
+- Bound state machine events.
+
+### 2. Architectural Boundary Guarding
+Before proposing code edits, the agent queries `validate_architectural_invariants` to verify:
+- No illegal cross-boundary package imports.
+- Compliance with the repository's data-fetching paradigm.
+- Proper use of error boundary wrappers.
+
+---
+
+## Technical Stack
+
+- **Protocol Runtime**: TypeScript with `@modelcontextprotocol/sdk`.
+- **Parsing Engine**: Babel / TypeScript compiler API AST extractors.
+- **Local Cache**: SQLite with vector embeddings for semantic document search.

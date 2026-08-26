@@ -1,0 +1,60 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="w-full border-t border-[var(--border-subtle)] mt-24 py-12 text-sm text-[var(--text-muted)] bg-[var(--bg-secondary)]/30">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col gap-8">
+    
+    <!-- Bodyctrl subtle reference -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-[var(--border-subtle)]">
+      <div class="flex items-center gap-2">
+        <span class="font-mono text-xs px-2 py-0.5 rounded bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-secondary)]">
+          LAB / EXPERIMENTATION
+        </span>
+        <span class="text-xs text-[var(--text-secondary)]">
+          Exploring frontend craft, interactive systems, and control at <a href="https://bodyctrl.com" target="_blank" rel="noopener noreferrer" class="text-[var(--text-primary)] hover:text-[var(--accent)] font-mono underline underline-offset-2">bodyctrl.com</a>
+        </span>
+      </div>
+    </div>
+
+    <!-- Main Footer Links & Info -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-mono text-[var(--text-secondary)]">
+          &copy; {currentYear} Orielsy Diaz. Built with Astro, TypeScript, and Tailwind.
+        </p>
+        <p class="text-[11px] text-[var(--text-muted)]">
+          No trackers. Minimal client-side JavaScript. Static-first architecture.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-5 text-xs font-mono">
+        <a
+          href="https://github.com/orielsy"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+        >
+          GitHub
+        </a>
+        <a
+          href="https://www.linkedin.com/in/orielsy"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+        >
+          LinkedIn
+        </a>
+        <a
+          href="/rss.xml"
+          class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-1"
+        >
+          <svg class="w-3 h-3 text-[var(--accent)]" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-8.18v4.814c10.569.063 19.123 8.614 19.186 19.186h4.814c-.063-13.227-10.763-23.936-24-24z"/>
+          </svg>
+          RSS
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

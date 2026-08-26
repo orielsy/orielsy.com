@@ -1,0 +1,100 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  articleDate?: string;
+  type?: 'website' | 'article';
+}
+
+const {
+  title = 'Orielsy Diaz — Senior Frontend Engineer & UI Architect',
+  description = 'Personal website, technical research, UI architecture explorations, and applied AI systems by Orielsy Diaz.',
+  image = '/og-image.png',
+  articleDate,
+  type = 'website',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://orielsy.com');
+const formattedTitle = title === 'Orielsy Diaz' ? title : `${title} | Orielsy Diaz`;
+const ogImageUrl = new URL(image, Astro.site || 'https://orielsy.com').toString();
+
+const jsonLd = type === 'article'
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'TechArticle',
+      headline: title,
+      description: description,
+      datePublished: articleDate,
+      author: {
+        '@type': 'Person',
+        name: 'Orielsy Diaz',
+        url: 'https://orielsy.com',
+      },
+      url: canonicalURL.toString(),
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Orielsy Diaz',
+      url: 'https://orielsy.com',
+      description: description,
+      author: {
+        '@type': 'Person',
+        name: 'Orielsy Diaz',
+        jobTitle: 'Senior Frontend Engineer & UI Architect',
+      },
+    };
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href={canonicalURL} />
+<link rel="alternate" type="application/rss+xml" title="Orielsy Diaz — Research & Writing" href="/rss.xml" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Primary Meta Tags -->
+<title>{formattedTitle}</title>
+<meta name="title" content={formattedTitle} />
+<meta name="description" content={description} />
+<meta name="author" content="Orielsy Diaz" />
+
+<!-- Open Graph / Facebook / LinkedIn -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={formattedTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:site_name" content="Orielsy Diaz" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={formattedTitle} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={ogImageUrl} />
+
+<!-- Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+<!-- Theme Script to prevent FOUC -->
+<script is:inline>
+  (function () {
+    const theme = (() => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+        return localStorage.getItem('theme');
+      }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    })();
+
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  })();
+</script>

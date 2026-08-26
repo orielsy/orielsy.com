@@ -1,0 +1,60 @@
+---
+title: "Context Engineering for Software Development"
+description: "Designing persistent repository knowledge architectures and Model Context Protocol (MCP) systems that provide autonomous coding agents with relevant context while eliminating context pollution."
+pubDate: 2026-07-30
+type: "Research Note"
+tags: ["coding-agents", "context-engineering", "mcp", "developer-tools"]
+status: "published"
+featured: false
+readingTime: "7 min read"
+demo: "https://orielsy.com/research/context-engineering-software-development"
+---
+
+import Callout from '../../components/Callout.astro';
+
+<Callout type="note" title="RESEARCH NOTE">
+  This research note analyzes strategies for structuring repository knowledge, architectural constraints, and tool protocols to maximize coding-agent precision.
+</Callout>
+
+## The Context Pollution Problem
+
+As context windows expand into millions of tokens, the naive approach is to dump entire repositories, test logs, and chat histories into an agent's prompt.
+
+However, empirical evaluation reveals that **more context does not equal better code**:
+1. **Context degradation**: Critical architecture rules get lost in irrelevant file noise.
+2. **Attention dilution**: The agent hallucinates deprecated conventions present in legacy files.
+3. **High latency & compute cost**: Repeatedly sending massive token payloads degrades developer feedback loops.
+
+```text
+Naive Prompting:
+[Entire 500-file Codebase] ---> [Agent LLM] ---> (Slow, Confused Output)
+
+Context Engineered Pipeline:
+[Repository State] ---> [AST & Dependency Graph] 
+                             |
+                             v
+               [Model Context Protocol (MCP) Server]
+                             |
+                 (Targeted Tool & Rule Dispatch)
+                             v
+                        [Agent LLM] ---> (Precise, Architecture-Compliant Patch)
+```
+
+---
+
+## Architectural Pillars of Effective Context Engineering
+
+### 1. Hierarchical Rule Granularity
+Instead of a single monolithic prompt, structure rules hierarchically:
+- **Global Invariants**: Core language version, forbidden libraries, formatting rules.
+- **Package / Domain Boundaries**: Service-specific error types, authentication guards.
+- **Component Primitives**: Design system tokens, state management contracts.
+
+### 2. Just-In-Time Tool Retrieval via MCP
+Using the **Model Context Protocol (MCP)**, agents query specialized tools and resources only when a task demands them:
+- `get_component_schema`: Returns typed prop interfaces without loading component implementation code.
+- `search_architectural_decisions`: Fetches specific ADRs matching the modified system.
+
+<Callout type="architecture" title="PERSISTENT KNOWLEDGE OVER PROMPT REPETITION">
+  By moving engineering context from ephemeral user prompts into persistent, version-controlled repository manifests, agents behave with architectural consistency across different developer sessions.
+</Callout>

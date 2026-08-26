@@ -1,0 +1,197 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-primary: #fafafa;
+    --bg-secondary: #f4f4f5;
+    --bg-card: #ffffff;
+    --bg-card-hover: #fcfcfc;
+    --text-primary: #09090b;
+    --text-secondary: #52525b;
+    --text-muted: #71717a;
+    --border-subtle: #e4e4e7;
+    --border-strong: #d4d4d8;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --accent-subtle: #eff6ff;
+    --accent-border: #bfdbfe;
+    --code-bg: #f4f4f5;
+    --code-border: #e4e4e7;
+    --callout-bg: #f8fafc;
+    --callout-border: #cbd5e1;
+  }
+
+  html.dark {
+    --bg-primary: #090a0f;
+    --bg-secondary: #12141c;
+    --bg-card: #121520;
+    --bg-card-hover: #171b29;
+    --text-primary: #f4f4f6;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    --border-subtle: #1e2433;
+    --border-strong: #2a3347;
+    --accent: #38bdf8;
+    --accent-hover: #7dd3fc;
+    --accent-subtle: #0c4a6e33;
+    --accent-border: #0284c7;
+    --code-bg: #0d1117;
+    --code-border: #1e2433;
+    --callout-bg: #0d121f;
+    --callout-border: #1e2d4a;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  code, pre, kbd, samp {
+    font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+}
+
+/* Custom architectural utilities */
+.architectural-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
+}
+
+.subtle-border {
+  border-color: var(--border-subtle);
+}
+
+.strong-border {
+  border-color: var(--border-strong);
+}
+
+/* Prose customizations for long-form technical reading */
+.prose {
+  color: var(--text-secondary);
+  max-width: 68ch;
+}
+
+/* Two-class override: lets a prose block fill its parent's width.
+   Required because the unlayered `.prose { max-width: 68ch }` rule above
+   sits later in the cascade than Tailwind's `.max-w-none` utility and wins
+   on equal specificity. The `.prose.max-w-none` selector has higher
+   specificity (0,2,0 vs 0,1,0) and therefore resolves the override. */
+.prose.max-w-none {
+  max-width: none;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: var(--text-primary);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.prose h1 {
+  font-size: 2rem;
+  line-height: 1.25;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose h2 {
+  font-size: 1.45rem;
+  line-height: 1.35;
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.prose h3 {
+  font-size: 1.15rem;
+  line-height: 1.4;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose p {
+  margin-top: 1.15rem;
+  margin-bottom: 1.15rem;
+  line-height: 1.75;
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+.prose a:hover {
+  color: var(--accent-hover);
+}
+
+.prose strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.prose ul, .prose ol {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+  font-style: italic;
+  color: var(--text-secondary);
+  background-color: var(--accent-subtle);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 0 4px 4px 0;
+}
+
+.prose code:not(pre code) {
+  background-color: var(--code-bg);
+  color: var(--text-primary);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  border: 1px solid var(--code-border);
+  font-size: 0.875em;
+}
+
+.prose pre {
+  background-color: var(--code-bg) !important;
+  border: 1px solid var(--code-border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose img {
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  margin: 2.5rem 0;
+}

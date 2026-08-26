@@ -1,0 +1,35 @@
+---
+import { getCollection, render } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+export async function getStaticPaths() {
+  const researchEntries = await getCollection('research', ({ data }) => {
+    return data.status === 'published';
+  });
+
+  const sorted = researchEntries.sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+
+  return sorted.map((entry, index) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      prevEntry: index < sorted.length - 1 ? sorted[index + 1] : undefined,
+      nextEntry: index > 0 ? sorted[index - 1] : undefined,
+    },
+  }));
+}
+
+const { entry, prevEntry, nextEntry } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+
+<ArticleLayout
+  entry={entry}
+  headings={headings}
+  prevEntry={prevEntry}
+  nextEntry={nextEntry}
+>
+  <Content />
+</ArticleLayout>

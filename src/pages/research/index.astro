@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const allResearch = await getCollection('research', ({ data }) => {
+  return data.status === 'published';
+});
+
+const sortedResearch = allResearch.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const allTags = Array.from(new Set(allResearch.flatMap((item) => item.data.tags)));
+const allTypes = Array.from(new Set(allResearch.map((item) => item.data.type)));
+---
+
+<BaseLayout
+  title="Research & Architecture Explorations"
+  description="Technical essays, architecture explorations, research notes, and systems design by Orielsy Diaz."
+>
+  <div class="max-w-4xl">
+    <!-- Header -->
+    <header class="pb-8 border-b border-[var(--border-subtle)] mb-8">
+      <div class="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold mb-2">
+        Technical Publication
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--text-primary)] mb-3">
+        Research & Explorations
+      </h1>
+      <p class="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed max-w-2xl">
+        Long-form architectural thinking, empirical experiments, and system designs exploring frontend platforms, runtime inference, context engineering, and interactive tools.
+      </p>
+
+      <!-- Types / Filter Buttons -->
+      <div class="flex flex-wrap items-center gap-2 mt-6 pt-4 border-t border-[var(--border-subtle)] text-xs font-mono" id="filter-container">
+        <span class="text-[var(--text-muted)] text-[11px]">FILTER:</span>
+        <button
+          type="button"
+          data-filter="all"
+          class="filter-btn px-2.5 py-1 rounded border border-[var(--accent)] bg-[var(--accent)] text-white text-[11px] font-medium transition-colors cursor-pointer"
+        >
+          All ({allResearch.length})
+        </button>
+        {allTypes.map((t) => {
+          const count = allResearch.filter((r) => r.data.type === t).length;
+          return (
+            <button
+              type="button"
+              data-filter={t}
+              class="filter-btn px-2.5 py-1 rounded bg-[var(--bg-secondary)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-[11px] transition-colors cursor-pointer"
+            >
+              {t} ({count})
+            </button>
+          );
+        })}
+      </div>
+    </header>
+
+    <!-- Articles Grid / List -->
+    <div class="space-y-4" id="articles-list">
+      {sortedResearch.map((entry) => (
+        <ArticleCard entry={entry} showTags={true} />
+      ))}
+    </div>
+
+    <!-- Empty filtered state -->
+    <div id="no-filtered-results" class="hidden p-12 text-center border border-[var(--border-subtle)] rounded-lg bg-[var(--bg-card)] mt-4">
+      <p class="text-xs font-mono text-[var(--text-muted)]">No articles found matching this format.</p>
+    </div>
+
+    {sortedResearch.length === 0 && (
+      <div class="p-12 text-center border border-[var(--border-subtle)] rounded-lg bg-[var(--bg-card)]">
+        <p class="text-xs font-mono text-[var(--text-muted)]">No published research articles yet.</p>
+      </div>
+    )}
+  </div>
+
+  <script>
+    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const articles = document.querySelectorAll<HTMLElement>('.article-item');
+    const emptyState = document.getElementById('no-filtered-results');
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+
+        // Update button active styles
+        filterButtons.forEach((b) => {
+          b.classList.remove('bg-[var(--accent)]', 'text-white', 'border-[var(--accent)]', 'font-medium');
+          b.classList.add('bg-[var(--bg-secondary)]', 'border-[var(--border-subtle)]', 'text-[var(--text-secondary)]');
+        });
+
+        btn.classList.add('bg-[var(--accent)]', 'text-white', 'border-[var(--accent)]', 'font-medium');
+        btn.classList.remove('bg-[var(--bg-secondary)]', 'border-[var(--border-subtle)]', 'text-[var(--text-secondary)]');
+
+        let visibleCount = 0;
+        articles.forEach((article) => {
+          const type = article.getAttribute('data-article-type');
+          if (filter === 'all' || type === filter) {
+            article.style.display = 'flex';
+            visibleCount++;
+          } else {
+            article.style.display = 'none';
+          }
+        });
+
+        if (emptyState) {
+          emptyState.classList.toggle('hidden', visibleCount > 0);
+        }
+      });
+    });
+  </script>
+</BaseLayout>

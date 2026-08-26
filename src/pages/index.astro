@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const allResearch = await getCollection('research', ({ data }) => {
+  return data.status === 'published';
+});
+
+const recentResearch = allResearch
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const allProjects = await getCollection('projects');
+const recentProjects = allProjects
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 2);
+
+const explorationAreas = [
+  {
+    title: 'Adaptive AI Runtimes & Tiered Inference',
+    description: 'Routing intelligent tasks across browser-local WebGPU/WebLLM models, desktop hardware, and server endpoints based on latency, cost, privacy, and device capability.',
+    tag: 'Runtime Architecture',
+  },
+  {
+    title: 'Context Engineering for Coding Agents',
+    description: 'Structuring persistent repository knowledge, architectural patterns, and specifications to reduce context pollution and prompt dependency in autonomous agent workflows.',
+    tag: 'Agent Systems',
+  },
+  {
+    title: 'Non-Chat AI & Documentation-Driven UX',
+    description: 'Embedding ambient intelligence into enterprise interfaces through structured metadata, inline guidance, semantic ranking, and classification rather than generic chatbot overlays.',
+    tag: 'UI Architecture',
+  },
+  {
+    title: 'Hardware-Aware Client Interfaces',
+    description: 'Investigating browser compute thresholds, multi-process desktop runtimes (Electron), and client-side models for private, zero-token real-time capabilities.',
+    tag: 'Client Systems',
+  },
+];
+---
+
+<BaseLayout
+  title="Orielsy Diaz"
+  description="Senior Frontend Engineer & UI Architect. Research, systems architecture, and applied AI explorations."
+>
+  <!-- Hero / Positioning Section -->
+  <section class="pb-12 pt-2 sm:pt-6 border-b border-[var(--border-subtle)]">
+    <div class="flex flex-col gap-4">
+      <div class="inline-flex items-center gap-2 text-xs font-mono text-[var(--accent)]">
+        <span class="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse"></span>
+        <span>Senior Frontend Engineer &bull; UI Architect</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-[var(--text-primary)] leading-[1.15]">
+        Architecture, interaction systems, and applied AI at the edge of the interface.
+      </h1>
+
+      <p class="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-3xl mt-2">
+        I have 15+ years of experience designing scalable web architectures, design systems, and enterprise platforms. My current work centers on applying emerging AI runtimes, context engineering, Model Context Protocol (MCP), and local inference to real user experiences and developer tools.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-3 pt-3 text-xs font-mono">
+        <a
+          href="/research"
+          class="px-4 py-2 rounded bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] font-medium transition-colors flex items-center gap-1.5"
+        >
+          <span>Read Research & Explorations</span>
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+        <a
+          href="/projects"
+          class="px-4 py-2 rounded border border-[var(--border-subtle)] hover:border-[var(--border-strong)] bg-[var(--bg-card)] text-[var(--text-primary)] transition-colors"
+        >
+          View Selected Projects
+        </a>
+        <a
+          href="/about"
+          class="px-3 py-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+        >
+          About & Background &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Current Areas of Exploration -->
+  <section class="py-12 border-b border-[var(--border-subtle)]">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] font-semibold">
+          Focus & Inquiries
+        </h2>
+        <p class="text-xl font-bold text-[var(--text-primary)] tracking-tight mt-1">
+          Current Areas of Exploration
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {explorationAreas.map((area) => (
+        <div class="p-5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] flex flex-col justify-between">
+          <div>
+            <div class="text-[10px] font-mono text-[var(--accent)] uppercase tracking-wider mb-2 font-medium">
+              {area.tag}
+            </div>
+            <h3 class="text-sm font-semibold text-[var(--text-primary)] mb-2">
+              {area.title}
+            </h3>
+            <p class="text-xs text-[var(--text-secondary)] leading-relaxed">
+              {area.description}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Recent Research & Technical Writing -->
+  <section class="py-12 border-b border-[var(--border-subtle)]">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] font-semibold">
+          Writing & Thinking
+        </h2>
+        <p class="text-xl font-bold text-[var(--text-primary)] tracking-tight mt-1">
+          Recent Research & Explorations
+        </p>
+      </div>
+      <a
+        href="/research"
+        class="text-xs font-mono text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors flex items-center gap-1"
+      >
+        <span>View all ({allResearch.length})</span>
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4">
+      {recentResearch.map((entry) => (
+        <ArticleCard entry={entry} />
+      ))}
+    </div>
+  </section>
+
+  <!-- Selected Projects -->
+  <section class="py-12 border-b border-[var(--border-subtle)]">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] font-semibold">
+          Implementations & Prototypes
+        </h2>
+        <p class="text-xl font-bold text-[var(--text-primary)] tracking-tight mt-1">
+          Selected Projects
+        </p>
+      </div>
+      <a
+        href="/projects"
+        class="text-xs font-mono text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors flex items-center gap-1"
+      >
+        <span>View all ({allProjects.length})</span>
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6">
+      {recentProjects.map((entry) => (
+        <ProjectCard entry={entry} />
+      ))}
+    </div>
+  </section>
+
+  <!-- Concise Philosophy / Background Summary -->
+  <section class="py-12">
+    <div class="p-6 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div class="flex flex-col gap-2 max-w-xl">
+        <h2 class="text-sm font-mono uppercase tracking-wider text-[var(--text-muted)] font-semibold">
+          Engineering Perspective
+        </h2>
+        <p class="text-sm text-[var(--text-secondary)] leading-relaxed">
+          I view frontend engineering not as skinning mockups, but as architecting resilient state systems, distributed client compute, and ergonomic interaction models.
+        </p>
+      </div>
+      <a
+        href="/about"
+        class="px-4 py-2 text-xs font-mono rounded border border-[var(--border-subtle)] bg-[var(--bg-card)] text-[var(--text-primary)] hover:border-[var(--border-strong)] whitespace-nowrap transition-colors"
+      >
+        Read Full Background &rarr;
+      </a>
+    </div>
+  </section>
+</BaseLayout>
