@@ -29,8 +29,8 @@ Unlike batch transcription—where a static media file is uploaded, processed se
 4. **Fluid UI Compositing**: Rendering animated overlay graphics at 60fps without thread contention or UI jitter.
 
 <DiagramFigure
-  src="/projects/speechbubbles/pipeline_v3.png"
-  alt="SpeechBubbles Real-Time Audio Pipeline"
+  src="/projects/speechbubbles/speechbubbles-pipeline_v4.png"
+  alt="Four-stage speechBubbles streaming inference pipeline showing hardware audio capture, temporal buffering, local Whisper decoding, and fluid UI overlay compositing connected in sequence."
   caption="High-fidelity diagram of the real-time streaming pipeline: Microphone capture → Web Audio API downsampling → FastAPI WebSocket ingestion → PyAnnote VAD silence gating → local Whisper inference → Electron overlay rendering. Click image to expand to full resolution."
 />
 
@@ -116,9 +116,9 @@ When fed ambient room noise, HVAC hum, or silence, Whisper’s decoder attempts 
 To achieve broadcast-reliable output, the system implements **Two-Stage Defense Gating**:
 
 <DiagramFigure
-  src="/projects/speechbubbles/pipeline.png"
-  alt="SpeechBubbles Streaming Audio Pipeline"
-  caption="End-to-end audio pipeline: Browser microphone capture → Web Audio API downsampling → Python WebSocket ingestion → PyAnnote VAD silence gating → local Whisper inference → Electron overlay rendering. Click image for full resolution."
+  src="/projects/speechbubbles/speechbubbles-gating_v2.png"
+  alt="Two-stage hallucination defense flow showing an incoming 16 kHz PCM chunk passing through a server-side PyAnnote VAD speech gate, local Whisper decoding, and a client-side Vue and Pinia confidence contract that rejects failed segments or commits verified text to the overlay."
+  caption="Two-Stage Defense Gating: PyAnnote VAD drops silence chunks before Whisper inference to conserve GPU/CPU resources, while client-side probabilistic filtering discards hallucination loops before DOM rendering. Click image for full resolution."
 />
 
 ### Layer 1: Backend Voice Activity Gating (PyAnnote VAD)

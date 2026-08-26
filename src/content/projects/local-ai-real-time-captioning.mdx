@@ -46,8 +46,8 @@ The system is structured as two decoupled tiers:
 ## Architectural Breakdown
 
 <DiagramFigure 
-  src="/projects/speechbubbles/architecture.png"
-  alt="speechBubbles System Architecture"
+  src="/projects/speechbubbles/speechbubbles-architecture_v2.png"
+  alt="System architecture diagram showing Web Audio API capture sending 16 kHz PCM to a FastAPI streaming server, which sends transcript segments to an Electron Vue and Pinia client for OBS Studio overlay compositing."
   caption="System Architecture: Decoupled multi-process pipeline isolating audio capture, streaming WebSockets, local Whisper STT inference, and OBS Studio video compositing."
 />
 
