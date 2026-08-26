@@ -9,6 +9,7 @@ export interface Props {
 const { entry, showTags = true } = Astro.props;
 const { data, id } = entry;
 const isPublished = data.published;
+const isConceptDraft = isPublished && data.draft;
 
 const formattedDate = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
@@ -32,6 +33,7 @@ const badgeClass = typeBadgeStyles[data.type] || 'text-[var(--text-secondary)] b
 <article
   data-article-type={data.type}
   data-article-published={isPublished ? 'true' : 'false'}
+  data-article-draft={isConceptDraft ? 'true' : 'false'}
   aria-disabled={!isPublished ? 'true' : undefined}
   class:list={[
     'article-item group relative flex flex-col p-5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] transition-all duration-150',
@@ -44,6 +46,11 @@ const badgeClass = typeBadgeStyles[data.type] || 'text-[var(--text-secondary)] b
       {!isPublished && (
         <span class="px-2 py-0.5 rounded text-[11px] font-medium border text-[var(--accent)] border-[var(--accent-border)] bg-[var(--accent-subtle)]">
           Research in Progress
+        </span>
+      )}
+      {isConceptDraft && (
+        <span class="px-2 py-0.5 rounded text-[11px] font-medium border text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-900/60 bg-amber-50/60 dark:bg-amber-950/20">
+          Concept Draft
         </span>
       )}
       <span class:list={['px-2 py-0.5 rounded text-[11px] font-medium border', badgeClass]}>

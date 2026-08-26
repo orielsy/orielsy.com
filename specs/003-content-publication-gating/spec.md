@@ -6,7 +6,7 @@
 
 ## 1. Goal
 
-Keep authored Research and Project content visible in the catalog without exposing unfinished body content as public work. New entries must fail closed until they are deliberately reviewed and published.
+Keep authored Research and Project content visible in the appropriate catalogs without exposing unfinished body content as public work. Support public concept drafts separately from entries that remain status-only. New entries must fail closed until they are deliberately reviewed and published.
 
 ## 2. Requirements
 
@@ -14,12 +14,17 @@ Keep authored Research and Project content visible in the catalog without exposi
 
 - Research and Project collections must expose a boolean `published` field.
 - The default value must be `false`.
+- Research and Project collections must expose a boolean `draft` field.
+- The default value must be `false`.
 - Lifecycle fields such as Research `status` and Project `status` must not replace the publication gate.
+- `published: false` must take precedence over `draft: true`.
 
 ### 2.2 Catalog behavior
 
-- Home, Research, and Projects listings must include both published and unpublished entries.
+- The home listing must include published entries only.
+- Research and Projects collection listings must include both published and unpublished entries.
 - Published entries must render active links to their detail routes.
+- Published entries with `draft: true` must render a `Concept Draft` badge and public-ideation explanation.
 - Unpublished Research entries must render a disabled card labeled `Research in Progress`.
 - Unpublished Project entries must render a disabled card labeled `Project in Progress`.
 - Unpublished cards must not expose detail, repository, or demo links.
@@ -34,7 +39,7 @@ Keep authored Research and Project content visible in the catalog without exposi
 
 ### 2.4 Distribution behavior
 
-- RSS must contain published Research entries only.
+- RSS must contain Research entries with `published: true`, including public concept drafts.
 - Publication status must not remove entries from the source collection or catalog counts.
 
 ## 3. Non-goals
@@ -46,7 +51,9 @@ Keep authored Research and Project content visible in the catalog without exposi
 ## 4. Acceptance criteria
 
 - New entries default to unpublished.
-- Catalog pages show all entries with the correct enabled or disabled presentation.
+- The home page shows only published entries.
+- Collection pages show all entries with the correct enabled, concept-draft, or disabled presentation.
+- Published concept-draft detail routes render their body with the public-ideation explanation.
 - Published detail routes retain full content.
 - Unpublished detail routes contain status messaging only and are not indexable.
 - RSS excludes unpublished Research.

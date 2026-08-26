@@ -1,0 +1,24 @@
+---
+export interface Props {
+  kind: 'research' | 'project';
+}
+
+const { kind } = Astro.props;
+const contentLabel = kind === 'research' ? 'research' : 'project';
+const headingId = `concept-draft-${kind}-heading`;
+---
+
+<section
+  class="my-8 p-6 rounded-lg border border-amber-200 dark:border-amber-900/60 bg-amber-50/60 dark:bg-amber-950/20"
+  aria-labelledby={headingId}
+>
+  <div class="text-xs font-mono uppercase tracking-widest text-amber-700 dark:text-amber-300 font-semibold mb-2">
+    Concept Draft
+  </div>
+  <h2 id={headingId} class="text-lg font-semibold tracking-tight text-[var(--text-primary)] mb-2">
+    Published while still ideating
+  </h2>
+  <p class="text-sm text-[var(--text-secondary)] leading-relaxed">
+    This {contentLabel} is a public concept draft—an idea or concept I quickly jotted down and published while I continue ideating. The framing, examples, and conclusions may change substantially as the work develops.
+  </p>
+</section>

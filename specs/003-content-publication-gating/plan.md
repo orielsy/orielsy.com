@@ -5,9 +5,9 @@
 
 ## 1. Technical strategy
 
-Add a fail-closed `published` field to both content collection schemas. Keep all entries in catalog queries, and pass publication state into the card and detail-layout components so the presentation can distinguish disabled status from missing content.
+Add fail-closed `published` and independent `draft` fields to both content collection schemas. Home-page queries select published entries only, while collection-page queries retain all entries. Pass publication and draft state into the card and detail-layout components so the presentation can distinguish public concept drafts from disabled status entries.
 
-Published detail routes render the existing layouts normally. Unpublished routes reuse those layouts with status-only content, suppressed metadata and links, and `noindex, nofollow` output. RSS applies the same publication predicate used by the route and catalog behavior.
+Published detail routes render the existing layouts normally, with a concept-draft notice when `draft: true`. Unpublished routes reuse those layouts with status-only content, suppressed metadata and links, and `noindex, nofollow` output. RSS applies the `published: true` predicate; the sitemap applies the same publication predicate.
 
 ## 2. Implementation references
 

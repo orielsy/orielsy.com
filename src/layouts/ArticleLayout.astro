@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import ContentStatus from '../components/ContentStatus.astro';
+import ConceptDraftNotice from '../components/ConceptDraftNotice.astro';
 import type { CollectionEntry } from 'astro:content';
 
 export interface Props {
@@ -14,6 +15,7 @@ export interface Props {
 
 const { entry, headings, prevEntry, nextEntry, published = false } = Astro.props;
 const { data, id } = entry;
+const isConceptDraft = published && data.draft;
 const statusTitle = 'Research in Progress';
 const statusDescription = 'This research entry is still being developed and is not publicly available yet.';
 
@@ -62,6 +64,11 @@ const formattedUpdateDate = data.updatedDate
       {published ? (
         <>
       <div class="flex flex-wrap items-center gap-2.5 mb-4 text-xs font-mono">
+        {isConceptDraft && (
+          <span class="px-2.5 py-0.5 rounded font-medium border border-amber-200 dark:border-amber-900/60 bg-amber-50/60 dark:bg-amber-950/20 text-amber-700 dark:text-amber-300">
+            Concept Draft
+          </span>
+        )}
         <span class="px-2.5 py-0.5 rounded font-medium border border-[var(--border-subtle)] bg-[var(--bg-secondary)] text-[var(--accent)]">
           {data.type}
         </span>
@@ -144,6 +151,7 @@ const formattedUpdateDate = data.updatedDate
         </div>
       )}
     </header>
+    {published && isConceptDraft && <ConceptDraftNotice kind="research" />}
     {published ? (
       <>
         <!-- Table of contents if headings present -->
