@@ -1,0 +1,206 @@
+---
+title: "Architecture Notes: Audio Stream Windowing, VAD Gating, and Real-Time Speech UI Systems"
+description: "A technical exploration of the trade-offs in streaming audio buffer management, PyAnnote VAD silence gating, Whisper hallucination suppression, and high-performance Electron overlay rendering."
+pubDate: 2026-08-25
+type: "Architecture Exploration"
+tags: ["speech-to-text", "audio-engineering", "whisper", "vad", "electron", "ui-architecture", "obs-studio"]
+status: "published"
+featured: true
+readingTime: "10 min read"
+demo: "/projects/local-ai-real-time-captioning"
+---
+
+import Callout from '../../components/Callout.astro';
+import DiagramFigure from '../../components/DiagramFigure.astro';
+
+<Callout type="note" title="COMPANION PROJECT ARTIFACT">
+  This research article details the engineering architecture and streaming trade-offs behind **speechBubbles**, an on-device live broadcast graphics and speech-to-text overlay platform. For the full system case study and 1080p production demonstration video, see the <a href="/projects/local-ai-real-time-captioning" class="text-[var(--accent)] underline font-medium">speechBubbles Project Case Study</a>.
+</Callout>
+
+## The Challenge: Real-Time Audio at the Interface Layer
+
+Building a real-time, on-device speech-to-text interface presents a classic distributed systems challenge disguised as a frontend feature. 
+
+Unlike batch transcription—where a static media file is uploaded, processed sequentially, and returned as a finished transcript—real-time live streaming requires continuous, low-latency coordination across four distinct operational domains:
+
+1. **Hardware Audio Capture**: Sampling continuous analog microphone signals in the browser/client environment.
+2. **Temporal Buffer Windowing**: Deciding when to cut an audio stream into discrete chunks for neural processing.
+3. **Acoustic Gating & Silence Detection**: Preventing decoder hallucinations during natural pauses in human speech.
+4. **Fluid UI Compositing**: Rendering animated overlay graphics at 60fps without thread contention or UI jitter.
+
+```text
++-----------------------------------------------------------------------------------------+
+|                                STREAMING INFERENCE PIPELINE                             |
+|                                                                                         |
+|   Microphone         Web Audio API              FastAPI / WebSocket       Local Whisper |
+|  [48 kHz Stereo] --> [Downsample to 16 kHz] --> [Sliding PCM Buffer] ---> [Worker Thread|
+|                      [Convert Float32->Int16]             |               [model.transcribe]
+|                                                           v                      |      |
+|                                                  [PyAnnote VAD Gating]           |      |
+|                                                  (Suppress Silence)              v      |
+|                                                                        [JSON Token Segments]
+|                                                                                  |      |
+|                                 Electron Overlay Window                          v      |
+|                                [Double-buffered rAF Animation] <-----------------+      |
+|                                [Chroma-keyed OBS Video Feed]                            |
++-----------------------------------------------------------------------------------------+
+```
+
+---
+
+## 1. The Audio Sample Rate Dilemma
+
+Standard consumer audio hardware and modern browser `AudioContext` instances default to **44,100 Hz** or **48,000 Hz** stereo floating-point buffers.
+
+Feeding raw 48 kHz stereo streams directly over a network or local IPC socket introduces three severe penalties:
+- **Bandwidth Waste**: 48,000 samples/sec × 2 channels × 4 bytes (32-bit float) = ~384 KB/sec of raw uncompressed payload.
+- **Garbage Collection Pressure**: Continual instantiation of large `Float32Array` objects triggers micro-pauses in the JavaScript runtime.
+- **Model Inefficiency**: Transformer-based acoustic models such as OpenAI Whisper are trained natively on **16,000 Hz 16-bit mono PCM**. Sending higher sample rates forces the backend to resample every chunk on the GPU/CPU thread.
+
+### The Client-Side Downsampling Solution
+
+In the `CaptionControl.vue` audio pipeline, downsampling is performed on the capture thread before packet transmission:
+
+```javascript
+// High-efficiency downsampler: AudioContext rate -> 16,000 Hz Int16 PCM
+function downsampleBuffer(buffer, inputSampleRate, outputSampleRate = 16000) {
+  if (inputSampleRate === outputSampleRate) return buffer;
+  
+  const sampleRateRatio = inputSampleRate / outputSampleRate;
+  const newLength = Math.round(buffer.length / sampleRateRatio);
+  const result = new Float32Array(newLength);
+  
+  let offsetResult = 0;
+  let offsetBuffer = 0;
+  
+  while (offsetResult < result.length) {
+    const nextOffsetBuffer = Math.round((offsetResult + 1) * sampleRateRatio);
+    let accum = 0, count = 0;
+    
+    for (let i = offsetBuffer; i < nextOffsetBuffer && i < buffer.length; i++) {
+      accum += buffer[i];
+      count++;
+    }
+    result[offsetResult] = count > 0 ? accum / count : 0;
+    offsetResult++;
+    offsetBuffer = nextOffsetBuffer;
+  }
+  return result;
+}
+```
+
+The filtered float array is then clamped and converted to signed 16-bit integers (`Int16Array`), reducing stream throughput to exactly **32 KB/sec** (a **91.6% reduction in payload size**).
+
+---
+
+## 2. Temporal Windowing: Latency vs. Semantic Context
+
+Acoustic transformer decoders do not evaluate isolated phonemes; they require context windows to resolve homophones, linguistic cadence, and grammatical structure. This creates an architectural trade-off:
+
+| Buffer Duration | Latency to Screen | Transcription Accuracy | Failure Mode |
+| :--- | :--- | :--- | :--- |
+| **Sub-500ms** | Ultra-Fast (~100ms) | Low | Truncated words, missing context, hallucinated sentence endings |
+| **2.0s – 3.5s** | Balanced (~400ms) | **Optimal** | Natural phrase boundaries, accurate punctuation |
+| **5.0s+** | High (~1.5s+) | High | Lags behind live speech; awkward for broadcast subtitles |
+
+In `fastapi_app.py`, the server implements a **sliding chunk accumulator**:
+
+```python
+chunk_length_bytes = int(client.config.get("chunk_length_seconds", 3)) * client.sampling_rate * client.samples_width
+
+if len(client.buffer) >= chunk_length_bytes:
+    client.scratch_buffer.extend(client.buffer)
+    client.buffer.clear()
+    asyncio.create_task(self.process_buffer(client, websocket))
+```
+
+---
+
+## 3. Combating Ghost Hallucinations in Live Audio
+
+One of the most notorious challenges when deploying autoregressive speech models (like Whisper) on continuous microphone streams is **ghost hallucination during silence**.
+
+When fed ambient room noise, HVAC hum, or silence, Whisper’s decoder attempts to predict text from unconditioned acoustic tokens. This frequently results in phantom outputs:
+- Infinite loops: *"Thank you. Thank you. Thank you."*
+- Subtitle artifacts: *"[Music]", "[Applause]", "Subscribe to the channel."*
+- Punctuation cascades: *". . . . ."*
+
+To achieve broadcast-reliable output, the system implements **Two-Stage Defense Gating**:
+
+<DiagramFigure 
+  src="/projects/speechbubbles/architecture.png"
+  alt="speechBubbles Streaming Inference & Gating Pipeline"
+  caption="Two-Stage Gating Architecture: Backend Voice Activity Detection (PyAnnote) combined with client-side probability thresholding."
+/>
+
+### Layer 1: Backend Voice Activity Gating (PyAnnote VAD)
+Before invoking heavy neural inference, audio chunks are analyzed by a segmentation model to verify that human vocal energy is actually present:
+
+```python
+# Evaluate voice activity before invoking Whisper
+vad_results = await asyncio.to_thread(self.vad_pipeline, audio_file_path)
+if not vad_results or len(vad_results) == 0:
+    client.scratch_buffer.clear()
+    return
+```
+
+### Layer 2: Client-Side Probabilistic Filtering
+Even with VAD, edge-case noise can slip through. In `CaptionControl.vue`, incoming segment payloads are evaluated against the model's confidence metadata:
+
+```javascript
+// Filter out segments with elevated silence probability or decoding entropy
+function filterSegments(segments) {
+  for (let x = 0; x < segments.length; x += 1) {
+    const seg = segments[x];
+    const noSpeech = seg.no_speech_prob ?? 0;
+    const temp = seg.temperature ?? 0;
+    
+    // Discard segments that exhibit low confidence or hallucination signatures
+    if (noSpeech <= 0.5 && temp <= 0.6 && seg.text?.trim()) {
+      store.captions.push(seg.text.trim());
+    }
+  }
+}
+```
+
+By discarding segments where `no_speech_prob > 0.5` or `temperature > 0.6`, phantom text is eliminated before it ever touches the DOM.
+
+---
+
+## 4. Multi-Process Compositing & UI Thread Isolation
+
+In broadcast environments, dropping frames is unacceptable. If an animated lower-third stutters or drops below 60fps on an OBS live stream, the production immediately looks unprofessional.
+
+To protect UI performance:
+
+1. **Async Worker Offloading**: `fastapi_app.py` executes `model.transcribe()` inside `asyncio.to_thread()`, ensuring Python’s async event loop remains responsive to incoming WebSocket packets.
+2. **Double-Buffered Layout Measurements**: `CaptionsView.vue` computes dynamic bounding rectangles (`getBoundingClientRect`) across consecutive frames inside double-nested `requestAnimationFrame` passes, preventing layout thrashing and cumulative layout shift.
+3. **GPU Composite Layers**: All overlay containers utilize CSS transforms (`translateY`, `scale`) and hardware-accelerated viewport blending (`electron-acrylic-window`), keeping GPU composite operations isolated from main-thread JavaScript execution.
+
+```javascript
+// Frame-budgeted animation scheduler in CaptionsView.vue
+const performAnimation = (multiplier = 1) => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      reference.$el.style.transition = `all ease-in-out ${animationTiming * multiplier}ms`;
+      reference.$el.style.opacity = x >= messageRefs.value.length - 1 ? 1 : 0;
+      reference.$el.style.transform = `revert`;
+      setTimeout(() => {
+        if (reference.$el) reference.$el.style.transition = 'unset';
+      }, animationTiming * multiplier);
+    });
+  });
+};
+```
+
+---
+
+## 5. Architectural Takeaways & Future Directions
+
+Building on-device intelligent UI systems reveals several core principles:
+
+1. **Single-Purpose Neural Models for Primitives**: Dedicated STT models (Whisper/Conformer) provide deterministic, fast transcription without the massive latency or memory footprint of generalized LLMs.
+2. **Tiered Edge Intelligence**: In-browser runtimes (WebLLM / WebGPU) can be layered downstream of the caption stream to perform zero-cost live translation, topic extraction, and meeting summarization.
+3. **Decoupled Architecture as a Prerequisite**: Isolating audio capture, neural inference, and UI rendering into independent processes is essential for real-time responsiveness.
+
+For the practical implementation and video demonstration of this architecture in action, visit the [speechBubbles Project Case Study](/projects/local-ai-real-time-captioning).
