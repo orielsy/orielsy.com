@@ -10,7 +10,7 @@
 - **Engine:** Astro SSG with Content Collections (`src/content.config.ts`).
 - **Styling:** Tailwind CSS v4 with CSS variables for dynamic Dark/Light theming without layout shift.
 - **Syntax Highlighting:** Dual-theme Shiki (`github-light` / `github-dark-default`).
-- **Hosting & CI/CD:** GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml`) with apex domain `orielsy.com` routed through Hostinger DNS.
+- **Hosting & publishing:** GitHub Pages via explicit local `npm run live` publishing to the `gh-pages` branch, with apex domain `orielsy.com` routed through Hostinger DNS.
 
 ---
 

@@ -7,6 +7,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "live": "npm run build && gh-pages -d dist -b gh-pages",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -21,5 +22,8 @@
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.7",
     "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
 }
