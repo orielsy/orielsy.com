@@ -4,6 +4,7 @@ import ArticleCard from '../../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
 
 const allResearch = await getCollection('research');
+const previewUnpublished = import.meta.env.DEV && import.meta.env.MODE === 'content-preview';
 
 const publishedResearch = allResearch.filter((entry) => entry.data.published);
 const sortedResearch = publishedResearch.sort(
@@ -85,12 +86,14 @@ const allTypes = Array.from(new Set(publishedResearch.map((item) => item.data.ty
             Research in Progress
           </h2>
           <p class="text-sm text-[var(--text-secondary)] leading-relaxed max-w-2xl">
-            Early ideas and unfinished explorations are shown here for context. These entries are not published as finished research and do not link to detail pages.
+            {previewUnpublished
+              ? 'Local content-preview mode is active. Unpublished entries are linked for review but remain unpublished in source.'
+              : 'Early ideas and unfinished explorations are shown here for context. These entries are not published as finished research and do not link to detail pages.'}
           </p>
         </header>
         <div class="space-y-4" id="unpublished-articles-list">
           {sortedUnpublishedResearch.map((entry) => (
-            <ArticleCard entry={entry} showTags={true} />
+            <ArticleCard entry={entry} showTags={true} previewUnpublished={previewUnpublished} />
           ))}
         </div>
       </section>
@@ -106,7 +109,6 @@ const allTypes = Array.from(new Set(publishedResearch.map((item) => item.data.ty
       btn.addEventListener('click', () => {
         const filter = btn.getAttribute('data-filter');
 
-        // Update button active styles
         filterButtons.forEach((b) => {
           b.classList.remove('bg-[var(--accent)]', 'text-white', 'border-[var(--accent)]', 'font-medium');
           b.classList.add('bg-[var(--bg-secondary)]', 'border-[var(--border-subtle)]', 'text-[var(--text-secondary)]');
