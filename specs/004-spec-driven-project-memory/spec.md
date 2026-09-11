@@ -93,7 +93,18 @@ The closing may connect to the unpublished Repository Context Engine concept onl
 
 Possible future topics include relevance-aware retrieval, MCP-based context delivery, repository-specific architectural knowledge, selective context loading, and automatic routing to relevant specs/ADRs.
 
-## 9. Taxonomy & Publication
+## 9. Diagrams
+
+The article may use embedded architectural diagrams when they clarify the argument rather than decorate it.
+
+The current approved diagrams are:
+
+- **The Project Memory Stack** — shows `AGENTS.md`, Constitution, Feature Spec, Plan, Tasks, ADR, and Implementation as differently scoped knowledge layers rather than a rigid execution pipeline.
+- **Context Selection, Not Context Accumulation** — shows `AGENTS.md` as a lightweight human-authored routing layer that points tasks toward relevant repository memory while leaving unrelated context unselected.
+
+These diagrams must remain responsive, text-readable, and semantically embedded in the article. They must not imply automated relevance detection, MCP retrieval, or guaranteed agent correctness.
+
+## 10. Taxonomy & Publication
 
 - Content type: **Research**
 - Existing slug/file path should remain stable.
@@ -101,7 +112,7 @@ Possible future topics include relevance-aware retrieval, MCP-based context deli
 - Do not add a Work section or change navigation.
 - No new ADR is required unless a new durable site-wide decision emerges during implementation.
 
-## 10. Acceptance Criteria
+## 11. Acceptance Criteria
 
 The feature is ready for review when:
 
@@ -110,6 +121,7 @@ The feature is ready for review when:
 - the article explains the repository knowledge layers accurately
 - the design-systems failure case is included accurately
 - current behavior and future exploration are clearly separated
+- the two architecture diagrams reinforce the article without overstating automation or maturity
 - the article remains unpublished and gated
 - the article follows the existing Research taxonomy and editorial voice
 - the production build succeeds, or any inability to run it is reported explicitly rather than assumed
