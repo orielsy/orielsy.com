@@ -12,6 +12,8 @@ readingTime: "10 min read"
 ---
 
 import Callout from '../../components/Callout.astro';
+import ProjectMemoryStack from '../../components/ProjectMemoryStack.astro';
+import ContextSelection from '../../components/ContextSelection.astro';
 
 <Callout type="note" title="WORKING PATTERN, NOT A UNIVERSAL PRESCRIPTION">
   This article describes a repository structure I have been using on orielsy.com to preserve product intent and engineering decisions across coding-agent sessions. It is an evolving practice, not a claim that specifications make agent output deterministic or correct by default.
@@ -73,35 +75,9 @@ The point is not that conversation is bad. The point is that **a project should 
 
 ## Externalizing Intent
 
-orielsy.com uses a lightweight Spec-Driven Development structure. The repository currently separates project knowledge into several layers:
+orielsy.com uses a lightweight Spec-Driven Development structure. The repository currently separates project knowledge into several layers.
 
-```text
-AGENTS.md
-   ↓
-How should the agent work?
-
-Constitution
-   ↓
-What must remain true across the project?
-
-Feature Spec
-   ↓
-What are we trying to accomplish?
-
-Plan
-   ↓
-How will this repository implement it?
-
-Tasks
-   ↓
-What needs to happen now?
-
-ADR / Decision Record
-   ↓
-Why was a durable product or architectural decision made?
-
-Implementation
-```
+<ProjectMemoryStack />
 
 These are not interchangeable documents.
 
@@ -250,6 +226,8 @@ That costs more than changing one component. It also means the next agent does n
 This connects directly to how I think about context engineering more broadly.
 
 **More context is not automatically better context.**
+
+<ContextSelection />
 
 The objective is not:
 
