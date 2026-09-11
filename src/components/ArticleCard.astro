@@ -34,13 +34,22 @@ const badgeClass = typeBadgeStyles[data.type] || 'text-[var(--text-secondary)] b
   data-article-type={data.type}
   data-article-published={isPublished ? 'true' : 'false'}
   data-article-draft={isConceptDraft ? 'true' : 'false'}
-  aria-disabled={!isPublished ? 'true' : undefined}
   class:list={[
     'article-item group relative flex flex-col p-5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] transition-all duration-150',
     isPublished && 'hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-strong)]',
-    !isPublished && 'opacity-75',
+    !isPublished && 'opacity-75 cursor-pointer hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-strong)]',
   ]}
 >
+  {!isPublished && (
+    <button
+      type="button"
+      data-status-trigger
+      aria-controls={`research-status-${id}`}
+      aria-expanded="false"
+      aria-label={`Show publication status for ${data.title}`}
+      class="absolute inset-0 z-10 rounded-lg border-0 bg-transparent p-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)]"
+    ></button>
+  )}
   <div class="flex flex-wrap items-center justify-between gap-2 mb-2 text-xs font-mono">
     <div class="flex items-center gap-2">
       {!isPublished && (
@@ -56,7 +65,7 @@ const badgeClass = typeBadgeStyles[data.type] || 'text-[var(--text-secondary)] b
       <span class:list={['px-2 py-0.5 rounded text-[11px] font-medium border', badgeClass]}>
         {data.type}
       </span>
-      {data.readingTime && (
+      {isPublished && data.readingTime && (
         <span class="text-[var(--text-muted)] text-[11px]">&bull; {data.readingTime}</span>
       )}
     </div>
@@ -79,6 +88,17 @@ const badgeClass = typeBadgeStyles[data.type] || 'text-[var(--text-secondary)] b
   <p class="text-xs sm:text-sm text-[var(--text-secondary)] line-clamp-2 leading-relaxed mb-4">
     {data.description}
   </p>
+  {!isPublished && (
+    <div
+      id={`research-status-${id}`}
+      hidden
+      role="status"
+      aria-live="polite"
+      class="relative z-20 mb-4 rounded-md border border-amber-200 dark:border-amber-900/60 bg-amber-50/60 dark:bg-amber-950/20 px-3 py-2 text-xs leading-relaxed text-amber-900 dark:text-amber-200"
+    >
+      This research entry is still being developed and is not publicly available yet.
+    </div>
+  )}
 
   {showTags && data.tags && data.tags.length > 0 && (
     <div class="mt-auto pt-3 border-t border-[var(--border-subtle)] flex flex-wrap gap-1.5 z-10">

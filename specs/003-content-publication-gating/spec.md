@@ -25,7 +25,7 @@ Keep authored Research and Project content visible in the appropriate catalogs w
 - Research and Projects collection listings must place published entries in the primary results section and may show unpublished entries in a separate in-progress section beneath it.
 - Published entries must render active links to their detail routes.
 - Published entries with `draft: true` must render a `Concept Draft` badge and public-ideation explanation.
-- Unpublished Research and Project entries must render non-clickable summary cards in the separate in-progress section, without presenting them as published work.
+- Unpublished Research and Project entries must render status-interactive summary cards in the separate in-progress section, without presenting them as published work. Activating a card may reveal an inline not-yet-published message, but must not navigate to unfinished body content.
 
 ### 2.3 Detail-route behavior
 
@@ -51,6 +51,7 @@ Keep authored Research and Project content visible in the appropriate catalogs w
 - New entries default to unpublished.
 - The home page shows only published entries.
 - Collection pages show published entries with the correct enabled or concept-draft presentation.
+- Activating an unpublished collection card reveals an inline status message without navigating or exposing unfinished body content.
 - Published concept-draft detail routes render their body with the public-ideation explanation.
 - Published detail routes retain full content.
 - Unpublished detail routes contain status messaging only and are not indexable.

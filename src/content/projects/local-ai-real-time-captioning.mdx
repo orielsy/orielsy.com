@@ -4,7 +4,7 @@ summary: "A desktop live-broadcast graphics engine and local speech-to-text plat
 date: 2026-07-15
 status: "Prototype"
 published: true
-role: "Creator & Lead Architect"
+role: "Creator / Developer"
 technologies: ["Electron", "Vue 3", "Pinia", "FastAPI", "Python", "Whisper", "PyAnnote VAD", "Web Audio API", "OBS Studio", "Vite"]
 architecture: "Multi-Process Audio Pipeline, Streaming WebSocket Inference & Transparent GPU Overlays"
 problem: "Live streaming broadcasters and presenters need real-time subtitles, lower-third credential banners, and topic graphics, but cloud transcription introduces latency, ongoing subscription costs, and privacy exposure."
@@ -38,10 +38,12 @@ import DiagramFigure from '../../components/DiagramFigure.astro';
 
 **speechBubbles** is an on-device desktop overlay and live-broadcast graphics platform designed to bring television-style dynamic graphics and automated speech transcription to streamers, presenters, and video creators without relying on cloud APIs.
 
+This 2026 implementation is part of a longer-running captioning project whose earlier version dates to approximately December 2024.
+
 The system is structured as two decoupled tiers:
 
 1. **The Desktop Overlay Client (`speechBubbles`)**: An Electron and Vue 3 application that generates frameless, transparent, hardware-accelerated broadcast graphics—including animated speaker lower-thirds, title banners, topic tickers, and speech bubble captions. Broadcasters capture these windows directly in **OBS Studio** (or similar streaming software) using chroma-key or alpha transparency masks.
-2. **The Local Audio & Inference Engine (`whisper-api`)**: A local Python FastAPI service that ingests real-time 16 kHz 16-bit PCM audio streams over WebSockets (`ws://localhost:8000/listen`), performs Voice Activity Detection (VAD) to trim silence, and runs local Whisper neural transcription models on machine silicon.
+2. **The Local Audio & Inference Engine (`whisper-api`)**: A local Python FastAPI service that ingests real-time 16 kHz 16-bit PCM audio streams over WebSockets (`ws://localhost:8000/listen`), includes optional PyAnnote Voice Activity Detection (VAD) support, and runs local Whisper neural transcription models on machine silicon.
 
 ---
 
@@ -63,7 +65,7 @@ Television news broadcasts frequently display context when a speaker is introduc
 `speechBubbles` translates this workflow into a dedicated operator console:
 - **Lower-Third Banners (`BannerView.vue`)**: Configurable dual-tone gradient banners with entrance and exit timing queues.
 - **Presenter Nametags (`TitleView.vue`)**: Dropdown title badges for displaying speaker names and professional roles.
-- **Chroma-Key & Alpha Ingestion**: Windows are formatted with distinct background borders and transparent viewport layers, allowing streaming software to isolate graphics with zero edge bleed.
+- **Chroma-Key & Alpha Ingestion**: Windows are formatted with distinct background borders and transparent viewport layers, allowing streaming software to isolate graphics while helping avoid visible edge bleed.
 
 <DiagramFigure 
   src="/projects/speechbubbles/studio-setup.jpg"
@@ -71,12 +73,12 @@ Television news broadcasts frequently display context when a speaker is introduc
   caption="Dual-display broadcast workstation: Operator control deck managing topic banners and speech ingestion (left), alongside live camera compositing with real-time lower-third graphics and speech bubble captions (right)."
 />
 
-### 2. High-Throughput 16 kHz Audio Streamer
-Browser audio interfaces typically record at 44.1 kHz or 48 kHz stereo. Feeding uncompressed raw audio directly to neural models creates unnecessary bandwidth and computation overhead.
+### 2. 16 kHz Audio Streamer
+Browser audio interfaces can provide higher-rate stereo buffers than the 16 kHz mono PCM contract used by the companion API. Feeding that data directly to neural models creates unnecessary bandwidth and computation overhead.
 
-In `CaptionControl.vue`, the client utilizes the Web Audio API to downsample audio in real time:
-- The raw `AudioContext` buffer is downsampled to a 16 kHz mono float stream.
-- Audio samples are converted to signed 16-bit PCM integers (`convertFloat32ToInt16`) and streamed as binary blobs over WebSockets with minimal garbage collection churn.
+The companion API expects clients to normalize audio before transmission:
+- A client can downsample its raw `AudioContext` buffer to a 16 kHz mono float stream.
+- Audio samples can then be converted to signed 16-bit PCM integers (`convertFloat32ToInt16`) and streamed as binary blobs over WebSockets.
 
 ### 3. Asynchronous Non-Blocking Whisper Inference
 Running heavy neural models on an asynchronous web framework like FastAPI can easily block the event loop, causing dropped WebSocket heartbeats and audio buffer overflow.
@@ -84,7 +86,7 @@ Running heavy neural models on an asynchronous web framework like FastAPI can ea
 The backend engine offloads neural computation:
 - Incoming PCM chunks are accumulated into a sliding scratch buffer.
 - When sufficient audio is buffered, `model.transcribe()` executes inside a dedicated worker thread via `asyncio.to_thread()`, keeping the main event loop free to ingest continuous audio packets.
-- Segments are checked against silence and temperature probability thresholds to eliminate ghost hallucinations during natural speaking pauses.
+- Segments can be checked against silence and confidence signals to reduce hallucinated output during natural speaking pauses.
 
 ### 4. Dynamic Bounding-Box Layout & Animation
 When new transcription segments arrive from the backend, `CaptionsView.vue` computes the physical layout of active bubbles on screen:

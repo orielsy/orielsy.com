@@ -18,6 +18,8 @@ Never fabricate, guess, or inflate:
 
 If information is unknown, use an explicit placeholder or ask for clarification. Factual accuracy is strictly prioritized over making the site appear impressive.
 
+Quantitative technical claims require support from actual source code, project documentation, recorded measurements, or information explicitly supplied by Orielsy. Avoid absolute technical claims such as "eliminates," "zero-cost," or "optimal" unless the available evidence supports them. Completed work, prototypes, investigations, and proposed or future architecture must be described as distinct states; exploratory architecture must not be presented as an implemented system.
+
 ---
 
 ## 8. Repository Links Must Be Specific
@@ -41,6 +43,8 @@ Repository links on **Project** and **Research** entries must point to the actua
 - A technical blog
 
 His deepest professional foundation is **frontend engineering and UI architecture**. Applied AI and context engineering are significant newer areas of exploration and work that extend this foundation rather than replace it. The site architecture must leave space for broader technical and creative interests to emerge naturally over time.
+
+Do not describe Orielsy's professional background, experience, or capabilities as formal **design-system ownership** unless he explicitly establishes that experience later. Use accurate terms such as component architecture, reusable frontend patterns, frontend systems, reusable interface architecture, and engineering standards.
 
 ---
 
@@ -75,6 +79,8 @@ His AI work operates at the application, product, interface, and systems layer:
 - Local model exploration (WebLLM, Ollama)
 - AI-enhanced product and interface concepts
 - Hardware-aware client/browser inference
+
+This is an internal accuracy guardrail, not public-facing positioning copy. Public copy should describe the application, product, interface, and systems layer positively. Where relevant, connect context engineering explicitly to AI agents, coding-agent systems, and agentic development workflows without turning the site into AI-buzzword copy.
 
 ---
 

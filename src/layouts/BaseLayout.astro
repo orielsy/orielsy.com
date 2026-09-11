@@ -50,5 +50,18 @@ const {
       <slot />
     </main>
     <Footer />
+    <script>
+      document.querySelectorAll<HTMLButtonElement>('[data-status-trigger]').forEach((trigger) => {
+        const statusId = trigger.getAttribute('aria-controls');
+        const status = statusId ? document.getElementById(statusId) : null;
+
+        if (!status) return;
+
+        trigger.addEventListener('click', () => {
+          status.hidden = false;
+          trigger.setAttribute('aria-expanded', 'true');
+        });
+      });
+    </script>
   </body>
 </html>

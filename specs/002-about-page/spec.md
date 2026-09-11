@@ -20,15 +20,16 @@ Provide visitors with an accurate, grounded, and engaging understanding of Oriel
 - **Introductory Concept:** Keep: *"Senior Frontend Engineer and UI Architect with 15+ years of experience building scalable web applications, enterprise platforms, and high-profile digital experiences."*
 
 ### 2.2 Core Background & Positioning
-- **Remove:** Unsupported claims about building design systems from zero to enterprise scale.
+- **Remove:** Any description of Orielsy's professional background, experience, or capabilities as formal design-system ownership unless he explicitly establishes that experience later. Do not narrow this rule to only claims about building design systems from zero to enterprise scale.
 - **Include:** Supported areas: frontend engineering, UI architecture, enterprise applications, reusable component architecture, frontend platform patterns, engineering standards, platform modernization, low-code/no-code interfaces, turning complex automation/backend systems into usable interfaces, and UI technical leadership.
-- **Applied AI Framing:** Distinguish from ML research. Emphasize application, product, interface, and systems architecture (context engineering, repository-specific coding-agent knowledge, MCP, WebLLM, Ollama, local/browser inference).
-- **Core Stance:** *"My focus is one layer above model training: how emerging AI capabilities can be turned into useful products, developer systems, and interfaces before an established playbook exists."* The framing must remain positive and avoid defining the work primarily by what it is not.
+- **Applied AI Framing:** Public copy must describe the application, product, interface, and systems layer positively rather than defining Orielsy by what he is not. Connect context engineering to AI agents, coding-agent systems, and agentic development workflows where relevant, alongside MCP, WebLLM, Ollama, and local/browser inference. The internal constitution guardrail against misrepresenting him as an ML researcher, data scientist, or foundation-model engineer remains authoritative but must not be copied into public prose.
+- **Core Stance:** Use positive wording such as *"I'm particularly interested in the application layer of AI: how agents, context, tools, and interfaces come together to create useful products and developer experiences."*
 - **Built vs. Exploration:** The recent-AI paragraph must accurately distinguish actual artifacts built from work that was evaluated or explored. Specifically:
   - **Built:** Repository-specific coding-agent knowledge systems were designed and built.
   - **Built (MVP):** An MCP Apps MVP was independently conceptualized and prototyped.
   - **Explored:** WebLLM and Ollama (and adjacent emerging capabilities) were evaluated for local-model use cases.
   - Do not collapse the three categories under a single verb such as *"exploring"*. Do not inflate exploratory work into production implementation.
+- Quantitative claims require actual source, documentation, recorded measurements, or explicit user-provided evidence. Qualify or remove unsupported absolute claims.
 
 ### 2.3 How I Think (Engineering Philosophy)
 - **Heading:** `How I Think` (replace `Engineering Philosophy`).
