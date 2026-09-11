@@ -3,12 +3,14 @@ import type { CollectionEntry } from 'astro:content';
 
 export interface Props {
   entry: CollectionEntry<'projects'>;
+  previewUnpublished?: boolean;
 }
 
-const { entry } = Astro.props;
+const { entry, previewUnpublished = false } = Astro.props;
 const { data, id } = entry;
 const isPublished = data.published;
 const isConceptDraft = isPublished && data.draft;
+const canOpen = isPublished || previewUnpublished;
 
 const statusStyles: Record<string, string> = {
   'Active': 'text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/50 dark:bg-emerald-950/30',
@@ -27,11 +29,11 @@ const statusBadge = statusStyles[data.status] || 'text-[var(--text-secondary)] b
   data-project-draft={isConceptDraft ? 'true' : 'false'}
   class:list={[
     'project-item group relative flex flex-col p-6 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] transition-all duration-150',
-    isPublished && 'hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-strong)]',
-    !isPublished && 'opacity-75 cursor-pointer hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-strong)]',
+    canOpen && 'hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-strong)]',
+    !canOpen && 'opacity-75 cursor-pointer hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-strong)]',
   ]}
 >
-  {!isPublished && (
+  {!canOpen && (
     <button
       type="button"
       data-status-trigger
@@ -43,7 +45,12 @@ const statusBadge = statusStyles[data.status] || 'text-[var(--text-secondary)] b
   )}
 
   <div class="flex items-center justify-between gap-2 mb-3">
-    {!isPublished && (
+    {!isPublished && previewUnpublished && (
+      <span class="px-2 py-0.5 rounded text-[11px] font-mono font-medium border text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800 bg-amber-50/80 dark:bg-amber-950/30">
+        Local Preview
+      </span>
+    )}
+    {!isPublished && !previewUnpublished && (
       <span class="px-2 py-0.5 rounded text-[11px] font-mono font-medium border text-[var(--accent)] border-[var(--accent-border)] bg-[var(--accent-subtle)]">
         Project in Progress
       </span>
@@ -64,7 +71,7 @@ const statusBadge = statusStyles[data.status] || 'text-[var(--text-secondary)] b
   </div>
 
   <h3 class="text-lg sm:text-xl font-semibold tracking-tight text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors mb-2">
-    {isPublished ? (
+    {canOpen ? (
       <a href={`/projects/${id}`} class="focus:outline-none">
         <span class="absolute inset-0" aria-hidden="true"></span>
         {data.title}
@@ -78,7 +85,7 @@ const statusBadge = statusStyles[data.status] || 'text-[var(--text-secondary)] b
     {data.summary}
   </p>
 
-  {!isPublished && (
+  {!canOpen && (
     <div
       id={`project-status-${id}`}
       hidden
@@ -131,7 +138,7 @@ const statusBadge = statusStyles[data.status] || 'text-[var(--text-secondary)] b
         >
           <span>Demo</span>
           <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
         </a>
       )}
