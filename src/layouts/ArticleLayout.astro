@@ -129,7 +129,7 @@ const formattedUpdateDate = data.updatedDate
             >
               <span>Live Implementation</span>
               <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m-6 4h6m0 0v6m0-6L10 14" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </a>
           )}
@@ -156,23 +156,17 @@ const formattedUpdateDate = data.updatedDate
     {published && isConceptDraft && <ConceptDraftNotice kind="research" />}
     {published ? (
       <>
-        <!-- Table of contents if headings present -->
         <TableOfContents headings={headings} />
 
-        <!-- Article Content -->
         <div class="prose max-w-none pt-6">
           <slot />
         </div>
 
-        <!-- Article Footer / Navigation -->
         <footer class="mt-16 pt-8 border-t border-[var(--border-subtle)]">
           <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               {prevEntry ? (
-                <a
-                  href={`/research/${prevEntry.id}`}
-                  class="group flex flex-col text-left"
-                >
+                <a href={`/research/${prevEntry.id}`} class="group flex flex-col text-left">
                   <span class="text-[11px] font-mono text-[var(--text-muted)] group-hover:text-[var(--accent)]">
                     &larr; Previous Research
                   </span>
@@ -185,10 +179,7 @@ const formattedUpdateDate = data.updatedDate
 
             <div>
               {nextEntry ? (
-                <a
-                  href={`/research/${nextEntry.id}`}
-                  class="group flex flex-col text-right sm:items-end"
-                >
+                <a href={`/research/${nextEntry.id}`} class="group flex flex-col text-right sm:items-end">
                   <span class="text-[11px] font-mono text-[var(--text-muted)] group-hover:text-[var(--accent)]">
                     Next Research &rarr;
                   </span>
