@@ -1,14 +1,15 @@
 ---
 title: "speechBubbles: Real-Time AI Broadcast Overlay & Captioning Engine"
 summary: "A desktop live-broadcast graphics engine and local speech-to-text platform built with Vue 3, Pinia, Electron, and a local Whisper streaming WebSocket backend for OBS Studio overlays."
-date: 2026-07-15
+date: 2024-01-01
+dateLabel: "Initial development: Jan 2024 – Jun 2024"
 status: "Prototype"
 published: true
-role: "Creator & Lead Architect"
-technologies: ["Electron", "Vue 3", "Pinia", "FastAPI", "Python", "Whisper", "PyAnnote VAD", "Web Audio API", "OBS Studio", "Vite"]
-architecture: "Multi-Process Audio Pipeline, Streaming WebSocket Inference & Transparent GPU Overlays"
-problem: "Live streaming broadcasters and presenters need real-time subtitles, lower-third credential banners, and topic graphics, but cloud transcription introduces latency, ongoing subscription costs, and privacy exposure."
-solution: "Built a decoupled broadcast graphics platform combining an Electron/Vue 3 transparent overlay shell with a local Python FastAPI/Whisper streaming engine that composites directly over OBS video feeds."
+role: "Creator / Developer"
+technologies: ["Electron", "Vue 3", "Pinia", "FastAPI", "Python", "Whisper", "Web Audio API", "OBS Studio", "Vite"]
+architecture: "Multi-Process Audio Pipeline, Streaming WebSocket Inference & Transparent Overlays"
+problem: "Live streaming broadcasters and presenters need real-time subtitles, lower-third credential banners, and topic graphics, but cloud transcription can introduce latency, ongoing subscription costs, and privacy exposure."
+solution: "Built a decoupled broadcast graphics platform combining an Electron/Vue 3 transparent overlay shell with a local Python FastAPI/Whisper streaming engine for OBS video compositing."
 github: "https://github.com/orielsy/speechBubbles"
 demo: "/videos/speechbubbles-demo.mp4"
 featured: true
@@ -36,12 +37,12 @@ import DiagramFigure from '../../components/DiagramFigure.astro';
 
 ## Project Overview
 
-**speechBubbles** is an on-device desktop overlay and live-broadcast graphics platform designed to bring television-style dynamic graphics and automated speech transcription to streamers, presenters, and video creators without relying on cloud APIs.
+**speechBubbles** is an on-device desktop overlay and live-broadcast graphics platform designed to bring television-style dynamic graphics and automated speech transcription to streamers, presenters, and video creators without relying on cloud transcription APIs.
 
 The system is structured as two decoupled tiers:
 
-1. **The Desktop Overlay Client (`speechBubbles`)**: An Electron and Vue 3 application that generates frameless, transparent, hardware-accelerated broadcast graphics—including animated speaker lower-thirds, title banners, topic tickers, and speech bubble captions. Broadcasters capture these windows directly in **OBS Studio** (or similar streaming software) using chroma-key or alpha transparency masks.
-2. **The Local Audio & Inference Engine (`whisper-api`)**: A local Python FastAPI service that ingests real-time 16 kHz 16-bit PCM audio streams over WebSockets (`ws://localhost:8000/listen`), performs Voice Activity Detection (VAD) to trim silence, and runs local Whisper neural transcription models on machine silicon.
+1. **The Desktop Overlay Client (`speechBubbles`)**: An Electron and Vue 3 application that generates frameless, transparent broadcast graphics—including animated speaker lower-thirds, title banners, topic tickers, and speech bubble captions. Broadcasters capture these windows directly in **OBS Studio** (or similar streaming software) using chroma-key or alpha transparency.
+2. **The Local Audio & Inference Engine (`whisper-api`)**: A local Python FastAPI service that ingests real-time 16 kHz 16-bit PCM audio streams over WebSockets (`ws://localhost:8000/listen`), accumulates fixed-duration audio chunks, and runs local Whisper transcription.
 
 ---
 
@@ -63,7 +64,7 @@ Television news broadcasts frequently display context when a speaker is introduc
 `speechBubbles` translates this workflow into a dedicated operator console:
 - **Lower-Third Banners (`BannerView.vue`)**: Configurable dual-tone gradient banners with entrance and exit timing queues.
 - **Presenter Nametags (`TitleView.vue`)**: Dropdown title badges for displaying speaker names and professional roles.
-- **Chroma-Key & Alpha Ingestion**: Windows are formatted with distinct background borders and transparent viewport layers, allowing streaming software to isolate graphics with zero edge bleed.
+- **Chroma-Key & Alpha Ingestion**: Windows are formatted with distinct background borders and transparent viewport layers, allowing streaming software to isolate graphics while minimizing edge artifacts.
 
 <DiagramFigure 
   src="/projects/speechbubbles/studio-setup.jpg"
@@ -72,19 +73,23 @@ Television news broadcasts frequently display context when a speaker is introduc
 />
 
 ### 2. High-Throughput 16 kHz Audio Streamer
-Browser audio interfaces typically record at 44.1 kHz or 48 kHz stereo. Feeding uncompressed raw audio directly to neural models creates unnecessary bandwidth and computation overhead.
+Browser audio interfaces commonly expose 44.1 kHz or 48 kHz floating-point buffers. Sending that format directly would use substantially more bandwidth than the 16 kHz mono stream expected by this backend.
 
-In `CaptionControl.vue`, the client utilizes the Web Audio API to downsample audio in real time:
-- The raw `AudioContext` buffer is downsampled to a 16 kHz mono float stream.
-- Audio samples are converted to signed 16-bit PCM integers (`convertFloat32ToInt16`) and streamed as binary blobs over WebSockets with minimal garbage collection churn.
+In `CaptionControl.vue`, the client downsamples audio before transmission:
+- The microphone's mono `AudioContext` buffer is downsampled to a 16 kHz float stream.
+- Audio samples are converted to signed 16-bit PCM integers (`convertFloat32ToInt16`) and streamed as binary WebSocket messages.
 
-### 3. Asynchronous Non-Blocking Whisper Inference
-Running heavy neural models on an asynchronous web framework like FastAPI can easily block the event loop, causing dropped WebSocket heartbeats and audio buffer overflow.
+At 16 kHz × 16-bit mono, the resulting payload is approximately **32 KB/sec** before protocol overhead. That figure is derived directly from the sample format rather than measured as a performance benchmark.
 
-The backend engine offloads neural computation:
-- Incoming PCM chunks are accumulated into a sliding scratch buffer.
-- When sufficient audio is buffered, `model.transcribe()` executes inside a dedicated worker thread via `asyncio.to_thread()`, keeping the main event loop free to ingest continuous audio packets.
-- Segments are checked against silence and temperature probability thresholds to eliminate ghost hallucinations during natural speaking pauses.
+### 3. Asynchronous Whisper Inference & Client Filtering
+Running neural inference directly on an async event loop can stall WebSocket handling while transcription is in progress.
+
+The current public backend and client handle that work as follows:
+- Incoming PCM data is accumulated until the configured chunk threshold is reached, then moved into a scratch buffer for processing.
+- `model.transcribe()` is executed with `asyncio.to_thread()`, moving blocking inference off the async event loop.
+- Returned Whisper segments are filtered in `CaptionControl.vue`; segments are accepted when `no_speech_prob <= 0.6`, `temperature <= 0.8`, and non-empty text is present. This helps suppress likely hallucinated output during low-confidence segments.
+
+The backend repository contains PyAnnote VAD scaffolding and dependencies, but the current public `process_buffer()` path does not invoke that VAD pipeline before Whisper inference.
 
 ### 4. Dynamic Bounding-Box Layout & Animation
 When new transcription segments arrive from the backend, `CaptionsView.vue` computes the physical layout of active bubbles on screen:
@@ -98,5 +103,5 @@ When new transcription segments arrive from the backend, `CaptionsView.vue` comp
 - **Desktop Shell**: Electron with `electron-acrylic-window` transparency and `qhotkeys` system bindings.
 - **Frontend Layer**: Vue 3 (Composition API / `<script setup>`), Pinia state management, and Vite.
 - **Audio Capture**: Web Audio API (`AudioContext`, `createScriptProcessor` / `MediaStreamAudioSourceNode`).
-- **Inference Engine**: Python 3.10+, FastAPI, Uvicorn, OpenAI Whisper, WhisperX, and PyAnnote Audio.
-- **Video Production**: OBS Studio window capture with hardware-accelerated GPU layers.
+- **Inference Engine**: Python, FastAPI, Uvicorn, and OpenAI Whisper. The backend also contains PyAnnote Audio VAD scaffolding, but VAD is not active in the current streaming transcription path.
+- **Video Production**: OBS Studio window capture and transparent/chroma-key overlay compositing.

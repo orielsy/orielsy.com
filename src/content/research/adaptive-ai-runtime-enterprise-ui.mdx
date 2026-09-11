@@ -18,50 +18,50 @@ import Callout from '../../components/Callout.astro';
 
 ## The Problem: Monolithic Cloud Inference
 
-Most modern AI-enhanced web interfaces treat generative AI as an all-or-nothing remote API call. Every user keystroke, semantic classification, or summarization request is serialized, sent over the public internet to a centralized server cluster, processed on cloud GPUs, and streamed back.
+Most modern AI-enhanced web interfaces treat generative AI as a remote API call. User input, semantic classification, or summarization requests are serialized, sent to a server endpoint, processed remotely, and returned to the interface.
 
-While acceptable for asynchronous chat interfaces, this paradigm introduces critical architectural friction in high-throughput enterprise software:
+While acceptable for many asynchronous interactions, this paradigm can introduce architectural friction in high-throughput enterprise software:
 
-1. **Latency overhead**: Round-trip network times (100ms–800ms) prevent fluid, frame-budgeted UI interactions.
-2. **Operational cost**: Running multi-billion parameter models for trivial tasks (e.g. entity extraction or status tagging) burns unnecessary cloud compute.
-3. **Data privacy & governance**: Sensitive enterprise data leaves the client perimeter for tasks that could be resolved locally.
-4. **Availability brittleness**: Interface responsiveness degrades to zero during network blips or cloud provider outages.
+1. **Latency overhead**: Network and server round trips can make some interactions feel less immediate.
+2. **Operational cost**: Routing every small task through remote inference can create avoidable cloud-compute expense.
+3. **Data privacy & governance**: Sensitive enterprise data may leave the client environment for tasks that could potentially be resolved locally.
+4. **Availability brittleness**: Interface features that depend entirely on remote inference can become unavailable during network or provider outages.
 
 ```text
 Traditional Model:
-[Browser UI]  ---- (Network Roundtrip: 300ms) ---->  [Cloud GPU LLM (70B)]
+[Browser UI]  ---- (Network / Server Round Trip) ---->  [Cloud Model]
 
 Adaptive Model:
-[Browser UI]  --> [Capability Detection] 
-                     |--> [Local WebGPU / Small Model (0.5B-3B)] (15ms, $0, Private)
-                     |--> [Desktop / Local Daemon (Ollama)]     (50ms, $0)
-                     '--> [Server / Cloud LLM Endpoint]         (Fallback / High Complexity)
+[Browser UI]  --> [Capability Detection]
+                     |--> [Browser-Local WebGPU / Small Model] (Local)
+                     |--> [Desktop / Local Runtime]             (Local)
+                     '--> [Server / Cloud Model Endpoint]       (Fallback / Higher Complexity)
 ```
 
 ---
 
 ## Architectural Principles of Tiered Inference
 
-An adaptive AI runtime evaluates hardware capability at client initialization and routes individual tasks to the most efficient tier:
+An adaptive AI runtime could evaluate hardware capability at client initialization and route individual tasks to an appropriate execution tier:
 
 ### 1. Hardware Capability Detection
 
-At runtime, the browser probes available acceleration primitives:
+At runtime, the browser can inspect available acceleration primitives such as:
 
-- **WebGPU Adapter Inspection**: Max buffer sizes, subgroup operations, and available device memory.
-- **Thread Concurrency & WASM SIMD**: Assessing CPU fallback performance when WebGPU is unavailable.
-- **Battery & Thermal State**: Throttling heavy inference when the client is on battery power or constrained.
+- **WebGPU Adapter Capabilities**: Supported limits and features exposed by the adapter/device.
+- **Thread Concurrency & WASM SIMD**: Useful signals when considering CPU-backed execution paths.
+- **Runtime Constraints**: Available memory and other device constraints that may affect whether local inference is appropriate.
 
 ### 2. Task Complexity Categorization
 
-Not every AI task in an interface requires conversational depth:
+Not every AI task in an interface requires the same model size or execution environment. A conceptual routing table might look like this:
 
-| Task Type | Complexity | Recommended Execution Tier |
+| Task Type | Relative Complexity | Candidate Execution Tier |
 | :--- | :--- | :--- |
-| Semantic Tagging & Extraction | Low (0.1B–1B) | Browser-Local (WebGPU / WebLLM) |
-| Structured Schema Validation | Low (0.5B) | Browser-Local (WASM / Small Model) |
-| Inline Contextual Guidance | Medium (1B–3B) | Local Runtime / Fast Edge |
-| Multi-Turn Synthesis & Reasoning | High (8B–70B+) | Server / Cloud Endpoint |
+| Semantic Tagging & Extraction | Lower | Browser-Local (WebGPU / WebLLM) |
+| Structured Schema Validation | Lower | Browser-Local (WASM / Small Model) |
+| Inline Contextual Guidance | Medium | Local Runtime / Fast Edge |
+| Multi-Turn Synthesis & Reasoning | Higher | Server / Cloud Endpoint |
 
 ```typescript
 // Conceptual Task Router Signature
@@ -91,16 +91,16 @@ class AdaptiveAIRuntime {
 
 ## Caching Validated Structured Artifacts
 
-In enterprise environments, multiple users often interact with identical source documents or domain objects. Rather than re-evaluating prompt sequences repeatedly, the runtime maintains a shared, cryptographically keyed cache of structured artifacts.
+In enterprise environments, multiple users may interact with identical source documents or domain objects. Rather than re-evaluating the same prompt sequence repeatedly, a runtime could cache validated structured artifacts using stable cache keys.
 
 <Callout type="architecture" title="STRUCTURED ARTIFACT CACHING">
-  Prefer caching validated JSON / schema objects keyed by <code>(model_version, schema_version, source_content_hash)</code> rather than raw generated prose. This guarantees deterministic behavior and eliminates duplicate computation across weaker client nodes.
+  Prefer caching validated JSON / schema objects keyed by <code>(model_version, schema_version, source_content_hash)</code> rather than raw generated prose. This can improve consistency for repeated inputs and avoid duplicate computation across compatible client nodes.
 </Callout>
 
 ---
 
 ## Summary & Next Explorations
 
-By treating client-side compute as a primary tier rather than an afterthought, frontend architects can deliver instantaneous, privacy-preserving, and resilient intelligent interfaces.
+Treating client-side compute as a possible execution tier can support lower-latency, privacy-preserving, and more resilient intelligent interfaces when the model, task, and hardware are a good fit.
 
 Subsequent notes in this series will explore concrete WebLLM weight caching strategies, memory budgeting inside shared browser tabs, and graceful worker failover.

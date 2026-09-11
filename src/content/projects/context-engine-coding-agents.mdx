@@ -1,62 +1,59 @@
 ---
 title: "Repository Context Engine for Coding Agents"
-summary: "A Model Context Protocol (MCP) server that indexes codebase architectural patterns, component prop contracts, and ADRs to feed targeted context to autonomous coding agents."
+summary: "An in-progress concept exploring an MCP-based repository context service that could expose targeted architectural rules, component contracts, and repository knowledge to coding agents."
 date: 2026-08-01
 status: "In Progress"
 published: false
-role: "Architect & Lead Developer"
-technologies: ["TypeScript", "Model Context Protocol (MCP)", "Node.js", "AST Analysis", "Vector Indexing"]
-architecture: "Dual AST & Semantic Graph Index with JIT MCP Tool Dispatch"
-problem: "Autonomous coding agents frequently pollute their context windows with irrelevant files, leading to hallucinated dependencies and architectural deviations."
-solution: "Engineered a local MCP daemon that exposes granular AST inspection, architectural constraint queries, and component interfaces via standard protocol tools."
+role: "Concept / Prototype Direction"
+technologies: ["TypeScript", "Model Context Protocol (MCP)", "Node.js"]
+architecture: "Proposed architecture: structured repository knowledge with targeted MCP tool dispatch"
+problem: "Autonomous coding agents can overload their context windows with irrelevant files, increasing the chance of architectural drift and outdated assumptions."
+solution: "Exploring a local MCP service that could expose focused repository context and architectural constraints through task-specific tools rather than loading broad codebase context into every prompt."
 featured: true
 associatedResearch: "/research/context-engineering-software-development"
 ---
 
 import Callout from '../../components/Callout.astro';
 
-<Callout type="note" title="PROJECT CASE STUDY PLACEHOLDER">
-  This project is currently in active development. Architecture schematics, tool schemas, and local benchmark results will be updated as the implementation reaches public alpha.
+<Callout type="note" title="PROJECT CONCEPT PLACEHOLDER">
+  This entry documents a proposed architecture and prototype direction. It should not be read as a completed implementation. Concrete tool schemas, storage choices, and benchmark results will only be documented here once they exist in verifiable source.
 </Callout>
 
-## System Overview
+## Intended Direction
 
-The Context Engine operates as a local background daemon adhering to Anthropic's **Model Context Protocol (MCP)** specification. When a coding agent (e.g., Warp, Claude Code, Cursor) attaches to the repository, the engine establishes an IPC connection and exposes domain-specific tools.
+The concept is a local service based on the **Model Context Protocol (MCP)** that would let a coding agent request repository-specific context on demand instead of repeatedly loading large portions of a codebase into its prompt.
 
 ```text
 +---------------------+        MCP JSON-RPC        +------------------------+
-| Coding Agent Client | <------------------------> | Repository MCP Daemon  |
-| (Warp / Agent CLI)  |                            +------------------------+
-+---------------------+                                        |
+| Coding Agent Client | <------------------------> | Proposed Context       |
+|                     |                            | Service                |
++---------------------+                            +------------------------+
+                                                               |
                                          +---------------------+---------------------+
                                          |                                           |
                                          v                                           v
                               +--------------------+                      +--------------------+
-                              | AST Prop Analyzer  |                      | Architecture ADR   |
-                              | & Type Extractor   |                      | Semantic Index     |
+                              | Structured Code /  |                      | Architecture ADR   |
+                              | Interface Context  |                      | & Rule Retrieval   |
                               +--------------------+                      +--------------------+
 ```
 
 ---
 
-## Key Capabilities
+## Capabilities Being Explored
 
-### 1. Granular Interface Inspection
-Instead of forcing an agent to read entire 1,000-line component implementation files, the engine provides `get_component_interface`, which returns only:
-- Exported TypeScript interfaces and prop types.
-- Allowed design system variant tokens.
-- Bound state machine events.
+### 1. Focused Interface Inspection
+A future prototype could expose a tool that returns only the interface information relevant to a task—for example exported TypeScript types or component contracts—without forcing an agent to read an entire implementation file.
 
-### 2. Architectural Boundary Guarding
-Before proposing code edits, the agent queries `validate_architectural_invariants` to verify:
-- No illegal cross-boundary package imports.
-- Compliance with the repository's data-fetching paradigm.
-- Proper use of error boundary wrappers.
+### 2. Architectural Constraint Retrieval
+Another direction is to let an agent retrieve repository rules or ADRs relevant to the code it is changing before proposing an edit.
+
+These are intended capabilities, not claims about a finished system.
 
 ---
 
-## Technical Stack
+## Candidate Technical Direction
 
-- **Protocol Runtime**: TypeScript with `@modelcontextprotocol/sdk`.
-- **Parsing Engine**: Babel / TypeScript compiler API AST extractors.
-- **Local Cache**: SQLite with vector embeddings for semantic document search.
+- **Protocol Runtime**: Model Context Protocol using a TypeScript/Node.js service.
+- **Repository Analysis**: Exploring structured parsing or indexing approaches where they materially improve retrieval.
+- **Storage / Search**: Not yet established. No database, vector index, or semantic-graph implementation should be assumed from this concept entry.
