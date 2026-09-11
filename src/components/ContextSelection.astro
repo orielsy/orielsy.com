@@ -1,0 +1,99 @@
+---
+const rows = [
+  {
+    task: 'Publishing change',
+    selected: [
+      ['Publication Gating Spec', 'spec'],
+      ['Manual Publishing ADR', 'decision'],
+      ['SEO / URL ADR', 'decision, if relevant'],
+    ],
+  },
+  {
+    task: 'About-page rewrite',
+    selected: [
+      ['Constitution', 'project-wide rules'],
+      ['About Page Spec', 'spec'],
+    ],
+  },
+  {
+    task: 'Typography change',
+    selected: [['Site Foundation Spec', 'spec']],
+  },
+  {
+    task: 'Coding-agent architecture work',
+    selected: [
+      ['Constitution', 'project-wide rules'],
+      ['Relevant feature spec / ADR', 'spec, decision'],
+    ],
+  },
+];
+
+const unselected = [
+  'speechBubbles implementation history',
+  'Unrelated project specs',
+  'Unrelated ADRs',
+];
+---
+
+<figure class="media-breakout my-8 rounded-lg border border-[#34373f] bg-[#18191d] px-4 py-6 text-[#ededee] sm:px-7 sm:py-8">
+  <header class="mb-6 sm:mb-8">
+    <h3 class="!m-0 !border-0 !p-0 text-base font-semibold tracking-tight text-[#ededee] sm:text-lg">Context Selection, Not Context Accumulation</h3>
+    <p class="!mt-1 !mb-0 max-w-2xl text-xs leading-relaxed text-[#b4b5ba] sm:text-sm">The goal is to surface the right project memory for the task — not load everything.</p>
+  </header>
+
+  <div class="flex flex-col gap-4 lg:grid lg:grid-cols-[minmax(0,0.9fr)_auto_minmax(0,1.4fr)] lg:grid-rows-[auto_repeat(4,auto)] lg:items-stretch lg:gap-x-5 lg:gap-y-3">
+    <div class="hidden lg:col-start-1 lg:row-start-1 lg:block"><div class="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#8b8d94]">Incoming task</div></div>
+    <div class="hidden lg:col-start-2 lg:row-start-1 lg:block"><div class="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#8b8d94]">Routing layer</div></div>
+    <div class="hidden lg:col-start-3 lg:row-start-1 lg:block"><div class="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#8b8d94]">Selected project memory</div></div>
+
+    <div class="order-1 lg:col-start-2 lg:row-start-2 lg:row-end-6 lg:flex lg:items-center">
+      <div class="rounded-md border border-dashed border-[#67c6d7]/60 bg-[#222328] px-4 py-3 text-center lg:w-44">
+        <div class="font-mono text-sm text-[#78d0df]">AGENTS.md</div>
+        <p class="!mb-0 !mt-1 text-[11px] leading-relaxed text-[#b4b5ba]">Small routing layer. Points to the few documents this task needs.</p>
+      </div>
+    </div>
+
+    {rows.map((row, i) => (
+      <>
+        <div class="flex items-center rounded-md border border-[#34373f] bg-[#292a30] px-4 py-3" style={`grid-column-start:1;grid-row-start:${i + 2};order:${2 + i * 2}`}>
+          <span class="min-w-0 text-[13px] leading-snug text-[#ededee]">{row.task}</span>
+          <span aria-hidden="true" class="ml-3 hidden text-[#545760] lg:inline">→</span>
+        </div>
+        <div class="flex flex-col justify-center gap-2 rounded-md border border-[#34373f] bg-[#222328] px-4 py-3" style={`grid-column-start:3;grid-row-start:${i + 2};order:${3 + i * 2}`}>
+          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#8b8d94] lg:hidden">{row.task}</span>
+          <div class="flex flex-wrap gap-2">
+            {row.selected.map(([file, kind]) => (
+              <span class="inline-flex items-baseline gap-2 rounded border border-[#67c6d7]/40 bg-[#18191d] px-2.5 py-1.5">
+                <span class="font-mono text-[12px] text-[#ededee]">{file}</span>
+                <span class="text-[10px] text-[#8b8d94]">{kind}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </>
+    ))}
+  </div>
+
+  <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+    <span aria-hidden="true" class="hidden h-px flex-1 bg-[#545760] sm:block"></span>
+    <div class="rounded-md border border-[#34373f] bg-[#222328] px-4 py-3">
+      <span class="font-mono text-[13px] text-[#ededee]">Agent working context</span>
+      <span class="ml-2 text-[12px] text-[#b4b5ba]">task + selected project memory → implementation</span>
+    </div>
+  </div>
+
+  <div class="mt-6 rounded-md border border-dashed border-[#34373f]/70 px-4 py-3">
+    <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8b8d94]">Present in the repository, not selected for this task</span>
+    <div class="mt-2 flex flex-wrap gap-2">
+      {unselected.map((item) => (
+        <span class="rounded border border-[#34373f]/60 px-2.5 py-1.5 font-mono text-[12px] text-[#8b8d94]">{item}</span>
+      ))}
+    </div>
+  </div>
+
+  <p class="!mb-0 !mt-4 text-[11px] leading-relaxed text-[#8b8d94] sm:text-xs"><span class="font-mono">Accumulation model:</span> task → everything in the repository → agent. It still fits, but the signal a task depends on gets harder to find.</p>
+
+  <figcaption class="mt-6 border-t border-[#34373f] pt-4 text-[11px] leading-relaxed text-[#8b8d94] sm:text-xs">
+    Routing here is human-authored: AGENTS.md points to documents a person wrote and maintained. There is no automated relevance engine, and reading the right document does not guarantee correct output.
+  </figcaption>
+</figure>
