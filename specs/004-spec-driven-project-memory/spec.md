@@ -1,12 +1,12 @@
 # Specification: Spec-Driven Project Memory Research Article
 
-- **Status:** Draft / In Progress
+- **Status:** Ready for Publication
 - **Owner:** Orielsy Diaz
 - **Feature Directory:** `specs/004-spec-driven-project-memory/`
 
 ## 1. Goal
 
-Turn the existing unpublished Research note at `src/content/research/specification-driven-ai-development.mdx` into a concrete, defensible article about using version-controlled repository artifacts as durable project memory for coding agents.
+Turn the existing Research note at `src/content/research/specification-driven-ai-development.mdx` into a concrete, defensible article about using version-controlled repository artifacts as durable project memory for coding agents.
 
 The article must be grounded in the real `orielsy.com` repository and must not read as a generic Spec-Driven Development explainer.
 
@@ -107,14 +107,16 @@ These diagrams must remain responsive, text-readable, and semantically embedded 
 ## 10. Taxonomy & Publication
 
 - Content type: **Research**
-- Existing slug/file path should remain stable.
-- Keep `published: false` during this feature unless Orielsy explicitly asks to publish.
+- Existing slug/file path remains stable.
+- Orielsy explicitly approved publication on 2026-09-11.
+- `published: true`, `draft: false`, and `status: published` represent the intended public state.
+- Publication date is 2026-09-11.
 - Do not add a Work section or change navigation.
 - No new ADR is required unless a new durable site-wide decision emerges during implementation.
 
 ## 11. Acceptance Criteria
 
-The feature is ready for review when:
+The feature is ready to merge when:
 
 - the old article has been substantially rewritten around `orielsy.com` as the case study
 - weak or absolute claims from the old draft have been removed or qualified
@@ -122,6 +124,6 @@ The feature is ready for review when:
 - the design-systems failure case is included accurately
 - current behavior and future exploration are clearly separated
 - the two architecture diagrams reinforce the article without overstating automation or maturity
-- the article remains unpublished and gated
+- the article is explicitly configured for publication
 - the article follows the existing Research taxonomy and editorial voice
 - the production build succeeds, or any inability to run it is reported explicitly rather than assumed
