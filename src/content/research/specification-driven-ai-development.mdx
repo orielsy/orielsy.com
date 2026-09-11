@@ -1,53 +1,342 @@
 ---
-title: "Reducing Prompt Dependency via Specification-Driven AI Development"
-description: "Externalizing software intent, state transition contracts, and architectural constraints into persistent structured artifacts rather than ephemeral conversational prompts."
+title: "From Prompts to Project Memory: Spec-Driven Development for Coding Agents"
+description: "A repository-grounded look at using version-controlled specs, decisions, and project rules as durable memory for coding agents across long-running software work."
 pubDate: 2026-07-22
 type: "Research Note"
-tags: ["specifications", "prompt-engineering", "software-architecture", "ai-systems"]
+tags: ["coding-agents", "context-engineering", "specifications", "software-architecture"]
 status: "draft"
 published: false
 draft: false
 featured: false
-readingTime: "6 min read"
+readingTime: "10 min read"
 ---
 
 import Callout from '../../components/Callout.astro';
 
-<Callout type="note" title="ARCHITECTURAL INQUIRY">
-  This exploration examines the benefits of decoupling software specifications from conversational prompt workflows, viewing specifications as executable, version-controlled engineering artifacts.
+<Callout type="note" title="WORKING PATTERN, NOT A UNIVERSAL PRESCRIPTION">
+  This article describes a repository structure I have been using on orielsy.com to preserve product intent and engineering decisions across coding-agent sessions. It is an evolving practice, not a claim that specifications make agent output deterministic or correct by default.
 </Callout>
 
-## The Ephemerality of Conversational Prompting
+## The Problem Isn't Just Prompt Quality
 
-Much of current AI-assisted development relies on conversational sessions where an engineer iteratively refines instructions in a chat box.
+Coding agents have become capable enough that prompt quality is no longer the only interesting problem.
 
-This introduces notable engineering challenges:
-1. **Zero version control**: Prompts typed in chat tools disappear when the session closes.
-2. **Non-reproducible code generation**: Re-running a vague natural-language prompt across different model versions yields drifting results.
-3. **Collaboration silos**: Team members cannot easily inspect the exact constraints that guided an AI-generated pull request.
+A good prompt can get substantial work started. The harder question appears later: **what happens when the next task begins in a different session, with a different agent, after the decisions that shaped the project have fallen out of working context?**
+
+Long-running software work accumulates knowledge that is easy to lose when it exists only inside conversation history:
+
+- product intent
+- architectural constraints
+- terminology choices
+- rejected approaches
+- publishing rules
+- operational workflows
+- reasons behind decisions that are not obvious from the implementation alone
+
+The failure mode is often subtle. An agent can produce something locally plausible while still undoing an earlier decision.
+
+That is the problem I have been experimenting with on this site: not how to write one perfect prompt, but how to make important project knowledge durable enough that future work can recover it.
 
 ---
 
-## Specifications as Structured Invariants
+## Conversation Context Is Not Project Memory
 
-Rather than treating AI as a conversational assistant, we can treat it as a **deterministic compiler from structured specifications to implementation code**.
+A conversation is useful working context. It contains the immediate objective, discussion, tradeoffs, corrections, and discoveries that happen while a task is active.
+
+But conversational context and project memory are not the same thing.
+
+A new coding session may not have access to the discussion that happened yesterday. A different tool may see only the repository. Even when chat history exists somewhere, it may not be the thing an engineer or agent naturally inspects before changing the code.
+
+For this project, I have been moving durable decisions into version-controlled artifacts that live beside the implementation.
+
+The distinction looks roughly like this:
 
 ```text
-Conversational Workflow:
-[Developer Prompt] ---> [Chat Session] ---> [One-off Patch] (Context lost upon completion)
+Transient working context
 
-Specification-Driven Workflow:
-[Spec Manifest (.spec.json / .spec.md)] ---> [Automated Agent Validator] ---> [Verified Pull Request]
-                  ^                                                                  |
-                  +-------------------- CI / Test Suite Feedback --------------------+
+current task
+→ conversation
+→ temporary reasoning
+→ implementation attempt
+
+Durable project memory
+
+project rule / requirement / decision
+→ version-controlled artifact
+→ discoverable in later sessions
+→ available before the next implementation change
 ```
 
-### Key Elements of a Machine-Readable Specification
+The point is not that conversation is bad. The point is that **a project should not depend on one conversation remaining available forever**.
 
-- **State Transitions**: Formal input/output schema definitions and error bounds.
-- **Dependency Isolation**: Explicit boundary manifests preventing unintended library additions.
-- **Acceptance Invariants**: Concrete assertions that can be executed directly in headless test runners.
+---
 
-<Callout type="architecture" title="INDEPENDENT CONVERGENCE ON SPECIFICATION SYSTEMS">
-  As AI coding capabilities mature across the industry, externalizing software intent into formal, persistent specifications bridges the gap between human architectural intuition and automated code generation.
-</Callout>
+## Externalizing Intent
+
+orielsy.com uses a lightweight Spec-Driven Development structure. The repository currently separates project knowledge into several layers:
+
+```text
+AGENTS.md
+   ↓
+How should the agent work?
+
+Constitution
+   ↓
+What must remain true across the project?
+
+Feature Spec
+   ↓
+What are we trying to accomplish?
+
+Plan
+   ↓
+How will this repository implement it?
+
+Tasks
+   ↓
+What needs to happen now?
+
+ADR / Decision Record
+   ↓
+Why was a durable product or architectural decision made?
+
+Implementation
+```
+
+These are not interchangeable documents.
+
+### Constitution: project-wide invariants
+
+`.specify/memory/constitution.md` contains rules that should survive individual features and sessions. Examples include factual-accuracy constraints, content taxonomy, repository-link rules, static-first architecture, and editorial voice.
+
+One current rule is especially important for this article: quantitative claims require evidence, proposed architecture must not be written as implemented work, and source code outranks generated prose when the two disagree.
+
+Those constraints are broader than any one page. They belong above feature-level implementation.
+
+### Feature specs: desired behavior and scope
+
+A feature spec narrows the problem.
+
+For example, `specs/003-content-publication-gating/spec.md` defines the behavior of unpublished Research and Project entries: they remain visible as in-progress summaries, do not expose unfinished body content, and do not become indexable published pages.
+
+That is different from saying, "make unpublished cards look disabled." The durable artifact captures the product behavior that future UI changes still need to preserve.
+
+### Plans and tasks: implementation and execution state
+
+The plan records how the repository intends to satisfy the feature. Tasks record the work being performed now.
+
+This distinction matters because an implementation strategy can change without necessarily changing the requirement itself.
+
+### ADRs: durable reasons
+
+Decision records preserve choices that affect future work but are not obvious from code alone.
+
+This site has ADRs for content taxonomy, manual production publishing, publication gating, and canonical URL/SEO behavior.
+
+For example, `docs/decisions/003-manual-production-publishing.md` establishes that pushing source code does **not** publish the site. Production deployment is an explicit `npm run live` action that builds and publishes generated output to `gh-pages`.
+
+A future agent modifying deployment behavior should not have to rediscover that intent from package scripts alone.
+
+---
+
+## The Agent Entry Point
+
+The most useful part of this structure may be the smallest file.
+
+`AGENTS.md` is intentionally thin. It does not try to contain the entire project.
+
+Instead, it tells an agent how to navigate the project's existing memory:
+
+```text
+1. Read the constitution.
+2. Consult the relevant feature specification.
+3. Review the plan and tasks.
+4. Consult ADRs before structural changes.
+5. Never fabricate content.
+6. Update durable specs when requirements change.
+```
+
+I think of this as a **routing layer**, not a mega-prompt.
+
+That distinction matters. If every architectural rule, editorial constraint, feature requirement, task, and historical decision were copied into one enormous instruction file, the project would recreate the same context problem in a different form.
+
+The goal is not to maximize the amount of text sent to an agent. The goal is to make the right knowledge discoverable at the right scope.
+
+---
+
+## A Real Failure: When an Old Decision Came Back
+
+One of the reasons I care about this is that I have already seen the opposite fail.
+
+During work on this site, we had established that my professional background supports claims around:
+
+- reusable UI components
+- component architecture
+- frontend patterns
+- frontend systems
+- UI architecture
+- engineering standards
+
+What we had **not** established was formal design-system ownership.
+
+That distinction had been discussed and rejected in prior work. But later, the homepage contained this line:
+
+> "15+ years of experience designing scalable web architectures, design systems, and enterprise platforms."
+
+The wording was plausible. It even sounded professionally polished.
+
+It was also not supported by the evidence we had established.
+
+This was not primarily a coding error. It was a context-persistence failure.
+
+```text
+Decision exists only in conversation
+→ new coding session
+→ prior discussion is absent from working context
+→ plausible wording reappears
+```
+
+The correction was not just to change the homepage sentence. The durable project memory also needed to change.
+
+The constitution now explicitly says not to describe my professional experience as design systems unless that experience is established later. `specs/001-site-foundation/spec.md` carries the same positioning constraint at the site-foundation level.
+
+That gives future work a different path:
+
+```text
+Decision becomes a project rule
+→ agent reads AGENTS.md
+→ AGENTS.md routes to constitution/specs
+→ constraint enters working context
+→ silent regression becomes less likely
+```
+
+"Less likely" is intentional. A rule in a repository is not a proof that an agent will always follow it. But it gives the next session something durable to recover that the previous conversation alone did not.
+
+---
+
+## Updating the Source of Truth Before the Code
+
+The workflow I want is not:
+
+```text
+requirement changes
+→ patch implementation
+→ leave old specification behind
+```
+
+That produces a repository where the code and the project's stated intent slowly diverge.
+
+Instead, when a requirement changes materially, the durable artifact should change with it:
+
+```text
+requirement changes
+→ update spec / rule / decision
+→ update implementation
+→ keep repository memory and behavior aligned
+```
+
+The publication-gating feature is a good example.
+
+The original behavior described unpublished entries as non-clickable summaries. Later, the interaction changed so those cards could reveal an inline status message without navigating to unfinished content.
+
+The implementation was not the only thing updated. The feature spec, README, publication-gating ADR, and URL/SEO policy were updated to describe the new behavior as well.
+
+That costs more than changing one component. It also means the next agent does not have to infer the product requirement from whichever implementation detail happens to be present.
+
+---
+
+## Context Selection, Not Context Accumulation
+
+This connects directly to how I think about context engineering more broadly.
+
+**More context is not automatically better context.**
+
+The objective is not:
+
+> Put every document in the prompt.
+
+The objective is to:
+
+1. externalize knowledge that should survive the current conversation
+2. organize it by scope
+3. keep the entry point small
+4. retrieve or read the artifacts relevant to the current task
+5. avoid dragging unrelated project history into every working context
+
+A publishing change may need the publication-gating spec and deployment ADR. An About-page rewrite may need the site constitution and About spec. A typography change probably does not need the entire history of the speech transcription project.
+
+This is where Spec-Driven Development and context engineering meet for me.
+
+The value of the spec is not merely that it exists. The value is that it can become **selectable project context**.
+
+---
+
+## What This Does Not Solve
+
+Version-controlled project memory creates new responsibilities. It does not remove the old ones.
+
+### Specs can be wrong
+
+Moving an incorrect assumption into a durable file makes it durable; it does not make it true.
+
+### Specs can become stale
+
+If implementation changes without updating the corresponding artifact, an agent may confidently follow obsolete guidance.
+
+### Agents can still misunderstand the documents
+
+Explicit context reduces ambiguity but does not eliminate interpretation errors.
+
+### Documentation can become noise
+
+Too many overlapping rules can make retrieval harder. Redundant artifacts can also disagree with each other.
+
+### Specifications do not replace tests
+
+A written requirement and a passing implementation are different forms of evidence. Behavioral claims still need verification.
+
+### Human judgment still matters
+
+Deciding what should become durable, which rule owns a decision, when a specification should change, and whether an implementation actually satisfies intent remains engineering work.
+
+The system only helps if the memory itself is maintained.
+
+---
+
+## Where This Could Go Next
+
+Today, the flow in this repository is mostly explicit and human-authored:
+
+```text
+Agent task
+→ AGENTS.md
+→ relevant constitution / specs / ADRs
+→ working context
+→ implementation
+```
+
+A natural next step is to investigate whether some of that selection can become more task-aware without turning the repository into one giant context payload.
+
+For example:
+
+```text
+Agent task
+→ relevance detection
+→ select relevant specs / ADRs / repository patterns
+→ context delivery layer
+→ agent working context
+```
+
+That could involve ideas such as:
+
+- relevance-aware retrieval
+- MCP-based context delivery
+- repository-specific architectural knowledge
+- selective context loading
+- automated routing to the right specs and decisions
+
+There is already an unpublished **Repository Context Engine for Coding Agents** concept in this repository that explores that direction. It is still a proposed architecture, not a finished implementation.
+
+For now, the simpler system is useful on its own: important decisions move out of transient conversation, into version-controlled project memory, and become available to the next session that needs them.
+
+That is the part I find most interesting—not replacing prompts, but giving coding agents a project that can remember more than the conversation they happen to be in.
