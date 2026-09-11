@@ -18,6 +18,17 @@ Never fabricate, guess, or inflate:
 
 If information is unknown, use an explicit placeholder or ask for clarification. Factual accuracy is strictly prioritized over making the site appear impressive.
 
+### Evidence and Claim-State Rules
+
+- Do not describe Orielsy's professional experience as **design systems** unless that experience is explicitly established later. Use grounded terms such as reusable UI components, component architecture, frontend patterns, frontend systems, UI architecture, or engineering standards where appropriate.
+- Quantitative claims require evidence. Values mathematically derived from an implementation may be stated as **derived**; benchmark, latency, performance, quality, and outcome claims require actual **measured** evidence.
+- Conceptual examples must not contain invented benchmark precision.
+- Clearly distinguish between **implemented**, **measured**, **observed**, **proposed**, and **exploratory** work. Proposed architecture must never be written as though it already exists.
+- Source code outranks generated prose when describing implementation. If public prose and source disagree, correct the prose or mark the claim as conceptual/historical when evidence supports that distinction.
+- Avoid absolute technical claims (for example, "eliminates," "zero-cost," or "broadcast-reliable") unless they are demonstrably true in the stated scope.
+- Public project dates must reflect actual development history rather than publication date unless the date is explicitly labeled as publication.
+- Do not make unfinished or unpublished projects sound more mature merely for presentation.
+
 ---
 
 ## 8. Repository Links Must Be Specific
