@@ -1,6 +1,6 @@
 # Tasks: Spec-Driven Project Memory Research Article
 
-- **Status:** Implementation Complete / Build Verification Pending
+- **Status:** Ready for Publication / Build Verification Pending
 - **Feature Directory:** `specs/004-spec-driven-project-memory/`
 
 ## Task Checklist
@@ -12,18 +12,20 @@
 - [x] Rewrite `src/content/research/specification-driven-ai-development.mdx` around `orielsy.com` as the case study.
 - [x] Confirm the design-systems failure case is factual and understated.
 - [x] Confirm the article distinguishes current behavior from future context-engine exploration.
-- [x] Confirm `published: false` remains in place and publication gating is unchanged.
 - [x] Add reusable local unpublished-content preview workflow.
 - [x] Review Lovable's two architecture diagrams and port them into native Astro components.
 - [x] Integrate the Project Memory Stack and Context Selection diagrams into the article.
+- [x] Fix the duplicated desktop/mobile theme-toggle binding.
+- [x] Set the article to `published: true`, `draft: false`, `status: published` with publication date 2026-09-11 after explicit approval to publish.
 - [ ] Run `npm run build`.
 - [x] Review the branch diff against `main` for unrelated changes.
 
 ## Verification Notes
 
-- The article frontmatter remains `published: false`.
-- Local review is available through `npm run dev:content`; normal development and production behavior remain publication-gated.
+- The article is now configured for publication and should appear in published Research surfaces after merge and intentional production deployment.
+- Local review remains available through `npm run dev:content`; normal `npm run dev` now also renders this article as published because its frontmatter is public.
 - The two diagrams were copied from the completed Lovable prototype and adapted from React/Tailwind components into static Astro components so they do not add a React runtime to the site.
 - The diagram copy preserves the prototype's factual guardrails: the knowledge layers are not presented as a fixed pipeline, routing is human-authored, and no automated relevance engine is implied.
-- The branch now intentionally contains the article, its `004` feature artifacts, the local content-preview infrastructure, and the two article diagram components.
-- The assistant execution environment cannot currently resolve `github.com` for a local clone, so `npm run build` could not be executed here. This remains an explicit pending verification item and must not be treated as a successful build.
+- The theme toggle now binds to all rendered toggle instances instead of relying on a duplicated DOM id.
+- The branch intentionally contains the article, its `004` feature artifacts, the local content-preview infrastructure, the two article diagram components, and the theme-toggle bug fix.
+- The assistant execution environment cannot currently run the repository locally, so `npm run build` remains an explicit pending verification item and must not be treated as successful until run elsewhere.
