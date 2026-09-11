@@ -1,0 +1,20 @@
+---
+export interface Props {
+  kind: 'research' | 'project';
+}
+
+const { kind } = Astro.props;
+const label = kind === 'research' ? 'Research' : 'Project';
+---
+
+<aside
+  class="not-prose my-6 rounded-lg border border-amber-300/80 dark:border-amber-800 bg-amber-50/80 dark:bg-amber-950/30 px-4 py-3"
+  role="status"
+>
+  <div class="text-[11px] font-mono font-semibold uppercase tracking-widest text-amber-800 dark:text-amber-300 mb-1">
+    Local Preview · Not Published
+  </div>
+  <p class="text-sm leading-relaxed text-amber-950 dark:text-amber-100 m-0">
+    You are viewing the unpublished {label.toLowerCase()} body through the local content-preview mode. Production publication state is unchanged.
+  </p>
+</aside>
