@@ -6,7 +6,9 @@
   "scripts": {
     "reset:astro": "node scripts/reset-astro-cache.mjs",
     "dev": "astro dev",
+    "dev:content": "astro dev --mode content-preview",
     "predev": "npm run reset:astro",
+    "predev:content": "npm run reset:astro",
     "start": "astro dev",
     "prestart": "npm run reset:astro",
     "build": "astro build",

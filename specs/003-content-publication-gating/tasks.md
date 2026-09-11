@@ -17,3 +17,8 @@
 - [x] Limit RSS output to published Research entries
 - [x] Record the durable decision in `docs/decisions/004-content-publication-gating.md`
 - [x] Build and inspect generated routes, catalog counts, and RSS output
+- [x] Add explicit `npm run dev:content` local preview command
+- [x] Allow unpublished Research and Project cards to link only in local content-preview mode
+- [x] Render full unpublished bodies only when Astro is in development + content-preview mode
+- [x] Add a visible local-preview / not-published notice
+- [ ] Re-run production build verification after the local preview extension

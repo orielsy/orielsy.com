@@ -1,7 +1,7 @@
 ---
 ---
 <button
-  id="theme-toggle"
+  data-theme-toggle
   type="button"
   aria-label="Toggle visual theme"
   class="relative inline-flex items-center justify-center p-1.5 text-xs font-mono rounded border border-[var(--border-subtle)] hover:border-[var(--border-strong)] bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
@@ -29,9 +29,15 @@
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   };
 
-  document.getElementById('theme-toggle')?.addEventListener('click', handleToggleClick);
+  const bindThemeToggles = () => {
+    document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) => {
+      if (button.dataset.themeToggleBound === 'true') return;
 
-  document.addEventListener('astro:after-swap', () => {
-    document.getElementById('theme-toggle')?.addEventListener('click', handleToggleClick);
-  });
+      button.addEventListener('click', handleToggleClick);
+      button.dataset.themeToggleBound = 'true';
+    });
+  };
+
+  bindThemeToggles();
+  document.addEventListener('astro:after-swap', bindThemeToggles);
 </script>

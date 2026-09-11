@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import ProjectLayout from '../../layouts/ProjectLayout.astro';
+import ContentPreviewNotice from '../../components/ContentPreviewNotice.astro';
 
 export async function getStaticPaths() {
   const projectEntries = await getCollection('projects');
@@ -13,8 +14,11 @@ export async function getStaticPaths() {
 
 const { entry, published } = Astro.props;
 const { Content } = await render(entry);
+const previewUnpublished = import.meta.env.DEV && import.meta.env.MODE === 'content-preview' && !published;
+const renderFullContent = published || previewUnpublished;
 ---
 
-<ProjectLayout entry={entry} published={published}>
-  {published && <Content />}
+<ProjectLayout entry={entry} published={renderFullContent}>
+  {previewUnpublished && <ContentPreviewNotice kind="project" />}
+  {renderFullContent && <Content />}
 </ProjectLayout>

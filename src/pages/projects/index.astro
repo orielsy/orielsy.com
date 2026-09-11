@@ -4,6 +4,7 @@ import ProjectCard from '../../components/ProjectCard.astro';
 import { getCollection } from 'astro:content';
 
 const allProjects = await getCollection('projects');
+const previewUnpublished = import.meta.env.DEV && import.meta.env.MODE === 'content-preview';
 const publishedProjects = allProjects.filter((entry) => entry.data.published);
 const sortedProjects = publishedProjects.sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -80,12 +81,14 @@ const sortedUnpublishedProjects = unpublishedProjects.sort(
             Projects in Progress
           </h2>
           <p class="text-sm text-[var(--text-secondary)] leading-relaxed max-w-2xl">
-            Early ideas and unfinished implementations are shown here for context. These entries are not published as finished projects and do not link to detail pages.
+            {previewUnpublished
+              ? 'Local content-preview mode is active. Unpublished entries are linked for review but remain unpublished in source.'
+              : 'Early ideas and unfinished implementations are shown here for context. These entries are not published as finished projects and do not link to detail pages.'}
           </p>
         </header>
         <div class="space-y-6" id="unpublished-projects-list">
           {sortedUnpublishedProjects.map((project) => (
-            <ProjectCard entry={project} />
+            <ProjectCard entry={project} previewUnpublished={previewUnpublished} />
           ))}
         </div>
       </section>
@@ -101,7 +104,6 @@ const sortedUnpublishedProjects = unpublishedProjects.sort(
       btn.addEventListener('click', () => {
         const filter = btn.getAttribute('data-filter');
 
-        // Update active button state
         filterButtons.forEach((b) => {
           b.classList.remove('bg-[var(--accent)]', 'text-white', 'border-[var(--accent)]', 'font-medium');
           b.classList.add('bg-[var(--bg-secondary)]', 'border-[var(--border-subtle)]', 'text-[var(--text-secondary)]');

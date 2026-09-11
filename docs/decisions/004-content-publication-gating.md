@@ -16,6 +16,16 @@ Unpublished entries are omitted from the home page and RSS. Research and Project
 
 The `status` field remains a lifecycle label for the work. It is not a substitute for the publication gate or the public-draft maturity label. `published: false` always takes precedence over `draft: true`; such entries render status-only pages.
 
+## Local author preview
+
+Unpublished source content must be reviewable locally without temporarily changing `published: false` to `true`.
+
+The repository therefore provides `npm run dev:content`, which starts Astro in a dedicated `content-preview` development mode. Only when both development mode and this explicit preview mode are active may unpublished Research and Project cards link to their detail routes and render their full body content.
+
+Previewed unpublished pages display a prominent `Local Preview · Not Published` notice. This mode does not alter frontmatter, RSS, sitemap inclusion, production publication state, or the normal `npm run dev` experience.
+
+The preview path must remain impossible to activate through ordinary production commands. `npm run build` and `npm run live` continue to use normal publication gating.
+
 ## Current classification
 
 The AI-as-UI essay is a public concept draft. The real-time speech architecture article and speechBubbles project are published without the draft label. The context-engineering note and specification-driven note, along with the Adaptive AI Runtime, Documentation-Driven Adaptive UX, and Repository Context Engine entries, remain unpublished because their content is not yet polished enough to present as public work or identifies them as conceptual placeholders or active-development case studies. They may appear as status-interactive summaries in the collection pages' in-progress sections.
@@ -27,6 +37,7 @@ The AI-as-UI essay is a public concept draft. The real-time speech architecture 
 - Authors can share early ideas transparently without misrepresenting them as finished work.
 - Inline card notices and direct links can communicate that work is in progress without exposing unfinished material.
 - Search engines should not index unpublished status pages.
+- Local author review should not require mutating publication state, because temporary frontmatter changes are easy to commit accidentally and make production state harder to reason about.
 
 ## Future
 
