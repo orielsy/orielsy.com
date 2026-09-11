@@ -12,6 +12,7 @@
     "start": "astro dev",
     "prestart": "npm run reset:astro",
     "build": "astro build",
+    "prelive": "node scripts/assert-main-branch.mjs",
     "live": "npm run build && gh-pages -d dist -b gh-pages --dotfiles --nojekyll",
     "preview": "astro preview",
     "astro": "astro"
