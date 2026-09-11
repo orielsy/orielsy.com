@@ -83,7 +83,7 @@ These are not interchangeable documents.
 
 ### Constitution: project-wide invariants
 
-`.specify/memory/constitution.md` contains rules that should survive individual features and sessions. Examples include factual-accuracy constraints, content taxonomy, repository-link rules, static-first architecture, and editorial voice.
+[`.specify/memory/constitution.md`](https://github.com/orielsy/orielsy.com/blob/main/.specify/memory/constitution.md) contains rules that should survive individual features and sessions. Examples include factual-accuracy constraints, content taxonomy, repository-link rules, static-first architecture, and editorial voice.
 
 One current rule is especially important for this article: quantitative claims require evidence, proposed architecture must not be written as implemented work, and source code outranks generated prose when the two disagree.
 
@@ -93,7 +93,7 @@ Those constraints are broader than any one page. They belong above feature-level
 
 A feature spec narrows the problem.
 
-For example, `specs/003-content-publication-gating/spec.md` defines the behavior of unpublished Research and Project entries: they remain visible as in-progress summaries, do not expose unfinished body content, and do not become indexable published pages.
+For example, [`specs/003-content-publication-gating/spec.md`](https://github.com/orielsy/orielsy.com/blob/main/specs/003-content-publication-gating/spec.md) defines the behavior of unpublished Research and Project entries: they remain visible as in-progress summaries, do not expose unfinished body content, and do not become indexable published pages.
 
 That is different from saying, "make unpublished cards look disabled." The durable artifact captures the product behavior that future UI changes still need to preserve.
 
@@ -109,7 +109,7 @@ Decision records preserve choices that affect future work but are not obvious fr
 
 This site has ADRs for content taxonomy, manual production publishing, publication gating, and canonical URL/SEO behavior.
 
-For example, `docs/decisions/003-manual-production-publishing.md` establishes that pushing source code does **not** publish the site. Production deployment is an explicit `npm run live` action that builds and publishes generated output to `gh-pages`.
+For example, [`docs/decisions/003-manual-production-publishing.md`](https://github.com/orielsy/orielsy.com/blob/main/docs/decisions/003-manual-production-publishing.md) establishes that pushing source code does **not** publish the site. Production deployment is an explicit `npm run live` action that builds and publishes generated output to `gh-pages`.
 
 A future agent modifying deployment behavior should not have to rediscover that intent from package scripts alone.
 
@@ -119,7 +119,7 @@ A future agent modifying deployment behavior should not have to rediscover that 
 
 The most useful part of this structure may be the smallest file.
 
-`AGENTS.md` is intentionally thin. It does not try to contain the entire project.
+[`AGENTS.md`](https://github.com/orielsy/orielsy.com/blob/main/AGENTS.md) is intentionally thin. It does not try to contain the entire project.
 
 Instead, it tells an agent how to navigate the project's existing memory:
 
