@@ -8,7 +8,7 @@
 
 ## 1. Overview & Positioning
 
-**orielsy.com** is the canonical personal web property for Orielsy Diaz—a Senior Frontend Engineer and UI Architect with 15+ years of experience. The site communicates the intersection of frontend architecture, interaction systems, and applied AI at the edge of the interface.
+**orielsy.com** is the canonical personal web property for Orielsy Diaz—a Senior Frontend Engineer and UI Architect with 15+ years of experience. The site communicates the intersection of frontend architecture, interaction systems, and applied AI at the edge of the interface. Professional positioning should use established terms such as component architecture, reusable frontend patterns, frontend systems, and UI architecture; it must not describe formal design-system ownership unless Orielsy explicitly establishes that experience.
 
 ---
 

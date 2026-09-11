@@ -87,6 +87,8 @@ His AI work operates at the application, product, interface, and systems layer:
 - AI-enhanced product and interface concepts
 - Hardware-aware client/browser inference
 
+This is an internal accuracy guardrail, not public-facing positioning copy. Public copy should describe the application, product, interface, and systems layer positively. Where relevant, connect context engineering explicitly to AI agents, coding-agent systems, and agentic development workflows without turning the site into AI-buzzword copy.
+
 ---
 
 ## 6. Static-First Web Architecture
