@@ -1,0 +1,83 @@
+---
+const bands = [
+  {
+    scope: 'Entry point',
+    hint: 'Routing layer, not a mega-prompt',
+    accent: true,
+    dashed: true,
+    layers: [{ file: 'AGENTS.md', question: 'How should the agent work?', indent: 0 }],
+  },
+  {
+    scope: 'Project-wide',
+    hint: 'Applies to every change',
+    layers: [{ file: 'Constitution', question: 'What must remain true across the project?', indent: 0 }],
+  },
+  {
+    scope: 'Feature-specific',
+    hint: 'Scope narrows as work gets concrete',
+    layers: [
+      { file: 'Feature Spec', question: 'What are we trying to accomplish?', indent: 0 },
+      { file: 'Plan', question: 'How will this repository implement it?', indent: 1 },
+      { file: 'Tasks', question: 'What needs to happen now?', indent: 2 },
+    ],
+  },
+  {
+    scope: 'Durable history',
+    hint: 'Written once, consulted later',
+    layers: [
+      {
+        file: 'ADR / Decision Record',
+        question: 'Why was a durable product or architectural decision made?',
+        indent: 0,
+        note: 'Can influence implementation at any point — not only after tasks.',
+      },
+    ],
+  },
+  {
+    scope: 'Output',
+    hint: 'A result of intent, not the source of it',
+    layers: [{ file: 'Implementation', question: 'The resulting code and content', indent: 0 }],
+  },
+];
+---
+
+<figure class="media-breakout my-8 rounded-lg border border-[#34373f] bg-[#18191d] px-4 py-6 text-[#ededee] sm:px-7 sm:py-8">
+  <header class="mb-6 sm:mb-8">
+    <h3 class="!m-0 !border-0 !p-0 text-base font-semibold tracking-tight text-[#ededee] sm:text-lg">The Project Memory Stack</h3>
+    <p class="!mt-1 !mb-0 max-w-2xl text-xs leading-relaxed text-[#b4b5ba] sm:text-sm">Different artifacts preserve different kinds of intent.</p>
+  </header>
+
+  <div class="flex flex-col gap-5 sm:gap-6">
+    {bands.map((band, bandIndex) => (
+      <div>
+        <div class="mb-2 flex items-center gap-3">
+          <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8b8d94] sm:text-[11px]">{band.scope}</span>
+          <span class="h-px flex-1 bg-[#34373f]"></span>
+          <span class="hidden text-[11px] text-[#8b8d94] sm:inline">{band.hint}</span>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          {band.layers.map((layer) => (
+            <div class:list={[layer.indent === 1 && 'sm:ml-6', layer.indent === 2 && 'sm:ml-12']}>
+              <div class:list={['rounded-md border bg-[#222328] px-4 py-3', band.dashed ? 'border-dashed border-[#67c6d7]/60' : 'border-[#34373f]']}>
+                <div class="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 gap-y-1 sm:flex sm:flex-wrap sm:items-baseline sm:justify-between">
+                  <span class:list={['min-w-0 truncate font-mono text-sm sm:text-[15px]', band.accent ? 'text-[#78d0df]' : 'text-[#ededee]']}>{layer.file}</span>
+                  <span class="col-span-2 text-xs leading-relaxed text-[#b4b5ba] sm:col-auto sm:text-right sm:text-[13px]">{layer.question}</span>
+                </div>
+                {layer.note && (
+                  <p class="!mb-0 !mt-2 border-t border-dashed border-[#34373f] pt-2 text-[11px] leading-relaxed text-[#8b8d94]">{layer.note}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {bandIndex < bands.length - 1 && <div aria-hidden="true" class="mt-4 ml-3 h-4 w-px bg-[#545760] sm:ml-5"></div>}
+      </div>
+    ))}
+  </div>
+
+  <figcaption class="mt-6 border-t border-[#34373f] pt-4 text-[11px] leading-relaxed text-[#8b8d94] sm:text-xs">
+    These are durable knowledge layers with different scopes, not a fixed execution pipeline. A change may read only one or two of them.
+  </figcaption>
+</figure>
