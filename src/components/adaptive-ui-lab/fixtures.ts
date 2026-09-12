@@ -3,7 +3,7 @@ import type {
   RuntimeContext,
   UIState,
   WorkerGroup,
-} from './types';
+} from './types.ts';
 
 export const WORKER_GROUPS = {
   eastCoastProduction: {
