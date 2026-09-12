@@ -1,4 +1,4 @@
-import type { AutomationConfiguration, ValidationIssue } from './types';
+import type { AutomationConfiguration, ValidationIssue } from './types.ts';
 
 export function validateConfiguration(
   config: AutomationConfiguration,
