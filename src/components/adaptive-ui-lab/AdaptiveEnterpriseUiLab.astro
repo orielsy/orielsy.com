@@ -6,35 +6,21 @@ import { resolveInterface } from './resolver.ts';
 const initialResult = resolveInterface({
   config: DEFAULT_CONFIG,
   runtime: DEFAULT_RUNTIME,
-  ui: {
-    expandedHelp: [],
-    highlightedField: null,
-    dismissedGuidance: [],
-  },
+  ui: { expandedHelp: [], highlightedField: null, dismissedGuidance: [] },
   knowledge: KNOWLEDGE,
 });
-
 const initialResponseIds = initialResult.responses.map((response) => response.id);
 ---
 
-<section
-  class="not-prose my-10 overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-card)] shadow-sm"
-  data-adaptive-enterprise-ui-lab
->
+<section class="not-prose my-10 overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-card)] shadow-sm" data-adaptive-enterprise-ui-lab>
   <header class="border-b border-[var(--border-subtle)] px-5 py-4 sm:px-6">
     <div class="flex flex-wrap items-start justify-between gap-4">
       <div>
-        <p class="mb-1 font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--text-tertiary)]">
-          Adaptive Enterprise UI Lab · Phase 1
-        </p>
-        <h3 class="m-0 text-lg font-semibold text-[var(--text-primary)]">One field, changing context</h3>
-        <p class="mt-1 max-w-2xl text-sm text-[var(--text-secondary)]">
-          Change the simulated context, then observe how the Worker Group control changes its guidance and level of intervention.
-        </p>
+        <p class="mb-1 font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--text-tertiary)]">Adaptive Enterprise UI Lab · Phase 1</p>
+        <h3 class="m-0 text-lg font-semibold text-[var(--text-primary)]">One field, two interface policies</h3>
+        <p class="mt-1 max-w-2xl text-sm text-[var(--text-secondary)]">Keep the underlying state the same and compare conventional validation with context-aware adaptive guidance.</p>
       </div>
-      <span class="rounded-full border border-[var(--border-subtle)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">
-        deterministic
-      </span>
+      <span class="rounded-full border border-[var(--border-subtle)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">deterministic</span>
     </div>
   </header>
 
@@ -42,18 +28,20 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
     <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
       <div>
         <p class="m-0 font-mono text-[10px] uppercase tracking-[0.16em] text-sky-600 dark:text-sky-400">Lab context</p>
-        <p class="mt-1 text-xs text-[var(--text-tertiary)]">Simulation controls · these are not part of the fictional product</p>
+        <p class="mt-1 text-xs text-[var(--text-tertiary)]">Simulation controls · outside the fictional product</p>
       </div>
-      <button
-        type="button"
-        data-reset-context
-        class="rounded-md border border-[var(--border-subtle)] px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider text-[var(--text-secondary)] transition hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"
-      >
-        Reset context
-      </button>
+      <button type="button" data-reset-context class="rounded-md border border-[var(--border-subtle)] px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider text-[var(--text-secondary)] transition hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]">Reset context</button>
     </div>
 
     <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <fieldset class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-3">
+        <legend class="px-1 font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">Experience</legend>
+        <div class="mt-1 grid grid-cols-2 gap-1.5">
+          <button type="button" data-experience="standard" aria-pressed="false" class="rounded-md border border-[var(--border-subtle)] px-3 py-2 text-xs text-[var(--text-secondary)]">Standard UI</button>
+          <button type="button" data-experience="adaptive" aria-pressed="true" class="rounded-md border border-[var(--border-strong)] bg-[var(--bg-primary)] px-3 py-2 text-xs font-medium text-[var(--text-primary)]">Adaptive UI</button>
+        </div>
+      </fieldset>
+
       <fieldset class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-3">
         <legend class="px-1 font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">User familiarity</legend>
         <div class="mt-1 grid grid-cols-2 gap-1.5">
@@ -71,14 +59,6 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
       </fieldset>
 
       <fieldset class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-3">
-        <legend class="px-1 font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">Execution mode</legend>
-        <div class="mt-1 grid grid-cols-2 gap-1.5">
-          <button type="button" data-execution-mode="local" aria-pressed="false" class="rounded-md border border-[var(--border-subtle)] px-3 py-2 text-xs text-[var(--text-secondary)]">Local</button>
-          <button type="button" data-execution-mode="distributed" aria-pressed="true" class="rounded-md border border-[var(--border-strong)] bg-[var(--bg-primary)] px-3 py-2 text-xs font-medium text-[var(--text-primary)]">Distributed</button>
-        </div>
-      </fieldset>
-
-      <fieldset class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-3">
         <legend class="px-1 font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">Available Worker Groups</legend>
         <div class="mt-1 grid grid-cols-2 gap-1.5">
           <button type="button" data-group-count="1" aria-pressed="false" class="rounded-md border border-[var(--border-subtle)] px-3 py-2 text-xs text-[var(--text-secondary)]">Exactly 1</button>
@@ -92,15 +72,15 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
     <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
       <div>
         <p class="m-0 font-mono text-[10px] uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-400">Product surface</p>
-        <p class="mt-1 text-xs text-[var(--text-tertiary)]">Only the field below belongs to the fictional product experience</p>
+        <p class="mt-1 text-xs text-[var(--text-tertiary)]">Only the Worker Group field belongs to the fictional product</p>
       </div>
-      <span class="rounded-md border border-[var(--border-subtle)] px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">Worker Group study</span>
+      <span data-experience-label class="rounded-md border border-[var(--border-subtle)] px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">Adaptive UI</span>
     </div>
 
     <div class="mx-auto max-w-2xl overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)] shadow-inner">
       <div class="border-b border-[var(--border-subtle)] px-5 py-4 sm:px-6">
         <h4 class="m-0 text-base font-semibold text-[var(--text-primary)]">Worker Group</h4>
-        <p class="mt-1 text-sm text-[var(--text-secondary)]">Choose which workers can execute this automation when the current context requires one.</p>
+        <p class="mt-1 text-sm text-[var(--text-secondary)]">Choose which workers can execute this distributed automation.</p>
       </div>
 
       <div class="space-y-5 p-5 sm:p-6">
@@ -109,27 +89,20 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
             <span>Worker Group</span>
             <span data-required-indicator class="font-mono text-[10px] uppercase tracking-wide text-amber-600 dark:text-amber-400">Required</span>
           </span>
-          <select
-            data-field="workerGroup"
-            class="w-full rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3 py-2.5 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--border-strong)] disabled:cursor-not-allowed disabled:opacity-50"
-          >
+          <select data-field="workerGroup" class="w-full rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3 py-2.5 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--border-strong)]">
             <option value="">None selected</option>
-            {THREE_WORKER_GROUPS.map((group) => (
-              <option value={group.id}>{group.name}</option>
-            ))}
+            {THREE_WORKER_GROUPS.map((group) => <option value={group.id}>{group.name}</option>)}
           </select>
-          <p data-field-summary class="mt-1.5 text-xs text-[var(--text-tertiary)]">Determines which workers can execute distributed automations.</p>
+          <p class="mt-1.5 text-xs text-[var(--text-tertiary)]">Determines which workers can execute distributed automations.</p>
         </label>
 
         <div data-guidance-region class="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4" aria-live="polite">
           <div class="mb-3 flex items-center justify-between gap-3">
             <div>
-              <h5 class="m-0 text-sm font-semibold text-[var(--text-primary)]">Adaptive guidance</h5>
-              <p class="mt-0.5 text-xs text-[var(--text-tertiary)]">Resolved from current state and authored product knowledge</p>
+              <h5 data-guidance-title class="m-0 text-sm font-semibold text-[var(--text-primary)]">Adaptive guidance</h5>
+              <p data-guidance-subtitle class="mt-0.5 text-xs text-[var(--text-tertiary)]">Resolved from current state and authored product knowledge</p>
             </div>
-            <span data-response-count class="font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">
-              {initialResponseIds.length} signals
-            </span>
+            <span data-response-count class="font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">{initialResponseIds.length} signals</span>
           </div>
           <div data-guidance-list class="space-y-2"></div>
         </div>
@@ -142,41 +115,30 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
   import { ONE_WORKER_GROUP, THREE_WORKER_GROUPS } from './fixtures.ts';
   import { KNOWLEDGE } from './knowledge.ts';
   import { resolveInterface } from './resolver.ts';
-  import type {
-    AutomationConfiguration,
-    ProductVersion,
-    RuntimeContext,
-    UIAction,
-    UIResponse,
-    UserFamiliarity,
-  } from './types.ts';
+  import type { AutomationConfiguration, ProductVersion, RuntimeContext, UIAction, UIResponse, UserFamiliarity } from './types.ts';
 
-  const labs = document.querySelectorAll<HTMLElement>('[data-adaptive-enterprise-ui-lab]');
+  type ExperienceMode = 'standard' | 'adaptive';
 
-  labs.forEach((lab) => {
+  document.querySelectorAll<HTMLElement>('[data-adaptive-enterprise-ui-lab]').forEach((lab) => {
     if (lab.dataset.bound === 'true') return;
     lab.dataset.bound = 'true';
 
     const workerGroup = lab.querySelector<HTMLSelectElement>('[data-field="workerGroup"]');
     const workerGroupShell = lab.querySelector<HTMLElement>('[data-worker-group-shell]');
     const requiredIndicator = lab.querySelector<HTMLElement>('[data-required-indicator]');
-    const fieldSummary = lab.querySelector<HTMLElement>('[data-field-summary]');
     const guidanceList = lab.querySelector<HTMLElement>('[data-guidance-list]');
     const responseCount = lab.querySelector<HTMLElement>('[data-response-count]');
+    const guidanceTitle = lab.querySelector<HTMLElement>('[data-guidance-title]');
+    const guidanceSubtitle = lab.querySelector<HTMLElement>('[data-guidance-subtitle]');
+    const experienceLabel = lab.querySelector<HTMLElement>('[data-experience-label]');
     const resetContext = lab.querySelector<HTMLButtonElement>('[data-reset-context]');
-
     if (!workerGroup || !guidanceList) return;
 
+    let experience: ExperienceMode = 'adaptive';
     let familiarity: UserFamiliarity = 'new';
     let productVersion: ProductVersion = '4.2';
-    let executionMode: AutomationConfiguration['executionMode'] = 'distributed';
     let groupCount: 1 | 3 = 3;
-
-    const uiState = {
-      expandedHelp: [],
-      highlightedField: null,
-      dismissedGuidance: [],
-    };
+    const uiState = { expandedHelp: [], highlightedField: null, dismissedGuidance: [] };
 
     const setPressedState = (selector: string, activeValue: string, attribute: string) => {
       lab.querySelectorAll<HTMLButtonElement>(selector).forEach((button) => {
@@ -194,7 +156,6 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
     const rebuildWorkerGroupOptions = () => {
       const groups = groupCount === 1 ? ONE_WORKER_GROUP : THREE_WORKER_GROUPS;
       const previousValue = workerGroup.value;
-
       workerGroup.replaceChildren();
       workerGroup.add(new Option('None selected', ''));
       groups.forEach((group) => workerGroup.add(new Option(group.name, group.id)));
@@ -206,170 +167,130 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
       button.type = 'button';
       button.textContent = action.label;
       button.className = 'mt-2 rounded-md border border-[var(--border-strong)] bg-[var(--bg-primary)] px-3 py-1.5 text-xs font-medium text-[var(--text-primary)] transition hover:opacity-80';
-
       button.addEventListener('click', () => {
         if (action.type === 'focus-field' && action.field === 'workerGroup') workerGroup.focus();
-
         if (action.type === 'set-value' && action.field === 'workerGroup' && action.value) {
           workerGroup.value = action.value;
           render();
           workerGroup.focus();
         }
       });
-
       return button;
     };
 
     const createResponseItem = (response: UIResponse, compact = false) => {
       const item = document.createElement('div');
-
-      if (response.type === 'preconfiguration') {
-        item.className = 'rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-3';
-      } else if (response.type === 'suggestion') {
-        item.className = 'rounded-lg border border-sky-500/30 bg-sky-500/5 p-3';
-      } else if (response.type === 'explanation' || response.type === 'warning') {
-        item.className = 'rounded-lg border border-amber-500/30 bg-amber-500/5 p-3';
-      } else {
-        item.className = compact ? 'py-1.5' : 'rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-primary)] p-3';
-      }
+      if (response.type === 'preconfiguration') item.className = 'rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-3';
+      else if (response.type === 'suggestion') item.className = 'rounded-lg border border-sky-500/30 bg-sky-500/5 p-3';
+      else if (response.type === 'explanation' || response.type === 'warning') item.className = 'rounded-lg border border-amber-500/30 bg-amber-500/5 p-3';
+      else item.className = compact ? 'py-1.5' : 'rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-primary)] p-3';
 
       const message = document.createElement('p');
-      message.className = compact
-        ? 'm-0 text-xs leading-relaxed text-[var(--text-secondary)]'
-        : 'm-0 text-sm leading-relaxed text-[var(--text-primary)]';
+      message.className = compact ? 'm-0 text-xs leading-relaxed text-[var(--text-secondary)]' : 'm-0 text-sm leading-relaxed text-[var(--text-primary)]';
       message.textContent = response.message;
       item.append(message);
-
       response.actions?.forEach((action) => item.append(createActionButton(action)));
       return item;
     };
 
-    const renderResponses = (responses: UIResponse[]) => {
+    const renderStandard = () => {
       guidanceList.replaceChildren();
+      const message = document.createElement('p');
+      message.className = workerGroup.value ? 'm-0 text-sm text-[var(--text-secondary)]' : 'm-0 text-sm text-amber-700 dark:text-amber-300';
+      message.textContent = workerGroup.value ? 'Worker Group selected.' : 'Worker Group is required.';
+      guidanceList.append(message);
+      workerGroupShell?.classList.remove('ring-2', 'ring-amber-500/35', 'bg-amber-500/5', 'p-3');
+      requiredIndicator?.classList.toggle('hidden', Boolean(workerGroup.value));
+      if (guidanceTitle) guidanceTitle.textContent = 'Standard validation';
+      if (guidanceSubtitle) guidanceSubtitle.textContent = 'Conventional field description and required-state feedback';
+      if (responseCount) responseCount.textContent = 'baseline';
+      if (experienceLabel) experienceLabel.textContent = 'Standard UI';
+    };
 
+    const renderAdaptive = (responses: UIResponse[]) => {
+      guidanceList.replaceChildren();
       const visibleResponses = responses.filter((response) => response.type !== 'highlight');
       const primaryResponses = visibleResponses.filter((response) => response.type !== 'help');
       const helpResponses = visibleResponses.filter((response) => response.type === 'help');
 
       if (visibleResponses.length === 0) {
-        const quiet = document.createElement('div');
-        quiet.className = 'flex items-start gap-2 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-3';
-
-        const marker = document.createElement('span');
-        marker.className = 'mt-0.5 text-xs text-emerald-600 dark:text-emerald-400';
-        marker.textContent = '✓';
-
-        const text = document.createElement('p');
-        text.className = 'm-0 text-sm text-[var(--text-secondary)]';
-        text.textContent = executionMode === 'local'
-          ? 'Worker Group is not required for local execution.'
-          : 'Worker Group is set. No contextual intervention is needed.';
-
-        quiet.append(marker, text);
+        const quiet = document.createElement('p');
+        quiet.className = 'm-0 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-3 text-sm text-[var(--text-secondary)]';
+        quiet.textContent = 'Worker Group is set. No contextual intervention is needed.';
         guidanceList.append(quiet);
       } else {
         primaryResponses.forEach((response) => guidanceList.append(createResponseItem(response)));
-
         if (helpResponses.length > 0) {
           const details = document.createElement('details');
           details.className = 'rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 py-2';
-
           const summary = document.createElement('summary');
           summary.className = 'cursor-pointer text-xs font-medium text-[var(--text-secondary)]';
           summary.textContent = `Why this guidance? · ${helpResponses.length} ${helpResponses.length === 1 ? 'detail' : 'details'}`;
           details.append(summary);
-
           const detailBody = document.createElement('div');
           detailBody.className = 'mt-2 divide-y divide-[var(--border-subtle)]';
           helpResponses.forEach((response) => detailBody.append(createResponseItem(response, true)));
           details.append(detailBody);
-
           guidanceList.append(details);
         }
       }
 
-      if (responseCount) responseCount.textContent = `${responses.length} ${responses.length === 1 ? 'signal' : 'signals'}`;
-    };
-
-    const render = () => {
-      const availableWorkerGroups = groupCount === 1 ? ONE_WORKER_GROUP : THREE_WORKER_GROUPS;
-
-      const config: AutomationConfiguration = {
-        executionMode,
-        workerGroupId: workerGroup.value || null,
-        targetEnvironment: 'production',
-      };
-
-      const runtime: RuntimeContext = {
-        productVersion,
-        userFamiliarity: familiarity,
-        availableWorkerGroups,
-      };
-
-      const result = resolveInterface({ config, runtime, ui: uiState, knowledge: KNOWLEDGE });
-      const shouldHighlight = result.responses.some((response) => response.id === 'worker-group-highlight');
-
+      const shouldHighlight = responses.some((response) => response.id === 'worker-group-highlight');
       workerGroupShell?.classList.toggle('ring-2', shouldHighlight);
       workerGroupShell?.classList.toggle('ring-amber-500/35', shouldHighlight);
       workerGroupShell?.classList.toggle('bg-amber-500/5', shouldHighlight);
       workerGroupShell?.classList.toggle('p-3', shouldHighlight);
       requiredIndicator?.classList.toggle('hidden', !shouldHighlight);
+      if (guidanceTitle) guidanceTitle.textContent = 'Adaptive guidance';
+      if (guidanceSubtitle) guidanceSubtitle.textContent = 'Resolved from current state and authored product knowledge';
+      if (responseCount) responseCount.textContent = `${responses.length} ${responses.length === 1 ? 'signal' : 'signals'}`;
+      if (experienceLabel) experienceLabel.textContent = 'Adaptive UI';
+    };
 
-      workerGroup.disabled = executionMode !== 'distributed';
-      if (workerGroup.disabled && workerGroup.value) workerGroup.value = '';
-
-      if (fieldSummary) {
-        fieldSummary.textContent = executionMode === 'distributed'
-          ? 'Determines which workers can execute distributed automations.'
-          : 'Not used while execution mode is Local.';
-      }
-
-      renderResponses(result.responses);
+    const render = () => {
+      const availableWorkerGroups = groupCount === 1 ? ONE_WORKER_GROUP : THREE_WORKER_GROUPS;
+      const config: AutomationConfiguration = { executionMode: 'distributed', workerGroupId: workerGroup.value || null, targetEnvironment: 'production' };
+      const runtime: RuntimeContext = { productVersion, userFamiliarity: familiarity, availableWorkerGroups };
+      const result = resolveInterface({ config, runtime, ui: uiState, knowledge: KNOWLEDGE });
+      if (experience === 'standard') renderStandard();
+      else renderAdaptive(result.responses);
     };
 
     workerGroup.addEventListener('change', render);
 
-    lab.querySelectorAll<HTMLButtonElement>('[data-familiarity]').forEach((button) => {
-      button.addEventListener('click', () => {
-        familiarity = button.dataset.familiarity as UserFamiliarity;
-        setPressedState('[data-familiarity]', familiarity, 'familiarity');
-        render();
-      });
-    });
+    lab.querySelectorAll<HTMLButtonElement>('[data-experience]').forEach((button) => button.addEventListener('click', () => {
+      experience = button.dataset.experience as ExperienceMode;
+      setPressedState('[data-experience]', experience, 'experience');
+      render();
+    }));
 
-    lab.querySelectorAll<HTMLButtonElement>('[data-version]').forEach((button) => {
-      button.addEventListener('click', () => {
-        productVersion = button.dataset.version as ProductVersion;
-        setPressedState('[data-version]', productVersion, 'version');
-        render();
-      });
-    });
+    lab.querySelectorAll<HTMLButtonElement>('[data-familiarity]').forEach((button) => button.addEventListener('click', () => {
+      familiarity = button.dataset.familiarity as UserFamiliarity;
+      setPressedState('[data-familiarity]', familiarity, 'familiarity');
+      render();
+    }));
 
-    lab.querySelectorAll<HTMLButtonElement>('[data-execution-mode]').forEach((button) => {
-      button.addEventListener('click', () => {
-        executionMode = button.dataset.executionMode as AutomationConfiguration['executionMode'];
-        setPressedState('[data-execution-mode]', executionMode, 'executionMode');
-        render();
-      });
-    });
+    lab.querySelectorAll<HTMLButtonElement>('[data-version]').forEach((button) => button.addEventListener('click', () => {
+      productVersion = button.dataset.version as ProductVersion;
+      setPressedState('[data-version]', productVersion, 'version');
+      render();
+    }));
 
-    lab.querySelectorAll<HTMLButtonElement>('[data-group-count]').forEach((button) => {
-      button.addEventListener('click', () => {
-        groupCount = button.dataset.groupCount === '1' ? 1 : 3;
-        setPressedState('[data-group-count]', String(groupCount), 'groupCount');
-        rebuildWorkerGroupOptions();
-        render();
-      });
-    });
+    lab.querySelectorAll<HTMLButtonElement>('[data-group-count]').forEach((button) => button.addEventListener('click', () => {
+      groupCount = button.dataset.groupCount === '1' ? 1 : 3;
+      setPressedState('[data-group-count]', String(groupCount), 'groupCount');
+      rebuildWorkerGroupOptions();
+      render();
+    }));
 
     resetContext?.addEventListener('click', () => {
+      experience = 'adaptive';
       familiarity = 'new';
       productVersion = '4.2';
-      executionMode = 'distributed';
       groupCount = 3;
+      setPressedState('[data-experience]', experience, 'experience');
       setPressedState('[data-familiarity]', familiarity, 'familiarity');
       setPressedState('[data-version]', productVersion, 'version');
-      setPressedState('[data-execution-mode]', executionMode, 'executionMode');
       setPressedState('[data-group-count]', String(groupCount), 'groupCount');
       rebuildWorkerGroupOptions();
       workerGroup.value = '';
