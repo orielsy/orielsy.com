@@ -69,9 +69,11 @@ Similar to how context engineering prevents prompt bloat in AI agents, adaptive 
 
 ## Adaptive Enterprise UI Lab — Phase 1
 
-The first implementation deliberately begins without AI and narrows the experiment to one adaptive field: **Worker Group**. The lab controls simulate user familiarity, product version, execution mode, and the number of available Worker Groups. The product surface itself contains only the field being studied, making it easier to see how the same control can require different levels of explanation, highlighting, suggestion, or safe preconfiguration as context changes.
+The first implementation deliberately begins without AI and narrows the experiment to one field: **Worker Group**. The lab keeps the underlying scenario fixed to distributed execution and lets the reader change only the context needed to study the behavior: user familiarity, product version, available Worker Groups, and the interface policy itself.
 
-Under the hood, the application inspects current state, applies deterministic validation, filters authored product knowledge by context, and then chooses an appropriate UI response level. Secondary beginner and version-specific explanations remain available without competing with the primary intervention.
+The **Standard UI** mode provides a conventional baseline: the field, its short description, and required-state validation. The **Adaptive UI** mode keeps that same application state but uses deterministic validation, authored product knowledge, and response policy to decide whether to explain, highlight, suggest a next action, or safely offer the only valid Worker Group.
+
+That comparison is the point of the Phase 1 demo: same field, same state, same available product knowledge, different interface policy.
 
 <AdaptiveEnterpriseUiLab />
 
