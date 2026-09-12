@@ -28,17 +28,18 @@ These are future extension points only. Phase 1 must not implement or imply that
 
 ## 3. Phase 1 Scenario
 
-Use one fictional enterprise workflow:
+Phase 1 deliberately studies **one visible product field: Worker Group**.
 
-- Execution Mode
-- Worker Group
-- Target Environment
-
-Simulation controls provide:
+The lab context controls simulate:
 
 - user familiarity: New / Experienced
 - product version: 4.1 / 4.2
+- execution mode: Local / Distributed
 - available Worker Groups: exactly 1 / 3
+
+The product surface exposes only the Worker Group control and its adaptive guidance. This keeps the experiment focused on how one field changes its explanation, highlighting, suggestion, and safe-preconfiguration behavior as surrounding context changes.
+
+The underlying domain model may retain broader configuration concepts such as Execution Mode and Target Environment because they are part of application truth. In the Phase 1 publication, Execution Mode is controlled by the lab harness rather than presented as a product field, and Target Environment is fixed to Production and intentionally not surfaced because it does not materially affect the demonstrated behavior.
 
 The initial deterministic slice must demonstrate compact vs expanded help, first-time-user guidance, version-specific guidance, deterministic validation, current-state-aware explanation, safe suggested action, and optional preconfiguration only when the correct choice is unambiguous.
 
@@ -163,7 +164,7 @@ A source push or feature-branch commit must not be treated as a production deplo
 
 ## 12. Phase 1 Acceptance Criteria
 
-Phase 1 is ready for UI integration when:
+Phase 1 is complete when:
 
 - domain and runtime-context types are explicit
 - fixed demo fixtures exist
@@ -173,6 +174,8 @@ Phase 1 is ready for UI integration when:
 - response policy is separate from knowledge applicability
 - the resolver returns structured UI responses
 - the required scenario matrix is represented as executable or otherwise verifiable behavior
+- the publication demo clearly separates lab context from the product surface
+- Worker Group is the sole visible product field in the Phase 1 experiment
 - exactly one valid Worker Group can be safely offered
 - three valid Worker Groups never cause the system to guess
 - experienced users receive less automatically surfaced explanation than new users without changing underlying rules
