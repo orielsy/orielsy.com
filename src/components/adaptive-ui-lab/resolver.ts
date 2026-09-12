@@ -1,13 +1,13 @@
-import { resolveApplicableKnowledge } from './knowledge';
-import { resolveResponses } from './response-policy';
+import { resolveApplicableKnowledge } from './knowledge.ts';
+import { resolveResponses } from './response-policy.ts';
 import type {
   AutomationConfiguration,
   DerivedFacts,
   ResolveInput,
   ResolveResult,
   RuntimeContext,
-} from './types';
-import { validateConfiguration } from './validation';
+} from './types.ts';
+import { validateConfiguration } from './validation.ts';
 
 export function deriveFacts(
   config: AutomationConfiguration,
