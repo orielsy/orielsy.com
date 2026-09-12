@@ -21,17 +21,20 @@
 - [x] Implement resolver orchestration.
 - [x] Add executable tests for the six required scenario outcomes.
 - [ ] Execute `npm run test:adaptive-ui` in a Node environment with repository access and confirm all six scenarios pass.
-- [ ] Build the interactive Astro/client-side UI.
-- [ ] Embed the lab in `src/content/research/documentation-driven-adaptive-ux.mdx`.
-- [ ] Confirm the Research article remains unpublished unless explicit publication approval is given.
+- [x] Build the interactive Astro/client-side UI.
+- [x] Embed the lab in `src/content/research/documentation-driven-adaptive-ux.mdx`.
+- [x] Confirm the Research article remains unpublished unless explicit publication approval is given.
 - [ ] Run `npm run build` if execution access permits.
 - [ ] Review the branch diff against `main` for unrelated changes.
-- [ ] Do not publish production from this branch.
+- [x] Do not publish production from this branch.
 
 ## Verification Notes
 
 - The scenario suite lives at `src/components/adaptive-ui-lab/resolver.test.mts` and is wired to `npm run test:adaptive-ui` using Node's built-in test runner and TypeScript stripping mode; no new test-framework dependency was introduced.
 - The current assistant execution container could not clone the public repository because outbound DNS/network access to GitHub was unavailable, so the scenario suite has not been claimed as executed successfully yet.
+- `AdaptiveEnterpriseUiLab.astro` renders the Phase 1 Automation Configuration workflow, simulation controls, state-aware guidance, highlight behavior, multi-option guidance, and single-option safe preconfiguration action through the deterministic resolver.
+- `src/content/research/documentation-driven-adaptive-ux.mdx` embeds the Phase 1 lab while retaining `published: false` and `status: draft`.
+- No production publishing command has been run and `main` / `gh-pages` remain untouched by this feature work.
 
 ## Phase 1 Non-Goals
 
