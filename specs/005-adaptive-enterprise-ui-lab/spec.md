@@ -32,16 +32,16 @@ Phase 1 deliberately studies **one visible product field: Worker Group**.
 
 The lab context controls simulate:
 
+- interface policy: Standard UI / Adaptive UI
 - user familiarity: New / Experienced
 - product version: 4.1 / 4.2
-- execution mode: Local / Distributed
 - available Worker Groups: exactly 1 / 3
 
-The product surface exposes only the Worker Group control and its adaptive guidance. This keeps the experiment focused on how one field changes its explanation, highlighting, suggestion, and safe-preconfiguration behavior as surrounding context changes.
+The underlying application scenario is fixed to **Distributed execution**, where Worker Group is relevant. Execution Mode remains part of application truth in the domain model but is not exposed as a lab control because changing it would introduce a second concept into a demo intended to isolate one field. Target Environment remains fixed to Production and is also not surfaced because it does not materially affect the demonstrated behavior.
 
-The underlying domain model may retain broader configuration concepts such as Execution Mode and Target Environment because they are part of application truth. In the Phase 1 publication, Execution Mode is controlled by the lab harness rather than presented as a product field, and Target Environment is fixed to Production and intentionally not surfaced because it does not materially affect the demonstrated behavior.
+The product surface exposes only the Worker Group control. Standard UI provides the baseline field description and conventional required-state validation. Adaptive UI keeps the same state and available product knowledge but allows response policy to add contextual explanation, highlighting, suggestion, or safe preconfiguration.
 
-The initial deterministic slice must demonstrate compact vs expanded help, first-time-user guidance, version-specific guidance, deterministic validation, current-state-aware explanation, safe suggested action, and optional preconfiguration only when the correct choice is unambiguous.
+The initial deterministic slice must demonstrate compact vs expanded help, first-time-user guidance, version-specific guidance, deterministic validation, current-state-aware explanation, safe suggested action, optional preconfiguration only when the correct choice is unambiguous, and a direct Standard-versus-Adaptive comparison without changing application state.
 
 ## 4. Architectural Boundaries
 
@@ -176,6 +176,8 @@ Phase 1 is complete when:
 - the required scenario matrix is represented as executable or otherwise verifiable behavior
 - the publication demo clearly separates lab context from the product surface
 - Worker Group is the sole visible product field in the Phase 1 experiment
+- Standard UI and Adaptive UI can be contrasted without changing application state
+- Execution Mode is fixed to Distributed and is not exposed as a lab control
 - exactly one valid Worker Group can be safely offered
 - three valid Worker Groups never cause the system to guess
 - experienced users receive less automatically surfaced explanation than new users without changing underlying rules
