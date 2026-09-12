@@ -1,0 +1,331 @@
+---
+import { DEFAULT_CONFIG, DEFAULT_RUNTIME, THREE_WORKER_GROUPS } from './fixtures.ts';
+import { KNOWLEDGE } from './knowledge.ts';
+import { resolveInterface } from './resolver.ts';
+
+const initialResult = resolveInterface({
+  config: DEFAULT_CONFIG,
+  runtime: DEFAULT_RUNTIME,
+  ui: {
+    expandedHelp: [],
+    highlightedField: null,
+    dismissedGuidance: [],
+  },
+  knowledge: KNOWLEDGE,
+});
+
+const initialResponseIds = initialResult.responses.map((response) => response.id);
+---
+
+<section
+  class="not-prose my-10 overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-card)] shadow-sm"
+  data-adaptive-enterprise-ui-lab
+>
+  <header class="border-b border-[var(--border-subtle)] px-5 py-4 sm:px-6">
+    <div class="flex flex-wrap items-start justify-between gap-4">
+      <div>
+        <p class="mb-1 font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--text-tertiary)]">
+          Adaptive Enterprise UI Lab · Phase 1
+        </p>
+        <h3 class="m-0 text-lg font-semibold text-[var(--text-primary)]">Automation Configuration</h3>
+        <p class="mt-1 max-w-2xl text-sm text-[var(--text-secondary)]">
+          Deterministic product knowledge and state-aware guidance. No LLM or semantic inference is used in this phase.
+        </p>
+      </div>
+      <span class="rounded-full border border-[var(--border-subtle)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">
+        deterministic
+      </span>
+    </div>
+  </header>
+
+  <div class="grid lg:grid-cols-[minmax(0,1fr)_18rem]">
+    <div class="space-y-6 p-5 sm:p-6">
+      <div class="grid gap-5 sm:grid-cols-2">
+        <label class="block">
+          <span class="mb-1.5 block text-sm font-medium text-[var(--text-primary)]">Execution Mode</span>
+          <select
+            data-field="executionMode"
+            class="w-full rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 py-2.5 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--border-strong)]"
+          >
+            <option value="local">Local</option>
+            <option value="distributed" selected>Distributed</option>
+          </select>
+        </label>
+
+        <label class="block" data-worker-group-shell>
+          <span class="mb-1.5 flex items-center justify-between gap-2 text-sm font-medium text-[var(--text-primary)]">
+            <span>Worker Group</span>
+            <span data-required-indicator class="font-mono text-[10px] uppercase tracking-wide text-amber-600 dark:text-amber-400">Required</span>
+          </span>
+          <select
+            data-field="workerGroup"
+            class="w-full rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 py-2.5 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--border-strong)]"
+          >
+            <option value="">None selected</option>
+            {THREE_WORKER_GROUPS.map((group) => (
+              <option value={group.id}>{group.name}</option>
+            ))}
+          </select>
+          <p class="mt-1.5 text-xs text-[var(--text-tertiary)]">
+            Determines which workers can execute distributed automations.
+          </p>
+        </label>
+
+        <label class="block sm:col-span-2">
+          <span class="mb-1.5 block text-sm font-medium text-[var(--text-primary)]">Target Environment</span>
+          <select
+            data-field="targetEnvironment"
+            class="w-full rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 py-2.5 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--border-strong)]"
+          >
+            <option value="development">Development</option>
+            <option value="staging">Staging</option>
+            <option value="production" selected>Production</option>
+          </select>
+        </label>
+      </div>
+
+      <div
+        data-guidance-region
+        class="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)] p-4"
+        aria-live="polite"
+      >
+        <div class="mb-3 flex items-center justify-between gap-3">
+          <h4 class="m-0 text-sm font-semibold text-[var(--text-primary)]">Contextual guidance</h4>
+          <span data-response-count class="font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">
+            {initialResponseIds.length} signals
+          </span>
+        </div>
+        <div data-guidance-list class="space-y-2"></div>
+      </div>
+    </div>
+
+    <aside class="border-t border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-5 sm:p-6 lg:border-l lg:border-t-0">
+      <p class="mb-4 font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Demo context</p>
+
+      <div class="space-y-5">
+        <fieldset>
+          <legend class="mb-2 text-xs font-medium text-[var(--text-secondary)]">User familiarity</legend>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" data-familiarity="new" aria-pressed="true" class="rounded-md border border-[var(--border-strong)] bg-[var(--bg-card)] px-3 py-2 text-xs font-medium text-[var(--text-primary)]">New</button>
+            <button type="button" data-familiarity="experienced" aria-pressed="false" class="rounded-md border border-[var(--border-subtle)] px-3 py-2 text-xs text-[var(--text-secondary)]">Experienced</button>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="mb-2 text-xs font-medium text-[var(--text-secondary)]">Product version</legend>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" data-version="4.1" aria-pressed="false" class="rounded-md border border-[var(--border-subtle)] px-3 py-2 text-xs text-[var(--text-secondary)]">4.1</button>
+            <button type="button" data-version="4.2" aria-pressed="true" class="rounded-md border border-[var(--border-strong)] bg-[var(--bg-card)] px-3 py-2 text-xs font-medium text-[var(--text-primary)]">4.2</button>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="mb-2 text-xs font-medium text-[var(--text-secondary)]">Available Worker Groups</legend>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" data-group-count="1" aria-pressed="false" class="rounded-md border border-[var(--border-subtle)] px-3 py-2 text-xs text-[var(--text-secondary)]">Exactly 1</button>
+            <button type="button" data-group-count="3" aria-pressed="true" class="rounded-md border border-[var(--border-strong)] bg-[var(--bg-card)] px-3 py-2 text-xs font-medium text-[var(--text-primary)]">3 options</button>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="mt-6 border-t border-[var(--border-subtle)] pt-4">
+        <p class="m-0 text-xs leading-relaxed text-[var(--text-tertiary)]">
+          These controls simulate product and user context. They are not part of the fictional enterprise configuration itself.
+        </p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<script>
+  import { ONE_WORKER_GROUP, THREE_WORKER_GROUPS } from './fixtures.ts';
+  import { KNOWLEDGE } from './knowledge.ts';
+  import { resolveInterface } from './resolver.ts';
+  import type {
+    AutomationConfiguration,
+    ProductVersion,
+    RuntimeContext,
+    UIAction,
+    UIResponse,
+    UserFamiliarity,
+  } from './types.ts';
+
+  const labs = document.querySelectorAll<HTMLElement>('[data-adaptive-enterprise-ui-lab]');
+
+  labs.forEach((lab) => {
+    if (lab.dataset.bound === 'true') return;
+    lab.dataset.bound = 'true';
+
+    const executionMode = lab.querySelector<HTMLSelectElement>('[data-field="executionMode"]');
+    const workerGroup = lab.querySelector<HTMLSelectElement>('[data-field="workerGroup"]');
+    const targetEnvironment = lab.querySelector<HTMLSelectElement>('[data-field="targetEnvironment"]');
+    const workerGroupShell = lab.querySelector<HTMLElement>('[data-worker-group-shell]');
+    const requiredIndicator = lab.querySelector<HTMLElement>('[data-required-indicator]');
+    const guidanceList = lab.querySelector<HTMLElement>('[data-guidance-list]');
+    const responseCount = lab.querySelector<HTMLElement>('[data-response-count]');
+
+    if (!executionMode || !workerGroup || !targetEnvironment || !guidanceList) return;
+
+    let familiarity: UserFamiliarity = 'new';
+    let productVersion: ProductVersion = '4.2';
+    let groupCount: 1 | 3 = 3;
+
+    const uiState = {
+      expandedHelp: [],
+      highlightedField: null,
+      dismissedGuidance: [],
+    };
+
+    const setPressedState = (selector: string, activeValue: string, attribute: string) => {
+      lab.querySelectorAll<HTMLButtonElement>(selector).forEach((button) => {
+        const active = button.dataset[attribute] === activeValue;
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+        button.classList.toggle('border-[var(--border-strong)]', active);
+        button.classList.toggle('bg-[var(--bg-card)]', active);
+        button.classList.toggle('font-medium', active);
+        button.classList.toggle('text-[var(--text-primary)]', active);
+        button.classList.toggle('border-[var(--border-subtle)]', !active);
+        button.classList.toggle('text-[var(--text-secondary)]', !active);
+      });
+    };
+
+    const rebuildWorkerGroupOptions = () => {
+      const groups = groupCount === 1 ? ONE_WORKER_GROUP : THREE_WORKER_GROUPS;
+      const previousValue = workerGroup.value;
+
+      workerGroup.replaceChildren();
+      workerGroup.add(new Option('None selected', ''));
+
+      groups.forEach((group) => {
+        workerGroup.add(new Option(group.name, group.id));
+      });
+
+      workerGroup.value = groups.some((group) => group.id === previousValue) ? previousValue : '';
+    };
+
+    const createActionButton = (action: UIAction) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = action.label;
+      button.className = 'mt-2 rounded-md border border-[var(--border-strong)] bg-[var(--bg-card)] px-3 py-1.5 text-xs font-medium text-[var(--text-primary)] transition hover:opacity-80';
+
+      button.addEventListener('click', () => {
+        if (action.type === 'focus-field' && action.field === 'workerGroup') {
+          workerGroup.focus();
+        }
+
+        if (action.type === 'set-value' && action.field === 'workerGroup' && action.value) {
+          workerGroup.value = action.value;
+          render();
+          workerGroup.focus();
+        }
+      });
+
+      return button;
+    };
+
+    const responseTone = (response: UIResponse) => {
+      if (response.type === 'preconfiguration') return 'border-emerald-500/30 bg-emerald-500/5';
+      if (response.type === 'suggestion') return 'border-sky-500/30 bg-sky-500/5';
+      if (response.type === 'explanation' || response.type === 'warning') return 'border-amber-500/30 bg-amber-500/5';
+      return 'border-[var(--border-subtle)] bg-[var(--bg-card)]';
+    };
+
+    const renderResponses = (responses: UIResponse[]) => {
+      guidanceList.replaceChildren();
+
+      const visibleResponses = responses.filter((response) => response.type !== 'highlight');
+
+      if (visibleResponses.length === 0) {
+        const quiet = document.createElement('p');
+        quiet.className = 'm-0 text-sm text-[var(--text-secondary)]';
+        quiet.textContent = 'Configuration is valid. No contextual intervention is needed.';
+        guidanceList.append(quiet);
+      } else {
+        visibleResponses.forEach((response) => {
+          const item = document.createElement('div');
+          item.className = `rounded-lg border p-3 ${responseTone(response)}`;
+
+          const message = document.createElement('p');
+          message.className = 'm-0 text-sm leading-relaxed text-[var(--text-primary)]';
+          message.textContent = response.message;
+          item.append(message);
+
+          response.actions?.forEach((action) => item.append(createActionButton(action)));
+          guidanceList.append(item);
+        });
+      }
+
+      if (responseCount) {
+        responseCount.textContent = `${responses.length} ${responses.length === 1 ? 'signal' : 'signals'}`;
+      }
+    };
+
+    const render = () => {
+      const availableWorkerGroups = groupCount === 1 ? ONE_WORKER_GROUP : THREE_WORKER_GROUPS;
+
+      const config: AutomationConfiguration = {
+        executionMode: executionMode.value as AutomationConfiguration['executionMode'],
+        workerGroupId: workerGroup.value || null,
+        targetEnvironment: targetEnvironment.value as AutomationConfiguration['targetEnvironment'],
+      };
+
+      const runtime: RuntimeContext = {
+        productVersion,
+        userFamiliarity: familiarity,
+        availableWorkerGroups,
+      };
+
+      const result = resolveInterface({
+        config,
+        runtime,
+        ui: uiState,
+        knowledge: KNOWLEDGE,
+      });
+
+      const shouldHighlight = result.responses.some((response) => response.id === 'worker-group-highlight');
+      workerGroupShell?.classList.toggle('rounded-xl', shouldHighlight);
+      workerGroupShell?.classList.toggle('ring-2', shouldHighlight);
+      workerGroupShell?.classList.toggle('ring-amber-500/35', shouldHighlight);
+      workerGroupShell?.classList.toggle('p-3', shouldHighlight);
+      workerGroupShell?.classList.toggle('-m-3', shouldHighlight);
+      requiredIndicator?.classList.toggle('hidden', !shouldHighlight);
+
+      workerGroup.disabled = executionMode.value !== 'distributed';
+      if (workerGroup.disabled && workerGroup.value) workerGroup.value = '';
+
+      renderResponses(result.responses);
+    };
+
+    executionMode.addEventListener('change', render);
+    workerGroup.addEventListener('change', render);
+    targetEnvironment.addEventListener('change', render);
+
+    lab.querySelectorAll<HTMLButtonElement>('[data-familiarity]').forEach((button) => {
+      button.addEventListener('click', () => {
+        familiarity = button.dataset.familiarity as UserFamiliarity;
+        setPressedState('[data-familiarity]', familiarity, 'familiarity');
+        render();
+      });
+    });
+
+    lab.querySelectorAll<HTMLButtonElement>('[data-version]').forEach((button) => {
+      button.addEventListener('click', () => {
+        productVersion = button.dataset.version as ProductVersion;
+        setPressedState('[data-version]', productVersion, 'version');
+        render();
+      });
+    });
+
+    lab.querySelectorAll<HTMLButtonElement>('[data-group-count]').forEach((button) => {
+      button.addEventListener('click', () => {
+        groupCount = button.dataset.groupCount === '1' ? 1 : 3;
+        setPressedState('[data-group-count]', String(groupCount), 'groupCount');
+        rebuildWorkerGroupOptions();
+        render();
+      });
+    });
+
+    render();
+  });
+</script>
