@@ -4,7 +4,7 @@ import type {
   ResolveInput,
   UIResponse,
   ValidationIssue,
-} from './types';
+} from './types.ts';
 
 interface ResolveResponsesInput extends ResolveInput {
   facts: DerivedFacts;
