@@ -11,9 +11,10 @@ readingTime: "6 min read"
 ---
 
 import Callout from '../../components/Callout.astro';
+import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEnterpriseUiLab.astro';
 
-<Callout type="note" title="ARCHITECTURAL EXPLORATION PLACEHOLDER">
-  This article outlines the conceptual architecture for documentation-driven adaptive user interfaces. Code reference implementations and evaluation datasets will be linked as development progresses.
+<Callout type="note" title="PHASE 1 REFERENCE IMPLEMENTATION">
+  This research is now backed by the first slice of the Adaptive Enterprise UI Lab: a deterministic, client-side reference implementation for state-aware product knowledge and adaptive guidance. It intentionally uses no LLM, semantic retrieval, or remote AI runtime yet.
 </Callout>
 
 ## The Problem: The Documentation / Interface Disconnect
@@ -63,6 +64,16 @@ Similar to how context engineering prevents prompt bloat in AI agents, adaptive 
 <Callout type="architecture" title="SURFACING RELEVANCE AT THE POINT OF INTERACTION">
   By indexing structured product documentation alongside UI component state, the client runtime can evaluate whether a user is attempting an outdated workflow and proactively surface the modern alternative inline.
 </Callout>
+
+---
+
+## Adaptive Enterprise UI Lab — Phase 1
+
+The first implementation deliberately begins without AI. The application inspects current form state, applies deterministic validation, filters authored product knowledge by context, and then chooses an appropriate UI response level. The simulation controls below make user familiarity, product version, and available Worker Groups explicit so the same workflow can be exercised across different states.
+
+<AdaptiveEnterpriseUiLab />
+
+This is only the first capability slice of the longer-lived Adaptive Enterprise UI Lab. Later phases can add natural-language intent resolution, semantic knowledge retrieval, browser-local inference, and adaptive runtime routing without replacing the deterministic application-state and response-policy boundaries established here.
 
 ---
 
