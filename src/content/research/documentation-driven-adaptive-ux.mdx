@@ -69,11 +69,13 @@ Similar to how context engineering prevents prompt bloat in AI agents, adaptive 
 
 ## Adaptive Enterprise UI Lab — Phase 1
 
-The first implementation deliberately begins without AI. The application inspects current form state, applies deterministic validation, filters authored product knowledge by context, and then chooses an appropriate UI response level. The simulation controls below make user familiarity, product version, and available Worker Groups explicit so the same workflow can be exercised across different states.
+The first implementation deliberately begins without AI and narrows the experiment to one adaptive field: **Worker Group**. The lab controls simulate user familiarity, product version, execution mode, and the number of available Worker Groups. The product surface itself contains only the field being studied, making it easier to see how the same control can require different levels of explanation, highlighting, suggestion, or safe preconfiguration as context changes.
+
+Under the hood, the application inspects current state, applies deterministic validation, filters authored product knowledge by context, and then chooses an appropriate UI response level. Secondary beginner and version-specific explanations remain available without competing with the primary intervention.
 
 <AdaptiveEnterpriseUiLab />
 
-This is only the first capability slice of the longer-lived Adaptive Enterprise UI Lab. Later phases can add natural-language intent resolution, semantic knowledge retrieval, browser-local inference, and adaptive runtime routing without replacing the deterministic application-state and response-policy boundaries established here.
+This is the first capability slice of the longer-lived Adaptive Enterprise UI Lab. Later research can build on the same state, knowledge, and response-policy boundaries with natural-language intent resolution, semantic knowledge retrieval, browser-local inference, and adaptive runtime routing rather than expanding this Phase 1 article into every subsequent capability.
 
 ---
 
