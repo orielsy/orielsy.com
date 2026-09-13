@@ -22,96 +22,96 @@ function hasValidation(items: ValidationIssue[], id: string): boolean {
 
 export function resolveResponses(input: ResolveResponsesInput): UIResponse[] {
   const responses: UIResponse[] = [];
-  const workerGroupMissing = input.facts.workerGroupMissing;
+  const dataConnectionMissing = input.facts.dataConnectionMissing;
 
-  if (!workerGroupMissing) return responses;
+  if (!dataConnectionMissing) return responses;
 
   if (
-    hasValidation(input.validation, 'worker-group-required') &&
-    hasKnowledge(input.applicableKnowledge, 'worker-group-distributed-help')
+    hasValidation(input.validation, 'data-connection-required') &&
+    hasKnowledge(input.applicableKnowledge, 'data-connection-required-help')
   ) {
     responses.push({
-      id: 'worker-group-required-explanation',
+      id: 'data-connection-required-explanation',
       type: 'explanation',
       authority: 3,
-      field: 'workerGroup',
-      message: 'You selected Distributed Execution. A Worker Group is required for this mode.',
-      validationIds: ['worker-group-required'],
-      knowledgeIds: ['worker-group-distributed-help'],
+      field: 'dataConnection',
+      message: 'This workflow requires a Data Connection before it can run.',
+      validationIds: ['data-connection-required'],
+      knowledgeIds: ['data-connection-required-help'],
     });
   }
 
-  if (hasValidation(input.validation, 'worker-group-required')) {
+  if (hasValidation(input.validation, 'data-connection-required')) {
     responses.push({
-      id: 'worker-group-highlight',
+      id: 'data-connection-highlight',
       type: 'highlight',
       authority: 4,
-      field: 'workerGroup',
-      message: 'Choose a Worker Group to continue.',
-      validationIds: ['worker-group-required'],
+      field: 'dataConnection',
+      message: 'Choose a Data Connection to continue.',
+      validationIds: ['data-connection-required'],
     });
   }
 
-  if (hasKnowledge(input.applicableKnowledge, 'worker-group-beginner')) {
+  if (hasKnowledge(input.applicableKnowledge, 'data-connection-beginner')) {
     responses.push({
-      id: 'worker-group-beginner-help',
+      id: 'data-connection-beginner-help',
       type: 'help',
       authority: 2,
-      field: 'workerGroup',
-      message: 'Worker Groups determine where distributed automations run and which systems they can reach.',
-      knowledgeIds: ['worker-group-beginner'],
+      field: 'dataConnection',
+      message: 'A Data Connection identifies the external system and credentials this workflow will use.',
+      knowledgeIds: ['data-connection-beginner'],
     });
   }
 
-  if (hasKnowledge(input.applicableKnowledge, 'worker-group-required-v42')) {
+  if (hasKnowledge(input.applicableKnowledge, 'data-connection-required-v42')) {
     responses.push({
-      id: 'worker-group-version-guidance',
+      id: 'data-connection-version-guidance',
       type: 'help',
       authority: 2,
-      field: 'workerGroup',
-      message: 'Starting with version 4.2, distributed execution requires an explicit Worker Group.',
-      knowledgeIds: ['worker-group-required-v42'],
+      field: 'dataConnection',
+      message: 'Starting with version 4.2, workflows must explicitly select a Data Connection.',
+      knowledgeIds: ['data-connection-required-v42'],
     });
   }
 
-  if (input.facts.hasSingleWorkerGroupCandidate) {
-    const candidate = input.runtime.availableWorkerGroups[0];
+  if (input.facts.hasSingleDataConnectionCandidate) {
+    const candidate = input.runtime.availableDataConnections[0];
 
     if (candidate) {
       responses.push({
-        id: 'worker-group-single-option-suggestion',
+        id: 'data-connection-single-option-suggestion',
         type: 'preconfiguration',
         authority: 6,
-        field: 'workerGroup',
-        message: `${candidate.name} is the only available Worker Group.`,
+        field: 'dataConnection',
+        message: `${candidate.name} is the only compatible Data Connection for this workflow.`,
         actions: [
           {
             id: `use-${candidate.id}`,
             label: `Use ${candidate.name}`,
             type: 'set-value',
-            field: 'workerGroup',
+            field: 'dataConnection',
             value: candidate.id,
           },
         ],
       });
     }
   } else if (
-    input.facts.availableWorkerGroupCount > 1 &&
-    hasKnowledge(input.applicableKnowledge, 'worker-group-selection-guidance')
+    input.facts.availableDataConnectionCount > 1 &&
+    hasKnowledge(input.applicableKnowledge, 'data-connection-selection-guidance')
   ) {
     responses.push({
-      id: 'worker-group-selection-guidance',
+      id: 'data-connection-selection-guidance',
       type: 'suggestion',
       authority: 5,
-      field: 'workerGroup',
-      message: 'Choose the Worker Group associated with the systems this automation needs to reach.',
-      knowledgeIds: ['worker-group-selection-guidance'],
+      field: 'dataConnection',
+      message: 'Choose the connection for the system this workflow needs to access.',
+      knowledgeIds: ['data-connection-selection-guidance'],
       actions: [
         {
-          id: 'focus-worker-group',
-          label: 'Choose Worker Group',
+          id: 'focus-data-connection',
+          label: 'Choose Data Connection',
           type: 'focus-field',
-          field: 'workerGroup',
+          field: 'dataConnection',
         },
       ],
     });
