@@ -1,46 +1,44 @@
 import type {
   AutomationConfiguration,
+  DataConnection,
   RuntimeContext,
   UIState,
-  WorkerGroup,
 } from './types.ts';
 
-export const WORKER_GROUPS = {
-  eastCoastProduction: {
-    id: 'east-coast-production',
-    name: 'East Coast Production',
-    environment: 'production',
+export const DATA_CONNECTIONS = {
+  salesforceProduction: {
+    id: 'salesforce-production',
+    name: 'Salesforce Production',
+    system: 'Salesforce',
   },
-  westCoastProduction: {
-    id: 'west-coast-production',
-    name: 'West Coast Production',
-    environment: 'production',
+  snowflakeAnalytics: {
+    id: 'snowflake-analytics',
+    name: 'Snowflake Analytics',
+    system: 'Snowflake',
   },
-  centralProduction: {
-    id: 'central-production',
-    name: 'Central Production',
-    environment: 'production',
+  erpProduction: {
+    id: 'erp-production',
+    name: 'ERP Production',
+    system: 'ERP',
   },
-} satisfies Record<string, WorkerGroup>;
+} satisfies Record<string, DataConnection>;
 
-export const ONE_WORKER_GROUP: WorkerGroup[] = [WORKER_GROUPS.eastCoastProduction];
+export const ONE_DATA_CONNECTION: DataConnection[] = [DATA_CONNECTIONS.salesforceProduction];
 
-export const THREE_WORKER_GROUPS: WorkerGroup[] = [
-  WORKER_GROUPS.eastCoastProduction,
-  WORKER_GROUPS.westCoastProduction,
-  WORKER_GROUPS.centralProduction,
+export const THREE_DATA_CONNECTIONS: DataConnection[] = [
+  DATA_CONNECTIONS.salesforceProduction,
+  DATA_CONNECTIONS.snowflakeAnalytics,
+  DATA_CONNECTIONS.erpProduction,
 ];
 
 export const DEFAULT_CONFIG: AutomationConfiguration = {
-  executionMode: 'distributed',
-  workerGroupId: null,
-  targetEnvironment: 'production',
+  dataConnectionId: null,
 };
 
 export const DEFAULT_RUNTIME: RuntimeContext = {
   productVersion: '4.2',
   userFamiliarity: 'new',
-  availableWorkerGroups: THREE_WORKER_GROUPS,
+  availableDataConnections: THREE_DATA_CONNECTIONS,
 };
 
 export const DEFAULT_UI_STATE: UIState = {
