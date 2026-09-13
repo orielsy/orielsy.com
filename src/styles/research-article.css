@@ -88,6 +88,15 @@
   position: relative;
 }
 
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose h2:first-of-type {
+  margin-top: 0;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose aside.not-prose p {
+  margin: 0;
+  line-height: 1.7;
+}
+
 [data-research-entry="documentation-driven-adaptive-ux"] .research-prose h2::before {
   content: "Section " counter(research-section, decimal-leading-zero);
   display: block;
