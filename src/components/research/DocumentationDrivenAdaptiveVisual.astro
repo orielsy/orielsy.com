@@ -1,4 +1,4 @@
-<figure class="not-prose my-10 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]">
+<figure class="knowledge-path-figure not-prose my-10 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]">
   <header class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-7">
     <p class="font-editorial-mono m-0 text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]">Documentation-driven adaptive UX</p>
     <h3 class="font-display mt-2 mb-0 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Move the knowledge, not the user.</h3>
@@ -128,3 +128,56 @@
     <span class="font-editorial-mono uppercase tracking-[0.12em]">Deterministic by design</span>
   </figcaption>
 </figure>
+
+<style>
+  /*
+   * This figure is rendered inside `.prose`, whose custom global rules target
+   * raw descendants (`.prose p`, `.prose ol`, `.prose li`, `.prose h3`, ...).
+   * `not-prose` does not automatically neutralize those hand-written selectors,
+   * so explicitly establish the diagram's own typographic rhythm here.
+   */
+  .knowledge-path-figure :global(p),
+  .knowledge-path-figure :global(h3),
+  .knowledge-path-figure :global(h4),
+  .knowledge-path-figure :global(ol),
+  .knowledge-path-figure :global(li) {
+    margin: 0;
+  }
+
+  .knowledge-path-figure :global(ol) {
+    padding-left: 0;
+  }
+
+  .knowledge-path-figure :global(li) {
+    margin-block: 0;
+  }
+
+  .knowledge-path-figure :global(p) {
+    line-height: 1.5;
+  }
+
+  .knowledge-path-figure :global(h3) {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .knowledge-path-figure :global(h4) {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    line-height: 1.35;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  @media (min-width: 640px) {
+    .knowledge-path-figure :global(h3) {
+      font-size: 1.875rem;
+    }
+  }
+</style>
