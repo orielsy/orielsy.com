@@ -38,7 +38,7 @@ Provide visitors with an accurate, grounded, and engaging understanding of Oriel
   1. **The Right Context at the Right Time:** Filtering and surfacing relevant context when needed (applies to coding agents, documentation-driven UX, and onboarding).
   2. **AI as a Capability, Not Just a Chatbot:** Embedding intelligence natively into interface architecture (extraction, semantic filtering, adaptive guidance, transformations).
   3. **Abstraction Should Remove Complexity, Not Relocate It:** Finding ergonomic interaction models for intricate backend and automation workflows.
-- **Visual Separation:** The three principles must read as three distinct ideas inside the existing visual container. Achieve this through vertical spacing only — no cards, no icons, no decorative dividers, and no significant increase in overall section height.
+- **Visual Separation:** The three principles must read as three distinct ideas. Use restrained editorial spacing and linework rather than cards, icons, or decorative chrome.
 
 ### 2.4 Local & Tiered AI Runtimes
 - **Wording Constraint:** Avoid absolute guarantees (e.g. "guarantees privacy" or "eliminates operational cost"). Use precise qualifying language ("can improve privacy by keeping suitable workloads on-device", "can reduce or avoid cloud token costs for appropriate tasks").
@@ -55,11 +55,13 @@ Provide visitors with an accurate, grounded, and engaging understanding of Oriel
 - **Remove:** Unsupported expertise claims (real-time rendering expertise, embedded computing specialization, input latency optimization).
 - **Frame as Interests/Inquiries:** Modular synthesis, gaming, MIDI and control surfaces, physical/digital interfaces, and interactive systems.
 
-### 2.7 Identity & The Two Domains
-- Keep open-ended. `orielsy.com` is the canonical home. `bodyctrl.com` is a nod to `<body> + Ctrl` and a home for experiments without a forced separation. Do not describe it as a fully established separate lab.
+### 2.7 Domain Visibility
+- `orielsy.com` is the canonical personal home and the only public experimentation surface for the current phase.
+- `bodyctrl.com` remains a distinct future identity documented in ADR 001, but while it is inactive it must not be promoted or linked from the About page or other public site surfaces.
+- Do not present BODYCTRL as a current lab, experimentation destination, or active channel until Orielsy explicitly reactivates it.
 
 ### 2.8 Links & Canonical Handles
 - **LinkedIn:** `https://www.linkedin.com/in/orielsy`
 - **GitHub:** `https://github.com/orielsy`
-- **BODYCTRL:** `https://bodyctrl.com`
 - **RSS:** `/rss.xml`
+- **BODYCTRL:** intentionally omitted from public About links while inactive.
