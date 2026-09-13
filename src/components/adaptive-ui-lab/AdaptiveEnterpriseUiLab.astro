@@ -1,0 +1,402 @@
+---
+import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
+---
+
+<section
+  class="not-prose my-10 text-[var(--text-primary)]"
+  data-adaptive-enterprise-ui-lab
+  aria-labelledby="adaptive-lab-title"
+>
+  <header class="border-b border-[var(--border-subtle)] pb-8">
+    <div class="flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
+      <span>Interactive reference implementation</span>
+      <span aria-hidden="true" class="h-px w-8 bg-[var(--border-strong)]"></span>
+      <span>Phase 1 · deterministic</span>
+    </div>
+    <h3 id="adaptive-lab-title" class="mt-4 mb-0 max-w-4xl text-3xl font-semibold leading-tight text-[var(--text-primary)] sm:text-4xl">
+      Adaptive Enterprise UI Lab
+    </h3>
+    <p class="mt-4 max-w-3xl text-sm leading-7 text-[var(--text-secondary)] sm:text-base">
+      Change the scenario, then compare how two interface policies respond to the same Data Connection truth. No AI, inference, or semantic retrieval is used.
+    </p>
+  </header>
+
+  <div class="py-8">
+    <div class="flex items-center gap-3">
+      <span class="font-mono text-[10px] text-[var(--accent)]">01</span>
+      <h4 class="m-0 font-mono text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-secondary)]">Set the shared scenario</h4>
+    </div>
+
+    <div class="mt-4 grid gap-px overflow-hidden rounded-md border border-[var(--border-subtle)] bg-[var(--border-subtle)] md:grid-cols-3">
+      <div class="bg-[var(--bg-card)] p-4 sm:p-5">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <span class="text-xs text-[var(--text-secondary)]">User familiarity</span>
+          <span data-scenario-familiarity class="font-mono text-[10px] uppercase text-[var(--accent)]">new</span>
+        </div>
+        <div class="grid grid-cols-2 gap-1.5" role="group" aria-label="User familiarity">
+          <button type="button" data-familiarity="new" aria-pressed="true" class="h-9 rounded-sm border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-3 text-xs font-medium text-[var(--accent)] transition">New</button>
+          <button type="button" data-familiarity="experienced" aria-pressed="false" class="h-9 rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-xs text-[var(--text-secondary)] transition hover:bg-[var(--bg-card-hover)] hover:text-[var(--text-primary)]">Experienced</button>
+        </div>
+      </div>
+
+      <div class="bg-[var(--bg-card)] p-4 sm:p-5">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <span class="text-xs text-[var(--text-secondary)]">Product version</span>
+          <span data-scenario-version class="font-mono text-[10px] uppercase text-[var(--accent)]">v4.2</span>
+        </div>
+        <div class="grid grid-cols-2 gap-1.5" role="group" aria-label="Product version">
+          <button type="button" data-version="4.1" aria-pressed="false" class="h-9 rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-xs text-[var(--text-secondary)] transition hover:bg-[var(--bg-card-hover)] hover:text-[var(--text-primary)]">4.1</button>
+          <button type="button" data-version="4.2" aria-pressed="true" class="h-9 rounded-sm border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-3 text-xs font-medium text-[var(--accent)] transition">4.2</button>
+        </div>
+      </div>
+
+      <div class="bg-[var(--bg-card)] p-4 sm:p-5">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <span class="text-xs text-[var(--text-secondary)]">Compatible connections</span>
+          <span data-scenario-connections class="font-mono text-[10px] uppercase text-[var(--accent)]">3 matches</span>
+        </div>
+        <div class="grid grid-cols-2 gap-1.5" role="group" aria-label="Compatible Data Connections">
+          <button type="button" data-connection-count="1" aria-pressed="false" class="h-9 rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-xs text-[var(--text-secondary)] transition hover:bg-[var(--bg-card-hover)] hover:text-[var(--text-primary)]">One</button>
+          <button type="button" data-connection-count="3" aria-pressed="true" class="h-9 rounded-sm border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-3 text-xs font-medium text-[var(--accent)] transition">Several</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-y border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-4 py-4 sm:px-5">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-center gap-3">
+        <svg class="size-4 shrink-0 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+        <div>
+          <p class="m-0 font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Shared application truth</p>
+          <p data-truth-summary class="mt-1 text-sm text-[var(--text-primary)]">3 compatible connections · product 4.2 · new user</p>
+        </div>
+      </div>
+      <span class="font-mono text-[11px] text-[var(--text-secondary)]">SAME STATE → DIFFERENT POLICY</span>
+    </div>
+  </div>
+
+  <div class="py-8">
+    <div class="flex items-center gap-3">
+      <span class="font-mono text-[10px] text-[var(--accent)]">02</span>
+      <h4 class="m-0 font-mono text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-secondary)]">Compare the interface policy</h4>
+    </div>
+
+    <div class="mt-4 grid gap-5 lg:grid-cols-2">
+      <article class="flex min-h-[32rem] flex-col rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 sm:p-6">
+        <div class="mb-8 flex items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-5">
+          <div>
+            <p class="m-0 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--text-muted)]">Conventional experience</p>
+            <h5 class="mt-2 mb-0 text-lg font-semibold text-[var(--text-primary)]">Configuration</h5>
+            <p class="mt-2 max-w-md text-xs leading-5 text-[var(--text-secondary)]">The form exposes the available values and leaves interpretation to the user.</p>
+          </div>
+          <svg class="mt-1 size-4 shrink-0 text-[var(--text-muted)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 9l-3 3 3 3"/><path d="M2 12h16"/><path d="M19 5l3 3-3 3"/><path d="M22 8H6"/></svg>
+        </div>
+
+        <div class="flex flex-1 flex-col">
+          <div>
+            <label for="standard-data-connection" class="text-sm font-medium text-[var(--text-primary)]">Data Connection</label>
+            <p class="mt-1 text-xs text-[var(--text-muted)]">Required for this configuration</p>
+            <select id="standard-data-connection" data-standard-data-connection class="mt-3 h-11 w-full rounded-md border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--accent-border)]">
+              <option value="">Select a Data Connection</option>
+              {THREE_DATA_CONNECTIONS.map((connection) => <option value={connection.id}>{connection.name} · {connection.system}</option>)}
+            </select>
+            <p data-standard-error class="mt-3 hidden text-xs text-red-600 dark:text-red-400" role="alert">Select a Data Connection to continue.</p>
+          </div>
+
+          <div class="mt-auto flex flex-col-reverse gap-3 border-t border-[var(--border-subtle)] pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <button type="button" data-standard-continue class="inline-flex items-center justify-center gap-2 rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3 py-2 text-xs font-medium text-[var(--text-primary)] transition hover:bg-[var(--bg-card-hover)]">Continue <span aria-hidden="true">→</span></button>
+            <span data-standard-outcome class="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Awaiting selection</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="flex min-h-[32rem] flex-col rounded-md border border-[var(--accent-border)] bg-[var(--bg-card)] p-5 sm:p-6">
+        <div class="mb-8 flex items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-5">
+          <div>
+            <p class="m-0 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--accent)]">Adaptive experience</p>
+            <h5 class="mt-2 mb-0 text-lg font-semibold text-[var(--text-primary)]">Configuration</h5>
+            <p class="mt-2 max-w-md text-xs leading-5 text-[var(--text-secondary)]">The form adds only the intervention supported by the current evidence.</p>
+          </div>
+          <svg class="mt-1 size-4 shrink-0 text-[var(--text-muted)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 9l-3 3 3 3"/><path d="M2 12h16"/><path d="M19 5l3 3-3 3"/><path d="M22 8H6"/></svg>
+        </div>
+
+        <div class="flex flex-1 flex-col">
+          <div data-adaptive-intervention class="mb-5 rounded-md border border-[var(--accent-border)] bg-[var(--bg-primary)] p-4" aria-live="polite">
+            <div class="flex gap-3">
+              <svg data-adaptive-info-icon class="mt-0.5 size-4 shrink-0 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>
+              <div class="min-w-0 flex-1">
+                <div class="flex flex-wrap items-center gap-2">
+                  <p data-adaptive-headline class="m-0 text-sm font-medium text-[var(--text-primary)]">Choose among compatible connections</p>
+                  <span data-adaptive-authority class="rounded border border-[var(--accent-border)] px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">EXPLAIN</span>
+                </div>
+                <p data-adaptive-guidance class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Several connections satisfy the product rules. Check the system label and choose the connection that matches your task.</p>
+                <p data-version-source class="mt-3 border-t border-[var(--border-subtle)] pt-3 font-mono text-[10px] leading-5 text-[var(--text-muted)]">DEMO KNOWLEDGE · Applies to product 4.2</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="adaptive-data-connection" class="text-sm font-medium text-[var(--text-primary)]">Data Connection</label>
+            <p class="mt-1 text-xs text-[var(--text-muted)]">Required for this configuration</p>
+            <select id="adaptive-data-connection" data-adaptive-data-connection class="mt-3 h-11 w-full rounded-md border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--accent-border)]">
+              <option value="">Select a Data Connection</option>
+              {THREE_DATA_CONNECTIONS.map((connection) => <option value={connection.id}>{connection.name} · {connection.system}</option>)}
+            </select>
+            <button type="button" data-use-sole-connection class="mt-3 hidden w-fit rounded-md border border-[var(--accent-border)] bg-[var(--bg-primary)] px-3 py-1.5 text-xs font-medium text-[var(--accent)] transition hover:bg-[var(--accent-subtle)]"></button>
+            <p data-adaptive-error class="mt-3 hidden text-xs text-red-600 dark:text-red-400" role="alert">Select a Data Connection to continue.</p>
+          </div>
+
+          <div class="mt-auto flex flex-col-reverse gap-3 border-t border-[var(--border-subtle)] pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <button type="button" data-adaptive-continue class="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--accent)] px-3 py-2 text-xs font-medium text-white transition hover:bg-[var(--accent-hover)]">Continue <span aria-hidden="true">→</span></button>
+            <span data-adaptive-outcome class="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Awaiting selection</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="border-t border-[var(--border-subtle)] pt-8">
+    <details data-decision-trace open>
+      <summary class="cursor-pointer list-none">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div class="flex items-center gap-3">
+            <span class="font-mono text-[10px] text-[var(--accent)]">03</span>
+            <h4 class="m-0 font-mono text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-secondary)]">Inspect the deterministic decision</h4>
+          </div>
+          <span data-trace-toggle-label class="inline-flex items-center gap-2 rounded-md px-3 py-2 text-xs text-[var(--text-secondary)] transition hover:bg-[var(--bg-card)] hover:text-[var(--text-primary)]">Hide trace <span aria-hidden="true">⌃</span></span>
+        </div>
+      </summary>
+
+      <div class="mt-4 grid gap-px overflow-hidden rounded-md border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-2 xl:grid-cols-4">
+        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
+          <svg class="size-4 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Application state</p>
+          <p data-trace-state class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">4.2 · new · 3 matches</p>
+        </div>
+        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
+          <svg class="size-4 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 3l8 4v5c0 5-3.4 8.4-8 9-4.6-.6-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Validation</p>
+          <p data-trace-validation class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Data Connection is required.</p>
+        </div>
+        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
+          <svg class="size-4 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4"/></svg>
+          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Applicable knowledge</p>
+          <p data-trace-knowledge class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Authored product guidance</p>
+        </div>
+        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
+          <svg class="size-4 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 3v6"/><path d="M6 15v6"/><path d="M18 3v4"/><path d="M18 13v8"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="10" r="3"/></svg>
+          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Response policy</p>
+          <p data-trace-policy class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Explain the ambiguity; do not infer or preselect a value.</p>
+        </div>
+      </div>
+
+      <div class="mt-4 flex items-start gap-3 rounded-md border border-dashed border-[var(--border-subtle)] px-4 py-3 text-xs leading-5 text-[var(--text-secondary)]">
+        <svg class="mt-0.5 size-4 shrink-0 text-[var(--text-muted)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 5a2 2 0 012-2h12v17H6a2 2 0 01-2-2z"/><path d="M4 18a2 2 0 012-2h12"/></svg>
+        <p class="m-0">The knowledge fragments and rules in this lab are authored fixtures. The interface evaluates explicit conditions; it does not discover documents or generate guidance.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<script>
+  import { ONE_DATA_CONNECTION, THREE_DATA_CONNECTIONS } from './fixtures.ts';
+  import { KNOWLEDGE } from './knowledge.ts';
+  import { resolveInterface } from './resolver.ts';
+  import type { AutomationConfiguration, ProductVersion, RuntimeContext, UserFamiliarity } from './types.ts';
+
+  document.querySelectorAll<HTMLElement>('[data-adaptive-enterprise-ui-lab]').forEach((lab) => {
+    if (lab.dataset.bound === 'true') return;
+    lab.dataset.bound = 'true';
+
+    const standardDataConnection = lab.querySelector<HTMLSelectElement>('[data-standard-data-connection]');
+    const adaptiveDataConnection = lab.querySelector<HTMLSelectElement>('[data-adaptive-data-connection]');
+    const standardError = lab.querySelector<HTMLElement>('[data-standard-error]');
+    const adaptiveError = lab.querySelector<HTMLElement>('[data-adaptive-error]');
+    const standardContinue = lab.querySelector<HTMLButtonElement>('[data-standard-continue]');
+    const adaptiveContinue = lab.querySelector<HTMLButtonElement>('[data-adaptive-continue]');
+    const standardOutcome = lab.querySelector<HTMLElement>('[data-standard-outcome]');
+    const adaptiveOutcome = lab.querySelector<HTMLElement>('[data-adaptive-outcome]');
+    const adaptiveHeadline = lab.querySelector<HTMLElement>('[data-adaptive-headline]');
+    const adaptiveAuthority = lab.querySelector<HTMLElement>('[data-adaptive-authority]');
+    const adaptiveGuidance = lab.querySelector<HTMLElement>('[data-adaptive-guidance]');
+    const versionSource = lab.querySelector<HTMLElement>('[data-version-source]');
+    const useSoleConnection = lab.querySelector<HTMLButtonElement>('[data-use-sole-connection]');
+    const truthSummary = lab.querySelector<HTMLElement>('[data-truth-summary]');
+    const scenarioFamiliarity = lab.querySelector<HTMLElement>('[data-scenario-familiarity]');
+    const scenarioVersion = lab.querySelector<HTMLElement>('[data-scenario-version]');
+    const scenarioConnections = lab.querySelector<HTMLElement>('[data-scenario-connections]');
+    const traceState = lab.querySelector<HTMLElement>('[data-trace-state]');
+    const traceValidation = lab.querySelector<HTMLElement>('[data-trace-validation]');
+    const traceKnowledge = lab.querySelector<HTMLElement>('[data-trace-knowledge]');
+    const tracePolicy = lab.querySelector<HTMLElement>('[data-trace-policy]');
+    const decisionTrace = lab.querySelector<HTMLDetailsElement>('[data-decision-trace]');
+    const traceToggleLabel = lab.querySelector<HTMLElement>('[data-trace-toggle-label]');
+
+    if (!standardDataConnection || !adaptiveDataConnection) return;
+
+    let familiarity: UserFamiliarity = 'new';
+    let productVersion: ProductVersion = '4.2';
+    let connectionCount: 1 | 3 = 3;
+    let standardDataConnectionId = '';
+    let adaptiveDataConnectionId = '';
+    let standardAttempted = false;
+    let adaptiveAttempted = false;
+    const uiState = { expandedHelp: [], highlightedField: null, dismissedGuidance: [] };
+
+    const currentConnections = () => connectionCount === 1 ? ONE_DATA_CONNECTION : THREE_DATA_CONNECTIONS;
+
+    const setPressedState = (selector: string, activeValue: string, attribute: string) => {
+      lab.querySelectorAll<HTMLButtonElement>(selector).forEach((button) => {
+        const active = button.dataset[attribute] === activeValue;
+        button.setAttribute('aria-pressed', String(active));
+        button.classList.toggle('border-[var(--accent-border)]', active);
+        button.classList.toggle('bg-[var(--accent-subtle)]', active);
+        button.classList.toggle('font-medium', active);
+        button.classList.toggle('text-[var(--accent)]', active);
+        button.classList.toggle('border-[var(--border-subtle)]', !active);
+        button.classList.toggle('bg-[var(--bg-primary)]', !active);
+        button.classList.toggle('text-[var(--text-secondary)]', !active);
+      });
+    };
+
+    const resetSurfaceState = () => {
+      standardDataConnectionId = '';
+      adaptiveDataConnectionId = '';
+      standardAttempted = false;
+      adaptiveAttempted = false;
+    };
+
+    const rebuildOptions = () => {
+      const connections = currentConnections();
+      [standardDataConnection, adaptiveDataConnection].forEach((select) => {
+        select.replaceChildren();
+        select.add(new Option('Select a Data Connection', ''));
+        connections.forEach((connection) => select.add(new Option(`${connection.name} · ${connection.system}`, connection.id)));
+      });
+    };
+
+    const presentationDecision = () => {
+      const oneMatch = connectionCount === 1;
+      const detailed = familiarity === 'new';
+      return {
+        authority: oneMatch ? 'offer' : 'explain',
+        headline: oneMatch ? 'One compatible connection found' : 'Choose among compatible connections',
+        guidance: oneMatch
+          ? detailed
+            ? 'The current configuration has one compatible Data Connection. Review it, then apply it if it is the connection you intended.'
+            : 'Only one connection matches the current configuration.'
+          : detailed
+            ? 'Several connections satisfy the product rules. Check the system label and choose the connection that matches your task.'
+            : 'Several valid matches remain. A user choice is required.',
+        validation: oneMatch
+          ? 'Deterministic validation returned exactly one compatible value.'
+          : 'Deterministic validation returned several compatible values.',
+        policy: oneMatch
+          ? 'Offer the sole valid value; require confirmation before changing the field.'
+          : 'Explain the ambiguity; do not infer or preselect a value.',
+      };
+    };
+
+    const render = () => {
+      const connections = currentConnections();
+      const decision = presentationDecision();
+      const config: AutomationConfiguration = { dataConnectionId: adaptiveDataConnectionId || null };
+      const runtime: RuntimeContext = { productVersion, userFamiliarity: familiarity, availableDataConnections: connections };
+      const result = resolveInterface({ config, runtime, ui: uiState, knowledge: KNOWLEDGE });
+
+      if (scenarioFamiliarity) scenarioFamiliarity.textContent = familiarity;
+      if (scenarioVersion) scenarioVersion.textContent = `v${productVersion}`;
+      if (scenarioConnections) scenarioConnections.textContent = `${connections.length} ${connections.length === 1 ? 'match' : 'matches'}`;
+      if (truthSummary) truthSummary.textContent = `${connections.length} compatible ${connections.length === 1 ? 'connection' : 'connections'} · product ${productVersion} · ${familiarity} user`;
+
+      if (standardError) standardError.classList.toggle('hidden', !(standardAttempted && !standardDataConnectionId));
+      if (adaptiveError) adaptiveError.classList.toggle('hidden', !(adaptiveAttempted && !adaptiveDataConnectionId));
+      if (standardOutcome) standardOutcome.textContent = standardDataConnectionId ? 'Ready to continue' : 'Awaiting selection';
+      if (adaptiveOutcome) adaptiveOutcome.textContent = adaptiveDataConnectionId ? 'Ready to continue' : 'Awaiting selection';
+
+      if (adaptiveHeadline) adaptiveHeadline.textContent = decision.headline;
+      if (adaptiveAuthority) adaptiveAuthority.textContent = decision.authority;
+      if (adaptiveGuidance) adaptiveGuidance.textContent = decision.guidance;
+      if (versionSource) versionSource.classList.toggle('hidden', productVersion !== '4.2');
+
+      const soleConnection = connections.length === 1 ? connections[0] : undefined;
+      if (useSoleConnection) {
+        const show = Boolean(soleConnection && !adaptiveDataConnectionId);
+        useSoleConnection.classList.toggle('hidden', !show);
+        if (soleConnection) useSoleConnection.textContent = `✓ Use ${soleConnection.name}`;
+      }
+
+      if (traceState) traceState.textContent = `${productVersion} · ${familiarity} · ${connections.length} ${connections.length === 1 ? 'match' : 'matches'}`;
+      if (traceValidation) traceValidation.textContent = decision.validation;
+      if (traceKnowledge) {
+        const labels = [...new Set(result.applicableKnowledge.map((item) => item.source.label))];
+        traceKnowledge.textContent = labels.length > 0 ? labels.join(' · ') : 'No authored knowledge applies.';
+      }
+      if (tracePolicy) tracePolicy.textContent = decision.policy;
+    };
+
+    standardDataConnection.addEventListener('change', () => {
+      standardDataConnectionId = standardDataConnection.value;
+      standardAttempted = false;
+      render();
+    });
+
+    adaptiveDataConnection.addEventListener('change', () => {
+      adaptiveDataConnectionId = adaptiveDataConnection.value;
+      adaptiveAttempted = false;
+      render();
+    });
+
+    standardContinue?.addEventListener('click', () => {
+      standardAttempted = true;
+      render();
+    });
+
+    adaptiveContinue?.addEventListener('click', () => {
+      adaptiveAttempted = true;
+      render();
+    });
+
+    useSoleConnection?.addEventListener('click', () => {
+      const soleConnection = currentConnections()[0];
+      if (!soleConnection || connectionCount !== 1) return;
+      adaptiveDataConnectionId = soleConnection.id;
+      adaptiveDataConnection.value = soleConnection.id;
+      adaptiveAttempted = false;
+      render();
+    });
+
+    decisionTrace?.addEventListener('toggle', () => {
+      if (!traceToggleLabel) return;
+      traceToggleLabel.innerHTML = decisionTrace.open ? 'Hide trace <span aria-hidden="true">⌃</span>' : 'Show trace <span aria-hidden="true">⌄</span>';
+    });
+
+    lab.querySelectorAll<HTMLButtonElement>('[data-familiarity]').forEach((button) => button.addEventListener('click', () => {
+      familiarity = button.dataset.familiarity as UserFamiliarity;
+      setPressedState('[data-familiarity]', familiarity, 'familiarity');
+      resetSurfaceState();
+      rebuildOptions();
+      render();
+    }));
+
+    lab.querySelectorAll<HTMLButtonElement>('[data-version]').forEach((button) => button.addEventListener('click', () => {
+      productVersion = button.dataset.version as ProductVersion;
+      setPressedState('[data-version]', productVersion, 'version');
+      resetSurfaceState();
+      rebuildOptions();
+      render();
+    }));
+
+    lab.querySelectorAll<HTMLButtonElement>('[data-connection-count]').forEach((button) => button.addEventListener('click', () => {
+      connectionCount = button.dataset.connectionCount === '1' ? 1 : 3;
+      setPressedState('[data-connection-count]', String(connectionCount), 'connectionCount');
+      resetSurfaceState();
+      rebuildOptions();
+      render();
+    }));
+
+    rebuildOptions();
+    render();
+  });
+</script>
