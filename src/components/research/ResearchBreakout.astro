@@ -3,7 +3,7 @@ export interface Props {
   maxWidth?: string;
 }
 
-const { maxWidth = '72rem' } = Astro.props;
+const { maxWidth = '80rem' } = Astro.props;
 ---
 
 <div class="research-breakout not-prose" style={`--research-breakout-max: ${maxWidth};`}>
