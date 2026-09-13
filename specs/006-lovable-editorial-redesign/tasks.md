@@ -29,30 +29,30 @@ Existing implementation predates this feature spec and must now be audited again
 - [x] Refine header/navigation without promoting Graphics Lab.
 - [x] Refine footer to match editorial system.
 - [x] Redesign homepage composition using authoritative repository content.
-- [ ] Audit all existing Stage 1 changes against `spec.md`.
-- [ ] Confirm no Lovable prototype copy replaced authoritative repository wording unintentionally.
-- [ ] Confirm featured Research selection uses authoritative collection metadata/content.
-- [ ] Confirm featured Project selection uses authoritative collection metadata/content.
-- [ ] Verify Current Inquiries uses repository-authored wording.
+- [x] Audit existing Stage 1 homepage source against `spec.md`.
+- [x] Confirm no Lovable prototype copy replaced authoritative homepage wording unintentionally.
+- [x] Confirm featured Research selection uses authoritative collection metadata/content.
+- [x] Confirm featured Project selection uses authoritative collection metadata/content.
+- [x] Verify Current Inquiries uses repository-authored wording.
 - [ ] Verify both light and dark themes visually.
 - [ ] Verify mobile layout intentionally preserves hierarchy.
 - [ ] Verify no horizontal overflow at supported viewport ranges.
 - [ ] Verify focus states and keyboard navigation.
 - [ ] Verify reduced-motion behavior where motion exists.
-- [ ] Verify no prohibited dependency/framework additions.
+- [x] Verify no prohibited dependency/framework additions in the redesign diff to date.
 - [ ] Run `npm run build` when execution environment permits.
 - [ ] Review Stage 1 branch diff against `main` for unrelated changes.
-- [ ] Obtain explicit Stage 1 design approval before Stage 2.
+- [ ] Obtain explicit Stage 1 design approval before finalizing Stage 1.
 
 ## Stage 2 — Indexes
 
-Do not begin until Stage 1 is approved.
+Orielsy explicitly authorized proceeding with the indexes before the detail-page exemplar.
 
-- [ ] Redesign Research index using the approved editorial system.
-- [ ] Preserve published/unpublished and local-preview behaviors.
-- [ ] Redesign Projects index using the approved editorial system.
-- [ ] Preserve Projects taxonomy and metadata behavior.
-- [ ] Redesign About presentation without rewriting factual/professional content.
+- [x] Redesign Research index using the approved editorial system.
+- [x] Preserve published/unpublished and local-preview behavior in source.
+- [x] Redesign Projects index using the approved editorial system.
+- [x] Preserve Projects taxonomy and metadata behavior in source.
+- [x] Redesign About presentation without rewriting factual/professional content; remove inactive BODYCTRL promotion per current redesign policy.
 - [ ] Verify responsive behavior across all three routes.
 - [ ] Verify light/dark theme consistency.
 - [ ] Run build and diff verification.
@@ -60,7 +60,7 @@ Do not begin until Stage 1 is approved.
 
 ## Stage 3 — Detail Layouts
 
-Do not begin until Stage 2 is approved.
+Do not begin broad detail-layout work until Stage 2 is approved. A targeted research-detail exemplar may be explored only with explicit Orielsy approval.
 
 - [ ] Redesign Research detail layout.
 - [ ] Preserve article publication/noindex/local-preview behavior.
