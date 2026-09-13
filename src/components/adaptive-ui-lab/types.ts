@@ -1,26 +1,22 @@
-export type ExecutionMode = 'local' | 'distributed';
-export type Environment = 'development' | 'staging' | 'production';
 export type ProductVersion = '4.1' | '4.2';
 export type UserFamiliarity = 'new' | 'experienced';
 
-export type FieldId = 'executionMode' | 'workerGroup' | 'targetEnvironment';
+export type FieldId = 'dataConnection';
 
-export interface WorkerGroup {
+export interface DataConnection {
   id: string;
   name: string;
-  environment: Environment;
+  system: string;
 }
 
 export interface AutomationConfiguration {
-  executionMode: ExecutionMode;
-  workerGroupId: string | null;
-  targetEnvironment: Environment;
+  dataConnectionId: string | null;
 }
 
 export interface RuntimeContext {
   productVersion: ProductVersion;
   userFamiliarity: UserFamiliarity;
-  availableWorkerGroups: WorkerGroup[];
+  availableDataConnections: DataConnection[];
 }
 
 export interface UIState {
@@ -53,10 +49,8 @@ export interface VersionRange {
 }
 
 export interface KnowledgeCondition {
-  executionMode?: ExecutionMode;
-  workerGroupMissing?: boolean;
-  targetEnvironment?: Environment;
-  availableWorkerGroupCount?: number;
+  dataConnectionMissing?: boolean;
+  availableDataConnectionCount?: number;
 }
 
 export interface KnowledgeSource {
@@ -77,9 +71,9 @@ export interface KnowledgeItem {
 }
 
 export interface DerivedFacts {
-  workerGroupMissing: boolean;
-  availableWorkerGroupCount: number;
-  hasSingleWorkerGroupCandidate: boolean;
+  dataConnectionMissing: boolean;
+  availableDataConnectionCount: number;
+  hasSingleDataConnectionCandidate: boolean;
 }
 
 export type AuthorityLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
