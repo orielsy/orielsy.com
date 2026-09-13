@@ -1,0 +1,27 @@
+---
+export interface Props {
+  maxWidth?: string;
+}
+
+const { maxWidth = '72rem' } = Astro.props;
+---
+
+<div class="research-breakout not-prose" style={`--research-breakout-max: ${maxWidth};`}>
+  <slot />
+</div>
+
+<style>
+  .research-breakout {
+    position: relative;
+    left: 50%;
+    width: min(var(--research-breakout-max), calc(100vw - 2rem));
+    max-width: none;
+    transform: translateX(-50%);
+  }
+
+  @media (min-width: 640px) {
+    .research-breakout {
+      width: min(var(--research-breakout-max), calc(100vw - 3rem));
+    }
+  }
+</style>
