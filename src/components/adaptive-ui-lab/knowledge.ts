@@ -7,49 +7,49 @@ import type {
 
 export const KNOWLEDGE: KnowledgeItem[] = [
   {
-    id: 'worker-group-summary',
-    concept: 'worker-group',
+    id: 'data-connection-summary',
+    concept: 'data-connection',
     kind: 'summary',
-    text: 'Determines which workers can execute distributed automations.',
+    text: 'Selects the external system this workflow reads from or writes to.',
     audience: 'all',
-    source: { type: 'documentation', label: 'Worker Groups' },
+    source: { type: 'documentation', label: 'Data Connections' },
   },
   {
-    id: 'worker-group-distributed-help',
-    concept: 'worker-group',
+    id: 'data-connection-required-help',
+    concept: 'data-connection',
     kind: 'field-help',
-    text: 'A Worker Group is required when Execution Mode is Distributed.',
+    text: 'This workflow requires a Data Connection before it can run.',
     audience: 'all',
-    conditions: { executionMode: 'distributed' },
-    source: { type: 'documentation', label: 'Distributed Execution' },
+    conditions: { dataConnectionMissing: true },
+    source: { type: 'documentation', label: 'Configuring Data Connections' },
   },
   {
-    id: 'worker-group-beginner',
-    concept: 'worker-group',
+    id: 'data-connection-beginner',
+    concept: 'data-connection',
     kind: 'concept',
-    text: 'Worker Groups determine where distributed automations run and which systems they can reach.',
+    text: 'A Data Connection identifies the external system and credentials the workflow will use.',
     audience: 'new',
-    conditions: { executionMode: 'distributed' },
-    source: { type: 'documentation', label: 'Worker Groups' },
+    conditions: { dataConnectionMissing: true },
+    source: { type: 'documentation', label: 'Data Connections' },
   },
   {
-    id: 'worker-group-required-v42',
-    concept: 'worker-group',
+    id: 'data-connection-required-v42',
+    concept: 'data-connection',
     kind: 'version-guidance',
-    text: 'Starting with version 4.2, distributed execution requires an explicit Worker Group.',
+    text: 'Starting with version 4.2, workflows must explicitly select a Data Connection.',
     audience: 'all',
     versions: { min: '4.2' },
-    conditions: { executionMode: 'distributed', workerGroupMissing: true },
-    source: { type: 'release-note', label: 'Version 4.2 distributed execution changes' },
+    conditions: { dataConnectionMissing: true },
+    source: { type: 'release-note', label: 'Version 4.2 connection changes' },
   },
   {
-    id: 'worker-group-selection-guidance',
-    concept: 'worker-group',
+    id: 'data-connection-selection-guidance',
+    concept: 'data-connection',
     kind: 'configuration-guidance',
-    text: 'Choose the Worker Group associated with the systems this automation needs to reach.',
+    text: 'Choose the connection for the system this workflow needs to access.',
     audience: 'all',
-    conditions: { executionMode: 'distributed', workerGroupMissing: true },
-    source: { type: 'documentation', label: 'Choosing a Worker Group' },
+    conditions: { dataConnectionMissing: true },
+    source: { type: 'documentation', label: 'Choosing a Data Connection' },
   },
 ];
 
@@ -68,19 +68,20 @@ function matchesVersion(item: KnowledgeItem, version: ProductVersion): boolean {
   return true;
 }
 
-function matchesConditions(item: KnowledgeItem, input: ResolveInput, facts: DerivedFacts): boolean {
+function matchesConditions(item: KnowledgeItem, facts: DerivedFacts): boolean {
   const conditions = item.conditions;
   if (!conditions) return true;
-  if (conditions.executionMode !== undefined && conditions.executionMode !== input.config.executionMode) return false;
-  if (conditions.workerGroupMissing !== undefined && conditions.workerGroupMissing !== facts.workerGroupMissing) return false;
-  if (conditions.targetEnvironment !== undefined && conditions.targetEnvironment !== input.config.targetEnvironment) return false;
-  if (conditions.availableWorkerGroupCount !== undefined && conditions.availableWorkerGroupCount !== facts.availableWorkerGroupCount) return false;
+  if (conditions.dataConnectionMissing !== undefined && conditions.dataConnectionMissing !== facts.dataConnectionMissing) return false;
+  if (
+    conditions.availableDataConnectionCount !== undefined &&
+    conditions.availableDataConnectionCount !== facts.availableDataConnectionCount
+  ) return false;
   return true;
 }
 
 export function resolveApplicableKnowledge(input: ResolveInput, facts: DerivedFacts): KnowledgeItem[] {
   return input.knowledge.filter((item) => {
     const audienceMatches = item.audience === 'all' || item.audience === input.runtime.userFamiliarity;
-    return audienceMatches && matchesVersion(item, input.runtime.productVersion) && matchesConditions(item, input, facts);
+    return audienceMatches && matchesVersion(item, input.runtime.productVersion) && matchesConditions(item, facts);
   });
 }
