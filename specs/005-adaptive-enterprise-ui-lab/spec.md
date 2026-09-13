@@ -36,19 +36,21 @@ The shared scenario controls simulate:
 - product version: 4.1 / 4.2
 - compatible Data Connections: One / Several
 
-The product comparison renders **Standard UI** and **Adaptive UI** simultaneously. Both surfaces receive the same scenario and share the same selected Data Connection.
+The product comparison renders **Standard UI** and **Adaptive UI** simultaneously. Both begin from the same scenario and application truth, while each surface maintains its own interaction state so the visitor can experience the two policies independently.
 
-Standard UI provides the baseline field description and conventional required-state validation. Adaptive UI keeps the same application state but allows response policy to add contextual explanation, highlighting, suggestion, or safe preconfiguration.
+Standard UI provides the conventional baseline and behaves reactively: required-state validation appears when the visitor attempts to continue without a Data Connection. Adaptive UI uses the same scenario plus deterministic validation, authored product knowledge, and response policy to intervene proactively when the available evidence supports explanation, highlighting, suggestion, or safe preconfiguration.
 
 The compatibility control demonstrates evidence-sensitive UI authority: when several compatible Data Connections exist, the adaptive UI may guide but must not guess; when exactly one compatible connection exists, it may safely offer that value as a user-accepted action.
 
-The initial deterministic slice must demonstrate compact vs expanded help, first-time-user guidance, version-specific guidance, deterministic validation, current-state-aware explanation, safe suggested action, optional preconfiguration only when the correct choice is unambiguous, and a direct Standard-versus-Adaptive comparison without changing application state.
+The lab must also expose a compact deterministic decision trace showing the adaptive path through application state, validation, applicable authored knowledge, and response policy. This trace is explanatory instrumentation for the research demo; it is not part of the fictional product surface.
+
+The initial deterministic slice must demonstrate compact vs expanded help, first-time-user guidance, version-specific guidance, deterministic validation, current-state-aware explanation, safe suggested action, optional preconfiguration only when the correct choice is unambiguous, and a direct Standard-versus-Adaptive comparison without changing the shared scenario.
 
 ## 4. Architectural Boundaries
 
 The implementation must keep these concerns distinct:
 
-1. **Domain state** — the selected Data Connection.
+1. **Domain state** — the selected Data Connection for the experience being evaluated.
 2. **Runtime/user context** — surrounding product version, familiarity, and compatible connections.
 3. **Application truth and validation** — deterministic requirements and available options.
 4. **Product knowledge** — authored explanatory/configuration knowledge with provenance and applicability.
@@ -147,6 +149,8 @@ The first slice belongs with the existing Research entry:
 
 The Research article is not itself the architecture boundary of the application. It is the first publication surface that embeds the shared reference application.
 
+The opening problem section may include a purpose-built explanatory visual contrasting the conventional documentation detour with an in-product adaptive path. That visual is article communication, not application state or resolver logic.
+
 Do not publish the article merely because the demo exists. Publication remains separately gated by existing content-publication rules.
 
 ## 11. Production Publishing
@@ -177,7 +181,12 @@ Phase 1 is complete when:
 - the required scenario matrix is represented as executable or otherwise verifiable behavior
 - the publication demo clearly separates shared scenario controls from product surfaces
 - Data Connection is the sole visible product field in the Phase 1 experiment
-- Standard UI and Adaptive UI are visible side by side under the same state
+- Standard UI and Adaptive UI are visible side by side under the same shared scenario
+- each comparison surface can be interacted with independently without changing the shared scenario
+- Standard UI demonstrates conventional reactive validation after an attempted continuation
+- Adaptive UI demonstrates proactive intervention derived from deterministic state and authored knowledge
+- the shared application truth is summarized explicitly for the reader
+- an inspectable deterministic trace exposes state, validation, applicable knowledge, and response policy
 - exactly one compatible Data Connection can be safely offered
 - several compatible Data Connections never cause the system to guess
 - experienced users receive less automatically surfaced explanation than new users without changing underlying rules
