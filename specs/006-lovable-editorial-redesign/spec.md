@@ -46,6 +46,15 @@ Existing factual guardrails remain binding, including the distinction between gr
 
 and unsupported claims such as formal design-system ownership unless separately established.
 
+### Homepage editorial restraint
+
+The homepage must remain **evidence-oriented rather than manifesto-oriented**.
+
+- Do not elevate Lovable-authored perspective copy, manifesto-style statements, or broad professional philosophy into oversized homepage sections.
+- In particular, do not use the large "Engineering Perspective" quote treatment from the Lovable prototype on the homepage.
+- If the underlying idea already exists in authoritative About/background content, preserve it there; do not promote it into a dominant homepage statement without explicit approval.
+- Homepage emphasis should remain on current research, implemented work, and grounded supporting context.
+
 ## 3. Visual Direction
 
 The redesign should move toward an **editorial technical publication** aesthetic with architectural restraint.
@@ -77,6 +86,7 @@ The redesign should avoid:
 - repeated card grids when an editorial list or composition is stronger
 - unnecessary animation
 - decorative iconography without a clear functional or informational role
+- oversized manifesto-style quote treatments on the homepage
 
 Motion must remain subtle and must respect `prefers-reduced-motion`.
 
@@ -266,7 +276,6 @@ The homepage should preserve the strengths of the Lovable composition:
 - featured research
 - recent research
 - selected implementation/project
-- restrained perspective/about entry
 
 Do not automatically adopt Lovable wording for:
 
@@ -275,6 +284,8 @@ Do not automatically adopt Lovable wording for:
 - section names such as "Implementation as evidence"
 - manifesto-style quotes
 - professional identity framing
+
+The homepage must **not** include the large bottom "Engineering Perspective" quote treatment from the Lovable prototype.
 
 ### Stage 2 — Indexes
 
@@ -328,6 +339,7 @@ This redesign does not authorize:
 - broad animation or motion-system work
 - redesigning every route in Stage 1
 - inventing new research/project content to fill the new composition
+- introducing a manifesto-style homepage statement simply because it appeared in Lovable
 
 ## 16. Acceptance Criteria
 
@@ -342,6 +354,7 @@ Stage 1 is ready for review when:
 - remaining published Research is presented in a list-oriented editorial treatment
 - one published Project is given a strong featured treatment without fabricating copy
 - Current Inquiries is presented in a compressed, scannable format using existing authoritative wording
+- no oversized manifesto/"Engineering Perspective" quote section appears on the homepage
 - header preserves Research / Projects / About and does not promote Graphics Lab
 - footer and other global surfaces do not promote BODYCTRL as an active destination
 - public experimentation visible in the redesign is contained within `orielsy.com`
