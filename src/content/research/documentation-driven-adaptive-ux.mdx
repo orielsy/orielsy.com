@@ -12,6 +12,7 @@ readingTime: "6 min read"
 
 import Callout from '../../components/Callout.astro';
 import DocumentationDrivenAdaptiveVisual from '../../components/research/DocumentationDrivenAdaptiveVisual.astro';
+import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEnterpriseUiLab.astro';
 
 <Callout type="note" title="PHASE 1 REFERENCE IMPLEMENTATION">
@@ -27,7 +28,9 @@ Users are forced to:
 2. Search through fragmented release notes to discover newly shipped features.
 3. Guess configuration constraints that are documented elsewhere.
 
-<DocumentationDrivenAdaptiveVisual />
+<ResearchBreakout>
+  <DocumentationDrivenAdaptiveVisual />
+</ResearchBreakout>
 
 ---
 
@@ -63,7 +66,9 @@ The demo renders the conventional and adaptive experiences **at the same time**.
 
 That side-by-side comparison is the point of the Phase 1 demo: same field, same scenario, same application truth, different interface policy. When several compatible connections exist, the adaptive UI can guide without guessing. When only one compatible connection exists, it can safely offer that value as a user-accepted action. The decision trace below the comparison exposes the exact state, validation, applicable knowledge, and response-policy outcome behind the adaptive behavior.
 
-<AdaptiveEnterpriseUiLab />
+<ResearchBreakout>
+  <AdaptiveEnterpriseUiLab />
+</ResearchBreakout>
 
 This is the first capability slice of the longer-lived Adaptive Enterprise UI Lab. Later research can build on the same state, knowledge, and response-policy boundaries with natural-language intent resolution, semantic knowledge retrieval, browser-local inference, and adaptive runtime routing rather than expanding this Phase 1 article into every subsequent capability.
 
