@@ -1,0 +1,399 @@
+/* Adaptive Enterprise UI Lab polish
+   Loaded after global.css so the embedded research instrument can keep its
+   own density, hierarchy, and control treatment without fighting article prose. */
+
+.prose [data-adaptive-enterprise-ui-lab] {
+  --lab-control-bg: #f8f8f6;
+  --lab-control-hover: #f0f0ed;
+  --lab-accent-soft: #eeeeff;
+  margin-block: 2.25rem;
+}
+
+html.dark .prose [data-adaptive-enterprise-ui-lab] {
+  --lab-control-bg: #0d0e12;
+  --lab-control-hover: #17181e;
+  --lab-accent-soft: #15172a;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > header {
+  padding-bottom: 1.35rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > header > div:first-child {
+  gap: 0.65rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.17em;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > header > div:first-child > span[aria-hidden="true"] {
+  width: 1.65rem;
+  background: var(--lab-line);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] #adaptive-lab-title {
+  margin-top: 0.7rem;
+  font-size: clamp(1.9rem, 3vw, 2.45rem);
+  line-height: 1.04;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > header > p {
+  margin-top: 0.7rem;
+  max-width: 50rem;
+  font-size: 0.86rem;
+  line-height: 1.58;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1),
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) {
+  padding-block: 1.35rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) h4,
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) h4,
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) h4 {
+  color: var(--lab-muted);
+  font-size: 0.67rem;
+  letter-spacing: 0.15em;
+}
+
+/* Scenario controller */
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) > div:last-child {
+  margin-top: 0.7rem;
+  border-color: var(--lab-border);
+  background: var(--lab-border);
+  border-radius: 0.4rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) > div:last-child > div {
+  padding: 0.82rem 0.9rem;
+  background: var(--lab-surface);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) > div:last-child > div > div:first-child {
+  margin-bottom: 0.65rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) > div:last-child > div > div:first-child > span:first-child {
+  color: var(--lab-muted);
+  font-size: 0.72rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) > div:last-child > div > div:first-child > span:last-child {
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] button[aria-pressed] {
+  min-height: 2.35rem;
+  border-radius: 0.28rem;
+  font-size: 0.72rem;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] button[aria-pressed="false"] {
+  border-color: var(--lab-border);
+  background: var(--lab-control-bg);
+  color: var(--lab-muted);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] button[aria-pressed="false"]:hover {
+  border-color: var(--lab-line);
+  background: var(--lab-control-hover);
+  color: var(--lab-fg);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] button[aria-pressed="true"] {
+  border-color: var(--accent-border);
+  background: var(--lab-accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] button[aria-pressed]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Shared truth strip */
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(2) {
+  padding: 0.78rem 1rem;
+  border-color: var(--lab-border);
+  background: var(--lab-surface-2);
+  box-shadow: inset 2px 0 0 var(--lab-accent);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(2) svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(2) p:first-of-type {
+  font-size: 0.61rem;
+  letter-spacing: 0.14em;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] [data-truth-summary] {
+  margin-top: 0.12rem;
+  font-size: 0.76rem;
+  font-weight: 500;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(2) > div > span:last-child {
+  color: var(--lab-faint);
+  font-size: 0.61rem;
+  letter-spacing: 0.04em;
+}
+
+/* Interface comparison */
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) > div:last-child {
+  margin-top: 0.72rem;
+  gap: 0.72rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article {
+  min-height: 0 !important;
+  border-radius: 0.42rem;
+  border-color: var(--lab-border);
+  background: var(--lab-surface);
+  padding: 0.95rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article + article {
+  border-color: var(--accent-border);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article > div:first-child {
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.8rem;
+  border-color: var(--lab-border);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article > div:first-child > div > p:first-child {
+  font-size: 0.59rem;
+  letter-spacing: 0.15em;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article h5 {
+  margin-top: 0.28rem;
+  font-size: 1.02rem;
+  line-height: 1.15;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article > div:first-child p:last-of-type {
+  margin-top: 0.3rem;
+  max-width: 31rem;
+  color: var(--lab-muted);
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] label {
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] label + p {
+  margin-top: 0.15rem;
+  font-size: 0.66rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] select {
+  margin-top: 0.55rem;
+  height: 2.5rem;
+  border-color: var(--lab-line);
+  border-radius: 0.35rem;
+  background-color: var(--lab-control-bg);
+  color: var(--lab-fg);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color-scheme: light;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+html.dark .prose [data-adaptive-enterprise-ui-lab] select {
+  color-scheme: dark;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] select:hover {
+  border-color: var(--lab-line);
+  background-color: var(--lab-control-hover);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] select:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] [data-adaptive-intervention] {
+  margin-bottom: 0.85rem;
+  border-color: var(--accent-border);
+  border-radius: 0.4rem;
+  background: var(--lab-control-bg);
+  padding: 0.82rem 0.9rem;
+  box-shadow: inset 2px 0 0 var(--lab-accent);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] [data-adaptive-headline] {
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] [data-adaptive-authority] {
+  border-color: var(--accent-border);
+  border-radius: 0.25rem;
+  background: var(--lab-accent-soft);
+  padding: 0.15rem 0.42rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] [data-adaptive-guidance] {
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] [data-version-source] {
+  margin-top: 0.58rem;
+  padding-top: 0.52rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] [data-standard-continue],
+.prose [data-adaptive-enterprise-ui-lab] [data-adaptive-continue],
+.prose [data-adaptive-enterprise-ui-lab] [data-use-sole-connection] {
+  min-height: 2.25rem;
+  border-radius: 0.32rem;
+  padding-inline: 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] [data-standard-continue] {
+  border-color: var(--lab-border);
+  background: var(--lab-control-bg);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] [data-standard-continue]:hover {
+  border-color: var(--lab-line);
+  background: var(--lab-control-hover);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] [data-adaptive-continue] {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] [data-standard-outcome],
+.prose [data-adaptive-enterprise-ui-lab] [data-adaptive-outcome] {
+  font-size: 0.56rem;
+  letter-spacing: 0.13em;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article > div:last-child > div:last-child {
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+}
+
+/* Decision trace */
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) {
+  padding-top: 1.35rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) summary > div {
+  gap: 0.75rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] [data-trace-toggle-label] {
+  border: 1px solid transparent;
+  border-radius: 0.3rem;
+  padding: 0.35rem 0.5rem;
+  color: var(--lab-faint);
+  font-size: 0.66rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] summary:hover [data-trace-toggle-label] {
+  border-color: var(--lab-border);
+  background: var(--lab-surface);
+  color: var(--lab-fg);
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) details > div:first-of-type {
+  margin-top: 0.68rem;
+  border-color: var(--lab-border);
+  background: var(--lab-border);
+  border-radius: 0.38rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) details > div:first-of-type > div {
+  min-height: 7rem;
+  background: var(--lab-surface);
+  padding: 0.85rem 0.9rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) details > div:first-of-type svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) details > div:first-of-type p:first-of-type {
+  margin-top: 0.65rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) details > div:first-of-type p:last-of-type {
+  margin-top: 0.3rem;
+  font-size: 0.69rem;
+  line-height: 1.46;
+}
+
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) details > div:last-of-type {
+  margin-top: 0.68rem;
+  border-color: var(--lab-border);
+  border-radius: 0.35rem;
+  background: var(--lab-control-bg);
+  padding: 0.72rem 0.85rem;
+  color: var(--lab-muted);
+  font-size: 0.68rem;
+  line-height: 1.45;
+}
+
+@media (min-width: 640px) {
+  .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .prose [data-adaptive-enterprise-ui-lab] {
+    margin-block: 1.85rem;
+  }
+
+  .prose [data-adaptive-enterprise-ui-lab] > header {
+    padding-bottom: 1.15rem;
+  }
+
+  .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1),
+  .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) {
+    padding-block: 1.15rem;
+  }
+
+  .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(2) {
+    padding-inline: 0.8rem;
+  }
+
+  .prose [data-adaptive-enterprise-ui-lab] [data-standard-continue],
+  .prose [data-adaptive-enterprise-ui-lab] [data-adaptive-continue] {
+    min-height: 2.5rem;
+  }
+}
