@@ -11,6 +11,7 @@ readingTime: "6 min read"
 ---
 
 import Callout from '../../components/Callout.astro';
+import DocumentationDrivenAdaptiveVisual from '../../components/research/DocumentationDrivenAdaptiveVisual.astro';
 import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEnterpriseUiLab.astro';
 
 <Callout type="note" title="PHASE 1 REFERENCE IMPLEMENTATION">
@@ -26,20 +27,7 @@ Users are forced to:
 2. Search through fragmented release notes to discover newly shipped features.
 3. Guess configuration constraints that are documented elsewhere.
 
-```text
-Current Workflow:
-[User in App]  ---> (Confusion / Blocker) ---> [Leaves App] ---> [Search Wiki / Docs] ---> [Return to App]
-
-Documentation-Driven Adaptive UX:
-[Structured Docs] ---> [Semantic Knowledge Ingestion] ---> [Adaptive UI Controller]
-                                                                     |
-                                                       +-------------+-------------+
-                                                       |             |             |
-                                                       v             v             v
-                                                 Contextual     Inline Feature   Adaptive
-                                                  Badges &        Discovery      Tooltips &
-                                                  Warnings         Prompts       Guidance
-```
+<DocumentationDrivenAdaptiveVisual />
 
 ---
 
@@ -71,9 +59,9 @@ Similar to how context engineering prevents prompt bloat in AI agents, adaptive 
 
 The first implementation deliberately begins without AI and narrows the experiment to one field: **Data Connection**. The reader can vary user familiarity, product version, and whether the workflow has one compatible connection or several.
 
-The demo renders the conventional and adaptive versions **at the same time**. Both sides receive the same scenario and share the same Data Connection selection. The **Standard UI** provides the field, its short description, and ordinary required-state validation. The **Adaptive UI** uses that same application state plus deterministic validation, authored product knowledge, and response policy to decide whether to explain, highlight, suggest a next action, or safely offer the only compatible Data Connection.
+The demo renders the conventional and adaptive experiences **at the same time**. Both begin from the same scenario and application truth, but the visitor can interact with each surface independently. The **Standard UI** behaves reactively: it exposes the field and ordinary validation when the user attempts to continue without a selection. The **Adaptive UI** uses the same scenario plus deterministic validation, authored product knowledge, and response policy to decide whether to explain, highlight, suggest a next action, or safely offer the only compatible Data Connection before the user hits that failure state.
 
-That side-by-side comparison is the point of the Phase 1 demo: same field, same scenario, same application truth, different interface policy. When several compatible connections exist, the adaptive UI can guide without guessing. When only one compatible connection exists, it can safely offer that value as a user-accepted action.
+That side-by-side comparison is the point of the Phase 1 demo: same field, same scenario, same application truth, different interface policy. When several compatible connections exist, the adaptive UI can guide without guessing. When only one compatible connection exists, it can safely offer that value as a user-accepted action. The decision trace below the comparison exposes the exact state, validation, applicable knowledge, and response-policy outcome behind the adaptive behavior.
 
 <AdaptiveEnterpriseUiLab />
 
