@@ -1,7 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ArticleCard from '../components/ArticleCard.astro';
-import ProjectCard from '../components/ProjectCard.astro';
 import { getCollection } from 'astro:content';
 
 const allResearch = await getCollection('research');
@@ -13,6 +11,12 @@ const allProjects = await getCollection('projects');
 const publishedProjects = allProjects.filter((entry) => entry.data.published);
 const recentProjects = publishedProjects
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const featuredResearch = recentResearch.find((entry) => entry.data.featured) ?? recentResearch[0];
+const recentResearchList = recentResearch
+  .filter((entry) => entry.id !== featuredResearch?.id)
+  .slice(0, 3);
+const featuredProject = recentProjects.find((entry) => entry.data.featured) ?? recentProjects[0];
 
 const explorationAreas = [
   {
@@ -36,157 +40,216 @@ const explorationAreas = [
     tag: 'Client Systems',
   },
 ];
+
+const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+}).format(date);
 ---
 
 <BaseLayout
   title="Orielsy Diaz — UI Architecture, Context Engineering & Applied AI"
   description="Senior Frontend Engineer & UI Architect. Research, systems architecture, and applied AI explorations."
   schemaType="website"
+  wide
 >
-  <section class="pb-12 pt-2 sm:pt-6 border-b border-[var(--border-subtle)]">
-    <div class="flex flex-col gap-4">
-      <div class="inline-flex items-center gap-2 text-xs font-mono text-[var(--accent)]">
-        <span class="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse"></span>
-        <span>Senior Frontend Engineer &bull; UI Architect</span>
-      </div>
-
-      <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-[var(--text-primary)] leading-[1.15]">
-        Architecture, interaction systems, and applied AI at the edge of the interface.
-      </h1>
-
-      <p class="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-3xl mt-2">
-        I have 15+ years of experience designing scalable web architectures, frontend systems, and enterprise platforms. My current work centers on applied AI, context engineering for AI agents, Model Context Protocol (MCP), and local inference—exploring how these capabilities can support real product experiences, agentic development workflows, and developer tools.
-      </p>
-
-      <div class="flex flex-wrap items-center gap-3 pt-3 text-xs font-mono">
-        <a
-          href="/research"
-          class="px-4 py-2 rounded bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] font-medium transition-colors flex items-center gap-1.5"
-        >
-          <span>Read Research & Explorations</span>
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </a>
-        <a
-          href="/projects"
-          class="px-4 py-2 rounded border border-[var(--border-subtle)] hover:border-[var(--border-strong)] bg-[var(--bg-card)] text-[var(--text-primary)] transition-colors"
-        >
-          View Selected Projects
-        </a>
-        <a
-          href="/about"
-          class="px-3 py-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
-        >
-          About & Background &rarr;
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-12 border-b border-[var(--border-subtle)]">
-    <div class="flex items-center justify-between mb-8">
-      <div>
-        <h2 class="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] font-semibold">
-          Focus & Inquiries
-        </h2>
-        <p class="text-xl font-bold text-[var(--text-primary)] tracking-tight mt-1">
-          Current Areas of Exploration
-        </p>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {explorationAreas.map((area) => (
-        <div class="p-5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] flex flex-col justify-between">
-          <div>
-            <div class="text-[10px] font-mono text-[var(--accent)] uppercase tracking-wider mb-2 font-medium">
-              {area.tag}
-            </div>
-            <h3 class="text-sm font-semibold text-[var(--text-primary)] mb-2">
-              {area.title}
-            </h3>
-            <p class="text-xs text-[var(--text-secondary)] leading-relaxed">
-              {area.description}
-            </p>
-          </div>
+  <section class="border-b border-[var(--border-subtle)] py-16 sm:py-24 lg:py-28">
+    <div class="site-shell grid gap-12 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-8">
+        <div class="flex items-center gap-3 font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)] sm:text-[10px]">
+          <span class="h-px w-10 bg-[var(--accent)]" aria-hidden="true"></span>
+          <span>Senior Frontend Engineer &bull; UI Architect</span>
         </div>
-      ))}
-    </div>
-  </section>
 
-  <section class="py-12 border-b border-[var(--border-subtle)]">
-    <div class="flex items-center justify-between mb-8">
-      <div>
-        <h2 class="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] font-semibold">
-          Writing & Thinking
-        </h2>
-        <p class="text-xl font-bold text-[var(--text-primary)] tracking-tight mt-1">
-          Recent Research & Explorations
-        </p>
+        <h1 class="font-display mt-8 max-w-5xl text-4xl font-semibold leading-[1.04] tracking-[-0.045em] text-[var(--text-primary)] sm:text-6xl lg:text-7xl">
+          Architecture, interaction systems, and applied AI <span class="text-[var(--text-muted)]">at the edge of the interface.</span>
+        </h1>
       </div>
-      <a
-        href="/research"
-        class="text-xs font-mono text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors flex items-center gap-1"
-      >
-        <span>View all</span>
-        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-      </a>
-    </div>
 
-    <div class="grid grid-cols-1 gap-4">
-      {recentResearch.map((entry) => (
-        <ArticleCard entry={entry} />
-      ))}
-    </div>
-  </section>
-
-  <section class="py-12 border-b border-[var(--border-subtle)]">
-    <div class="flex items-center justify-between mb-8">
-      <div>
-        <h2 class="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] font-semibold">
-          Implementations & Prototypes
-        </h2>
-        <p class="text-xl font-bold text-[var(--text-primary)] tracking-tight mt-1">
-          Selected Projects
+      <div class="lg:col-span-4 lg:pb-2">
+        <p class="max-w-md text-sm leading-7 text-[var(--text-secondary)] sm:text-[15px]">
+          I have 15+ years of experience designing scalable web architectures, frontend systems, and enterprise platforms. My current work centers on applied AI, context engineering for AI agents, Model Context Protocol (MCP), and local inference—exploring how these capabilities can support real product experiences, agentic development workflows, and developer tools.
         </p>
-      </div>
-      <a
-        href="/projects"
-        class="text-xs font-mono text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors flex items-center gap-1"
-      >
-        <span>View all</span>
-        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-      </a>
-    </div>
 
-    <div class="grid grid-cols-1 gap-6">
-      {recentProjects.map((entry) => (
-        <ProjectCard entry={entry} />
-      ))}
+        <div class="mt-7 flex flex-wrap gap-x-6 gap-y-3 font-editorial-mono text-[10px] uppercase tracking-[0.08em]">
+          <a href="/research" class="inline-flex items-center gap-2 text-[var(--text-primary)] hover:text-[var(--accent)]">
+            Read Research & Explorations <span aria-hidden="true">↗</span>
+          </a>
+          <a href="/projects" class="inline-flex items-center gap-2 text-[var(--text-primary)] hover:text-[var(--accent)]">
+            View Selected Projects <span aria-hidden="true">↗</span>
+          </a>
+          <a href="/about" class="inline-flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-primary)]">
+            About & Background <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="py-12">
-    <div class="p-6 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-      <div class="flex flex-col gap-2 max-w-xl">
-        <h2 class="text-sm font-mono uppercase tracking-wider text-[var(--text-muted)] font-semibold">
-          Engineering Perspective
-        </h2>
-        <p class="text-sm text-[var(--text-secondary)] leading-relaxed">
+  <section class="border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)]/40 py-7">
+    <div class="site-shell flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
+      <div class="shrink-0 font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
+        Focus & Inquiries
+      </div>
+
+      <ol class="grid flex-1 border-l border-t border-[var(--border-subtle)] sm:grid-cols-2 lg:grid-cols-4">
+        {explorationAreas.map((area, index) => (
+          <li class="min-h-28 border-b border-r border-[var(--border-subtle)] px-4 py-4" title={area.description}>
+            <div class="flex gap-3">
+              <span class="font-editorial-mono text-[9px] text-[var(--accent)]">0{index + 1}</span>
+              <div>
+                <h2 class="font-display text-xs font-semibold leading-5 text-[var(--text-primary)]">{area.title}</h2>
+                <p class="font-editorial-mono mt-2 text-[8px] uppercase tracking-[0.08em] text-[var(--text-muted)]">{area.tag}</p>
+                <p class="sr-only">{area.description}</p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {featuredResearch && (
+    <section class="py-16 sm:py-20">
+      <div class="site-shell grid gap-8 lg:grid-cols-12">
+        <div class="lg:col-span-3">
+          <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Featured Research</p>
+          <p class="mt-3 max-w-xs text-xs leading-6 text-[var(--text-muted)]">Writing & Thinking</p>
+        </div>
+
+        <article class="grid gap-8 border-t border-[var(--accent)] pt-6 lg:col-span-9 lg:grid-cols-[minmax(0,1fr)_260px]">
+          <div>
+            <div class="flex flex-wrap gap-x-4 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">
+              <span>{featuredResearch.data.type}</span>
+              <time datetime={featuredResearch.data.pubDate.toISOString()}>{formatDate(featuredResearch.data.pubDate)}</time>
+              {featuredResearch.data.readingTime && <span>{featuredResearch.data.readingTime}</span>}
+            </div>
+
+            <h2 class="font-display mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.035em] text-[var(--text-primary)] sm:text-4xl">
+              <a href={`/research/${featuredResearch.id}`} class="hover:text-[var(--accent)]">{featuredResearch.data.title}</a>
+            </h2>
+
+            <p class="mt-5 max-w-2xl text-sm leading-7 text-[var(--text-secondary)]">
+              {featuredResearch.data.description}
+            </p>
+
+            <a href={`/research/${featuredResearch.id}`} class="font-editorial-mono mt-7 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.08em] text-[var(--text-primary)] hover:text-[var(--accent)]">
+              Read publication <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <aside class="border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5" aria-label="Featured research metadata">
+            <p class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Research Index</p>
+            <div class="mt-7 border-t border-[var(--border-subtle)]">
+              {featuredResearch.data.tags.map((tag, index) => (
+                <div class="flex items-center justify-between gap-4 border-b border-[var(--border-subtle)] py-3">
+                  <span class="font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-secondary)]">#{tag}</span>
+                  <span class="font-editorial-mono text-[8px] text-[var(--text-muted)]">0{index + 1}</span>
+                </div>
+              ))}
+            </div>
+          </aside>
+        </article>
+      </div>
+    </section>
+  )}
+
+  {recentResearchList.length > 0 && (
+    <section class="border-y border-[var(--border-subtle)] py-16 sm:py-20">
+      <div class="site-shell">
+        <div class="flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Recent Research</p>
+            <h2 class="font-display mt-3 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Recent Research & Explorations</h2>
+          </div>
+          <a href="/research" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all ↗</a>
+        </div>
+
+        <div class="mt-9 border-y border-[var(--border-subtle)]">
+          {recentResearchList.map((entry, index) => (
+            <article class="group grid gap-4 border-b border-[var(--border-subtle)] py-7 last:border-b-0 sm:grid-cols-[130px_minmax(0,1fr)_auto] sm:gap-8">
+              <div class="flex items-start gap-3 sm:block">
+                <span class="font-editorial-mono text-[9px] text-[var(--accent)]">0{index + 1}</span>
+                <time datetime={entry.data.pubDate.toISOString()} class="font-editorial-mono sm:mt-3 sm:block text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
+                  {formatDate(entry.data.pubDate)}
+                </time>
+              </div>
+
+              <div>
+                <div class="flex flex-wrap gap-x-4 gap-y-1 font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
+                  <span>{entry.data.type}</span>
+                  {entry.data.readingTime && <span>{entry.data.readingTime}</span>}
+                </div>
+                <h3 class="font-display mt-3 max-w-3xl text-xl font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)] sm:text-2xl">
+                  <a href={`/research/${entry.id}`} class="group-hover:text-[var(--accent)]">{entry.data.title}</a>
+                </h3>
+                <p class="mt-3 max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">{entry.data.description}</p>
+              </div>
+
+              <span class="hidden text-[var(--text-muted)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:block" aria-hidden="true">↗</span>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {featuredProject && (
+    <section class="py-16 sm:py-20">
+      <div class="site-shell">
+        <div class="flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Selected Implementation</p>
+            <h2 class="font-display mt-3 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Selected Projects</h2>
+          </div>
+          <a href="/projects" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all ↗</a>
+        </div>
+
+        <article class="mt-10 grid gap-8 border-t border-[var(--accent)] pt-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+          <div>
+            <div class="flex flex-wrap gap-x-4 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">
+              <span>{featuredProject.data.status}</span>
+              <span>{featuredProject.data.role}</span>
+              <span>{featuredProject.data.dateLabel ?? formatDate(featuredProject.data.date)}</span>
+            </div>
+            <h3 class="font-display mt-4 max-w-3xl text-2xl font-semibold leading-tight tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">
+              <a href={`/projects/${featuredProject.id}`} class="hover:text-[var(--accent)]">{featuredProject.data.title}</a>
+            </h3>
+            <p class="mt-4 max-w-2xl text-sm leading-7 text-[var(--text-secondary)]">{featuredProject.data.summary}</p>
+            <a href={`/projects/${featuredProject.id}`} class="font-editorial-mono mt-7 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.08em] text-[var(--text-primary)] hover:text-[var(--accent)]">
+              View project <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <aside class="border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5" aria-label="Selected project technologies">
+            <p class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Technology</p>
+            <ul class="mt-7 border-t border-[var(--border-subtle)]">
+              {featuredProject.data.technologies.slice(0, 6).map((technology, index) => (
+                <li class="flex items-center justify-between gap-4 border-b border-[var(--border-subtle)] py-3">
+                  <span class="font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-secondary)]">{technology}</span>
+                  <span class="font-editorial-mono text-[8px] text-[var(--text-muted)]">0{index + 1}</span>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        </article>
+      </div>
+    </section>
+  )}
+
+  <section class="border-t border-[var(--border-subtle)] py-14 sm:py-16">
+    <div class="site-shell grid gap-7 lg:grid-cols-12">
+      <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)] lg:col-span-3">Engineering Perspective</p>
+      <div class="lg:col-span-8">
+        <p class="font-display max-w-4xl text-2xl font-medium leading-snug tracking-[-0.025em] text-[var(--text-secondary)] sm:text-3xl">
           I view frontend engineering not as skinning mockups, but as architecting resilient state systems, distributed client compute, and ergonomic interaction models.
         </p>
+        <a href="/about" class="font-editorial-mono mt-7 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.08em] text-[var(--text-primary)] hover:text-[var(--accent)]">
+          Read Full Background <span aria-hidden="true">→</span>
+        </a>
       </div>
-      <a
-        href="/about"
-        class="px-4 py-2 text-xs font-mono rounded border border-[var(--border-subtle)] bg-[var(--bg-card)] text-[var(--text-primary)] hover:border-[var(--border-strong)] whitespace-nowrap transition-colors"
-      >
-        Read Full Background &rarr;
-      </a>
     </div>
   </section>
 </BaseLayout>
