@@ -62,11 +62,13 @@ Orielsy explicitly authorized proceeding with the indexes before the detail-page
 
 Stage 2 was explicitly approved by Orielsy. Begin with the published `documentation-driven-adaptive-ux` research paper as the reference implementation for the Research detail system.
 
-- [ ] Redesign Research detail layout.
-- [ ] Preserve article publication/noindex/local-preview behavior.
-- [ ] Preserve long-form prose readability and width policy.
-- [ ] Integrate existing wide diagrams/media without reducing legibility.
-- [ ] Use `documentation-driven-adaptive-ux` as the first Research-detail visual exemplar without rewriting its factual/editorial content.
+- [x] Redesign Research detail layout in source.
+- [x] Preserve article publication/noindex/local-preview behavior in the shared route/layout architecture.
+- [x] Preserve long-form prose readability with a centered reading measure and wider editorial shell.
+- [x] Preserve and integrate existing wide diagram/demo breakouts within the centered reading system.
+- [x] Use `documentation-driven-adaptive-ux` as the first Research-detail visual exemplar without rewriting its factual/editorial MDX content.
+- [x] Restyle the paper's documentation/adaptive comparison visual to the approved editorial linework system.
+- [x] Restyle research callouts and table of contents to the approved editorial system.
 - [ ] Redesign Project detail layout.
 - [ ] Preserve project metadata, routes, and artifact links.
 - [ ] Verify existing callouts, tables, code, media, and diagrams in both themes.
