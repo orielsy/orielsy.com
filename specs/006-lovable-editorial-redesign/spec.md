@@ -131,6 +131,15 @@ The redesign must not:
 
 Supporting or experimental areas may remain available without being promoted into the primary information architecture.
 
+### Experimentation visibility
+
+For the current phase, **orielsy.com is the only public experimentation surface**.
+
+- Do not promote or link `bodyctrl.com` as an active lab, experimentation destination, or creative surface.
+- Do not use footer copy, navigation, badges, or supporting text that implies BODYCTRL is currently active.
+- BODYCTRL may remain documented as a future/distinct identity in ADR 001, but visible cross-linking is deferred until Orielsy explicitly reactivates it.
+- Experimental work that is public now should be framed and surfaced within `orielsy.com` under the existing Research / Projects / supporting-experiment structure.
+
 ## 7. Content Architecture Preservation
 
 The redesign must preserve the existing Astro content collections and current repository content as the source of truth.
@@ -315,6 +324,7 @@ This redesign does not authorize:
 - changing deployment architecture
 - introducing React or a component framework
 - promoting Graphics Lab into primary navigation
+- promoting BODYCTRL as an active public destination
 - broad animation or motion-system work
 - redesigning every route in Stage 1
 - inventing new research/project content to fill the new composition
@@ -333,6 +343,8 @@ Stage 1 is ready for review when:
 - one published Project is given a strong featured treatment without fabricating copy
 - Current Inquiries is presented in a compressed, scannable format using existing authoritative wording
 - header preserves Research / Projects / About and does not promote Graphics Lab
+- footer and other global surfaces do not promote BODYCTRL as an active destination
+- public experimentation visible in the redesign is contained within `orielsy.com`
 - the existing theme behavior still works in light and dark modes
 - semantic theme tokens drive the redesigned palette
 - desktop and mobile layouts are intentionally composed and free of horizontal overflow
@@ -356,5 +368,6 @@ The feature is complete when:
 - SEO and stable URL behavior remain unchanged
 - all factual copy remains traceable to authoritative repository sources or separately approved edits
 - no prohibited framework/dependency additions have been introduced
+- BODYCTRL remains unpromoted until explicitly reactivated
 - final branch diff has been reviewed for unrelated changes
 - merge and production publication occur only after explicit approval
