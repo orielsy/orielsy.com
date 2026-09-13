@@ -9,11 +9,12 @@
 2. Build Phase 1 as a reusable application slice under `src/components/adaptive-ui-lab/`, not as article-specific inline logic.
 3. Keep domain state, runtime context, validation, authored knowledge, knowledge applicability, response policy, and rendering separate.
 4. Implement the deterministic resolver first and make its expected scenario behavior explicit before visual polish.
-5. Present Phase 1 as a focused single-field study: Worker Group is the only visible product control; surrounding variables belong to the lab harness.
-6. Embed the application into `src/content/research/documentation-driven-adaptive-ux.mdx` only after the resolver boundary is stable.
-7. Keep the article unpublished unless Orielsy explicitly approves publication.
-8. Do not add AI, WebLLM, MCP, backend infrastructure, persistence, telemetry, or a separate repository in Phase 1.
-9. Do not publish production from the feature branch.
+5. Present Phase 1 as a focused single-field study: Data Connection is the only visible product control.
+6. Render Standard UI and Adaptive UI side by side from one shared scenario so the baseline and concept can be compared directly.
+7. Embed the application into `src/content/research/documentation-driven-adaptive-ux.mdx` only after the resolver boundary is stable.
+8. Keep the article unpublished unless Orielsy explicitly approves publication.
+9. Do not add AI, WebLLM, MCP, backend infrastructure, persistence, telemetry, or a separate repository in Phase 1.
+10. Do not publish production from the feature branch.
 
 ## 2. Intended Phase 1 Structure
 
@@ -33,7 +34,7 @@ Exact filenames may change if existing repository conventions indicate a better 
 ## 3. Deterministic Implementation Order
 
 1. Define domain/runtime/response types.
-2. Add fixed Worker Group and simulation fixtures.
+2. Add fixed Data Connection and simulation fixtures.
 3. Implement deterministic validation.
 4. Add authored product-knowledge records with provenance and applicability.
 5. Implement derived facts and knowledge matching.
@@ -41,7 +42,7 @@ Exact filenames may change if existing repository conventions indicate a better 
 7. Implement the resolver orchestration function.
 8. Verify the required scenario matrix.
 9. Add the interactive Astro/client-side presentation.
-10. Separate lab-context controls visually and structurally from the single Worker Group product surface.
+10. Render Standard and Adaptive product surfaces from the same scenario and selected Data Connection.
 11. Embed it into the existing unpublished Research entry.
 12. Run build/verification where execution access permits.
 13. Review branch diff against `main` for unrelated changes.
@@ -50,14 +51,14 @@ Exact filenames may change if existing repository conventions indicate a better 
 
 The deterministic core must cover:
 
-- New user, v4.1, distributed, no Worker Group, 3 available groups.
-- New user, v4.2, distributed, no Worker Group, 3 available groups.
-- Experienced user, v4.2, distributed, no Worker Group, 3 available groups.
-- New user, v4.2, distributed, no Worker Group, exactly 1 available group.
-- Experienced user, v4.2, distributed, no Worker Group, exactly 1 available group.
-- v4.2 distributed configuration with a Worker Group selected successfully.
+- New user, v4.1, no Data Connection, several compatible connections.
+- New user, v4.2, no Data Connection, several compatible connections.
+- Experienced user, v4.2, no Data Connection, several compatible connections.
+- New user, v4.2, no Data Connection, exactly one compatible connection.
+- Experienced user, v4.2, no Data Connection, exactly one compatible connection.
+- v4.2 configuration with a Data Connection selected successfully.
 
-The UI harness additionally allows Local / Distributed execution context so the viewer can see the Worker Group field become irrelevant when distributed execution is not active.
+The UI harness must make the certainty distinction obvious: several compatible connections permit guidance but not guessing; exactly one compatible connection permits a safe user-accepted preconfiguration offer.
 
 ## 5. Future-Phase Guardrail
 
