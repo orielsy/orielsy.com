@@ -28,18 +28,19 @@ These are future extension points only. Phase 1 must not implement or imply that
 
 ## 3. Phase 1 Scenario
 
-Phase 1 deliberately studies **one visible product field: Worker Group**.
+Phase 1 deliberately studies **one visible product field: Data Connection**.
 
-The lab context controls simulate:
+The shared scenario controls simulate:
 
-- interface policy: Standard UI / Adaptive UI
 - user familiarity: New / Experienced
 - product version: 4.1 / 4.2
-- available Worker Groups: exactly 1 / 3
+- compatible Data Connections: One / Several
 
-The underlying application scenario is fixed to **Distributed execution**, where Worker Group is relevant. Execution Mode remains part of application truth in the domain model but is not exposed as a lab control because changing it would introduce a second concept into a demo intended to isolate one field. Target Environment remains fixed to Production and is also not surfaced because it does not materially affect the demonstrated behavior.
+The product comparison renders **Standard UI** and **Adaptive UI** simultaneously. Both surfaces receive the same scenario and share the same selected Data Connection.
 
-The product surface exposes only the Worker Group control. Standard UI provides the baseline field description and conventional required-state validation. Adaptive UI keeps the same state and available product knowledge but allows response policy to add contextual explanation, highlighting, suggestion, or safe preconfiguration.
+Standard UI provides the baseline field description and conventional required-state validation. Adaptive UI keeps the same application state but allows response policy to add contextual explanation, highlighting, suggestion, or safe preconfiguration.
+
+The compatibility control demonstrates evidence-sensitive UI authority: when several compatible Data Connections exist, the adaptive UI may guide but must not guess; when exactly one compatible connection exists, it may safely offer that value as a user-accepted action.
 
 The initial deterministic slice must demonstrate compact vs expanded help, first-time-user guidance, version-specific guidance, deterministic validation, current-state-aware explanation, safe suggested action, optional preconfiguration only when the correct choice is unambiguous, and a direct Standard-versus-Adaptive comparison without changing application state.
 
@@ -47,9 +48,9 @@ The initial deterministic slice must demonstrate compact vs expanded help, first
 
 The implementation must keep these concerns distinct:
 
-1. **Domain state** — what the user is configuring.
-2. **Runtime/user context** — surrounding product and familiarity state.
-3. **Application truth and validation** — deterministic business rules and available options.
+1. **Domain state** — the selected Data Connection.
+2. **Runtime/user context** — surrounding product version, familiarity, and compatible connections.
+3. **Application truth and validation** — deterministic requirements and available options.
 4. **Product knowledge** — authored explanatory/configuration knowledge with provenance and applicability.
 5. **Knowledge applicability** — whether an authored item applies to the current state.
 6. **Response policy** — how strongly the UI should intervene given available evidence.
@@ -174,15 +175,14 @@ Phase 1 is complete when:
 - response policy is separate from knowledge applicability
 - the resolver returns structured UI responses
 - the required scenario matrix is represented as executable or otherwise verifiable behavior
-- the publication demo clearly separates lab context from the product surface
-- Worker Group is the sole visible product field in the Phase 1 experiment
-- Standard UI and Adaptive UI can be contrasted without changing application state
-- Execution Mode is fixed to Distributed and is not exposed as a lab control
-- exactly one valid Worker Group can be safely offered
-- three valid Worker Groups never cause the system to guess
+- the publication demo clearly separates shared scenario controls from product surfaces
+- Data Connection is the sole visible product field in the Phase 1 experiment
+- Standard UI and Adaptive UI are visible side by side under the same state
+- exactly one compatible Data Connection can be safely offered
+- several compatible Data Connections never cause the system to guess
 - experienced users receive less automatically surfaced explanation than new users without changing underlying rules
 - v4.2-specific guidance is absent for v4.1
-- selecting a valid Worker Group removes the missing-group intervention
+- selecting a valid Data Connection removes the missing-connection intervention
 - no AI, backend, or production deployment is introduced
 
 ## 13. Future-Phase Compatibility
