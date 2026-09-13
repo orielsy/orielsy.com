@@ -12,9 +12,7 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
       <span aria-hidden="true" class="h-px w-8 bg-[var(--border-strong)]"></span>
       <span>Phase 1 · deterministic</span>
     </div>
-    <h3 class="mt-4 mb-0 text-2xl font-semibold leading-tight text-[var(--text-primary)] sm:text-3xl">
-      Adaptive Enterprise UI Lab
-    </h3>
+    <h3 class="mt-4 mb-0 text-2xl font-semibold leading-tight text-[var(--text-primary)] sm:text-3xl">Adaptive Enterprise UI Lab</h3>
     <p class="mt-3 max-w-3xl text-sm leading-7 text-[var(--text-secondary)] sm:text-base">
       Change the scenario, then compare how two interface policies respond to the same Data Connection truth. No AI, inference, or semantic retrieval is used.
     </p>
@@ -128,15 +126,17 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
         </div>
 
         <div class="flex flex-1 flex-col">
-          <div class="mb-5 rounded-md border border-[var(--accent-border)] bg-[var(--accent-subtle)] p-4" aria-live="polite">
+          <div data-intervention-card class="mb-5 rounded-md border border-[var(--accent-border)] bg-[var(--accent-subtle)] p-4" aria-live="polite">
             <div class="flex gap-3">
-              <span aria-hidden="true" class="mt-1 inline-block size-2 shrink-0 rounded-full bg-[var(--accent)]"></span>
+              <span data-intervention-icon aria-hidden="true" class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border border-[var(--accent-border)] font-mono text-[11px] font-semibold text-[var(--accent)]">i</span>
               <div class="min-w-0 flex-1">
                 <div class="flex flex-wrap items-center gap-2">
-                  <p data-adaptive-headline class="m-0 text-sm font-medium text-[var(--text-primary)]">Context-aware guidance</p>
-                  <span data-adaptive-authority class="rounded border border-[var(--accent-border)] px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">authority 5</span>
+                  <p data-adaptive-headline class="m-0 text-sm font-semibold text-[var(--text-primary)]">Choose among compatible connections</p>
+                  <span data-intervention-kind class="rounded border border-[var(--accent-border)] px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">Info</span>
+                  <span data-adaptive-authority class="font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">authority 5</span>
                 </div>
-                <div data-adaptive-guidance-list class="mt-3 space-y-2"></div>
+                <p data-intervention-message class="mt-2 mb-0 text-xs leading-5 text-[var(--text-secondary)]">Several valid matches remain. A user choice is required.</p>
+                <div data-intervention-action></div>
                 <p data-version-source class="mt-3 border-t border-[var(--accent-border)] pt-3 font-mono text-[10px] leading-5 text-[var(--text-muted)]">Demo knowledge · applies to product 4.2</p>
               </div>
             </div>
@@ -180,26 +180,10 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
       </summary>
 
       <div class="mt-4 grid overflow-hidden rounded-md border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-2 sm:gap-px xl:grid-cols-4">
-        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
-          <span aria-hidden="true" class="inline-block size-2 rounded-full bg-[var(--accent)]"></span>
-          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Application state</p>
-          <p data-trace-state class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">4.2 · new · 3 matches</p>
-        </div>
-        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
-          <span aria-hidden="true" class="inline-block size-2 rounded-full bg-[var(--accent)]"></span>
-          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Validation</p>
-          <p data-trace-validation class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Data Connection is required.</p>
-        </div>
-        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
-          <span aria-hidden="true" class="inline-block size-2 rounded-full bg-[var(--accent)]"></span>
-          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Applicable knowledge</p>
-          <p data-trace-knowledge class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Authored product guidance</p>
-        </div>
-        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
-          <span aria-hidden="true" class="inline-block size-2 rounded-full bg-[var(--accent)]"></span>
-          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Response policy</p>
-          <p data-trace-policy class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Authority 5 · suggestion</p>
-        </div>
+        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5"><span aria-hidden="true" class="inline-block size-2 rounded-full bg-[var(--accent)]"></span><p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Application state</p><p data-trace-state class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">4.2 · new · 3 matches</p></div>
+        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5"><span aria-hidden="true" class="inline-block size-2 rounded-full bg-[var(--accent)]"></span><p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Validation</p><p data-trace-validation class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Data Connection is required.</p></div>
+        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5"><span aria-hidden="true" class="inline-block size-2 rounded-full bg-[var(--accent)]"></span><p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Applicable knowledge</p><p data-trace-knowledge class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Authored product guidance</p></div>
+        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5"><span aria-hidden="true" class="inline-block size-2 rounded-full bg-[var(--accent)]"></span><p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Response policy</p><p data-trace-policy class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Authority 5 · suggestion</p></div>
       </div>
 
       <div class="mt-4 flex items-start gap-3 rounded-md border border-dashed border-[var(--border-subtle)] px-4 py-3">
@@ -229,8 +213,12 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
     const standardOutcome = lab.querySelector<HTMLElement>('[data-standard-outcome]');
     const adaptiveOutcome = lab.querySelector<HTMLElement>('[data-adaptive-outcome]');
     const adaptiveRequired = lab.querySelector<HTMLElement>('[data-adaptive-required]');
-    const adaptiveGuidanceList = lab.querySelector<HTMLElement>('[data-adaptive-guidance-list]');
     const adaptiveShell = lab.querySelector<HTMLElement>('[data-adaptive-data-connection-shell]');
+    const interventionCard = lab.querySelector<HTMLElement>('[data-intervention-card]');
+    const interventionIcon = lab.querySelector<HTMLElement>('[data-intervention-icon]');
+    const interventionKind = lab.querySelector<HTMLElement>('[data-intervention-kind]');
+    const interventionMessage = lab.querySelector<HTMLElement>('[data-intervention-message]');
+    const interventionAction = lab.querySelector<HTMLElement>('[data-intervention-action]');
     const adaptiveHeadline = lab.querySelector<HTMLElement>('[data-adaptive-headline]');
     const adaptiveAuthority = lab.querySelector<HTMLElement>('[data-adaptive-authority]');
     const versionSource = lab.querySelector<HTMLElement>('[data-version-source]');
@@ -246,7 +234,7 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
     const traceToggleLabel = lab.querySelector<HTMLElement>('[data-trace-toggle-label]');
     const resetContext = lab.querySelector<HTMLButtonElement>('[data-reset-context]');
 
-    if (!standardDataConnection || !adaptiveDataConnection || !adaptiveGuidanceList) return;
+    if (!standardDataConnection || !adaptiveDataConnection || !interventionCard || !interventionMessage || !interventionAction) return;
 
     let familiarity: UserFamiliarity = 'new';
     let productVersion: ProductVersion = '4.2';
@@ -309,49 +297,68 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
       return button;
     };
 
-    const createResponseItem = (response: UIResponse, compact = false) => {
-      const item = document.createElement('div');
-      item.className = compact ? 'py-1.5' : 'rounded-md border border-[var(--border-subtle)] bg-[var(--bg-primary)] p-3';
-      const message = document.createElement('p');
-      message.className = compact ? 'm-0 text-xs leading-5 text-[var(--text-secondary)]' : 'm-0 text-xs leading-5 text-[var(--text-secondary)]';
-      message.textContent = response.message;
-      item.append(message);
-      response.actions?.forEach((action) => item.append(createActionButton(action)));
-      return item;
-    };
-
     const renderStandard = () => {
       standardError?.classList.toggle('hidden', !(standardAttempted && !standardDataConnectionId));
       if (standardOutcome) standardOutcome.textContent = standardDataConnectionId ? 'Ready to continue' : 'Awaiting selection';
     };
 
-    const renderAdaptive = (responses: UIResponse[]) => {
-      adaptiveGuidanceList.replaceChildren();
-      const visibleResponses = responses.filter((response) => response.type !== 'highlight');
-      const primaryResponses = visibleResponses.filter((response) => response.type !== 'help');
-      const helpResponses = visibleResponses.filter((response) => response.type === 'help');
+    const composeIntervention = (responses: UIResponse[]) => {
+      const presentable = responses.filter((response) => response.type !== 'highlight' && response.type !== 'help');
+      const primary = presentable.reduce<UIResponse | null>((current, response) => !current || response.authority > current.authority ? response : current, null);
 
-      if (visibleResponses.length === 0) {
-        const quiet = document.createElement('p');
-        quiet.className = 'm-0 text-xs leading-5 text-[var(--text-secondary)]';
-        quiet.textContent = 'Data Connection is set. No contextual intervention is needed.';
-        adaptiveGuidanceList.append(quiet);
-      } else {
-        primaryResponses.forEach((response) => adaptiveGuidanceList.append(createResponseItem(response)));
-        if (helpResponses.length > 0) {
-          const details = document.createElement('details');
-          details.className = 'rounded-md border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 py-2';
-          const summary = document.createElement('summary');
-          summary.className = 'cursor-pointer text-xs font-medium text-[var(--text-secondary)]';
-          summary.textContent = `Why this guidance? · ${helpResponses.length} ${helpResponses.length === 1 ? 'detail' : 'details'}`;
-          details.append(summary);
-          const detailBody = document.createElement('div');
-          detailBody.className = 'mt-2 divide-y divide-[var(--border-subtle)]';
-          helpResponses.forEach((response) => detailBody.append(createResponseItem(response, true)));
-          details.append(detailBody);
-          adaptiveGuidanceList.append(details);
-        }
+      if (!primary) {
+        return {
+          headline: 'No intervention needed',
+          message: 'Data Connection is set. No contextual intervention is needed.',
+          kind: 'Success',
+          icon: '✓',
+          authority: 0,
+          action: null as UIAction | null,
+        };
       }
+
+      if (primary.type === 'preconfiguration') {
+        return {
+          headline: 'One compatible connection remains',
+          message: primary.message,
+          kind: 'Suggestion',
+          icon: 'i',
+          authority: primary.authority,
+          action: primary.actions?.[0] ?? null,
+        };
+      }
+
+      if (primary.type === 'suggestion') {
+        return {
+          headline: 'Choose among compatible connections',
+          message: 'Several valid matches remain. A user choice is required.',
+          kind: 'Info',
+          icon: 'i',
+          authority: primary.authority,
+          action: primary.actions?.[0] ?? null,
+        };
+      }
+
+      return {
+        headline: 'Data Connection needs attention',
+        message: primary.message,
+        kind: 'Warning',
+        icon: '!',
+        authority: primary.authority,
+        action: primary.actions?.[0] ?? null,
+      };
+    };
+
+    const renderAdaptive = (responses: UIResponse[]) => {
+      const intervention = composeIntervention(responses);
+      interventionAction.replaceChildren();
+      if (intervention.action) interventionAction.append(createActionButton(intervention.action));
+
+      if (adaptiveHeadline) adaptiveHeadline.textContent = intervention.headline;
+      if (interventionMessage) interventionMessage.textContent = intervention.message;
+      if (interventionKind) interventionKind.textContent = intervention.kind;
+      if (interventionIcon) interventionIcon.textContent = intervention.icon;
+      if (adaptiveAuthority) adaptiveAuthority.textContent = `authority ${intervention.authority}`;
 
       const shouldHighlight = responses.some((response) => response.id === 'data-connection-highlight');
       adaptiveShell?.classList.toggle('ring-1', shouldHighlight);
@@ -361,10 +368,6 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
       adaptiveRequired?.classList.toggle('hidden', !shouldHighlight);
       adaptiveError?.classList.toggle('hidden', !(adaptiveAttempted && !adaptiveDataConnectionId));
       if (adaptiveOutcome) adaptiveOutcome.textContent = adaptiveDataConnectionId ? 'Ready to continue' : 'Awaiting selection';
-
-      const highest = responses.reduce<UIResponse | null>((current, response) => !current || response.authority > current.authority ? response : current, null);
-      if (adaptiveHeadline) adaptiveHeadline.textContent = highest ? (highest.type === 'preconfiguration' ? 'A safe value can be offered' : 'Context-aware guidance') : 'No intervention needed';
-      if (adaptiveAuthority) adaptiveAuthority.textContent = highest ? `authority ${highest.authority}` : 'authority 0';
       if (versionSource) versionSource.classList.toggle('hidden', productVersion !== '4.2');
     };
 
