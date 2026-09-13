@@ -25,11 +25,17 @@
 - [x] Narrow the Phase 1 product surface to one field.
 - [x] Replace the Worker Group scenario with the more legible Data Connection concept.
 - [x] Remove obsolete Execution Mode and Target Environment state from the Phase 1 domain model.
-- [x] Render Standard UI and Adaptive UI side by side from one shared scenario and selection.
+- [x] Render Standard UI and Adaptive UI side by side from one shared scenario.
+- [x] Let each comparison surface maintain independent interaction state so the two policies can be experienced without surprising cross-control synchronization.
+- [x] Make the conventional baseline reactive by surfacing required-state validation only after an attempted continuation.
+- [x] Keep the adaptive side proactive by resolving applicable knowledge and response policy before the user hits the same failure state.
+- [x] Add an explicit shared-application-truth summary between scenario controls and the comparison.
+- [x] Add a collapsible deterministic decision trace for state, validation, applicable knowledge, and response policy.
 - [x] Use compatible-connection count to demonstrate ambiguity versus safe preconfiguration.
 - [x] Collapse secondary beginner/version guidance behind a progressive “Why this guidance?” disclosure.
+- [x] Replace the opening text workflow diagram with a purpose-built conventional-versus-adaptive explanatory visual.
 - [x] Embed the lab in `src/content/research/documentation-driven-adaptive-ux.mdx`.
-- [x] Update the article copy to describe the Data Connection comparison accurately.
+- [x] Update the article copy to describe the refined Data Connection comparison accurately.
 - [x] Align the durable Phase 1 spec and plan with the Data Connection presentation.
 - [x] Confirm the Research article remains unpublished unless explicit publication approval is given.
 - [ ] Run `npm run build` if execution access permits.
@@ -40,11 +46,14 @@
 
 - The scenario suite lives at `src/components/adaptive-ui-lab/resolver.test.mts` and is wired to `npm run test:adaptive-ui` using Node's built-in test runner and TypeScript stripping mode; no new test-framework dependency was introduced.
 - The assistant execution environment has not been able to clone the repository from GitHub, so neither `npm run test:adaptive-ui` nor `npm run build` is claimed as passing yet.
-- `AdaptiveEnterpriseUiLab.astro` now compares Standard UI and Adaptive UI simultaneously using one shared Data Connection selection and three scenario variables: user familiarity, product version, and compatible Data Connections.
+- `AdaptiveEnterpriseUiLab.astro` now compares Standard UI and Adaptive UI simultaneously under the same scenario variables: user familiarity, product version, and compatible Data Connections. The two surfaces intentionally keep separate selected values and continuation attempts.
+- The conventional baseline waits for an attempted continuation before showing required validation; the adaptive experience can surface context-aware intervention earlier from the same scenario.
+- A shared-application-truth band states the scenario both experiences inherit, while a collapsible decision trace exposes how the adaptive side resolves state, validation, authored knowledge, and response policy.
 - The Data Connection domain replaces the earlier Worker Group/Execution Mode/Target Environment scenario so the micro-demo can be understood without learning fictional infrastructure terminology.
 - Several compatible connections permit guidance but never guessing; exactly one compatible connection permits a safe user-accepted “Use …” action.
 - Secondary explanatory responses are progressively disclosed so required-state explanation and safe next action remain visually primary.
-- `src/content/research/documentation-driven-adaptive-ux.mdx` embeds the Phase 1 lab while retaining `published: false` and `status: draft`.
+- `src/components/research/DocumentationDrivenAdaptiveVisual.astro` replaces the article's original text-only workflow diagram with a conventional external-detour versus in-product adaptive-path visual.
+- `src/content/research/documentation-driven-adaptive-ux.mdx` embeds both the explanatory visual and the Phase 1 lab while retaining `published: false` and `status: draft`.
 - No production publishing command has been run and `main` / `gh-pages` remain untouched by this feature work.
 
 ## Phase 1 Non-Goals
