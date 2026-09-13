@@ -13,14 +13,13 @@ export function deriveFacts(
   config: AutomationConfiguration,
   runtime: RuntimeContext,
 ): DerivedFacts {
-  const workerGroupMissing =
-    config.executionMode === 'distributed' && config.workerGroupId === null;
+  const dataConnectionMissing = config.dataConnectionId === null;
 
   return {
-    workerGroupMissing,
-    availableWorkerGroupCount: runtime.availableWorkerGroups.length,
-    hasSingleWorkerGroupCandidate:
-      workerGroupMissing && runtime.availableWorkerGroups.length === 1,
+    dataConnectionMissing,
+    availableDataConnectionCount: runtime.availableDataConnections.length,
+    hasSingleDataConnectionCandidate:
+      dataConnectionMissing && runtime.availableDataConnections.length === 1,
   };
 }
 
