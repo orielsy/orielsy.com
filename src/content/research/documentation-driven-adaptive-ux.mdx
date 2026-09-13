@@ -1,13 +1,13 @@
 ---
 title: "Documentation-Driven Adaptive UX"
-description: "Transforming static enterprise documentation, release notes, and implementation guides into dynamic, contextual UI annotations and intelligent inline affordances."
+description: "Exploring how enterprise product knowledge can become contextual interface behavior through deterministic state, validation, authored guidance, and evidence-aware response policy."
 pubDate: 2026-08-15
 type: "Architecture Exploration"
 tags: ["ui-architecture", "context-engineering", "adaptive-ux", "enterprise-ui"]
 status: "draft"
 published: false
 featured: true
-readingTime: "6 min read"
+readingTime: "12 min read"
 ---
 
 import Callout from '../../components/Callout.astro';
@@ -16,64 +16,393 @@ import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEnterpriseUiLab.astro';
 
 <Callout type="note" title="PHASE 1 REFERENCE IMPLEMENTATION">
-  This research is now backed by the first slice of the Adaptive Enterprise UI Lab: a deterministic, client-side reference implementation for state-aware product knowledge and adaptive guidance. It intentionally uses no LLM, semantic retrieval, or remote AI runtime yet.
+  This research is backed by the first slice of the Adaptive Enterprise UI Lab: a deterministic, client-side reference implementation for state-aware product knowledge and adaptive guidance. It intentionally uses no LLM, semantic retrieval, or remote AI runtime.
 </Callout>
 
-## The Problem: The Documentation / Interface Disconnect
+## Thesis
 
-In enterprise ecosystems, product teams produce extensive technical documentation, release notes, patch bulletins, and implementation runbooks. However, this knowledge lives in external portals (Confluence, Notion, developer portals) disconnected from the active application interface.
+Enterprise software usually treats product knowledge and product behavior as separate systems.
 
-Users are forced to:
-1. Context-switch out of their active workflow to locate answers.
-2. Search through fragmented release notes to discover newly shipped features.
-3. Guess configuration constraints that are documented elsewhere.
+The application knows what state it is in. Validation knows which values are required. Documentation explains concepts, release notes describe version changes, and implementation guides tell users how to make the right choice. But those sources of knowledge often live outside the interface that needs them.
+
+The result is familiar: a user reaches a configuration field, encounters uncertainty, leaves the application, searches documentation, interprets what they find, and then returns to the original task.
+
+My working hypothesis is that part of this gap can be closed without starting with a chatbot, an LLM, or generative UI.
+
+**If an application can combine authoritative state, deterministic validation, authored product knowledge, user context, and an explicit response policy, it can make useful interface adaptations before inference is introduced at all.**
+
+That is the narrow question explored in Phase 1 of the Adaptive Enterprise UI Lab.
+
+---
+
+## The Documentation / Interface Disconnect
+
+Enterprise products accumulate large amounts of operational knowledge: product documentation, release notes, migration notes, implementation guides, runbooks, support articles, and internal configuration guidance.
+
+The interface, however, often exposes only the raw control surface.
+
+A select field might know that a value is missing. The surrounding application might know which version is running, which options are valid, and which environment is active. Documentation might separately explain why the field matters or how the rules changed between versions. Yet the user is still expected to assemble that context manually.
 
 <ResearchBreakout>
   <DocumentationDrivenAdaptiveVisual />
 </ResearchBreakout>
 
+The design opportunity is not simply to move documentation into a tooltip. It is to treat product knowledge as something that can be **selected and surfaced according to current application state**.
+
+That distinction matters. A static tooltip still gives every user the same explanation. An adaptive interface can decide whether an explanation is relevant at all, whether a version-specific note applies, whether the user needs conceptual help, and whether the system has enough evidence to suggest an action safely.
+
 ---
 
-## Architectural Principles
+## Start With Application Truth
 
-### 1. Granular Structured Knowledge Fragments
+The first architectural rule is simple:
 
-Rather than treating documentation as monolithic markdown pages, the system parses documentation into discrete semantic fragments tagged with metadata:
+**The application remains authoritative.**
 
-- **Target Route / Component Selector**: Which views or DOM subtrees the guidance applies to.
-- **Trigger Conditions**: User role, feature flag state, error frequency, or telemetry thresholds.
-- **Recency & Version**: Associated software release or patch version.
-- **Interactivity Payload**: Actionable shortcuts (e.g. pre-filling form state or enabling a setting).
+Documentation can explain a rule, but it should not redefine the rule. An LLM may eventually help interpret intent, but it should not decide whether a required field is valid. Product knowledge can enrich the experience, but deterministic business logic should remain deterministic.
 
-### 2. Context Engineering for Interfaces
+Phase 1 therefore separates several concerns that are easy to blur together:
 
-Similar to how context engineering prevents prompt bloat in AI agents, adaptive UX enforces strict relevance budgets:
-* Never dump all available tips or guides at once.
-* Surface information only at the moment of cognitive need.
-* Decay notifications automatically once the interaction pattern is established.
+1. **Domain state** — what the user has selected.
+2. **Runtime and user context** — product version, user familiarity, and available compatible options.
+3. **Validation** — deterministic application requirements.
+4. **Product knowledge** — authored explanatory material and configuration guidance.
+5. **Knowledge applicability** — whether a specific knowledge item applies to the current state.
+6. **Response policy** — how strongly the interface should intervene given the available evidence.
+7. **Rendering** — how those structured responses appear in the UI.
 
-<Callout type="architecture" title="SURFACING RELEVANCE AT THE POINT OF INTERACTION">
-  By indexing structured product documentation alongside UI component state, the client runtime can evaluate whether a user is attempting an outdated workflow and proactively surface the modern alternative inline.
+The resulting Phase 1 pipeline is intentionally boring:
+
+```text
+application state
+      ↓
+deterministic validation
+      ↓
+product/runtime context
+      ↓
+applicable authored knowledge
+      ↓
+response policy
+      ↓
+structured UI responses
+```
+
+That is a feature, not a limitation.
+
+It gives later AI capabilities a clean place to enter without forcing them to replace application truth.
+
+---
+
+## Why Deterministic First?
+
+Adaptive UX is often discussed as if adaptation requires generation. It does not.
+
+Many interface situations are already well understood by the product team. A field is required. A feature changed in version 4.2. A first-time user may need more explanation than an experienced user. One compatible option may be safe to offer; several compatible options require user judgment.
+
+None of those cases require semantic inference.
+
+Starting with deterministic behavior has three advantages.
+
+### 1. It exposes the real architectural boundaries
+
+If the system cannot clearly distinguish validation from product knowledge before AI is introduced, adding an LLM will hide the ambiguity rather than solve it.
+
+### 2. It prevents AI from owning rules it should not own
+
+Known constraints belong in code or configuration that can be tested directly. Generated text should not become the source of truth for required fields, compatibility, permissions, or other deterministic behavior.
+
+### 3. It creates a baseline for future inference
+
+A future semantic system should improve ambiguity resolution and relevance selection. It should be possible to compare that future behavior against a deterministic baseline rather than asking an AI system to invent the entire interaction model at once.
+
+<Callout type="architecture" title="ADAPTIVE DOES NOT MEAN GENERATIVE">
+  The Phase 1 interface adapts without generating anything. It changes what it surfaces and how strongly it intervenes based on explicit state, authored knowledge, and deterministic policy.
 </Callout>
 
 ---
 
-## Adaptive Enterprise UI Lab — Phase 1
+## Structured Product Knowledge
 
-The first implementation deliberately begins without AI and narrows the experiment to one field: **Data Connection**. The reader can vary user familiarity, product version, and whether the workflow has one compatible connection or several.
+The reference implementation does not ingest real documentation yet. Instead, it models small authored knowledge fragments that approximate what a future ingestion or authoring pipeline could produce.
 
-The demo renders the conventional and adaptive experiences **at the same time**. Both begin from the same scenario and application truth, but the visitor can interact with each surface independently. The **Standard UI** behaves reactively: it exposes the field and ordinary validation when the user attempts to continue without a selection. The **Adaptive UI** uses the same scenario plus deterministic validation, authored product knowledge, and response policy to decide whether to explain, highlight, suggest a next action, or safely offer the only compatible Data Connection before the user hits that failure state.
+The fragments currently include:
 
-That side-by-side comparison is the point of the Phase 1 demo: same field, same scenario, same application truth, different interface policy. When several compatible connections exist, the adaptive UI can guide without guessing. When only one compatible connection exists, it can safely offer that value as a user-accepted action. The decision trace below the comparison exposes the exact state, validation, applicable knowledge, and response-policy outcome behind the adaptive behavior.
+- a basic Data Connection summary,
+- required-field help,
+- a beginner-oriented concept explanation,
+- version 4.2 guidance,
+- and configuration-selection guidance.
+
+Each fragment carries applicability information such as audience, version, and state conditions, along with simple provenance metadata identifying whether it represents documentation or a release note.
+
+For example, the version-specific knowledge applies only when the product is at least version 4.2 and the Data Connection is missing. Beginner help applies only to a new user in the same missing-connection state.
+
+This is deliberately different from dumping all related documentation into the interface.
+
+The design goal is **context selection, not context accumulation**: first narrow the available knowledge according to deterministic facts, then decide how much of that knowledge deserves to become interface behavior.
+
+---
+
+## Knowledge Applicability Is Not Response Policy
+
+One of the more important distinctions in the implementation is that **knowing something applies does not automatically determine what the interface should do with it**.
+
+Knowledge applicability answers:
+
+> Does this authored information match the current product state, version, and audience?
+
+Response policy answers:
+
+> Given the application state, validation result, available knowledge, and certainty of the evidence, how strongly should the UI intervene?
+
+Keeping those decisions separate prevents the knowledge layer from becoming an accidental UI controller.
+
+A version note can be relevant without deserving a modal. A beginner explanation can be applicable without changing validation. A configuration guide can be applicable while the interface still refuses to choose among several valid options.
+
+That separation becomes especially important if semantic retrieval is added later. Retrieval can help rank or discover relevant knowledge, while response policy can remain the layer that decides whether the result should become help text, a highlight, a suggestion, or an action.
+
+---
+
+## UI Authority Should Follow Evidence
+
+The lab uses a simple concept of **UI authority**: the more deterministic the evidence, the more strongly the interface may act.
+
+The conceptual progression is:
+
+1. no intervention,
+2. expanded description,
+3. contextual help,
+4. current-state explanation,
+5. highlight the relevant control,
+6. suggest the next action,
+7. preconfigure a safe value.
+
+Phase 1 never performs an autonomous destructive action.
+
+The most important boundary is between **guidance** and **choice**.
+
+If several Data Connections are compatible, the system has enough evidence to explain the requirement and guide the user toward the field, but it does not know which connection matches the user's intent. It must not guess.
+
+If exactly one compatible Data Connection exists, the evidence changes. The system can safely offer that value as a user-accepted action because there is no competing valid candidate.
+
+The interface becomes more helpful not because it is more confident in a generated answer, but because the underlying state is less ambiguous.
+
+---
+
+## Phase 1 Experiment: One Field, Two Interface Policies
+
+The first implementation intentionally narrows the experiment to one visible product field: **Data Connection**.
+
+The shared scenario controls vary three pieces of context:
+
+- **User familiarity:** New or Experienced
+- **Product version:** 4.1 or 4.2
+- **Compatible Data Connections:** One or Several
+
+The demo then renders a conventional experience and an adaptive experience side by side.
+
+Both start from the same scenario and the same application truth. Each surface maintains its own interaction state so the reader can compare the policies without changing the underlying scenario.
+
+### Standard UI
+
+The Standard UI behaves reactively.
+
+It exposes the required field and ordinary validation. If the user attempts to continue without selecting a Data Connection, the interface reports the missing value.
+
+This is not intended as a straw man. It represents a perfectly normal enterprise form pattern: expose the configuration, validate the user's input, and rely on documentation or prior knowledge when interpretation is required.
+
+### Adaptive UI
+
+The Adaptive UI starts from the same field and validation rule, then adds authored product knowledge and response policy.
+
+It can explain why a Data Connection is required, provide additional conceptual help to a new user, surface version-specific guidance for 4.2, direct the user toward the relevant field, and vary its action depending on whether the valid choice is ambiguous.
 
 <ResearchBreakout>
   <AdaptiveEnterpriseUiLab />
 </ResearchBreakout>
 
-This is the first capability slice of the longer-lived Adaptive Enterprise UI Lab. Later research can build on the same state, knowledge, and response-policy boundaries with natural-language intent resolution, semantic knowledge retrieval, browser-local inference, and adaptive runtime routing rather than expanding this Phase 1 article into every subsequent capability.
+The decision trace in the demo is intentionally visible. It exposes the state, validation result, applicable knowledge, and response-policy outcome so the adaptive behavior is inspectable rather than magical.
 
 ---
 
-## Integration with Local Runtimes
+## What the Scenarios Demonstrate
 
-When paired with a lightweight browser-local inference engine (e.g., WebGPU-based extraction), the UI can evaluate user intent from freeform search inputs or repeated navigation patterns and map them directly to documented features without sending telemetry to remote servers.
+The value of the experiment is in the differences between states, not in any single message.
+
+### Several compatible connections
+
+When the Data Connection is missing and several compatible connections exist, the resolver can explain the requirement, highlight the field, and provide selection guidance.
+
+It can also focus the relevant field as a suggested next action.
+
+What it cannot do is choose a connection. The application does not have enough evidence to know which external system the user intends to access.
+
+### Exactly one compatible connection
+
+When only one compatible Data Connection exists, the system can make a stronger intervention.
+
+Instead of merely saying "choose a connection," it can state that the single candidate is the only compatible option and offer an explicit **Use [connection]** action.
+
+The resolver still does not silently mutate the configuration. The user accepts the preconfiguration.
+
+### New versus experienced users
+
+A new user receives the authored conceptual explanation of what a Data Connection represents.
+
+An experienced user does not receive that beginner-specific fragment, even though the underlying validation rule remains identical.
+
+This is a small example of adapting explanation depth without weakening application truth.
+
+### Version 4.1 versus 4.2
+
+The version 4.2 release-note fragment appears only for 4.2.
+
+Version context changes the explanation, not the validity of the current state. The distinction is important: release knowledge can explain why the experience changed without becoming the implementation of the rule itself.
+
+### Valid selection
+
+Once a valid Data Connection is selected, the missing-connection intervention disappears.
+
+The system does not continue surfacing warnings or suggestions simply because related knowledge exists. Relevance decays with state.
+
+---
+
+## What Phase 1 Actually Shows
+
+The experiment is intentionally small, but it has already clarified several architectural ideas.
+
+### Product knowledge can participate in UI behavior without owning business logic
+
+Validation remains separate. Knowledge explains and enriches the experience around that validation.
+
+### Adaptation can be useful before inference
+
+User familiarity, product version, validation state, and option cardinality are enough to produce meaningfully different interface responses.
+
+### Certainty is a useful control on interface authority
+
+The difference between one compatible option and several compatible options is not cosmetic. It changes what the interface can responsibly do.
+
+### Progressive help can be modeled as policy rather than scattered component conditionals
+
+The renderer consumes structured responses. It does not need to rediscover why a message applies or whether an action is safe.
+
+### A future AI layer has a narrower job than "control the UI"
+
+The deterministic experiment suggests that inference is most useful where the application is genuinely ambiguous: interpreting freeform intent, ranking semantically relevant product knowledge, adapting explanations, or bridging combinations that were not explicitly authored.
+
+That is a much smaller and safer responsibility than asking a model to infer application truth.
+
+---
+
+## Limitations of the Current Experiment
+
+Phase 1 is not a production adaptive-UX platform.
+
+It intentionally does **not** include:
+
+- document ingestion,
+- semantic search,
+- embeddings or vector retrieval,
+- natural-language intent resolution,
+- generated guidance,
+- telemetry or behavioral learning,
+- backend services,
+- persistence,
+- authentication,
+- WebLLM,
+- MCP,
+- or remote AI APIs.
+
+The product knowledge is authored fixture data. The compatibility scenarios are fixed demo data. User familiarity is a simulation control rather than an inferred or persisted profile.
+
+The experiment also does not answer governance questions that a production implementation would need to address, such as how knowledge fragments are reviewed, how stale release guidance is retired, how conflicting sources are reconciled, or how intervention quality is measured over time.
+
+Those are not implementation omissions hidden behind the demo. They are deliberately outside the Phase 1 question.
+
+---
+
+## Where AI Could Enter Later
+
+The deterministic architecture is useful partly because it gives future inference explicit seams.
+
+A later version could insert optional inference after deterministic filtering and before response policy:
+
+```text
+application truth
+      ↓
+deterministic validation
+      ↓
+deterministic context filtering
+      ↓
+optional inference
+      ↓
+evidence reconciliation
+      ↓
+response policy
+      ↓
+UI response
+```
+
+Several capabilities become plausible at that boundary.
+
+### Natural-language intent resolution
+
+A user might ask, "Why can't this workflow connect anymore?" An inference layer could map that language to the Data Connection concept, while the deterministic resolver still checks the actual current state before responding.
+
+### Semantic product-knowledge retrieval
+
+A larger documentation corpus will eventually make hand-authored direct matching insufficient. Semantic ranking could help identify the most relevant knowledge fragments after deterministic filters such as product version, environment, permissions, or feature availability have already reduced the candidate set.
+
+### Explanation adaptation
+
+A model could rewrite or compress an already-authorized explanation for the current user while preserving the underlying facts and action boundary.
+
+### Browser-local inference
+
+For some narrow tasks, a browser-local runtime could provide intent classification or ranking without sending application context to a remote model. WebGPU/WebLLM is one possible implementation direction, but it is not part of Phase 1 and has not yet been evaluated in this lab.
+
+### Runtime routing
+
+A future capability layer could choose whether a particular inference task belongs in the browser, on a local service, or in a remote model. That decision should sit below the product-facing resolver rather than leak infrastructure choices into UI components.
+
+<Callout type="architecture" title="INFERENCE SHOULD RESOLVE AMBIGUITY, NOT REPLACE TRUTH">
+  Future AI should help interpret intent and select relevant knowledge. Deterministic application state should still constrain what the interface is allowed to claim or do.
+</Callout>
+
+---
+
+## From Documentation Portal to Product Capability
+
+The broader direction is not to eliminate documentation.
+
+Long-form documentation remains necessary for learning, implementation, troubleshooting, and reference. The opportunity is to stop treating that material as useful only after the user leaves the product to search for it.
+
+Some product knowledge can be structured so that the application understands:
+
+- what concept it describes,
+- which state makes it relevant,
+- which versions it applies to,
+- which audience needs it,
+- where it came from,
+- and what level of action it can safely support.
+
+At that point, documentation is no longer only a destination. It becomes one input into interface behavior.
+
+The strongest version of this idea is not a UI that constantly talks to the user. It is an interface that becomes quieter when context is obvious, more explanatory when uncertainty is predictable, and more helpful only when the available evidence justifies it.
+
+---
+
+## Conclusion
+
+Phase 1 of the Adaptive Enterprise UI Lab began with a deliberately constrained question: **how adaptive can an enterprise interface become before AI is necessary?**
+
+The answer, at least for this narrow experiment, is: meaningfully adaptive.
+
+A small deterministic system can already distinguish application truth from product knowledge, select guidance by version and audience, vary explanation depth, escalate intervention according to certainty, refuse to guess among ambiguous choices, and safely offer a single unambiguous option.
+
+That does not make inference unnecessary. It makes its future role clearer.
+
+Instead of handing application behavior to a model, the architecture can reserve AI for the places where software genuinely needs help with ambiguity: understanding intent, ranking knowledge, adapting explanations, and navigating combinations that were not explicitly authored.
+
+The next phases of the lab will explore those seams. The deterministic core remains the baseline they will have to improve without weakening the authority of the application itself.
