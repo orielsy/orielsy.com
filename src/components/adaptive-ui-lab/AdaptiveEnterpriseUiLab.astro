@@ -1,182 +1,211 @@
 ---
-import { DEFAULT_CONFIG, DEFAULT_RUNTIME, THREE_DATA_CONNECTIONS } from './fixtures.ts';
-import { KNOWLEDGE } from './knowledge.ts';
-import { resolveInterface } from './resolver.ts';
-
-const initialResult = resolveInterface({
-  config: DEFAULT_CONFIG,
-  runtime: DEFAULT_RUNTIME,
-  ui: { expandedHelp: [], highlightedField: null, dismissedGuidance: [] },
-  knowledge: KNOWLEDGE,
-});
-const initialResponseIds = initialResult.responses.map((response) => response.id);
+import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
 ---
 
-<section class="not-prose my-10 overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-card)] shadow-sm" data-adaptive-enterprise-ui-lab>
-  <header class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-6">
-    <div class="flex flex-wrap items-center gap-3 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--text-tertiary)]">
+<section
+  class="not-prose my-10 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)]"
+  data-adaptive-enterprise-ui-lab
+>
+  <header class="border-b border-[var(--border-subtle)] px-5 py-7 sm:px-7 sm:py-8">
+    <div class="flex flex-wrap items-center gap-3 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
       <span>Interactive reference implementation</span>
-      <span aria-hidden="true" class="h-px w-7 bg-[var(--border-strong)]"></span>
+      <span aria-hidden="true" class="h-px w-8 bg-[var(--border-strong)]"></span>
       <span>Phase 1 · deterministic</span>
     </div>
-    <h3 class="mt-3 mb-0 text-xl font-semibold text-[var(--text-primary)]">Adaptive Enterprise UI Lab</h3>
-    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-[var(--text-secondary)]">
-      Change the shared scenario, then compare how a conventional interface and an adaptive interface respond to the same Data Connection truth.
+    <h3 class="mt-4 mb-0 text-2xl font-semibold leading-tight text-[var(--text-primary)] sm:text-3xl">
+      Adaptive Enterprise UI Lab
+    </h3>
+    <p class="mt-3 max-w-3xl text-sm leading-7 text-[var(--text-secondary)] sm:text-base">
+      Change the scenario, then compare how two interface policies respond to the same Data Connection truth. No AI, inference, or semantic retrieval is used.
     </p>
   </header>
 
-  <div class="border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-5 py-5 sm:px-6">
-    <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
-      <div>
-        <p class="m-0 font-mono text-[10px] uppercase tracking-[0.16em] text-sky-600 dark:text-sky-400">01 · Set the shared scenario</p>
-        <p class="mt-1 text-xs text-[var(--text-tertiary)]">These conditions apply equally to both experiences.</p>
+  <div class="px-5 py-7 sm:px-7 sm:py-8">
+    <div class="flex items-center gap-3">
+      <span class="font-mono text-[10px] text-[var(--accent)]">01</span>
+      <h4 class="m-0 font-mono text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-secondary)]">Set the shared scenario</h4>
+    </div>
+
+    <div class="mt-4 grid overflow-hidden rounded-md border border-[var(--border-subtle)] bg-[var(--border-subtle)] md:grid-cols-3 md:gap-px">
+      <fieldset class="m-0 border-0 bg-[var(--bg-card)] p-4 sm:p-5">
+        <legend class="sr-only">User familiarity</legend>
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <span class="text-xs text-[var(--text-secondary)]">User familiarity</span>
+          <span data-scenario-familiarity class="font-mono text-[10px] uppercase tracking-wider text-[var(--accent)]">new</span>
+        </div>
+        <div class="grid grid-cols-2 gap-1.5">
+          <button type="button" data-familiarity="new" aria-pressed="true" class="rounded-sm border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-3 py-2.5 text-xs font-medium text-[var(--accent)] transition">New</button>
+          <button type="button" data-familiarity="experienced" aria-pressed="false" class="rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 py-2.5 text-xs text-[var(--text-secondary)] transition hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]">Experienced</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="m-0 border-0 bg-[var(--bg-card)] p-4 sm:p-5">
+        <legend class="sr-only">Product version</legend>
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <span class="text-xs text-[var(--text-secondary)]">Product version</span>
+          <span data-scenario-version class="font-mono text-[10px] uppercase tracking-wider text-[var(--accent)]">v4.2</span>
+        </div>
+        <div class="grid grid-cols-2 gap-1.5">
+          <button type="button" data-version="4.1" aria-pressed="false" class="rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 py-2.5 text-xs text-[var(--text-secondary)] transition hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]">4.1</button>
+          <button type="button" data-version="4.2" aria-pressed="true" class="rounded-sm border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-3 py-2.5 text-xs font-medium text-[var(--accent)] transition">4.2</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="m-0 border-0 bg-[var(--bg-card)] p-4 sm:p-5">
+        <legend class="sr-only">Compatible connections</legend>
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <span class="text-xs text-[var(--text-secondary)]">Compatible connections</span>
+          <span data-scenario-connections class="font-mono text-[10px] uppercase tracking-wider text-[var(--accent)]">3 matches</span>
+        </div>
+        <div class="grid grid-cols-2 gap-1.5">
+          <button type="button" data-connection-count="1" aria-pressed="false" class="rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 py-2.5 text-xs text-[var(--text-secondary)] transition hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]">One</button>
+          <button type="button" data-connection-count="3" aria-pressed="true" class="rounded-sm border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-3 py-2.5 text-xs font-medium text-[var(--accent)] transition">Several</button>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="mt-4 flex justify-end">
+      <button type="button" data-reset-context class="font-mono text-[10px] uppercase tracking-wider text-[var(--text-muted)] transition hover:text-[var(--text-primary)]">Reset scenario</button>
+    </div>
+  </div>
+
+  <div class="border-y border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-5 py-4 sm:px-7">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-start gap-3">
+        <span aria-hidden="true" class="mt-1 inline-block size-2 rounded-full bg-[var(--accent)]"></span>
+        <div>
+          <p class="m-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Shared application truth</p>
+          <p data-truth-summary class="mt-1 text-sm text-[var(--text-primary)]">3 compatible connections · product 4.2 · new user</p>
+        </div>
       </div>
-      <button type="button" data-reset-context class="rounded-md border border-[var(--border-subtle)] px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider text-[var(--text-secondary)] transition hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]">Reset scenario</button>
-    </div>
-
-    <div class="grid gap-3 md:grid-cols-3">
-      <fieldset class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-3">
-        <legend class="px-1 font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">User familiarity</legend>
-        <div class="mt-1 grid grid-cols-2 gap-1.5">
-          <button type="button" data-familiarity="new" aria-pressed="true" class="rounded-md border border-[var(--border-strong)] bg-[var(--bg-primary)] px-3 py-2 text-xs font-medium text-[var(--text-primary)]">New</button>
-          <button type="button" data-familiarity="experienced" aria-pressed="false" class="rounded-md border border-[var(--border-subtle)] px-3 py-2 text-xs text-[var(--text-secondary)]">Experienced</button>
-        </div>
-      </fieldset>
-
-      <fieldset class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-3">
-        <legend class="px-1 font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">Product version</legend>
-        <div class="mt-1 grid grid-cols-2 gap-1.5">
-          <button type="button" data-version="4.1" aria-pressed="false" class="rounded-md border border-[var(--border-subtle)] px-3 py-2 text-xs text-[var(--text-secondary)]">4.1</button>
-          <button type="button" data-version="4.2" aria-pressed="true" class="rounded-md border border-[var(--border-strong)] bg-[var(--bg-primary)] px-3 py-2 text-xs font-medium text-[var(--text-primary)]">4.2</button>
-        </div>
-      </fieldset>
-
-      <fieldset class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-3">
-        <legend class="px-1 font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">Compatible Data Connections</legend>
-        <div class="mt-1 grid grid-cols-2 gap-1.5">
-          <button type="button" data-connection-count="1" aria-pressed="false" class="rounded-md border border-[var(--border-subtle)] px-3 py-2 text-xs text-[var(--text-secondary)]">One</button>
-          <button type="button" data-connection-count="3" aria-pressed="true" class="rounded-md border border-[var(--border-strong)] bg-[var(--bg-primary)] px-3 py-2 text-xs font-medium text-[var(--text-primary)]">Several</button>
-        </div>
-      </fieldset>
+      <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--accent)]">Same state → different policy</span>
     </div>
   </div>
 
-  <div class="border-b border-[var(--border-subtle)] px-5 py-3 sm:px-6">
-    <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-      <div>
-        <p class="m-0 font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Shared application truth</p>
-        <p data-truth-summary class="mt-1 text-xs text-[var(--text-secondary)]">3 compatible connections · product 4.2 · new user</p>
-      </div>
-      <span class="font-mono text-[9px] uppercase tracking-[0.14em] text-sky-600 dark:text-sky-400">Same scenario → different policy</span>
-    </div>
-  </div>
-
-  <div class="p-5 sm:p-6">
-    <div class="mb-4">
-      <p class="m-0 font-mono text-[10px] uppercase tracking-[0.16em] text-emerald-600 dark:text-emerald-400">02 · Compare the interface policy</p>
-      <p class="mt-1 text-xs text-[var(--text-tertiary)]">The two experiences start from the same scenario, but each can be used independently.</p>
+  <div class="px-5 py-7 sm:px-7 sm:py-8">
+    <div class="flex items-center gap-3">
+      <span class="font-mono text-[10px] text-[var(--accent)]">02</span>
+      <h4 class="m-0 font-mono text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-secondary)]">Compare the interface policy</h4>
     </div>
 
-    <div class="grid gap-4 lg:grid-cols-2">
-      <section class="flex min-h-[28rem] flex-col overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)]">
-        <div class="border-b border-[var(--border-subtle)] px-5 py-4">
-          <p class="m-0 font-mono text-[10px] uppercase tracking-wider text-[var(--text-tertiary)]">Conventional experience</p>
-          <h4 class="mt-1 mb-0 text-base font-semibold text-[var(--text-primary)]">Configuration</h4>
-          <p class="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">The form exposes the available values and leaves interpretation to the user.</p>
-        </div>
-
-        <div class="flex flex-1 flex-col p-5">
-          <label class="block">
-            <span class="text-sm font-medium text-[var(--text-primary)]">Data Connection</span>
-            <p class="mt-1 text-xs text-[var(--text-tertiary)]">Required for this configuration</p>
-            <select data-standard-data-connection class="mt-3 w-full rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3 py-2.5 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--border-strong)]">
-              <option value="">Select a Data Connection</option>
-              {THREE_DATA_CONNECTIONS.map((connection) => <option value={connection.id}>{connection.name} · {connection.system}</option>)}
-            </select>
-          </label>
-
-          <div data-standard-error class="mt-3 hidden text-xs text-red-600 dark:text-red-400" role="alert">Select a Data Connection to continue.</div>
-
-          <div class="mt-auto flex flex-col-reverse gap-3 border-t border-[var(--border-subtle)] pt-5 sm:flex-row sm:items-center sm:justify-between">
-            <button type="button" data-standard-continue class="rounded-md border border-[var(--border-strong)] px-3 py-2 text-xs font-medium text-[var(--text-primary)] transition hover:bg-[var(--bg-secondary)]">Continue →</button>
-            <span data-standard-outcome class="font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-tertiary)]">Awaiting selection</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="flex min-h-[28rem] flex-col overflow-hidden rounded-xl border border-sky-500/30 bg-[var(--bg-primary)] shadow-sm">
-        <div class="border-b border-sky-500/20 px-5 py-4">
-          <p class="m-0 font-mono text-[10px] uppercase tracking-wider text-sky-600 dark:text-sky-400">Adaptive experience</p>
-          <h4 class="mt-1 mb-0 text-base font-semibold text-[var(--text-primary)]">Configuration</h4>
-          <p class="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">The form adds only the intervention supported by the current evidence.</p>
-        </div>
-
-        <div class="flex flex-1 flex-col p-5">
-          <div class="mb-4 rounded-lg border border-sky-500/25 bg-sky-500/5 p-3" aria-live="polite">
-            <div class="mb-2 flex flex-wrap items-center justify-between gap-2">
-              <p data-adaptive-headline class="m-0 text-sm font-medium text-[var(--text-primary)]">Context-aware guidance</p>
-              <span data-adaptive-authority class="rounded border border-sky-500/25 px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-sky-600 dark:text-sky-400">policy</span>
-            </div>
-            <div data-adaptive-guidance-list class="space-y-2"></div>
-          </div>
-
-          <label class="block rounded-xl transition" data-adaptive-data-connection-shell>
-            <span class="mb-1.5 flex items-center justify-between gap-2 text-sm font-medium text-[var(--text-primary)]">
-              <span>Data Connection</span>
-              <span data-adaptive-required class="hidden font-mono text-[10px] uppercase tracking-wide text-amber-600 dark:text-amber-400">Required</span>
-            </span>
-            <select data-adaptive-data-connection class="w-full rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3 py-2.5 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--border-strong)]">
-              <option value="">Select a Data Connection</option>
-              {THREE_DATA_CONNECTIONS.map((connection) => <option value={connection.id}>{connection.name} · {connection.system}</option>)}
-            </select>
-            <p class="mt-1.5 text-xs text-[var(--text-tertiary)]">Selects the external system this workflow reads from or writes to.</p>
-          </label>
-
-          <div data-adaptive-error class="mt-3 hidden text-xs text-red-600 dark:text-red-400" role="alert">Select a Data Connection to continue.</div>
-
-          <div class="mt-auto flex flex-col-reverse gap-3 border-t border-[var(--border-subtle)] pt-5 sm:flex-row sm:items-center sm:justify-between">
-            <button type="button" data-adaptive-continue class="rounded-md bg-[var(--text-primary)] px-3 py-2 text-xs font-medium text-[var(--bg-primary)] transition hover:opacity-90">Continue →</button>
-            <span data-adaptive-outcome class="font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-tertiary)]">Awaiting selection</span>
-          </div>
-        </div>
-      </section>
-    </div>
-  </div>
-
-  <div class="border-t border-[var(--border-subtle)] px-5 py-5 sm:px-6">
-    <details data-decision-trace>
-      <summary class="cursor-pointer list-none">
-        <div class="flex items-center justify-between gap-3">
+    <div class="mt-4 grid gap-5 lg:grid-cols-2">
+      <article class="flex min-h-[32rem] flex-col rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 sm:p-6">
+        <div class="mb-8 flex items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-5">
           <div>
-            <p class="m-0 font-mono text-[10px] uppercase tracking-[0.16em] text-violet-600 dark:text-violet-400">03 · Inspect the deterministic decision</p>
-            <p class="mt-1 text-xs text-[var(--text-tertiary)]">See what the adaptive side evaluated before choosing its response.</p>
+            <p class="m-0 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--text-muted)]">Conventional experience</p>
+            <h5 class="mt-2 mb-0 text-lg font-semibold text-[var(--text-primary)]">Configuration</h5>
+            <p class="mt-2 max-w-md text-xs leading-5 text-[var(--text-secondary)]">The form exposes the available values and leaves interpretation to the user.</p>
           </div>
-          <span class="font-mono text-[9px] uppercase tracking-wider text-[var(--text-tertiary)]">Show trace</span>
+          <span class="font-mono text-[9px] uppercase tracking-wider text-[var(--text-muted)]">baseline</span>
+        </div>
+
+        <div class="flex flex-1 flex-col">
+          <div>
+            <label for="standard-data-connection" class="text-sm font-medium text-[var(--text-primary)]">Data Connection</label>
+            <p class="mt-1 text-xs text-[var(--text-muted)]">Required for this configuration</p>
+            <select id="standard-data-connection" data-standard-data-connection class="mt-3 h-11 w-full rounded-md border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--accent-border)]">
+              <option value="">Select a Data Connection</option>
+              {THREE_DATA_CONNECTIONS.map((connection) => <option value={connection.id}>{connection.name} · {connection.system}</option>)}
+            </select>
+            <p data-standard-error class="mt-3 hidden text-xs font-medium text-[var(--accent)]" role="alert">Select a Data Connection to continue.</p>
+          </div>
+
+          <div class="mt-auto flex flex-col-reverse gap-3 border-t border-[var(--border-subtle)] pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <button type="button" data-standard-continue class="inline-flex items-center justify-center gap-2 rounded-md border border-[var(--border-strong)] bg-[var(--bg-card)] px-3 py-2 text-xs font-medium text-[var(--text-primary)] transition hover:bg-[var(--bg-secondary)]">Continue <span aria-hidden="true">→</span></button>
+            <span data-standard-outcome class="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Awaiting selection</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="flex min-h-[32rem] flex-col rounded-md border border-[var(--accent-border)] bg-[var(--bg-card)] p-5 sm:p-6">
+        <div class="mb-8 flex items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-5">
+          <div>
+            <p class="m-0 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--accent)]">Adaptive experience</p>
+            <h5 class="mt-2 mb-0 text-lg font-semibold text-[var(--text-primary)]">Configuration</h5>
+            <p class="mt-2 max-w-md text-xs leading-5 text-[var(--text-secondary)]">The form adds only the intervention supported by the current evidence.</p>
+          </div>
+          <span class="font-mono text-[9px] uppercase tracking-wider text-[var(--accent)]">adaptive</span>
+        </div>
+
+        <div class="flex flex-1 flex-col">
+          <div class="mb-5 rounded-md border border-[var(--accent-border)] bg-[var(--accent-subtle)] p-4" aria-live="polite">
+            <div class="flex gap-3">
+              <span aria-hidden="true" class="mt-1 inline-block size-2 shrink-0 rounded-full bg-[var(--accent)]"></span>
+              <div class="min-w-0 flex-1">
+                <div class="flex flex-wrap items-center gap-2">
+                  <p data-adaptive-headline class="m-0 text-sm font-medium text-[var(--text-primary)]">Context-aware guidance</p>
+                  <span data-adaptive-authority class="rounded border border-[var(--accent-border)] px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">authority 5</span>
+                </div>
+                <div data-adaptive-guidance-list class="mt-3 space-y-2"></div>
+                <p data-version-source class="mt-3 border-t border-[var(--accent-border)] pt-3 font-mono text-[10px] leading-5 text-[var(--text-muted)]">Demo knowledge · applies to product 4.2</p>
+              </div>
+            </div>
+          </div>
+
+          <div data-adaptive-data-connection-shell class="rounded-md transition">
+            <div class="flex items-center justify-between gap-3">
+              <label for="adaptive-data-connection" class="text-sm font-medium text-[var(--text-primary)]">Data Connection</label>
+              <span data-adaptive-required class="hidden font-mono text-[9px] uppercase tracking-wider text-[var(--accent)]">Required</span>
+            </div>
+            <p class="mt-1 text-xs text-[var(--text-muted)]">Required for this configuration</p>
+            <select id="adaptive-data-connection" data-adaptive-data-connection class="mt-3 h-11 w-full rounded-md border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--accent-border)]">
+              <option value="">Select a Data Connection</option>
+              {THREE_DATA_CONNECTIONS.map((connection) => <option value={connection.id}>{connection.name} · {connection.system}</option>)}
+            </select>
+            <p data-adaptive-error class="mt-3 hidden text-xs font-medium text-[var(--accent)]" role="alert">Select a Data Connection to continue.</p>
+          </div>
+
+          <div class="mt-auto flex flex-col-reverse gap-3 border-t border-[var(--border-subtle)] pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <button type="button" data-adaptive-continue class="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--accent)] px-3 py-2 text-xs font-medium text-white transition hover:bg-[var(--accent-hover)]">Continue <span aria-hidden="true">→</span></button>
+            <span data-adaptive-outcome class="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Awaiting selection</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="border-t border-[var(--border-subtle)] px-5 py-7 sm:px-7 sm:py-8">
+    <details data-decision-trace open>
+      <summary class="cursor-pointer list-none">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div class="flex items-center gap-3">
+            <span class="font-mono text-[10px] text-[var(--accent)]">03</span>
+            <div>
+              <h4 class="m-0 font-mono text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-secondary)]">Inspect the deterministic decision</h4>
+              <p class="mt-1 text-xs text-[var(--text-muted)]">The adaptive side exposes exactly what the resolver evaluated.</p>
+            </div>
+          </div>
+          <span data-trace-toggle-label class="font-mono text-[10px] uppercase tracking-wider text-[var(--text-muted)]">Hide trace</span>
         </div>
       </summary>
 
-      <div class="mt-4 grid gap-px overflow-hidden rounded-lg border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-2 xl:grid-cols-4">
-        <div class="bg-[var(--bg-card)] p-4">
-          <p class="m-0 font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Application state</p>
-          <p data-trace-state class="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">4.2 · new · 3 matches</p>
+      <div class="mt-4 grid overflow-hidden rounded-md border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-2 sm:gap-px xl:grid-cols-4">
+        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
+          <span aria-hidden="true" class="inline-block size-2 rounded-full bg-[var(--accent)]"></span>
+          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Application state</p>
+          <p data-trace-state class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">4.2 · new · 3 matches</p>
         </div>
-        <div class="bg-[var(--bg-card)] p-4">
-          <p class="m-0 font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Validation</p>
-          <p data-trace-validation class="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">Data Connection required</p>
+        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
+          <span aria-hidden="true" class="inline-block size-2 rounded-full bg-[var(--accent)]"></span>
+          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Validation</p>
+          <p data-trace-validation class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Data Connection is required.</p>
         </div>
-        <div class="bg-[var(--bg-card)] p-4">
-          <p class="m-0 font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Applicable knowledge</p>
-          <p data-trace-knowledge class="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">Authored product guidance</p>
+        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
+          <span aria-hidden="true" class="inline-block size-2 rounded-full bg-[var(--accent)]"></span>
+          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Applicable knowledge</p>
+          <p data-trace-knowledge class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Authored product guidance</p>
         </div>
-        <div class="bg-[var(--bg-card)] p-4">
-          <p class="m-0 font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Response policy</p>
-          <p data-trace-policy class="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">Contextual suggestion</p>
+        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
+          <span aria-hidden="true" class="inline-block size-2 rounded-full bg-[var(--accent)]"></span>
+          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Response policy</p>
+          <p data-trace-policy class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Authority 5 · suggestion</p>
         </div>
       </div>
 
-      <p class="mt-3 rounded-lg border border-dashed border-[var(--border-subtle)] px-4 py-3 text-xs leading-relaxed text-[var(--text-tertiary)]">
-        The knowledge fragments and rules in this lab are authored fixtures. Phase 1 evaluates explicit conditions; it does not discover documents or generate guidance.
-      </p>
+      <div class="mt-4 flex items-start gap-3 rounded-md border border-dashed border-[var(--border-subtle)] px-4 py-3">
+        <span aria-hidden="true" class="mt-1 inline-block size-2 shrink-0 rounded-full bg-[var(--text-muted)]"></span>
+        <p class="m-0 text-xs leading-5 text-[var(--text-secondary)]">The knowledge fragments and rules in this lab are authored fixtures. The interface evaluates explicit conditions; it does not discover documents or generate guidance.</p>
+      </div>
     </details>
   </div>
 </section>
@@ -204,11 +233,17 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
     const adaptiveShell = lab.querySelector<HTMLElement>('[data-adaptive-data-connection-shell]');
     const adaptiveHeadline = lab.querySelector<HTMLElement>('[data-adaptive-headline]');
     const adaptiveAuthority = lab.querySelector<HTMLElement>('[data-adaptive-authority]');
+    const versionSource = lab.querySelector<HTMLElement>('[data-version-source]');
     const truthSummary = lab.querySelector<HTMLElement>('[data-truth-summary]');
+    const scenarioFamiliarity = lab.querySelector<HTMLElement>('[data-scenario-familiarity]');
+    const scenarioVersion = lab.querySelector<HTMLElement>('[data-scenario-version]');
+    const scenarioConnections = lab.querySelector<HTMLElement>('[data-scenario-connections]');
     const traceState = lab.querySelector<HTMLElement>('[data-trace-state]');
     const traceValidation = lab.querySelector<HTMLElement>('[data-trace-validation]');
     const traceKnowledge = lab.querySelector<HTMLElement>('[data-trace-knowledge]');
     const tracePolicy = lab.querySelector<HTMLElement>('[data-trace-policy]');
+    const decisionTrace = lab.querySelector<HTMLDetailsElement>('[data-decision-trace]');
+    const traceToggleLabel = lab.querySelector<HTMLElement>('[data-trace-toggle-label]');
     const resetContext = lab.querySelector<HTMLButtonElement>('[data-reset-context]');
 
     if (!standardDataConnection || !adaptiveDataConnection || !adaptiveGuidanceList) return;
@@ -226,11 +261,12 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
       lab.querySelectorAll<HTMLButtonElement>(selector).forEach((button) => {
         const active = button.dataset[attribute] === activeValue;
         button.setAttribute('aria-pressed', active ? 'true' : 'false');
-        button.classList.toggle('border-[var(--border-strong)]', active);
-        button.classList.toggle('bg-[var(--bg-primary)]', active);
+        button.classList.toggle('border-[var(--accent-border)]', active);
+        button.classList.toggle('bg-[var(--accent-subtle)]', active);
         button.classList.toggle('font-medium', active);
-        button.classList.toggle('text-[var(--text-primary)]', active);
+        button.classList.toggle('text-[var(--accent)]', active);
         button.classList.toggle('border-[var(--border-subtle)]', !active);
+        button.classList.toggle('bg-[var(--bg-primary)]', !active);
         button.classList.toggle('text-[var(--text-secondary)]', !active);
       });
     };
@@ -259,7 +295,7 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
       const button = document.createElement('button');
       button.type = 'button';
       button.textContent = action.label;
-      button.className = 'mt-2 rounded-md border border-sky-500/35 bg-[var(--bg-primary)] px-3 py-1.5 text-xs font-medium text-sky-700 transition hover:opacity-80 dark:text-sky-300';
+      button.className = 'mt-3 rounded-md border border-[var(--accent-border)] bg-[var(--bg-primary)] px-3 py-1.5 text-xs font-medium text-[var(--accent)] transition hover:bg-[var(--accent-subtle)]';
       button.addEventListener('click', () => {
         if (action.type === 'focus-field' && action.field === 'dataConnection') adaptiveDataConnection.focus();
         if (action.type === 'set-value' && action.field === 'dataConnection' && action.value) {
@@ -275,13 +311,9 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
 
     const createResponseItem = (response: UIResponse, compact = false) => {
       const item = document.createElement('div');
-      if (response.type === 'preconfiguration') item.className = 'rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-3';
-      else if (response.type === 'suggestion') item.className = 'rounded-lg border border-sky-500/30 bg-[var(--bg-primary)] p-3';
-      else if (response.type === 'explanation' || response.type === 'warning') item.className = 'rounded-lg border border-amber-500/30 bg-amber-500/5 p-3';
-      else item.className = compact ? 'py-1.5' : 'rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-primary)] p-3';
-
+      item.className = compact ? 'py-1.5' : 'rounded-md border border-[var(--border-subtle)] bg-[var(--bg-primary)] p-3';
       const message = document.createElement('p');
-      message.className = compact ? 'm-0 text-xs leading-relaxed text-[var(--text-secondary)]' : 'm-0 text-sm leading-relaxed text-[var(--text-primary)]';
+      message.className = compact ? 'm-0 text-xs leading-5 text-[var(--text-secondary)]' : 'm-0 text-xs leading-5 text-[var(--text-secondary)]';
       message.textContent = response.message;
       item.append(message);
       response.actions?.forEach((action) => item.append(createActionButton(action)));
@@ -301,14 +333,14 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
 
       if (visibleResponses.length === 0) {
         const quiet = document.createElement('p');
-        quiet.className = 'm-0 text-sm text-[var(--text-secondary)]';
+        quiet.className = 'm-0 text-xs leading-5 text-[var(--text-secondary)]';
         quiet.textContent = 'Data Connection is set. No contextual intervention is needed.';
         adaptiveGuidanceList.append(quiet);
       } else {
         primaryResponses.forEach((response) => adaptiveGuidanceList.append(createResponseItem(response)));
         if (helpResponses.length > 0) {
           const details = document.createElement('details');
-          details.className = 'rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 py-2';
+          details.className = 'rounded-md border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 py-2';
           const summary = document.createElement('summary');
           summary.className = 'cursor-pointer text-xs font-medium text-[var(--text-secondary)]';
           summary.textContent = `Why this guidance? · ${helpResponses.length} ${helpResponses.length === 1 ? 'detail' : 'details'}`;
@@ -322,17 +354,18 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
       }
 
       const shouldHighlight = responses.some((response) => response.id === 'data-connection-highlight');
-      adaptiveShell?.classList.toggle('ring-2', shouldHighlight);
-      adaptiveShell?.classList.toggle('ring-amber-500/35', shouldHighlight);
-      adaptiveShell?.classList.toggle('bg-amber-500/5', shouldHighlight);
+      adaptiveShell?.classList.toggle('ring-1', shouldHighlight);
+      adaptiveShell?.classList.toggle('ring-[var(--accent-border)]', shouldHighlight);
+      adaptiveShell?.classList.toggle('bg-[var(--accent-subtle)]', shouldHighlight);
       adaptiveShell?.classList.toggle('p-3', shouldHighlight);
       adaptiveRequired?.classList.toggle('hidden', !shouldHighlight);
       adaptiveError?.classList.toggle('hidden', !(adaptiveAttempted && !adaptiveDataConnectionId));
       if (adaptiveOutcome) adaptiveOutcome.textContent = adaptiveDataConnectionId ? 'Ready to continue' : 'Awaiting selection';
 
       const highest = responses.reduce<UIResponse | null>((current, response) => !current || response.authority > current.authority ? response : current, null);
-      if (adaptiveHeadline) adaptiveHeadline.textContent = highest ? 'Context-aware guidance' : 'No intervention needed';
+      if (adaptiveHeadline) adaptiveHeadline.textContent = highest ? (highest.type === 'preconfiguration' ? 'A safe value can be offered' : 'Context-aware guidance') : 'No intervention needed';
       if (adaptiveAuthority) adaptiveAuthority.textContent = highest ? `authority ${highest.authority}` : 'authority 0';
+      if (versionSource) versionSource.classList.toggle('hidden', productVersion !== '4.2');
     };
 
     const render = () => {
@@ -344,6 +377,9 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
       renderStandard();
       renderAdaptive(result.responses);
 
+      if (scenarioFamiliarity) scenarioFamiliarity.textContent = familiarity;
+      if (scenarioVersion) scenarioVersion.textContent = `v${productVersion}`;
+      if (scenarioConnections) scenarioConnections.textContent = `${availableDataConnections.length} ${availableDataConnections.length === 1 ? 'match' : 'matches'}`;
       if (truthSummary) truthSummary.textContent = `${availableDataConnections.length} compatible ${availableDataConnections.length === 1 ? 'connection' : 'connections'} · product ${productVersion} · ${familiarity} user`;
       if (traceState) traceState.textContent = `${productVersion} · ${familiarity} · ${availableDataConnections.length} ${availableDataConnections.length === 1 ? 'match' : 'matches'}`;
       if (traceValidation) traceValidation.textContent = result.validation.length > 0 ? 'Data Connection is required.' : 'Configuration is valid.';
@@ -377,6 +413,10 @@ const initialResponseIds = initialResult.responses.map((response) => response.id
     adaptiveContinue?.addEventListener('click', () => {
       adaptiveAttempted = true;
       render();
+    });
+
+    decisionTrace?.addEventListener('toggle', () => {
+      if (traceToggleLabel) traceToggleLabel.textContent = decisionTrace.open ? 'Hide trace' : 'Show trace';
     });
 
     lab.querySelectorAll<HTMLButtonElement>('[data-familiarity]').forEach((button) => button.addEventListener('click', () => {
