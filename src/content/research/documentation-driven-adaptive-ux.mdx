@@ -64,13 +64,15 @@ Documentation can explain a rule, but it should not redefine the rule. An LLM ma
 
 Phase 1 therefore separates several concerns that are easy to blur together:
 
-1. **Domain state** — what the user has selected.
-2. **Runtime and user context** — product version, user familiarity, and available compatible options.
-3. **Validation** — deterministic application requirements.
-4. **Product knowledge** — authored explanatory material and configuration guidance.
-5. **Knowledge applicability** — whether a specific knowledge item applies to the current state.
-6. **Response policy** — how strongly the interface should intervene given the available evidence.
-7. **Rendering** — how those structured responses appear in the UI.
+<ol className="paper-concern-grid">
+  <li><strong>Domain state</strong> — what the user has selected.</li>
+  <li><strong>Runtime and user context</strong> — product version, user familiarity, and available compatible options.</li>
+  <li><strong>Validation</strong> — deterministic application requirements.</li>
+  <li><strong>Product knowledge</strong> — authored explanatory material and configuration guidance.</li>
+  <li><strong>Knowledge applicability</strong> — whether a specific knowledge item applies to the current state.</li>
+  <li><strong>Response policy</strong> — how strongly the interface should intervene given the available evidence.</li>
+  <li><strong>Rendering</strong> — how those structured responses appear in the UI.</li>
+</ol>
 
 The resulting Phase 1 pipeline is intentionally boring:
 
@@ -170,13 +172,15 @@ The lab uses a simple concept of **UI authority**: the more deterministic the ev
 
 The conceptual progression is:
 
-1. no intervention,
-2. expanded description,
-3. contextual help,
-4. current-state explanation,
-5. highlight the relevant control,
-6. suggest the next action,
-7. preconfigure a safe value.
+<ol className="paper-authority-scale">
+  <li>no intervention</li>
+  <li>expanded description</li>
+  <li>contextual help</li>
+  <li>current-state explanation</li>
+  <li>highlight the relevant control</li>
+  <li>suggest the next action</li>
+  <li>preconfigure a safe value</li>
+</ol>
 
 Phase 1 never performs an autonomous destructive action.
 
@@ -196,9 +200,11 @@ The first implementation intentionally narrows the experiment to one visible pro
 
 The shared scenario controls vary three pieces of context:
 
-- **User familiarity:** New or Experienced
-- **Product version:** 4.1 or 4.2
-- **Compatible Data Connections:** One or Several
+<ul className="paper-scenario-grid">
+  <li><strong>User familiarity</strong>New or Experienced</li>
+  <li><strong>Product version</strong>4.1 or 4.2</li>
+  <li><strong>Compatible Data Connections</strong>One or Several</li>
+</ul>
 
 The demo then renders a conventional experience and an adaptive experience side by side.
 
@@ -302,18 +308,20 @@ Phase 1 is not a production adaptive-UX platform.
 
 It intentionally does **not** include:
 
-- document ingestion,
-- semantic search,
-- embeddings or vector retrieval,
-- natural-language intent resolution,
-- generated guidance,
-- telemetry or behavioral learning,
-- backend services,
-- persistence,
-- authentication,
-- WebLLM,
-- MCP,
-- or remote AI APIs.
+<ul className="paper-limitations">
+  <li>document ingestion</li>
+  <li>semantic search</li>
+  <li>embeddings or vector retrieval</li>
+  <li>natural-language intent resolution</li>
+  <li>generated guidance</li>
+  <li>telemetry or behavioral learning</li>
+  <li>backend services</li>
+  <li>persistence</li>
+  <li>authentication</li>
+  <li>WebLLM</li>
+  <li>MCP</li>
+  <li>remote AI APIs</li>
+</ul>
 
 The product knowledge is authored fixture data. The compatibility scenarios are fixed demo data. User familiarity is a simulation control rather than an inferred or persisted profile.
 
