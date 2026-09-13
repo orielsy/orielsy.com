@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import ContentStatus from '../components/ContentStatus.astro';
 import ConceptDraftNotice from '../components/ConceptDraftNotice.astro';
+import '../styles/research-article.css';
 import type { CollectionEntry } from 'astro:content';
 
 export interface Props {
@@ -48,7 +49,7 @@ const formattedUpdateDate = data.updatedDate
   noindex={!published}
   wide
 >
-  <article class="w-full">
+  <article class="w-full" data-research-entry={entry.id}>
     <header class="border-b border-[var(--border-subtle)] py-12 sm:py-16 lg:py-20">
       <div class="site-shell grid gap-10 lg:grid-cols-12">
         <div class="lg:col-span-3">
@@ -61,7 +62,7 @@ const formattedUpdateDate = data.updatedDate
           </a>
         </div>
 
-        <div class="lg:col-span-8">
+        <div class="lg:col-span-8 lg:col-start-5">
           {published ? (
             <>
               <div class="font-editorial-mono flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.09em] text-[var(--text-muted)] sm:text-[10px]">
@@ -132,14 +133,18 @@ const formattedUpdateDate = data.updatedDate
 
     {published ? (
       <>
-        <div class="site-shell relative py-10 sm:py-14 lg:py-16">
-          <aside class="mb-10 xl:absolute xl:left-10 xl:top-16 xl:mb-0 xl:w-56" aria-label="Research navigation">
-            <TableOfContents headings={headings} />
-          </aside>
+        <div class="site-shell py-10 sm:py-14 lg:py-16">
+          <div class="grid gap-10 xl:grid-cols-12 xl:gap-0">
+            <aside class="xl:col-span-3" aria-label="Research navigation">
+              <div class="xl:sticky xl:top-24 xl:pr-8">
+                <TableOfContents headings={headings} />
+              </div>
+            </aside>
 
-          <div class="research-reading mx-auto w-full max-w-[46rem]">
-            <div class="prose research-prose max-w-none">
-              <slot />
+            <div class="research-reading w-full min-w-0 xl:col-span-8 xl:col-start-5">
+              <div class="prose research-prose max-w-none">
+                <slot />
+              </div>
             </div>
           </div>
         </div>
