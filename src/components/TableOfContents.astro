@@ -10,28 +10,25 @@ export interface Props {
 }
 
 const { headings } = Astro.props;
-const filteredHeadings = headings.filter((h) => h.depth > 1 && h.depth <= 3);
+const filteredHeadings = headings.filter((heading) => heading.depth === 2);
 ---
 
 {filteredHeadings.length > 2 && (
-  <nav class="border-t border-[var(--border-subtle)] pt-4" aria-label="Table of contents">
-    <p class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">
+  <nav class="research-toc" aria-label="Table of contents">
+    <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
       Contents
     </p>
-    <ol class="mt-4 list-none space-y-2 p-0">
+    <ol class="mt-4 list-none border-l border-[var(--border-subtle)] p-0">
       {filteredHeadings.map((heading, index) => (
-        <li class:list={['m-0 leading-5', heading.depth === 3 && 'pl-4']}>
+        <li class="m-0 p-0 leading-5">
           <a
             href={`#${heading.slug}`}
-            class="group grid grid-cols-[24px_minmax(0,1fr)] gap-2 no-underline transition-colors"
+            class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"
           >
-            <span class="font-editorial-mono text-[8px] text-[var(--text-muted)] group-hover:text-[var(--accent)]">
+            <span class="font-editorial-mono text-[8px] text-[var(--accent)]">
               {String(index + 1).padStart(2, '0')}
             </span>
-            <span class:list={[
-              'text-[11px] leading-5 group-hover:text-[var(--text-primary)]',
-              heading.depth === 3 ? 'text-[var(--text-muted)]' : 'text-[var(--text-secondary)]',
-            ]}>
+            <span class="text-[11px] leading-5 text-[var(--text-muted)] transition-colors group-hover:text-[var(--text-primary)]">
               {heading.text}
             </span>
           </a>
