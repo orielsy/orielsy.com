@@ -4,49 +4,57 @@
 
 @layer base {
   :root {
-    --bg-primary: #fafafa;
-    --bg-secondary: #f4f4f5;
-    --bg-card: #ffffff;
-    --bg-card-hover: #fcfcfc;
-    --text-primary: #09090b;
-    --text-secondary: #52525b;
-    --text-muted: #71717a;
-    --border-subtle: #e4e4e7;
-    --border-strong: #d4d4d8;
-    --accent: #2563eb;
-    --accent-hover: #1d4ed8;
-    --accent-subtle: #eff6ff;
-    --accent-border: #bfdbfe;
-    --code-bg: #f4f4f5;
-    --code-border: #e4e4e7;
-    --callout-bg: #f8fafc;
-    --callout-border: #cbd5e1;
+    --bg-primary: #f7f7f5;
+    --bg-secondary: #efefec;
+    --bg-card: #fbfbfa;
+    --bg-card-hover: #f3f3f1;
+    --text-primary: #17171b;
+    --text-secondary: #55545c;
+    --text-muted: #7b7a83;
+    --border-subtle: #dedde3;
+    --border-strong: #c5c4cc;
+    --accent: #5b5bd6;
+    --accent-hover: #4949bd;
+    --accent-subtle: #eeeeff;
+    --accent-border: #c9c9f7;
+    --code-bg: #f0f0ed;
+    --code-border: #d9d9dd;
+    --callout-bg: #f2f2f7;
+    --callout-border: #d2d2df;
+
+    --font-body: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-display: "Segoe UI Variable Display", "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono-ui: "Cascadia Code", "SF Mono", "JetBrains Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   }
 
   html.dark {
-    --bg-primary: #090a0f;
-    --bg-secondary: #12141c;
-    --bg-card: #121520;
-    --bg-card-hover: #171b29;
-    --text-primary: #f4f4f6;
-    --text-secondary: #a1a1aa;
-    --text-muted: #71717a;
-    --border-subtle: #1e2433;
-    --border-strong: #2a3347;
-    --accent: #38bdf8;
-    --accent-hover: #7dd3fc;
-    --accent-subtle: #0c4a6e33;
-    --accent-border: #0284c7;
-    --code-bg: #0d1117;
-    --code-border: #1e2433;
-    --callout-bg: #0d121f;
-    --callout-border: #1e2d4a;
+    --bg-primary: #0b0b0f;
+    --bg-secondary: #111217;
+    --bg-card: #13141a;
+    --bg-card-hover: #181a21;
+    --text-primary: #f0f0f3;
+    --text-secondary: #aaaab4;
+    --text-muted: #73737f;
+    --border-subtle: #24252d;
+    --border-strong: #363844;
+    --accent: #7c83ff;
+    --accent-hover: #9da2ff;
+    --accent-subtle: #171830;
+    --accent-border: #3b3e79;
+    --code-bg: #0e0f14;
+    --code-border: #262833;
+    --callout-bg: #10121a;
+    --callout-border: #2d3150;
+  }
+
+  html {
+    background-color: var(--bg-primary);
   }
 
   body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--font-body);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -54,14 +62,74 @@
   }
 
   code, pre, kbd, samp {
-    font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-family: var(--font-mono-ui);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  .site-shell {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  .reading-shell {
+    width: 100%;
+    max-width: 56rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-editorial-mono {
+    font-family: var(--font-mono-ui);
+  }
+}
+
+@media (min-width: 640px) {
+  .site-shell {
+    padding-inline: 2rem;
+  }
+
+  .reading-shell {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-shell {
+    padding-inline: 2.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 /* Custom architectural utilities */
 .architectural-grid {
   background-size: 32px 32px;
-  background-image: 
+  background-image:
     linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
     linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
 }
@@ -105,6 +173,7 @@
 
 .prose h1, .prose h2, .prose h3, .prose h4 {
   color: var(--text-primary);
+  font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: -0.02em;
 }
