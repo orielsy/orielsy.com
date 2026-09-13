@@ -22,13 +22,15 @@
 - [x] Add executable tests for the six required scenario outcomes.
 - [ ] Execute `npm run test:adaptive-ui` in a Node environment with repository access and confirm all six scenarios pass.
 - [x] Build the interactive Astro/client-side UI.
-- [x] Separate lab-context controls from the fictional product surface.
-- [x] Narrow the Phase 1 product surface to the Worker Group field only.
-- [x] Move Execution Mode into the lab context and remove Target Environment from the visible experiment.
+- [x] Narrow the Phase 1 product surface to one field.
+- [x] Replace the Worker Group scenario with the more legible Data Connection concept.
+- [x] Remove obsolete Execution Mode and Target Environment state from the Phase 1 domain model.
+- [x] Render Standard UI and Adaptive UI side by side from one shared scenario and selection.
+- [x] Use compatible-connection count to demonstrate ambiguity versus safe preconfiguration.
 - [x] Collapse secondary beginner/version guidance behind a progressive “Why this guidance?” disclosure.
 - [x] Embed the lab in `src/content/research/documentation-driven-adaptive-ux.mdx`.
-- [x] Update the article copy to describe the single-field deterministic experiment accurately.
-- [x] Align the durable Phase 1 spec and plan with the single-field presentation decision.
+- [x] Update the article copy to describe the Data Connection comparison accurately.
+- [x] Align the durable Phase 1 spec and plan with the Data Connection presentation.
 - [x] Confirm the Research article remains unpublished unless explicit publication approval is given.
 - [ ] Run `npm run build` if execution access permits.
 - [x] Review the branch diff against `main` for unrelated changes.
@@ -37,12 +39,12 @@
 ## Verification Notes
 
 - The scenario suite lives at `src/components/adaptive-ui-lab/resolver.test.mts` and is wired to `npm run test:adaptive-ui` using Node's built-in test runner and TypeScript stripping mode; no new test-framework dependency was introduced.
-- A fresh local clone was attempted again after the Phase 1 UI refinement, but the assistant execution container still cannot resolve `github.com`. Because repository bytes cannot be cloned into the execution environment, neither `npm run test:adaptive-ui` nor `npm run build` has been claimed as passing.
-- `AdaptiveEnterpriseUiLab.astro` now presents four lab-context variables (user familiarity, product version, execution mode, available Worker Groups) separately from a single Worker Group product field.
-- Target Environment remains part of the underlying domain model but is fixed to Production in this Phase 1 presentation because it does not materially affect the demonstrated behavior.
+- The assistant execution environment has not been able to clone the repository from GitHub, so neither `npm run test:adaptive-ui` nor `npm run build` is claimed as passing yet.
+- `AdaptiveEnterpriseUiLab.astro` now compares Standard UI and Adaptive UI simultaneously using one shared Data Connection selection and three scenario variables: user familiarity, product version, and compatible Data Connections.
+- The Data Connection domain replaces the earlier Worker Group/Execution Mode/Target Environment scenario so the micro-demo can be understood without learning fictional infrastructure terminology.
+- Several compatible connections permit guidance but never guessing; exactly one compatible connection permits a safe user-accepted “Use …” action.
 - Secondary explanatory responses are progressively disclosed so required-state explanation and safe next action remain visually primary.
 - `src/content/research/documentation-driven-adaptive-ux.mdx` embeds the Phase 1 lab while retaining `published: false` and `status: draft`.
-- Branch comparison against `main` shows only the Phase 1 lab implementation, its spec/plan/tasks, the article embedding/copy update, and the single `package.json` test script. No unrelated site files are changed.
 - No production publishing command has been run and `main` / `gh-pages` remain untouched by this feature work.
 
 ## Phase 1 Non-Goals
