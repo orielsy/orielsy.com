@@ -56,16 +56,17 @@ Orielsy explicitly authorized proceeding with the indexes before the detail-page
 - [ ] Verify responsive behavior across all three routes.
 - [ ] Verify light/dark theme consistency.
 - [ ] Run build and diff verification.
-- [ ] Obtain explicit Stage 2 approval before Stage 3.
+- [x] Obtain explicit Stage 2 approval before Stage 3.
 
 ## Stage 3 — Detail Layouts
 
-Do not begin broad detail-layout work until Stage 2 is approved. A targeted research-detail exemplar may be explored only with explicit Orielsy approval.
+Stage 2 was explicitly approved by Orielsy. Begin with the published `documentation-driven-adaptive-ux` research paper as the reference implementation for the Research detail system.
 
 - [ ] Redesign Research detail layout.
 - [ ] Preserve article publication/noindex/local-preview behavior.
 - [ ] Preserve long-form prose readability and width policy.
 - [ ] Integrate existing wide diagrams/media without reducing legibility.
+- [ ] Use `documentation-driven-adaptive-ux` as the first Research-detail visual exemplar without rewriting its factual/editorial content.
 - [ ] Redesign Project detail layout.
 - [ ] Preserve project metadata, routes, and artifact links.
 - [ ] Verify existing callouts, tables, code, media, and diagrams in both themes.
