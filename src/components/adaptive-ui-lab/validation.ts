@@ -5,11 +5,11 @@ export function validateConfiguration(
 ): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
 
-  if (config.executionMode === 'distributed' && config.workerGroupId === null) {
+  if (config.dataConnectionId === null) {
     issues.push({
-      id: 'worker-group-required',
-      ruleId: 'distributed-requires-worker-group',
-      field: 'workerGroup',
+      id: 'data-connection-required',
+      ruleId: 'workflow-requires-data-connection',
+      field: 'dataConnection',
       severity: 'error',
     });
   }
