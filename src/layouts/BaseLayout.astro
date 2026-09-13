@@ -14,6 +14,7 @@ export interface Props {
   type?: 'website' | 'article';
   schemaType?: 'website' | 'person' | 'article' | 'webpage';
   noindex?: boolean;
+  wide?: boolean;
 }
 
 const {
@@ -26,6 +27,7 @@ const {
   type = 'website',
   schemaType = 'webpage',
   noindex = false,
+  wide = false,
 } = Astro.props;
 ---
 
@@ -46,7 +48,12 @@ const {
   </head>
   <body class="min-h-screen flex flex-col selection:bg-[var(--accent)] selection:text-white">
     <Header />
-    <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 pt-8 sm:pt-12">
+    <main
+      class:list={[
+        'flex-1 w-full',
+        wide ? '' : 'max-w-4xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12',
+      ]}
+    >
       <slot />
     </main>
     <Footer />
