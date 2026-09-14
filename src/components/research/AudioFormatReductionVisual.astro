@@ -1,0 +1,189 @@
+---
+const source = {
+  label: 'Source example',
+  format: '48 kHz · stereo · Float32',
+  math: '48,000 × 2 × 4 bytes',
+  rate: '≈ 384 KB/sec',
+};
+
+const target = {
+  label: 'Transmitted format',
+  format: '16 kHz · mono · Int16',
+  math: '16,000 × 1 × 2 bytes',
+  rate: '≈ 32 KB/sec',
+};
+---
+
+<figure class="format-reduction not-prose">
+  <header>
+    <p class="eyebrow">Format reduction before transport</p>
+    <h3>Downsample and quantize before the audio leaves the client.</h3>
+  </header>
+
+  <div class="comparison">
+    <section>
+      <span class="label">{source.label}</span>
+      <strong>{source.format}</strong>
+      <code>{source.math}</code>
+      <span class="rate">{source.rate}</span>
+    </section>
+
+    <div class="transform" aria-label="client-side transformation">
+      <span>Downsample</span>
+      <span aria-hidden="true">→</span>
+      <span>Clamp + Int16</span>
+    </div>
+
+    <section class="target">
+      <span class="label">{target.label}</span>
+      <strong>{target.format}</strong>
+      <code>{target.math}</code>
+      <span class="rate">{target.rate}</span>
+    </section>
+  </div>
+
+  <div class="result">
+    <span class="result-value">≈ 91.7%</span>
+    <span class="result-copy">less raw sample data in this format comparison</span>
+  </div>
+
+  <figcaption>These values are derived from sample format math before WebSocket overhead; they are not measured runtime benchmarks.</figcaption>
+</figure>
+
+<style>
+  .format-reduction {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.7rem;
+    background: var(--bg-card);
+  }
+
+  .format-reduction :global(p),
+  .format-reduction :global(h3) { margin: 0; }
+
+  header {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.15rem 1.25rem;
+  }
+
+  .eyebrow,
+  .label,
+  .transform,
+  .result-value {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+  }
+
+  h3 {
+    margin-top: 0.45rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.16;
+    letter-spacing: -0.035em;
+  }
+
+  .comparison {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .comparison section {
+    display: grid;
+    gap: 0.45rem;
+    background: var(--bg-card);
+    padding: 1rem;
+  }
+
+  .comparison section.target {
+    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
+  }
+
+  .label {
+    color: var(--text-muted);
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+  }
+
+  .comparison strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.86rem;
+  }
+
+  .comparison code {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: var(--text-secondary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.62rem;
+  }
+
+  .rate {
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.72rem;
+  }
+
+  .transform {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    background: var(--bg-secondary);
+    padding: 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.48rem;
+    letter-spacing: 0.08em;
+  }
+
+  .result {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.85rem 1rem;
+  }
+
+  .result-value {
+    color: var(--accent);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  .result-copy {
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    line-height: 1.45;
+  }
+
+  figcaption {
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.8rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 720px) {
+    .comparison { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+    .transform { flex-direction: column; min-width: 7.5rem; }
+  }
+
+  @media (max-width: 719px) {
+    .transform span[aria-hidden='true'] { transform: rotate(90deg); }
+    .result { align-items: flex-start; flex-direction: column; gap: 0.3rem; }
+  }
+</style>
