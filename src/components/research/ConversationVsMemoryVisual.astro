@@ -1,0 +1,172 @@
+---
+const lanes = [
+  {
+    label: 'Transient working context',
+    tone: 'quiet',
+    steps: ['Current task', 'Conversation', 'Temporary reasoning', 'Implementation attempt'],
+  },
+  {
+    label: 'Durable project memory',
+    tone: 'accent',
+    steps: ['Project rule / requirement / decision', 'Version-controlled artifact', 'Discoverable in later sessions', 'Available before the next implementation change'],
+  },
+];
+---
+
+<figure class="memory-contrast not-prose">
+  <header>
+    <p class="eyebrow">Persistence boundary</p>
+    <h3>Conversation context is not project memory.</h3>
+    <p class="dek">One helps with the task in front of the agent. The other gives later work something durable to recover.</p>
+  </header>
+
+  <div class="lanes">
+    {lanes.map((lane) => (
+      <section class:list={['lane', lane.tone === 'accent' && 'is-durable']}>
+        <div class="lane-label">{lane.label}</div>
+        <ol>
+          {lane.steps.map((step, index) => (
+            <li>
+              <span class="step-number">{String(index + 1).padStart(2, '0')}</span>
+              <span>{step}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+  </div>
+
+  <figcaption>A project should not depend on one conversation remaining available forever.</figcaption>
+</figure>
+
+<style>
+  .memory-contrast {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.75rem;
+    background: var(--bg-card);
+  }
+
+  .memory-contrast :global(p),
+  .memory-contrast :global(h3),
+  .memory-contrast :global(ol),
+  .memory-contrast :global(li) {
+    margin: 0;
+  }
+
+  .memory-contrast :global(ol) {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.25rem 1.35rem;
+  }
+
+  .eyebrow,
+  .lane-label,
+  .step-number {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+
+  h3 {
+    margin-top: 0.45rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+  }
+
+  .dek {
+    margin-top: 0.45rem !important;
+    max-width: 42rem;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
+  .lanes {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .lane {
+    background: var(--bg-card);
+    padding: 1rem 1.1rem 1.15rem;
+  }
+
+  .lane.is-durable {
+    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
+  }
+
+  .lane-label {
+    margin-bottom: 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.5rem;
+    letter-spacing: 0.11em;
+  }
+
+  .is-durable .lane-label {
+    color: var(--accent);
+  }
+
+  ol {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 2.85rem;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    padding: 0.55rem 0.65rem;
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    line-height: 1.45;
+  }
+
+  .is-durable li {
+    border-color: color-mix(in srgb, var(--accent) 18%, var(--border-subtle));
+  }
+
+  .step-number {
+    color: var(--text-muted);
+    font-size: 0.48rem;
+    letter-spacing: 0.08em;
+  }
+
+  .is-durable .step-number {
+    color: var(--accent);
+  }
+
+  figcaption {
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.85rem 1.1rem;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 720px) {
+    .lanes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
