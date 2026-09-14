@@ -14,6 +14,11 @@ readingTime: "10 min read"
 import Callout from '../../components/Callout.astro';
 import ProjectMemoryStack from '../../components/ProjectMemoryStack.astro';
 import ContextSelection from '../../components/ContextSelection.astro';
+import ConversationVsMemoryVisual from '../../components/research/ConversationVsMemoryVisual.astro';
+import DecisionPersistenceVisual from '../../components/research/DecisionPersistenceVisual.astro';
+import FutureContextRoutingVisual from '../../components/research/FutureContextRoutingVisual.astro';
+import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+import SourceOfTruthWorkflowVisual from '../../components/research/SourceOfTruthWorkflowVisual.astro';
 
 <Callout type="note" title="WORKING PATTERN, NOT A UNIVERSAL PRESCRIPTION">
   This article describes a repository structure I have been using on orielsy.com to preserve product intent and engineering decisions across coding-agent sessions. It is an evolving practice, not a claim that specifications make agent output deterministic or correct by default.
@@ -53,21 +58,9 @@ For this project, I have been moving durable decisions into version-controlled a
 
 The distinction looks roughly like this:
 
-```text
-Transient working context
-
-current task
-→ conversation
-→ temporary reasoning
-→ implementation attempt
-
-Durable project memory
-
-project rule / requirement / decision
-→ version-controlled artifact
-→ discoverable in later sessions
-→ available before the next implementation change
-```
+<ResearchBreakout mode="wide">
+  <ConversationVsMemoryVisual />
+</ResearchBreakout>
 
 The point is not that conversation is bad. The point is that **a project should not depend on one conversation remaining available forever**.
 
@@ -77,7 +70,9 @@ The point is not that conversation is bad. The point is that **a project should 
 
 orielsy.com uses a lightweight Spec-Driven Development structure. The repository currently separates project knowledge into several layers.
 
-<ProjectMemoryStack />
+<ResearchBreakout mode="wide">
+  <ProjectMemoryStack />
+</ResearchBreakout>
 
 These are not interchangeable documents.
 
@@ -165,26 +160,15 @@ It was also not supported by the evidence we had established.
 
 This was not primarily a coding error. It was a context-persistence failure.
 
-```text
-Decision exists only in conversation
-→ new coding session
-→ prior discussion is absent from working context
-→ plausible wording reappears
-```
-
 The correction was not just to change the homepage sentence. The durable project memory also needed to change.
 
 The constitution now explicitly says not to describe my professional experience as design systems unless that experience is established later. `specs/001-site-foundation/spec.md` carries the same positioning constraint at the site-foundation level.
 
 That gives future work a different path:
 
-```text
-Decision becomes a project rule
-→ agent reads AGENTS.md
-→ AGENTS.md routes to constitution/specs
-→ constraint enters working context
-→ silent regression becomes less likely
-```
+<ResearchBreakout mode="wide">
+  <DecisionPersistenceVisual />
+</ResearchBreakout>
 
 "Less likely" is intentional. A rule in a repository is not a proof that an agent will always follow it. But it gives the next session something durable to recover that the previous conversation alone did not.
 
@@ -192,24 +176,15 @@ Decision becomes a project rule
 
 ## Updating the Source of Truth Before the Code
 
-The workflow I want is not:
-
-```text
-requirement changes
-→ patch implementation
-→ leave old specification behind
-```
+The workflow I want is not to patch implementation while leaving the old specification behind.
 
 That produces a repository where the code and the project's stated intent slowly diverge.
 
 Instead, when a requirement changes materially, the durable artifact should change with it:
 
-```text
-requirement changes
-→ update spec / rule / decision
-→ update implementation
-→ keep repository memory and behavior aligned
-```
+<ResearchBreakout mode="wide">
+  <SourceOfTruthWorkflowVisual />
+</ResearchBreakout>
 
 The publication-gating feature is a good example.
 
@@ -227,7 +202,9 @@ This connects directly to how I think about context engineering more broadly.
 
 **More context is not automatically better context.**
 
-<ContextSelection />
+<ResearchBreakout mode="wide">
+  <ContextSelection />
+</ResearchBreakout>
 
 The objective is not:
 
@@ -285,25 +262,11 @@ The system only helps if the memory itself is maintained.
 
 Today, the flow in this repository is mostly explicit and human-authored:
 
-```text
-Agent task
-→ AGENTS.md
-→ relevant constitution / specs / ADRs
-→ working context
-→ implementation
-```
+<ResearchBreakout mode="wide">
+  <FutureContextRoutingVisual />
+</ResearchBreakout>
 
 A natural next step is to investigate whether some of that selection can become more task-aware without turning the repository into one giant context payload.
-
-For example:
-
-```text
-Agent task
-→ relevance detection
-→ select relevant specs / ADRs / repository patterns
-→ context delivery layer
-→ agent working context
-```
 
 That could involve ideas such as:
 
