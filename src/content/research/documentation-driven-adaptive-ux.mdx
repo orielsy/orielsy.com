@@ -17,6 +17,7 @@ import DocumentationDrivenAdaptiveVisual from '../../components/research/Documen
 import Phase1DeterministicPipelineVisual from '../../components/research/Phase1DeterministicPipelineVisual.astro';
 import Phase1FindingsVisual from '../../components/research/Phase1FindingsVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+import ScenarioEvidenceMatrix from '../../components/research/ScenarioEvidenceMatrix.astro';
 import WhereAiCouldEnterLaterVisual from '../../components/research/WhereAiCouldEnterLaterVisual.astro';
 import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEnterpriseUiLab.astro';
 
@@ -230,41 +231,7 @@ The decision trace in the demo is intentionally visible. It exposes the state, v
 
 The value of the experiment is in the differences between states, not in any single message.
 
-### Several compatible connections
-
-When the Data Connection is missing and several compatible connections exist, the resolver can explain the requirement, highlight the field, and provide selection guidance.
-
-It can also focus the relevant field as a suggested next action.
-
-What it cannot do is choose a connection. The application does not have enough evidence to know which external system the user intends to access.
-
-### Exactly one compatible connection
-
-When only one compatible Data Connection exists, the system can make a stronger intervention.
-
-Instead of merely saying "choose a connection," it can state that the single candidate is the only compatible option and offer an explicit **Use [connection]** action.
-
-The resolver still does not silently mutate the configuration. The user accepts the preconfiguration.
-
-### New versus experienced users
-
-A new user receives the authored conceptual explanation of what a Data Connection represents.
-
-An experienced user does not receive that beginner-specific fragment, even though the underlying validation rule remains identical.
-
-This is a small example of adapting explanation depth without weakening application truth.
-
-### Version 4.1 versus 4.2
-
-The version 4.2 release-note fragment appears only for 4.2.
-
-Version context changes the explanation, not the validity of the current state. The distinction is important: release knowledge can explain why the experience changed without becoming the implementation of the rule itself.
-
-### Valid selection
-
-Once a valid Data Connection is selected, the missing-connection intervention disappears.
-
-The system does not continue surfacing warnings or suggestions simply because related knowledge exists. Relevance decays with state.
+<ScenarioEvidenceMatrix />
 
 ---
 
