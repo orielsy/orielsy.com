@@ -1,0 +1,123 @@
+<figure class="phase-one-findings not-prose my-10 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]">
+  <header class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-6">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <p class="font-editorial-mono text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]">Phase 1 findings</p>
+      <span class="font-editorial-mono rounded-full border border-[var(--border-subtle)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Deterministic prototype</span>
+    </div>
+    <h3 class="font-display mt-2 text-xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-2xl">What the experiment supports.</h3>
+    <p class="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">The prototype clarifies what deterministic adaptation can already do, and narrows the future role of inference.</p>
+  </header>
+
+  <div class="findings-grid grid lg:grid-cols-[1.15fr_0.85fr]">
+    <section class="supported-findings border-b border-[var(--border-subtle)] lg:border-r lg:border-b-0" aria-labelledby="supported-findings-title">
+      <div class="flex items-center gap-2 border-b border-[var(--border-subtle)] px-5 py-3.5 sm:px-6">
+        <svg class="h-3.5 w-3.5 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg>
+        <h4 id="supported-findings-title" class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-primary)]">Supported by Phase 1</h4>
+      </div>
+
+      <ol class="divide-y divide-[var(--border-subtle)]">
+        <li>
+          <span class="finding-number">01</span>
+          <div>
+            <strong>Product knowledge can participate in UI behavior without owning business logic</strong>
+            <p>Validation remains separate. Knowledge explains and enriches the experience around that validation.</p>
+          </div>
+        </li>
+        <li>
+          <span class="finding-number">02</span>
+          <div>
+            <strong>Adaptation can be useful before inference</strong>
+            <p>User familiarity, product version, validation state, and option cardinality are enough to produce meaningfully different interface responses.</p>
+          </div>
+        </li>
+        <li>
+          <span class="finding-number">03</span>
+          <div>
+            <strong>Certainty is a useful control on interface authority</strong>
+            <p>The difference between one compatible option and several compatible options is not cosmetic. It changes what the interface can responsibly do.</p>
+          </div>
+        </li>
+        <li>
+          <span class="finding-number">04</span>
+          <div>
+            <strong>Progressive help can be modeled as policy rather than scattered component conditionals</strong>
+            <p>The renderer consumes structured responses. It does not need to rediscover why a message applies or whether an action is safe.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <aside class="implication-panel bg-[var(--bg-secondary)] px-5 py-5 sm:px-6" aria-labelledby="architectural-implication-title">
+      <div class="flex items-center gap-2">
+        <svg class="h-3.5 w-3.5 text-[var(--text-muted)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M5 20h14"/></svg>
+        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Architectural implication</p>
+      </div>
+
+      <h4 id="architectural-implication-title" class="font-display mt-5 text-lg font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)]">A future AI layer has a narrower job than “control the UI.”</h4>
+      <p class="mt-4 text-xs leading-6 text-[var(--text-secondary)]">The deterministic experiment suggests that inference is most useful where the application is genuinely ambiguous: interpreting freeform intent, ranking semantically relevant product knowledge, adapting explanations, or bridging combinations that were not explicitly authored.</p>
+
+      <div class="mt-6 border-l-2 border-[var(--accent)] pl-4">
+        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">Narrower responsibility</p>
+        <p class="mt-2 text-xs leading-6 text-[var(--text-secondary)]">That is a much smaller and safer responsibility than asking a model to infer application truth.</p>
+      </div>
+    </aside>
+  </div>
+
+  <figcaption class="flex flex-col gap-2 border-t border-[var(--border-subtle)] px-5 py-3 text-[10px] text-[var(--text-muted)] sm:flex-row sm:items-center sm:justify-between sm:px-6">
+    <span>Four findings from the deterministic baseline.</span>
+    <span class="font-editorial-mono uppercase tracking-[0.12em] text-[var(--accent)]">Inference stays bounded by ambiguity</span>
+  </figcaption>
+</figure>
+
+<style>
+  .phase-one-findings :global(p),
+  .phase-one-findings :global(h3),
+  .phase-one-findings :global(h4),
+  .phase-one-findings :global(ol),
+  .phase-one-findings :global(li) {
+    margin: 0;
+  }
+
+  .phase-one-findings :global(ol) {
+    padding-left: 0;
+  }
+
+  .supported-findings li {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.85rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .finding-number {
+    padding-top: 0.15rem;
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: 0.11em;
+  }
+
+  .supported-findings strong {
+    display: block;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .supported-findings li p {
+    margin-top: 0.4rem;
+    color: var(--text-muted);
+    font-size: 0.67rem;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 640px) {
+    .supported-findings li {
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+    }
+  }
+</style>
