@@ -14,6 +14,7 @@ readingTime: "12 min read"
 import Callout from '../../components/Callout.astro';
 import DocumentationDrivenAdaptiveVisual from '../../components/research/DocumentationDrivenAdaptiveVisual.astro';
 import Phase1DeterministicPipelineVisual from '../../components/research/Phase1DeterministicPipelineVisual.astro';
+import Phase1FindingsVisual from '../../components/research/Phase1FindingsVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import WhereAiCouldEnterLaterVisual from '../../components/research/WhereAiCouldEnterLaterVisual.astro';
 import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEnterpriseUiLab.astro';
@@ -268,27 +269,7 @@ The system does not continue surfacing warnings or suggestions simply because re
 
 The experiment is intentionally small, but it has already clarified several architectural ideas.
 
-### Product knowledge can participate in UI behavior without owning business logic
-
-Validation remains separate. Knowledge explains and enriches the experience around that validation.
-
-### Adaptation can be useful before inference
-
-User familiarity, product version, validation state, and option cardinality are enough to produce meaningfully different interface responses.
-
-### Certainty is a useful control on interface authority
-
-The difference between one compatible option and several compatible options is not cosmetic. It changes what the interface can responsibly do.
-
-### Progressive help can be modeled as policy rather than scattered component conditionals
-
-The renderer consumes structured responses. It does not need to rediscover why a message applies or whether an action is safe.
-
-### A future AI layer has a narrower job than "control the UI"
-
-The deterministic experiment suggests that inference is most useful where the application is genuinely ambiguous: interpreting freeform intent, ranking semantically relevant product knowledge, adapting explanations, or bridging combinations that were not explicitly authored.
-
-That is a much smaller and safer responsibility than asking a model to infer application truth.
+<Phase1FindingsVisual />
 
 ---
 
