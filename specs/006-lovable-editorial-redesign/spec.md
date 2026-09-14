@@ -305,6 +305,16 @@ After the broader system is approved:
 
 Do not redesign all routes simultaneously.
 
+#### Research detail pattern promotion
+
+Research-detail exemplars may reveal presentation patterns that are useful beyond one paper. Treat those patterns as candidates rather than automatically making every article visually identical.
+
+- Promote genuinely reusable mechanics—such as reading measure, table-of-contents behavior, breakout geometry, ordinary Markdown list treatment, semantic theme integration, and shared publication rhythm—into shared layouts, styles, or primitives when they prove useful across Research entries.
+- Keep paper-specific editorial choreography—such as section numbering, special subheading rails, figure-specific semantics, content-specific diagrams, and custom labels—scoped to the entry or component that needs it.
+- The shared Research system should provide durable publication primitives without forcing every Research entry into one visual template.
+- Promoting a visual pattern into shared infrastructure must not change the authoritative claims or meaning of the underlying Research content.
+- If a redesign-era pattern proves durable beyond this feature, carry the long-lived rule into the applicable site-foundation specification during finalization rather than creating an ADR solely for presentation choreography.
+
 ## 13. Existing Stage 1 Work
 
 At the time this spec was created, an initial Stage 1 implementation already existed on `redesign/lovable-editorial`.
