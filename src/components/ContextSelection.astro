@@ -35,65 +35,344 @@ const unselected = [
 ];
 ---
 
-<figure class="media-breakout my-8 rounded-lg border border-[#34373f] bg-[#18191d] px-4 py-6 text-[#ededee] sm:px-7 sm:py-8">
-  <header class="mb-6 sm:mb-8">
-    <h3 class="!m-0 !border-0 !p-0 text-base font-semibold tracking-tight text-[#ededee] sm:text-lg">Context Selection, Not Context Accumulation</h3>
-    <p class="!mt-1 !mb-0 max-w-2xl text-xs leading-relaxed text-[#b4b5ba] sm:text-sm">The goal is to surface the right project memory for the task — not load everything.</p>
+<figure class="context-selection not-prose">
+  <header class="context-header">
+    <div>
+      <p class="eyebrow">Context routing</p>
+      <h3>Context Selection, Not Context Accumulation</h3>
+      <p class="dek">The goal is to surface the right project memory for the task — not load everything.</p>
+    </div>
+    <div class="router-chip">
+      <span>Routing layer</span>
+      <code>AGENTS.md</code>
+    </div>
   </header>
 
-  <div class="flex flex-col gap-4 lg:grid lg:grid-cols-[minmax(0,0.9fr)_auto_minmax(0,1.4fr)] lg:grid-rows-[auto_repeat(4,auto)] lg:items-stretch lg:gap-x-5 lg:gap-y-3">
-    <div class="hidden lg:col-start-1 lg:row-start-1 lg:block"><div class="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#8b8d94]">Incoming task</div></div>
-    <div class="hidden lg:col-start-2 lg:row-start-1 lg:block"><div class="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#8b8d94]">Routing layer</div></div>
-    <div class="hidden lg:col-start-3 lg:row-start-1 lg:block"><div class="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#8b8d94]">Selected project memory</div></div>
+  <div class="column-headings" aria-hidden="true">
+    <span>Incoming task</span>
+    <span>Selected project memory</span>
+  </div>
 
-    <div class="order-1 lg:col-start-2 lg:row-start-2 lg:row-end-6 lg:flex lg:items-center">
-      <div class="rounded-md border border-dashed border-[#67c6d7]/60 bg-[#222328] px-4 py-3 text-center lg:w-44">
-        <div class="font-mono text-sm text-[#78d0df]">AGENTS.md</div>
-        <p class="!mb-0 !mt-1 text-[11px] leading-relaxed text-[#b4b5ba]">Small routing layer. Points to the few documents this task needs.</p>
-      </div>
-    </div>
-
-    {rows.map((row, i) => (
-      <>
-        <div class="flex items-center rounded-md border border-[#34373f] bg-[#292a30] px-4 py-3" style={`grid-column-start:1;grid-row-start:${i + 2};order:${2 + i * 2}`}>
-          <span class="min-w-0 text-[13px] leading-snug text-[#ededee]">{row.task}</span>
-          <span aria-hidden="true" class="ml-3 hidden text-[#545760] lg:inline">→</span>
+  <ol class="routing-rows" aria-label="Examples of task-specific context selection">
+    {rows.map((row, index) => (
+      <li class="routing-row">
+        <div class="task-cell">
+          <span class="row-number">{String(index + 1).padStart(2, '0')}</span>
+          <strong>{row.task}</strong>
         </div>
-        <div class="flex flex-col justify-center gap-2 rounded-md border border-[#34373f] bg-[#222328] px-4 py-3" style={`grid-column-start:3;grid-row-start:${i + 2};order:${3 + i * 2}`}>
-          <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#8b8d94] lg:hidden">{row.task}</span>
-          <div class="flex flex-wrap gap-2">
+        <div class="route-mark" aria-hidden="true">
+          <span>→</span>
+        </div>
+        <div class="memory-cell">
+          <span class="mobile-label">Selected project memory</span>
+          <div class="selected-items">
             {row.selected.map(([file, kind]) => (
-              <span class="inline-flex items-baseline gap-2 rounded border border-[#67c6d7]/40 bg-[#18191d] px-2.5 py-1.5">
-                <span class="font-mono text-[12px] text-[#ededee]">{file}</span>
-                <span class="text-[10px] text-[#8b8d94]">{kind}</span>
-              </span>
+              <div class="selected-item">
+                <code>{file}</code>
+                <span>{kind}</span>
+              </div>
             ))}
           </div>
         </div>
-      </>
+      </li>
     ))}
+  </ol>
+
+  <div class="working-context">
+    <span class="working-label">Agent working context</span>
+    <strong>task + selected project memory → implementation</strong>
   </div>
 
-  <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
-    <span aria-hidden="true" class="hidden h-px flex-1 bg-[#545760] sm:block"></span>
-    <div class="rounded-md border border-[#34373f] bg-[#222328] px-4 py-3">
-      <span class="font-mono text-[13px] text-[#ededee]">Agent working context</span>
-      <span class="ml-2 text-[12px] text-[#b4b5ba]">task + selected project memory → implementation</span>
+  <div class="not-selected">
+    <p>Present in the repository, not selected for this task</p>
+    <div>
+      {unselected.map((item) => <span>{item}</span>)}
     </div>
   </div>
 
-  <div class="mt-6 rounded-md border border-dashed border-[#34373f]/70 px-4 py-3">
-    <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8b8d94]">Present in the repository, not selected for this task</span>
-    <div class="mt-2 flex flex-wrap gap-2">
-      {unselected.map((item) => (
-        <span class="rounded border border-[#34373f]/60 px-2.5 py-1.5 font-mono text-[12px] text-[#8b8d94]">{item}</span>
-      ))}
-    </div>
-  </div>
-
-  <p class="!mb-0 !mt-4 text-[11px] leading-relaxed text-[#8b8d94] sm:text-xs"><span class="font-mono">Accumulation model:</span> task → everything in the repository → agent. It still fits, but the signal a task depends on gets harder to find.</p>
-
-  <figcaption class="mt-6 border-t border-[#34373f] pt-4 text-[11px] leading-relaxed text-[#8b8d94] sm:text-xs">
+  <figcaption>
     Routing here is human-authored: AGENTS.md points to documents a person wrote and maintained. There is no automated relevance engine, and reading the right document does not guarantee correct output.
   </figcaption>
 </figure>
+
+<style>
+  .context-selection {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.75rem;
+    background: var(--bg-card);
+    color: var(--text-primary);
+  }
+
+  .context-selection :global(p),
+  .context-selection :global(h3),
+  .context-selection :global(ol),
+  .context-selection :global(li) {
+    margin: 0;
+  }
+
+  .context-selection :global(ol) {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .context-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.25rem 1.35rem;
+  }
+
+  .eyebrow,
+  .router-chip span,
+  .column-headings,
+  .row-number,
+  .mobile-label,
+  .working-label,
+  .not-selected > p {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+
+  .context-header h3 {
+    margin-top: 0.45rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+  }
+
+  .dek {
+    margin-top: 0.45rem !important;
+    max-width: 38rem;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
+  .router-chip {
+    flex: 0 0 auto;
+    border-left: 2px solid var(--accent);
+    padding: 0.25rem 0 0.25rem 0.7rem;
+  }
+
+  .router-chip span {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.46rem;
+    letter-spacing: 0.1em;
+  }
+
+  .router-chip code {
+    display: block;
+    margin-top: 0.2rem;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.72rem;
+  }
+
+  .column-headings {
+    display: none;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.8fr);
+    gap: 2.8rem;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    padding: 0.65rem 1.35rem;
+    color: var(--text-muted);
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+  }
+
+  .routing-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .task-cell,
+  .memory-cell {
+    min-width: 0;
+    padding: 0.9rem 1.1rem;
+  }
+
+  .task-cell {
+    position: relative;
+    padding-top: 2rem;
+    background: var(--bg-card);
+  }
+
+  .row-number {
+    position: absolute;
+    top: 0.8rem;
+    left: 1.1rem;
+    color: var(--accent);
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  .task-cell strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .route-mark {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+  }
+
+  .memory-cell {
+    background: var(--bg-secondary);
+  }
+
+  .mobile-label {
+    display: block;
+    margin-bottom: 0.55rem;
+    color: var(--text-muted);
+    font-size: 0.46rem;
+    letter-spacing: 0.1em;
+  }
+
+  .selected-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .selected-item {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.35rem;
+    background: var(--bg-card);
+    padding: 0.45rem 0.55rem;
+  }
+
+  .selected-item code {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: var(--text-primary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.62rem;
+    font-weight: 500;
+  }
+
+  .selected-item span {
+    color: var(--text-muted);
+    font-size: 0.56rem;
+    line-height: 1.4;
+  }
+
+  .working-context {
+    display: grid;
+    gap: 0.3rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.9rem 1.1rem;
+  }
+
+  .working-label,
+  .not-selected > p {
+    color: var(--accent);
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+  }
+
+  .working-context strong {
+    color: var(--text-primary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.68rem;
+    font-weight: 500;
+  }
+
+  .not-selected {
+    padding: 0.9rem 1.1rem;
+    background: color-mix(in srgb, var(--bg-secondary) 62%, transparent);
+  }
+
+  .not-selected > p {
+    color: var(--text-muted);
+  }
+
+  .not-selected > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.55rem;
+  }
+
+  .not-selected span {
+    border: 1px dashed var(--border-subtle);
+    border-radius: 0.3rem;
+    padding: 0.35rem 0.5rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.56rem;
+  }
+
+  figcaption {
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.85rem 1.1rem;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 760px) {
+    .column-headings {
+      display: grid;
+    }
+
+    .routing-row {
+      grid-template-columns: minmax(0, 0.8fr) 2.8rem minmax(0, 1.8fr);
+    }
+
+    .task-cell,
+    .memory-cell {
+      min-height: 5.2rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .task-cell {
+      padding-top: 1.65rem;
+    }
+
+    .route-mark {
+      display: flex;
+      background: var(--bg-card);
+    }
+
+    .mobile-label {
+      display: none;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .context-header {
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+  }
+</style>
