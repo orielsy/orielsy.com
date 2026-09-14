@@ -201,40 +201,137 @@
   line-height: 1.65;
 }
 
+/*
+ * UI authority is still the article's original seven-step ordered list. The
+ * presentation turns that list into an evidence ramp rather than inventing a
+ * second data model just for the figure: increasing width = increasing UI
+ * authority, while Explain / Guide / Offer are visual group labels only.
+ */
 [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale {
   counter-reset: authority;
-  border-top: 1px solid var(--border-subtle);
+  position: relative;
+  display: grid;
+  gap: 0.5rem;
+  overflow: hidden;
+  margin: 2.25rem 0 2.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  background: var(--bg-card);
+  padding: 3.9rem 1rem 3.15rem;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale::before {
+  content: "Evidence → UI authority";
+  position: absolute;
+  inset: 0 0 auto;
   border-bottom: 1px solid var(--border-subtle);
+  padding: 1rem;
+  color: var(--accent);
+  font-family: var(--font-mono-ui);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale::after {
+  content: "Guidance → choice · stronger evidence permits stronger intervention";
+  position: absolute;
+  inset: auto 0 0;
+  border-top: 1px solid var(--border-subtle);
+  padding: 0.85rem 1rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono-ui);
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 
 [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li {
+  --authority-width: 100%;
   counter-increment: authority;
+  position: relative;
   display: grid;
-  grid-template-columns: 2.4rem minmax(0, 1fr);
+  grid-template-columns: 2.2rem minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.7rem;
+  box-sizing: border-box;
+  width: var(--authority-width);
+  min-width: 0;
   margin: 0;
-  border-top: 1px solid var(--border-subtle);
-  padding: 0.8rem 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--bg-secondary) 72%, transparent);
+  padding: 0.72rem 0.8rem;
   color: var(--text-secondary);
-  font-size: 0.82rem;
-}
-
-[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:first-child {
-  border-top: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
 }
 
 [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li::before {
   content: counter(authority, decimal-leading-zero);
-  color: var(--accent);
+  display: inline-flex;
+  min-height: 1.8rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  color: var(--text-muted);
   font-family: var(--font-mono-ui);
-  font-size: 0.58rem;
-  letter-spacing: 0.12em;
+  font-size: 0.54rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
 }
 
-[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:last-child {
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li::after {
+  color: var(--text-muted);
+  font-family: var(--font-mono-ui);
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(1)::after {
+  content: "Baseline";
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(2)::after,
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(3)::after,
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(4)::after {
+  content: "Explain";
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(5)::after,
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(6)::after {
+  content: "Guide";
+  color: var(--accent);
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(7)::after {
+  content: "Offer";
+  color: var(--accent);
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(5),
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(6) {
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border-subtle));
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(7) {
+  margin-top: 0.7rem;
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border-subtle));
+  background: color-mix(in srgb, var(--accent) 9%, var(--bg-card));
   color: var(--text-primary);
   font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(7)::before {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border-subtle));
+  color: var(--accent);
 }
 
 [data-research-entry="documentation-driven-adaptive-ux"] .paper-scenario-grid {
@@ -295,6 +392,39 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale {
+    padding-right: 1.15rem;
+    padding-left: 1.15rem;
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(1) {
+    --authority-width: 64%;
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(2) {
+    --authority-width: 70%;
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(3) {
+    --authority-width: 76%;
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(4) {
+    --authority-width: 82%;
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(5) {
+    --authority-width: 88%;
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(6) {
+    --authority-width: 94%;
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:nth-child(7) {
+    --authority-width: 100%;
+  }
+
   [data-research-entry="documentation-driven-adaptive-ux"] .paper-scenario-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -327,5 +457,14 @@
 @media (max-width: 639px) {
   [data-research-entry="documentation-driven-adaptive-ux"] .research-prose h2 {
     margin-top: 4rem;
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li {
+    grid-template-columns: 2.15rem minmax(0, 1fr);
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li::after {
+    grid-column: 2;
+    margin-top: -0.2rem;
   }
 }
