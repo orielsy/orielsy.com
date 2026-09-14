@@ -109,12 +109,75 @@
   line-height: 1.55;
 }
 
+/*
+ * Audio Chunking / Transcription Filtering — third research exemplar.
+ * Keep its section choreography scoped to the paper while using the shared
+ * breakout rhythm and publication grid. Direct-child selectors prevent prose
+ * heading rails from leaking into the Astro/HTML figures embedded below.
+ */
+[data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose {
+  counter-reset: research-section;
+}
+
+[data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > hr {
+  display: none;
+}
+
+[data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > h2 {
+  counter-increment: research-section;
+  position: relative;
+  margin-top: 4.75rem;
+}
+
+[data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > h2:first-of-type {
+  margin-top: 0;
+}
+
+[data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > h2::before {
+  content: "Section " counter(research-section, decimal-leading-zero);
+  display: block;
+  margin-bottom: 0.7rem;
+  color: var(--accent);
+  font-family: var(--font-mono-ui);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+[data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > h3 {
+  position: relative;
+  margin-top: 2.45rem;
+  padding-left: 1rem;
+}
+
+[data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > h3::before {
+  content: "";
+  position: absolute;
+  top: 0.22em;
+  bottom: 0.16em;
+  left: 0;
+  width: 1px;
+  background: var(--border-strong);
+}
+
+[data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > aside:first-child {
+  margin-top: 0;
+  margin-bottom: 3rem;
+}
+
+[data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > pre {
+  margin-block: 2.25rem;
+}
+
 @media (max-width: 639px) {
   .research-reading .research-prose > .research-breakout {
     margin-block: 2.5rem;
   }
 
-  [data-research-entry="specification-driven-ai-development"] .research-prose h2 {
+  [data-research-entry="specification-driven-ai-development"] .research-prose h2,
+  [data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > h2 {
     margin-top: 4rem;
   }
 }
