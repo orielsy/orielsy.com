@@ -71,6 +71,8 @@ Stage 2 was explicitly approved by Orielsy. Begin with the published `documentat
 - [x] Restyle research callouts and table of contents to the approved editorial system.
 - [x] Use `specification-driven-ai-development` as a second Research-detail exemplar to test which publication patterns should be shared and which should remain paper-specific.
 - [x] Document the Research-detail pattern-promotion rule; promote reusable breakout rhythm into the shared publication layer while keeping paper-specific section numbering and figure choreography scoped.
+- [x] Use `real-time-speech-audio-pipeline-desktop-ui` as a third Research-detail exemplar focused on evidence-heavy systems writing and responsive HTML/CSS architecture diagrams.
+- [x] Replace the speech paper's static pipeline/table treatments with source-grounded Astro/HTML/CSS figures while retaining code excerpts as implementation evidence.
 - [x] Redesign Project detail layout.
 - [x] Preserve project metadata, routes, and artifact links.
 - [ ] Verify existing callouts, tables, code, media, and diagrams in both themes.
