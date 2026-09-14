@@ -40,6 +40,10 @@ const flows = [
       </section>
     ))}
   </div>
+
+  <figcaption>
+    Requirement changes should update durable project intent and implementation together so later work does not inherit a stale source of truth.
+  </figcaption>
 </figure>
 
 <style>
@@ -160,6 +164,14 @@ const flows = [
   .is-preferred .outcome {
     border-left-color: var(--accent);
     color: var(--text-primary);
+  }
+
+  figcaption {
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.85rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    line-height: 1.55;
   }
 
   @media (min-width: 760px) {
