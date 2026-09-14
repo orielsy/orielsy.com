@@ -1,7 +1,7 @@
 /*
- * Article-specific publication refinements that sit on top of the shared
- * research system. Keep these selectors scoped to the exemplar entry so other
- * research papers retain their existing presentation.
+ * Research-detail publication refinements that sit on top of the shared
+ * research system. General prose fixes belong here only when they apply to
+ * every research entry; exemplar graphics remain scoped to their entry.
  */
 
 /*
@@ -22,37 +22,37 @@
 }
 
 /*
- * Tailwind's base reset removes native list markers. Shared prose styling was
- * restoring indentation and spacing but not the marker itself, which made
- * normal Markdown lists read like mysteriously indented paragraphs. Scope the
- * repair to unclassed top-level prose lists so custom diagrams remain intact.
+ * Tailwind's base reset removes native list markers. Shared prose styling
+ * restores indentation and spacing, so normal Markdown lists also need their
+ * markers restored. Keep this to unclassed top-level prose lists so custom
+ * diagram/list components can continue to own their presentation.
  */
-[data-research-entry="documentation-driven-adaptive-ux"] .research-prose > ul:not([class]) {
+.research-reading .research-prose > ul:not([class]) {
   list-style-type: disc;
   list-style-position: outside;
   margin: 1.25rem 0 1.6rem;
   padding-left: 1.35rem;
 }
 
-[data-research-entry="documentation-driven-adaptive-ux"] .research-prose > ol:not([class]) {
+.research-reading .research-prose > ol:not([class]) {
   list-style-type: decimal;
   list-style-position: outside;
   margin: 1.25rem 0 1.6rem;
   padding-left: 1.55rem;
 }
 
-[data-research-entry="documentation-driven-adaptive-ux"] .research-prose > ul:not([class]) > li,
-[data-research-entry="documentation-driven-adaptive-ux"] .research-prose > ol:not([class]) > li {
+.research-reading .research-prose > ul:not([class]) > li,
+.research-reading .research-prose > ol:not([class]) > li {
   margin: 0.35rem 0;
   padding-left: 0.25rem;
 }
 
-[data-research-entry="documentation-driven-adaptive-ux"] .research-prose > ul:not([class]) > li::marker {
+.research-reading .research-prose > ul:not([class]) > li::marker {
   color: var(--text-muted);
   font-size: 0.8em;
 }
 
-[data-research-entry="documentation-driven-adaptive-ux"] .research-prose > ol:not([class]) > li::marker {
+.research-reading .research-prose > ol:not([class]) > li::marker {
   color: var(--accent);
   font-family: var(--font-mono-ui);
   font-size: 0.78em;
