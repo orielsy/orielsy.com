@@ -14,6 +14,7 @@ readingTime: "12 min read"
 import Callout from '../../components/Callout.astro';
 import DocumentationDrivenAdaptiveVisual from '../../components/research/DocumentationDrivenAdaptiveVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+import WhereAiCouldEnterLaterVisual from '../../components/research/WhereAiCouldEnterLaterVisual.astro';
 import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEnterpriseUiLab.astro';
 
 <Callout type="note" title="PHASE 1 REFERENCE IMPLEMENTATION">
@@ -337,21 +338,9 @@ The deterministic architecture is useful partly because it gives future inferenc
 
 A later version could insert optional inference after deterministic filtering and before response policy:
 
-```text
-application truth
-      ↓
-deterministic validation
-      ↓
-deterministic context filtering
-      ↓
-optional inference
-      ↓
-evidence reconciliation
-      ↓
-response policy
-      ↓
-UI response
-```
+<ResearchBreakout mode="publication">
+  <WhereAiCouldEnterLaterVisual />
+</ResearchBreakout>
 
 Several capabilities become plausible at that boundary.
 
