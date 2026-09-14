@@ -136,7 +136,7 @@ const formattedUpdateDate = data.updatedDate
         <div class="site-shell py-10 sm:py-14 lg:py-16">
           <div class="research-publication-grid grid gap-10 xl:grid-cols-12 xl:gap-0">
             <aside class="xl:col-span-3" aria-label="Research navigation">
-              <div class="research-toc-sticky xl:pr-8">
+              <div class="research-toc-sticky xl:pr-8" data-research-toc-shell>
                 <TableOfContents headings={headings} />
               </div>
             </aside>
@@ -193,15 +193,100 @@ const formattedUpdateDate = data.updatedDate
     container-type: inline-size;
   }
 
+  .research-toc-sticky {
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease;
+  }
+
   @media (min-width: 1280px) {
     .research-toc-sticky {
       position: sticky;
       top: 6rem;
     }
 
-    [data-research-entry='documentation-driven-adaptive-ux'] .research-toc-sticky {
-      position: static;
-      top: auto;
+    .research-toc-sticky[data-yielding] {
+      opacity: 0;
+      transform: translateY(-0.5rem);
+      pointer-events: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .research-toc-sticky {
+      transition: none;
     }
   }
 </style>
+
+<script>
+  const desktopResearchLayout = window.matchMedia('(min-width: 1280px)');
+  const tocShell = document.querySelector<HTMLElement>('[data-research-toc-shell]');
+  const publicationPlates = Array.from(
+    document.querySelectorAll<HTMLElement>('[data-breakout-mode="publication"]'),
+  );
+
+  if (tocShell && publicationPlates.length > 0) {
+    let observer: IntersectionObserver | null = null;
+    let resizeTimer: number | undefined;
+
+    const setYielding = (yielding: boolean) => {
+      tocShell.toggleAttribute('data-yielding', yielding);
+
+      if (yielding) {
+        tocShell.setAttribute('aria-hidden', 'true');
+        tocShell.setAttribute('inert', '');
+      } else {
+        tocShell.removeAttribute('aria-hidden');
+        tocShell.removeAttribute('inert');
+      }
+    };
+
+    const disconnectObserver = () => {
+      observer?.disconnect();
+      observer = null;
+      setYielding(false);
+    };
+
+    const setupObserver = () => {
+      disconnectObserver();
+
+      if (!desktopResearchLayout.matches) return;
+
+      const stickyTop = 96;
+      const tocHeight = Math.max(1, Math.ceil(tocShell.getBoundingClientRect().height));
+      const bottomInset = Math.max(0, window.innerHeight - stickyTop - tocHeight);
+      const intersectingPlates = new Set<Element>();
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              intersectingPlates.add(entry.target);
+            } else {
+              intersectingPlates.delete(entry.target);
+            }
+          });
+
+          setYielding(intersectingPlates.size > 0);
+        },
+        {
+          root: null,
+          rootMargin: `-${stickyTop}px 0px -${bottomInset}px 0px`,
+          threshold: 0,
+        },
+      );
+
+      publicationPlates.forEach((plate) => observer?.observe(plate));
+    };
+
+    const scheduleObserverRefresh = () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(setupObserver, 120);
+    };
+
+    desktopResearchLayout.addEventListener('change', setupObserver);
+    window.addEventListener('resize', scheduleObserverRefresh, { passive: true });
+    setupObserver();
+  }
+</script>
