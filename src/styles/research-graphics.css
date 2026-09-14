@@ -26,7 +26,7 @@
   box-sizing: border-box;
   border-bottom: 1px solid var(--border-subtle);
   background: var(--bg-card);
-  padding: 1rem 1rem 0.9rem 3.15rem;
+  padding: 1rem 13rem 0.9rem 1rem;
   color: var(--text-primary);
   font-family: var(--font-mono-ui);
   font-size: 0.58rem;
@@ -36,21 +36,26 @@
   text-transform: uppercase;
 }
 
+/*
+ * The accent rule is not decorative: it marks exclusions that belong to the
+ * future AI / inference layer. Keep the legend explicit so the grouping does
+ * not require readers to infer our color semantics.
+ */
 [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations::after {
-  content: "×";
+  content: "Purple rule = AI / inference";
   position: absolute;
-  top: 0.95rem;
-  left: 1rem;
-  display: grid;
-  width: 1.55rem;
-  height: 1.55rem;
-  place-items: center;
-  border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--border-subtle));
-  border-radius: 999px;
+  top: 1rem;
+  right: 1rem;
+  max-width: 10.5rem;
+  border-left: 2px solid color-mix(in srgb, var(--accent) 48%, transparent);
+  padding: 0.25rem 0 0.25rem 0.6rem;
   color: var(--accent);
   font-family: var(--font-mono-ui);
-  font-size: 0.72rem;
-  line-height: 1;
+  font-size: 0.48rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.45;
+  text-transform: uppercase;
 }
 
 [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations > li {
@@ -109,6 +114,25 @@
 
   [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations > li {
     min-height: 3.35rem;
+  }
+}
+
+@media (max-width: 639px) {
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations {
+    padding-top: 5.7rem;
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations::before {
+    min-height: 5.7rem;
+    padding-right: 1rem;
+    padding-bottom: 2.55rem;
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations::after {
+    top: 3.15rem;
+    right: auto;
+    left: 1rem;
+    max-width: none;
   }
 }
 
