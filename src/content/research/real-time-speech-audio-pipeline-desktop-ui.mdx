@@ -13,7 +13,13 @@ demo: "/projects/local-ai-real-time-captioning"
 ---
 
 import Callout from '../../components/Callout.astro';
-import DiagramFigure from '../../components/DiagramFigure.astro';
+import AsyncSpeechPipelineVisual from '../../components/research/AsyncSpeechPipelineVisual.astro';
+import AudioFormatReductionVisual from '../../components/research/AudioFormatReductionVisual.astro';
+import ChunkingTradeoffVisual from '../../components/research/ChunkingTradeoffVisual.astro';
+import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+import SpeechArchitectureTakeawaysVisual from '../../components/research/SpeechArchitectureTakeawaysVisual.astro';
+import SpeechStreamingPipelineVisual from '../../components/research/SpeechStreamingPipelineVisual.astro';
+import TranscriptionFilteringTruthVisual from '../../components/research/TranscriptionFilteringTruthVisual.astro';
 
 <Callout type="note" title="COMPANION PROJECT ARTIFACT">
   This research article details the engineering architecture and streaming trade-offs behind **speechBubbles**, an on-device live broadcast graphics and speech-to-text overlay platform. For the full system case study and 1080p production demonstration video, see the [speechBubbles Project Case Study](/projects/local-ai-real-time-captioning).
@@ -25,26 +31,23 @@ Building a real-time, on-device speech-to-text interface presents a distributed-
 
 Unlike batch transcription—where a static media file is uploaded, processed sequentially, and returned as a finished transcript—live transcription requires continuous coordination across four distinct operational domains:
 
-1. **Hardware Audio Capture**: Sampling microphone input in the browser/client environment.
-2. **Buffered Chunk Processing**: Deciding when accumulated audio is large enough to send through neural inference.
-3. **Transcript Confidence Filtering**: Suppressing low-confidence segments before they are rendered to the overlay.
-4. **Fluid UI Compositing**: Rendering animated overlay graphics without unnecessary layout churn or visible jitter.
-
-<DiagramFigure
-  src="/projects/speechbubbles/speechbubbles-pipeline_v4.png"
-  alt="speechBubbles streaming inference pipeline showing hardware audio capture, temporal buffering, local Whisper decoding, and fluid UI overlay compositing connected in sequence."
-  caption="Pipeline overview for speechBubbles. The current public backend buffers fixed-duration chunks and transcribes them directly with Whisper; PyAnnote VAD scaffolding exists in the repository but is not active in process_buffer(). Click image to expand to full resolution."
-/>
+<ResearchBreakout mode="publication">
+  <SpeechStreamingPipelineVisual />
+</ResearchBreakout>
 
 ---
 
-## 1. The Audio Sample Rate Dilemma
+## The Audio Sample Rate Dilemma
 
 Consumer audio hardware and browser `AudioContext` instances commonly operate at **44,100 Hz** or **48,000 Hz** using floating-point sample buffers.
 
 Sending 48 kHz stereo 32-bit float audio directly would produce about **384 KB/sec** of raw sample data before protocol overhead:
 
 48,000 samples/sec × 2 channels × 4 bytes/sample = 384,000 bytes/sec.
+
+<ResearchBreakout mode="wide">
+  <AudioFormatReductionVisual />
+</ResearchBreakout>
 
 ### The Client-Side Downsampling Solution
 
@@ -81,14 +84,13 @@ The filtered float array is then clamped and converted to signed 16-bit integers
 
 ---
 
-## 2. Buffered Chunking: Delay vs. Linguistic Context
+## Buffered Chunking: Delay vs. Linguistic Context
 
 Speech transcription needs enough surrounding audio to resolve word boundaries and linguistic context. That creates a practical trade-off:
 
-| Chunk Strategy | Perceived Delay | Linguistic Context | Typical Trade-off |
-| :--- | :--- | :--- | :--- |
-| **Shorter chunks** | Lower | Less | Faster updates, but more risk of unstable or incomplete phrases |
-| **Longer chunks** | Higher | More | More context for decoding, but the transcript arrives later |
+<ResearchBreakout mode="wide">
+  <ChunkingTradeoffVisual />
+</ResearchBreakout>
 
 The public backend currently defaults to a **3-second chunk threshold** when no client override is supplied. This is an implementation setting, not evidence that three seconds is an optimal latency/accuracy point.
 
@@ -107,7 +109,7 @@ After transcription finishes, `scratch_buffer` is cleared. Because processed sam
 
 ---
 
-## 3. Handling Low-Confidence Transcription Output
+## Handling Low-Confidence Transcription Output
 
 Continuous microphone input can cause Whisper to emit undesirable text during silence, ambient noise, or otherwise low-confidence audio. The public source currently addresses this primarily on the client after transcription.
 
@@ -136,9 +138,13 @@ function filterSegments(segments) {
 
 Segments above those thresholds are discarded by the client. This helps suppress likely hallucinated or low-confidence text before it reaches the caption queue, but it does not guarantee that all phantom output is eliminated.
 
+<ResearchBreakout mode="publication">
+  <TranscriptionFilteringTruthVisual />
+</ResearchBreakout>
+
 ---
 
-## 4. Async Inference & UI Rendering
+## Async Inference & UI Rendering
 
 The backend uses `asyncio.to_thread()` around `model.transcribe()`. This moves blocking model inference off the async event loop so the WebSocket server can remain responsive while transcription runs.
 
@@ -161,14 +167,18 @@ const performAnimation = (multiplier = 1) => {
 
 The result is a separation of responsibilities: audio capture and downsampling happen in the client, blocking model inference is moved off the async event loop, and caption layout/animation remains in the Electron/Vue rendering layer.
 
+<ResearchBreakout mode="publication">
+  <AsyncSpeechPipelineVisual />
+</ResearchBreakout>
+
 ---
 
-## 5. Architectural Takeaways & Future Directions
+## Architectural Takeaways & Future Directions
 
 Building on-device intelligent UI systems suggests several useful design principles:
 
-1. **Use specialized models for specialized primitives**: A speech-to-text model can serve transcription directly without routing the task through a general conversational interface.
-2. **Treat local inference as an execution option**: Browser or desktop runtimes can support downstream tasks such as translation, topic extraction, or summarization without per-request cloud inference charges when the local model and hardware are sufficient.
-3. **Keep capture, inference, and rendering decoupled**: Separating those responsibilities makes it easier to reason about latency, blocking work, and UI behavior independently.
+<ResearchBreakout mode="wide">
+  <SpeechArchitectureTakeawaysVisual />
+</ResearchBreakout>
 
 For the practical implementation and video demonstration of this architecture in action, visit the [speechBubbles Project Case Study](/projects/local-ai-real-time-captioning).
