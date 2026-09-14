@@ -1,0 +1,183 @@
+---
+const flows = [
+  {
+    label: 'Current repository flow',
+    badge: 'Explicit / human-authored',
+    accent: false,
+    steps: ['Agent task', 'AGENTS.md', 'Relevant constitution / specs / ADRs', 'Working context', 'Implementation'],
+  },
+  {
+    label: 'Possible next step',
+    badge: 'Proposed / not implemented',
+    accent: true,
+    steps: ['Agent task', 'Relevance detection', 'Select relevant specs / ADRs / repository patterns', 'Context delivery layer', 'Agent working context'],
+  },
+];
+---
+
+<figure class="future-routing not-prose">
+  <header>
+    <p class="eyebrow">Where this could go next</p>
+    <h3>Selection could become more task-aware without turning the repository into one giant context payload.</h3>
+  </header>
+
+  <div class="flows">
+    {flows.map((flow) => (
+      <section class:list={['flow', flow.accent && 'is-future']}>
+        <div class="flow-heading">
+          <strong>{flow.label}</strong>
+          <span>{flow.badge}</span>
+        </div>
+        <ol>
+          {flow.steps.map((step, index) => (
+            <li>
+              <span class="index">{String(index + 1).padStart(2, '0')}</span>
+              <span>{step}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+  </div>
+
+  <figcaption>The second path is a research direction, not a claim about the current repository implementation.</figcaption>
+</figure>
+
+<style>
+  .future-routing {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.75rem;
+    background: var(--bg-card);
+  }
+
+  .future-routing :global(p),
+  .future-routing :global(h3),
+  .future-routing :global(ol),
+  .future-routing :global(li) {
+    margin: 0;
+  }
+
+  .future-routing :global(ol) {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.2rem 1.35rem;
+  }
+
+  .eyebrow,
+  .flow-heading span,
+  .index {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+
+  h3 {
+    margin-top: 0.45rem !important;
+    max-width: 48rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+  }
+
+  .flows {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .flow {
+    background: var(--bg-card);
+    padding: 1rem;
+  }
+
+  .flow.is-future {
+    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
+  }
+
+  .flow-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .flow-heading strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+  }
+
+  .flow-heading span {
+    color: var(--text-muted);
+    font-size: 0.46rem;
+    letter-spacing: 0.1em;
+  }
+
+  .is-future .flow-heading span {
+    color: var(--accent);
+  }
+
+  ol {
+    display: grid;
+    gap: 0.42rem;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    align-items: center;
+    gap: 0.65rem;
+    min-height: 2.7rem;
+    border-left: 1px solid var(--border-strong);
+    background: var(--bg-secondary);
+    padding: 0.5rem 0.65rem;
+    color: var(--text-secondary);
+    font-size: 0.66rem;
+    line-height: 1.45;
+  }
+
+  .is-future li {
+    border-left-color: color-mix(in srgb, var(--accent) 58%, var(--border-strong));
+  }
+
+  .index {
+    color: var(--text-muted);
+    font-size: 0.46rem;
+    letter-spacing: 0.08em;
+  }
+
+  .is-future .index {
+    color: var(--accent);
+  }
+
+  figcaption {
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.85rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 760px) {
+    .flows {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
