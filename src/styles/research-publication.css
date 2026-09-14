@@ -1,0 +1,120 @@
+/*
+ * Shared publication rhythm for research details.
+ * ResearchBreakout owns horizontal geometry; this layer owns the vertical
+ * cadence around those plates so papers do not have to reinvent it.
+ */
+.research-reading .research-prose > .research-breakout {
+  margin-block: 3rem;
+}
+
+.research-reading .research-prose > .research-breakout + p {
+  margin-top: 1.5rem;
+}
+
+/*
+ * From Prompts to Project Memory — second research exemplar.
+ * Numbering and subheading rails are intentionally scoped to this paper;
+ * other research entries inherit the publication system without being forced
+ * into the same editorial choreography.
+ */
+[data-research-entry="specification-driven-ai-development"] .research-prose {
+  counter-reset: research-section;
+}
+
+[data-research-entry="specification-driven-ai-development"] .research-prose hr {
+  display: none;
+}
+
+[data-research-entry="specification-driven-ai-development"] .research-prose h2 {
+  counter-increment: research-section;
+  position: relative;
+  margin-top: 4.75rem;
+}
+
+[data-research-entry="specification-driven-ai-development"] .research-prose h2:first-of-type {
+  margin-top: 0;
+}
+
+[data-research-entry="specification-driven-ai-development"] .research-prose h2::before {
+  content: "Section " counter(research-section, decimal-leading-zero);
+  display: block;
+  margin-bottom: 0.7rem;
+  color: var(--accent);
+  font-family: var(--font-mono-ui);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+[data-research-entry="specification-driven-ai-development"] .research-prose h3 {
+  position: relative;
+  margin-top: 2.35rem;
+  padding-left: 1rem;
+}
+
+[data-research-entry="specification-driven-ai-development"] .research-prose h3::before {
+  content: "";
+  position: absolute;
+  top: 0.22em;
+  bottom: 0.16em;
+  left: 0;
+  width: 1px;
+  background: var(--border-strong);
+}
+
+[data-research-entry="specification-driven-ai-development"] .research-prose > aside:first-child {
+  margin-top: 0;
+  margin-bottom: 3rem;
+}
+
+/*
+ * Give independently-authored figures one publication shell rhythm without
+ * flattening their internal diagrams. These selectors only normalize the
+ * outer header/caption treatment for this exemplar.
+ */
+[data-research-entry="specification-driven-ai-development"] .research-prose .research-breakout > figure.not-prose {
+  border-radius: 0.7rem;
+}
+
+[data-research-entry="specification-driven-ai-development"] .research-prose .research-breakout > figure.not-prose > header {
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 1.15rem 1.25rem;
+}
+
+[data-research-entry="specification-driven-ai-development"] .research-prose .research-breakout > figure.not-prose > header .eyebrow {
+  font-size: 0.54rem;
+  letter-spacing: 0.13em;
+}
+
+[data-research-entry="specification-driven-ai-development"] .research-prose .research-breakout > figure.not-prose > header h3 {
+  margin-top: 0.45rem;
+  padding-left: 0;
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+}
+
+[data-research-entry="specification-driven-ai-development"] .research-prose .research-breakout > figure.not-prose > header h3::before {
+  content: none;
+  display: none;
+}
+
+[data-research-entry="specification-driven-ai-development"] .research-prose .research-breakout > figure.not-prose > figcaption {
+  border-top: 1px solid var(--border-subtle);
+  padding: 0.8rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.62rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 639px) {
+  .research-reading .research-prose > .research-breakout {
+    margin-block: 2.5rem;
+  }
+
+  [data-research-entry="specification-driven-ai-development"] .research-prose h2 {
+    margin-top: 4rem;
+  }
+}
