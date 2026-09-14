@@ -1,0 +1,79 @@
+<figure class="applicability-policy-figure not-prose my-10 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]">
+  <header class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-6">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <p class="font-editorial-mono text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]">Separation of concerns</p>
+      <span class="font-editorial-mono rounded-full border border-[var(--border-subtle)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Applicability ≠ policy</span>
+    </div>
+    <h3 class="font-display mt-2 text-xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-2xl">Knowing something applies does not decide what the UI should do.</h3>
+  </header>
+
+  <div class="grid lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
+    <section class="boundary-stage border-b border-[var(--border-subtle)] px-5 py-5 sm:px-6 lg:border-b-0" aria-labelledby="applicability-stage-title">
+      <div class="flex items-center justify-between gap-3">
+        <span class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">01 · Applicability</span>
+        <svg class="h-4 w-4 text-[var(--text-muted)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+      </div>
+      <h4 id="applicability-stage-title" class="font-display mt-4 text-base font-semibold text-[var(--text-primary)]">Does this knowledge match the current context?</h4>
+      <div class="mt-5 grid gap-2 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+        <span class="fact-chip">Product state</span>
+        <span class="fact-chip">Version</span>
+        <span class="fact-chip">Audience</span>
+      </div>
+      <div class="mt-5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-4">
+        <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Output</span>
+        <p class="mt-2 text-xs leading-5 text-[var(--text-primary)]">Applicable authored knowledge</p>
+      </div>
+    </section>
+
+    <div class="boundary-divider flex items-center justify-center border-b border-[var(--border-subtle)] px-5 py-3 lg:border-r lg:border-b-0 lg:border-l lg:px-3" aria-hidden="true">
+      <span class="font-editorial-mono text-xs text-[var(--text-muted)] lg:rotate-0">→</span>
+    </div>
+
+    <section class="boundary-stage px-5 py-5 sm:px-6" aria-labelledby="policy-stage-title">
+      <div class="flex items-center justify-between gap-3">
+        <span class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">02 · Response policy</span>
+        <svg class="h-4 w-4 text-[var(--text-muted)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 5h14v14H5z"/><path d="M8 9h8M8 13h5"/><path d="m14 16 2 2 3-4"/></svg>
+      </div>
+      <h4 id="policy-stage-title" class="font-display mt-4 text-base font-semibold text-[var(--text-primary)]">How strongly should the interface intervene?</h4>
+      <div class="mt-5 grid gap-2 sm:grid-cols-2">
+        <span class="fact-chip">Application state</span>
+        <span class="fact-chip">Validation result</span>
+        <span class="fact-chip">Available knowledge</span>
+        <span class="fact-chip">Evidence certainty</span>
+      </div>
+      <div class="mt-5 rounded-lg border border-[var(--accent-border)] bg-[var(--accent-subtle)] p-4">
+        <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">Possible UI response</span>
+        <p class="mt-2 text-xs leading-5 text-[var(--text-primary)]">Help text · highlight · suggestion · user-accepted action</p>
+      </div>
+    </section>
+  </div>
+
+  <figcaption class="flex flex-col gap-2 border-t border-[var(--border-subtle)] px-5 py-3 text-[10px] text-[var(--text-muted)] sm:flex-row sm:items-center sm:justify-between sm:px-6">
+    <span>The knowledge layer identifies relevance.</span>
+    <span class="font-editorial-mono uppercase tracking-[0.12em] text-[var(--accent)]">Policy controls UI authority</span>
+  </figcaption>
+</figure>
+
+<style>
+  .applicability-policy-figure :global(p),
+  .applicability-policy-figure :global(h3),
+  .applicability-policy-figure :global(h4) {
+    margin: 0;
+  }
+
+  .fact-chip {
+    display: flex;
+    min-height: 2.25rem;
+    align-items: center;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.4rem;
+    background: var(--bg-card);
+    padding: 0.5rem 0.65rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.52rem;
+    letter-spacing: 0.06em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+</style>
