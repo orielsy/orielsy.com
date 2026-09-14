@@ -1,7 +1,7 @@
 /*
- * Article-specific graphic treatments that sit on top of the shared research
- * publication system. Keep these selectors scoped to the exemplar entry so
- * other research papers retain their existing list presentation.
+ * Article-specific publication refinements that sit on top of the shared
+ * research system. Keep these selectors scoped to the exemplar entry so other
+ * research papers retain their existing presentation.
  */
 
 /*
@@ -19,6 +19,44 @@
 [data-research-entry="documentation-driven-adaptive-ux"] .research-prose figure.not-prose h4::before {
   content: none;
   display: none;
+}
+
+/*
+ * Tailwind's base reset removes native list markers. Shared prose styling was
+ * restoring indentation and spacing but not the marker itself, which made
+ * normal Markdown lists read like mysteriously indented paragraphs. Scope the
+ * repair to unclassed top-level prose lists so custom diagrams remain intact.
+ */
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose > ul:not([class]) {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin: 1.25rem 0 1.6rem;
+  padding-left: 1.35rem;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose > ol:not([class]) {
+  list-style-type: decimal;
+  list-style-position: outside;
+  margin: 1.25rem 0 1.6rem;
+  padding-left: 1.55rem;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose > ul:not([class]) > li,
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose > ol:not([class]) > li {
+  margin: 0.35rem 0;
+  padding-left: 0.25rem;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose > ul:not([class]) > li::marker {
+  color: var(--text-muted);
+  font-size: 0.8em;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose > ol:not([class]) > li::marker {
+  color: var(--accent);
+  font-family: var(--font-mono-ui);
+  font-size: 0.78em;
+  font-weight: 500;
 }
 
 [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations {
