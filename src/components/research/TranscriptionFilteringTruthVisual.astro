@@ -1,0 +1,222 @@
+---
+const repoScaffolding = ['VADFactory', 'PyAnnote dependencies', 'lazy get_vad() helper'];
+const activePath = [
+  'Buffered audio reaches process_buffer()',
+  'model.transcribe() runs without the VAD path being invoked first',
+  'Returned segments reach CaptionControl.vue',
+  'Client keeps text only when no_speech_prob ≤ 0.6 and temperature ≤ 0.8',
+];
+---
+
+<figure class="filtering-truth not-prose">
+  <header>
+    <div>
+      <p class="eyebrow">Repository truth vs runtime truth</p>
+      <h3>VAD infrastructure exists, but the current public streaming path does not use it before Whisper.</h3>
+    </div>
+    <span class="badge">Do not overstate</span>
+  </header>
+
+  <div class="truth-grid">
+    <section class="present">
+      <div class="section-label">Present in repository</div>
+      <ul>
+        {repoScaffolding.map((item) => <li>{item}</li>)}
+      </ul>
+      <p>These pieces show intended or available VAD scaffolding, not active silence dropping in the current public transcription path.</p>
+    </section>
+
+    <section class="active">
+      <div class="section-label">Active path in current public source</div>
+      <ol>
+        {activePath.map((item, index) => (
+          <li>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <p>{item}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </div>
+
+  <div class="boundary">
+    <span>Behavioral boundary</span>
+    <strong>Client-side probabilistic filtering reduces likely low-confidence output; it does not guarantee all phantom transcription is eliminated.</strong>
+  </div>
+
+  <figcaption>The distinction is source-grounded: available architecture and active runtime behavior are not the same claim.</figcaption>
+</figure>
+
+<style>
+  .filtering-truth {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.7rem;
+    background: var(--bg-card);
+  }
+
+  .filtering-truth :global(p),
+  .filtering-truth :global(h3),
+  .filtering-truth :global(ol),
+  .filtering-truth :global(ul),
+  .filtering-truth :global(li) { margin: 0; }
+
+  .filtering-truth :global(ol),
+  .filtering-truth :global(ul) { padding: 0; list-style: none; }
+
+  header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.25rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.15rem 1.25rem;
+  }
+
+  .eyebrow,
+  .badge,
+  .section-label,
+  .active li > span,
+  .boundary > span {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+  }
+
+  h3 {
+    margin-top: 0.45rem !important;
+    max-width: 47rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.16;
+    letter-spacing: -0.035em;
+  }
+
+  .badge {
+    flex: 0 0 auto;
+    color: var(--accent);
+    font-size: 0.47rem;
+    letter-spacing: 0.1em;
+  }
+
+  .truth-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .truth-grid section {
+    min-width: 0;
+    background: var(--bg-card);
+    padding: 1rem;
+  }
+
+  .truth-grid .active {
+    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
+  }
+
+  .section-label {
+    color: var(--text-muted);
+    font-size: 0.49rem;
+    letter-spacing: 0.1em;
+  }
+
+  .active .section-label { color: var(--accent); }
+
+  .present ul {
+    display: grid;
+    gap: 0.45rem;
+    margin-top: 0.8rem !important;
+  }
+
+  .present li {
+    border-left: 1px dashed var(--border-strong);
+    background: var(--bg-secondary);
+    padding: 0.6rem 0.7rem;
+    color: var(--text-primary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.65rem;
+  }
+
+  .present > p {
+    margin-top: 0.8rem !important;
+    color: var(--text-secondary);
+    font-size: 0.65rem;
+    line-height: 1.55;
+  }
+
+  .active ol {
+    display: grid;
+    gap: 0.45rem;
+    margin-top: 0.8rem !important;
+  }
+
+  .active li {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    align-items: center;
+    gap: 0.65rem;
+    min-height: 2.9rem;
+    border-left: 1px solid var(--accent);
+    background: var(--bg-secondary);
+    padding: 0.55rem 0.65rem;
+  }
+
+  .active li > span {
+    color: var(--accent);
+    font-size: 0.47rem;
+    letter-spacing: 0.08em;
+  }
+
+  .active li p {
+    color: var(--text-secondary);
+    font-size: 0.65rem;
+    line-height: 1.5;
+  }
+
+  .boundary {
+    display: grid;
+    gap: 0.35rem;
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.9rem 1rem;
+  }
+
+  .boundary > span {
+    color: var(--accent);
+    font-size: 0.47rem;
+    letter-spacing: 0.1em;
+  }
+
+  .boundary strong {
+    max-width: 52rem;
+    color: var(--text-primary);
+    font-size: 0.68rem;
+    font-weight: 500;
+    line-height: 1.55;
+  }
+
+  figcaption {
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.8rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 800px) {
+    .truth-grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+  }
+
+  @media (max-width: 560px) {
+    header { flex-direction: column; gap: 0.75rem; }
+  }
+</style>
