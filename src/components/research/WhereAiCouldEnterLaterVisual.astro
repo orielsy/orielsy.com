@@ -1,0 +1,305 @@
+<figure class="ai-seams-figure not-prose my-10 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]">
+  <header class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-7 sm:py-6">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <p class="font-editorial-mono text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]">Future inference seams</p>
+      <span class="font-editorial-mono rounded-full border border-[var(--border-subtle)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Not Phase 1</span>
+    </div>
+    <h3 class="font-display mt-2 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Where AI could enter later.</h3>
+    <p class="mt-2 max-w-3xl text-sm leading-6 text-[var(--text-secondary)]">Inference can enter at an explicit seam without taking ownership of application truth or response policy.</p>
+  </header>
+
+  <section class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-7 sm:py-6" aria-labelledby="future-pipeline-title">
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Architecture boundary</p>
+        <h4 id="future-pipeline-title" class="mt-1 font-display text-base font-semibold text-[var(--text-primary)]">Deterministic core with one optional inference seam</h4>
+      </div>
+      <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Authority flows left → right</span>
+    </div>
+
+    <ol class="pipeline mt-5 grid gap-2 lg:grid-cols-7" aria-label="Future inference pipeline">
+      <li class="pipeline-node">
+        <div class="node-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5M8 17h7"/></svg>
+        </div>
+        <span class="node-number">01</span>
+        <strong>Application truth</strong>
+        <small>Authoritative state</small>
+      </li>
+      <li class="pipeline-node">
+        <div class="node-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m5 12 4 4L19 6"/><circle cx="12" cy="12" r="9"/></svg>
+        </div>
+        <span class="node-number">02</span>
+        <strong>Deterministic validation</strong>
+        <small>Known requirements</small>
+      </li>
+      <li class="pipeline-node">
+        <div class="node-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+        </div>
+        <span class="node-number">03</span>
+        <strong>Context filtering</strong>
+        <small>Reduce candidates</small>
+      </li>
+      <li class="pipeline-node inference-node">
+        <div class="flex items-start justify-between gap-2">
+          <div class="node-icon accent-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="4"/></svg>
+          </div>
+          <span class="future-chip">Optional</span>
+        </div>
+        <span class="node-number">04 · Future</span>
+        <strong>Inference</strong>
+        <small>Resolve ambiguity</small>
+      </li>
+      <li class="pipeline-node">
+        <div class="node-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16v10H4z"/><path d="M8 11h8M8 14h5"/></svg>
+        </div>
+        <span class="node-number">05</span>
+        <strong>Evidence reconciliation</strong>
+        <small>Constrain the result</small>
+      </li>
+      <li class="pipeline-node">
+        <div class="node-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 5h14v14H5z"/><path d="M8 9h8M8 13h5"/><path d="m14 16 2 2 3-4"/></svg>
+        </div>
+        <span class="node-number">06</span>
+        <strong>Response policy</strong>
+        <small>Decide UI authority</small>
+      </li>
+      <li class="pipeline-node output-node">
+        <div class="node-icon accent-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9h17"/><path d="M8 14h3"/></svg>
+        </div>
+        <span class="node-number">07</span>
+        <strong>UI response</strong>
+        <small>Explanation or action</small>
+      </li>
+    </ol>
+
+    <div class="boundary-note mt-4 grid gap-2 sm:grid-cols-[auto_1fr_auto] sm:items-center">
+      <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Deterministic facts</span>
+      <span class="hidden border-t border-dashed border-[var(--border-strong)] sm:block" aria-hidden="true"></span>
+      <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">Inference remains bounded</span>
+    </div>
+  </section>
+
+  <section class="px-5 py-5 sm:px-7 sm:py-6" aria-labelledby="future-capabilities-title">
+    <div class="grid gap-5 lg:grid-cols-[0.72fr_2.28fr] lg:items-start">
+      <div>
+        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">Possible future layers</p>
+        <h4 id="future-capabilities-title" class="mt-2 font-display text-lg font-semibold leading-snug text-[var(--text-primary)]">Five places inference could help.</h4>
+        <p class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Each capability addresses ambiguity after deterministic facts have already narrowed the problem.</p>
+      </div>
+
+      <ol class="capability-grid grid gap-px overflow-hidden rounded-lg border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-2 xl:grid-cols-5">
+        <li class="capability-card">
+          <div class="capability-topline"><span>01</span><span>Future</span></div>
+          <svg class="capability-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 5h14v11H9l-4 3z"/><path d="M8 9h8M8 12h5"/></svg>
+          <strong>Intent resolution</strong>
+          <p>Map freeform language to a product concept while deterministic state remains authoritative.</p>
+        </li>
+        <li class="capability-card">
+          <div class="capability-topline"><span>02</span><span>Future</span></div>
+          <svg class="capability-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 4 4"/><path d="M8.5 10.5h4"/></svg>
+          <strong>Semantic retrieval</strong>
+          <p>Rank relevant product knowledge after version, environment, permissions, or feature filters reduce the set.</p>
+        </li>
+        <li class="capability-card">
+          <div class="capability-topline"><span>03</span><span>Future</span></div>
+          <svg class="capability-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 6h14M5 10h10M5 14h12M5 18h7"/><path d="m18 14 2 2-3 3"/></svg>
+          <strong>Explanation adaptation</strong>
+          <p>Rewrite or compress an already-authorized explanation without changing its facts or action boundary.</p>
+        </li>
+        <li class="capability-card">
+          <div class="capability-topline"><span>04</span><span>Future</span></div>
+          <svg class="capability-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 2v3M16 2v3M8 19v3M16 19v3M2 9h2M20 9h2M2 15h2M20 15h2"/><path d="M9 10h6v4H9z"/></svg>
+          <strong>Browser-local inference</strong>
+          <p>Use a local runtime for narrow intent classification or ranking without sending application context remotely.</p>
+        </li>
+        <li class="capability-card">
+          <div class="capability-topline"><span>05</span><span>Future</span></div>
+          <svg class="capability-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="m7.7 7.2 3.1 8.6M16.3 7.2l-3.1 8.6M8 6h8"/></svg>
+          <strong>Runtime routing</strong>
+          <p>Choose whether an inference task belongs in the browser, a local service, or a remote model.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <figcaption class="grid gap-3 border-t border-[var(--border-subtle)] bg-[var(--bg-primary)] px-5 py-4 sm:grid-cols-[auto_1fr] sm:items-center sm:px-7">
+    <span class="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--accent-border)] text-[var(--accent)]" aria-hidden="true">
+      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 12 4 4L19 6"/></svg>
+    </span>
+    <p class="text-xs leading-5 text-[var(--text-secondary)]"><strong class="text-[var(--text-primary)]">Inference should resolve ambiguity, not replace truth.</strong> Deterministic application state still constrains what the interface is allowed to claim or do.</p>
+  </figcaption>
+</figure>
+
+<style>
+  /* Isolate this technical figure from the article's hand-written `.prose` selectors. */
+  .ai-seams-figure :global(p),
+  .ai-seams-figure :global(h3),
+  .ai-seams-figure :global(h4),
+  .ai-seams-figure :global(ol),
+  .ai-seams-figure :global(li),
+  .ai-seams-figure :global(strong),
+  .ai-seams-figure :global(small) {
+    margin: 0;
+  }
+
+  .ai-seams-figure :global(ol) {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .pipeline-node {
+    position: relative;
+    min-width: 0;
+    min-height: 9.5rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.5rem;
+    background: var(--bg-secondary);
+    padding: 0.85rem;
+  }
+
+  .pipeline-node:not(:last-child)::after {
+    content: '↓';
+    position: absolute;
+    right: 50%;
+    bottom: -1.15rem;
+    z-index: 2;
+    width: 1rem;
+    transform: translateX(50%);
+    background: var(--bg-card);
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    line-height: 1rem;
+    text-align: center;
+  }
+
+  .node-icon {
+    display: flex;
+    width: 1.8rem;
+    height: 1.8rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    color: var(--text-muted);
+  }
+
+  .node-icon :global(svg) {
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+
+  .accent-icon {
+    border-color: var(--accent-border);
+    color: var(--accent);
+  }
+
+  .node-number {
+    display: block;
+    margin-top: 1rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .pipeline-node :global(strong) {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--text-primary);
+    font-size: 0.72rem;
+    line-height: 1.35;
+  }
+
+  .pipeline-node :global(small) {
+    display: block;
+    margin-top: 0.3rem;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    line-height: 1.45;
+  }
+
+  .inference-node {
+    border-style: dashed;
+    border-color: var(--accent-border);
+    background: var(--accent-subtle);
+  }
+
+  .future-chip {
+    border: 1px solid var(--accent-border);
+    border-radius: 999px;
+    padding: 0.18rem 0.38rem;
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.43rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .output-node {
+    border-color: var(--accent-border);
+  }
+
+  .capability-card {
+    min-width: 0;
+    background: var(--bg-secondary);
+    padding: 1rem;
+  }
+
+  .capability-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.46rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .capability-topline :global(span:last-child) {
+    color: var(--accent);
+  }
+
+  .capability-icon {
+    width: 1rem;
+    height: 1rem;
+    margin-top: 1.5rem;
+    color: var(--accent);
+  }
+
+  .capability-card :global(strong) {
+    display: block;
+    margin-top: 0.65rem;
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .capability-card :global(p) {
+    margin-top: 0.45rem;
+    color: var(--text-muted);
+    font-size: 0.66rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 1024px) {
+    .pipeline-node:not(:last-child)::after {
+      content: '→';
+      top: 50%;
+      right: -0.62rem;
+      bottom: auto;
+      width: 1rem;
+      transform: translateY(-50%);
+      line-height: 1rem;
+    }
+  }
+</style>
