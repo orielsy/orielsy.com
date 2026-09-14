@@ -4,7 +4,6 @@ const bands = [
     scope: 'Entry point',
     hint: 'Routing layer, not a mega-prompt',
     accent: true,
-    dashed: true,
     layers: [{ file: 'AGENTS.md', question: 'How should the agent work?', indent: 0 }],
   },
   {
@@ -41,43 +40,245 @@ const bands = [
 ];
 ---
 
-<figure class="media-breakout my-8 rounded-lg border border-[#34373f] bg-[#18191d] px-4 py-6 text-[#ededee] sm:px-7 sm:py-8">
-  <header class="mb-6 sm:mb-8">
-    <h3 class="!m-0 !border-0 !p-0 text-base font-semibold tracking-tight text-[#ededee] sm:text-lg">The Project Memory Stack</h3>
-    <p class="!mt-1 !mb-0 max-w-2xl text-xs leading-relaxed text-[#b4b5ba] sm:text-sm">Different artifacts preserve different kinds of intent.</p>
+<figure class="memory-stack not-prose">
+  <header class="memory-header">
+    <div>
+      <p class="eyebrow">Repository memory model</p>
+      <h3>The Project Memory Stack</h3>
+      <p class="dek">Different artifacts preserve different kinds of intent.</p>
+    </div>
+    <span class="scope-badge">Durable by scope</span>
   </header>
 
-  <div class="flex flex-col gap-5 sm:gap-6">
+  <ol class="memory-bands" aria-label="Project memory layers">
     {bands.map((band, bandIndex) => (
-      <div>
-        <div class="mb-2 flex items-center gap-3">
-          <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8b8d94] sm:text-[11px]">{band.scope}</span>
-          <span class="h-px flex-1 bg-[#34373f]"></span>
-          <span class="hidden text-[11px] text-[#8b8d94] sm:inline">{band.hint}</span>
+      <li class:list={['memory-band', band.accent && 'is-entry']}>
+        <div class="scope-column">
+          <span class="band-number">{String(bandIndex + 1).padStart(2, '0')}</span>
+          <strong>{band.scope}</strong>
+          <span>{band.hint}</span>
         </div>
 
-        <div class="flex flex-col gap-2">
+        <div class="layers-column">
           {band.layers.map((layer) => (
-            <div class:list={[layer.indent === 1 && 'sm:ml-6', layer.indent === 2 && 'sm:ml-12']}>
-              <div class:list={['rounded-md border bg-[#222328] px-4 py-3', band.dashed ? 'border-dashed border-[#67c6d7]/60' : 'border-[#34373f]']}>
-                <div class="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 gap-y-1 sm:flex sm:flex-wrap sm:items-baseline sm:justify-between">
-                  <span class:list={['min-w-0 truncate font-mono text-sm sm:text-[15px]', band.accent ? 'text-[#78d0df]' : 'text-[#ededee]']}>{layer.file}</span>
-                  <span class="col-span-2 text-xs leading-relaxed text-[#b4b5ba] sm:col-auto sm:text-right sm:text-[13px]">{layer.question}</span>
-                </div>
-                {layer.note && (
-                  <p class="!mb-0 !mt-2 border-t border-dashed border-[#34373f] pt-2 text-[11px] leading-relaxed text-[#8b8d94]">{layer.note}</p>
-                )}
+            <div class:list={['memory-layer', layer.indent === 1 && 'indent-1', layer.indent === 2 && 'indent-2']}>
+              <div class="layer-line">
+                <code>{layer.file}</code>
+                <span>{layer.question}</span>
               </div>
+              {layer.note && <p class="layer-note">{layer.note}</p>}
             </div>
           ))}
         </div>
-
-        {bandIndex < bands.length - 1 && <div aria-hidden="true" class="mt-4 ml-3 h-4 w-px bg-[#545760] sm:ml-5"></div>}
-      </div>
+      </li>
     ))}
-  </div>
+  </ol>
 
-  <figcaption class="mt-6 border-t border-[#34373f] pt-4 text-[11px] leading-relaxed text-[#8b8d94] sm:text-xs">
+  <figcaption>
     These are durable knowledge layers with different scopes, not a fixed execution pipeline. A change may read only one or two of them.
   </figcaption>
 </figure>
+
+<style>
+  .memory-stack {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.75rem;
+    background: var(--bg-card);
+    color: var(--text-primary);
+  }
+
+  .memory-stack :global(p),
+  .memory-stack :global(h3),
+  .memory-stack :global(ol),
+  .memory-stack :global(li) {
+    margin: 0;
+  }
+
+  .memory-stack :global(ol) {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .memory-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.25rem 1.35rem 1.2rem;
+  }
+
+  .eyebrow,
+  .band-number,
+  .scope-badge {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+
+  .memory-header h3 {
+    margin-top: 0.45rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+  }
+
+  .dek {
+    margin-top: 0.45rem !important;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
+  .scope-badge {
+    flex: 0 0 auto;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    padding: 0.32rem 0.55rem;
+    color: var(--text-muted);
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+  }
+
+  .memory-band {
+    display: grid;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1rem 1.1rem;
+  }
+
+  .memory-band:last-child {
+    border-bottom: 0;
+  }
+
+  .memory-band.is-entry {
+    background: color-mix(in srgb, var(--accent) 5%, var(--bg-card));
+  }
+
+  .scope-column {
+    min-width: 0;
+  }
+
+  .band-number {
+    display: block;
+    color: var(--accent);
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  .scope-column strong {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+
+  .scope-column > span:last-child {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--text-muted);
+    font-size: 0.64rem;
+    line-height: 1.5;
+  }
+
+  .layers-column {
+    display: grid;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+
+  .memory-layer {
+    border-left: 1px solid var(--border-strong);
+    padding: 0.65rem 0.75rem;
+    background: var(--bg-secondary);
+  }
+
+  .is-entry .memory-layer {
+    border-left-color: var(--accent);
+  }
+
+  .layer-line {
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .layer-line code {
+    width: fit-content;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: var(--text-primary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  .is-entry .layer-line code {
+    color: var(--accent);
+  }
+
+  .layer-line span {
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    line-height: 1.5;
+  }
+
+  .layer-note {
+    margin-top: 0.5rem !important;
+    border-top: 1px dashed var(--border-subtle);
+    padding-top: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.6rem;
+    line-height: 1.5;
+  }
+
+  figcaption {
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.85rem 1.1rem;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 700px) {
+    .memory-band {
+      grid-template-columns: minmax(9rem, 0.8fr) minmax(0, 2fr);
+      gap: 1.4rem;
+      padding: 1rem 1.35rem;
+    }
+
+    .layer-line {
+      grid-template-columns: minmax(8.5rem, 0.8fr) minmax(0, 1.7fr);
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    .memory-layer.indent-1 {
+      margin-left: 1.25rem;
+    }
+
+    .memory-layer.indent-2 {
+      margin-left: 2.5rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .memory-header {
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+  }
+</style>
