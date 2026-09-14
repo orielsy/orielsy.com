@@ -1,0 +1,175 @@
+---
+const flows = [
+  {
+    label: 'Drift pattern',
+    accent: false,
+    steps: ['Requirement changes', 'Patch implementation', 'Leave old specification behind'],
+    outcome: 'Repository intent and behavior diverge',
+  },
+  {
+    label: 'Preferred workflow',
+    accent: true,
+    steps: ['Requirement changes', 'Update spec / rule / decision', 'Update implementation'],
+    outcome: 'Repository memory and behavior stay aligned',
+  },
+];
+---
+
+<figure class="truth-workflow not-prose">
+  <header>
+    <p class="eyebrow">Source-of-truth discipline</p>
+    <h3>Update durable intent before letting the implementation become the only record.</h3>
+  </header>
+
+  <div class="flows">
+    {flows.map((flow) => (
+      <section class:list={['flow', flow.accent && 'is-preferred']}>
+        <div class="flow-label">{flow.label}</div>
+        <div class="step-row">
+          {flow.steps.map((step, index) => (
+            <>
+              <div class="step">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <strong>{step}</strong>
+              </div>
+              {index < flow.steps.length - 1 && <span class="arrow" aria-hidden="true">→</span>}
+            </>
+          ))}
+        </div>
+        <div class="outcome">{flow.outcome}</div>
+      </section>
+    ))}
+  </div>
+</figure>
+
+<style>
+  .truth-workflow {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.75rem;
+    background: var(--bg-card);
+  }
+
+  .truth-workflow :global(p),
+  .truth-workflow :global(h3) {
+    margin: 0;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.2rem 1.35rem;
+  }
+
+  .eyebrow,
+  .flow-label,
+  .step span {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+
+  h3 {
+    margin-top: 0.45rem !important;
+    max-width: 44rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+  }
+
+  .flows {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .flow {
+    background: var(--bg-card);
+    padding: 1rem;
+  }
+
+  .flow.is-preferred {
+    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
+  }
+
+  .flow-label {
+    margin-bottom: 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  .is-preferred .flow-label {
+    color: var(--accent);
+  }
+
+  .step-row {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .step {
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    padding: 0.7rem 0.75rem;
+  }
+
+  .step span {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.46rem;
+    letter-spacing: 0.08em;
+  }
+
+  .step strong {
+    display: block;
+    margin-top: 0.22rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .arrow {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+  }
+
+  .outcome {
+    margin-top: 0.7rem;
+    border-left: 2px solid var(--border-strong);
+    padding: 0.5rem 0.65rem;
+    color: var(--text-secondary);
+    font-size: 0.64rem;
+    line-height: 1.5;
+  }
+
+  .is-preferred .outcome {
+    border-left-color: var(--accent);
+    color: var(--text-primary);
+  }
+
+  @media (min-width: 760px) {
+    .step-row {
+      grid-template-columns: minmax(0, 1fr) 1.5rem minmax(0, 1fr) 1.5rem minmax(0, 1fr);
+      align-items: stretch;
+    }
+
+    .arrow {
+      display: flex;
+    }
+  }
+</style>
