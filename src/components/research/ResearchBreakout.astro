@@ -38,17 +38,18 @@ const { maxWidth, mode = 'wide' } = Astro.props;
   }
 
   /*
-   * At the 12-column article layout, publication plates stop centering on the
-   * prose column and instead align to the article grid itself. The grid is a
-   * named size container, so 100cqw is the full publication canvas and the
-   * prose column begins four of twelve columns in from its left edge.
+   * On the 12-column article layout the reading region occupies eight columns.
+   * A publication plate therefore reaches the full twelve-column canvas at
+   * 150% of that region, shifted left by half of the eight-column width.
+   * This keeps the breakout tied to the editorial grid without introducing a
+   * size-containment ancestor around the sticky contents rail.
    */
-  @media (min-width: 1280px) {
+  @media (min-width: 1024px) {
     .research-breakout[data-breakout-mode='publication'] {
       left: auto;
-      width: min(var(--research-breakout-max), 100cqw);
-      max-width: 100cqw;
-      margin-left: -33.333333cqw;
+      width: min(var(--research-breakout-max), 150%);
+      max-width: 150%;
+      margin-left: -50%;
       transform: none;
     }
   }
