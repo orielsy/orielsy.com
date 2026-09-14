@@ -69,6 +69,8 @@ Stage 2 was explicitly approved by Orielsy. Begin with the published `documentat
 - [x] Use `documentation-driven-adaptive-ux` as the first Research-detail visual exemplar without rewriting its factual/editorial MDX content.
 - [x] Restyle the paper's documentation/adaptive comparison visual to the approved editorial linework system.
 - [x] Restyle research callouts and table of contents to the approved editorial system.
+- [x] Use `specification-driven-ai-development` as a second Research-detail exemplar to test which publication patterns should be shared and which should remain paper-specific.
+- [x] Document the Research-detail pattern-promotion rule; promote reusable breakout rhythm into the shared publication layer while keeping paper-specific section numbering and figure choreography scoped.
 - [x] Redesign Project detail layout.
 - [x] Preserve project metadata, routes, and artifact links.
 - [ ] Verify existing callouts, tables, code, media, and diagrams in both themes.
