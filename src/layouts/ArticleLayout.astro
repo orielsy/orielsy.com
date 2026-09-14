@@ -186,3 +186,22 @@ const formattedUpdateDate = data.updatedDate
     )}
   </article>
 </BaseLayout>
+
+<style is:global>
+  .research-publication-grid {
+    container-name: research-publication;
+    container-type: inline-size;
+  }
+
+  @media (min-width: 1280px) {
+    .research-toc-sticky {
+      position: sticky;
+      top: 6rem;
+    }
+
+    [data-research-entry='documentation-driven-adaptive-ux'] .research-toc-sticky {
+      position: static;
+      top: auto;
+    }
+  }
+</style>
