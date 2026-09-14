@@ -59,6 +59,55 @@
   font-weight: 500;
 }
 
+/*
+ * Concern grid: compact editorial records rather than stacked numbered cards.
+ * The number shares the title line; descriptions stay quiet underneath. The
+ * seventh/output concern spans the final row so the grid ends intentionally.
+ */
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-concern-grid > li {
+  position: relative;
+  min-height: 6rem;
+  padding: 1rem 3.15rem 1rem 1rem;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-concern-grid > li::before {
+  position: absolute;
+  top: 1.05rem;
+  right: 1rem;
+  display: block;
+  margin: 0;
+  color: var(--accent);
+  font-family: var(--font-mono-ui);
+  font-size: 0.54rem;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  line-height: 1.4;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-concern-grid strong {
+  display: block;
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-concern-grid > li > span {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+@media (min-width: 640px) {
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-concern-grid > li:last-child {
+    grid-column: 1 / -1;
+    min-height: 5.25rem;
+  }
+}
+
 [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations {
   counter-reset: excluded-capability;
   position: relative;
