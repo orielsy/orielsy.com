@@ -1,0 +1,239 @@
+---
+const strategies = [
+  {
+    label: 'Shorter chunks',
+    delay: 'Lower perceived delay',
+    context: 'Less linguistic context',
+    tradeoff: 'Faster updates, with more risk of unstable or incomplete phrases.',
+  },
+  {
+    label: 'Longer chunks',
+    delay: 'Higher perceived delay',
+    context: 'More linguistic context',
+    tradeoff: 'More context for decoding, but the transcript arrives later.',
+  },
+];
+---
+
+<figure class="chunk-tradeoff not-prose">
+  <header>
+    <div>
+      <p class="eyebrow">Latency ↔ context</p>
+      <h3>Chunk duration changes both responsiveness and decoding context.</h3>
+    </div>
+    <div class="current-setting">
+      <span>Current default</span>
+      <strong>3 seconds</strong>
+    </div>
+  </header>
+
+  <div class="strategies">
+    {strategies.map((strategy, index) => (
+      <section>
+        <span class="index">{String(index + 1).padStart(2, '0')}</span>
+        <strong class="strategy-title">{strategy.label}</strong>
+        <dl>
+          <div><dt>Delay</dt><dd>{strategy.delay}</dd></div>
+          <div><dt>Context</dt><dd>{strategy.context}</dd></div>
+        </dl>
+        <p>{strategy.tradeoff}</p>
+      </section>
+    ))}
+  </div>
+
+  <div class="implementation-note">
+    <span>Current public backend</span>
+    <strong>Fixed-duration chunk accumulator</strong>
+    <p>Processed samples are cleared after transcription; the current source should not be described as an overlapping sliding window.</p>
+  </div>
+
+  <figcaption>The 3-second threshold is an implementation default when no client override is supplied, not evidence of an optimal latency/accuracy point.</figcaption>
+</figure>
+
+<style>
+  .chunk-tradeoff {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.7rem;
+    background: var(--bg-card);
+  }
+
+  .chunk-tradeoff :global(p),
+  .chunk-tradeoff :global(h3),
+  .chunk-tradeoff :global(dl),
+  .chunk-tradeoff :global(dt),
+  .chunk-tradeoff :global(dd) { margin: 0; }
+
+  header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.25rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.15rem 1.25rem;
+  }
+
+  .eyebrow,
+  .current-setting span,
+  .index,
+  dt,
+  .implementation-note > span {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+  }
+
+  h3 {
+    margin-top: 0.45rem !important;
+    max-width: 40rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.16;
+    letter-spacing: -0.035em;
+  }
+
+  .current-setting {
+    flex: 0 0 auto;
+    border-left: 2px solid var(--accent);
+    padding-left: 0.75rem;
+  }
+
+  .current-setting span {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.46rem;
+    letter-spacing: 0.1em;
+  }
+
+  .current-setting strong {
+    display: block;
+    margin-top: 0.18rem;
+    color: var(--text-primary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.74rem;
+  }
+
+  .strategies {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .strategies section {
+    position: relative;
+    background: var(--bg-card);
+    padding: 2.7rem 1rem 1rem;
+  }
+
+  .strategies section:last-child {
+    background: color-mix(in srgb, var(--accent) 3%, var(--bg-card));
+  }
+
+  .index {
+    position: absolute;
+    top: 0.95rem;
+    left: 1rem;
+    color: var(--accent);
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  .strategy-title {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+  }
+
+  dl {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 0.85rem !important;
+  }
+
+  dl > div {
+    display: grid;
+    grid-template-columns: 4.3rem minmax(0, 1fr);
+    gap: 0.6rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.5rem;
+  }
+
+  dt {
+    color: var(--text-muted);
+    font-size: 0.46rem;
+    letter-spacing: 0.08em;
+  }
+
+  dd {
+    color: var(--text-secondary);
+    font-size: 0.66rem;
+    line-height: 1.45;
+  }
+
+  .strategies p {
+    margin-top: 0.8rem !important;
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    line-height: 1.55;
+  }
+
+  .implementation-note {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.35rem 1rem;
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    padding: 0.9rem 1rem;
+  }
+
+  .implementation-note > span {
+    grid-column: 1;
+    color: var(--text-muted);
+    font-size: 0.47rem;
+    letter-spacing: 0.1em;
+  }
+
+  .implementation-note strong {
+    grid-column: 2;
+    grid-row: 1;
+    color: var(--text-primary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.68rem;
+    font-weight: 500;
+  }
+
+  .implementation-note p {
+    grid-column: 1 / -1;
+    color: var(--text-secondary);
+    font-size: 0.64rem;
+    line-height: 1.5;
+  }
+
+  figcaption {
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.8rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 720px) {
+    .strategies { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 560px) {
+    header { flex-direction: column; gap: 0.8rem; }
+    .implementation-note { grid-template-columns: 1fr; }
+    .implementation-note strong,
+    .implementation-note > span { grid-column: 1; grid-row: auto; }
+  }
+</style>
