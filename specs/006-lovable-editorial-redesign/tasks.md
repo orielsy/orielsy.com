@@ -69,8 +69,8 @@ Stage 2 was explicitly approved by Orielsy. Begin with the published `documentat
 - [x] Use `documentation-driven-adaptive-ux` as the first Research-detail visual exemplar without rewriting its factual/editorial MDX content.
 - [x] Restyle the paper's documentation/adaptive comparison visual to the approved editorial linework system.
 - [x] Restyle research callouts and table of contents to the approved editorial system.
-- [ ] Redesign Project detail layout.
-- [ ] Preserve project metadata, routes, and artifact links.
+- [x] Redesign Project detail layout.
+- [x] Preserve project metadata, routes, and artifact links.
 - [ ] Verify existing callouts, tables, code, media, and diagrams in both themes.
 - [ ] Verify responsive article/project reading layouts.
 - [ ] Run build and diff verification.
