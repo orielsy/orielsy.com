@@ -13,6 +13,7 @@ readingTime: "12 min read"
 
 import Callout from '../../components/Callout.astro';
 import DocumentationDrivenAdaptiveVisual from '../../components/research/DocumentationDrivenAdaptiveVisual.astro';
+import Phase1DeterministicPipelineVisual from '../../components/research/Phase1DeterministicPipelineVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import WhereAiCouldEnterLaterVisual from '../../components/research/WhereAiCouldEnterLaterVisual.astro';
 import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEnterpriseUiLab.astro';
@@ -77,19 +78,7 @@ Phase 1 therefore separates several concerns that are easy to blur together:
 
 The resulting Phase 1 pipeline is intentionally boring:
 
-```text
-application state
-      ↓
-deterministic validation
-      ↓
-product/runtime context
-      ↓
-applicable authored knowledge
-      ↓
-response policy
-      ↓
-structured UI responses
-```
+<Phase1DeterministicPipelineVisual />
 
 That is a feature, not a limitation.
 
