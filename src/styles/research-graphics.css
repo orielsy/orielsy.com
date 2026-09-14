@@ -1,0 +1,124 @@
+/*
+ * Article-specific graphic treatments that sit on top of the shared research
+ * publication system. Keep these selectors scoped to the exemplar entry so
+ * other research papers retain their existing list presentation.
+ */
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations {
+  counter-reset: excluded-capability;
+  position: relative;
+  display: grid;
+  gap: 1px;
+  overflow: hidden;
+  margin: 2.25rem 0 2.75rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  background: var(--border-subtle);
+  padding: 4.35rem 0 0;
+  list-style: none;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations::before {
+  content: "Phase 1 scope boundary · intentionally not included";
+  position: absolute;
+  inset: 0 0 auto;
+  min-height: 4.35rem;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  padding: 1rem 1rem 0.9rem 3.15rem;
+  color: var(--text-primary);
+  font-family: var(--font-mono-ui);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations::after {
+  content: "×";
+  position: absolute;
+  top: 0.95rem;
+  left: 1rem;
+  display: grid;
+  width: 1.55rem;
+  height: 1.55rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--border-subtle));
+  border-radius: 999px;
+  color: var(--accent);
+  font-family: var(--font-mono-ui);
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations > li {
+  counter-increment: excluded-capability;
+  position: relative;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  background: var(--bg-card);
+  padding: 0.85rem 0.9rem;
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations > li::before {
+  content: counter(excluded-capability, decimal-leading-zero);
+  position: static;
+  color: var(--text-muted);
+  font-family: var(--font-mono-ui);
+  font-size: 0.52rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations > li::after {
+  content: "Outside";
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 0.22rem 0.45rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono-ui);
+  font-size: 0.45rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations > li:nth-child(4),
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations > li:nth-child(5),
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations > li:nth-child(10),
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations > li:nth-child(11),
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations > li:nth-child(12) {
+  box-shadow: inset 2px 0 0 color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+@media (min-width: 640px) {
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations > li {
+    min-height: 3.35rem;
+  }
+}
+
+@media (max-width: 479px) {
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations > li {
+    grid-template-columns: 1.8rem minmax(0, 1fr);
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations > li::after {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
