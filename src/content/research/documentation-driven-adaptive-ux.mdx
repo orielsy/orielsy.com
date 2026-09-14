@@ -12,6 +12,7 @@ readingTime: "12 min read"
 ---
 
 import Callout from '../../components/Callout.astro';
+import ApplicabilityVsPolicyVisual from '../../components/research/ApplicabilityVsPolicyVisual.astro';
 import DocumentationDrivenAdaptiveVisual from '../../components/research/DocumentationDrivenAdaptiveVisual.astro';
 import Phase1DeterministicPipelineVisual from '../../components/research/Phase1DeterministicPipelineVisual.astro';
 import Phase1FindingsVisual from '../../components/research/Phase1FindingsVisual.astro';
@@ -148,6 +149,8 @@ Knowledge applicability answers:
 Response policy answers:
 
 > Given the application state, validation result, available knowledge, and certainty of the evidence, how strongly should the UI intervene?
+
+<ApplicabilityVsPolicyVisual />
 
 Keeping those decisions separate prevents the knowledge layer from becoming an accidental UI controller.
 
