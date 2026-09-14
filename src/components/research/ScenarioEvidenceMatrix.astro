@@ -26,7 +26,7 @@
         <span class="mobile-label">What changes</span>
         <p>Data Connection is missing and several compatible options remain.</p>
       </div>
-      <div class="scenario-cell allowed-cell">
+      <div class="scenario-cell">
         <span class="mobile-label">UI may do</span>
         <p>Explain the requirement, highlight or focus the field, and provide selection guidance.</p>
       </div>
@@ -46,7 +46,7 @@
         <span class="mobile-label">What changes</span>
         <p>Only one compatible Data Connection remains.</p>
       </div>
-      <div class="scenario-cell allowed-cell">
+      <div class="scenario-cell">
         <span class="mobile-label">UI may do</span>
         <p>State that it is the only compatible option and offer an explicit <strong>Use [connection]</strong> action.</p>
       </div>
@@ -66,7 +66,7 @@
         <span class="mobile-label">What changes</span>
         <p>User familiarity changes while application truth does not.</p>
       </div>
-      <div class="scenario-cell allowed-cell">
+      <div class="scenario-cell">
         <span class="mobile-label">UI may do</span>
         <p>Show authored conceptual explanation to a new user and omit that beginner fragment for an experienced user.</p>
       </div>
@@ -86,7 +86,7 @@
         <span class="mobile-label">What changes</span>
         <p>The product version changes.</p>
       </div>
-      <div class="scenario-cell allowed-cell">
+      <div class="scenario-cell">
         <span class="mobile-label">UI may do</span>
         <p>Surface the version 4.2 release-note fragment only for 4.2.</p>
       </div>
@@ -106,7 +106,7 @@
         <span class="mobile-label">What changes</span>
         <p>A valid Data Connection has been selected.</p>
       </div>
-      <div class="scenario-cell allowed-cell">
+      <div class="scenario-cell">
         <span class="mobile-label">UI may do</span>
         <p>Remove the missing-connection intervention as the state becomes valid.</p>
       </div>
@@ -203,10 +203,6 @@
   .scenario-cell p strong {
     color: var(--text-primary);
     font-weight: 600;
-  }
-
-  .allowed-cell {
-    box-shadow: inset 2px 0 0 color-mix(in srgb, var(--accent) 24%, transparent);
   }
 
   .boundary-cell {
