@@ -4,6 +4,23 @@
  * other research papers retain their existing list presentation.
  */
 
+/*
+ * The article intentionally uses hand-written descendant selectors for prose
+ * headings. `not-prose` does not neutralize those selectors, so publication
+ * figures explicitly opt out of the article h3 rail treatment. Individual
+ * components remain responsible for their own type scale and spacing.
+ */
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose figure.not-prose h3,
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose figure.not-prose h4 {
+  padding-left: 0;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose figure.not-prose h3::before,
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose figure.not-prose h4::before {
+  content: none;
+  display: none;
+}
+
 [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations {
   counter-reset: excluded-capability;
   position: relative;
