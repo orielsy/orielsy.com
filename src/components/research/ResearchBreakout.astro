@@ -1,13 +1,15 @@
 ---
 export interface Props {
   maxWidth?: string;
+  mode?: 'wide' | 'publication';
 }
 
-const { maxWidth } = Astro.props;
+const { maxWidth, mode = 'wide' } = Astro.props;
 ---
 
 <div
   class="research-breakout not-prose"
+  data-breakout-mode={mode}
   style={maxWidth ? `--research-breakout-max: ${maxWidth};` : undefined}
 >
   <slot />
@@ -15,7 +17,7 @@ const { maxWidth } = Astro.props;
 
 <style>
   .research-breakout {
-    --research-breakout-max: 54rem;
+    --research-breakout-max: 58rem;
     position: relative;
     left: 50%;
     box-sizing: border-box;
@@ -24,19 +26,30 @@ const { maxWidth } = Astro.props;
     transform: translateX(-50%);
   }
 
-  /*
-   * The lab is an embedded instrument, not a full-width publication plate.
-   * Keep it slightly tighter than major research figures so its two form
-   * surfaces remain readable without stretching into the TOC rail.
-   */
-  .research-breakout:has([data-adaptive-enterprise-ui-lab]) {
-    --research-breakout-max: 52rem;
+  .research-breakout[data-breakout-mode='publication'] {
+    --research-breakout-max: 80rem;
   }
 
   @media (min-width: 640px) {
     .research-breakout {
       width: min(var(--research-breakout-max), calc(100vw - 3rem));
       max-width: calc(100vw - 3rem);
+    }
+  }
+
+  /*
+   * At the 12-column article layout, publication plates stop centering on the
+   * prose column and instead align to the article grid itself. The grid is a
+   * named size container, so 100cqw is the full publication canvas and the
+   * prose column begins four of twelve columns in from its left edge.
+   */
+  @media (min-width: 1280px) {
+    .research-breakout[data-breakout-mode='publication'] {
+      left: auto;
+      width: min(var(--research-breakout-max), 100cqw);
+      max-width: 100cqw;
+      margin-left: -33.333333cqw;
+      transform: none;
     }
   }
 </style>
