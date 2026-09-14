@@ -6,6 +6,8 @@ const stages = [
   { label: 'Client filtering', detail: 'Whisper metadata gates which segments enter the caption queue.' },
   { label: 'Electron / Vue rendering', detail: 'Caption positions and transitions remain in the desktop rendering layer.' },
 ];
+
+const owners = ['Client', 'Backend', 'Backend', 'Client', 'Renderer'];
 ---
 
 <figure class="async-pipeline not-prose">
@@ -24,10 +26,8 @@ const stages = [
     ))}
   </ol>
 
-  <div class="responsibility-band">
-    <span>Client</span>
-    <span>Backend</span>
-    <span>Renderer</span>
+  <div class="responsibility-band" aria-label="responsibility owner by stage">
+    {owners.map((owner) => <span>{owner}</span>)}
   </div>
 
   <figcaption>Capture/downsampling, model inference, transcript filtering, and caption animation remain distinct responsibilities in the current implementation.</figcaption>
@@ -122,7 +122,7 @@ const stages = [
 
   .responsibility-band {
     display: grid;
-    grid-template-columns: 2fr 2fr 1fr;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     border-top: 1px solid var(--border-subtle);
     background: var(--bg-secondary);
     color: var(--text-muted);
