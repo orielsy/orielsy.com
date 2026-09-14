@@ -1,0 +1,172 @@
+<figure class="phase-one-pipeline not-prose my-9 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]">
+  <header class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-6">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <p class="font-editorial-mono text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]">Phase 1 decision path</p>
+      <span class="font-editorial-mono rounded-full border border-[var(--border-subtle)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">No inference</span>
+    </div>
+    <h3 class="font-display mt-2 text-xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-2xl">A deterministic path from state to interface response.</h3>
+    <p class="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">Explicit application facts narrow applicable product knowledge before response policy decides how strongly the interface may act.</p>
+  </header>
+
+  <ol class="pipeline-grid grid gap-px bg-[var(--border-subtle)] sm:grid-cols-3" aria-label="Phase 1 deterministic pipeline">
+    <li class="pipeline-node">
+      <div class="node-topline">
+        <span class="node-number">01</span>
+        <svg class="node-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h5M8 17h7"/></svg>
+      </div>
+      <strong>Application state</strong>
+      <small>What the user has selected</small>
+    </li>
+
+    <li class="pipeline-node">
+      <div class="node-topline">
+        <span class="node-number">02</span>
+        <svg class="node-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg>
+      </div>
+      <strong>Deterministic validation</strong>
+      <small>Known application requirements</small>
+    </li>
+
+    <li class="pipeline-node">
+      <div class="node-topline">
+        <span class="node-number">03</span>
+        <svg class="node-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 7h14M7.5 12h9M10 17h4"/></svg>
+      </div>
+      <strong>Product / runtime context</strong>
+      <small>Version, familiarity, compatible options</small>
+    </li>
+
+    <li class="pipeline-node knowledge-node">
+      <div class="node-topline">
+        <span class="node-number">04</span>
+        <svg class="node-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v15h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></svg>
+      </div>
+      <strong>Applicable authored knowledge</strong>
+      <small>Only fragments supported by current facts</small>
+    </li>
+
+    <li class="pipeline-node policy-node">
+      <div class="node-topline">
+        <span class="node-number">05</span>
+        <svg class="node-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 5h14v14H5z"/><path d="M8 9h8M8 13h5"/><path d="m14 16 2 2 3-4"/></svg>
+      </div>
+      <strong>Response policy</strong>
+      <small>Choose explanation, guidance, or safe offer</small>
+    </li>
+
+    <li class="pipeline-node output-node">
+      <div class="node-topline">
+        <span class="node-number">06</span>
+        <svg class="node-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9h17"/><path d="M8 14h3"/></svg>
+      </div>
+      <strong>Structured UI response</strong>
+      <small>Render the authorized intervention</small>
+    </li>
+  </ol>
+
+  <figcaption class="flex flex-col gap-2 border-t border-[var(--border-subtle)] px-5 py-3 text-[10px] text-[var(--text-muted)] sm:flex-row sm:items-center sm:justify-between sm:px-6">
+    <span>Known facts remain in code and configuration.</span>
+    <span class="font-editorial-mono uppercase tracking-[0.12em] text-[var(--accent)]">Application truth stays authoritative</span>
+  </figcaption>
+</figure>
+
+<style>
+  .phase-one-pipeline :global(p),
+  .phase-one-pipeline :global(h3),
+  .phase-one-pipeline :global(ol),
+  .phase-one-pipeline :global(li) {
+    margin: 0;
+  }
+
+  .phase-one-pipeline :global(ol) {
+    padding-left: 0;
+  }
+
+  .pipeline-node {
+    position: relative;
+    min-width: 0;
+    min-height: 9.4rem;
+    background: var(--bg-card);
+    padding: 1rem;
+  }
+
+  .pipeline-node::after {
+    content: "→";
+    position: absolute;
+    right: -0.45rem;
+    top: 50%;
+    z-index: 2;
+    display: none;
+    transform: translateY(-50%);
+    background: var(--bg-card);
+    padding-inline: 0.15rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.7rem;
+  }
+
+  .node-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .node-number {
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: 0.11em;
+  }
+
+  .node-icon {
+    width: 1rem;
+    height: 1rem;
+    color: var(--text-muted);
+  }
+
+  .pipeline-node strong,
+  .pipeline-node small {
+    display: block;
+  }
+
+  .pipeline-node strong {
+    margin-top: 1.6rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .pipeline-node small {
+    margin-top: 0.42rem;
+    color: var(--text-muted);
+    font-size: 0.66rem;
+    line-height: 1.55;
+  }
+
+  .knowledge-node,
+  .policy-node {
+    box-shadow: inset 2px 0 0 color-mix(in srgb, var(--accent) 24%, transparent);
+  }
+
+  .output-node {
+    background: color-mix(in srgb, var(--accent) 7%, var(--bg-card));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  .output-node .node-icon {
+    color: var(--accent);
+  }
+
+  @media (min-width: 640px) {
+    .pipeline-node:nth-child(1)::after,
+    .pipeline-node:nth-child(2)::after,
+    .pipeline-node:nth-child(4)::after,
+    .pipeline-node:nth-child(5)::after {
+      display: block;
+    }
+  }
+</style>
