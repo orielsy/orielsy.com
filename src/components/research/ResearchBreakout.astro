@@ -3,25 +3,40 @@ export interface Props {
   maxWidth?: string;
 }
 
-const { maxWidth = '80rem' } = Astro.props;
+const { maxWidth } = Astro.props;
 ---
 
-<div class="research-breakout not-prose" style={`--research-breakout-max: ${maxWidth};`}>
+<div
+  class="research-breakout not-prose"
+  style={maxWidth ? `--research-breakout-max: ${maxWidth};` : undefined}
+>
   <slot />
 </div>
 
 <style>
   .research-breakout {
+    --research-breakout-max: 54rem;
     position: relative;
     left: 50%;
+    box-sizing: border-box;
     width: min(var(--research-breakout-max), calc(100vw - 2rem));
-    max-width: none;
+    max-width: calc(100vw - 2rem);
     transform: translateX(-50%);
+  }
+
+  /*
+   * The lab is an embedded instrument, not a full-width publication plate.
+   * Keep it slightly tighter than major research figures so its two form
+   * surfaces remain readable without stretching into the TOC rail.
+   */
+  .research-breakout:has([data-adaptive-enterprise-ui-lab]) {
+    --research-breakout-max: 52rem;
   }
 
   @media (min-width: 640px) {
     .research-breakout {
       width: min(var(--research-breakout-max), calc(100vw - 3rem));
+      max-width: calc(100vw - 3rem);
     }
   }
 </style>
