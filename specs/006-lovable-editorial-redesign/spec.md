@@ -106,6 +106,20 @@ Typography decisions must preserve:
 
 A font change may be scoped to the redesigned system if needed, but any new font asset or remote font dependency must be explicitly justified before introduction.
 
+### Approved redesign font system
+
+The redesign uses the same core typographic roles validated in the Lovable visual study, reduced to three families so the site does not carry an unnecessary fourth sans family:
+
+- **Sora 500/600** for display headlines and editorial headings.
+- **Manrope 400/500/600** for body text and long-form reading.
+- **JetBrains Mono 400/500** for metadata, code, source labels, diagram labels, and other technical UI.
+
+These families are loaded from Google Fonts in the shared base layout with `display=swap`, preconnects to the Google Fonts stylesheet/font hosts, and system fallbacks preserved in semantic CSS tokens. Orielsy explicitly approved this remote font dependency as part of the redesign because typography is a primary visual-system element rather than decorative page-specific styling.
+
+Do not add Inter solely to mirror Lovable's secondary diagram-sans token; Manrope remains the general sans family unless a later demonstrated need justifies another font.
+
+Because the font change can alter text geometry, final visual verification must explicitly review hero line wrapping, long-form readability, card/row heights, technical metadata density, and mobile overflow across the redesigned routes.
+
 ## 5. Theme Requirements
 
 The existing light/dark theme system must be preserved.
@@ -371,7 +385,7 @@ Stage 1 is ready for review when:
 - the existing theme behavior still works in light and dark modes
 - semantic theme tokens drive the redesigned palette
 - desktop and mobile layouts are intentionally composed and free of horizontal overflow
-- no React, TanStack, shadcn, Radix, Lucide React, or new UI framework/library is added
+- no React, TanStack Router, shadcn/ui, Radix, Lucide React, or new UI framework/library is added
 - no content collection, route, slug, SEO, RSS, sitemap, or publication-gating behavior is changed
 - no unsupported professional or technical claims are introduced
 - existing Stage 1 implementation has been checked against this spec
