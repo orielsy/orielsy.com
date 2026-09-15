@@ -53,6 +53,7 @@ Orielsy explicitly authorized proceeding with the indexes before the detail-page
 - [x] Redesign Projects index using the approved editorial system.
 - [x] Preserve Projects taxonomy and metadata behavior in source.
 - [x] Redesign About presentation without rewriting factual/professional content; remove inactive BODYCTRL promotion per current redesign policy.
+- [x] Refine About into a stronger editorial hierarchy: grounded positioning hero, practice progression, visual How I Think centerpiece, compact career/service timeline, personal interests, and connect surfaces without repeating Current Inquiries.
 - [ ] Verify responsive behavior across all three routes.
 - [ ] Verify light/dark theme consistency.
 - [ ] Run build and diff verification.
