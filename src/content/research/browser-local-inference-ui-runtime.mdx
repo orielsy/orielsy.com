@@ -1,0 +1,19 @@
+---
+title: "Browser-Local Inference as a UI Runtime Capability"
+description: "A planned experiment exploring WebGPU and browser-local model runtimes as an execution tier for intelligent interface capabilities."
+pubDate: 2026-09-15
+type: "Experiment"
+tags: ["webgpu", "webllm", "client-side-ai", "ai-runtime"]
+status: "draft"
+published: false
+draft: false
+featured: false
+---
+
+WebGPU and browser-local model runtimes such as WebLLM make inference a potential client-side UI capability rather than something that must always occur behind an API. This planned experiment will explore where browser-local inference is useful, how an interface should detect and react to device capability, and when work should fall back to local desktop or remote execution. Any performance, memory, latency, or compatibility conclusions will be based on measured implementation rather than assumed capability.
+
+## Planned Scope
+
+This is a future technical deep dive subordinate to [Adaptive AI Runtime for Enterprise UI](/research/adaptive-ai-runtime-enterprise-ui). It does not replace the broader runtime architecture.
+
+The experiment may eventually investigate browser capability detection, local model loading, fallback behavior, and measured execution characteristics. It does not currently claim benchmark results, supported hardware, model-size limits, latency, memory usage, browser compatibility conclusions, or a working WebLLM implementation.
