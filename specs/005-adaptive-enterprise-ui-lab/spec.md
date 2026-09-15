@@ -1,6 +1,6 @@
-# Specification: Adaptive Enterprise UI Lab — Phase 1
+# Specification: Adaptive Enterprise UI Lab — Phase 1 Foundation
 
-- **Status:** In Progress
+- **Status:** Phase 1 Implemented / Phase 2 Specified
 - **Owner:** Orielsy Diaz
 - **Feature Directory:** `specs/005-adaptive-enterprise-ui-lab/`
 
@@ -8,11 +8,11 @@
 
 Establish **Adaptive Enterprise UI Lab** as a long-lived reference application inside `orielsy.com` for exploring AI-augmented enterprise interfaces across multiple Research publications.
 
-Phase 1 implements the Product Knowledge / Adaptive UX slice only. It must prove that meaningful interface adaptation can be driven deterministically from application state, product knowledge, user context, and response policy before any inference system is added.
+Phase 1 implements the Product Knowledge / Adaptive UX slice only. It demonstrates that meaningful interface adaptation can be driven deterministically from application state, product knowledge, user context, and response policy before any inference system is added.
 
-The Phase 1 implementation is embedded in the related Research publication, but the application architecture must not be article-specific. Future phases should extend the same domain, state, knowledge, resolver, and UI boundaries rather than replace them.
+The Phase 1 implementation is embedded in the related Research publication, but the application architecture is not article-specific. Later phases should extend the same domain, state, knowledge, resolver, and UI boundaries rather than replace them.
 
-The same application is also represented in the Projects catalog as an **unpublished Project-in-Progress** entry. The Research article explains the reasoning; the Project entry represents the evolving artifact. These two surfaces must remain distinct rather than duplicating the same content.
+The same application is represented in the Projects catalog as a **publicly navigable Project with `status: In Progress`**. The Research article explains the reasoning; the Project entry represents the evolving artifact. These two surfaces must remain distinct rather than duplicating the same content.
 
 ## 2. Long-Lived Project Direction
 
@@ -26,13 +26,11 @@ The same reference application may later add:
 - local/server/cloud capability routing
 - runtime instrumentation where justified
 
-These are future extension points only. Phase 1 must not implement or imply that these capabilities already exist.
-
 The conceptual phase map is:
 
 - **Phase 1 — Product Knowledge / Deterministic Adaptive UX:** implemented and currently supports `Documentation-Driven Adaptive UX`.
-- **Phase 2 — Non-chat AI capabilities:** future only; may later support `AI as a UI Capability, Not Just a Chatbot`.
-- **Phase 3 — Adaptive inference runtime:** future only; may later support `Adaptive AI Runtime for Enterprise UI`.
+- **Phase 2 — Selective non-chat inference:** specified / beginning, but not implemented. The first capability is natural-language intent/question mapping into known product concepts, followed by deterministic evidence reconciliation. The detailed contract lives in `phase-2.md`.
+- **Phase 3 — Adaptive inference runtime:** planned only; may later support `Adaptive AI Runtime for Enterprise UI` and investigate where useful inference executes.
 
 Future phases must not be described as implemented until verifiable source exists.
 
@@ -52,9 +50,9 @@ Standard UI provides the conventional baseline and behaves reactively: required-
 
 The compatibility control demonstrates evidence-sensitive UI authority: when several compatible Data Connections exist, the adaptive UI may guide but must not guess; when exactly one compatible connection exists, it may safely offer that value as a user-accepted action.
 
-The lab must also expose a compact deterministic decision trace showing the adaptive path through application state, validation, applicable authored knowledge, and response policy. This trace is explanatory instrumentation for the research demo; it is not part of the fictional product surface.
+The lab also exposes a compact deterministic decision trace showing the adaptive path through application state, validation, applicable authored knowledge, and response policy. This trace is explanatory instrumentation for the research demo; it is not part of the fictional product surface.
 
-The initial deterministic slice must demonstrate compact vs expanded help, first-time-user guidance, version-specific guidance, deterministic validation, current-state-aware explanation, safe suggested action, optional preconfiguration only when the correct choice is unambiguous, and a direct Standard-versus-Adaptive comparison without changing the shared scenario.
+The initial deterministic slice demonstrates compact vs expanded help, first-time-user guidance, version-specific guidance, deterministic validation, current-state-aware explanation, safe suggested action, optional preconfiguration only when the correct choice is unambiguous, and a direct Standard-versus-Adaptive comparison without changing the shared scenario.
 
 ## 4. Architectural Boundaries
 
@@ -65,8 +63,10 @@ The implementation must keep these concerns distinct:
 3. **Application truth and validation** — deterministic requirements and available options.
 4. **Product knowledge** — authored explanatory/configuration knowledge with provenance and applicability.
 5. **Knowledge applicability** — whether an authored item applies to the current state.
-6. **Response policy** — how strongly the UI should intervene given available evidence.
-7. **UI rendering** — how structured responses are presented.
+6. **Optional inference** — beginning in Phase 2, may reduce ambiguity or select candidate concepts but cannot redefine application truth.
+7. **Evidence reconciliation** — deterministic filtering of inferred candidates against current application truth and approved knowledge.
+8. **Response policy** — how strongly the UI should intervene given available evidence.
+9. **UI rendering** — how structured responses are presented.
 
 The resolver should coordinate these layers without owning component rendering or DOM behavior.
 
@@ -80,8 +80,9 @@ The resolver should coordinate these layers without owning component rendering o
 - Adaptive does not necessarily mean generative.
 - User familiarity may change explanation depth, not application truth.
 - Knowledge applicability and UI response policy are separate concerns.
+- Inference may improve ambiguity resolution or relevance selection but does not gain authority merely by being AI-generated.
 - UI authority should increase only as evidence becomes more deterministic.
-- Phase 1 must remain deliberately small and readable.
+- Phase 1 must remain independently functional when Phase 2 inference is unavailable.
 
 ## 6. Phase 1 Resolver Contract
 
@@ -103,7 +104,7 @@ structured UI responses
 
 Phase 1 contains no semantic inference.
 
-A future phase may insert optional inference between deterministic context filtering and response policy, but any inferred result must be reconciled against authoritative application state before the UI acts on it.
+Phase 2 may insert optional inference for intent/concept interpretation, but any inferred result must be reconciled against authoritative application state before response policy or the UI acts on it. See `phase-2.md` for the exact boundary.
 
 ## 7. UI Authority
 
@@ -119,26 +120,26 @@ Phase 1 may support these response levels:
 
 Do not automatically execute destructive or ambiguous actions.
 
-A single valid candidate may be offered as a user-accepted preconfiguration. Multiple valid candidates must not be guessed among.
+A single valid candidate may be offered as a user-accepted preconfiguration. Multiple valid candidates must not be guessed among. Phase 2 inference must not bypass this rule.
 
 ## 8. Hosting, Repository Scope, and Project Representation
 
 - Repository: `orielsy/orielsy.com`
 - Authoritative source branch: `main`
-- Phase 1 remains inside the Orielsy.com codebase under `src/components/adaptive-ui-lab/`.
+- The implementation remains inside the Orielsy.com codebase under `src/components/adaptive-ui-lab/`.
 - Do not create a separate repository for the Lab at this stage.
-- The implementation remains embedded in the related Research publication.
-- The Projects catalog contains an unpublished `Adaptive Enterprise UI Lab` Project-in-Progress entry pointing to the actual in-repository source path rather than inventing a separate repository.
-- The Project entry remains publication-gated and must not present future Phase 2 or Phase 3 work as implemented.
+- Phase 1 remains embedded in the related Research publication.
+- The Projects catalog contains a **published** `Adaptive Enterprise UI Lab` entry with lifecycle status **In Progress**, pointing to the actual in-repository source path rather than inventing a separate repository.
+- Public status does not imply completion: the Project page must distinguish implemented Phase 1 from specified-but-unimplemented Phase 2 and planned Phase 3.
 - Do not add a top-level Labs navigation section.
 
 If the Lab later becomes a separately packaged artifact, moving it to its own repository would require a separate explicit decision. The current Project representation does not imply that such a repository exists.
 
 ## 9. Static-First Constraint
 
-Phase 1 must remain fully compatible with the site's static Astro/GitHub Pages architecture.
+Phase 1 remains fully compatible with the site's static Astro/GitHub Pages architecture.
 
-Do not add:
+Phase 1 does not add:
 
 - backend services
 - database
@@ -152,7 +153,9 @@ Do not add:
 - vector search
 - telemetry
 
-All Phase 1 behavior should run from local TypeScript/data and client-side state where interactivity is required.
+All Phase 1 behavior runs from local TypeScript/data and client-side state where interactivity is required.
+
+Phase 2 must preserve this deterministic core. A genuine inference implementation must not be fabricated merely to keep the site static; if an execution choice would prematurely solve Phase 3 runtime architecture, Phase 2 remains specified until that dependency is intentionally addressed.
 
 ## 10. Research Integration
 
@@ -162,9 +165,11 @@ The first slice belongs with the existing Research entry:
 
 The Research article is not itself the architecture boundary of the application. It is the first publication surface that embeds the shared reference application.
 
-The opening problem section may include a purpose-built explanatory visual contrasting the conventional documentation detour with an in-product adaptive path. That visual is article communication, not application state or resolver logic.
+`Documentation-Driven Adaptive UX` is currently the intentional primary Featured Research entry because it combines the strongest present evidence across frontend/UI architecture, enterprise UX, product knowledge, context engineering, deterministic adaptive behavior, and a real interactive reference implementation.
 
-Publication remains separately gated by existing content-publication rules. The current Research publication state must be taken from its source frontmatter rather than inferred from the existence of the Lab.
+`AI as a UI Capability, Not Just a Chatbot` remains a public Concept Draft. Its next substantive evidence should come from a real Phase 2 implementation rather than speculative article expansion.
+
+Publication remains separately gated by existing content-publication rules. Current Research/Project state must always be taken from source frontmatter.
 
 ## 11. Production Publishing
 
@@ -205,16 +210,44 @@ Phase 1 is complete when:
 - experienced users receive less automatically surfaced explanation than new users without changing underlying rules
 - v4.2-specific guidance is absent for v4.1
 - selecting a valid Data Connection removes the missing-connection intervention
-- no AI, backend, or production deployment is introduced
+- Phase 1 contains no AI, backend, or production deployment
 
-## 13. Future-Phase Compatibility
+## 13. Phase 2 Boundary
 
-Phase 1 must avoid premature abstractions, but its public boundaries should make later extension possible at these seams:
+The first Phase 2 capability is specified in `specs/005-adaptive-enterprise-ui-lab/phase-2.md`.
 
-- natural-language intent → concept/relevance matching
-- semantic ranking → product-knowledge selection
-- explanation adaptation → response composition/depth
-- inference capability → optional resolver input
-- runtime selection → capability execution below the resolver
+Its intended progression is:
 
-Future AI should improve ambiguity resolution and relevance selection. It must not replace deterministic application truth.
+```text
+user question
+      ↓
+intent / concept interpretation
+      ↓
+candidate product-knowledge concepts
+      ↓
+deterministic applicability filtering
+      ↓
+actual application-state reconciliation
+      ↓
+response policy
+      ↓
+contextual UI explanation
+```
+
+The model may help resolve ambiguity. It must not decide validation, permissions, compatibility, version truth, business rules, product policy, or ambiguous configuration actions.
+
+The current repository has no genuine inference runtime integration, so Phase 2 implementation is deliberately deferred rather than represented with fake AI or a keyword matcher disguised as inference.
+
+## 14. Phase 3 Compatibility
+
+Do not build generic runtime-routing abstractions into Phase 2. Preserve clean seams so Phase 3 can later investigate:
+
+- WebLLM / browser-local inference
+- machine-local inference
+- server / edge / cloud inference
+- capability detection
+- fallback between execution tiers
+- runtime instrumentation
+- measured latency, memory, compatibility, and cost tradeoffs
+
+Phase 3 should answer **where a useful capability executes** only after Phase 2 demonstrates that the capability itself adds value to the interface.
