@@ -12,6 +12,22 @@
 }
 
 /*
+ * Code is evidence in many Research entries, but not every fenced block is a
+ * repository source excerpt. Keep the baseline treatment global and neutral;
+ * known source files can opt into ResearchSourceExcerpt for explicit labeling.
+ */
+.research-reading .research-prose > pre {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  tab-size: 2;
+}
+
+.research-reading .research-prose > pre code {
+  font-family: var(--font-mono-ui);
+  letter-spacing: 0.01em;
+}
+
+/*
  * From Prompts to Project Memory — second research exemplar.
  * Numbering and subheading rails are intentionally scoped to this paper;
  * other research entries inherit the publication system without being forced
@@ -174,6 +190,11 @@
 @media (max-width: 639px) {
   .research-reading .research-prose > .research-breakout {
     margin-block: 2.5rem;
+  }
+
+  .research-reading .research-prose > pre {
+    padding: 0.9rem;
+    font-size: 0.74rem;
   }
 
   [data-research-entry="specification-driven-ai-development"] .research-prose h2,
