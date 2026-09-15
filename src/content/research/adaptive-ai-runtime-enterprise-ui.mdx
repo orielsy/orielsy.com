@@ -1,6 +1,6 @@
 ---
 title: "Adaptive AI Runtime for Enterprise UI"
-description: "Architecting a tiered execution model that routes inference across WebGPU browser-local models, client hardware, and server endpoints based on latency, privacy, and device capability."
+description: "Exploring how an interface could choose where an already-requested AI capability executes across browser-local, machine-local, server, edge, or cloud runtimes based on capability, privacy, latency, availability, cost, and governance constraints."
 pubDate: 2026-08-20
 type: "Architecture Exploration"
 tags: ["ai-architecture", "webgpu", "webllm", "client-side-ai", "enterprise-ui"]
@@ -12,95 +12,106 @@ readingTime: "8 min read"
 
 import Callout from '../../components/Callout.astro';
 
-<Callout type="note" title="RESEARCH NOTE & ARCHITECTURAL PLACEHOLDER">
-  This article represents an architectural exploration and conceptual framework. Full empirical benchmark suites and reference repository links will be attached as implementation continues.
+<Callout type="note" title="DRAFT · EXECUTION-LAYER EXPLORATION">
+  This article asks how and where an AI capability should execute after the interface has already decided that the capability is needed. Browser-local WebLLM, machine-local runtimes, server or edge execution, and cloud endpoints are candidate tiers—not implemented or benchmarked conclusions.
 </Callout>
 
-## The Problem: Monolithic Cloud Inference
+## Scope Boundary: What the UI Does vs. Where It Runs
 
-Most modern AI-enhanced web interfaces treat generative AI as a remote API call. User input, semantic classification, or summarization requests are serialized, sent to a server endpoint, processed remotely, and returned to the interface.
+[AI as a UI Capability, Not Just a Chatbot](/research/ai-as-ui-capability-not-chatbot) explores **what kinds of intelligent behavior belong directly inside an interface**. This draft is intentionally narrower: it begins after such a capability has been requested and asks **how and where that work should execute**.
 
-While acceptable for many asynchronous interactions, this paradigm can introduce architectural friction in high-throughput enterprise software:
+Concepts such as semantic filtering, structured extraction, intent interpretation, contextual transformation, and adaptive guidance belong primarily to the interface-capability discussion. This article owns the execution layer beneath them: browser-local inference, machine-local runtimes, server or edge execution, cloud fallback, capability detection, privacy, latency, availability, device constraints, cost, and enterprise governance.
 
-1. **Latency overhead**: Network and server round trips can make some interactions feel less immediate.
-2. **Operational cost**: Routing every small task through remote inference can create avoidable cloud-compute expense.
-3. **Data privacy & governance**: Sensitive enterprise data may leave the client environment for tasks that could potentially be resolved locally.
-4. **Availability brittleness**: Interface features that depend entirely on remote inference can become unavailable during network or provider outages.
+## The Execution Problem: One Runtime Tier for Every Capability
+
+Many AI-enhanced interfaces begin with a single execution assumption: send the request to a remote model endpoint. That can be entirely appropriate, but it is not the only possible architecture.
+
+Different interface capabilities may eventually have different execution constraints. Some may be candidates for browser-local inference, some may require a machine-local runtime, and others may belong on server, edge, or cloud infrastructure.
 
 ```text
-Traditional Model:
-[Browser UI]  ---- (Network / Server Round Trip) ---->  [Cloud Model]
-
-Adaptive Model:
-[Browser UI]  --> [Capability Detection]
-                     |--> [Browser-Local WebGPU / Small Model] (Local)
-                     |--> [Desktop / Local Runtime]             (Local)
-                     '--> [Server / Cloud Model Endpoint]       (Fallback / Higher Complexity)
+Interface requests an AI capability
+            |
+            v
+     [Capability Router]
+            |
+            |--> [Browser-Local WebGPU / WebLLM]   (candidate tier)
+            |--> [Machine-Local Runtime]            (candidate tier)
+            |--> [Server / Edge]                    (candidate tier)
+            '--> [Cloud Model Endpoint]             (candidate tier)
 ```
+
+The routing problem is not simply "local is better" or "cloud is better." A useful runtime would need to reconcile the needs of the task with what the current environment can actually support.
 
 ---
 
-## Architectural Principles of Tiered Inference
+## Architectural Questions for Tiered Inference
 
-An adaptive AI runtime could evaluate hardware capability at client initialization and route individual tasks to an appropriate execution tier:
+### 1. Runtime Capability Detection
 
-### 1. Hardware Capability Detection
+A future runtime could inspect signals that help determine whether a local execution path is even viable, including:
 
-At runtime, the browser can inspect available acceleration primitives such as:
+- **WebGPU availability and adapter capabilities** exposed by the browser.
+- **CPU/WASM capabilities** relevant to non-GPU local execution.
+- **Memory and device constraints** that may make a model or task unsuitable for a client tier.
+- **Runtime availability** for machine-local services where a desktop companion is part of the product architecture.
 
-- **WebGPU Adapter Capabilities**: Supported limits and features exposed by the adapter/device.
-- **Thread Concurrency & WASM SIMD**: Useful signals when considering CPU-backed execution paths.
-- **Runtime Constraints**: Available memory and other device constraints that may affect whether local inference is appropriate.
+These signals indicate capability, not guaranteed performance. Performance and compatibility conclusions require measured implementation.
 
-### 2. Task Complexity Categorization
+### 2. Task Requirements
 
-Not every AI task in an interface requires the same model size or execution environment. A conceptual routing table might look like this:
+Execution choice should also be constrained by what the requested capability needs. Candidate dimensions include:
 
-| Task Type | Relative Complexity | Candidate Execution Tier |
-| :--- | :--- | :--- |
-| Semantic Tagging & Extraction | Lower | Browser-Local (WebGPU / WebLLM) |
-| Structured Schema Validation | Lower | Browser-Local (WASM / Small Model) |
-| Inline Contextual Guidance | Medium | Local Runtime / Fast Edge |
-| Multi-Turn Synthesis & Reasoning | Higher | Server / Cloud Endpoint |
+- privacy and data-residency requirements
+- acceptable interaction latency
+- model or runtime availability
+- offline or degraded-network requirements
+- expected computation cost
+- device capability
+- enterprise policy and governance
+
+A conceptual routing contract might look like this:
 
 ```typescript
-// Conceptual Task Router Signature
-interface InferenceTask<TInput, TOutput> {
+interface InferenceRequest<TInput, TOutput> {
   id: string;
-  complexity: 'low' | 'medium' | 'high';
-  requiresPrivacy: boolean;
-  maxLatencyMs: number;
-  schema: Schema<TOutput>;
-  execute(input: TInput): Promise<TOutput>;
+  requiresLocalDataHandling: boolean;
+  preferredLatencyClass: 'interactive' | 'background';
+  input: TInput;
+  executeWith(runtime: InferenceRuntime): Promise<TOutput>;
 }
 
-class AdaptiveAIRuntime {
-  async route<TIn, TOut>(task: InferenceTask<TIn, TOut>, input: TIn): Promise<TOut> {
-    const capability = await this.detectCapability();
-    
-    if (task.complexity === 'low' && capability.hasWebGPU) {
-      return this.executeLocalWebGPU(task, input);
-    }
-    
-    return this.executeCloudFallback(task, input);
-  }
+interface InferenceRuntime {
+  kind: 'browser-local' | 'machine-local' | 'server' | 'cloud';
+  available: boolean;
 }
 ```
 
+This is a design sketch, not a current implementation.
+
+### 3. Fallback and Availability
+
+An adaptive runtime would also need explicit fallback behavior. If a browser-local model cannot load, if a device lacks the required capability, or if local execution conflicts with product policy, the interface needs a defined alternative rather than silently failing or pretending every tier is interchangeable.
+
+Fallback itself has product consequences: the UI may need to communicate that a capability is unavailable, delayed, privacy-sensitive, or executing through a different tier.
+
+### 4. Governance and Cost
+
+Execution architecture is also a governance boundary. Browser-local, machine-local, and remote runtimes may differ in data exposure, operational cost, observability, update control, and compliance requirements.
+
+Those tradeoffs should be evaluated per capability and environment rather than inferred from the runtime label alone.
+
 ---
 
-## Caching Validated Structured Artifacts
+## Browser-Local Inference as a Future Deep Dive
 
-In enterprise environments, multiple users may interact with identical source documents or domain objects. Rather than re-evaluating the same prompt sequence repeatedly, a runtime could cache validated structured artifacts using stable cache keys.
+WebGPU and runtimes such as WebLLM make the browser a plausible future execution tier for some workloads. That deserves its own measured experiment rather than speculative benchmark claims inside this broader architecture draft.
 
-<Callout type="architecture" title="STRUCTURED ARTIFACT CACHING">
-  Prefer caching validated JSON / schema objects keyed by <code>(model_version, schema_version, source_content_hash)</code> rather than raw generated prose. This can improve consistency for repeated inputs and avoid duplicate computation across compatible client nodes.
-</Callout>
+A separate unpublished experiment, **Browser-Local Inference as a UI Runtime Capability**, will hold that narrower work once an implementation exists. It is subordinate to this runtime architecture rather than a replacement for it.
 
 ---
 
 ## Summary & Next Explorations
 
-Treating client-side compute as a possible execution tier can support lower-latency, privacy-preserving, and more resilient intelligent interfaces when the model, task, and hardware are a good fit.
+Adaptive AI Runtime is the **how / where** layer beneath intelligent interface capabilities. Its open question is whether a product can choose among browser-local, machine-local, server, edge, and cloud execution tiers without confusing capability selection with application truth or UI behavior.
 
-Subsequent notes in this series will explore concrete WebLLM weight caching strategies, memory budgeting inside shared browser tabs, and graceful worker failover.
+Future work should remain evidence-driven. Browser compatibility, model size, memory use, latency, and routing quality should be documented only after they are measured in a real implementation.
