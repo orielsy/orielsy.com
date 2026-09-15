@@ -44,7 +44,7 @@ Existing implementation predates this feature spec and must now be audited again
 - [ ] Verify focus states and keyboard navigation.
 - [ ] Verify reduced-motion behavior where motion exists.
 - [x] Verify no prohibited dependency/framework additions in the redesign diff to date.
-- [ ] Run `npm run build` when execution environment permits.
+- [ ] Run `npm run build` on the final branch tip. A user-run build passed before the final SEO semantic fix; rerun after the last source change.
 - [ ] Review Stage 1 branch diff against `main` for unrelated changes.
 - [ ] Obtain explicit Stage 1 design approval before finalizing Stage 1.
 
@@ -95,11 +95,11 @@ Stage 2 was explicitly approved by Orielsy. Begin with the published `documentat
 ## Final Verification
 
 - [ ] Confirm no React, TanStack Router, shadcn/ui, Radix, Lucide React, or new UI framework/library was added.
-- [ ] Confirm Astro Content Collections remain the content source of truth.
-- [ ] Confirm Research / Projects / About remain the primary public IA.
-- [ ] Confirm routes and slugs remain stable.
-- [ ] Confirm publication gating remains intact.
-- [ ] Confirm RSS/sitemap/SEO behavior remains intact.
+- [x] Confirm Astro Content Collections remain the content source of truth.
+- [x] Confirm Research / Projects / About remain the primary public IA.
+- [x] Confirm routes and slugs remain stable.
+- [x] Confirm publication gating remains intact.
+- [x] Confirm RSS/sitemap/SEO behavior remains intact. Source-level SEO sanity pass completed; nested About `<main>` regression corrected.
 - [ ] Confirm theme persistence and OS-preference behavior remain intact.
 - [ ] Confirm all factual/professional claims remain repository-grounded or separately approved.
 - [ ] Confirm branch contains no unrelated changes.
