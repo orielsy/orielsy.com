@@ -1,6 +1,6 @@
 ---
 title: "Context Engineering for Software Development"
-description: "Designing persistent repository knowledge architectures and Model Context Protocol (MCP) systems that provide autonomous coding agents with relevant context while reducing context pollution."
+description: "Exploring how coding agents can select and receive the subset of durable repository knowledge relevant to the current task, from architectural rules and component contracts to specifications and ADRs."
 pubDate: 2026-07-30
 type: "Research Note"
 tags: ["coding-agents", "context-engineering", "mcp", "developer-tools"]
@@ -8,54 +8,51 @@ status: "draft"
 published: false
 draft: false
 featured: false
-readingTime: "7 min read"
 ---
 
 import Callout from '../../components/Callout.astro';
 
-<Callout type="note" title="RESEARCH NOTE">
-  This research note analyzes strategies for structuring repository knowledge, architectural constraints, and tool protocols to improve coding-agent precision.
+<Callout type="note" title="DRAFT · REPURPOSED RESEARCH DIRECTION">
+  This exploration begins after durable project memory exists. Its question is not how to preserve repository knowledge, but how to select and deliver the subset relevant to the coding task at hand.
 </Callout>
 
-## The Context Pollution Problem
+Durable project memory solves only part of the coding-agent context problem. As repository knowledge grows, the next challenge becomes selection: determining which architectural rules, component contracts, decisions, specifications, and implementation context are relevant to the task at hand. This exploration looks at the transition from static project memory toward task-aware context retrieval and delivery.
 
-As context windows expand, the naive approach is to dump entire repositories, test logs, and chat histories into an agent's prompt.
+## From Project Memory to Context Selection
 
-More context does not automatically produce better code. Large undifferentiated context sets can introduce several failure modes:
-1. **Context degradation**: Critical architecture rules can get lost in irrelevant file noise.
-2. **Attention dilution**: Agents may surface deprecated conventions present in legacy files.
-3. **High latency & compute cost**: Repeatedly sending large token payloads can degrade developer feedback loops.
+[From Prompts to Project Memory](/research/specification-driven-ai-development) focuses on making engineering intent durable across coding-agent sessions. This draft starts from that foundation rather than repeating it.
 
 ```text
-Naive Prompting:
-[Entire Codebase] ---> [Agent LLM] ---> (Large, Noisy Context)
+Project Memory
+→ make project knowledge durable
 
-Context Engineered Pipeline:
-[Repository State] ---> [Structured Repository Knowledge]
-                             |
-                             v
-               [Model Context Protocol (MCP) Server]
-                             |
-                 (Targeted Tool & Rule Dispatch)
-                             v
-                        [Agent LLM] ---> (Task-Relevant Context)
+Context Engineering
+→ select the relevant durable knowledge for the current task
+
+Repository Context Engine
+→ explore an implementation for delivering that selected context on demand
 ```
 
----
+The problem changes as durable repository memory grows. A coding task rarely needs every specification, ADR, component contract, convention, and historical implementation detail at once. The useful question becomes: **which context is relevant now, at what scope, and through which delivery mechanism?**
 
-## Architectural Pillars of Effective Context Engineering
+## Selection Questions
 
-### 1. Hierarchical Rule Granularity
-Instead of a single monolithic prompt, structure rules hierarchically:
-- **Global Invariants**: Core language version, forbidden libraries, formatting rules.
-- **Package / Domain Boundaries**: Service-specific error types, authentication guards.
-- **Component Primitives**: Component contracts, state-management rules, and UI conventions.
+This research direction will focus on questions such as:
 
-### 2. Just-In-Time Tool Retrieval via MCP
-Using the **Model Context Protocol (MCP)**, an agent can query specialized tools and resources only when a task demands them. Conceptual examples include:
-- `get_component_schema`: Return typed prop interfaces without loading an entire component implementation.
-- `search_architectural_decisions`: Fetch ADRs relevant to the area being modified.
+- **Task awareness:** What does the current coding task actually need to know?
+- **Relevance:** Which rules, specifications, decisions, and implementation details are materially related?
+- **Scope:** Is the relevant context project-wide, feature-specific, package-specific, or component-specific?
+- **Architectural knowledge:** Which invariants and ADRs should constrain a proposed change?
+- **Component contracts:** Which interfaces or usage conventions matter without loading entire implementations?
+- **Specification selection:** Which feature specs, plans, and tasks should be surfaced for the work being attempted?
+- **Delivery:** Should selected context be loaded directly, exposed through tools, or delivered through a protocol such as MCP?
 
-<Callout type="architecture" title="PERSISTENT KNOWLEDGE OVER PROMPT REPETITION">
-  Moving engineering context from ephemeral user prompts into persistent, version-controlled repository artifacts can improve architectural consistency across different developer sessions.
-</Callout>
+## Retrieval and Delivery Are Not the Same Problem
+
+A future system might use deterministic routing, structured indexes, search, or other retrieval techniques to identify candidate context. Model Context Protocol could provide one delivery surface for that context, but MCP itself does not solve relevance or selection.
+
+No semantic retrieval system, vector database, AST graph, or completed MCP server is claimed by this draft. Those choices remain open until an implementation provides evidence for them.
+
+## Project Counterpart
+
+The unpublished [Repository Context Engine for Coding Agents](/projects/context-engine-coding-agents) is the implementation counterpart to this research direction. It remains a proposed/in-progress project: a place to test how repository-specific context could be delivered to coding agents on demand without presenting unbuilt capabilities as finished tooling.
