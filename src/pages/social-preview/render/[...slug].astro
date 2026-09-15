@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import SocialShareCard from '../../../components/social/SocialShareCard.astro';
+import {
+  DEFAULT_SOCIAL_CARD,
+  projectSocialCard,
+  researchSocialCard,
+  type SocialCardData,
+} from '../../../lib/social-cards';
+import '../../../styles/global.css';
+
+export async function getStaticPaths() {
+  if (import.meta.env.PROD) return [];
+
+  const research = (await getCollection('research')).filter((entry) => entry.data.published);
+  const projects = (await getCollection('projects')).filter((entry) => entry.data.published);
+
+  return [
+    {
+      params: { slug: 'default' },
+      props: { card: DEFAULT_SOCIAL_CARD },
+    },
+    ...research.map((entry) => ({
+      params: { slug: `research/${entry.id}` },
+      props: { card: researchSocialCard(entry) },
+    })),
+    ...projects.map((entry) => ({
+      params: { slug: `projects/${entry.id}` },
+      props: { card: projectSocialCard(entry) },
+    })),
+  ];
+}
+
+interface Props {
+  card: SocialCardData;
+}
+
+const { card } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1200, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Social card render</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Sora:wght@500;600&display=swap"
+    />
+  </head>
+  <body>
+    <SocialShareCard {...card} />
+    <script is:inline>
+      document.fonts.ready.then(() => {
+        document.documentElement.dataset.fontsReady = 'true';
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  html,
+  body {
+    width: 1200px;
+    height: 630px;
+    margin: 0;
+    overflow: hidden;
+    background: transparent;
+  }
+
+  body > .social-share-card {
+    width: 1200px;
+    height: 630px;
+  }
+</style>
