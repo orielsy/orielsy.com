@@ -15,6 +15,7 @@ const { data, id } = entry;
 const isConceptDraft = published && data.draft;
 const statusTitle = 'Project in Progress';
 const statusDescription = 'This project is still being developed and its public case study is not available yet.';
+const demoIsVideo = published && typeof data.demo === 'string' && /\.(mp4|webm|ogg)(?:$|\?)/i.test(data.demo);
 
 const formattedDate = data.dateLabel ?? new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
@@ -64,6 +65,27 @@ const formattedDate = data.dateLabel ?? new Intl.DateTimeFormat('en-US', {
                 {data.summary}
               </p>
 
+              {(data.architecture || data.technologies.length > 0) && (
+                <dl class="project-hero-facts mt-9 grid gap-px border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-2">
+                  {data.architecture && (
+                    <div class="bg-[var(--bg-card)] p-5">
+                      <dt>Architecture paradigm</dt>
+                      <dd>{data.architecture}</dd>
+                    </div>
+                  )}
+                  {data.technologies.length > 0 && (
+                    <div class="bg-[var(--bg-card)] p-5">
+                      <dt>Technologies</dt>
+                      <dd>
+                        <ul class="project-hero-technology-list" aria-label="Project technologies">
+                          {data.technologies.map((technology) => <li>{technology}</li>)}
+                        </ul>
+                      </dd>
+                    </div>
+                  )}
+                </dl>
+              )}
+
               {(data.github || data.demo || data.associatedResearch) && (
                 <div class="font-editorial-mono mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-[var(--border-subtle)] pt-5 text-[9px] uppercase tracking-[0.08em] sm:text-[10px]">
                   {data.demo && (
@@ -91,10 +113,28 @@ const formattedDate = data.dateLabel ?? new Intl.DateTimeFormat('en-US', {
                       href={data.associatedResearch}
                       class="text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
                     >
-                      Related research →
+                      Architecture research →
                     </a>
                   )}
                 </div>
+              )}
+
+              {demoIsVideo && data.demo && (
+                <figure class="project-hero-media mt-10 overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-card)]">
+                  <video
+                    controls
+                    poster={data.heroImage}
+                    class="block aspect-video w-full bg-black object-contain"
+                    preload="metadata"
+                    playsinline
+                  >
+                    <source src={data.demo} />
+                    Your browser does not support the video tag.
+                  </video>
+                  <figcaption class="font-editorial-mono border-t border-[var(--border-subtle)] px-4 py-3 text-[10px] leading-5 text-[var(--text-muted)]">
+                    {data.demoCaption ?? `Demonstration artifact for ${data.title}.`}
+                  </figcaption>
+                </figure>
               )}
             </>
           ) : (
@@ -140,24 +180,6 @@ const formattedDate = data.dateLabel ?? new Intl.DateTimeFormat('en-US', {
                   <div>
                     <dt>Built response</dt>
                     <dd>{data.solution}</dd>
-                  </div>
-                )}
-
-                {data.architecture && (
-                  <div>
-                    <dt>Architecture</dt>
-                    <dd>{data.architecture}</dd>
-                  </div>
-                )}
-
-                {data.technologies.length > 0 && (
-                  <div>
-                    <dt>Technologies</dt>
-                    <dd>
-                      <ul class="project-technology-list" aria-label="Project technologies">
-                        {data.technologies.map((technology) => <li>{technology}</li>)}
-                      </ul>
-                    </dd>
                   </div>
                 )}
               </dl>
