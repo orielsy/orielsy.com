@@ -47,7 +47,12 @@ const projects = defineCollection({
     demo: z.string().optional(),
     demoCaption: z.string().optional(),
     featured: z.boolean().default(false),
-    associatedResearch: z.string().optional(),
+    associatedResearch: z.array(
+      z.string().regex(
+        /^\/research\/[a-z0-9]+(?:[/-][a-z0-9]+)*$/,
+        'Associated Research entries must use a /research/<stable-slug> route.',
+      ),
+    ).default([]),
     heroImage: z.string().optional(),
   }),
 });
