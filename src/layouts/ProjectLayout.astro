@@ -3,7 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import ContentStatus from '../components/ContentStatus.astro';
 import ConceptDraftNotice from '../components/ConceptDraftNotice.astro';
 import '../styles/project-article.css';
-import type { CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 export interface Props {
   entry: CollectionEntry<'projects'>;
@@ -22,6 +22,24 @@ const formattedDate = data.dateLabel ?? new Intl.DateTimeFormat('en-US', {
   month: 'long',
   timeZone: 'UTC',
 }).format(data.date);
+
+const researchEntries = await getCollection('research');
+const researchByPath = new Map(
+  researchEntries.map((researchEntry) => [`/research/${researchEntry.id}`, researchEntry]),
+);
+const unresolvedResearch = data.associatedResearch.filter((path) => !researchByPath.has(path));
+
+if (unresolvedResearch.length > 0) {
+  throw new Error(
+    `Project "${id}" references unknown Research route(s): ${unresolvedResearch.join(', ')}`,
+  );
+}
+
+const previewUnpublishedResearch = import.meta.env.DEV && import.meta.env.MODE === 'content-preview';
+const associatedResearchEntries = data.associatedResearch
+  .map((path) => researchByPath.get(path))
+  .filter((researchEntry): researchEntry is CollectionEntry<'research'> => Boolean(researchEntry))
+  .filter((researchEntry) => researchEntry.data.published || previewUnpublishedResearch);
 ---
 
 <BaseLayout
@@ -86,7 +104,7 @@ const formattedDate = data.dateLabel ?? new Intl.DateTimeFormat('en-US', {
                 </dl>
               )}
 
-              {(data.github || data.demo || data.associatedResearch) && (
+              {(data.github || data.demo) && (
                 <div class="font-editorial-mono mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-[var(--border-subtle)] pt-5 text-[9px] uppercase tracking-[0.08em] sm:text-[10px]">
                   {data.demo && (
                     <a
@@ -108,14 +126,27 @@ const formattedDate = data.dateLabel ?? new Intl.DateTimeFormat('en-US', {
                       Repository ↗
                     </a>
                   )}
-                  {data.associatedResearch && (
-                    <a
-                      href={data.associatedResearch}
-                      class="text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
-                    >
-                      Architecture research →
-                    </a>
-                  )}
+                </div>
+              )}
+
+              {associatedResearchEntries.length > 0 && (
+                <div class="mt-8 border-t border-[var(--border-subtle)] pt-5">
+                  <p class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)] sm:text-[10px]">
+                    Associated Research
+                  </p>
+                  <ul class="mt-3 grid gap-2">
+                    {associatedResearchEntries.map((researchEntry) => (
+                      <li>
+                        <a
+                          href={`/research/${researchEntry.id}`}
+                          class="group inline-flex items-start gap-2 text-sm leading-6 text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
+                        >
+                          <span>{researchEntry.data.title}</span>
+                          <span class="font-editorial-mono shrink-0 text-[var(--accent)] transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
 
