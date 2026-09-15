@@ -39,7 +39,7 @@ Existing implementation predates this feature spec and must now be audited again
 - [x] Verify Current Inquiries uses repository-authored wording.
 - [ ] Verify post-font-change hero/title wrapping and metadata density across redesigned routes.
 - [ ] Verify both light and dark themes visually.
-- [ ] Verify mobile layout intentionally preserves hierarchy.
+- [x] Verify mobile layout intentionally preserves hierarchy. User-verified after final mobile border/spacing fixes.
 - [ ] Verify no horizontal overflow at supported viewport ranges.
 - [ ] Verify focus states and keyboard navigation.
 - [ ] Verify reduced-motion behavior where motion exists.
@@ -58,7 +58,7 @@ Orielsy explicitly authorized proceeding with the indexes before the detail-page
 - [x] Preserve Projects taxonomy and metadata behavior in source.
 - [x] Redesign About presentation without rewriting factual/professional content; remove inactive BODYCTRL promotion per current redesign policy.
 - [x] Refine About into a stronger editorial hierarchy: grounded positioning hero, practice progression, visual How I Think centerpiece, compact career/service timeline, personal interests, and connect surfaces without repeating Current Inquiries.
-- [ ] Verify responsive behavior across all three routes.
+- [x] Verify responsive behavior across all three routes. User-verified in mobile QA.
 - [ ] Verify light/dark theme consistency.
 - [ ] Run build and diff verification.
 - [x] Obtain explicit Stage 2 approval before Stage 3.
@@ -89,7 +89,7 @@ Stage 2 was explicitly approved by Orielsy. Begin with the published `documentat
 - [x] Replace the speechBubbles Project's static architecture PNG with the live source-grounded topology and promote the workstation image to a major evidence plate.
 - [x] Keep detailed chunking/filtering reasoning in the associated Research entry while summarizing the built captioning path in the Project case study.
 - [ ] Verify existing callouts, tables, code, media, and diagrams in both themes.
-- [ ] Verify responsive article/project reading layouts.
+- [x] Verify responsive article/project reading layouts. User-verified in mobile QA after final topology and card-height fixes.
 - [ ] Run build and diff verification.
 
 ## Final Verification
