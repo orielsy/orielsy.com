@@ -1,0 +1,88 @@
+---
+interface Props {
+  file: string;
+  label?: string;
+}
+
+const { file, label = 'Source excerpt' } = Astro.props;
+---
+
+<figure class="research-source-excerpt not-prose">
+  <figcaption>
+    <code>{file}</code>
+    <span>{label}</span>
+  </figcaption>
+  <div class="source-code">
+    <slot />
+  </div>
+</figure>
+
+<style>
+  .research-source-excerpt {
+    overflow: hidden;
+    margin: 2.25rem 0;
+    border: 1px solid var(--border-subtle);
+    background: var(--code-bg);
+  }
+
+  figcaption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    padding: 0.72rem 0.9rem;
+    font-family: var(--font-mono-ui);
+    font-size: 0.52rem;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  figcaption code {
+    overflow-wrap: anywhere;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: var(--accent);
+    font-family: inherit;
+    font-size: inherit;
+    text-transform: none;
+  }
+
+  figcaption span {
+    flex: 0 0 auto;
+    color: var(--text-muted);
+  }
+
+  .source-code :global(pre) {
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: var(--code-bg) !important;
+    padding: 1rem 1.1rem !important;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    font-size: 0.76rem !important;
+    line-height: 1.75 !important;
+    tab-size: 2;
+  }
+
+  .source-code :global(pre code) {
+    font-family: var(--font-mono-ui);
+  }
+
+  @media (max-width: 639px) {
+    figcaption {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .source-code :global(pre) {
+      padding: 0.9rem !important;
+      font-size: 0.72rem !important;
+    }
+  }
+</style>
