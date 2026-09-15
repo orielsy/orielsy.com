@@ -1,0 +1,116 @@
+---
+const tiers = [
+  {
+    index: '01',
+    label: 'Desktop overlay client',
+    stack: 'Electron · Vue 3 · Pinia',
+    body: 'Generates frameless, transparent broadcast graphics including speaker lower-thirds, title banners, topic tickers, and speech bubble captions for OBS capture.',
+    facts: ['operator console', 'transparent overlays', 'caption state'],
+  },
+  {
+    index: '02',
+    label: 'Local audio & inference engine',
+    stack: 'FastAPI · Python · Whisper',
+    body: 'Receives real-time 16 kHz 16-bit PCM audio over WebSockets, accumulates fixed-duration chunks, and runs local Whisper transcription.',
+    facts: ['ws://localhost:8000/listen', 'fixed-duration buffer', 'local STT'],
+  },
+] as const;
+---
+
+<div class="system-tiers not-prose" aria-label="speechBubbles two-tier project architecture">
+  {tiers.map((tier) => (
+    <section class="tier">
+      <div class="tier-meta">
+        <span class="tier-index">{tier.index}</span>
+        <span>{tier.stack}</span>
+      </div>
+      <h3>{tier.label}</h3>
+      <p>{tier.body}</p>
+      <ul>
+        {tier.facts.map((fact) => <li>{fact}</li>)}
+      </ul>
+    </section>
+  ))}
+</div>
+
+<style>
+  .system-tiers {
+    display: grid;
+    gap: 1px;
+    margin: 2rem 0 2.75rem;
+    border: 1px solid var(--border-subtle);
+    background: var(--border-subtle);
+  }
+
+  .tier {
+    min-width: 0;
+    background: var(--bg-card);
+    padding: 1.15rem;
+  }
+
+  .tier-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.5rem;
+    letter-spacing: 0.09em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .tier-index {
+    color: var(--accent);
+  }
+
+  h3 {
+    margin: 1.15rem 0 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1rem !important;
+    font-weight: 600;
+    line-height: 1.3 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  p {
+    margin: 0.55rem 0 0 !important;
+    color: var(--text-secondary);
+    font-size: 0.76rem;
+    line-height: 1.65 !important;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1rem 0 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+
+  li {
+    margin: 0 !important;
+    border: 1px solid var(--border-subtle);
+    padding: 0.34rem 0.45rem !important;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.5rem;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+
+  @media (min-width: 720px) {
+    .system-tiers {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .tier {
+      padding: 1.3rem;
+    }
+  }
+</style>
