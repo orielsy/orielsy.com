@@ -46,7 +46,8 @@ The homepage `Focus & Inquiries` strip communicates four distinct current areas 
 ### 3.2 Projects (Artifact-First)
 - **Purpose:** Demonstration of concrete software artifacts, tools, desktop clients, and reference prototypes.
 - **Payload:** Problem statement, architectural overview, technology stack, and direct repository/demo links.
-- **Distinction:** Explains what was built and how it operates. A Project can link to an associated Research exploration when deep conceptual background exists.
+- **Distinction:** Explains what was built and how it operates. A Project can relate to zero, one, or multiple Research explorations when genuine conceptual relationships exist.
+- **Research relationships:** Project frontmatter uses `associatedResearch` as a canonical array of `/research/<stable-slug>` routes. Schema capability does not imply that relationships exist; add each relationship only when current source, implementation, or publication state justifies it. Public Project pages must not turn an unpublished Research relationship into normal public navigation.
 - **Lifecycle:** A Project may be publicly navigable while its lifecycle status remains `In Progress`; publication and completion are separate concepts.
 
 ### 3.3 Work (Future Career Case Studies)
@@ -122,6 +123,8 @@ Only one published Research entry should normally carry `featured: true`; curren
 - **Phase 1 — Product Knowledge / Deterministic Adaptive UX:** implemented. Supports Documentation-Driven Adaptive UX. Application/domain state, deterministic validation, authored product knowledge, runtime/user context, knowledge applicability, response policy, adaptive rendering, and an inspectable decision trace are implemented in the current source.
 - **Phase 2 — Selective non-chat inference:** specified / beginning, not yet implemented. The first capability is natural-language intent/question mapping into known product concepts, followed by deterministic applicability filtering, application-state reconciliation, and response policy. See `specs/005-adaptive-enterprise-ui-lab/phase-2.md`.
 - **Phase 3 — Adaptive inference runtime:** planned only. May later support Adaptive AI Runtime for Enterprise UI and investigate where useful inference executes.
+
+The Lab's Project entry is expected to accumulate multiple `associatedResearch` relationships as real phases produce implementation evidence. At present, only the implemented Phase 1 relationship to `Documentation-Driven Adaptive UX` belongs in that collection. Do not add Phase 2 or Phase 3 Research relationships merely because the schema supports them or because those directions are planned.
 
 Future phases must never be described as implemented before source exists. The Lab remains one application across these phases rather than a series of disconnected demos.
 
