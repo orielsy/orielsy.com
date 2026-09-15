@@ -65,3 +65,12 @@ Provide visitors with an accurate, grounded, and engaging understanding of Oriel
 - **GitHub:** `https://github.com/orielsy`
 - **RSS:** `/rss.xml`
 - **BODYCTRL:** intentionally omitted from public About links while inactive.
+
+### 2.9 Direct Contact
+- Direct email belongs in the existing About → Connect experience; do not create a Contact page, Contact nav item, contact form, CAPTCHA, modal, or reveal puzzle for the current contact model.
+- Prefer a dedicated public-facing email address or alias rather than exposing an important private inbox.
+- The complete public email address should not appear in the initial rendered HTML. Assemble the address from separately stored components with the smallest reasonable amount of client-side JavaScript when the Email control is activated, then open a `mailto:` URL.
+- The Email control must be a semantic, keyboard-accessible interactive element with a clear accessible name and visible focus state.
+- This JavaScript assembly is lightweight spam reduction, not a security boundary. A scraper that executes JavaScript may recover the address; mail-provider filtering and replaceability of the public alias remain the primary operational controls.
+- Do not add encoding tricks, base64 obfuscation, timers, hidden forms, server calls, or other anti-bot complexity.
+- If no clearly established public-facing address exists in source, implementation must stop before inserting an address and wait for Orielsy to provide the intended public address or alias.
