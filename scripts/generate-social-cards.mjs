@@ -12,11 +12,7 @@ const ROOT = process.cwd();
 const PORT = Number(process.env.SOCIAL_CARD_PORT || 4328);
 const HOST = `http://127.0.0.1:${PORT}`;
 const OUTPUT_ROOT = resolve(ROOT, 'public/social');
-const ASTRO_BIN = resolve(
-  ROOT,
-  'node_modules/.bin',
-  process.platform === 'win32' ? 'astro.cmd' : 'astro',
-);
+const ASTRO_ENTRY = resolve(ROOT, 'node_modules/astro/astro.js');
 
 function fail(message) {
   console.error(`\n[social-cards] ${message}\n`);
@@ -148,6 +144,10 @@ function capture(browser, url, output) {
     '--headless=new',
     '--hide-scrollbars',
     '--disable-gpu',
+    '--disable-dev-shm-usage',
+    '--disable-background-networking',
+    '--no-first-run',
+    '--no-default-browser-check',
     '--force-device-scale-factor=1',
     '--window-size=1200,630',
     '--virtual-time-budget=5000',
@@ -184,8 +184,8 @@ function capture(browser, url, output) {
 }
 
 async function main() {
-  if (!existsSync(ASTRO_BIN)) {
-    throw new Error(`Astro executable not found at ${ASTRO_BIN}. Install repository dependencies first.`);
+  if (!existsSync(ASTRO_ENTRY)) {
+    throw new Error(`Astro entry point not found at ${ASTRO_ENTRY}. Install repository dependencies first.`);
   }
 
   const browser = findBrowser();
@@ -219,12 +219,11 @@ async function main() {
   mkdirSync(OUTPUT_ROOT, { recursive: true });
 
   const server = spawn(
-    ASTRO_BIN,
-    ['dev', '--host', '127.0.0.1', '--port', String(PORT), '--mode', 'social-preview'],
+    process.execPath,
+    [ASTRO_ENTRY, 'dev', '--host', '127.0.0.1', '--port', String(PORT), '--mode', 'social-preview'],
     {
       cwd: ROOT,
       stdio: ['ignore', 'pipe', 'pipe'],
-      shell: process.platform === 'win32',
     },
   );
 
