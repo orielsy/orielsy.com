@@ -12,6 +12,7 @@ problem: "Live streaming broadcasters and presenters need real-time subtitles, l
 solution: "Built a decoupled broadcast graphics platform combining an Electron/Vue 3 transparent overlay shell with a local Python FastAPI/Whisper streaming engine for OBS video compositing."
 github: "https://github.com/orielsy/speechBubbles"
 demo: "/videos/speechbubbles-demo.mp4"
+demoCaption: "Live broadcast demonstration: speechBubbles composited over a webcam feed with animated lower-third banners, speaker credentials, and real-time speech-to-text captions."
 featured: true
 associatedResearch: "/research/real-time-speech-audio-pipeline-desktop-ui"
 heroImage: "/projects/speechbubbles/hero.jpg"
@@ -19,84 +20,71 @@ heroImage: "/projects/speechbubbles/hero.jpg"
 
 import Callout from '../../components/Callout.astro';
 import DiagramFigure from '../../components/DiagramFigure.astro';
-
-<div class="my-8 rounded-lg overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-card)] media-breakout">
-  <video 
-    controls 
-    poster="/projects/speechbubbles/hero.jpg"
-    class="w-full aspect-video rounded-lg"
-    preload="metadata"
-  >
-    <source src="/videos/speechbubbles-demo.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-  <div class="p-3 text-xs font-mono text-[var(--text-muted)] text-center border-t border-[var(--border-subtle)]">
-    Live broadcast demonstration: SpeechBubbles overlay composited over webcam feed with animated lower-third banners, speaker credentials, and real-time speech-to-text captions.
-  </div>
-</div>
+import ProjectBreakout from '../../components/projects/ProjectBreakout.astro';
+import SpeechBubblesSystemTiers from '../../components/projects/SpeechBubblesSystemTiers.astro';
+import SpeechStreamingPipelineVisual from '../../components/research/SpeechStreamingPipelineVisual.astro';
 
 ## Project Overview
 
 **speechBubbles** is an on-device desktop overlay and live-broadcast graphics platform designed to bring television-style dynamic graphics and automated speech transcription to streamers, presenters, and video creators without relying on cloud transcription APIs.
 
-The system is structured as two decoupled tiers:
+The implementation is split into two decoupled tiers so the desktop graphics surface and the local transcription service can evolve independently:
 
-1. **The Desktop Overlay Client (`speechBubbles`)**: An Electron and Vue 3 application that generates frameless, transparent broadcast graphics—including animated speaker lower-thirds, title banners, topic tickers, and speech bubble captions. Broadcasters capture these windows directly in **OBS Studio** (or similar streaming software) using chroma-key or alpha transparency.
-2. **The Local Audio & Inference Engine (`whisper-api`)**: A local Python FastAPI service that ingests real-time 16 kHz 16-bit PCM audio streams over WebSockets (`ws://localhost:8000/listen`), accumulates fixed-duration audio chunks, and runs local Whisper transcription.
+<SpeechBubblesSystemTiers />
 
----
+## System Architecture
 
-## Architectural Breakdown
+The working system isolates audio capture, streaming WebSocket transport, local Whisper inference, client-side transcript policy, transparent Electron rendering, and OBS Studio compositing while keeping the complete path on the broadcast workstation.
 
-<DiagramFigure 
-  src="/projects/speechbubbles/speechbubbles-architecture_v2.png"
-  alt="System architecture diagram showing Web Audio API capture sending 16 kHz PCM to a FastAPI streaming server, which sends transcript segments to an Electron Vue and Pinia client for OBS Studio overlay compositing."
-  caption="System Architecture: Decoupled multi-process pipeline isolating audio capture, streaming WebSockets, local Whisper STT inference, and OBS Studio video compositing."
-/>
+<ProjectBreakout mode="publication">
+  <SpeechStreamingPipelineVisual />
+</ProjectBreakout>
 
----
+The project case study treats that topology as implementation evidence. The associated Research entry goes deeper into audio chunking, source-level filtering behavior, and the distinction between active runtime paths and available backend scaffolding.
 
-## Core System Highlights
+## Broadcast Graphics in Practice
 
-### 1. OBS-Optimized Broadcast Graphics Engine
-Television news broadcasts frequently display context when a speaker is introduced—credentials, affiliation, topic titles, and disclaimers. 
+Television news broadcasts frequently display context when a speaker is introduced—credentials, affiliation, topic titles, and disclaimers. `speechBubbles` translates that workflow into a dedicated operator console:
 
-`speechBubbles` translates this workflow into a dedicated operator console:
 - **Lower-Third Banners (`BannerView.vue`)**: Configurable dual-tone gradient banners with entrance and exit timing queues.
 - **Presenter Nametags (`TitleView.vue`)**: Dropdown title badges for displaying speaker names and professional roles.
 - **Chroma-Key & Alpha Ingestion**: Windows are formatted with distinct background borders and transparent viewport layers, allowing streaming software to isolate graphics while minimizing edge artifacts.
 
-<DiagramFigure 
-  src="/projects/speechbubbles/studio-setup.jpg"
-  alt="Studio Production Environment and Control Deck"
-  caption="Dual-display broadcast workstation: Operator control deck managing topic banners and speech ingestion (left), alongside live camera compositing with real-time lower-third graphics and speech bubble captions (right)."
-/>
+The workstation can therefore separate an operator-facing control deck from the visible broadcast composition while both remain part of the same local production environment.
 
-### 2. High-Throughput 16 kHz Audio Streamer
-Browser audio interfaces commonly expose 44.1 kHz or 48 kHz floating-point buffers. Sending that format directly would use substantially more bandwidth than the 16 kHz mono stream expected by this backend.
+<ProjectBreakout mode="publication">
+  <DiagramFigure 
+    src="/projects/speechbubbles/studio-setup.jpg"
+    alt="Studio Production Environment and Control Deck"
+    caption="Dual-display broadcast workstation: Operator control deck managing topic banners and speech ingestion (left), alongside live camera compositing with real-time lower-third graphics and speech bubble captions (right)."
+  />
+</ProjectBreakout>
 
-In `CaptionControl.vue`, the client downsamples audio before transmission:
-- The microphone's mono `AudioContext` buffer is downsampled to a 16 kHz float stream.
-- Audio samples are converted to signed 16-bit PCM integers (`convertFloat32ToInt16`) and streamed as binary WebSocket messages.
+## Local Captioning Path
 
-At 16 kHz × 16-bit mono, the resulting payload is approximately **32 KB/sec** before protocol overhead. That figure is derived directly from the sample format rather than measured as a performance benchmark.
+The transcription side is intentionally summarized here as part of the built artifact rather than repeated as a second architecture paper:
 
-### 3. Asynchronous Whisper Inference & Client Filtering
-Running neural inference directly on an async event loop can stall WebSocket handling while transcription is in progress.
+- The microphone's mono `AudioContext` buffer is downsampled to a **16 kHz** float stream.
+- Samples are converted to signed 16-bit PCM integers (`convertFloat32ToInt16`) and streamed as binary WebSocket messages to `ws://localhost:8000/listen`.
+- The FastAPI backend accumulates fixed-duration audio chunks and runs `model.transcribe()` through `asyncio.to_thread()`, moving blocking inference off the async event loop.
+- Returned Whisper segments are filtered in `CaptionControl.vue`; accepted segments require `no_speech_prob <= 0.6`, `temperature <= 0.8`, and non-empty text before entering the caption queue.
 
-The current public backend and client handle that work as follows:
-- Incoming PCM data is accumulated until the configured chunk threshold is reached, then moved into a scratch buffer for processing.
-- `model.transcribe()` is executed with `asyncio.to_thread()`, moving blocking inference off the async event loop.
-- Returned Whisper segments are filtered in `CaptionControl.vue`; segments are accepted when `no_speech_prob <= 0.6`, `temperature <= 0.8`, and non-empty text is present. This helps suppress likely hallucinated output during low-confidence segments.
+At 16 kHz × 16-bit mono, the audio payload is approximately **32 KB/sec** before protocol overhead. That number is derived from the sample format, not measured as a runtime performance benchmark.
 
-The backend repository contains PyAnnote VAD scaffolding and dependencies, but the current public `process_buffer()` path does not invoke that VAD pipeline before Whisper inference.
+The backend repository also contains PyAnnote VAD scaffolding and dependencies, but the current public `process_buffer()` path does not invoke that VAD pipeline before Whisper inference.
 
-### 4. Dynamic Bounding-Box Layout & Animation
+<Callout type="note" title="ARCHITECTURE RESEARCH">
+  For the source-grounded reasoning behind chunk size, filtering, VAD status, and rendering behavior, read [Architecture Notes: Audio Chunking, Transcription Filtering, and Real-Time Speech UI Systems](/research/real-time-speech-audio-pipeline-desktop-ui).
+</Callout>
+
+## Caption Rendering & Motion
+
 When new transcription segments arrive from the backend, `CaptionsView.vue` computes the physical layout of active bubbles on screen:
+
 - Using `getBoundingClientRect()`, each caption calculates its offset relative to previous elements.
 - Bubble pop-in animations and vertical shifts are orchestrated using double-buffered `requestAnimationFrame` transitions.
 
----
+This keeps caption layout and visual motion in the Electron/Vue renderer rather than coupling those responsibilities to the local inference service.
 
 ## Technical Stack
 
