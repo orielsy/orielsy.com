@@ -12,6 +12,8 @@ Phase 1 implements the Product Knowledge / Adaptive UX slice only. It must prove
 
 The Phase 1 implementation is embedded in the related Research publication, but the application architecture must not be article-specific. Future phases should extend the same domain, state, knowledge, resolver, and UI boundaries rather than replace them.
 
+The same application is also represented in the Projects catalog as an **unpublished Project-in-Progress** entry. The Research article explains the reasoning; the Project entry represents the evolving artifact. These two surfaces must remain distinct rather than duplicating the same content.
+
 ## 2. Long-Lived Project Direction
 
 The same reference application may later add:
@@ -25,6 +27,14 @@ The same reference application may later add:
 - runtime instrumentation where justified
 
 These are future extension points only. Phase 1 must not implement or imply that these capabilities already exist.
+
+The conceptual phase map is:
+
+- **Phase 1 — Product Knowledge / Deterministic Adaptive UX:** implemented and currently supports `Documentation-Driven Adaptive UX`.
+- **Phase 2 — Non-chat AI capabilities:** future only; may later support `AI as a UI Capability, Not Just a Chatbot`.
+- **Phase 3 — Adaptive inference runtime:** future only; may later support `Adaptive AI Runtime for Enterprise UI`.
+
+Future phases must not be described as implemented until verifiable source exists.
 
 ## 3. Phase 1 Scenario
 
@@ -111,15 +121,18 @@ Do not automatically execute destructive or ambiguous actions.
 
 A single valid candidate may be offered as a user-accepted preconfiguration. Multiple valid candidates must not be guessed among.
 
-## 8. Hosting and Repository Scope
+## 8. Hosting, Repository Scope, and Project Representation
 
 - Repository: `orielsy/orielsy.com`
 - Authoritative source branch: `main`
-- Phase 1 remains inside the Orielsy.com codebase.
-- Do not create a separate repository yet.
-- The implementation should initially be embedded in the related Research publication.
-- Do not add a top-level Labs navigation section for Phase 1.
-- If Adaptive Enterprise UI Lab later becomes a substantial standalone artifact, it may be graduated into its own repository and Project entry through a separate explicit decision.
+- Phase 1 remains inside the Orielsy.com codebase under `src/components/adaptive-ui-lab/`.
+- Do not create a separate repository for the Lab at this stage.
+- The implementation remains embedded in the related Research publication.
+- The Projects catalog contains an unpublished `Adaptive Enterprise UI Lab` Project-in-Progress entry pointing to the actual in-repository source path rather than inventing a separate repository.
+- The Project entry remains publication-gated and must not present future Phase 2 or Phase 3 work as implemented.
+- Do not add a top-level Labs navigation section.
+
+If the Lab later becomes a separately packaged artifact, moving it to its own repository would require a separate explicit decision. The current Project representation does not imply that such a repository exists.
 
 ## 9. Static-First Constraint
 
@@ -151,7 +164,7 @@ The Research article is not itself the architecture boundary of the application.
 
 The opening problem section may include a purpose-built explanatory visual contrasting the conventional documentation detour with an in-product adaptive path. That visual is article communication, not application state or resolver logic.
 
-Do not publish the article merely because the demo exists. Publication remains separately gated by existing content-publication rules.
+Publication remains separately gated by existing content-publication rules. The current Research publication state must be taken from its source frontmatter rather than inferred from the existence of the Lab.
 
 ## 11. Production Publishing
 
