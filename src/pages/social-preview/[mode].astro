@@ -1,0 +1,203 @@
+---
+import { getCollection } from 'astro:content';
+import SocialShareCard from '../../components/social/SocialShareCard.astro';
+import {
+  DEFAULT_SOCIAL_CARD,
+  projectSocialCard,
+  researchSocialCard,
+  type SocialCardData,
+} from '../../lib/social-cards';
+import '../../styles/global.css';
+
+export function getStaticPaths() {
+  if (import.meta.env.PROD) return [];
+  return [{ params: { mode: 'cards' } }];
+}
+
+const publishedResearch = (await getCollection('research'))
+  .filter((entry) => entry.data.published)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const publishedProjects = (await getCollection('projects'))
+  .filter((entry) => entry.data.published)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const referenceCards: Array<{ label: string; card: SocialCardData }> = [
+  {
+    label: 'Reference · long Research · dark · rich',
+    card: {
+      title: 'From Prompts to Project Memory: Spec-Driven Development for Coding Agents',
+      type: 'Research Note',
+      description: 'Durable project knowledge for long-running software work with coding agents.',
+      topic: 'Context Engineering · Coding Agents',
+      date: 'Sep 11, 2026',
+      variant: 'dark',
+      metadataDensity: 'rich',
+    },
+  },
+  {
+    label: 'Reference · short Research · light · rich',
+    card: {
+      title: 'Documentation-Driven Adaptive UX',
+      type: 'Architecture Exploration',
+      description: 'Connecting authored product knowledge to current application state.',
+      topic: 'Adaptive UX · UI Architecture',
+      date: 'Aug 15, 2026',
+      variant: 'light',
+      metadataDensity: 'rich',
+    },
+  },
+  {
+    label: 'Reference · Project · dark · sparse',
+    card: {
+      title: 'speechBubbles: Real-Time AI Broadcast Overlay & Captioning Engine',
+      type: 'Project / Prototype',
+      topic: 'Local Inference · Broadcast UI',
+      variant: 'dark',
+      metadataDensity: 'sparse',
+    },
+  },
+];
+
+const productionCards = [
+  { label: 'Default site card', card: DEFAULT_SOCIAL_CARD },
+  ...publishedResearch.map((entry) => ({
+    label: `Research · ${entry.id}`,
+    card: researchSocialCard(entry),
+  })),
+  ...publishedProjects.map((entry) => ({
+    label: `Project · ${entry.id}`,
+    card: projectSocialCard(entry),
+  })),
+];
+
+const previewWidths = [1200, 500, 300];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Local Social Card Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Sora:wght@500;600&display=swap"
+    />
+  </head>
+  <body>
+    <main class="social-preview-shell">
+      <header class="social-preview-header">
+        <p>Local-only production-component QA</p>
+        <h1>Social share cards</h1>
+        <p>Reference designs first, then the cards generated from current published content.</p>
+      </header>
+
+      <section aria-labelledby="reference-heading">
+        <h2 id="reference-heading">Approved reference cards</h2>
+        {referenceCards.map(({ label, card }) => (
+          <article class="social-preview-set">
+            <h3>{label}</h3>
+            {previewWidths.map((width) => (
+              <figure style={`width:${width}px;max-width:100%;`}>
+                <figcaption>{width}px wide</figcaption>
+                <SocialShareCard {...card} />
+              </figure>
+            ))}
+          </article>
+        ))}
+      </section>
+
+      <section aria-labelledby="production-heading">
+        <h2 id="production-heading">Current published-content cards</h2>
+        {productionCards.map(({ label, card }) => (
+          <article class="social-preview-set">
+            <h3>{label}</h3>
+            <figure style="width:1200px;max-width:100%;">
+              <SocialShareCard {...card} />
+            </figure>
+          </article>
+        ))}
+      </section>
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  html {
+    background: #08090c;
+  }
+
+  body {
+    margin: 0;
+    background: #08090c;
+    color: #f0f0f3;
+    font-family: var(--font-body);
+  }
+
+  .social-preview-shell {
+    width: min(100% - 2rem, 84rem);
+    margin-inline: auto;
+    padding-block: 3rem 6rem;
+  }
+
+  .social-preview-header {
+    margin-bottom: 4rem;
+    border-bottom: 1px solid #24252d;
+    padding-bottom: 2rem;
+  }
+
+  .social-preview-header p,
+  .social-preview-set h3,
+  .social-preview-set figcaption,
+  .social-preview-shell > section > h2 {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .social-preview-header p,
+  .social-preview-set figcaption {
+    color: #aaaab4;
+    font-size: 0.7rem;
+  }
+
+  .social-preview-header h1 {
+    margin: 0.5rem 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+  }
+
+  .social-preview-shell > section {
+    margin-top: 4rem;
+  }
+
+  .social-preview-shell > section > h2 {
+    color: #7c83ff;
+    font-size: 0.75rem;
+  }
+
+  .social-preview-set {
+    margin-top: 3rem;
+    border-top: 1px solid #24252d;
+    padding-top: 1.5rem;
+  }
+
+  .social-preview-set h3 {
+    margin: 0 0 1.5rem;
+    color: #aaaab4;
+    font-size: 0.7rem;
+  }
+
+  .social-preview-set figure {
+    margin: 0 0 2rem;
+  }
+
+  .social-preview-set figcaption {
+    margin-bottom: 0.5rem;
+  }
+</style>

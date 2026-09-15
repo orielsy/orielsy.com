@@ -26,8 +26,16 @@ const {
 const siteUrl = Astro.site || new URL('https://orielsy.com');
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 const formattedTitle = title.includes('Orielsy Diaz') ? title : `${title} | Orielsy Diaz`;
-const ogImageUrl = image ? new URL(image, siteUrl).toString() : undefined;
-const socialImageAlt = image ? imageAlt || title : undefined;
+const pathParts = Astro.url.pathname.split('/').filter(Boolean);
+const contentSocialImage = !noindex && pathParts.length >= 2 && pathParts[0] === 'research'
+  ? `/social/research/${pathParts.slice(1).join('/')}.png`
+  : !noindex && pathParts.length >= 2 && pathParts[0] === 'projects'
+    ? `/social/projects/${pathParts.slice(1).join('/')}.png`
+    : undefined;
+const resolvedImage = contentSocialImage ?? image ?? (!noindex ? '/social/default.png' : undefined);
+const generatedSocialCard = Boolean(resolvedImage?.startsWith('/social/') && resolvedImage.endsWith('.png'));
+const ogImageUrl = resolvedImage ? new URL(resolvedImage, siteUrl).toString() : undefined;
+const socialImageAlt = resolvedImage ? imageAlt || title : undefined;
 
 const author = {
   '@type': 'Person',
@@ -113,6 +121,9 @@ const jsonLd = buildStructuredData();
 <meta property="og:title" content={formattedTitle} />
 <meta property="og:description" content={description} />
 {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+{generatedSocialCard && <meta property="og:image:type" content="image/png" />}
+{generatedSocialCard && <meta property="og:image:width" content="1200" />}
+{generatedSocialCard && <meta property="og:image:height" content="630" />}
 {socialImageAlt && <meta property="og:image:alt" content={socialImageAlt} />}
 <meta property="og:site_name" content="Orielsy Diaz" />
 {type === 'article' && articleDate && <meta property="article:published_time" content={articleDate} />}
