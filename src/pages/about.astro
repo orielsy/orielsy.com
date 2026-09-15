@@ -180,22 +180,34 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
 
       <div class="lg:col-span-8 lg:col-start-5">
-        <div class="grid gap-px border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-3">
-          <a href="https://github.com/orielsy" target="_blank" rel="noopener noreferrer" class="group bg-[var(--bg-card)] p-5 transition-colors hover:bg-[var(--bg-secondary)]">
+        <div class="grid gap-px border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-2 lg:grid-cols-4">
+          <a href="https://github.com/orielsy" target="_blank" rel="noopener noreferrer" class="group bg-[var(--bg-card)] p-5 transition-colors hover:bg-[var(--bg-secondary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--accent)]">
             <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Code</span>
             <span class="font-display mt-3 flex items-center justify-between gap-4 text-base font-semibold text-[var(--text-primary)]">
               GitHub @orielsy <span class="text-[var(--accent)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">↗</span>
             </span>
           </a>
 
-          <a href="https://www.linkedin.com/in/orielsy" target="_blank" rel="noopener noreferrer" class="group bg-[var(--bg-card)] p-5 transition-colors hover:bg-[var(--bg-secondary)]">
+          <a href="https://www.linkedin.com/in/orielsy" target="_blank" rel="noopener noreferrer" class="group bg-[var(--bg-card)] p-5 transition-colors hover:bg-[var(--bg-secondary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--accent)]">
             <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Professional</span>
             <span class="font-display mt-3 flex items-center justify-between gap-4 text-base font-semibold text-[var(--text-primary)]">
               LinkedIn <span class="text-[var(--accent)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">↗</span>
             </span>
           </a>
 
-          <a href="/rss.xml" class="group bg-[var(--bg-card)] p-5 transition-colors hover:bg-[var(--bg-secondary)]">
+          <button
+            type="button"
+            id="email-contact"
+            aria-label="Email Orielsy Diaz"
+            class="group cursor-pointer border-0 bg-[var(--bg-card)] p-5 text-left transition-colors hover:bg-[var(--bg-secondary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--accent)]"
+          >
+            <span class="font-editorial-mono block text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Email</span>
+            <span class="font-display mt-3 flex items-center justify-between gap-4 text-base font-semibold text-[var(--text-primary)]">
+              Get in touch <span class="text-[var(--accent)] transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+            </span>
+          </button>
+
+          <a href="/rss.xml" class="group bg-[var(--bg-card)] p-5 transition-colors hover:bg-[var(--bg-secondary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--accent)]">
             <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Updates</span>
             <span class="font-display mt-3 flex items-center justify-between gap-4 text-base font-semibold text-[var(--text-primary)]">
               RSS <span class="text-[var(--accent)] transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
@@ -205,4 +217,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </section>
   </div>
+
+  <script is:inline>
+    const emailControl = document.getElementById('email-contact');
+
+    emailControl?.addEventListener('click', () => {
+      const localPart = 'contact';
+      const domainParts = ['orielsy', 'com'];
+      const address = `${localPart}@${domainParts.join('.')}`;
+      window.location.href = `mailto:${address}`;
+    });
+  </script>
 </BaseLayout>
