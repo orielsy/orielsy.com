@@ -20,24 +20,24 @@ const featuredProject = recentProjects.find((entry) => entry.data.featured) ?? r
 
 const explorationAreas = [
   {
-    title: 'Adaptive AI Runtimes & Tiered Inference',
-    description: 'Exploring how intelligent tasks could be routed across browser-local WebGPU/WebLLM models, desktop hardware, and server endpoints based on latency, cost, privacy, and device capability.',
-    tag: 'Runtime Architecture',
-  },
-  {
     title: 'Context Engineering for Coding Agents',
-    description: 'Structuring persistent repository knowledge, architectural patterns, and specifications to reduce context pollution and prompt dependency in autonomous agent workflows.',
+    description: 'Durable repository knowledge and task-aware context selection across specifications, ADRs, component contracts, and architectural constraints.',
     tag: 'Agent Systems',
   },
   {
-    title: 'Non-Chat AI & Documentation-Driven UX',
-    description: 'Embedding ambient intelligence into enterprise interfaces through structured metadata, inline guidance, semantic ranking, and classification rather than generic chatbot overlays.',
+    title: 'Product Knowledge & Adaptive UX',
+    description: 'Authored product knowledge, application state, deterministic validation, and evidence-aware guidance that adapts explanation without changing product truth.',
     tag: 'UI Architecture',
   },
   {
-    title: 'Hardware-Aware Client Interfaces',
-    description: 'Investigating browser compute thresholds, multi-process desktop runtimes (Electron), and client-side models for real-time capabilities without per-request cloud inference costs for suitable workloads.',
-    tag: 'Client Systems',
+    title: 'AI as an Interface Capability',
+    description: 'Non-chat intelligence inside existing interface primitives: intent interpretation, semantic retrieval, structured extraction, contextual transformation, and adaptive guidance.',
+    tag: 'Applied AI',
+  },
+  {
+    title: 'Adaptive AI Runtimes',
+    description: 'How intelligent interface capabilities could execute across browser-local, machine-local, server, edge, or cloud tiers under privacy, latency, availability, cost, and governance constraints.',
+    tag: 'Runtime Architecture',
   },
 ];
 
@@ -96,13 +96,13 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
 
       <ol class="grid flex-1 border-l border-t border-[var(--border-subtle)] sm:grid-cols-2 lg:grid-cols-4">
         {explorationAreas.map((area, index) => (
-          <li class="min-h-0 border-b border-r border-[var(--border-subtle)] px-4 py-3 sm:min-h-28 sm:py-4" title={area.description}>
+          <li class="border-b border-r border-[var(--border-subtle)] px-4 py-4">
             <div class="flex gap-3">
               <span class="font-editorial-mono text-[9px] text-[var(--accent)]">0{index + 1}</span>
               <div>
                 <h2 class="font-display text-xs font-semibold leading-5 text-[var(--text-primary)]">{area.title}</h2>
                 <p class="font-editorial-mono mt-2 text-[8px] uppercase tracking-[0.08em] text-[var(--text-muted)]">{area.tag}</p>
-                <p class="sr-only">{area.description}</p>
+                <p class="mt-3 text-[11px] leading-5 text-[var(--text-secondary)]">{area.description}</p>
               </div>
             </div>
           </li>
