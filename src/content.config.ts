@@ -1,6 +1,13 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+const socialCard = z.object({
+  variant: z.enum(['dark', 'light']).optional(),
+  topic: z.string().optional(),
+  metadataDensity: z.enum(['rich', 'sparse']).optional(),
+  description: z.string().optional(),
+}).optional();
+
 const research = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/research' }),
   schema: z.object({
@@ -25,6 +32,7 @@ const research = defineCollection({
     demo: z.string().optional(),
     readingTime: z.string().optional(),
     heroImage: z.string().optional(),
+    socialCard,
   }),
 });
 
@@ -49,6 +57,7 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     associatedResearch: z.string().optional(),
     heroImage: z.string().optional(),
+    socialCard,
   }),
 });
 
