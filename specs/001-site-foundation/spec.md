@@ -23,6 +23,17 @@ The current top-level navigation consists strictly of:
 - Do **NOT** replace `Projects` with `Work`.
 - Do **NOT** expose a `Work` section in top-level navigation until sufficient real career case studies are authored.
 
+### Homepage Focus Taxonomy
+
+The homepage `Focus & Inquiries` strip communicates four distinct current areas and must keep their descriptions visibly readable rather than relying on hover/title or screen-reader-only copy:
+
+1. **Context Engineering for Coding Agents** — durable repository knowledge, task-aware context selection, architectural constraints, specifications, ADRs, component contracts, and eventual targeted context delivery.
+2. **Product Knowledge & Adaptive UX** — application state, authored product knowledge, deterministic validation, progressive explanation, version-aware guidance, and evidence-aware interface behavior.
+3. **AI as an Interface Capability** — non-chat intelligent behavior embedded into existing interface primitives, including intent interpretation, semantic retrieval, structured extraction, contextual transformation, and adaptive guidance.
+4. **Adaptive AI Runtimes** — how intelligent interface capabilities may execute across browser-local, machine-local, server, edge, or cloud tiers under capability, privacy, latency, availability, cost, and governance constraints.
+
+`Hardware-Aware Client Interfaces` is not a separate top-level focus area; it belongs under Adaptive AI Runtimes. Product Knowledge / Documentation-Driven UX and AI-as-UI must remain separate because they represent different architectural layers.
+
 ---
 
 ## 3. Content Taxonomy Definitions
@@ -36,6 +47,7 @@ The current top-level navigation consists strictly of:
 - **Purpose:** Demonstration of concrete software artifacts, tools, desktop clients, and reference prototypes.
 - **Payload:** Problem statement, architectural overview, technology stack, and direct repository/demo links.
 - **Distinction:** Explains what was built and how it operates. A Project can link to an associated Research exploration when deep conceptual background exists.
+- **Lifecycle:** A Project may be publicly navigable while its lifecycle status remains `In Progress`; publication and completion are separate concepts.
 
 ### 3.3 Work (Future Career Case Studies)
 - **Status:** Deferred / Future.
@@ -95,19 +107,21 @@ Repository Context Engine
 
 ### 6.2 Interface-side progression
 
-1. **Documentation-Driven Adaptive UX** — published Research and canonical home for product knowledge as interface context, knowledge-aware interfaces, context-aware product guidance, progressive explanatory depth, onboarding/version-aware guidance, deterministic adaptive UX, and evidence-aware response authority.
-2. **AI as a UI Capability, Not Just a Chatbot** — published public Concept Draft. Owns the question **what intelligent behavior belongs directly inside the interface**, including semantic filtering, structured extraction, intent interpretation, contextual transformation, command routing, adaptive guidance, inline assistance, and intelligent UI primitives.
+1. **Documentation-Driven Adaptive UX** — published Research and the intentional primary Featured Research entry on the homepage. It is the canonical home for product knowledge as interface context, knowledge-aware interfaces, context-aware product guidance, progressive explanatory depth, onboarding/version-aware guidance, deterministic adaptive UX, and evidence-aware response authority.
+2. **AI as a UI Capability, Not Just a Chatbot** — published public Concept Draft. Owns the question **what intelligent behavior belongs directly inside the interface**, including semantic filtering, structured extraction, intent interpretation, contextual transformation, command routing, adaptive guidance, inline assistance, and intelligent UI primitives. Its next substantive evidence should come from Adaptive Enterprise UI Lab Phase 2 before the article is expanded significantly.
 3. **Adaptive AI Runtime for Enterprise UI** — unpublished Research draft. Owns the separate question **how / where an already-requested capability executes**, including browser-local inference, machine-local runtimes, server/edge/cloud tiers, capability detection, fallback, privacy, latency, availability, device constraints, cost, and enterprise governance.
 
 Do not collapse the AI-as-UI and Adaptive AI Runtime articles: one is about interface behavior; the other is about execution architecture.
 
+Only one published Research entry should normally carry `featured: true`; currently that entry is **Documentation-Driven Adaptive UX**. Other strong Research remains visible through the Recent Research ordering rather than competing for the primary feature slot. `From Prompts to Project Memory` should remain prominent there because its publication date is among the newest published Research entries.
+
 ### 6.3 Shared reference application
 
-**Adaptive Enterprise UI Lab** is one evolving reference application inside `orielsy.com`, represented as an unpublished Project-in-Progress entry while its current Phase 1 implementation remains embedded in Documentation-Driven Adaptive UX.
+**Adaptive Enterprise UI Lab** is one evolving reference application inside `orielsy.com`, represented as a **publicly navigable Project with `status: In Progress`** while its current Phase 1 implementation remains embedded in Documentation-Driven Adaptive UX.
 
-- **Phase 1 — Product Knowledge / Deterministic Adaptive UX:** implemented. Supports Documentation-Driven Adaptive UX.
-- **Phase 2 — Non-chat AI capabilities:** future only. May support AI as a UI Capability, Not Just a Chatbot.
-- **Phase 3 — Adaptive inference runtime:** future only. May support Adaptive AI Runtime for Enterprise UI.
+- **Phase 1 — Product Knowledge / Deterministic Adaptive UX:** implemented. Supports Documentation-Driven Adaptive UX. Application/domain state, deterministic validation, authored product knowledge, runtime/user context, knowledge applicability, response policy, adaptive rendering, and an inspectable decision trace are implemented in the current source.
+- **Phase 2 — Selective non-chat inference:** specified / beginning, not yet implemented. The first capability is natural-language intent/question mapping into known product concepts, followed by deterministic applicability filtering, application-state reconciliation, and response policy. See `specs/005-adaptive-enterprise-ui-lab/phase-2.md`.
+- **Phase 3 — Adaptive inference runtime:** planned only. May later support Adaptive AI Runtime for Enterprise UI and investigate where useful inference executes.
 
 Future phases must never be described as implemented before source exists. The Lab remains one application across these phases rather than a series of disconnected demos.
 
