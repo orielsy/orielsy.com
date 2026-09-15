@@ -1,0 +1,50 @@
+---
+export interface Props {
+  maxWidth?: string;
+  mode?: 'wide' | 'publication';
+}
+
+const { maxWidth, mode = 'wide' } = Astro.props;
+---
+
+<div
+  class="project-breakout not-prose"
+  data-project-breakout={mode}
+  style={maxWidth ? `--project-breakout-max: ${maxWidth};` : undefined}
+>
+  <slot />
+</div>
+
+<style>
+  .project-breakout {
+    --project-breakout-max: 58rem;
+    position: relative;
+    left: 50%;
+    box-sizing: border-box;
+    width: min(var(--project-breakout-max), calc(100vw - 2rem));
+    max-width: calc(100vw - 2rem);
+    margin-block: 2.75rem;
+    transform: translateX(-50%);
+  }
+
+  .project-breakout[data-project-breakout='publication'] {
+    --project-breakout-max: 80rem;
+  }
+
+  @media (min-width: 640px) {
+    .project-breakout {
+      width: min(var(--project-breakout-max), calc(100vw - 3rem));
+      max-width: calc(100vw - 3rem);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .project-breakout[data-project-breakout='publication'] {
+      left: auto;
+      width: min(var(--project-breakout-max), 150%);
+      max-width: 150%;
+      margin-left: -50%;
+      transform: none;
+    }
+  }
+</style>
