@@ -17,6 +17,8 @@ import AsyncSpeechPipelineVisual from '../../components/research/AsyncSpeechPipe
 import AudioFormatReductionVisual from '../../components/research/AudioFormatReductionVisual.astro';
 import ChunkingTradeoffVisual from '../../components/research/ChunkingTradeoffVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+import ResearchSourceExcerpt from '../../components/research/ResearchSourceExcerpt.astro';
+import ResearchSourceNote from '../../components/research/ResearchSourceNote.astro';
 import SpeechArchitectureTakeawaysVisual from '../../components/research/SpeechArchitectureTakeawaysVisual.astro';
 import SpeechStreamingPipelineVisual from '../../components/research/SpeechStreamingPipelineVisual.astro';
 import TranscriptionFilteringTruthVisual from '../../components/research/TranscriptionFilteringTruthVisual.astro';
@@ -25,15 +27,24 @@ import TranscriptionFilteringTruthVisual from '../../components/research/Transcr
   This research article details the engineering architecture and streaming trade-offs behind **speechBubbles**, an on-device live broadcast graphics and speech-to-text overlay platform. For the full system case study and 1080p production demonstration video, see the [speechBubbles Project Case Study](/projects/local-ai-real-time-captioning).
 </Callout>
 
+<ResearchSourceNote>
+  This exploration is grounded in the current public `speechBubbles` and `whisper-api` source. Format calculations below are arithmetic derived from the stated sample formats, not measured runtime benchmarks.
+</ResearchSourceNote>
+
+<ResearchBreakout mode="publication">
+  <SpeechStreamingPipelineVisual />
+</ResearchBreakout>
+
 ## The Challenge: Real-Time Audio at the Interface Layer
 
 Building a real-time, on-device speech-to-text interface presents a distributed-systems problem at the interface layer.
 
 Unlike batch transcription—where a static media file is uploaded, processed sequentially, and returned as a finished transcript—live transcription requires continuous coordination across four distinct operational domains:
 
-<ResearchBreakout mode="publication">
-  <SpeechStreamingPipelineVisual />
-</ResearchBreakout>
+1. **Hardware Audio Capture**: Sampling microphone input in the browser/client environment.
+2. **Buffered Chunk Processing**: Deciding when accumulated audio is large enough to send through neural inference.
+3. **Transcript Confidence Filtering**: Suppressing low-confidence segments before they are rendered to the overlay.
+4. **Fluid UI Compositing**: Rendering animated overlay graphics without unnecessary layout churn or visible jitter.
 
 ---
 
@@ -52,6 +63,8 @@ Sending 48 kHz stereo 32-bit float audio directly would produce about **384 KB/s
 ### The Client-Side Downsampling Solution
 
 In `CaptionControl.vue`, downsampling is performed before packet transmission:
+
+<ResearchSourceExcerpt file="CaptionControl.vue">
 
 ```javascript
 function downsampleBuffer(buffer, inputSampleRate, outputSampleRate = 16000) {
@@ -80,6 +93,8 @@ function downsampleBuffer(buffer, inputSampleRate, outputSampleRate = 16000) {
 }
 ```
 
+</ResearchSourceExcerpt>
+
 The filtered float array is then clamped and converted to signed 16-bit integers (`Int16Array`). At 16 kHz × 16-bit mono, that format is approximately **32 KB/sec** before WebSocket overhead—a mathematically derived reduction of about **91.7%** compared with the 48 kHz stereo 32-bit-float example above. These are format calculations, not measured runtime benchmarks.
 
 ---
@@ -96,6 +111,8 @@ The public backend currently defaults to a **3-second chunk threshold** when no 
 
 In `fastapi_app.py`, the server uses a fixed-duration chunk accumulator rather than an overlapping sliding window:
 
+<ResearchSourceExcerpt file="fastapi_app.py">
+
 ```python
 chunk_length_bytes = int(client.config.get("chunk_length_seconds", 3)) * client.sampling_rate * client.samples_width
 
@@ -104,6 +121,8 @@ if len(client.buffer) >= chunk_length_bytes:
     client.buffer.clear()
     asyncio.create_task(self.process_buffer(client, websocket))
 ```
+
+</ResearchSourceExcerpt>
 
 After transcription finishes, `scratch_buffer` is cleared. Because processed samples are not intentionally retained and reused across overlapping windows, describing this as a sliding window would overstate what the current source implements.
 
@@ -123,6 +142,8 @@ That means the public implementation should not be described as actively droppin
 
 In `CaptionControl.vue`, returned segments are evaluated against Whisper metadata:
 
+<ResearchSourceExcerpt file="CaptionControl.vue">
+
 ```javascript
 function filterSegments(segments) {
   for (let x = 0; x < segments.length; x += 1) {
@@ -135,6 +156,8 @@ function filterSegments(segments) {
   }
 }
 ```
+
+</ResearchSourceExcerpt>
 
 Segments above those thresholds are discarded by the client. This helps suppress likely hallucinated or low-confidence text before it reaches the caption queue, but it does not guarantee that all phantom output is eliminated.
 
@@ -150,6 +173,8 @@ The backend uses `asyncio.to_thread()` around `model.transcribe()`. This moves b
 
 On the renderer side, `CaptionsView.vue` measures caption positions with `getBoundingClientRect()` and applies transitions inside nested `requestAnimationFrame()` callbacks:
 
+<ResearchSourceExcerpt file="CaptionsView.vue">
+
 ```javascript
 const performAnimation = (multiplier = 1) => {
   requestAnimationFrame(() => {
@@ -164,6 +189,8 @@ const performAnimation = (multiplier = 1) => {
   });
 };
 ```
+
+</ResearchSourceExcerpt>
 
 The result is a separation of responsibilities: audio capture and downsampling happen in the client, blocking model inference is moved off the async event loop, and caption layout/animation remains in the Electron/Vue rendering layer.
 
