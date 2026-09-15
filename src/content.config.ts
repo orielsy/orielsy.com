@@ -45,6 +45,7 @@ const projects = defineCollection({
     solution: z.string().optional(),
     github: z.string().url().optional(),
     demo: z.string().optional(),
+    demoCaption: z.string().optional(),
     featured: z.boolean().default(false),
     associatedResearch: z.string().optional(),
     heroImage: z.string().optional(),
