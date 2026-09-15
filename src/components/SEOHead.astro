@@ -26,7 +26,13 @@ const {
 const siteUrl = Astro.site || new URL('https://orielsy.com');
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 const formattedTitle = title.includes('Orielsy Diaz') ? title : `${title} | Orielsy Diaz`;
-const resolvedImage = image ?? (!noindex ? '/social/default.png' : undefined);
+const pathParts = Astro.url.pathname.split('/').filter(Boolean);
+const contentSocialImage = !noindex && pathParts.length >= 2 && pathParts[0] === 'research'
+  ? `/social/research/${pathParts.slice(1).join('/')}.png`
+  : !noindex && pathParts.length >= 2 && pathParts[0] === 'projects'
+    ? `/social/projects/${pathParts.slice(1).join('/')}.png`
+    : undefined;
+const resolvedImage = contentSocialImage ?? image ?? (!noindex ? '/social/default.png' : undefined);
 const ogImageUrl = resolvedImage ? new URL(resolvedImage, siteUrl).toString() : undefined;
 const socialImageAlt = resolvedImage ? imageAlt || title : undefined;
 
