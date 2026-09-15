@@ -7,142 +7,176 @@
       <p class="eyebrow">System topology</p>
       <h3>speechBubbles live transcription and broadcast path.</h3>
       <p class="dek">
-        The runtime spans client audio capture, local streaming inference, client-side transcript policy,
-        transparent Electron overlays, and OBS compositing inside one broadcast workstation.
+        One broadcast workstation, three architectural domains, and a runtime path that keeps capture,
+        local inference, client policy, and broadcast rendering distinct.
       </p>
     </div>
-    <span class="badge">On-device · local inference</span>
+    <span class="badge">Current public architecture</span>
   </header>
 
   <div class="workstation" aria-label="speechBubbles broadcast workstation architecture">
     <div class="boundary-label">
       <span>Broadcast workstation</span>
-      <span class="boundary-note">Current public architecture</span>
+      <span>On-device · local inference</span>
     </div>
 
-    <div class="source-chip" aria-label="Microphone input">
-      <span class="source-dot" aria-hidden="true"></span>
-      <strong>Microphone</strong>
-      <span>hardware input</span>
-    </div>
-
-    <div class="topology-grid">
-      <section class="node capture-node">
-        <div class="node-heading">
-          <span class="node-index">01</span>
-          <span class="node-kicker">Client capture</span>
+    <div class="architecture-grid">
+      <section class="domain client-domain" aria-labelledby="client-domain-title">
+        <div class="domain-heading">
+          <span class="domain-index">01</span>
+          <div>
+            <span class="domain-kicker">Electron client</span>
+            <h4 id="client-domain-title">Capture, control, and caption policy</h4>
+          </div>
+          <span class="domain-stack">Vue 3 · Pinia</span>
         </div>
-        <h4>Web Audio API pipeline</h4>
-        <p>Microphone samples are captured in the client and reduced before transport.</p>
-        <div class="node-facts">
-          <span>16 kHz</span>
-          <span>mono PCM</span>
-          <span>Int16</span>
+
+        <div class="domain-body client-body">
+          <div class="subnode capture-node">
+            <div class="subnode-heading">
+              <span>Capture module</span>
+              <span class="status-dot" aria-hidden="true"></span>
+            </div>
+            <strong>Microphone → Web Audio API</strong>
+            <p>Sample microphone input and reduce it before transport.</p>
+            <div class="fact-row" aria-label="Audio format after client downsampling">
+              <span>16 kHz</span>
+              <span>mono PCM</span>
+              <span>Int16</span>
+            </div>
+          </div>
+
+          <div class="subnode policy-node">
+            <div class="subnode-heading">
+              <span>Caption control</span>
+              <code>CaptionControl.vue</code>
+            </div>
+            <strong>State + confidence filtering</strong>
+            <p>Returned Whisper segments are evaluated before accepted text enters the caption queue.</p>
+            <div class="rule-list">
+              <code>no_speech_prob ≤ 0.6</code>
+              <code>temperature ≤ 0.8</code>
+              <code>text is not empty</code>
+            </div>
+          </div>
         </div>
       </section>
 
-      <div class="route route-client" aria-hidden="true">
-        <span class="route-line"></span>
-        <span class="route-arrow">→</span>
+      <div class="service-connection" aria-label="Client and local service transport">
+        <div class="connection-lane outbound-lane">
+          <span class="connection-label">01 · Binary PCM</span>
+          <code>/listen</code>
+          <span class="connection-line" aria-hidden="true"></span>
+          <span class="connection-arrow" aria-hidden="true">→</span>
+        </div>
+        <div class="connection-lane return-lane">
+          <span class="connection-label">02 · Segment JSON</span>
+          <span class="connection-arrow" aria-hidden="true">←</span>
+          <span class="connection-line" aria-hidden="true"></span>
+          <span class="connection-note">text + metadata</span>
+        </div>
       </div>
 
-      <section class="node client-node">
-        <div class="node-heading">
-          <span class="node-index">02</span>
-          <span class="node-kicker">Desktop client</span>
-        </div>
-        <h4>Electron · Vue 3 · Pinia</h4>
-        <div class="client-parts">
+      <section class="domain service-domain" aria-labelledby="service-domain-title">
+        <div class="domain-heading">
+          <span class="domain-index">02</span>
           <div>
-            <strong>Studio control panel</strong>
-            <code>HomeView.vue</code>
+            <span class="domain-kicker">Local transcription service</span>
+            <h4 id="service-domain-title">Buffer and decode</h4>
           </div>
-          <div>
-            <strong>Transparent graphic overlays</strong>
-            <code>Collage</code>
-          </div>
+          <span class="domain-stack">FastAPI</span>
         </div>
-      </section>
 
-      <div class="transport transport-down">
-        <span class="transport-label">Binary PCM chunks</span>
-        <code>/listen</code>
-        <span class="transport-arrow" aria-hidden="true">↓</span>
-      </div>
-
-      <section class="node server-node">
-        <div class="node-heading">
-          <span class="node-index">03</span>
-          <span class="node-kicker">Local inference service</span>
-        </div>
-        <h4>FastAPI streaming server</h4>
-        <div class="server-parts">
-          <div>
-            <strong>Fixed-duration audio buffer</strong>
-            <span>Current default: 3-second threshold</span>
+        <div class="domain-body">
+          <div class="subnode">
+            <div class="subnode-heading">
+              <span>Streaming buffer</span>
+              <span>fixed-duration</span>
+            </div>
+            <strong>PCM accumulation</strong>
+            <p>The public backend defaults to a three-second chunk threshold when the client does not override it.</p>
           </div>
-          <div>
+
+          <div class="subnode inference-node">
+            <div class="subnode-heading">
+              <span>Transcription</span>
+              <span class="accent-label">active path</span>
+            </div>
             <strong>Local Whisper STT</strong>
-            <span>Blocking inference moved off the async event loop</span>
+            <p><code>asyncio.to_thread()</code> moves blocking transcription away from the async event loop.</p>
           </div>
-        </div>
 
-        <aside class="vad-sidecar" aria-label="Voice activity detection implementation status">
-          <span class="status-mark" aria-hidden="true"></span>
+          <aside class="vad-sidecar" aria-label="Voice activity detection implementation status">
+            <span class="sidecar-mark" aria-hidden="true"></span>
+            <div>
+              <strong>PyAnnote VAD infrastructure</strong>
+              <span>Present in the repository · not invoked by the current public <code>process_buffer()</code> path.</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="render-connection" aria-hidden="true">
+        <span class="connection-label">03 · Accepted caption state</span>
+        <span class="connection-line"></span>
+        <span class="connection-arrow">→</span>
+      </div>
+
+      <section class="domain render-domain" aria-labelledby="render-domain-title">
+        <div class="domain-heading">
+          <span class="domain-index">03</span>
           <div>
-            <strong>PyAnnote VAD infrastructure</strong>
-            <span>Present in repository · not active in the current <code>process_buffer()</code> path</span>
+            <span class="domain-kicker">Broadcast rendering</span>
+            <h4 id="render-domain-title">Overlay and live compositing</h4>
           </div>
-        </aside>
-      </section>
-
-      <div class="return-route">
-        <span class="return-line" aria-hidden="true"></span>
-        <div>
-          <strong>Streaming transcription segments</strong>
-          <span>JSON → client</span>
+          <span class="domain-stack">Output</span>
         </div>
-        <span class="return-arrow" aria-hidden="true">→</span>
-      </div>
 
-      <section class="node policy-node">
-        <div class="node-heading">
-          <span class="node-index">04</span>
-          <span class="node-kicker">Client response policy</span>
-        </div>
-        <h4>Confidence filtering + caption queue</h4>
-        <p>
-          Whisper metadata is evaluated in the client before accepted text reaches the visible overlay.
-        </p>
-        <div class="policy-facts">
-          <span><code>no_speech_prob ≤ 0.6</code></span>
-          <span><code>temperature ≤ 0.8</code></span>
-        </div>
-      </section>
+        <div class="domain-body render-body">
+          <div class="subnode overlay-node">
+            <div class="subnode-heading">
+              <span>Electron renderer</span>
+              <code>CaptionsView.vue</code>
+            </div>
+            <strong>Transparent Vue overlay</strong>
+            <p>Caption layout and transitions stay in the desktop rendering layer.</p>
+            <div class="fact-row">
+              <span>caption state</span>
+              <span>frame transitions</span>
+              <span>transparent surface</span>
+            </div>
+          </div>
 
-      <div class="transport transport-render">
-        <span class="transport-label">Accepted captions</span>
-        <span class="transport-arrow" aria-hidden="true">↓</span>
-      </div>
+          <div class="render-arrow" aria-hidden="true">↓</div>
 
-      <section class="node obs-node">
-        <div class="node-heading">
-          <span class="node-index">05</span>
-          <span class="node-kicker">Broadcast output</span>
-        </div>
-        <h4>OBS Studio live compositing</h4>
-        <p>Transparent Electron graphics are composited over the live video feed.</p>
-        <div class="node-facts">
-          <span>alpha</span>
-          <span>color masking</span>
-          <span>live overlay</span>
+          <div class="subnode obs-node">
+            <div class="subnode-heading">
+              <span>Compositor</span>
+              <span class="accent-label">broadcast output</span>
+            </div>
+            <strong>OBS Studio</strong>
+            <p>Transparent Electron graphics are composited over the live video feed.</p>
+            <div class="fact-row">
+              <span>alpha</span>
+              <span>color masking</span>
+              <span>live overlay</span>
+            </div>
+          </div>
         </div>
       </section>
+    </div>
+
+    <div class="accepted-state-rail" aria-label="Accepted caption state moves from client policy to broadcast rendering">
+      <span class="rail-origin">Client policy</span>
+      <span class="rail-line" aria-hidden="true"></span>
+      <span class="rail-label">accepted captions</span>
+      <span class="rail-arrow" aria-hidden="true">→</span>
+      <span class="rail-target">renderer</span>
     </div>
   </div>
 
   <figcaption>
-    The topology preserves the original workstation-level architecture while distinguishing repository scaffolding from the active runtime path. PyAnnote VAD is shown as available infrastructure, not as an active pre-Whisper stage.
+    The system runs on one broadcast workstation, but ownership stays separated: the Electron client captures audio and applies transcript policy, the local FastAPI service buffers and transcribes, and the rendering layer turns accepted caption state into an OBS-facing overlay. PyAnnote VAD is shown as available infrastructure, not an active pre-Whisper stage.
   </figcaption>
 </figure>
 
@@ -175,12 +209,12 @@
   .eyebrow,
   .badge,
   .boundary-label,
-  .node-heading,
-  .node-facts,
-  .policy-facts,
-  .transport,
-  .return-route,
-  .source-chip {
+  .domain-heading,
+  .subnode-heading,
+  .fact-row,
+  .connection-lane,
+  .render-connection,
+  .accepted-state-rail {
     font-family: var(--font-mono-ui);
   }
 
@@ -220,10 +254,10 @@
 
   .workstation {
     position: relative;
-    margin: 1.25rem;
-    border: 1px dashed var(--border-strong);
+    margin: 1.1rem;
+    border: 1px solid var(--border-subtle);
     background: color-mix(in srgb, var(--bg-secondary) 46%, transparent);
-    padding: 3.3rem 1.15rem 1.15rem;
+    padding: 2.9rem 0.85rem 0.85rem;
   }
 
   .boundary-label {
@@ -233,114 +267,192 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    border-bottom: 1px dashed var(--border-subtle);
-    padding: 0.72rem 1rem;
-    color: var(--text-secondary);
-    font-size: 0.5rem;
-    letter-spacing: 0.12em;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.7rem 0.85rem;
+    color: var(--text-muted);
+    font-size: 0.47rem;
+    letter-spacing: 0.11em;
     text-transform: uppercase;
   }
 
-  .boundary-note {
-    color: var(--text-muted);
-    font-size: 0.44rem;
+  .boundary-label span:first-child {
+    color: var(--accent);
   }
 
-  .source-chip {
-    display: inline-grid;
-    grid-template-columns: auto auto 1fr;
-    align-items: center;
-    gap: 0.45rem;
-    margin: 0 0 0.85rem 0.25rem;
+  .architecture-grid {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .domain {
+    min-width: 0;
     border: 1px solid var(--border-subtle);
     background: var(--bg-card);
-    padding: 0.42rem 0.55rem;
-    font-size: 0.52rem;
   }
 
-  .source-chip strong {
-    color: var(--text-primary);
-    font-weight: 600;
+  .domain-heading {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 0.65rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.8rem 0.85rem;
   }
 
-  .source-chip span:last-child {
+  .domain-index {
+    color: var(--accent);
+    font-size: 0.48rem;
+    letter-spacing: 0.08em;
+    padding-top: 0.12rem;
+  }
+
+  .domain-kicker,
+  .domain-stack {
     color: var(--text-muted);
+    font-size: 0.44rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
-  .source-dot {
-    width: 0.38rem;
-    height: 0.38rem;
+  .domain-heading h4 {
+    margin-top: 0.24rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.84rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .domain-body {
+    display: grid;
+    gap: 0.55rem;
+    padding: 0.7rem;
+  }
+
+  .subnode {
+    min-width: 0;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    padding: 0.75rem;
+  }
+
+  .subnode-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    color: var(--text-muted);
+    font-size: 0.44rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .subnode-heading code {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  .status-dot {
+    width: 0.36rem;
+    height: 0.36rem;
     border-radius: 999px;
     background: var(--accent);
   }
 
-  .topology-grid {
-    display: grid;
-    gap: 0.7rem;
-  }
-
-  .node {
-    min-width: 0;
-    border: 1px solid var(--border-subtle);
-    background: var(--bg-card);
-    padding: 0.95rem;
-  }
-
-  .node-heading {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    text-transform: uppercase;
-  }
-
-  .node-index {
-    color: var(--accent);
-    font-size: 0.47rem;
-    letter-spacing: 0.08em;
-  }
-
-  .node-kicker {
-    color: var(--text-muted);
-    font-size: 0.46rem;
-    letter-spacing: 0.1em;
-  }
-
-  .node h4 {
-    margin-top: 0.5rem !important;
+  .subnode > strong,
+  .vad-sidecar strong {
+    display: block;
+    margin-top: 0.5rem;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 0.82rem;
+    font-size: 0.72rem;
     font-weight: 600;
     line-height: 1.35;
-    letter-spacing: -0.015em;
   }
 
-  .node > p {
-    margin-top: 0.42rem !important;
+  .subnode > p {
+    margin-top: 0.35rem !important;
     color: var(--text-secondary);
-    font-size: 0.64rem;
-    line-height: 1.5;
+    font-size: 0.59rem;
+    line-height: 1.48;
   }
 
-  .node-facts,
-  .policy-facts {
+  .fact-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.38rem;
-    margin-top: 0.75rem;
+    gap: 0.32rem;
+    margin-top: 0.6rem;
   }
 
-  .node-facts span,
-  .policy-facts span {
+  .fact-row span {
     border: 1px solid var(--border-subtle);
-    background: var(--bg-secondary);
-    padding: 0.32rem 0.42rem;
+    background: var(--bg-card);
+    padding: 0.28rem 0.38rem;
     color: var(--text-muted);
-    font-size: 0.48rem;
+    font-size: 0.44rem;
     letter-spacing: 0.05em;
   }
 
-  .policy-facts code,
+  .rule-list {
+    display: grid;
+    gap: 0.3rem;
+    margin-top: 0.6rem;
+  }
+
+  .rule-list code {
+    display: block;
+    border-left: 1px solid var(--border-strong);
+    background: transparent;
+    padding: 0.28rem 0 0.28rem 0.5rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.48rem;
+    line-height: 1.35;
+  }
+
+  .inference-node {
+    border-left: 2px solid var(--accent);
+  }
+
+  .accent-label {
+    color: var(--accent);
+  }
+
+  .vad-sidecar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.55rem;
+    border: 1px dashed color-mix(in srgb, var(--accent) 38%, var(--border-subtle));
+    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
+    padding: 0.65rem;
+  }
+
+  .sidecar-mark {
+    width: 0.38rem;
+    height: 0.38rem;
+    margin-top: 0.1rem;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+  }
+
+  .vad-sidecar strong {
+    margin-top: 0;
+    font-size: 0.62rem;
+  }
+
+  .vad-sidecar span:last-child {
+    display: block;
+    margin-top: 0.18rem;
+    color: var(--text-muted);
+    font-size: 0.5rem;
+    line-height: 1.45;
+  }
+
   .vad-sidecar code {
     border: 0;
     background: transparent;
@@ -350,72 +462,25 @@
     font-size: inherit;
   }
 
-  .client-parts,
-  .server-parts {
+  .service-connection,
+  .render-connection {
     display: grid;
-    gap: 0.45rem;
-    margin-top: 0.75rem;
+    gap: 0.55rem;
+    padding: 0.2rem 0.3rem;
   }
 
-  .client-parts > div,
-  .server-parts > div {
-    border-left: 1px solid var(--border-strong);
-    padding: 0.45rem 0 0.45rem 0.62rem;
-  }
-
-  .client-parts strong,
-  .server-parts strong {
-    display: block;
-    color: var(--text-secondary);
-    font-size: 0.63rem;
-    line-height: 1.4;
-  }
-
-  .client-parts code,
-  .server-parts span {
-    display: block;
-    margin-top: 0.16rem;
-    border: 0;
-    background: transparent;
-    padding: 0;
-    color: var(--text-muted);
-    font-family: var(--font-mono-ui);
-    font-size: 0.51rem;
-    line-height: 1.45;
-  }
-
-  .route {
-    display: none;
+  .connection-lane,
+  .render-connection {
+    display: grid;
     align-items: center;
-    justify-content: center;
-    min-width: 0;
-  }
-
-  .route-line {
-    width: 100%;
-    border-top: 1px dashed var(--border-strong);
-  }
-
-  .route-arrow {
-    margin-left: -0.1rem;
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.8rem;
-  }
-
-  .transport {
-    display: grid;
-    justify-items: start;
-    gap: 0.16rem;
-    border-left: 1px dashed var(--border-strong);
-    margin-left: 1rem;
-    padding: 0.3rem 0 0.25rem 0.65rem;
+    gap: 0.3rem;
     color: var(--text-muted);
-    font-size: 0.48rem;
-    line-height: 1.4;
+    font-size: 0.43rem;
+    line-height: 1.25;
+    text-transform: uppercase;
   }
 
-  .transport code {
+  .connection-lane code {
     border: 0;
     background: transparent;
     padding: 0;
@@ -424,85 +489,58 @@
     font-size: inherit;
   }
 
-  .transport-arrow {
+  .connection-line {
+    border-top: 1px dashed var(--border-strong);
+  }
+
+  .connection-arrow {
     color: var(--accent);
     font-size: 0.72rem;
     line-height: 1;
   }
 
-  .vad-sidecar {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 0.6rem;
-    margin-top: 0.8rem;
-    border: 1px dashed color-mix(in srgb, var(--accent) 38%, var(--border-subtle));
-    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
-    padding: 0.65rem;
-  }
-
-  .status-mark {
-    width: 0.42rem;
-    height: 0.42rem;
-    margin-top: 0.14rem;
-    border: 1px solid var(--accent);
-    border-radius: 999px;
-  }
-
-  .vad-sidecar strong {
-    display: block;
-    color: var(--text-primary);
-    font-size: 0.6rem;
-    line-height: 1.4;
-  }
-
-  .vad-sidecar span:last-child {
-    display: block;
-    margin-top: 0.18rem;
+  .connection-note {
     color: var(--text-muted);
-    font-size: 0.52rem;
-    line-height: 1.45;
+    font-size: 0.4rem;
+    text-transform: none;
   }
 
-  .return-route {
+  .render-arrow {
+    text-align: center;
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.8rem;
+  }
+
+  .accepted-state-rail {
     display: grid;
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: auto minmax(1rem, 1fr) auto auto auto;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.5rem;
+    margin-top: 0.7rem;
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.65rem 0.25rem 0;
     color: var(--text-muted);
-    font-size: 0.48rem;
-    line-height: 1.35;
+    font-size: 0.43rem;
+    text-transform: uppercase;
   }
 
-  .return-line {
+  .rail-origin,
+  .rail-target {
+    color: var(--text-secondary);
+  }
+
+  .rail-line {
     border-top: 1px dashed var(--border-strong);
   }
 
-  .return-route strong,
-  .return-route span:not(.return-line):not(.return-arrow) {
-    display: block;
-  }
-
-  .return-route strong {
-    color: var(--text-secondary);
-    font-weight: 500;
-  }
-
-  .return-route span:not(.return-line):not(.return-arrow) {
-    margin-top: 0.1rem;
+  .rail-label {
     color: var(--text-muted);
   }
 
-  .return-arrow {
+  .rail-arrow {
     color: var(--accent);
-    font-size: 0.75rem;
-  }
-
-  .policy-node {
-    background: color-mix(in srgb, var(--accent) 3%, var(--bg-card));
-  }
-
-  .obs-node {
-    border-color: color-mix(in srgb, var(--accent) 28%, var(--border-subtle));
+    font-size: 0.72rem;
   }
 
   figcaption {
@@ -513,76 +551,94 @@
     line-height: 1.55;
   }
 
-  @media (min-width: 820px) {
-    .workstation {
-      padding: 3.6rem 1.35rem 1.35rem;
-    }
-
-    .topology-grid {
-      grid-template-columns: minmax(0, 0.92fr) 3.1rem minmax(0, 1.25fr);
-      grid-template-areas:
-        "capture routeClient client"
-        "transportDown . client"
-        "server return policy"
-        ". . transportRender"
-        ". . obs";
-      align-items: stretch;
-      gap: 0.75rem;
-    }
-
-    .capture-node { grid-area: capture; }
-    .route-client { grid-area: routeClient; display: flex; }
-    .client-node { grid-area: client; }
-    .transport-down { grid-area: transportDown; }
-    .server-node { grid-area: server; }
-    .return-route { grid-area: return; }
-    .policy-node { grid-area: policy; }
-    .transport-render { grid-area: transportRender; }
-    .obs-node { grid-area: obs; }
-
-    .return-route {
-      grid-template-columns: 1fr;
-      justify-items: center;
-      align-content: center;
-      text-align: center;
-    }
-
-    .return-line {
-      width: 100%;
-    }
-
-    .return-arrow {
-      transform: rotate(0deg);
-    }
-
-    .transport-render {
-      margin-left: 1.25rem;
+  @media (min-width: 720px) {
+    .client-body {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
-  @media (max-width: 819px) {
-    .source-chip {
-      margin-left: 0;
+  @media (min-width: 1024px) {
+    .architecture-grid {
+      grid-template-columns:
+        minmax(0, 1.15fr)
+        minmax(4.5rem, 0.18fr)
+        minmax(0, 0.9fr)
+        minmax(3.5rem, 0.14fr)
+        minmax(0, 1fr);
+      align-items: stretch;
     }
 
-    .route-client {
-      display: none;
+    .service-connection,
+    .render-connection {
+      align-content: center;
+      padding: 0.5rem 0;
     }
 
-    .return-route {
-      grid-template-columns: auto minmax(0, 1fr);
+    .connection-lane,
+    .render-connection {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+
+    .outbound-lane {
+      grid-template-areas:
+        "label label label"
+        "code line arrow";
+    }
+
+    .outbound-lane .connection-label { grid-area: label; }
+    .outbound-lane code { grid-area: code; }
+    .outbound-lane .connection-line { grid-area: line; }
+    .outbound-lane .connection-arrow { grid-area: arrow; }
+
+    .return-lane {
+      grid-template-areas:
+        "label label label"
+        "arrow line note";
+    }
+
+    .return-lane .connection-label { grid-area: label; }
+    .return-lane .connection-arrow { grid-area: arrow; }
+    .return-lane .connection-line { grid-area: line; }
+    .return-lane .connection-note { grid-area: note; }
+
+    .render-connection {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .render-connection .connection-line {
+      width: 100%;
+    }
+
+    .accepted-state-rail {
+      grid-template-columns: auto minmax(0, 1fr) auto auto auto;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .service-connection,
+    .render-connection {
       border-left: 1px dashed var(--border-strong);
       margin-left: 1rem;
-      padding-left: 0.65rem;
+      padding-left: 0.75rem;
     }
 
-    .return-line {
+    .connection-lane,
+    .render-connection {
+      grid-template-columns: auto auto minmax(0, 1fr);
+    }
+
+    .connection-line {
       display: none;
     }
 
-    .return-arrow {
-      grid-row: 1 / span 2;
-      transform: rotate(90deg);
+    .return-lane {
+      grid-template-columns: auto auto minmax(0, 1fr);
+    }
+
+    .accepted-state-rail {
+      display: none;
     }
   }
 
@@ -593,8 +649,8 @@
     }
 
     .workstation {
-      margin: 0.85rem;
-      padding: 4.15rem 0.75rem 0.75rem;
+      margin: 0.7rem;
+      padding-inline: 0.55rem;
     }
 
     .boundary-label {
@@ -603,11 +659,11 @@
       gap: 0.2rem;
     }
 
-    .source-chip {
-      grid-template-columns: auto 1fr;
+    .domain-heading {
+      grid-template-columns: auto minmax(0, 1fr);
     }
 
-    .source-chip span:last-child {
+    .domain-stack {
       grid-column: 2;
     }
   }
