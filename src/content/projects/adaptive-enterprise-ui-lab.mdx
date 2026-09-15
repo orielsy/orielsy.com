@@ -1,10 +1,10 @@
 ---
 title: "Adaptive Enterprise UI Lab"
-summary: "An evolving reference enterprise interface for exploring how product knowledge, deterministic application state, non-chat AI capabilities, and adaptive inference runtimes can participate in the same UI architecture. Phase 1 implements deterministic, state-aware product guidance; later phases will explore semantic intent resolution and runtime inference routing."
+summary: "An evolving reference enterprise interface for exploring how product knowledge, deterministic application state, non-chat AI capabilities, and adaptive inference runtimes can participate in the same UI architecture. Phase 1 implements deterministic, state-aware product guidance; Phase 2 is now defined around selective intent interpretation; Phase 3 remains planned runtime work."
 date: 2026-09-13
 dateLabel: "Phase 1 implementation · 2026"
 status: "In Progress"
-published: false
+published: true
 draft: false
 role: "Creator / Developer"
 technologies: ["Astro", "TypeScript"]
@@ -16,18 +16,58 @@ featured: false
 associatedResearch: "/research/documentation-driven-adaptive-ux"
 ---
 
-The Adaptive Enterprise UI Lab is a long-lived reference application rather than a one-off article demo. Its first phase accompanies the [Documentation-Driven Adaptive UX](/research/documentation-driven-adaptive-ux) research and demonstrates how authored product knowledge, validation, version context, user familiarity, and response policy can alter an interface without using an LLM. Future phases are intended to explore non-chat AI capabilities and adaptive inference runtimes within the same application.
+The Adaptive Enterprise UI Lab is one evolving reference application rather than a one-off article demo or a collection of disconnected examples. Its purpose is to provide a shared implementation surface for several Research pieces while keeping implemented behavior clearly separated from planned directions.
+
+The current Phase 1 accompanies [Documentation-Driven Adaptive UX](/research/documentation-driven-adaptive-ux), where the interactive reference implementation is embedded. Later phases are intended to provide implementation evidence for [AI as a UI Capability, Not Just a Chatbot](/research/ai-as-ui-capability-not-chatbot) and, eventually, [Adaptive AI Runtime for Enterprise UI](/research/adaptive-ai-runtime-enterprise-ui).
 
 ## Phase 1 · Implemented
 
-Phase 1 currently demonstrates deterministic product knowledge, state-aware guidance, validation, product/runtime context, knowledge applicability, response policy, and adaptive UI behavior around a focused Data Connection scenario.
+Phase 1 currently demonstrates a focused Data Connection scenario built around:
 
-It intentionally does **not** use LLMs, semantic retrieval, embeddings, WebLLM, MCP, or remote AI APIs.
+- application/domain state
+- deterministic validation
+- authored product knowledge
+- product/runtime context
+- user familiarity
+- deterministic knowledge applicability
+- response policy
+- adaptive UI rendering
+- an inspectable decision trace
 
-## Future Phases · Planned, Not Implemented
+The current resolver keeps application truth authoritative. Several compatible Data Connections permit guidance but not guessing; exactly one compatible option can support a user-accepted preconfiguration offer.
 
-A later Phase 2 may explore non-chat AI capabilities such as intent interpretation, semantic product-knowledge retrieval, contextual explanation adaptation, structured extraction, and inline transformations.
+Phase 1 intentionally uses **no LLM, semantic retrieval, embeddings, WebLLM, MCP, or remote AI API**.
 
-A later Phase 3 may explore adaptive inference execution across browser-local, machine-local, server, edge, or cloud runtimes.
+## Phase 2 · Planned / Beginning
 
-Those phases are roadmap directions only. They should not be described as implemented until source exists.
+Phase 2 is now defined around the smallest selective-inference capability that extends the existing Data Connection scenario: **natural-language intent / question mapping**.
+
+A user question such as “Why can't this workflow connect anymore?” could be interpreted as referring to the Data Connection concept. That interpretation would only produce candidate concepts; it would not become product truth. The candidate would still have to pass deterministic applicability filtering and be reconciled against the actual configuration, product version, available options, validation state, and approved product knowledge before response policy can decide what the interface should show.
+
+Conceptually:
+
+```text
+user question
+      ↓
+intent / concept interpretation
+      ↓
+candidate product-knowledge concepts
+      ↓
+deterministic applicability filtering
+      ↓
+application-state reconciliation
+      ↓
+response policy
+      ↓
+contextual UI explanation
+```
+
+This Phase 2 capability is **specified but not implemented in the current source**. No model or inference runtime has been selected, and no semantic retrieval capability is claimed yet.
+
+## Phase 3 · Planned
+
+Phase 3 is reserved for the execution layer: deciding where an already-useful intelligent capability should run across browser-local, machine-local, server, edge, or cloud tiers.
+
+Potential Phase 3 work includes WebLLM, browser-local inference, machine-local inference, remote/server inference, capability detection, fallback, and runtime instrumentation. None of those capabilities should be read as implemented today.
+
+The project remains **In Progress**: Phase 1 is real and inspectable; Phase 2 has an architectural contract but no inference implementation yet; Phase 3 remains a future direction.
