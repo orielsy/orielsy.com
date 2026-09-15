@@ -73,6 +73,9 @@ Stage 2 was explicitly approved by Orielsy. Begin with the published `documentat
 - [x] Document the Research-detail pattern-promotion rule; promote reusable breakout rhythm into the shared publication layer while keeping paper-specific section numbering and figure choreography scoped.
 - [x] Use `real-time-speech-audio-pipeline-desktop-ui` as a third Research-detail exemplar focused on evidence-heavy systems writing and responsive HTML/CSS architecture diagrams.
 - [x] Replace the speech paper's static pipeline/table treatments with source-grounded Astro/HTML/CSS figures while retaining code excerpts as implementation evidence.
+- [x] Reorganize the speech architecture plate around Electron Client / Local Transcription Service / Broadcast Rendering ownership while preserving explicit runtime transport and filtering detail.
+- [x] Polish the speech paper opening into companion artifact → source grounding → full-width architecture plate → numbered article sections.
+- [x] Add shared Research source-grounding and source-excerpt primitives, plus neutral global code overflow/mono/mobile treatment without mislabeling arbitrary fenced blocks as verified source.
 - [x] Redesign Project detail layout.
 - [x] Preserve project metadata, routes, and artifact links.
 - [ ] Verify existing callouts, tables, code, media, and diagrams in both themes.
