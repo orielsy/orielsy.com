@@ -28,7 +28,14 @@ The preview path must remain impossible to activate through ordinary production 
 
 ## Current classification
 
-The AI-as-UI essay is a public concept draft. The real-time speech architecture article and speechBubbles project are published without the draft label. The context-engineering note and specification-driven note, along with the Adaptive AI Runtime, Documentation-Driven Adaptive UX, and Repository Context Engine entries, remain unpublished because their content is not yet polished enough to present as public work or identifies them as conceptual placeholders or active-development case studies. They may appear as status-interactive summaries in the collection pages' in-progress sections.
+As of the content-roadmap formalization:
+
+- **Published Research:** `From Prompts to Project Memory: Spec-Driven Development for Coding Agents`; `Documentation-Driven Adaptive UX`; `Architecture Notes: Audio Chunking, Transcription Filtering, and Real-Time Speech UI Systems`; and the public Concept Draft `AI as a UI Capability, Not Just a Chatbot`.
+- **Published Projects:** `speechBubbles: Real-Time AI Broadcast Overlay & Captioning Engine`.
+- **Unpublished Research / Research in Progress:** `Context Engineering for Software Development`; `Adaptive AI Runtime for Enterprise UI`; `AI Across the Interface Lifecycle: From Development-Time Generation to Runtime Adaptation`; and `Browser-Local Inference as a UI Runtime Capability`.
+- **Unpublished Projects / Projects in Progress:** `Repository Context Engine for Coding Agents` and `Adaptive Enterprise UI Lab`.
+
+These classifications are descriptive of current source state, not a substitute for frontmatter. Frontmatter remains authoritative for publication behavior.
 
 ## Reasoning
 
