@@ -161,6 +161,22 @@
     color: var(--accent);
   }
 
+  @media (max-width: 639px) {
+    .pipeline-node {
+      min-height: 0;
+      padding: 0.85rem 1rem;
+    }
+
+    .pipeline-node strong {
+      margin-top: 0.85rem;
+    }
+
+    .pipeline-node small {
+      margin-top: 0.3rem;
+      line-height: 1.45;
+    }
+  }
+
   @media (min-width: 640px) {
     .pipeline-node:nth-child(1)::after,
     .pipeline-node:nth-child(2)::after,
