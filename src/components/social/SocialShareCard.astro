@@ -1,0 +1,265 @@
+---
+export interface Props {
+  title: string;
+  type: string;
+  description?: string;
+  topic?: string;
+  date?: string;
+  variant?: 'dark' | 'light';
+  metadataDensity?: 'rich' | 'sparse';
+}
+
+const {
+  title,
+  type,
+  description,
+  topic,
+  date,
+  variant = 'dark',
+  metadataDensity,
+} = Astro.props;
+
+const density = metadataDensity ?? (description || date ? 'rich' : 'sparse');
+const sparse = density === 'sparse';
+const titleScale = title.length > 72
+  ? sparse ? 'long-sparse' : 'long-rich'
+  : title.length > 42
+    ? sparse ? 'medium-sparse' : 'medium-rich'
+    : sparse ? 'short-sparse' : 'short-rich';
+---
+
+<article
+  class="social-share-card"
+  data-variant={variant}
+  data-density={density}
+  data-title-scale={titleScale}
+  aria-label={`${type}: ${title}`}
+>
+  <header class="social-share-card__header">
+    <div class="social-share-card__type-cell">
+      <span class="social-share-card__type">{type}</span>
+    </div>
+
+    <div class="social-share-card__identity-cell">
+      <span class="social-share-card__author">Orielsy Diaz</span>
+      <span class="social-share-card__site">orielsy.com</span>
+    </div>
+  </header>
+
+  <div class="social-share-card__body">
+    <aside class="social-share-card__metadata">
+      <div class="social-share-card__metadata-block">
+        {description && <p class="social-share-card__description">{description}</p>}
+        {topic && <div class="social-share-card__topic">{topic}</div>}
+      </div>
+    </aside>
+
+    <div class="social-share-card__title-field">
+      <div>
+        <div class="social-share-card__accent" aria-hidden="true"></div>
+        <h2>{title}</h2>
+        <div class="social-share-card__date-row">
+          <div class="social-share-card__rule" aria-hidden="true"></div>
+          {date && <span class="social-share-card__date">{date}</span>}
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .social-share-card {
+    --card-bg: #0b0b0f;
+    --card-surface: #111217;
+    --card-border: #24252d;
+    --card-fg: #f0f0f3;
+    --card-muted: #aaaab4;
+    --card-accent: #7c83ff;
+    --card-rail: 30%;
+    container-type: inline-size;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1200 / 630;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--card-fg);
+    font-family: var(--font-body);
+  }
+
+  .social-share-card[data-variant='light'] {
+    --card-bg: #f7f7f5;
+    --card-surface: #fbfbfa;
+    --card-border: #dedde3;
+    --card-fg: #17171b;
+    --card-muted: #55545c;
+    --card-accent: #5b5bd6;
+  }
+
+  .social-share-card[data-density='sparse'] {
+    --card-rail: 24%;
+  }
+
+  .social-share-card::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    left: var(--card-rail);
+    width: 1px;
+    background: var(--card-border);
+    pointer-events: none;
+  }
+
+  .social-share-card__header,
+  .social-share-card__body {
+    display: grid;
+    grid-template-columns: var(--card-rail) calc(100% - var(--card-rail));
+  }
+
+  .social-share-card__header {
+    height: 22%;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .social-share-card__body {
+    height: 78%;
+  }
+
+  .social-share-card__type-cell,
+  .social-share-card__identity-cell {
+    display: flex;
+    align-items: center;
+  }
+
+  .social-share-card__type-cell {
+    padding-inline: 3.6cqw;
+  }
+
+  .social-share-card[data-density='sparse'] .social-share-card__type-cell,
+  .social-share-card[data-density='sparse'] .social-share-card__metadata {
+    padding-inline: 3.2cqw;
+  }
+
+  .social-share-card__identity-cell,
+  .social-share-card__title-field {
+    background: var(--card-surface);
+  }
+
+  .social-share-card__identity-cell {
+    justify-content: space-between;
+    gap: 3cqw;
+    padding-inline: 3.6cqw;
+  }
+
+  .social-share-card__type,
+  .social-share-card__site,
+  .social-share-card__topic,
+  .social-share-card__date {
+    font-family: var(--font-mono-ui);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .social-share-card__type {
+    color: var(--card-accent);
+    font-size: 1.12cqw;
+    letter-spacing: 0.08em;
+  }
+
+  .social-share-card__author {
+    font-family: var(--font-display);
+    font-size: 1.55cqw;
+    font-weight: 600;
+  }
+
+  .social-share-card__site {
+    color: var(--card-fg);
+    font-size: 1cqw;
+    letter-spacing: 0.08em;
+  }
+
+  .social-share-card__metadata {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 3.5cqw 3.6cqw;
+  }
+
+  .social-share-card[data-density='sparse'] .social-share-card__metadata {
+    justify-content: center;
+  }
+
+  .social-share-card__metadata-block {
+    display: grid;
+    gap: 1.35cqw;
+  }
+
+  .social-share-card__description {
+    margin: 0;
+    color: var(--card-muted);
+    font-size: 1.28cqw;
+    font-weight: 500;
+    line-height: 1.55;
+  }
+
+  .social-share-card__topic {
+    border-top: 1px solid var(--card-border);
+    padding-top: 1cqw;
+    color: var(--card-muted);
+    font-size: 0.95cqw;
+    letter-spacing: 0.06em;
+  }
+
+  .social-share-card__title-field {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3.4cqw 3.6cqw;
+  }
+
+  .social-share-card__accent {
+    margin-bottom: 2.2cqw;
+    width: 4cqw;
+    height: 0.32cqw;
+    background: var(--card-accent);
+  }
+
+  .social-share-card h2 {
+    margin: 0;
+    color: var(--card-fg);
+    font-family: var(--font-display);
+    font-size: 5.4cqw;
+    font-weight: 600;
+    line-height: 1.06;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  .social-share-card[data-title-scale='long-rich'] h2 { font-size: 3.9cqw; }
+  .social-share-card[data-title-scale='long-sparse'] h2 { font-size: 4.25cqw; }
+  .social-share-card[data-title-scale='medium-rich'] h2 { font-size: 4.45cqw; }
+  .social-share-card[data-title-scale='medium-sparse'] h2 { font-size: 4.8cqw; }
+  .social-share-card[data-title-scale='short-sparse'] h2 { font-size: 5.65cqw; }
+
+  .social-share-card__date-row {
+    display: flex;
+    align-items: center;
+    gap: 1.6cqw;
+    margin-top: 2.5cqw;
+  }
+
+  .social-share-card__rule {
+    height: 1px;
+    flex: 1;
+    background: var(--card-border);
+  }
+
+  .social-share-card__date {
+    color: var(--card-muted);
+    font-size: 0.92cqw;
+    letter-spacing: 0.06em;
+  }
+</style>
