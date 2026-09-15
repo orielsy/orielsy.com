@@ -78,6 +78,11 @@ Stage 2 was explicitly approved by Orielsy. Begin with the published `documentat
 - [x] Add shared Research source-grounding and source-excerpt primitives, plus neutral global code overflow/mono/mobile treatment without mislabeling arbitrary fenced blocks as verified source.
 - [x] Redesign Project detail layout.
 - [x] Preserve project metadata, routes, and artifact links.
+- [x] Use `local-ai-real-time-captioning` as the Project-detail artifact-first exemplar rather than mirroring the associated Research paper.
+- [x] Add shared Project hero support for local video demonstration artifacts, including optional factual demo captions and architecture/technology context.
+- [x] Add a shared Project breakout primitive for major artifact evidence without introducing Research-style contents/navigation choreography.
+- [x] Replace the speechBubbles Project's static architecture PNG with the live source-grounded topology and promote the workstation image to a major evidence plate.
+- [x] Keep detailed chunking/filtering reasoning in the associated Research entry while summarizing the built captioning path in the Project case study.
 - [ ] Verify existing callouts, tables, code, media, and diagrams in both themes.
 - [ ] Verify responsive article/project reading layouts.
 - [ ] Run build and diff verification.
