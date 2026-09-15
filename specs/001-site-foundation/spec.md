@@ -67,3 +67,64 @@ Technical architecture diagrams, workflow maps, and video demonstrations require
 2. **Interactive Zoom / Lightbox**: High-resolution architecture images must support click-to-expand / lightbox viewing with keyboard escape handling, click-outside dismissal, and a direct full-resolution link.
 3. **Structured Captioning & Metadata**: Every diagram figure must include a semantic `<figcaption>` or caption bar with high-contrast metadata describing the system flow.
 4. **Zero Layout Shift & Accessibility**: Video elements must specify aspect ratios (`aspect-video`) and poster thumbnails; images must provide descriptive `alt` text and `loading="lazy"`.
+
+---
+
+## 6. Applied-AI Research & Project Publication Family
+
+The site should grow as a coherent publication family rather than creating a new article every time terminology changes. Research pieces own distinct questions; Projects are artifact counterparts where a substantial implementation exists.
+
+### 6.1 Development-side progression
+
+1. **From Prompts to Project Memory: Spec-Driven Development for Coding Agents** — published Research. Owns durable project memory: repository-resident context, `AGENTS.md` routing, constitution/spec/ADR persistence, and conversation context versus project memory.
+2. **Context Engineering for Software Development** — unpublished Research draft. Begins *after* durable memory exists and asks which subset of architectural rules, component contracts, specifications, ADRs, and implementation context is relevant to the current coding task and how that context should be delivered.
+3. **Repository Context Engine for Coding Agents** — unpublished Project in progress. Serves as the implementation counterpart for task-aware repository context delivery. It must remain explicitly proposed/in progress until source proves concrete capabilities.
+
+Conceptual progression:
+
+```text
+Project Memory
+→ make knowledge durable
+
+Context Engineering
+→ select the relevant durable knowledge
+
+Repository Context Engine
+→ implement / experiment with that selection and delivery
+```
+
+### 6.2 Interface-side progression
+
+1. **Documentation-Driven Adaptive UX** — published Research and canonical home for product knowledge as interface context, knowledge-aware interfaces, context-aware product guidance, progressive explanatory depth, onboarding/version-aware guidance, deterministic adaptive UX, and evidence-aware response authority.
+2. **AI as a UI Capability, Not Just a Chatbot** — published public Concept Draft. Owns the question **what intelligent behavior belongs directly inside the interface**, including semantic filtering, structured extraction, intent interpretation, contextual transformation, command routing, adaptive guidance, inline assistance, and intelligent UI primitives.
+3. **Adaptive AI Runtime for Enterprise UI** — unpublished Research draft. Owns the separate question **how / where an already-requested capability executes**, including browser-local inference, machine-local runtimes, server/edge/cloud tiers, capability detection, fallback, privacy, latency, availability, device constraints, cost, and enterprise governance.
+
+Do not collapse the AI-as-UI and Adaptive AI Runtime articles: one is about interface behavior; the other is about execution architecture.
+
+### 6.3 Shared reference application
+
+**Adaptive Enterprise UI Lab** is one evolving reference application inside `orielsy.com`, represented as an unpublished Project-in-Progress entry while its current Phase 1 implementation remains embedded in Documentation-Driven Adaptive UX.
+
+- **Phase 1 — Product Knowledge / Deterministic Adaptive UX:** implemented. Supports Documentation-Driven Adaptive UX.
+- **Phase 2 — Non-chat AI capabilities:** future only. May support AI as a UI Capability, Not Just a Chatbot.
+- **Phase 3 — Adaptive inference runtime:** future only. May support Adaptive AI Runtime for Enterprise UI.
+
+Future phases must never be described as implemented before source exists. The Lab remains one application across these phases rather than a series of disconnected demos.
+
+### 6.4 Umbrella and future experiment
+
+- **AI Across the Interface Lifecycle: From Development-Time Generation to Runtime Adaptation** — unpublished umbrella Research placeholder connecting development-time agents/project memory, preparation-time structured knowledge, runtime intelligence, and execution-layer routing without replacing the focused pieces.
+- **Browser-Local Inference as a UI Runtime Capability** — unpublished future Experiment subordinate to Adaptive AI Runtime. It is the future home for measured WebGPU/WebLLM browser-local work and must not contain assumed benchmarks, compatibility conclusions, or implementation claims.
+
+### 6.5 Consolidation rules
+
+Do **not** create separate high-level Research entries for terminology that already has a canonical home:
+
+- **Product Knowledge as Interface Context** → Documentation-Driven Adaptive UX.
+- **Knowledge-Aware Interfaces** → Documentation-Driven Adaptive UX / Adaptive Enterprise UI Lab.
+- **Context-Aware Product Guidance** → Adaptive Enterprise UI Lab Phase 1.
+- **Hardware-Aware Client Interfaces**, client inference tier selection, and browser capability routing → Adaptive AI Runtime, with measured browser-specific work in the future Browser-Local Inference experiment.
+
+Research and Project counterparts must remain distinct: Research is reasoning-first; Projects are artifact-first. New overlapping articles should not be created merely because terminology changes.
+
+The existing speech architecture Research article and **speechBubbles** Project remain a separate established Research/Project pair and are unaffected by this roadmap.
