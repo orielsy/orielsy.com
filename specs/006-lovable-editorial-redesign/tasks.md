@@ -26,6 +26,9 @@ Existing implementation predates this feature spec and must now be audited again
 - [x] Review repository Constitution, Site Foundation spec/plan/tasks, publication gating, taxonomy ADR, and manual-publishing ADR.
 - [x] Implement initial wider editorial layout system.
 - [x] Implement initial semantic light/dark palette refinements.
+- [x] Adopt the approved global editorial font system: Sora for display, Manrope for body, and JetBrains Mono for technical/metadata UI.
+- [x] Load the approved font families once in the shared base layout with Google Fonts preconnects, `display=swap`, semantic token fallbacks, and no unnecessary Inter family.
+- [x] Document the explicitly approved remote font dependency and post-font geometry verification requirements in `spec.md`.
 - [x] Refine header/navigation without promoting Graphics Lab.
 - [x] Refine footer to match editorial system.
 - [x] Redesign homepage composition using authoritative repository content.
@@ -34,6 +37,7 @@ Existing implementation predates this feature spec and must now be audited again
 - [x] Confirm featured Research selection uses authoritative collection metadata/content.
 - [x] Confirm featured Project selection uses authoritative collection metadata/content.
 - [x] Verify Current Inquiries uses repository-authored wording.
+- [ ] Verify post-font-change hero/title wrapping and metadata density across redesigned routes.
 - [ ] Verify both light and dark themes visually.
 - [ ] Verify mobile layout intentionally preserves hierarchy.
 - [ ] Verify no horizontal overflow at supported viewport ranges.
