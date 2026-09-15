@@ -18,6 +18,7 @@ import ConversationVsMemoryVisual from '../../components/research/ConversationVs
 import DecisionPersistenceVisual from '../../components/research/DecisionPersistenceVisual.astro';
 import FutureContextRoutingVisual from '../../components/research/FutureContextRoutingVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+import ResearchSourceExcerpt from '../../components/research/ResearchSourceExcerpt.astro';
 import SourceOfTruthWorkflowVisual from '../../components/research/SourceOfTruthWorkflowVisual.astro';
 
 <Callout type="note" title="WORKING PATTERN, NOT A UNIVERSAL PRESCRIPTION">
@@ -114,9 +115,11 @@ A future agent modifying deployment behavior should not have to rediscover that 
 
 The most useful part of this structure may be the smallest file.
 
-[`AGENTS.md`](https://github.com/orielsy/orielsy.com/blob/main/AGENTS.md) is intentionally thin. It does not try to contain the entire project.
+[AGENTS.md](https://github.com/orielsy/orielsy.com/blob/main/AGENTS.md) is intentionally thin. It does not try to contain the entire project.
 
 Instead, it tells an agent how to navigate the project's existing memory:
+
+<ResearchSourceExcerpt file="AGENTS.md">
 
 ```text
 1. Read the constitution.
@@ -126,6 +129,8 @@ Instead, it tells an agent how to navigate the project's existing memory:
 5. Never fabricate content.
 6. Update durable specs when requirements change.
 ```
+
+</ResearchSourceExcerpt>
 
 I think of this as a **routing layer**, not a mega-prompt.
 
