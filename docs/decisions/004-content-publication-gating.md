@@ -14,7 +14,7 @@ Published entries, including public concept drafts with `draft: true`, appear as
 
 Unpublished entries are omitted from the home page and RSS. Research and Projects listings show them as status-interactive cards in separate in-progress sections beneath the published entries, without presenting them as finished work. Activating a card reveals an inline message explaining that the entry is not published yet, without navigating to unfinished body content. Their stable direct routes remain available as noindex status pages that show the same progress state without rendering unfinished body content, metadata, or promotional links.
 
-The `status` field remains a lifecycle label for the work. It is not a substitute for the publication gate or the public-draft maturity label. `published: false` always takes precedence over `draft: true`; such entries render status-only pages.
+The `status` field remains a lifecycle label for the work. It is not a substitute for the publication gate or the public-draft maturity label. A Project may therefore be both `published: true` and `status: "In Progress"`: public means its current artifact/case-study state is intentionally navigable, not that the project is complete. `published: false` always takes precedence over `draft: true`; such entries render status-only pages.
 
 ## Local author preview
 
@@ -28,12 +28,12 @@ The preview path must remain impossible to activate through ordinary production 
 
 ## Current classification
 
-As of the content-roadmap formalization:
+As of the site-focus / Adaptive Lab update:
 
 - **Published Research:** `From Prompts to Project Memory: Spec-Driven Development for Coding Agents`; `Documentation-Driven Adaptive UX`; `Architecture Notes: Audio Chunking, Transcription Filtering, and Real-Time Speech UI Systems`; and the public Concept Draft `AI as a UI Capability, Not Just a Chatbot`.
-- **Published Projects:** `speechBubbles: Real-Time AI Broadcast Overlay & Captioning Engine`.
+- **Published Projects:** `speechBubbles: Real-Time AI Broadcast Overlay & Captioning Engine`; and `Adaptive Enterprise UI Lab`, which remains explicitly `In Progress` while exposing its implemented Phase 1 and clearly separating planned Phase 2/3 work.
 - **Unpublished Research / Research in Progress:** `Context Engineering for Software Development`; `Adaptive AI Runtime for Enterprise UI`; `AI Across the Interface Lifecycle: From Development-Time Generation to Runtime Adaptation`; and `Browser-Local Inference as a UI Runtime Capability`.
-- **Unpublished Projects / Projects in Progress:** `Repository Context Engine for Coding Agents` and `Adaptive Enterprise UI Lab`.
+- **Unpublished Projects / Projects in Progress:** `Repository Context Engine for Coding Agents`.
 
 These classifications are descriptive of current source state, not a substitute for frontmatter. Frontmatter remains authoritative for publication behavior.
 
@@ -45,6 +45,7 @@ These classifications are descriptive of current source state, not a substitute 
 - Inline card notices and direct links can communicate that work is in progress without exposing unfinished material.
 - Search engines should not index unpublished status pages.
 - Local author review should not require mutating publication state, because temporary frontmatter changes are easy to commit accidentally and make production state harder to reason about.
+- Publication state and project lifecycle are separate concerns: a real, inspectable project can be publicly navigable while remaining actively in development.
 
 ## Future
 
