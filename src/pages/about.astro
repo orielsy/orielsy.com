@@ -8,102 +8,201 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   schemaType="person"
   wide
 >
-  <header class="border-b border-[var(--border-subtle)] py-14 sm:py-20">
-    <div class="site-shell grid gap-8 lg:grid-cols-12 lg:items-end">
+  <header class="border-b border-[var(--border-subtle)] py-14 sm:py-20 lg:py-24">
+    <div class="site-shell grid gap-10 lg:grid-cols-12 lg:items-end">
       <div class="lg:col-span-8">
-        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">Biography & Perspective</p>
-        <h1 class="font-display mt-5 text-4xl font-semibold leading-[1.06] tracking-[-0.04em] text-[var(--text-primary)] sm:text-6xl">Orielsy Diaz</h1>
+        <div class="flex items-center gap-3">
+          <span class="h-px w-10 bg-[var(--accent)]" aria-hidden="true"></span>
+          <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">About · Orielsy Diaz</p>
+        </div>
+        <h1 class="font-display mt-7 max-w-5xl text-4xl font-semibold leading-[1.04] tracking-[-0.045em] text-[var(--text-primary)] sm:text-6xl lg:text-7xl">
+          Frontend engineering, UI architecture, and the application layer of AI.
+        </h1>
       </div>
-      <p class="max-w-md text-sm leading-7 text-[var(--text-secondary)] sm:text-[15px] lg:col-span-4">
-        Senior Frontend Engineer and UI Architect with 15+ years of experience building scalable web applications, enterprise platforms, and high-profile digital experiences.
-      </p>
+
+      <div class="lg:col-span-4 lg:pb-1">
+        <p class="max-w-md text-sm leading-7 text-[var(--text-secondary)] sm:text-[15px]">
+          Senior Frontend Engineer and UI Architect with 15+ years of experience building scalable web applications, enterprise platforms, and high-profile digital experiences.
+        </p>
+        <div class="font-editorial-mono mt-6 flex flex-wrap gap-x-5 gap-y-2 border-t border-[var(--border-subtle)] pt-4 text-[9px] uppercase tracking-[0.08em]">
+          <a href="/research" class="text-[var(--text-secondary)] transition-colors hover:text-[var(--accent)]">Research →</a>
+          <a href="/projects" class="text-[var(--text-secondary)] transition-colors hover:text-[var(--accent)]">Projects →</a>
+        </div>
+      </div>
     </div>
   </header>
 
-  <div class="site-shell">
-    <section class="grid gap-8 border-b border-[var(--border-subtle)] py-12 sm:py-16 lg:grid-cols-12">
+  <main class="site-shell">
+    <section class="grid gap-10 border-b border-[var(--border-subtle)] py-14 sm:py-20 lg:grid-cols-12">
       <div class="lg:col-span-3">
-        <h2 class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Core Background & Positioning</h2>
+        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Practice</p>
       </div>
-      <div class="prose max-w-none lg:col-span-8">
-        <p>
-          My deepest professional background is frontend engineering and UI architecture: building enterprise applications, establishing reusable component and frontend patterns, modernizing long-lived platforms, and turning complex automation and backend functionality into interfaces people can actually use.
+
+      <div class="lg:col-span-8 lg:col-start-5">
+        <p class="font-display max-w-4xl text-2xl font-medium leading-[1.35] tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl lg:text-[2rem]">
+          My deepest professional background is frontend engineering and UI architecture.
         </p>
-        <p>
-          More recently, I have designed and built repository-specific coding-agent knowledge systems and prototyped an MCP Apps MVP, while evaluating local-model runtimes such as WebLLM and Ollama. Together, these efforts extend my frontend and UI architecture background into <strong>applied AI, context engineering, and developer tools</strong>.
-        </p>
-        <p>
-          I'm particularly interested in the application layer of AI: how agents, context, tools, and interfaces come together to create useful products and developer experiences.
-        </p>
+
+        <div class="mt-10 border-y border-[var(--border-subtle)]">
+          <article class="grid gap-4 border-b border-[var(--border-subtle)] py-7 sm:grid-cols-[56px_minmax(0,1fr)] sm:gap-7">
+            <span class="font-editorial-mono text-[9px] text-[var(--accent)]">01</span>
+            <div>
+              <h2 class="font-display text-lg font-semibold tracking-[-0.02em] text-[var(--text-primary)]">Frontend systems & enterprise interfaces</h2>
+              <p class="mt-3 max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">
+                I build enterprise applications, establish reusable component and frontend patterns, modernize long-lived platforms, and turn complex automation and backend functionality into interfaces people can actually use.
+              </p>
+            </div>
+          </article>
+
+          <article class="grid gap-4 border-b border-[var(--border-subtle)] py-7 sm:grid-cols-[56px_minmax(0,1fr)] sm:gap-7">
+            <span class="font-editorial-mono text-[9px] text-[var(--accent)]">02</span>
+            <div>
+              <h2 class="font-display text-lg font-semibold tracking-[-0.02em] text-[var(--text-primary)]">Applied AI & context systems</h2>
+              <p class="mt-3 max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">
+                More recently, I have designed and built repository-specific coding-agent knowledge systems and prototyped an MCP Apps MVP, while evaluating local-model runtimes such as WebLLM and Ollama. Together, these efforts extend my frontend and UI architecture background into <strong class="font-semibold text-[var(--text-primary)]">applied AI, context engineering, and developer tools</strong>.
+              </p>
+            </div>
+          </article>
+
+          <article class="grid gap-4 py-7 sm:grid-cols-[56px_minmax(0,1fr)] sm:gap-7">
+            <span class="font-editorial-mono text-[9px] text-[var(--accent)]">03</span>
+            <div>
+              <h2 class="font-display text-lg font-semibold tracking-[-0.02em] text-[var(--text-primary)]">The application layer</h2>
+              <p class="mt-3 max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">
+                I'm particularly interested in the application layer of AI: how agents, context, tools, and interfaces come together to create useful products and developer experiences.
+              </p>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section class="grid gap-8 border-b border-[var(--border-subtle)] py-12 sm:py-16 lg:grid-cols-12">
-      <div class="lg:col-span-3">
-        <h2 class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">How I Think</h2>
+    <section class="border-b border-[var(--border-subtle)] py-14 sm:py-20">
+      <div class="grid gap-10 lg:grid-cols-12">
+        <div class="lg:col-span-3">
+          <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">How I Think</p>
+          <p class="mt-4 max-w-xs text-xs leading-6 text-[var(--text-muted)]">
+            Three recurring ideas that shape how I approach interface and systems work.
+          </p>
+        </div>
+
+        <div class="lg:col-span-9">
+          <ol class="grid gap-px border border-[var(--border-subtle)] bg-[var(--border-subtle)] lg:grid-cols-3">
+            <li class="flex min-h-[19rem] flex-col bg-[var(--bg-card)] p-6 sm:p-7">
+              <div class="flex items-center justify-between gap-4">
+                <span class="font-editorial-mono text-[9px] text-[var(--accent)]">01</span>
+                <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Context</span>
+              </div>
+              <h2 class="font-display mt-10 text-xl font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)]">The Right Context at the Right Time</h2>
+              <p class="mt-4 text-sm leading-7 text-[var(--text-secondary)]">
+                More information is not automatically better. Whether the consumer is an autonomous coding agent or a person navigating a complex product, I tend to think in terms of filtering and surfacing the information or capability useful at that particular moment rather than presenting everything at once.
+              </p>
+            </li>
+
+            <li class="flex min-h-[19rem] flex-col bg-[var(--bg-card)] p-6 sm:p-7">
+              <div class="flex items-center justify-between gap-4">
+                <span class="font-editorial-mono text-[9px] text-[var(--accent)]">02</span>
+                <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Capability</span>
+              </div>
+              <h2 class="font-display mt-10 text-xl font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)]">AI as a Capability, Not Just a Chatbot</h2>
+              <p class="mt-4 text-sm leading-7 text-[var(--text-secondary)]">
+                Chat is only one narrow modality. Structured extraction, inline classification, semantic filtering, contextual actions, and adaptive guidance can become ordinary capabilities inside interface architecture without forcing users into a conversational text box.
+              </p>
+            </li>
+
+            <li class="flex min-h-[19rem] flex-col bg-[var(--bg-card)] p-6 sm:p-7">
+              <div class="flex items-center justify-between gap-4">
+                <span class="font-editorial-mono text-[9px] text-[var(--accent)]">03</span>
+                <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Abstraction</span>
+              </div>
+              <h2 class="font-display mt-10 text-xl font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)]">Abstraction Should Remove Complexity, Not Relocate It</h2>
+              <p class="mt-4 text-sm leading-7 text-[var(--text-secondary)]">
+                Some of the most rewarding interface problems involve taking complicated underlying automation, backend mechanics, or technical systems and designing an interaction model that makes the capability substantially easier for a person to understand and control.
+              </p>
+            </li>
+          </ol>
+        </div>
       </div>
-      <ol class="border-y border-[var(--border-subtle)] lg:col-span-8">
-        <li class="grid gap-4 border-b border-[var(--border-subtle)] py-6 sm:grid-cols-[52px_minmax(0,1fr)] sm:gap-6">
-          <span class="font-editorial-mono text-[9px] text-[var(--accent)]">01</span>
-          <div>
-            <h3 class="font-display text-lg font-semibold tracking-[-0.02em] text-[var(--text-primary)]">The Right Context at the Right Time</h3>
-            <p class="mt-3 text-sm leading-7 text-[var(--text-secondary)]">More information is not automatically better. Whether the consumer is an autonomous coding agent or a person navigating a complex product, I tend to think in terms of filtering and surfacing the information or capability useful at that particular moment rather than presenting everything at once.</p>
-          </div>
-        </li>
-        <li class="grid gap-4 border-b border-[var(--border-subtle)] py-6 sm:grid-cols-[52px_minmax(0,1fr)] sm:gap-6">
-          <span class="font-editorial-mono text-[9px] text-[var(--accent)]">02</span>
-          <div>
-            <h3 class="font-display text-lg font-semibold tracking-[-0.02em] text-[var(--text-primary)]">AI as a Capability, Not Just a Chatbot</h3>
-            <p class="mt-3 text-sm leading-7 text-[var(--text-secondary)]">Chat is only one narrow modality. Structured extraction, inline classification, semantic filtering, contextual actions, and adaptive guidance can become ordinary capabilities inside interface architecture without forcing users into a conversational text box.</p>
-          </div>
-        </li>
-        <li class="grid gap-4 py-6 sm:grid-cols-[52px_minmax(0,1fr)] sm:gap-6">
-          <span class="font-editorial-mono text-[9px] text-[var(--accent)]">03</span>
-          <div>
-            <h3 class="font-display text-lg font-semibold tracking-[-0.02em] text-[var(--text-primary)]">Abstraction Should Remove Complexity, Not Relocate It</h3>
-            <p class="mt-3 text-sm leading-7 text-[var(--text-secondary)]">Some of the most rewarding interface problems involve taking complicated underlying automation, backend mechanics, or technical systems and designing an interaction model that makes the capability substantially easier for a person to understand and control.</p>
-          </div>
-        </li>
-      </ol>
     </section>
 
-    <section class="grid gap-8 border-b border-[var(--border-subtle)] py-12 sm:py-16 lg:grid-cols-12">
+    <section class="grid gap-10 border-b border-[var(--border-subtle)] py-14 sm:py-20 lg:grid-cols-12">
       <div class="lg:col-span-3">
-        <h2 class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Career & Service</h2>
+        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Background</p>
       </div>
-      <div class="prose max-w-none lg:col-span-8">
-        <p>
+
+      <div class="lg:col-span-8 lg:col-start-5">
+        <p class="max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">
           Throughout my career, I have led frontend and UI technical direction, established engineering standards, collaborated closely across design and engineering teams, and remained hands-on in the codebase.
         </p>
-        <p>
-          I served four years in the U.S. Navy from 2002 to 2006 as a Petty Officer (SH3). While serving, I independently designed and developed my ship's website outside my assigned duties, work that was recognized with a Navy Commendation Medal.
+
+        <ol class="mt-9 border-y border-[var(--border-subtle)]">
+          <li class="grid gap-4 border-b border-[var(--border-subtle)] py-6 sm:grid-cols-[128px_minmax(0,1fr)] sm:gap-8">
+            <span class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--accent)]">2002 — 2006</span>
+            <div>
+              <h2 class="font-display text-base font-semibold text-[var(--text-primary)]">U.S. Navy</h2>
+              <p class="mt-2 text-sm leading-7 text-[var(--text-secondary)]">
+                I served four years as a Petty Officer (SH3). While serving, I independently designed and developed my ship's website outside my assigned duties, work that was recognized with a Navy Commendation Medal.
+              </p>
+            </div>
+          </li>
+
+          <li class="grid gap-4 py-6 sm:grid-cols-[128px_minmax(0,1fr)] sm:gap-8">
+            <span class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">After service</span>
+            <div>
+              <h2 class="font-display text-base font-semibold text-[var(--text-primary)]">Computer science & web development</h2>
+              <p class="mt-2 text-sm leading-7 text-[var(--text-secondary)]">
+                After leaving the Navy, I studied Computer Science at William Paterson University and worked part-time as a web developer before moving into frontend engineering full-time.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="grid gap-10 border-b border-[var(--border-subtle)] py-14 sm:py-20 lg:grid-cols-12">
+      <div class="lg:col-span-3">
+        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Outside the Work</p>
+      </div>
+
+      <div class="lg:col-span-8 lg:col-start-5">
+        <p class="font-display max-w-4xl text-xl leading-[1.5] tracking-[-0.02em] text-[var(--text-secondary)] sm:text-2xl">
+          Outside of software, I'm especially interested in modular synthesis, gaming, and the places where physical and digital interfaces meet.
         </p>
-        <p>
-          After leaving the Navy, I studied Computer Science at William Paterson University and worked part-time as a web developer before moving into frontend engineering full-time.
+        <p class="mt-5 max-w-3xl text-sm leading-7 text-[var(--text-muted)]">
+          MIDI, control surfaces, signal routing, and interactive systems are areas I find myself naturally drawn toward.
         </p>
       </div>
     </section>
 
-    <section class="grid gap-8 border-b border-[var(--border-subtle)] py-12 sm:py-16 lg:grid-cols-12">
+    <section class="grid gap-10 py-12 sm:py-16 lg:grid-cols-12">
       <div class="lg:col-span-3">
-        <h2 class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Creative & Adjacent Interests</h2>
+        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Connect</p>
       </div>
-      <div class="prose max-w-none lg:col-span-8">
-        <p>
-          Outside of software, I'm especially interested in modular synthesis, gaming, and the places where physical and digital interfaces meet. MIDI, control surfaces, signal routing, and interactive systems are areas I find myself naturally drawn toward.
-        </p>
-      </div>
-    </section>
 
-    <section class="grid gap-8 py-12 sm:py-16 lg:grid-cols-12">
-      <div class="lg:col-span-3">
-        <h2 class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Connect & Channels</h2>
-      </div>
-      <div class="flex flex-wrap gap-x-6 gap-y-4 font-editorial-mono text-[9px] uppercase tracking-[0.08em] lg:col-span-8">
-        <a href="https://github.com/orielsy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[var(--text-primary)] hover:text-[var(--accent)]">GitHub (@orielsy) <span aria-hidden="true">↗</span></a>
-        <a href="https://www.linkedin.com/in/orielsy" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[var(--text-primary)] hover:text-[var(--accent)]">LinkedIn <span aria-hidden="true">↗</span></a>
-        <a href="/rss.xml" class="inline-flex items-center gap-2 text-[var(--text-primary)] hover:text-[var(--accent)]">Subscribe via RSS <span aria-hidden="true">→</span></a>
+      <div class="lg:col-span-8 lg:col-start-5">
+        <div class="grid gap-px border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-3">
+          <a href="https://github.com/orielsy" target="_blank" rel="noopener noreferrer" class="group bg-[var(--bg-card)] p-5 transition-colors hover:bg-[var(--bg-secondary)]">
+            <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Code</span>
+            <span class="font-display mt-3 flex items-center justify-between gap-4 text-base font-semibold text-[var(--text-primary)]">
+              GitHub @orielsy <span class="text-[var(--accent)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">↗</span>
+            </span>
+          </a>
+
+          <a href="https://www.linkedin.com/in/orielsy" target="_blank" rel="noopener noreferrer" class="group bg-[var(--bg-card)] p-5 transition-colors hover:bg-[var(--bg-secondary)]">
+            <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Professional</span>
+            <span class="font-display mt-3 flex items-center justify-between gap-4 text-base font-semibold text-[var(--text-primary)]">
+              LinkedIn <span class="text-[var(--accent)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">↗</span>
+            </span>
+          </a>
+
+          <a href="/rss.xml" class="group bg-[var(--bg-card)] p-5 transition-colors hover:bg-[var(--bg-secondary)]">
+            <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Updates</span>
+            <span class="font-display mt-3 flex items-center justify-between gap-4 text-base font-semibold text-[var(--text-primary)]">
+              RSS <span class="text-[var(--accent)] transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+            </span>
+          </a>
+        </div>
       </div>
     </section>
-  </div>
+  </main>
 </BaseLayout>
