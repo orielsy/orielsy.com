@@ -30,6 +30,11 @@ const {
   noindex = false,
   wide = false,
 } = Astro.props;
+
+const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID?.trim();
+const umamiScriptUrl = import.meta.env.PUBLIC_UMAMI_SCRIPT_URL?.trim()
+  || 'https://cloud.umami.is/script.js';
+const umamiEnabled = import.meta.env.PROD && Boolean(umamiWebsiteId);
 ---
 
 <!doctype html>
@@ -52,12 +57,12 @@ const {
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Sora:wght@500;600&display=swap"
     />
-    {import.meta.env.PROD && (
+    {umamiEnabled && (
       <script
         is:inline
         defer
-        src="https://cloud.umami.is/script.js"
-        data-website-id="3d13a097-feea-41a8-86e9-9464d0a2fe75"
+        src={umamiScriptUrl}
+        data-website-id={umamiWebsiteId}
       ></script>
     )}
   </head>
@@ -73,6 +78,8 @@ const {
     </main>
     <Footer />
     <script>
+      import { trackPortfolioEvent } from '../lib/analytics';
+
       document.querySelectorAll<HTMLButtonElement>('[data-status-trigger]').forEach((trigger) => {
         const statusId = trigger.getAttribute('aria-controls');
         const status = statusId ? document.getElementById(statusId) : null;
@@ -84,6 +91,22 @@ const {
           status.hidden = !willExpand;
           trigger.setAttribute('aria-expanded', String(willExpand));
         });
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!(event.target instanceof Element)) return;
+
+        const control = event.target.closest<HTMLElement>('[data-analytics-event]');
+        const eventName = control?.dataset.analyticsEvent;
+        if (!control || !eventName) return;
+
+        const data = {
+          ...(control.dataset.analyticsSource && { source: control.dataset.analyticsSource }),
+          ...(control.dataset.analyticsProject && { project: control.dataset.analyticsProject }),
+          ...(control.dataset.analyticsResearch && { research: control.dataset.analyticsResearch }),
+        };
+
+        trackPortfolioEvent(eventName, Object.keys(data).length > 0 ? data : undefined);
       });
     </script>
   </body>

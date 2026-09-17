@@ -189,6 +189,27 @@ const formattedUpdateDate = data.updatedDate
   </article>
 </BaseLayout>
 
+<script>
+  import { trackPortfolioEvent } from '../lib/analytics';
+
+  document.querySelectorAll<HTMLElement>('[data-research-entry]').forEach((article) => {
+    if (article.dataset.analyticsBound === 'true') return;
+    article.dataset.analyticsBound = 'true';
+
+    article.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element)) return;
+
+      const link = event.target.closest<HTMLAnchorElement>('a[href^="/projects/"]');
+      const href = link?.getAttribute('href');
+      const project = href?.split('/').filter(Boolean)[1];
+      const research = article.dataset.researchEntry;
+
+      if (!project || !research) return;
+      trackPortfolioEvent('research_to_project', { research, project });
+    });
+  });
+</script>
+
 <style is:global>
   .research-toc-sticky {
     transition:

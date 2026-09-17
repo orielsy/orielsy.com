@@ -119,6 +119,8 @@ const statusBadge = statusStyles[data.status] || 'text-[var(--text-secondary)] b
           href={data.github}
           target="_blank"
           rel="noopener noreferrer"
+          data-analytics-event="project_repo"
+          data-analytics-project={id}
           class="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-1"
           aria-label={`View ${data.title} GitHub repository`}
         >
@@ -133,6 +135,8 @@ const statusBadge = statusStyles[data.status] || 'text-[var(--text-secondary)] b
           href={data.demo}
           target="_blank"
           rel="noopener noreferrer"
+          data-analytics-event="project_demo"
+          data-analytics-project={id}
           class="text-[var(--accent)] hover:underline flex items-center gap-1"
           aria-label={`View ${data.title} live demo`}
         >
