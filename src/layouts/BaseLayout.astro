@@ -52,6 +52,14 @@ const {
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Sora:wght@500;600&display=swap"
     />
+    {import.meta.env.PROD && (
+      <script
+        is:inline
+        defer
+        src="https://cloud.umami.is/script.js"
+        data-website-id="3d13a097-feea-41a8-86e9-9464d0a2fe75"
+      ></script>
+    )}
   </head>
   <body class="min-h-screen flex flex-col selection:bg-[var(--accent)] selection:text-white">
     <Header />
