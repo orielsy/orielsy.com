@@ -19,7 +19,7 @@ npm run dev
 
 ## Analytics
 
-Production analytics use Umami and remain optional. Set `PUBLIC_UMAMI_WEBSITE_ID` to include the tracker in a production build. `PUBLIC_UMAMI_SCRIPT_URL` is optional and defaults to `https://cloud.umami.is/script.js`. Without a website ID, the site builds normally and emits no Umami script; local development does not load it.
+Production analytics use Umami with the portfolio's website ID built in as the default. `PUBLIC_UMAMI_WEBSITE_ID` may override that ID when needed, and `PUBLIC_UMAMI_SCRIPT_URL` may override the script URL (default: `https://cloud.umami.is/script.js`). Normal local development does not load Umami. Production builds also suppress the tracker at runtime on `localhost`, `127.0.0.1`, and local IPv6, so `npm run preview` does not pollute production analytics.
 
 The integration relies on Umami for normal traffic, referrer, and UTM reporting. Custom events are limited to a small set of meaningful portfolio interactions such as contact activation, profile links, project artifacts, explicit Project/Research relationships, the first speechBubbles video play, and the first meaningful Adaptive Enterprise UI Lab interaction per page lifecycle.
 

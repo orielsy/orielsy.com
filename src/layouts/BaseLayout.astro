@@ -31,10 +31,11 @@ const {
   wide = false,
 } = Astro.props;
 
-const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID?.trim();
+const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID?.trim()
+  || '3d13a097-feea-41a8-86e9-9464d0a2fe75';
 const umamiScriptUrl = import.meta.env.PUBLIC_UMAMI_SCRIPT_URL?.trim()
   || 'https://cloud.umami.is/script.js';
-const umamiEnabled = import.meta.env.PROD && Boolean(umamiWebsiteId);
+const umamiEnabled = import.meta.env.PROD;
 ---
 
 <!doctype html>
@@ -60,10 +61,24 @@ const umamiEnabled = import.meta.env.PROD && Boolean(umamiWebsiteId);
     {umamiEnabled && (
       <script
         is:inline
-        defer
-        src={umamiScriptUrl}
-        data-website-id={umamiWebsiteId}
-      ></script>
+        define:vars={{ umamiWebsiteId, umamiScriptUrl }}
+      >
+        (() => {
+          const hostname = window.location.hostname;
+          const isLocal = hostname === 'localhost'
+            || hostname === '127.0.0.1'
+            || hostname === '[::1]'
+            || hostname.endsWith('.localhost');
+
+          if (isLocal) return;
+
+          const script = document.createElement('script');
+          script.defer = true;
+          script.src = umamiScriptUrl;
+          script.dataset.websiteId = umamiWebsiteId;
+          document.head.appendChild(script);
+        })();
+      </script>
     )}
   </head>
   <body class="min-h-screen flex flex-col selection:bg-[var(--accent)] selection:text-white">
