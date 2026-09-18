@@ -29,7 +29,31 @@ const umamiScriptUrl = "https://cloud.umami.is/script.js";
             || hostname === '[::1]'
             || hostname.endsWith('.localhost');
 
-          if (isLocal) return;
+          const analyticsOptOutKey = 'orielsy-analytics-opt-out';
+          const url = new URL(window.location.href);
+          const analyticsMode = url.searchParams.get('analytics')?.toLowerCase();
+          const hasAnalyticsToggle = analyticsMode === 'off' || analyticsMode === 'on';
+          let analyticsOptedOut = analyticsMode === 'off';
+
+          try {
+            if (analyticsMode === 'off') {
+              window.localStorage.setItem(analyticsOptOutKey, 'true');
+            } else if (analyticsMode === 'on') {
+              window.localStorage.removeItem(analyticsOptOutKey);
+            }
+
+            analyticsOptedOut = window.localStorage.getItem(analyticsOptOutKey) === 'true';
+          } catch {
+            // If storage is unavailable, honor the current URL toggle for this page load.
+          }
+
+          if (hasAnalyticsToggle) {
+            url.searchParams.delete('analytics');
+            const cleanUrl = `${url.pathname}${url.search}${url.hash}`;
+            window.history.replaceState(window.history.state, '', cleanUrl);
+          }
+
+          if (isLocal || analyticsOptedOut) return;
 
           const script = document.createElement('script');
           script.defer = true;
