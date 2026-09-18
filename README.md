@@ -27,9 +27,11 @@ The integration relies on Umami for normal traffic, referrer, and UTM reporting.
 
 Do not send names, email addresses, raw input values, full outbound URLs, or other PII in event data. Session replay, heatmaps, fingerprinting, visitor identification, and advertising pixels are intentionally excluded. PostHog is not part of the current architecture. Deeper product analytics can be reconsidered if the Labs become substantially more application-like.
 
-## Manual production publishing
+## Production publishing
 
-Production publishing is intentionally local and explicit:
+Production can be published in three equivalent ways. All production deployments ultimately build the latest `main` branch and publish `dist/` to `gh-pages`.
+
+### Local/manual
 
 ```text
 npm run live
@@ -37,23 +39,35 @@ npm run live
 
 `npm run live` runs the production build first. Only when that build succeeds does `gh-pages` publish `dist/` to the `gh-pages` branch. A failed build stops the command before any deployment begins.
 
+### GitHub Actions UI
+
+Open **Actions → Deploy Production → Run workflow**.
+
+The workflow is defined in `.github/workflows/deploy-production.yml` and deploys the latest `main` branch.
+
+### Remote deployment trigger
+
+The long-lived branch `production-deploy-trigger` exists only as a remote signal channel for production deployment. Updating `.deploy/trigger` on that branch causes the production workflow to run; the workflow then checks out and deploys the latest `main`.
+
+**Do not merge `production-deploy-trigger` into `main`.** It is not a feature branch and does not contain the production source of truth.
+
+For agent-driven workflows, a request such as **"deploy production"** means: create or update `.deploy/trigger` on `production-deploy-trigger`. Do not modify application code on that branch.
+
 The source branch is `main`; `gh-pages` contains generated production output. Do not commit `dist/` to `main`.
 
 The `public/.nojekyll` marker is included in every build because Astro emits assets under `_astro/`, and branch-based GitHub Pages otherwise applies Jekyll processing that can suppress those assets.
 
-## One-time GitHub Pages setup
+## GitHub Pages setup
 
 In the GitHub repository, open:
 
 `Settings` → `Pages` → `Build and deployment`
 
-After the first successful `npm run live` creates the deployment branch, configure:
+Configure:
 
 - **Source:** Deploy from a branch
 - **Branch:** `gh-pages`
 - **Folder:** `/ (root)`
-
-Save the setting. No GitHub Actions workflow is required for this publishing model.
 
 The production URL is [https://orielsy.com](https://orielsy.com). Astro's production site URL is configured in `astro.config.mjs`, and `public/CNAME` keeps `orielsy.com` in every generated deployment. DNS remains managed outside this repository.
 
