@@ -1,0 +1,38 @@
+name: Deploy Production
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and publish orielsy.com
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Publish to gh-pages
+        run: npm run live
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
