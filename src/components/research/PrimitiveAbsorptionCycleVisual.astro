@@ -1,4 +1,6 @@
 ---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
 const steps = [
   {
     label: 'Framework-owned technique',
@@ -19,90 +21,41 @@ const steps = [
 ];
 ---
 
-<figure class="absorption-cycle not-prose">
-  <header>
-    <p class="eyebrow">Decomposition → recomposition</p>
-    <h3>The framework can get thinner in one place and more architectural in another.</h3>
-  </header>
+<ResearchFigureFrame
+  eyebrow="Platformization cycle"
+  title="The framework can get thinner in one place and more architectural in another."
+  status="How the stack recomposes over time"
+  caption="Standardization can remove duplicated mechanism while leaving coordination, compilation, server integration, and product conventions above the platform."
+>
+  <div class="absorption-cycle">
+    <ol>
+      {steps.map((step, index) => (
+        <li>
+          <div class="number">{String(index + 1).padStart(2, '0')}</div>
+          <div>
+            <strong>{step.label}</strong>
+            <p>{step.detail}</p>
+          </div>
+          {index < steps.length - 1 && <span class="arrow" aria-hidden="true">→</span>}
+        </li>
+      ))}
+    </ol>
 
-  <ol>
-    {steps.map((step, index) => (
-      <li>
-        <div class="number">{String(index + 1).padStart(2, '0')}</div>
-        <div>
-          <strong>{step.label}</strong>
-          <p>{step.detail}</p>
-        </div>
-        {index < steps.length - 1 && <span class="arrow" aria-hidden="true">→</span>}
-      </li>
-    ))}
-  </ol>
-
-  <div class="result">
-    <span>Result</span>
-    <strong>the framework's center of gravity moves upward</strong>
+    <div class="result">
+      <span>Result</span>
+      <strong>the framework's center of gravity moves upward</strong>
+    </div>
   </div>
-
-  <figcaption>
-    Standardization can remove duplicated mechanism while leaving coordination, compilation, server integration, and product conventions above the platform.
-  </figcaption>
-</figure>
+</ResearchFigureFrame>
 
 <style>
-  .absorption-cycle {
-    overflow: hidden;
-    margin: 0;
-    border: 1px solid var(--border-subtle);
-    border-radius: 0.8rem;
-    background: var(--bg-card);
-  }
-
-  .absorption-cycle :global(p),
-  .absorption-cycle :global(h3),
-  .absorption-cycle :global(ol),
-  .absorption-cycle :global(li) {
-    margin: 0;
-  }
-
-  .absorption-cycle :global(ol) {
-    padding-left: 0;
-    list-style: none;
-  }
-
-  header {
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1.25rem 1.35rem;
-  }
-
-  .eyebrow,
-  .number,
-  .result span {
-    font-family: var(--font-mono-ui);
-    text-transform: uppercase;
-  }
-
-  .eyebrow {
-    color: var(--accent);
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-  }
-
-  h3 {
-    margin-top: 0.45rem !important;
-    max-width: 44rem;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: clamp(1.2rem, 2vw, 1.55rem);
-    font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.035em;
-  }
-
-  ol {
+  .absorption-cycle ol {
     display: grid;
     gap: 1px;
+    margin: 0;
+    padding: 0;
     background: var(--border-subtle);
+    list-style: none;
   }
 
   li {
@@ -112,6 +65,12 @@ const steps = [
     gap: 0.8rem;
     background: var(--bg-card);
     padding: 1rem;
+  }
+
+  .number,
+  .result span {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
   }
 
   .number {
@@ -131,7 +90,7 @@ const steps = [
   }
 
   li p {
-    margin-top: 0.35rem !important;
+    margin: 0.35rem 0 0 !important;
     color: var(--text-muted);
     font-size: 0.64rem;
     line-height: 1.55;
@@ -147,8 +106,8 @@ const steps = [
     align-items: baseline;
     gap: 0.6rem;
     border-top: 1px solid var(--border-subtle);
-    border-left: 3px solid var(--accent);
-    background: color-mix(in srgb, var(--accent) 5%, var(--bg-card));
+    border-left: 2px solid var(--accent);
+    background: color-mix(in srgb, var(--accent) 3%, var(--bg-card));
     padding: 0.8rem 1rem;
   }
 
@@ -165,21 +124,13 @@ const steps = [
     font-weight: 600;
   }
 
-  figcaption {
-    border-top: 1px solid var(--border-subtle);
-    padding: 0.85rem 1rem;
-    color: var(--text-muted);
-    font-size: 0.62rem;
-    line-height: 1.55;
-  }
-
   @media (min-width: 760px) {
-    ol {
+    .absorption-cycle ol {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     li {
-      min-height: 10rem;
+      min-height: 9.5rem;
       grid-template-columns: 1fr;
       align-content: start;
       padding: 1rem 1.1rem;

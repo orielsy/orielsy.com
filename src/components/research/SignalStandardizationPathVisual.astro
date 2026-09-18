@@ -1,4 +1,6 @@
 ---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
 const steps = [
   {
     label: 'Framework-owned capability',
@@ -19,16 +21,13 @@ const steps = [
 ];
 ---
 
-<figure class="signal-path not-prose">
-  <header>
-    <p class="eyebrow">Signals as a platformization example</p>
-    <h3>The primitive can move downward without the framework disappearing.</h3>
-    <p class="dek">
-      The proposal targets shared reactive semantics beneath frameworks rather than a complete application-facing framework API.
-    </p>
-  </header>
-
-  <ol>
+<ResearchFigureFrame
+  eyebrow="Platformization pattern"
+  title="The primitive can move downward without the framework disappearing."
+  status="Signals as a lower-level substrate"
+  caption="Standardizing a lower-level mechanism changes the implementation boundary; it does not standardize the framework policy above it."
+>
+  <ol class="signal-path">
     {steps.map((step, index) => (
       <li>
         <div class="step-head">
@@ -40,84 +39,22 @@ const steps = [
       </li>
     ))}
   </ol>
-
-  <figcaption>
-    Standardizing a lower-level mechanism changes the implementation boundary; it does not standardize the framework policy above it.
-  </figcaption>
-</figure>
+</ResearchFigureFrame>
 
 <style>
   .signal-path {
-    overflow: hidden;
-    margin: 0;
-    border: 1px solid var(--border-subtle);
-    border-radius: 0.8rem;
-    background: var(--bg-card);
-  }
-
-  .signal-path :global(p),
-  .signal-path :global(h3),
-  .signal-path :global(ol),
-  .signal-path :global(li) {
-    margin: 0;
-  }
-
-  .signal-path :global(ol) {
-    padding-left: 0;
-    list-style: none;
-  }
-
-  header {
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1.25rem 1.35rem;
-  }
-
-  .eyebrow,
-  .step-head span {
-    font-family: var(--font-mono-ui);
-    text-transform: uppercase;
-  }
-
-  .eyebrow {
-    color: var(--accent);
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-  }
-
-  h3 {
-    margin-top: 0.45rem !important;
-    max-width: 43rem;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: clamp(1.2rem, 2vw, 1.55rem);
-    font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.035em;
-  }
-
-  .dek {
-    margin-top: 0.45rem !important;
-    max-width: 44rem;
-    color: var(--text-secondary);
-    font-size: 0.75rem;
-    line-height: 1.6;
-  }
-
-  ol {
     display: grid;
     gap: 1px;
+    margin: 0;
+    padding: 0;
     background: var(--border-subtle);
+    list-style: none;
   }
 
   li {
     position: relative;
     background: var(--bg-card);
     padding: 1rem 1.05rem 1.05rem;
-  }
-
-  li:nth-child(3) {
-    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
   }
 
   .step-head {
@@ -129,8 +66,10 @@ const steps = [
 
   .step-head span {
     color: var(--accent);
+    font-family: var(--font-mono-ui);
     font-size: 0.48rem;
     letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   .step-head strong {
@@ -142,7 +81,7 @@ const steps = [
   }
 
   li p {
-    margin-top: 0.45rem !important;
+    margin: 0.45rem 0 0 !important;
     padding-left: 2.55rem;
     color: var(--text-muted);
     font-size: 0.64rem;
@@ -153,21 +92,13 @@ const steps = [
     display: none;
   }
 
-  figcaption {
-    border-top: 1px solid var(--border-subtle);
-    padding: 0.85rem 1rem;
-    color: var(--text-muted);
-    font-size: 0.62rem;
-    line-height: 1.55;
-  }
-
   @media (min-width: 760px) {
-    ol {
+    .signal-path {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     li {
-      min-height: 9.5rem;
+      min-height: 9rem;
       padding: 1rem 1.05rem;
     }
 

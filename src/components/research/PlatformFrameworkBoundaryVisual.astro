@@ -1,46 +1,42 @@
 ---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
 const layers = [
   {
     name: 'Application / product architecture',
-    tone: 'product',
     items: ['Domain state', 'Feature composition', 'Data ownership', 'Product policy', 'UX-specific behavior'],
   },
   {
     name: 'Framework / meta-framework',
-    tone: 'framework',
     items: ['Rendering coordination', 'Scheduling policy', 'Routing conventions', 'Data loading', 'SSR / hydration', 'Compilation'],
   },
   {
     name: 'Standardized runtime primitives',
-    tone: 'boundary',
+    emphasized: true,
     items: ['Custom Elements', 'Potential Signals', 'Navigation primitives', 'View Transitions', 'DOM update primitives', 'Common controls'],
   },
   {
     name: 'Browser platform',
-    tone: 'platform',
     items: ['HTML / DOM', 'CSS', 'JavaScript', 'Networking', 'Storage', 'Rendering / accessibility APIs'],
   },
 ];
 ---
 
-<figure class="boundary-map not-prose">
-  <header>
-    <p class="eyebrow">Responsibility map</p>
-    <h3>The interesting question is where the boundary moves.</h3>
-    <p class="dek">
-      Native primitives can absorb stable mechanisms without absorbing the application policy that frameworks coordinate above them.
-    </p>
-  </header>
-
-  <div class="stack">
+<ResearchFigureFrame
+  eyebrow="Working layer model"
+  title="The interesting question is where the boundary moves."
+  status="Where responsibilities may settle"
+  caption="Platform growth does not imply framework extinction. It can change what frameworks need to implement themselves."
+>
+  <div class="boundary-map">
     {layers.map((layer, index) => (
       <>
-        <section class:list={['layer', 'tone-' + layer.tone]}>
+        <section class:list={['layer', layer.emphasized && 'is-emphasized']}>
           <div class="layer-heading">
             <span>{String(index + 1).padStart(2, '0')}</span>
             <strong>{layer.name}</strong>
           </div>
-          <div class="chips">
+          <div class="items">
             {layer.items.map((item) => <span>{item}</span>)}
           </div>
         </section>
@@ -55,68 +51,23 @@ const layers = [
       </>
     ))}
   </div>
-
-  <figcaption>
-    Platform growth does not imply framework extinction. It can change what frameworks need to implement themselves.
-  </figcaption>
-</figure>
+</ResearchFigureFrame>
 
 <style>
   .boundary-map {
-    overflow: hidden;
-    margin: 0;
-    border: 1px solid var(--border-subtle);
-    border-radius: 0.8rem;
-    background: var(--bg-card);
-  }
-
-  .boundary-map :global(p),
-  .boundary-map :global(h3) {
-    margin: 0;
-  }
-
-  header {
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1.35rem 1.45rem;
-  }
-
-  .eyebrow,
-  .layer-heading span,
-  .moving-boundary {
-    font-family: var(--font-mono-ui);
-    text-transform: uppercase;
-  }
-
-  .eyebrow {
-    color: var(--accent);
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-  }
-
-  h3 {
-    margin-top: 0.45rem !important;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: clamp(1.35rem, 2.2vw, 1.8rem);
-    font-weight: 600;
-    line-height: 1.12;
-    letter-spacing: -0.035em;
-  }
-
-  .dek {
-    margin-top: 0.5rem !important;
-    max-width: 43rem;
-    color: var(--text-secondary);
-    font-size: 0.75rem;
-    line-height: 1.65;
+    background: var(--border-subtle);
   }
 
   .layer {
     display: grid;
     gap: 0.8rem;
-    padding: 1rem 1.15rem;
     border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    padding: 1rem 1.15rem;
+  }
+
+  .layer:last-child {
+    border-bottom: 0;
   }
 
   .layer-heading {
@@ -124,6 +75,12 @@ const layers = [
     grid-template-columns: 2rem minmax(0, 1fr);
     gap: 0.6rem;
     align-items: baseline;
+  }
+
+  .layer-heading span,
+  .moving-boundary {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
   }
 
   .layer-heading span {
@@ -139,36 +96,26 @@ const layers = [
     font-weight: 600;
   }
 
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
+  .items {
+    display: grid;
+    gap: 0.35rem 0.9rem;
   }
 
-  .chips span {
-    border: 1px solid var(--border-subtle);
-    background: var(--bg-secondary);
-    padding: 0.38rem 0.5rem;
+  .items span {
     color: var(--text-secondary);
-    font-size: 0.58rem;
-    line-height: 1.25;
+    font-family: var(--font-mono-ui);
+    font-size: 0.57rem;
+    line-height: 1.5;
   }
 
-  .tone-framework {
-    background: color-mix(in srgb, var(--text-primary) 2%, var(--bg-card));
+  .is-emphasized {
+    border-left: 2px solid var(--accent);
+    background: color-mix(in srgb, var(--accent) 3%, var(--bg-card));
   }
 
-  .tone-boundary {
-    background: color-mix(in srgb, var(--accent) 5%, var(--bg-card));
-  }
-
-  .tone-boundary .layer-heading span,
-  .tone-boundary .layer-heading strong {
+  .is-emphasized .layer-heading span,
+  .is-emphasized .layer-heading strong {
     color: var(--accent);
-  }
-
-  .tone-boundary .chips span {
-    border-color: color-mix(in srgb, var(--accent) 22%, var(--border-subtle));
   }
 
   .moving-boundary {
@@ -178,7 +125,7 @@ const layers = [
     align-items: center;
     border-bottom: 1px solid var(--border-subtle);
     background: var(--bg-secondary);
-    padding: 0.55rem 1.15rem;
+    padding: 0.52rem 1.15rem;
     color: var(--accent);
     font-size: 0.46rem;
     letter-spacing: 0.09em;
@@ -197,19 +144,16 @@ const layers = [
     letter-spacing: 0.07em;
   }
 
-  figcaption {
-    padding: 0.85rem 1.1rem;
-    color: var(--text-muted);
-    font-size: 0.62rem;
-    line-height: 1.55;
-  }
-
   @media (min-width: 760px) {
     .layer {
-      grid-template-columns: minmax(13rem, 0.7fr) minmax(0, 1.3fr);
+      grid-template-columns: minmax(13rem, 0.72fr) minmax(0, 1.28fr);
       align-items: start;
       gap: 1.3rem;
       padding: 1rem 1.35rem;
+    }
+
+    .items {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .moving-boundary {

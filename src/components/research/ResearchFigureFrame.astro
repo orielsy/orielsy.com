@@ -1,0 +1,116 @@
+---
+export interface Props {
+  eyebrow: string;
+  title: string;
+  status?: string;
+  caption: string;
+  bodyMode?: 'flush' | 'padded';
+}
+
+const {
+  eyebrow,
+  title,
+  status,
+  caption,
+  bodyMode = 'flush',
+} = Astro.props;
+---
+
+<figure class="research-figure-frame not-prose">
+  <header>
+    <div class="heading">
+      <p class="eyebrow">{eyebrow}</p>
+      <h3>{title}</h3>
+    </div>
+    {status && <p class="status">{status}</p>}
+  </header>
+
+  <div class:list={['body', bodyMode === 'padded' && 'is-padded']}>
+    <slot />
+  </div>
+
+  <figcaption>{caption}</figcaption>
+</figure>
+
+<style>
+  .research-figure-frame {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.75rem;
+    background: var(--bg-card);
+  }
+
+  .research-figure-frame :global(p),
+  .research-figure-frame :global(h3) {
+    margin: 0;
+  }
+
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.85rem 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.15rem 1.25rem;
+  }
+
+  .heading {
+    min-width: 0;
+  }
+
+  .eyebrow,
+  .status {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.52rem;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+  }
+
+  h3 {
+    margin-top: 0.42rem !important;
+    max-width: 45rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.16;
+    letter-spacing: -0.03em;
+  }
+
+  .status {
+    max-width: 18rem;
+    color: var(--text-muted);
+    font-size: 0.45rem;
+    line-height: 1.55;
+    letter-spacing: 0.08em;
+  }
+
+  .body.is-padded {
+    padding: 1.15rem;
+  }
+
+  figcaption {
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.8rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.61rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 640px) {
+    header {
+      padding: 1.2rem 1.35rem;
+    }
+
+    .body.is-padded {
+      padding: 1.35rem;
+    }
+  }
+</style>

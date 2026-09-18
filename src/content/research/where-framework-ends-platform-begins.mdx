@@ -12,12 +12,12 @@ readingTime: "12 min read"
 ---
 
 import Callout from '../../components/Callout.astro';
+import FrameworkExtinctionFramingVisual from '../../components/research/FrameworkExtinctionFramingVisual.astro';
 import PlatformFrameworkBoundaryVisual from '../../components/research/PlatformFrameworkBoundaryVisual.astro';
 import PrimitiveAbsorptionCycleVisual from '../../components/research/PrimitiveAbsorptionCycleVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import ResearchSourceNote from '../../components/research/ResearchSourceNote.astro';
 import SignalStandardizationPathVisual from '../../components/research/SignalStandardizationPathVisual.astro';
-import StandardsLandscapeVisual from '../../components/research/StandardsLandscapeVisual.astro';
 
 <Callout type="note" title="PRELIMINARY RESEARCH — WORKING MODEL">
   This is an in-progress architecture exploration, not a prediction that frameworks are disappearing. I am using it to map where frontend responsibilities appear to be moving as browser and language primitives mature. The conclusions here are intentionally provisional and should change as the underlying proposals change.
@@ -98,10 +98,6 @@ Looking across the work now happening in TC39, WHATWG, CSSWG, WICG, the Web Comp
 Instead, I see multiple efforts attacking different pieces of the problem independently.
 
 That fragmentation is not necessarily a weakness. Standards work generally advances by isolating capabilities that are sufficiently understood to become durable platform contracts.
-
-<ResearchBreakout mode="publication">
-  <StandardsLandscapeVisual />
-</ResearchBreakout>
 
 The emerging picture looks more like this:
 
@@ -194,7 +190,11 @@ Frontend history repeatedly decomposes responsibilities and then recomposes them
 
 Browsers gain capabilities. Libraries become thinner in one area and thicker in another. Build tools absorb transforms. Servers re-enter application rendering. Compilers move work out of the runtime. Frameworks adopt platform APIs and then provide higher-level conventions around them.
 
-So the future may not be a straight line from **frameworks → no frameworks**.
+So the future may not be a straight line from framework reliance to framework extinction.
+
+<ResearchBreakout mode="wide">
+  <FrameworkExtinctionFramingVisual />
+</ResearchBreakout>
 
 A more plausible cycle is that repeated framework behavior becomes legible enough to standardize at a lower layer, after which frameworks reorganize around the new primitive:
 
