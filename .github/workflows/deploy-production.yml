@@ -2,6 +2,11 @@ name: Deploy Production
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - production-deploy-trigger
+    paths:
+      - ".deploy/trigger"
 
 permissions:
   contents: write
