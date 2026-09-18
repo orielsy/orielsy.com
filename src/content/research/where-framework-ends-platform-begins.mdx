@@ -16,6 +16,7 @@ import PlatformFrameworkBoundaryVisual from '../../components/research/PlatformF
 import PrimitiveAbsorptionCycleVisual from '../../components/research/PrimitiveAbsorptionCycleVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import ResearchSourceNote from '../../components/research/ResearchSourceNote.astro';
+import SignalStandardizationPathVisual from '../../components/research/SignalStandardizationPathVisual.astro';
 import StandardsLandscapeVisual from '../../components/research/StandardsLandscapeVisual.astro';
 
 <Callout type="note" title="PRELIMINARY RESEARCH — WORKING MODEL">
@@ -58,15 +59,9 @@ But it does **not** imply that the rest of framework behavior becomes native aut
 
 The proposal deliberately leaves framework-specific concerns such as effect scheduling, ownership, disposal, batching policy, and rendering coordination above the primitive. In other words, Signals is interesting partly because it demonstrates a likely pattern for the future:
 
-```text
-Framework responsibility today
-        ↓
-Common ecosystem behavior emerges
-        ↓
-A lower-level primitive becomes standardizable
-        ↓
-Frameworks rebuild higher-level behavior on top
-```
+<ResearchBreakout mode="wide">
+  <SignalStandardizationPathVisual />
+</ResearchBreakout>
 
 That is platformization, but it is not framework replacement.
 
