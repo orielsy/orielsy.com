@@ -12,7 +12,6 @@ readingTime: "12 min read"
 ---
 
 import Callout from '../../components/Callout.astro';
-import FrameworkExtinctionFramingVisual from '../../components/research/FrameworkExtinctionFramingVisual.astro';
 import PlatformFrameworkBoundaryVisual from '../../components/research/PlatformFrameworkBoundaryVisual.astro';
 import PrimitiveAbsorptionCycleVisual from '../../components/research/PrimitiveAbsorptionCycleVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
@@ -190,13 +189,7 @@ Frontend history repeatedly decomposes responsibilities and then recomposes them
 
 Browsers gain capabilities. Libraries become thinner in one area and thicker in another. Build tools absorb transforms. Servers re-enter application rendering. Compilers move work out of the runtime. Frameworks adopt platform APIs and then provide higher-level conventions around them.
 
-So the future may not be a straight line from framework reliance to framework extinction.
-
-<ResearchBreakout mode="wide">
-  <FrameworkExtinctionFramingVisual />
-</ResearchBreakout>
-
-A more plausible cycle is that repeated framework behavior becomes legible enough to standardize at a lower layer, after which frameworks reorganize around the new primitive:
+A useful pattern to watch is that repeated framework behavior can become legible enough to standardize at a lower layer, after which frameworks reorganize around the new primitive:
 
 <ResearchBreakout mode="wide">
   <PrimitiveAbsorptionCycleVisual />
