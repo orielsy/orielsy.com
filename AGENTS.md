@@ -20,3 +20,25 @@ This project follows a lightweight **Spec-Driven Development** workflow to ensur
    If user requirements change or conflict with an existing specification, update the durable spec and decision records rather than silently working around them.
 7. **Preserve Established Decisions:**
    Honor previous architectural, brand, and design decisions unless explicitly instructed otherwise.
+
+## Production Deployment
+
+Production source lives on `main`. Generated production output is published to `gh-pages`.
+
+There are three supported deployment paths:
+
+- Local/manual: run `npm run live` from `main`.
+- GitHub UI: **Actions → Deploy Production → Run workflow**.
+- Remote/agent trigger: update `.deploy/trigger` on the long-lived `production-deploy-trigger` branch.
+
+When the user says **"deploy production"**, use the remote/agent trigger unless they explicitly request another method.
+
+The `production-deploy-trigger` branch is a signal channel only:
+
+- Never merge it into `main`.
+- Never treat it as application source.
+- Do not make product/code changes there.
+- Only create or update `.deploy/trigger` to emit the push event.
+- The deployment workflow itself checks out the latest `main` before building and publishing.
+
+The workflow is defined at `.github/workflows/deploy-production.yml`.
