@@ -155,7 +155,7 @@ function capture(browser, url, output) {
     `--screenshot=${output}`,
   ];
 
-  if (typeof process.getuid === 'function' && process.getuid() === 0) {
+  if (process.env.CI || (typeof process.getuid === 'function' && process.getuid() === 0)) {
     args.push('--no-sandbox');
   }
 
