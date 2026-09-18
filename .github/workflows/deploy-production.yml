@@ -45,6 +45,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to gh-pages
-        run: npm run live
+        run: |
+          node scripts/assert-main-branch.mjs
+          npm run build
+          npx gh-pages -d dist -b gh-pages --dotfiles --nojekyll -u "github-actions-bot <support+actions@github.com>"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
