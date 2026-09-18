@@ -1,0 +1,198 @@
+---
+title: "Gen13: Let There Be Light"
+description: "A preliminary exploration of a browser-native WebGPU simulation and visualization engine, beginning with light as its first physical system and WebLLM as a local natural-language interface."
+pubDate: 2026-09-18
+type: "Experiment"
+tags: ["webgpu", "webllm", "simulation", "graphics", "local-ai"]
+status: "published"
+published: true
+draft: true
+featured: false
+readingTime: "6 min read"
+---
+
+import Callout from '../../components/Callout.astro';
+
+<Callout type="note" title="PRELIMINARY CONCEPT — IN PROGRESS">
+  Gen13 is still an idea under exploration, not a finished engine or a fixed specification. This note captures the current working model: a browser-native real-time simulation and visualization engine built around WebGPU, beginning with light as its first physical system, with a local WebLLM interface for manipulating experiments through language.
+</Callout>
+
+## The Idea
+
+I've had an idea sitting in the back of my mind for a while: build something called **Gen13** — or **Genie**.
+
+Originally, I imagined a game engine.
+
+The name comes from Genesis 1:3:
+
+> “And God said, Let there be light: and there was light.”
+
+I liked the name before I knew exactly what the project should be.
+
+A complete game engine, however, is an enormous undertaking. More importantly, I'm not interested in rebuilding mature infrastructure simply to say that I built an engine.
+
+So the question has changed:
+
+> **What is the smallest version of this idea that is actually interesting?**
+
+## From Game Engine to Simulation
+
+One direction was a physics playground: an environment where students could experiment with gravity, orbital mechanics, and astrophysics.
+
+That still interests me.
+
+But it immediately opens an enormous surface area: gravity, collisions, orbital mechanics, numerical integration, atmospheres, visualization, interaction, and eventually many of the problems that full simulation and game engines already solve.
+
+The goal isn't to abandon physics. It's to find a narrow physical system that can establish the architecture without requiring the entire universe on day one.
+
+That brought the idea back to its name:
+
+**LIGHT.**
+
+The current hypothesis is that Gen13 begins as a **WebGPU-based real-time simulation and visualization engine, using light as its first physical system.**
+
+Not a general-purpose game engine.
+
+Not yet an astrophysics laboratory.
+
+One system, explored well.
+
+## LIGHT as the First System
+
+LIGHT does not need to begin as a scientifically exhaustive light-transport engine.
+
+The first experiments can be much smaller: illumination, materials, reflection, refraction, and ways of visualizing how light interacts with a scene.
+
+The distinction I want to preserve is important.
+
+Gen13 shouldn't merely render something that looks plausible. Where practical, the interesting part is exposing the behavior underneath the image.
+
+A sphere can be illuminated.
+
+A reflective surface can redirect light.
+
+A transparent material can refract it.
+
+And an inspection mode might eventually make those relationships visible rather than leaving the rendered pixels as the only output.
+
+If LIGHT proves interesting, other systems could someday follow: gravity, motion, orbital mechanics, collisions, atmospheres, or something I haven't considered yet.
+
+Those are possibilities, not commitments.
+
+## What If You Could Prompt the Simulation?
+
+Rendering and simulation are only part of the experiment.
+
+I'm also interested in a different interface to deterministic software: **natural language**.
+
+Imagine beginning with a dark scene and typing:
+
+> Let there be light.
+
+A light appears.
+
+Then:
+
+> Put a sphere beneath it.
+
+> Make the sphere glass.
+
+> Move the light behind it.
+
+> Show me what happens as the refractive index increases.
+
+The language model should not decide where light goes, generate the final pixels, or invent the physics.
+
+Instead, it interprets intent and translates that intent into a constrained representation that Gen13 understands.
+
+Conceptually:
+
+**Language → WebLLM → validated Gen13 state → simulation → WebGPU visualization**
+
+The simulation remains deterministic.
+
+The language model becomes an interface to it.
+
+That boundary is one of the parts I find most interesting.
+
+An LLM can produce unexpected output. A simulation engine expects explicit, valid state. Between them must be a contract: structured commands, validation, constraints, and a clear separation between interpretation and execution.
+
+## Gen13 and Genie
+
+There may be a useful separation hiding in the two names.
+
+**Gen13** is the deterministic simulation and visualization engine.
+
+**Genie** is the natural-language interface.
+
+Gen13 should not require Genie. A traditional interface or programmatic API should ultimately be able to manipulate the same underlying state.
+
+Genie is simply another way to communicate with the engine.
+
+That makes the Genesis reference unexpectedly appropriate in two different ways.
+
+The first system is light.
+
+And the interface creates through language.
+
+## Why WebGPU and WebLLM?
+
+Part of the motivation is deliberate skill expansion.
+
+I've spent most of my career building interfaces and frontend architectures. More recently I've been exploring local language models, context engineering, WebLLM, WebGPU, and the boundary between AI systems and traditional application architecture.
+
+Gen13 gives those interests a concrete place to meet.
+
+WebGPU should be foundational rather than decorative. I want this project to require deeper work with GPU computation, rendering pipelines, shaders, buffers, and simulation techniques.
+
+WebLLM has a different role.
+
+It should not be foundational to the correctness of the engine. Instead, it can provide a local intelligence layer over a deterministic system.
+
+That creates the possibility of a browser-native experiment in which both the GPU computation and language inference happen locally.
+
+No remote model needs to generate the scene.
+
+## Keeping the First Version Small
+
+This idea can become enormous very quickly.
+
+It's easy to jump from light into gravity, orbital mechanics, collisions, atmospheres, astrophysics, and eventually simulated worlds that a player could enter.
+
+Those possibilities are exciting precisely because they do **not** belong in the first implementation.
+
+For now, the project needs to answer something much smaller:
+
+> **Can Gen13 create a compelling browser-native physical experiment with WebGPU, and can Genie manipulate that experiment through a local language model without compromising the deterministic system underneath it?**
+
+The first environment may contain nothing more than a few primitives, materials, and light sources.
+
+If I can type:
+
+> Put a warm light above and behind the sphere.
+
+watch the simulation change, and then inspect exactly how Genie translated that instruction into Gen13 state, that is already enough to learn something.
+
+## An Experiment, Not a Promise
+
+I don't yet know whether Gen13 becomes a broader simulation engine, a physics playground, a developer tool, something game-like, or remains a focused research project.
+
+I'm publishing the idea before answering those questions intentionally.
+
+The purpose of the first implementation is not to prove that the distant vision is possible.
+
+It's to discover whether the smallest version is interesting enough to keep following.
+
+For now:
+
+**Gen13** — browser-native real-time simulation and visualization.
+
+**LIGHT** — the first physical system.
+
+**WebGPU** — the computational and rendering foundation.
+
+**Genie** — local natural-language control through WebLLM.
+
+And there is an obvious first instruction:
+
+> **Let there be light.**
