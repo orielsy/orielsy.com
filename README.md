@@ -17,6 +17,14 @@ npm run dev
 - `npm run build` creates the production site in `dist/` without publishing it.
 - `git push` updates the source repository only. It does not build, validate, or deploy the production site.
 
+## Analytics
+
+Production analytics use Umami and remain optional. Set `PUBLIC_UMAMI_WEBSITE_ID` to include the tracker in a production build. `PUBLIC_UMAMI_SCRIPT_URL` is optional and defaults to `https://cloud.umami.is/script.js`. Without a website ID, the site builds normally and emits no Umami script; local development does not load it.
+
+The integration relies on Umami for normal traffic, referrer, and UTM reporting. Custom events are limited to a small set of meaningful portfolio interactions such as contact activation, profile links, project artifacts, explicit Project/Research relationships, the first speechBubbles video play, and the first meaningful Adaptive Enterprise UI Lab interaction per page lifecycle.
+
+Do not send names, email addresses, raw input values, full outbound URLs, or other PII in event data. Session replay, heatmaps, fingerprinting, visitor identification, and advertising pixels are intentionally excluded. PostHog is not part of the current architecture. Deeper product analytics can be reconsidered if the Labs become substantially more application-like.
+
 ## Manual production publishing
 
 Production publishing is intentionally local and explicit:

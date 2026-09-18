@@ -200,10 +200,13 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
 </section>
 
 <script>
+  import { trackPortfolioEvent } from '../../lib/analytics';
   import { ONE_DATA_CONNECTION, THREE_DATA_CONNECTIONS } from './fixtures.ts';
   import { KNOWLEDGE } from './knowledge.ts';
   import { resolveInterface } from './resolver.ts';
   import type { AutomationConfiguration, ProductVersion, RuntimeContext, UserFamiliarity } from './types.ts';
+
+  let labInteractionTracked = false;
 
   document.querySelectorAll<HTMLElement>('[data-adaptive-enterprise-ui-lab]').forEach((lab) => {
     if (lab.dataset.bound === 'true') return;
@@ -234,6 +237,26 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
     const traceToggleLabel = lab.querySelector<HTMLElement>('[data-trace-toggle-label]');
 
     if (!standardDataConnection || !adaptiveDataConnection) return;
+
+    const trackFirstMeaningfulInteraction = () => {
+      if (labInteractionTracked) return;
+      labInteractionTracked = true;
+      trackPortfolioEvent('lab_interaction', { lab: 'adaptive-enterprise-ui' });
+    };
+
+    lab.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element)) return;
+      if (event.target.closest('[data-familiarity], [data-version], [data-connection-count], [data-standard-continue], [data-adaptive-continue], [data-use-sole-connection]')) {
+        trackFirstMeaningfulInteraction();
+      }
+    });
+
+    lab.addEventListener('change', (event) => {
+      if (!(event.target instanceof Element)) return;
+      if (event.target.matches('[data-standard-data-connection], [data-adaptive-data-connection]')) {
+        trackFirstMeaningfulInteraction();
+      }
+    });
 
     let familiarity: UserFamiliarity = 'new';
     let productVersion: ProductVersion = '4.2';
