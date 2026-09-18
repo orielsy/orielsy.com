@@ -12,7 +12,7 @@ const ROOT = process.cwd();
 const PORT = Number(process.env.SOCIAL_CARD_PORT || 4328);
 const HOST = `http://127.0.0.1:${PORT}`;
 const OUTPUT_ROOT = resolve(ROOT, 'public/social');
-const ASTRO_ENTRY = resolve(ROOT, 'node_modules/astro/astro.js');
+const ASTRO_ENTRY = resolve(ROOT, 'node_modules/astro/bin/astro.mjs');
 
 function fail(message) {
   console.error(`\n[social-cards] ${message}\n`);

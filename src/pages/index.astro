@@ -75,13 +75,19 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
 
         <div class="mt-7 flex flex-wrap gap-x-6 gap-y-3 font-editorial-mono text-[10px] uppercase tracking-[0.08em]">
           <a href="/research" class="inline-flex items-center gap-2 text-[var(--text-primary)] hover:text-[var(--accent)]">
-            Read Research & Explorations <span aria-hidden="true">↗</span>
+            Read Research & Explorations <span aria-hidden="true">→</span>
           </a>
           <a href="/projects" class="inline-flex items-center gap-2 text-[var(--text-primary)] hover:text-[var(--accent)]">
-            View Selected Projects <span aria-hidden="true">↗</span>
+            View Selected Projects <span aria-hidden="true">→</span>
           </a>
           <a href="/about" class="inline-flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-primary)]">
             About & Background <span aria-hidden="true">→</span>
+          </a>
+          <a href="/about#connect" class="inline-flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-primary)]">
+            Get in touch <span aria-hidden="true">→</span>
+          </a>
+          <a href="https://www.linkedin.com/in/orielsy" target="_blank" rel="noopener noreferrer" data-analytics-event="outbound_linkedin" data-analytics-source="home" class="inline-flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-primary)]">
+            LinkedIn <span aria-hidden="true">↗</span>
           </a>
         </div>
       </div>
@@ -91,7 +97,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
   <section class="border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)]/40 py-7">
     <div class="site-shell flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
       <div class="shrink-0 font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
-        Focus & Inquiries
+        Areas of Inquiry
       </div>
 
       <ol class="grid flex-1 border-l border-t border-[var(--border-subtle)] sm:grid-cols-2 lg:grid-cols-4">
@@ -136,12 +142,12 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             </p>
 
             <a href={`/research/${featuredResearch.id}`} class="font-editorial-mono mt-7 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.08em] text-[var(--text-primary)] hover:text-[var(--accent)]">
-              Read publication <span aria-hidden="true">↗</span>
+              Read research <span aria-hidden="true">→</span>
             </a>
           </div>
 
           <aside class="border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5" aria-label="Featured research metadata">
-            <p class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Research Index</p>
+            <p class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Topics</p>
             <div class="mt-7 border-t border-[var(--border-subtle)]">
               {featuredResearch.data.tags.map((tag, index) => (
                 <div class="flex items-center justify-between gap-4 border-b border-[var(--border-subtle)] py-3">
@@ -164,7 +170,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Recent Research</p>
             <h2 class="font-display mt-3 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Recent Research & Explorations</h2>
           </div>
-          <a href="/research" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all ↗</a>
+          <a href="/research" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all →</a>
         </div>
 
         <div class="mt-9 border-y border-[var(--border-subtle)]">
@@ -188,7 +194,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                 <p class="mt-3 max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">{entry.data.description}</p>
               </div>
 
-              <span class="hidden text-[var(--text-muted)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:block" aria-hidden="true">↗</span>
+              <span class="hidden text-[var(--text-muted)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:block" aria-hidden="true">→</span>
             </article>
           ))}
         </div>
@@ -201,8 +207,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
       <div class="site-shell">
         <div class="flex flex-wrap items-end justify-between gap-5">
           <div>
-            <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Selected Implementation</p>
-            <h2 class="font-display mt-3 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Selected Projects</h2>
+            <h2 class="font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Selected Projects</h2>
           </div>
           <a href="/projects" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all ↗</a>
         </div>
@@ -219,7 +224,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             </h3>
             <p class="mt-4 max-w-2xl text-sm leading-7 text-[var(--text-secondary)]">{featuredProject.data.summary}</p>
             <a href={`/projects/${featuredProject.id}`} class="font-editorial-mono mt-7 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.08em] text-[var(--text-primary)] hover:text-[var(--accent)]">
-              View project <span aria-hidden="true">↗</span>
+              View project <span aria-hidden="true">→</span>
             </a>
           </div>
 

@@ -16,6 +16,7 @@ const currentYear = new Date().getFullYear();
       <div class="flex flex-wrap gap-x-5 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.08em]">
         <a href="https://github.com/orielsy" target="_blank" rel="noopener noreferrer" data-analytics-event="outbound_github" data-analytics-source="footer" class="hover:text-[var(--text-primary)]">GitHub</a>
         <a href="https://www.linkedin.com/in/orielsy" target="_blank" rel="noopener noreferrer" data-analytics-event="outbound_linkedin" data-analytics-source="footer" class="hover:text-[var(--text-primary)]">LinkedIn</a>
+        <button type="button" id="footer-email-contact" class="cursor-pointer border-0 bg-transparent p-0 font-inherit uppercase tracking-[inherit] text-inherit hover:text-[var(--text-primary)]">Email</button>
         <a href="/rss.xml" class="hover:text-[var(--text-primary)]">RSS</a>
       </div>
     </div>
@@ -28,3 +29,17 @@ const currentYear = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<script>
+  import { trackPortfolioEvent } from '../lib/analytics';
+
+  const footerEmailControl = document.getElementById('footer-email-contact');
+
+  footerEmailControl?.addEventListener('click', () => {
+    trackPortfolioEvent('contact_email', { source: 'footer' });
+    const localPart = 'contact';
+    const domainParts = ['orielsy', 'com'];
+    const address = `${localPart}@${domainParts.join('.')}`;
+    window.location.href = `mailto:${address}`;
+  });
+</script>
