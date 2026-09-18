@@ -21,6 +21,8 @@ npm run dev
 
 Production analytics use Umami with the portfolio's website ID built in as the default. `PUBLIC_UMAMI_WEBSITE_ID` may override that ID when needed, and `PUBLIC_UMAMI_SCRIPT_URL` may override the script URL (default: `https://cloud.umami.is/script.js`). Normal local development does not load Umami. Production builds also suppress the tracker at runtime on `localhost`, `127.0.0.1`, and local IPv6, so `npm run preview` does not pollute production analytics.
 
+For owner/testing traffic on the live site, visit any page with `?analytics=off` once to persist an opt-out in that browser profile. The tracker will remain disabled on later visits from that profile. Use `?analytics=on` to clear the opt-out and resume tracking. After either toggle is processed, the `analytics` query parameter is removed from the visible URL without reloading the page. The preference is stored in `localStorage`, so it is specific to the current browser/profile and is lost if site data is cleared.
+
 The integration relies on Umami for normal traffic, referrer, and UTM reporting. Custom events are limited to a small set of meaningful portfolio interactions such as contact activation, profile links, project artifacts, explicit Project/Research relationships, the first speechBubbles video play, and the first meaningful Adaptive Enterprise UI Lab interaction per page lifecycle.
 
 Do not send names, email addresses, raw input values, full outbound URLs, or other PII in event data. Session replay, heatmaps, fingerprinting, visitor identification, and advertising pixels are intentionally excluded. PostHog is not part of the current architecture. Deeper product analytics can be reconsidered if the Labs become substantially more application-like.
