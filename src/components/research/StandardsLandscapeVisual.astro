@@ -1,0 +1,252 @@
+---
+const lanes = [
+  {
+    capability: 'Components',
+    work: 'Custom Elements + Shadow DOM',
+    status: 'HTML platform',
+    platform: 'Reusable element identity, lifecycle, encapsulation, slots',
+    remains: 'Application state, data flow, routing, composition policy',
+  },
+  {
+    capability: 'Reactivity',
+    work: 'TC39 Signals',
+    status: 'Stage 1 proposal',
+    platform: 'A possible common signal graph and auto-tracking substrate',
+    remains: 'Effects, scheduling, ownership, rendering coordination',
+  },
+  {
+    capability: 'Navigation',
+    work: 'Navigation API',
+    status: 'HTML Living Standard',
+    platform: 'Application-oriented navigation and history primitives',
+    remains: 'Route trees, loaders, layouts, authorization, conventions',
+  },
+  {
+    capability: 'Transitions',
+    work: 'View Transitions',
+    status: 'CSSWG editor draft',
+    platform: 'Browser-coordinated visual transition machinery',
+    remains: 'Product meaning, timing policy, state coordination',
+  },
+  {
+    capability: 'Dynamic DOM',
+    work: 'DOM Parts',
+    status: 'Web Components proposal',
+    platform: 'Addressable mutable positions and content in DOM',
+    remains: 'Template language, compiler strategy, rendering policy',
+  },
+  {
+    capability: 'Controls',
+    work: 'Open UI',
+    status: 'W3C Community Group',
+    platform: 'Common control anatomy, behavior, styling and accessibility work',
+    remains: 'Product-specific composition and application behavior',
+  },
+];
+---
+
+<figure class="standards-landscape not-prose">
+  <header>
+    <div>
+      <p class="eyebrow">Standards landscape · Sep 17, 2026</p>
+      <h3>Not one roadmap. A set of pressure points.</h3>
+    </div>
+    <p class="dek">
+      Different groups are standardizing different layers. The repeated pattern is selective platform absorption, not a coordinated replacement of frameworks.
+    </p>
+  </header>
+
+  <div class="table" role="table" aria-label="Frontend standards landscape">
+    <div class="table-head" role="row">
+      <span role="columnheader">Capability</span>
+      <span role="columnheader">Platform work</span>
+      <span role="columnheader">What moves downward</span>
+      <span role="columnheader">What still stays above</span>
+    </div>
+
+    {lanes.map((lane, index) => (
+      <div class="row" role="row">
+        <div class="capability" role="cell">
+          <span class="index">{String(index + 1).padStart(2, '0')}</span>
+          <strong>{lane.capability}</strong>
+        </div>
+        <div class="work" role="cell">
+          <strong>{lane.work}</strong>
+          <span class="status">{lane.status}</span>
+        </div>
+        <p role="cell">{lane.platform}</p>
+        <p role="cell">{lane.remains}</p>
+      </div>
+    ))}
+  </div>
+
+  <figcaption>
+    The lower layer grows selectively. Frameworks remain responsible for higher-level coordination and policy even when a primitive becomes native.
+  </figcaption>
+</figure>
+
+<style>
+  .standards-landscape {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.8rem;
+    background: var(--bg-card);
+  }
+
+  .standards-landscape :global(p),
+  .standards-landscape :global(h3) {
+    margin: 0;
+  }
+
+  header {
+    display: grid;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.35rem;
+  }
+
+  .eyebrow,
+  .index,
+  .status,
+  .table-head {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+
+  h3 {
+    margin-top: 0.45rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+  }
+
+  .dek {
+    max-width: 35rem;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.65;
+  }
+
+  .table-head {
+    display: none;
+    color: var(--text-muted);
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+  }
+
+  .row {
+    display: grid;
+    gap: 0.8rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1rem 1.1rem;
+  }
+
+  .row:last-child {
+    border-bottom: 0;
+  }
+
+  .capability,
+  .work {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+  }
+
+  .capability strong,
+  .work strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .index {
+    color: var(--accent);
+    font-size: 0.48rem;
+    letter-spacing: 0.08em;
+  }
+
+  .status {
+    margin-left: auto;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    padding: 0.22rem 0.45rem;
+    color: var(--text-muted);
+    font-size: 0.43rem;
+    letter-spacing: 0.07em;
+    white-space: nowrap;
+  }
+
+  .row > p {
+    color: var(--text-secondary);
+    font-size: 0.66rem;
+    line-height: 1.55;
+  }
+
+  figcaption {
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.85rem 1.1rem;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 780px) {
+    header {
+      grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+      align-items: end;
+      padding: 1.5rem 1.6rem;
+    }
+
+    .table-head,
+    .row {
+      grid-template-columns: 0.75fr 1fr 1.25fr 1.25fr;
+      gap: 1rem;
+    }
+
+    .table-head {
+      display: grid;
+      padding: 0.7rem 1.2rem;
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-secondary);
+    }
+
+    .row {
+      align-items: start;
+      padding: 0.95rem 1.2rem;
+    }
+
+    .capability,
+    .work {
+      display: block;
+    }
+
+    .capability strong,
+    .work strong {
+      display: block;
+    }
+
+    .index {
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 0.45rem;
+      margin-left: 0;
+    }
+  }
+</style>

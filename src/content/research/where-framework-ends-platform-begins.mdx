@@ -12,10 +12,19 @@ readingTime: "12 min read"
 ---
 
 import Callout from '../../components/Callout.astro';
+import PlatformFrameworkBoundaryVisual from '../../components/research/PlatformFrameworkBoundaryVisual.astro';
+import PrimitiveAbsorptionCycleVisual from '../../components/research/PrimitiveAbsorptionCycleVisual.astro';
+import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+import ResearchSourceNote from '../../components/research/ResearchSourceNote.astro';
+import StandardsLandscapeVisual from '../../components/research/StandardsLandscapeVisual.astro';
 
 <Callout type="note" title="PRELIMINARY RESEARCH — WORKING MODEL">
   This is an in-progress architecture exploration, not a prediction that frameworks are disappearing. I am using it to map where frontend responsibilities appear to be moving as browser and language primitives mature. The conclusions here are intentionally provisional and should change as the underlying proposals change.
 </Callout>
+
+<ResearchSourceNote>
+  Standards work moves. This draft is a dated snapshot of the primary sources reviewed on **September 17, 2026**. At that point the TC39 Signals proposal identifies itself as Stage 1; the Navigation API is part of the HTML Living Standard; CSS View Transitions Level 2 is an editor's draft; DOM Parts remains a Web Components proposal; and Open UI operates as a W3C Community Group. The source list at the end of the article links directly to those materials.
+</ResearchSourceNote>
 
 ## The Question I Started With
 
@@ -95,6 +104,10 @@ Instead, I see multiple efforts attacking different pieces of the problem indepe
 
 That fragmentation is not necessarily a weakness. Standards work generally advances by isolating capabilities that are sufficiently understood to become durable platform contracts.
 
+<ResearchBreakout mode="publication">
+  <StandardsLandscapeVisual />
+</ResearchBreakout>
+
 The emerging picture looks more like this:
 
 ### 1. Component substrate
@@ -143,44 +156,9 @@ The web platform tends to absorb **capabilities whose semantics have become broa
 
 That suggests a division something like this:
 
-```text
-Application / Product Architecture
-----------------------------------
-Domain state
-Feature composition
-Data ownership
-Application policy
-UX-specific behavior
-
-Framework / Meta-framework Layer
---------------------------------
-Rendering coordination
-Reactive scheduling policy
-Routing conventions
-Data-loading conventions
-SSR / hydration / server integration
-Compilation
-Code splitting
-Developer experience
-
-Standardized Runtime Primitives
--------------------------------
-Custom Elements / Shadow DOM
-Potential standard Signals
-Navigation primitives
-View Transitions
-DOM mutation / templating primitives
-Standard controls and interaction behavior
-
-Browser Platform
-----------------
-DOM / HTML / CSS / JavaScript
-Networking
-Storage
-Rendering
-Accessibility APIs
-Device capabilities
-```
+<ResearchBreakout mode="publication">
+  <PlatformFrameworkBoundaryVisual />
+</ResearchBreakout>
 
 The interesting movement is at the boundary between the middle two layers.
 
@@ -221,25 +199,13 @@ Frontend history repeatedly decomposes responsibilities and then recomposes them
 
 Browsers gain capabilities. Libraries become thinner in one area and thicker in another. Build tools absorb transforms. Servers re-enter application rendering. Compilers move work out of the runtime. Frameworks adopt platform APIs and then provide higher-level conventions around them.
 
-So the future may not be a straight line from:
+So the future may not be a straight line from **frameworks → no frameworks**.
 
-```text
-Frameworks → No Frameworks
-```
+A more plausible cycle is that repeated framework behavior becomes legible enough to standardize at a lower layer, after which frameworks reorganize around the new primitive:
 
-It may look more like:
-
-```text
-Framework-owned primitive
-        ↓
-Shared ecosystem pattern
-        ↓
-Standardized lower layer
-        ↓
-Framework reorganizes above it
-        ↓
-New higher-level composition emerges
-```
+<ResearchBreakout mode="wide">
+  <PrimitiveAbsorptionCycleVisual />
+</ResearchBreakout>
 
 If that continues, the framework does not necessarily disappear. **Its center of gravity changes.**
 

@@ -1,0 +1,224 @@
+---
+const layers = [
+  {
+    name: 'Application / product architecture',
+    tone: 'product',
+    items: ['Domain state', 'Feature composition', 'Data ownership', 'Product policy', 'UX-specific behavior'],
+  },
+  {
+    name: 'Framework / meta-framework',
+    tone: 'framework',
+    items: ['Rendering coordination', 'Scheduling policy', 'Routing conventions', 'Data loading', 'SSR / hydration', 'Compilation'],
+  },
+  {
+    name: 'Standardized runtime primitives',
+    tone: 'boundary',
+    items: ['Custom Elements', 'Potential Signals', 'Navigation primitives', 'View Transitions', 'DOM update primitives', 'Common controls'],
+  },
+  {
+    name: 'Browser platform',
+    tone: 'platform',
+    items: ['HTML / DOM', 'CSS', 'JavaScript', 'Networking', 'Storage', 'Rendering / accessibility APIs'],
+  },
+];
+---
+
+<figure class="boundary-map not-prose">
+  <header>
+    <p class="eyebrow">Responsibility map</p>
+    <h3>The interesting question is where the boundary moves.</h3>
+    <p class="dek">
+      Native primitives can absorb stable mechanisms without absorbing the application policy that frameworks coordinate above them.
+    </p>
+  </header>
+
+  <div class="stack">
+    {layers.map((layer, index) => (
+      <>
+        <section class:list={['layer', 'tone-' + layer.tone]}>
+          <div class="layer-heading">
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <strong>{layer.name}</strong>
+          </div>
+          <div class="chips">
+            {layer.items.map((item) => <span>{item}</span>)}
+          </div>
+        </section>
+
+        {index === 1 && (
+          <div class="moving-boundary">
+            <span>Moving boundary</span>
+            <div aria-hidden="true"></div>
+            <strong>mature mechanisms can migrate downward</strong>
+          </div>
+        )}
+      </>
+    ))}
+  </div>
+
+  <figcaption>
+    Platform growth does not imply framework extinction. It can change what frameworks need to implement themselves.
+  </figcaption>
+</figure>
+
+<style>
+  .boundary-map {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.8rem;
+    background: var(--bg-card);
+  }
+
+  .boundary-map :global(p),
+  .boundary-map :global(h3) {
+    margin: 0;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.35rem 1.45rem;
+  }
+
+  .eyebrow,
+  .layer-heading span,
+  .moving-boundary {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+
+  h3 {
+    margin-top: 0.45rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+  }
+
+  .dek {
+    margin-top: 0.5rem !important;
+    max-width: 43rem;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.65;
+  }
+
+  .layer {
+    display: grid;
+    gap: 0.8rem;
+    padding: 1rem 1.15rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .layer-heading {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.6rem;
+    align-items: baseline;
+  }
+
+  .layer-heading span {
+    color: var(--text-muted);
+    font-size: 0.48rem;
+    letter-spacing: 0.08em;
+  }
+
+  .layer-heading strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .chips span {
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    padding: 0.38rem 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.58rem;
+    line-height: 1.25;
+  }
+
+  .tone-framework {
+    background: color-mix(in srgb, var(--text-primary) 2%, var(--bg-card));
+  }
+
+  .tone-boundary {
+    background: color-mix(in srgb, var(--accent) 5%, var(--bg-card));
+  }
+
+  .tone-boundary .layer-heading span,
+  .tone-boundary .layer-heading strong {
+    color: var(--accent);
+  }
+
+  .tone-boundary .chips span {
+    border-color: color-mix(in srgb, var(--accent) 22%, var(--border-subtle));
+  }
+
+  .moving-boundary {
+    display: grid;
+    grid-template-columns: auto minmax(2rem, 1fr);
+    gap: 0.65rem;
+    align-items: center;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    padding: 0.55rem 1.15rem;
+    color: var(--accent);
+    font-size: 0.46rem;
+    letter-spacing: 0.09em;
+  }
+
+  .moving-boundary div {
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .moving-boundary strong {
+    grid-column: 1 / -1;
+    color: var(--text-muted);
+    font-size: 0.43rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+  }
+
+  figcaption {
+    padding: 0.85rem 1.1rem;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 760px) {
+    .layer {
+      grid-template-columns: minmax(13rem, 0.7fr) minmax(0, 1.3fr);
+      align-items: start;
+      gap: 1.3rem;
+      padding: 1rem 1.35rem;
+    }
+
+    .moving-boundary {
+      grid-template-columns: auto minmax(4rem, 1fr) auto;
+      padding-inline: 1.35rem;
+    }
+
+    .moving-boundary strong {
+      grid-column: auto;
+    }
+  }
+</style>

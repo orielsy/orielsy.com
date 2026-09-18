@@ -1,0 +1,207 @@
+---
+const steps = [
+  {
+    label: 'Framework-owned technique',
+    detail: 'Different libraries solve the same low-level problem with incompatible internal machinery.',
+  },
+  {
+    label: 'Ecosystem convergence',
+    detail: 'Repeated experience makes the shared semantics easier to identify across implementations.',
+  },
+  {
+    label: 'Standardized lower layer',
+    detail: 'A durable platform primitive can absorb the common mechanism without dictating application policy.',
+  },
+  {
+    label: 'Framework recomposition',
+    detail: 'Frameworks rebuild above the primitive and differentiate at a higher architectural layer.',
+  },
+];
+---
+
+<figure class="absorption-cycle not-prose">
+  <header>
+    <p class="eyebrow">Decomposition → recomposition</p>
+    <h3>The framework can get thinner in one place and more architectural in another.</h3>
+  </header>
+
+  <ol>
+    {steps.map((step, index) => (
+      <li>
+        <div class="number">{String(index + 1).padStart(2, '0')}</div>
+        <div>
+          <strong>{step.label}</strong>
+          <p>{step.detail}</p>
+        </div>
+        {index < steps.length - 1 && <span class="arrow" aria-hidden="true">→</span>}
+      </li>
+    ))}
+  </ol>
+
+  <div class="result">
+    <span>Result</span>
+    <strong>the framework's center of gravity moves upward</strong>
+  </div>
+
+  <figcaption>
+    Standardization can remove duplicated mechanism while leaving coordination, compilation, server integration, and product conventions above the platform.
+  </figcaption>
+</figure>
+
+<style>
+  .absorption-cycle {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.8rem;
+    background: var(--bg-card);
+  }
+
+  .absorption-cycle :global(p),
+  .absorption-cycle :global(h3),
+  .absorption-cycle :global(ol),
+  .absorption-cycle :global(li) {
+    margin: 0;
+  }
+
+  .absorption-cycle :global(ol) {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.25rem 1.35rem;
+  }
+
+  .eyebrow,
+  .number,
+  .result span {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+
+  h3 {
+    margin-top: 0.45rem !important;
+    max-width: 44rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+  }
+
+  ol {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.8rem;
+    background: var(--bg-card);
+    padding: 1rem;
+  }
+
+  .number {
+    padding-top: 0.08rem;
+    color: var(--accent);
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+  }
+
+  li strong {
+    display: block;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.76rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  li p {
+    margin-top: 0.35rem !important;
+    color: var(--text-muted);
+    font-size: 0.64rem;
+    line-height: 1.55;
+  }
+
+  .arrow {
+    display: none;
+  }
+
+  .result {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.6rem;
+    border-top: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--accent);
+    background: color-mix(in srgb, var(--accent) 5%, var(--bg-card));
+    padding: 0.8rem 1rem;
+  }
+
+  .result span {
+    color: var(--accent);
+    font-size: 0.48rem;
+    letter-spacing: 0.09em;
+  }
+
+  .result strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.74rem;
+    font-weight: 600;
+  }
+
+  figcaption {
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.85rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 760px) {
+    ol {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    li {
+      min-height: 10rem;
+      grid-template-columns: 1fr;
+      align-content: start;
+      padding: 1rem 1.1rem;
+    }
+
+    .arrow {
+      position: absolute;
+      right: -0.7rem;
+      top: 50%;
+      z-index: 2;
+      display: flex;
+      width: 1.4rem;
+      height: 1.4rem;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      background: var(--bg-card);
+      color: var(--accent);
+      font-family: var(--font-mono-ui);
+      font-size: 0.7rem;
+      transform: translateY(-50%);
+    }
+  }
+</style>
