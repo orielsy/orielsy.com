@@ -27,17 +27,15 @@ import SignalStandardizationPathVisual from '../../components/research/SignalSta
   Standards work moves. This draft is a dated snapshot of the primary sources reviewed on **September 17, 2026**. At that point the TC39 Signals proposal identifies itself as Stage 1; the Navigation API is part of the HTML Living Standard; CSS View Transitions Level 2 is an editor's draft; DOM Parts remains a Web Components proposal; and Open UI operates as a W3C Community Group. The source list at the end of the article links directly to those materials.
 </ResearchSourceNote>
 
+<Callout type="note" title="TL;DR">
+  Frameworks are not disappearing. But capabilities they once provided almost exclusively are increasingly moving into the web platform, which may change what future frameworks need to own—and where the boundary between framework and platform sits.
+</Callout>
+
 ## The Question I Started With
 
-I started this investigation with a stronger assumption than the evidence supported.
+I started this investigation with a stronger assumption than the evidence supported: **were standards bodies moving enough framework responsibilities into the platform that much of the framework layer could eventually disappear?**
 
-Signals, Web Components, native navigation, View Transitions, and ongoing work around templating looked like pieces of a larger convergence. My initial question was essentially: **are standards bodies gradually moving enough framework responsibilities into the platform that much of the framework layer could eventually disappear?**
-
-That is not quite what I found.
-
-There is real movement toward standardizing capabilities that frameworks have spent years providing or normalizing. But there does not appear to be one coordinated program whose goal is to replace React, Vue, Svelte, Angular, or application frameworks more generally.
-
-The more useful question is different:
+That is not quite what I found. The more useful question became:
 
 > **If more framework-era ideas become native primitives, how will the responsibilities of the browser platform, frameworks, compilers, libraries, servers, and application code be redistributed?**
 
