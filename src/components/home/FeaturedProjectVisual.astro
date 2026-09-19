@@ -8,11 +8,11 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
 >
   <div class="flex items-center justify-between gap-4">
     <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
-      Live system preview
+      Program output
     </p>
     <span class="font-editorial-mono inline-flex items-center gap-2 text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">
-      <span class="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" aria-hidden="true"></span>
-      Local
+      <span class="preview-live-dot h-1.5 w-1.5 rounded-full bg-[var(--accent)]" aria-hidden="true"></span>
+      Live · Local
     </span>
   </div>
 
@@ -34,9 +34,9 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
       </div>
 
       <div class="caption-stage absolute inset-x-4 top-12 h-14" aria-hidden="true">
-        <span class="caption caption-one">Real-time caption stream</span>
-        <span class="caption caption-two">Lower-third graphics</span>
-        <span class="caption caption-three">Local Whisper inference</span>
+        <span class="caption caption-one">Local speech becomes live captions.</span>
+        <span class="caption caption-two">Graphics stay ready for broadcast.</span>
+        <span class="caption caption-three">The overlay composites in OBS.</span>
       </div>
 
       <div class="absolute inset-x-4 bottom-[76px] flex items-end justify-between gap-3" aria-hidden="true">
@@ -49,8 +49,8 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
       </div>
 
       <div class="lower-third absolute inset-x-4 bottom-4 border-l-2 border-[var(--accent)] bg-black/55 px-3 py-2.5 backdrop-blur-sm" aria-hidden="true">
-        <p class="font-editorial-mono text-[7px] uppercase tracking-[0.12em] text-white/45">speechBubbles</p>
-        <p class="mt-1 text-[11px] font-medium leading-4 text-white/90">Overlay + captioning engine</p>
+        <p class="font-editorial-mono text-[7px] uppercase tracking-[0.12em] text-white/45">Orielsy Diaz</p>
+        <p class="mt-1 text-[11px] font-medium leading-4 text-white/90">Creator · Developer</p>
       </div>
     </div>
   </div>
@@ -67,6 +67,10 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
       linear-gradient(to right, rgba(255,255,255,0.12) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(255,255,255,0.12) 1px, transparent 1px);
     background-size: 24px 24px;
+  }
+
+  .preview-live-dot {
+    animation: live-pulse 1.2s ease-in-out infinite;
   }
 
   .caption {
@@ -107,6 +111,15 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
 
   .lower-third {
     animation: lower-third-cycle 9s ease-in-out infinite;
+  }
+
+  @keyframes live-pulse {
+    0%, 100% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 1;
+    }
   }
 
   @keyframes wave-pulse {
@@ -153,7 +166,8 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
   @media (prefers-reduced-motion: reduce) {
     .caption,
     .waveform span,
-    .lower-third {
+    .lower-third,
+    .preview-live-dot {
       animation: none !important;
       transform: none !important;
     }
