@@ -1,8 +1,8 @@
 ---
 title: "Gen13: Let There Be Light"
-description: "A preliminary exploration of a browser-native deterministic simulation and visualization environment, beginning with light and asking how inspectable physical systems might be manipulated and interrogated through language."
+description: "The architectural reasoning behind Gen13, a deterministic simulation and visualization environment beginning with light: Scene, Command, Trace, grounded explanations, and an implementation stack that must earn its complexity."
 pubDate: 2026-09-18
-type: "Experiment"
+type: "Architecture Exploration"
 tags: ["simulation", "physics", "graphics", "webgpu", "webllm", "local-ai"]
 status: "draft"
 published: false
@@ -13,8 +13,8 @@ readingTime: "7 min read"
 
 import Callout from '../../components/Callout.astro';
 
-<Callout type="note" title="PRELIMINARY CONCEPT — IN PROGRESS">
-  Gen13 is still an idea under exploration, not a finished engine or a fixed specification. The working hypothesis is evolving as I challenge the implementation assumptions. WebGPU and WebLLM remain technologies I want to explore, but they no longer define the first experiment. The more fundamental question is whether a deterministic physical system can be made visible, inspectable, manipulable, and eventually interrogable through language.
+<Callout type="note" title="RESEARCH COMPANION — IMPLEMENTATION ACTIVE">
+  This note captures the architectural reasoning that shaped Gen13. The implementation now lives as [Gen13 / LIGHT](/projects/gen13-light): v0.1 includes a deterministic headless core, browser visualization, command-driven state mutation, selectable trace events, and an inspector grounded directly in Trace data. The research remains intentionally open as the implementation tests the hypothesis.
 </Callout>
 
 ## The Idea
@@ -185,13 +185,13 @@ For now, the project needs to answer something much smaller:
 
 > **Can Gen13 make one deterministic physical phenomenon compelling to see, manipulate, inspect, and question?**
 
-The first experiment may be two-dimensional.
+The first implementation is two-dimensional.
 
-It may contain a ray, a slab, a prism, or a curved surface.
+In v0.1 it contains one ray, one flat optical boundary, ordinary angle and material controls, a selectable trace event, and an inspector driven directly from Trace data.
 
-It may begin with ordinary controls before Genie exists.
+Genie does not exist yet, and that is deliberate.
 
-That is enough.
+That is enough for the current experiment.
 
 If changing a material can produce a physically correct result, clicking an interaction can reveal exactly why it happened, and the architecture naturally supports asking “what if?” questions about the system, then there is something worth following.
 
