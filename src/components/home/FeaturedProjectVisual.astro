@@ -1,0 +1,178 @@
+---
+const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
+---
+
+<aside
+  class="implementation-preview relative overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5"
+  aria-label="Featured implementation preview"
+>
+  <div class="flex items-center justify-between gap-4">
+    <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
+      Live system preview
+    </p>
+    <span class="font-editorial-mono inline-flex items-center gap-2 text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">
+      <span class="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" aria-hidden="true"></span>
+      Local
+    </span>
+  </div>
+
+  <div class="preview-window mt-5 overflow-hidden border border-[var(--border-subtle)] bg-[#0f1015]">
+    <div class="flex items-center justify-between border-b border-white/10 px-3 py-2.5">
+      <div class="flex gap-1.5" aria-hidden="true">
+        <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
+        <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
+        <span class="h-1.5 w-1.5 rounded-full bg-white/20"></span>
+      </div>
+      <span class="font-editorial-mono text-[7px] uppercase tracking-[0.12em] text-white/35">OBS OVERLAY</span>
+    </div>
+
+    <div class="relative min-h-[220px] overflow-hidden">
+      <div class="signal-grid absolute inset-0" aria-hidden="true"></div>
+
+      <div class="absolute left-4 top-4 font-editorial-mono text-[7px] uppercase tracking-[0.12em] text-white/35">
+        Speech stream / active
+      </div>
+
+      <div class="caption-stage absolute inset-x-4 top-12 h-14" aria-hidden="true">
+        <span class="caption caption-one">Real-time caption stream</span>
+        <span class="caption caption-two">Lower-third graphics</span>
+        <span class="caption caption-three">Local Whisper inference</span>
+      </div>
+
+      <div class="absolute inset-x-4 bottom-[76px] flex items-end justify-between gap-3" aria-hidden="true">
+        <div class="waveform flex h-8 flex-1 items-end gap-[3px]">
+          {bars.map((height, index) => (
+            <span style={`--bar-height:${height}%; --bar-index:${index};`}></span>
+          ))}
+        </div>
+        <span class="font-editorial-mono text-[7px] uppercase tracking-[0.1em] text-white/35">audio</span>
+      </div>
+
+      <div class="lower-third absolute inset-x-4 bottom-4 border-l-2 border-[var(--accent)] bg-black/55 px-3 py-2.5 backdrop-blur-sm" aria-hidden="true">
+        <p class="font-editorial-mono text-[7px] uppercase tracking-[0.12em] text-white/45">speechBubbles</p>
+        <p class="mt-1 text-[11px] font-medium leading-4 text-white/90">Overlay + captioning engine</p>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .implementation-preview :global(p) {
+    margin: 0;
+  }
+
+  .signal-grid {
+    opacity: 0.16;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.12) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.12) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .caption {
+    position: absolute;
+    right: 0;
+    max-width: 88%;
+    border: 1px solid rgba(255,255,255,0.11);
+    background: rgba(18, 20, 28, 0.82);
+    padding: 0.45rem 0.6rem;
+    font-size: 0.69rem;
+    line-height: 1.35;
+    color: rgba(255,255,255,0.9);
+    opacity: 0;
+    transform: translateY(6px);
+    animation: caption-cycle 9s ease-in-out infinite;
+  }
+
+  .caption-two {
+    animation-delay: 3s;
+  }
+
+  .caption-three {
+    animation-delay: 6s;
+  }
+
+  .waveform span {
+    display: block;
+    width: 4px;
+    height: var(--bar-height);
+    min-height: 4px;
+    border-radius: 999px;
+    background: var(--accent);
+    opacity: 0.82;
+    transform-origin: bottom;
+    animation: wave-pulse 1.15s ease-in-out infinite;
+    animation-delay: calc(var(--bar-index) * 70ms);
+  }
+
+  .lower-third {
+    animation: lower-third-cycle 9s ease-in-out infinite;
+  }
+
+  @keyframes wave-pulse {
+    0%, 100% {
+      transform: scaleY(0.5);
+      opacity: 0.55;
+    }
+    50% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes caption-cycle {
+    0%, 100% {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    8%, 27% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    34% {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes lower-third-cycle {
+    0%, 10%, 100% {
+      opacity: 0.62;
+      transform: translateY(5px);
+    }
+    18%, 82% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    92% {
+      opacity: 0.7;
+      transform: translateY(3px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .caption,
+    .waveform span,
+    .lower-third {
+      animation: none !important;
+      transform: none !important;
+    }
+
+    .caption-one {
+      opacity: 1;
+    }
+
+    .caption-two,
+    .caption-three {
+      display: none;
+    }
+
+    .waveform span {
+      opacity: 0.82;
+    }
+
+    .lower-third {
+      opacity: 1;
+    }
+  }
+</style>
