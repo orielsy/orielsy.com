@@ -106,7 +106,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
         {explorationAreas.map((area, index) => (
           <li class="border-b border-r border-[var(--border-subtle)] px-4 py-4">
             <div class="flex gap-3">
-              <span class="font-editorial-mono text-[9px] text-[var(--accent)]">0{index + 1}</span>
+              <span class="font-editorial-mono text-[9px] text-[var(--accent)]">{String(entry.data.researchNumber ?? index + 1).padStart(2, '0')}</span>
               <div>
                 <h2 class="font-display text-xs font-semibold leading-5 text-[var(--text-primary)]">{area.title}</h2>
                 <p class="font-editorial-mono mt-2 text-[8px] uppercase tracking-[0.08em] text-[var(--text-muted)]">{area.tag}</p>
@@ -124,7 +124,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
       <div class="site-shell grid gap-10 lg:grid-cols-12">
         <div class="lg:col-span-3">
           <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
-            Featured Research · 01
+            Featured Research · {String(featuredResearch.data.researchNumber ?? 1).padStart(2, '0')}
           </p>
           {featuredResearch.data.home?.blurb && (
             <p class="mt-6 max-w-xs text-xs leading-6 text-[var(--text-muted)]">
