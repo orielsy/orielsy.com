@@ -19,15 +19,11 @@ import Callout from '../../components/Callout.astro';
   Context Zen is an early context-engineering experiment. The handoff model is implemented as a public skill specification, but the context-health heuristic is intentionally provisional. I am publishing the idea now so the behavior, assumptions, and eventual evaluation criteria remain inspectable as the project develops.
 </Callout>
 
+<Callout type="note" title="TL;DR">
+  Large context windows solve capacity, not context quality. Context Zen explores handing work to a fresh conversation once accumulated history becomes less useful than a distilled representation of the current working state.
+</Callout>
+
 ## When More Context Stops Helping
-
-AI systems keep getting larger context windows.
-
-That is useful, but it creates an easy assumption:
-
-> If the model can still fit the conversation, why start over?
-
-I am increasingly unconvinced that context capacity and context quality are the same thing.
 
 A long-running conversation can contain useful history while also accumulating abandoned directions, superseded decisions, repeated explanations, contradictory instructions, and residue that no longer helps the current task.
 
