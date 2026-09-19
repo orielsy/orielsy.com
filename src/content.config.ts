@@ -49,6 +49,7 @@ const projects = defineCollection({
     summary: z.string(),
     date: z.coerce.date(),
     dateLabel: z.string().optional(),
+    projectNumber: z.number().int().positive().optional(),
     status: z.enum(['Active', 'Prototype', 'Completed', 'Archived', 'In Progress']).default('Active'),
     published: z.boolean().default(false),
     draft: z.boolean().default(false),
