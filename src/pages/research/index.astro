@@ -75,19 +75,8 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
     </div>
   </section>
 
-  <section class="site-shell py-12 sm:py-16" aria-labelledby="published-research-heading">
-    <div class="grid gap-8 lg:grid-cols-12">
-      <div class="lg:col-span-3">
-        <p id="published-research-heading" class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
-          Published Research
-        </p>
-        <p class="mt-3 max-w-xs text-xs leading-6 text-[var(--text-muted)]">
-          Reasoning-first writing, architecture explorations, and technical investigations.
-        </p>
-      </div>
-
-      <div class="lg:col-span-9">
-        <div id="articles-list" class="border-y border-[var(--border-subtle)]">
+  <section class="site-shell py-12 sm:py-16" aria-label="Published research">
+    <div id="articles-list" class="border-y border-[var(--border-subtle)]">
           {sortedResearch.map((entry, index) => (
             <article
               data-article-type={entry.data.type}
@@ -117,7 +106,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                 )}
               </div>
 
-              <span class="hidden text-[var(--text-muted)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:block" aria-hidden="true">↗</span>
+              <span class="hidden text-[var(--text-muted)] transition-transform group-hover:translate-x-0.5 sm:block" aria-hidden="true">→</span>
             </article>
           ))}
         </div>
@@ -126,13 +115,11 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
           <p class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">No articles found matching this format.</p>
         </div>
 
-        {sortedResearch.length === 0 && (
-          <div class="border-y border-[var(--border-subtle)] py-10 text-center">
-            <p class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">No published research articles yet.</p>
-          </div>
-        )}
+    {sortedResearch.length === 0 && (
+      <div class="border-y border-[var(--border-subtle)] py-10 text-center">
+        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">No published research articles yet.</p>
       </div>
-    </div>
+    )}
   </section>
 
   {sortedUnpublishedResearch.length > 0 && (
