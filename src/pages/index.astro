@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FeaturedResearchVisual from '../components/home/FeaturedResearchVisual.astro';
+import FeaturedProjectVisual from '../components/home/FeaturedProjectVisual.astro';
 import { getCollection } from 'astro:content';
 
 const allResearch = await getCollection('research');
@@ -218,9 +219,10 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
       <div class="site-shell">
         <div class="flex flex-wrap items-end justify-between gap-5">
           <div>
-            <h2 class="font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Selected Projects</h2>
+            <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">From Theory to Practice</p>
+            <h2 class="font-display mt-3 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Selected Implementations</h2>
           </div>
-          <a href="/projects" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all →</a>
+          <a href="/projects" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all ↗</a>
         </div>
 
         <article class="mt-10 grid gap-8 border-t border-[var(--accent)] pt-6 lg:grid-cols-[minmax(0,1fr)_320px]">
@@ -233,23 +235,29 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             <h3 class="font-display mt-4 max-w-3xl text-2xl font-semibold leading-tight tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">
               <a href={`/projects/${featuredProject.id}`} class="hover:text-[var(--accent)]">{featuredProject.data.title}</a>
             </h3>
-            <p class="mt-4 max-w-2xl text-sm leading-7 text-[var(--text-secondary)]">{featuredProject.data.summary}</p>
-            <a href={`/projects/${featuredProject.id}`} class="font-editorial-mono mt-7 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.08em] text-[var(--text-primary)] hover:text-[var(--accent)]">
-              View project <span aria-hidden="true">→</span>
+            <p class="mt-4 max-w-2xl text-sm leading-7 text-[var(--text-secondary)]">
+              {featuredProject.data.home?.blurb ?? featuredProject.data.summary}
+            </p>
+            <a href={`/projects/${featuredProject.id}`} class="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--accent)]">
+              View implementation <span aria-hidden="true" class="text-xs">↗</span>
             </a>
           </div>
 
-          <aside class="border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5" aria-label="Selected project technologies">
-            <p class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Technology</p>
-            <ul class="mt-7 border-t border-[var(--border-subtle)]">
-              {featuredProject.data.technologies.slice(0, 6).map((technology, index) => (
-                <li class="flex items-center justify-between gap-4 border-b border-[var(--border-subtle)] py-3">
-                  <span class="font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-secondary)]">{technology}</span>
-                  <span class="font-editorial-mono text-[8px] text-[var(--text-muted)]">0{index + 1}</span>
-                </li>
-              ))}
-            </ul>
-          </aside>
+          {featuredProject.data.home?.visual === 'speech-broadcast' ? (
+            <FeaturedProjectVisual />
+          ) : (
+            <aside class="border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5" aria-label="Selected project technologies">
+              <p class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Technology</p>
+              <ul class="mt-7 border-t border-[var(--border-subtle)]">
+                {featuredProject.data.technologies.slice(0, 6).map((technology, index) => (
+                  <li class="flex items-center justify-between gap-4 border-b border-[var(--border-subtle)] py-3">
+                    <span class="font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-secondary)]">{technology}</span>
+                    <span class="font-editorial-mono text-[8px] text-[var(--text-muted)]">0{index + 1}</span>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          )}
         </article>
       </div>
     </section>
