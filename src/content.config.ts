@@ -19,6 +19,7 @@ const research = defineCollection({
     title: z.string(),
     description: z.string(),
     pubDate: z.coerce.date(),
+    researchNumber: z.number().int().positive().optional(),
     updatedDate: z.coerce.date().optional(),
     type: z.enum([
       'Article',
