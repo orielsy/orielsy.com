@@ -26,27 +26,9 @@ import SourceOfTruthWorkflowVisual from '../../components/research/SourceOfTruth
   This article describes a repository structure I have been using on orielsy.com to preserve product intent and engineering decisions across coding-agent sessions. It is an evolving practice, not a claim that specifications make agent output deterministic or correct by default.
 </Callout>
 
-## The Problem Isn't Just Prompt Quality
-
-Coding agents have become capable enough that prompt quality is no longer the only interesting problem.
-
-A good prompt can get substantial work started. The harder question appears later: **what happens when the next task begins in a different session, with a different agent, after the decisions that shaped the project have fallen out of working context?**
-
-Long-running software work accumulates knowledge that is easy to lose when it exists only inside conversation history:
-
-- product intent
-- architectural constraints
-- terminology choices
-- rejected approaches
-- publishing rules
-- operational workflows
-- reasons behind decisions that are not obvious from the implementation alone
-
-The failure mode is often subtle. An agent can produce something locally plausible while still undoing an earlier decision.
-
-That is the problem I have been experimenting with on this site: not how to write one perfect prompt, but how to make important project knowledge durable enough that future work can recover it.
-
----
+<Callout type="note" title="TL;DR">
+  Conversation is working context, not project memory. Important decisions and constraints should survive the coding-agent session that produced them.
+</Callout>
 
 ## Conversation Context Is Not Project Memory
 
