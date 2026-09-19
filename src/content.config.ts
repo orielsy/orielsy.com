@@ -70,7 +70,6 @@ const projects = defineCollection({
     heroImage: z.string().optional(),
     socialCard,
     home: homeFeature,
-    archiveBlurb: z.string().optional(),
   }),
 });
 
