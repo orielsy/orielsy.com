@@ -85,19 +85,26 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
           data-project-status={project.data.status}
           class="project-item grid gap-8 lg:grid-cols-12"
         >
-          <div class="lg:col-span-3">
+          <div class="lg:col-span-2">
             <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
               Project · {String(index + 1).padStart(2, '0')}
             </p>
             <p class="font-editorial-mono mt-4 text-[9px] uppercase tracking-[0.07em] text-[var(--text-secondary)]">
               {project.data.status}
             </p>
-            <p class="font-editorial-mono mt-2 max-w-xs text-[8px] uppercase leading-5 tracking-[0.07em] text-[var(--text-muted)]">
-              {project.data.dateLabel ?? formatDate(project.data.date)}
-            </p>
+            {project.data.dateLabel?.includes(':') ? (
+              <div class="font-editorial-mono mt-2 text-[8px] uppercase leading-5 tracking-[0.07em] text-[var(--text-muted)]">
+                <span class="block">{project.data.dateLabel.split(':', 2)[0]}</span>
+                <span class="block">{project.data.dateLabel.slice(project.data.dateLabel.indexOf(':') + 1).trim()}</span>
+              </div>
+            ) : (
+              <p class="font-editorial-mono mt-2 text-[8px] uppercase leading-5 tracking-[0.07em] text-[var(--text-muted)]">
+                {project.data.dateLabel ?? formatDate(project.data.date)}
+              </p>
+            )}
           </div>
 
-          <div class="grid gap-8 border-t border-[var(--accent)] pt-6 lg:col-span-9 lg:grid-cols-[minmax(0,1fr)_320px]">
+          <div class="grid gap-8 border-t border-[var(--accent)] pt-6 lg:col-span-10 lg:grid-cols-[minmax(0,1fr)_320px]">
             <div class="min-w-0">
               <div class="flex flex-wrap gap-x-4 gap-y-1 font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
                 {project.data.role && <span>{project.data.role}</span>}
