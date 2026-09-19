@@ -119,37 +119,37 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
   </section>
 
   {featuredResearch && (
-    <section class="py-16 sm:py-20 lg:py-24">
+    <section class="py-16 sm:py-20">
       <div class="site-shell grid gap-10 lg:grid-cols-12">
         <div class="lg:col-span-3">
           <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
-            Featured Research <span class="text-[var(--accent)]">· 01</span>
+            Featured Research · 01
           </p>
           {featuredResearch.data.home?.blurb && (
-            <p class="mt-6 max-w-[15rem] text-sm leading-7 text-[var(--text-muted)]">
+            <p class="mt-6 max-w-xs text-xs leading-6 text-[var(--text-muted)]">
               {featuredResearch.data.home.blurb}
             </p>
           )}
         </div>
 
-        <article class="grid gap-10 border-t border-[var(--accent)] pt-7 lg:col-span-9 lg:grid-cols-[minmax(0,1fr)_330px] lg:gap-12">
-          <div class="lg:pt-1">
+        <article class="grid gap-8 border-t border-[var(--accent)] pt-6 lg:col-span-9 lg:grid-cols-[minmax(0,1fr)_260px]">
+          <div>
             <div class="flex flex-wrap gap-x-5 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.09em] text-[var(--text-muted)]">
               <span>{featuredResearch.data.type}</span>
               <time datetime={featuredResearch.data.pubDate.toISOString()}>{formatDate(featuredResearch.data.pubDate)}</time>
               {featuredResearch.data.readingTime && <span>{featuredResearch.data.readingTime}</span>}
             </div>
 
-            <h2 class="font-display mt-7 max-w-4xl text-4xl font-semibold leading-[1.03] tracking-[-0.045em] text-[var(--text-primary)] sm:text-5xl lg:text-[3.4rem]">
+            <h2 class="font-display mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.035em] text-[var(--text-primary)] sm:text-4xl">
               <a href={`/research/${featuredResearch.id}`} class="hover:text-[var(--accent)]">{featuredResearch.data.title}</a>
             </h2>
 
-            <p class="mt-7 max-w-3xl text-sm leading-7 text-[var(--text-secondary)] sm:text-[15px] sm:leading-8">
+            <p class="mt-5 max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">
               {featuredResearch.data.description}
             </p>
 
-            <a href={`/research/${featuredResearch.id}`} class="font-editorial-mono mt-8 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.08em] text-[var(--text-primary)] hover:text-[var(--accent)]">
-              Read publication <span aria-hidden="true">↗</span>
+            <a href={`/research/${featuredResearch.id}`} class="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--accent)]">
+              Read publication <span aria-hidden="true" class="text-xs">↗</span>
             </a>
           </div>
 
