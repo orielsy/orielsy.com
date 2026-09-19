@@ -150,7 +150,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             </p>
 
             <a href={`/research/${featuredResearch.id}`} class="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--accent)]">
-              Read publication <span aria-hidden="true" class="text-xs">↗</span>
+              Read publication <span aria-hidden="true" class="text-xs">→</span>
             </a>
           </div>
 
@@ -222,7 +222,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">From Theory to Practice</p>
             <h2 class="font-display mt-3 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Selected Implementations</h2>
           </div>
-          <a href="/projects" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all ↗</a>
+          <a href="/projects" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all →</a>
         </div>
 
         <article class="mt-10 grid gap-8 border-t border-[var(--accent)] pt-6 lg:grid-cols-[minmax(0,1fr)_320px]">
@@ -239,7 +239,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
               {featuredProject.data.home?.blurb ?? featuredProject.data.summary}
             </p>
             <a href={`/projects/${featuredProject.id}`} class="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--accent)]">
-              View implementation <span aria-hidden="true" class="text-xs">↗</span>
+              View implementation <span aria-hidden="true" class="text-xs">→</span>
             </a>
           </div>
 
