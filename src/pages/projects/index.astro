@@ -87,7 +87,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
         >
           <div class="lg:col-span-2">
             <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
-              Project · {String(index + 1).padStart(2, '0')}
+              Project · {String(project.data.projectNumber ?? index + 1).padStart(2, '0')}
             </p>
             <p class="font-editorial-mono mt-4 text-[9px] uppercase tracking-[0.07em] text-[var(--text-secondary)]">
               {project.data.status}
