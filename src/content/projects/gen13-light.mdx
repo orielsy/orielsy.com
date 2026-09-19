@@ -1,0 +1,126 @@
+---
+title: "Gen13 / LIGHT"
+summary: "An active deterministic simulation and visualization environment that begins with geometrical optics and keeps physical truth in an inspectable solver trace rather than in the renderer."
+date: 2026-09-18
+dateLabel: "Active development · v0.1"
+status: "In Progress"
+published: true
+draft: false
+role: "Creator / Developer"
+technologies: ["TypeScript", "Vite", "Vitest", "SVG", "Zod"]
+architecture: "Scene + Command → Reducer → New Scene → Solver → Trace → SVG"
+problem: "Interactive simulations can make physical behavior visible while still hiding the state transitions, equations, and evidence that produced the image."
+solution: "Build a deterministic simulation core where commands mutate Scene state, the solver produces an inspectable Trace, and renderers visualize that evidence without becoming a second source of physical truth."
+github: "https://github.com/orielsy/gen13"
+featured: false
+archiveBlurb: "A deterministic optics environment where the trace—not the renderer—is the source of physical truth."
+associatedResearch:
+  - "/research/gen13-let-there-be-light"
+socialCard:
+  topic: "Deterministic Simulation · LIGHT"
+  metadataDensity: sparse
+---
+
+import Callout from '../../components/Callout.astro';
+
+<Callout type="note" title="ACTIVE EXPERIMENT — V0.1">
+  Gen13 is now a working implementation, not only a concept. The current LIGHT experiment includes a deterministic headless core, a browser visualization, command-driven state changes, selectable trace events, and an inspector whose physical values come directly from the solver trace.
+</Callout>
+
+## Project Overview
+
+**Gen13** is an experimental deterministic simulation and visualization environment. Its first physical system is **LIGHT**.
+
+The project deliberately starts smaller than a general-purpose game engine or physics framework. The immediate goal is to make one physical phenomenon correct, visible, manipulable, and inspectable before generalizing the architecture.
+
+The current implementation focuses on geometrical optics and keeps a strict separation between simulation truth and presentation.
+
+## Current Architecture
+
+The working model is intentionally compact:
+
+```text
+Scene + Command
+      ↓
+    Reducer
+      ↓
+   New Scene
+      ↓
+     solve
+      ↓
+     Trace
+      ↓
+      SVG
+```
+
+- **Scene** describes what exists.
+- **Command** describes what should change. State mutation goes through the command path.
+- **Reducer** produces the next Scene.
+- **Solver** determines the physical result.
+- **Trace** records what happened and the quantities needed to explain why.
+- **SVG** renders the result but does not calculate the physics.
+
+That last boundary is central to the project: the renderer is a view of the simulation, not the source of truth.
+
+## What v0.1 Implements
+
+The current browser experiment includes:
+
+- one ray
+- one flat optical boundary
+- angle changes dispatched through `setRayAngle`
+- material changes dispatched through `setSurfaceMaterial`
+- SVG incident, reflected, transmitted, surface, and normal lines
+- a selectable trace event
+- an inspector populated directly from `Trace`
+- the exact last command displayed alongside the resulting state
+
+The renderer does not calculate Snell's law, Fresnel behavior, or total internal reflection. It consumes directions and values already produced by the solver.
+
+## Physics as Inspectable Evidence
+
+Gen13 uses established geometrical-optics and ray-intersection equations rather than inventing its own physical model.
+
+The repository documents the equations and implementation references for:
+
+- Snell's law
+- total internal reflection and the critical angle
+- reflection vectors
+- Fresnel equations
+- ray/interface intersection
+- the Brewster-angle test oracle
+
+The intent is that a result can be followed from **source equation → implementation → Trace → test → visualization**.
+
+That traceability is part of the product idea, not only a testing concern.
+
+## Why LIGHT Comes First
+
+LIGHT provides a narrow system with enough depth to test the architecture without prematurely building a generalized engine.
+
+A ray crossing an optical boundary already gives the system meaningful state, deterministic behavior, material changes, inspectable quantities, and questions such as:
+
+- Why did the ray bend?
+- Why did it reflect?
+- What changes when the refractive index changes?
+- When does total internal reflection occur?
+
+That is enough surface area to test whether the Scene / Command / Trace model remains useful under real interaction.
+
+## Genie Comes Later
+
+**Genie** is the planned natural-language interface over Gen13.
+
+The architectural constraint is that Genie will not become part of the simulation's correctness path. It should eventually translate language into the same validated commands available to any other client and use Trace evidence to ground explanations.
+
+Gen13 must remain useful without Genie.
+
+Likewise, WebGPU and WebLLM are not prerequisites. They should enter the architecture only when the experiment demonstrates a need for them.
+
+## Research Relationship
+
+The companion research note, [Gen13: Let There Be Light](/research/gen13-let-there-be-light), documents the reasoning that narrowed the original game-engine idea into this first deterministic experiment: why LIGHT came first, why Trace is part of the model, how Genie may operate over commands and evidence, and why WebGPU and WebLLM must earn their place.
+
+The relationship is intentional:
+
+**Research develops the hypothesis. The project tests it.**
