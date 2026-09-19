@@ -69,6 +69,7 @@ const projects = defineCollection({
     ).default([]),
     heroImage: z.string().optional(),
     socialCard,
+    home: homeFeature,
   }),
 });
 
