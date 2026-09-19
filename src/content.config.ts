@@ -8,6 +8,11 @@ const socialCard = z.object({
   description: z.string().optional(),
 }).optional();
 
+const homeFeature = z.object({
+  blurb: z.string().optional(),
+  visual: z.string().optional(),
+}).optional();
+
 const research = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/research' }),
   schema: z.object({
@@ -33,6 +38,7 @@ const research = defineCollection({
     readingTime: z.string().optional(),
     heroImage: z.string().optional(),
     socialCard,
+    home: homeFeature,
   }),
 });
 
