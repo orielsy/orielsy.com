@@ -34,21 +34,9 @@ import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEn
   This research is backed by the first slice of the Adaptive Enterprise UI Lab: a deterministic, client-side reference implementation for state-aware product knowledge and adaptive guidance. It intentionally uses no LLM, semantic retrieval, or remote AI runtime.
 </Callout>
 
-## Thesis
-
-Enterprise software usually treats product knowledge and product behavior as separate systems.
-
-The application knows what state it is in. Validation knows which values are required. Documentation explains concepts, release notes describe version changes, and implementation guides tell users how to make the right choice. But those sources of knowledge often live outside the interface that needs them.
-
-The result is familiar: a user reaches a configuration field, encounters uncertainty, leaves the application, searches documentation, interprets what they find, and then returns to the original task.
-
-My working hypothesis is that part of this gap can be closed without starting with a chatbot, an LLM, or generative UI.
-
-**If an application can combine authoritative state, deterministic validation, authored product knowledge, user context, and an explicit response policy, it can make useful interface adaptations before inference is introduced at all.**
-
-That is the narrow question explored in Phase 1 of the Adaptive Enterprise UI Lab.
-
----
+<Callout type="note" title="TL;DR">
+  Product knowledge can become contextual interface behavior without giving AI authority over product truth. Application state, deterministic validation, authored guidance, and explicit response policy can already produce useful adaptation before inference enters the system.
+</Callout>
 
 ## The Documentation / Interface Disconnect
 
