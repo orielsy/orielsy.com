@@ -20,18 +20,18 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
     <div class="relative min-h-[220px] overflow-hidden">
       <div class="signal-grid absolute inset-0" aria-hidden="true"></div>
 
-      <div class="caption-stage absolute inset-x-4 top-6 h-14" aria-hidden="true">
-        <span class="caption caption-one">Local speech becomes live captions.</span>
-        <span class="caption caption-two">Graphics stay ready for broadcast.</span>
-        <span class="caption caption-three">The overlay composites in OBS.</span>
-      </div>
-
-      <div class="absolute inset-x-4 bottom-[76px]" aria-hidden="true">
+      <div class="absolute left-4 top-6" aria-hidden="true">
         <div class="waveform flex h-8 items-end gap-[3px]">
           {bars.map((height, index) => (
             <span style={`--bar-height:${height}%; --bar-index:${index};`}></span>
           ))}
         </div>
+      </div>
+
+      <div class="caption-stage absolute inset-x-4 top-[84px] h-14" aria-hidden="true">
+        <span class="caption caption-one">Local speech becomes live captions.</span>
+        <span class="caption caption-two">Graphics stay ready for broadcast.</span>
+        <span class="caption caption-three">The overlay composites in OBS.</span>
       </div>
 
       <div class="lower-third absolute inset-x-4 bottom-4 border-l-2 border-[var(--accent)] bg-black/55 px-3 py-2.5 backdrop-blur-sm" aria-hidden="true">
@@ -135,17 +135,17 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
   }
 
   @keyframes lower-third-cycle {
-    0%, 10%, 100% {
-      opacity: 0.62;
-      transform: translateY(5px);
+    0%, 7% {
+      opacity: 0.82;
+      transform: translateY(2px);
     }
-    18%, 82% {
+    14%, 92% {
       opacity: 1;
       transform: translateY(0);
     }
-    92% {
-      opacity: 0.7;
-      transform: translateY(3px);
+    100% {
+      opacity: 0.9;
+      transform: translateY(1px);
     }
   }
 
