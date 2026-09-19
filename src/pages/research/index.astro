@@ -83,7 +83,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
               class="article-item group grid gap-4 border-b border-[var(--border-subtle)] py-7 last:border-b-0 sm:grid-cols-[130px_minmax(0,1fr)_auto] sm:gap-8"
             >
               <div class="flex items-start gap-3 sm:block">
-                <span class="font-editorial-mono text-[9px] text-[var(--accent)]">{String(index + 1).padStart(2, '0')}</span>
+                <span class="font-editorial-mono text-[9px] text-[var(--accent)]">{String(entry.data.researchNumber ?? index + 1).padStart(2, '0')}</span>
                 <time datetime={entry.data.pubDate.toISOString()} class="font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)] sm:mt-3 sm:block">
                   {formatDate(entry.data.pubDate)}
                 </time>
