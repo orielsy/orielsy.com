@@ -44,18 +44,19 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
     </div>
   </header>
 
-  <section class="border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)]/35 py-5">
-    <div class="site-shell flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+  <section class="border-b border-[var(--border-subtle)] py-4">
+    <div class="site-shell flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
       <div class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
         Browse by format
       </div>
-      <div class="flex flex-wrap gap-2" id="filter-container">
+      <div class="flex flex-wrap gap-x-5 gap-y-2" id="filter-container">
         <button
           type="button"
           data-filter="all"
-          class="filter-btn border border-[var(--accent)] bg-[var(--accent)] px-3 py-1.5 font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-white transition-colors cursor-pointer"
+          aria-pressed="true"
+          class="filter-btn cursor-pointer border-b border-[var(--accent)] py-1 font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-primary)] transition-colors"
         >
-          All ({publishedResearch.length})
+          All <span class="text-[var(--text-muted)]">({publishedResearch.length})</span>
         </button>
         {allTypes.map((type) => {
           const count = publishedResearch.filter((entry) => entry.data.type === type).length;
@@ -63,9 +64,10 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             <button
               type="button"
               data-filter={type}
-              class="filter-btn border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 py-1.5 font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-secondary)] transition-colors hover:border-[var(--border-strong)] hover:text-[var(--text-primary)] cursor-pointer"
+              aria-pressed="false"
+              class="filter-btn cursor-pointer border-b border-transparent py-1 font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)] transition-colors hover:text-[var(--text-primary)]"
             >
-              {type} ({count})
+              {type} <span class="text-[var(--text-muted)]">({count})</span>
             </button>
           );
         })}
@@ -165,12 +167,14 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
         const filter = btn.getAttribute('data-filter');
 
         filterButtons.forEach((button) => {
-          button.classList.remove('bg-[var(--accent)]', 'text-white', 'border-[var(--accent)]');
-          button.classList.add('bg-[var(--bg-primary)]', 'border-[var(--border-subtle)]', 'text-[var(--text-secondary)]');
+          button.setAttribute('aria-pressed', 'false');
+          button.classList.remove('border-[var(--accent)]', 'text-[var(--text-primary)]');
+          button.classList.add('border-transparent', 'text-[var(--text-muted)]');
         });
 
-        btn.classList.add('bg-[var(--accent)]', 'text-white', 'border-[var(--accent)]');
-        btn.classList.remove('bg-[var(--bg-primary)]', 'border-[var(--border-subtle)]', 'text-[var(--text-secondary)]');
+        btn.setAttribute('aria-pressed', 'true');
+        btn.classList.add('border-[var(--accent)]', 'text-[var(--text-primary)]');
+        btn.classList.remove('border-transparent', 'text-[var(--text-muted)]');
 
         let visibleCount = 0;
         articles.forEach((article) => {
