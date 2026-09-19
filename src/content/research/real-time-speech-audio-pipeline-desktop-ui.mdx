@@ -32,22 +32,13 @@ import TranscriptionFilteringTruthVisual from '../../components/research/Transcr
   This exploration is grounded in the current public `speechBubbles` and `whisper-api` source. Format calculations below are arithmetic derived from the stated sample formats, not measured runtime benchmarks.
 </ResearchSourceNote>
 
+<Callout type="note" title="TL;DR">
+  Real-time speech UI is a pipeline problem. Separating capture, inference, filtering, and rendering makes the system easier to reason about.
+</Callout>
+
 <ResearchBreakout mode="publication">
   <SpeechStreamingPipelineVisual />
 </ResearchBreakout>
-
-## The Challenge: Real-Time Audio at the Interface Layer
-
-Building a real-time, on-device speech-to-text interface presents a distributed-systems problem at the interface layer.
-
-Unlike batch transcription—where a static media file is uploaded, processed sequentially, and returned as a finished transcript—live transcription requires continuous coordination across four distinct operational domains:
-
-1. **Hardware Audio Capture**: Sampling microphone input in the browser/client environment.
-2. **Buffered Chunk Processing**: Deciding when accumulated audio is large enough to send through neural inference.
-3. **Transcript Confidence Filtering**: Suppressing low-confidence segments before they are rendered to the overlay.
-4. **Fluid UI Compositing**: Rendering animated overlay graphics without unnecessary layout churn or visible jitter.
-
----
 
 ## The Audio Sample Rate Dilemma
 
