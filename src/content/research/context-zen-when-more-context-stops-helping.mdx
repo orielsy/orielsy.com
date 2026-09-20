@@ -74,44 +74,11 @@ It is "decide what still matters."
 
 ### Handoff
 
-The distilled state is packaged so another context can continue the work.
+The distilled state is packaged so another context can continue the work. The authoritative state stays the same, but a different receiving environment may need that state organized and emphasized differently.
 
 If the host exposes clipboard access, Context Zen can copy the complete handoff automatically. Otherwise it returns one clean, self-contained artifact for the user to copy.
 
 It does not assume it can create or navigate to a new conversation on the user's behalf.
-
----
-
-## Activation Follows the Work
-
-If activation belonged only to one conversation, Context Zen would disable itself every time it successfully recommended leaving that conversation.
-
-Instead, activation belongs to a **continuation lineage**: the chain of work that survives across handoffs.
-
-When Context Zen creates a handoff, it carries a small marker:
-
-```yaml
----
-context_zen:
-  version: "0.1"
-  continuation: true
-  enabled: true
----
-```
-
-`continuation` identifies the artifact as part of a Context Zen continuation. `enabled` says whether monitoring should remain active in the receiving context.
-
-That distinction also supports manual handoffs. A user can request:
-
-```text
-context zen handoff
-```
-
-even when monitoring is off. In that case the handoff is still a continuation, but it carries `enabled: false`. Creating a checkpoint does not silently opt the user into monitoring.
-
-The user can therefore opt in once for a chain of work and remain opted in until explicitly turning Context Zen off.
-
-A host does not need durable cross-chat state for this model to work; the handoff itself can carry the state forward.
 
 ---
 
@@ -146,6 +113,41 @@ The final test is deliberately simple:
 > **Would a fresh capable agent with a faithful compact handoff probably have an easier time continuing correctly than the current agent has reasoning over the entire accumulated conversation?**
 
 If the answer becomes clearly yes, Context Zen should hand off.
+
+---
+
+## Activation Follows the Work
+
+If activation belonged only to one conversation, Context Zen would disable itself every time it successfully recommended leaving that conversation.
+
+Instead, activation belongs to a **continuation lineage**: the chain of work that survives across handoffs.
+
+When Context Zen creates a handoff, it carries a small marker:
+
+<span className="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Continuation marker</span>
+
+```yaml
+---
+context_zen:
+  version: "0.1"
+  continuation: true
+  enabled: true
+---
+```
+
+`continuation` identifies the artifact as part of a Context Zen continuation. `enabled` says whether monitoring should remain active in the receiving context.
+
+That distinction also supports manual handoffs. A user can request:
+
+```text
+context zen handoff
+```
+
+even when monitoring is off. In that case the handoff is still a continuation, but it carries `enabled: false`. Creating a checkpoint does not silently opt the user into monitoring.
+
+The user can therefore opt in once for a chain of work and remain opted in until explicitly turning Context Zen off.
+
+A host does not need durable cross-chat state for this model to work; the handoff itself can carry the state forward.
 
 ---
 
@@ -205,11 +207,9 @@ The third arm matters. Comparing only a full transcript with a distilled handoff
 
 Useful measures could include missed active constraints, accidental revival of rejected decisions, repeated questions, user corrections, task completion quality, token use, latency, and target-specific success.
 
-It may turn out that some categories of work benefit from much longer raw history than others.
+Different kinds of work may benefit from different amounts of raw history, and rejected decisions may prove unusually important to preserve.
 
-It may also turn out that rejected decisions are disproportionately important to preserve.
-
-And the ideal threshold may depend more on **state entropy** than token count. By state entropy, I mean the share of retained context occupied by superseded, conflicting, or no-longer-actionable state.
+The more interesting possibility is that the handoff threshold depends less on token count than on **state entropy**: the share of retained context occupied by superseded, conflicting, or no-longer-actionable state.
 
 Those are the questions that make the project interesting to me.
 
