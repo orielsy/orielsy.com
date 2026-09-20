@@ -34,11 +34,35 @@ const stages = [
       <li class:list={['stage', index === stages.length - 1 && 'is-output']}>
         <div class="stage-topline">
           <span class="number">{stage.number}</span>
-          <span class="label">{stage.label}</span>
+          <span class="label">
+            {stage.label === 'Observe' && (
+              <svg class="stage-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" />
+                <circle cx="12" cy="12" r="2.5" />
+              </svg>
+            )}
+            {stage.label === 'Distill' && (
+              <svg class="stage-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <path d="M4 5h16l-6 7v5l-4 2v-7L4 5Z" />
+              </svg>
+            )}
+            {stage.label === 'Handoff' && (
+              <svg class="stage-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <path d="M5 12h13" />
+                <path d="m14 8 4 4-4 4" />
+              </svg>
+            )}
+            <span>{stage.label}</span>
+          </span>
         </div>
         <strong>{stage.title}</strong>
         <p>{stage.detail}</p>
-        {index < stages.length - 1 && <span class="arrow" aria-hidden="true">→</span>}
+        {index < stages.length - 1 && (
+          <>
+            <span class="arrow arrow-mobile" aria-hidden="true">↓</span>
+            <span class="arrow arrow-desktop" aria-hidden="true">→</span>
+          </>
+        )}
       </li>
     ))}
   </ol>
@@ -86,9 +110,19 @@ const stages = [
   }
 
   .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     color: var(--text-muted);
     font-size: 0.45rem;
     letter-spacing: 0.11em;
+  }
+
+  .stage-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    flex: 0 0 auto;
+    color: var(--accent);
   }
 
   .stage strong,
@@ -115,15 +149,24 @@ const stages = [
 
   .arrow {
     position: absolute;
-    right: -0.5rem;
-    top: 50%;
     z-index: 2;
-    display: none;
-    transform: translateY(-50%);
     background: var(--bg-card);
     padding: 0.1rem;
     color: var(--accent);
     font-family: var(--font-mono-ui);
+  }
+
+  .arrow-mobile {
+    left: 50%;
+    bottom: -0.55rem;
+    transform: translateX(-50%);
+  }
+
+  .arrow-desktop {
+    display: none;
+    right: -0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   @media (min-width: 720px) {
@@ -131,7 +174,11 @@ const stages = [
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .arrow {
+    .arrow-mobile {
+      display: none;
+    }
+
+    .arrow-desktop {
       display: block;
     }
   }
