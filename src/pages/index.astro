@@ -62,7 +62,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
       <div class="lg:col-span-8">
         <div class="flex items-center gap-3 font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)] sm:text-[10px]">
           <span class="h-px w-10 bg-[var(--accent)]" aria-hidden="true"></span>
-          <span>Senior Frontend Engineer &bull; UI Architect</span>
+          <span>Orielsy Diaz &bull; Senior Frontend Engineer &bull; UI Architect</span>
         </div>
 
         <h1 class="font-display mt-8 max-w-5xl text-4xl font-semibold leading-[1.04] tracking-[-0.045em] text-[var(--text-primary)] sm:text-6xl lg:text-7xl">
@@ -72,7 +72,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
 
       <div class="lg:col-span-4 lg:pb-2">
         <p class="max-w-[46rem] text-sm leading-7 text-[var(--text-secondary)] sm:text-[15px]">
-          I have 15+ years of experience designing scalable web architectures, frontend systems, and enterprise platforms. My current work centers on applied AI, context engineering for AI agents, Model Context Protocol (MCP), and local inference—exploring how these capabilities can support real product experiences, agentic development workflows, and developer tools.
+          I design and build frontend architecture for complex web applications and enterprise platforms, drawing on 15+ years of engineering experience. My current work centers on applied AI, context engineering for AI agents, Model Context Protocol (MCP), and local inference—exploring how these capabilities can support real product experiences, agentic development workflows, and developer tools.
         </p>
 
         <div class="mt-7 flex flex-wrap gap-x-6 gap-y-3 font-editorial-mono text-[10px] uppercase tracking-[0.08em]">
@@ -122,17 +122,6 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
               {featuredResearch.data.home.blurb}
             </p>
           )}
-          {featuredResearch.data.tldr && (
-            <button
-              type="button"
-              class="mt-4 cursor-pointer font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)]"
-              aria-expanded="false"
-              aria-controls={`tldr-home-featured-${featuredResearch.id}`}
-              data-tldr-toggle
-            >
-              TL;DR <span data-tldr-symbol aria-hidden="true">+</span>
-            </button>
-          )}
         </div>
 
         <article class="grid gap-8 border-t border-[var(--accent)] pt-6 lg:col-span-9 lg:grid-cols-[minmax(0,1fr)_260px]">
@@ -150,6 +139,18 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             <p class="mt-5 max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">
               {featuredResearch.data.description}
             </p>
+
+            {featuredResearch.data.tldr && (
+              <button
+                type="button"
+                class="mt-4 cursor-pointer font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)]"
+                aria-expanded="false"
+                aria-controls={`tldr-home-featured-${featuredResearch.id}`}
+                data-tldr-toggle
+              >
+                TL;DR <span data-tldr-symbol aria-hidden="true">+</span>
+              </button>
+            )}
 
             {featuredResearch.data.tldr && (
               <div
@@ -254,7 +255,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
         <div class="flex flex-wrap items-end justify-between gap-5">
           <div>
             <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">From Theory to Practice</p>
-            <h2 class="font-display mt-3 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Selected Implementations</h2>
+            <h2 class="font-display mt-3 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Selected Implementation</h2>
           </div>
           <a href="/projects" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all →</a>
         </div>
