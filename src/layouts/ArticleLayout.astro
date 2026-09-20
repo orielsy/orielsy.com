@@ -127,21 +127,17 @@ const formattedUpdateDate = data.updatedDate
         </div>
       </div>
     </header>
-
-    {published && isConceptDraft && (
-      <div class="reading-shell pt-8">
-        <ConceptDraftNotice kind="research" />
-      </div>
-    )}
-
     {published ? (
       <>
         <div class="site-shell py-10 sm:py-14 lg:py-16">
-          {data.tldr && (
+          {(isConceptDraft || data.tldr) && (
             <div class="research-reading mx-auto w-full min-w-0 lg:hidden">
-              <Callout type="note" title={data.tldrLabel ?? 'TL;DR'}>
-                {data.tldr}
-              </Callout>
+              {isConceptDraft && <ConceptDraftNotice kind="research" />}
+              {data.tldr && (
+                <Callout type="note" title={data.tldrLabel ?? 'TL;DR'}>
+                  {data.tldr}
+                </Callout>
+              )}
             </div>
           )}
 
@@ -153,6 +149,12 @@ const formattedUpdateDate = data.updatedDate
             </aside>
 
             <div class="research-reading mx-auto w-full min-w-0 lg:col-span-8 lg:col-start-5 lg:mx-0">
+              {isConceptDraft && (
+                <div class="hidden lg:block">
+                  <ConceptDraftNotice kind="research" />
+                </div>
+              )}
+
               {data.tldr && (
                 <div class="hidden lg:block">
                   <Callout type="note" title={data.tldrLabel ?? 'TL;DR'}>
