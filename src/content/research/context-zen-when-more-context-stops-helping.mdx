@@ -18,6 +18,7 @@ readingTime: "5 min read"
 import ContextDistillationVisual from '../../components/research/ContextDistillationVisual.astro';
 import ContextHealthStatesVisual from '../../components/research/ContextHealthStatesVisual.astro';
 import ContextRecompilationVisual from '../../components/research/ContextRecompilationVisual.astro';
+import ContextZenExperimentVisual from '../../components/research/ContextZenExperimentVisual.astro';
 import ContextZenLifecycleVisual from '../../components/research/ContextZenLifecycleVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 
@@ -196,9 +197,9 @@ That is the research opportunity.
 
 A useful experiment should compare continuation from three conditions:
 
-1. the complete long-running conversation
-2. a conventional conversation summary
-3. a Context Zen distilled handoff
+<ResearchBreakout mode="wide">
+  <ContextZenExperimentVisual />
+</ResearchBreakout>
 
 The third arm matters. Comparing only a full transcript with a distilled handoff would tell us that compression might help, but not whether reconstructing authoritative working state is better than ordinary summarization.
 
