@@ -76,6 +76,38 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
         </div>
       </div>
     </section>
+
+    <script is:inline>
+      const filterButtons = document.querySelectorAll('.project-filter-btn');
+      const projects = document.querySelectorAll('#projects-list .project-item');
+      const emptyState = document.getElementById('no-filtered-projects');
+
+      filterButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const filter = btn.getAttribute('data-filter');
+
+          filterButtons.forEach((button) => {
+            button.setAttribute('aria-pressed', 'false');
+            button.classList.remove('border-[var(--accent)]', 'text-[var(--text-primary)]');
+            button.classList.add('border-transparent', 'text-[var(--text-muted)]');
+          });
+
+          btn.setAttribute('aria-pressed', 'true');
+          btn.classList.add('border-[var(--accent)]', 'text-[var(--text-primary)]');
+          btn.classList.remove('border-transparent', 'text-[var(--text-muted)]');
+
+          let visibleCount = 0;
+          projects.forEach((project) => {
+            const status = project.getAttribute('data-project-status');
+            const visible = filter === 'all' || status === filter;
+            project.style.display = visible ? 'grid' : 'none';
+            if (visible) visibleCount++;
+          });
+
+          emptyState?.classList.toggle('hidden', visibleCount > 0);
+        });
+      });
+    </script>
   )}
 
   <section class="site-shell py-12 sm:py-16" aria-label="Selected project implementations">
@@ -183,35 +215,4 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
     </section>
   )}
 
-  <script>
-    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.project-filter-btn');
-    const projects = document.querySelectorAll<HTMLElement>('#projects-list .project-item');
-    const emptyState = document.getElementById('no-filtered-projects');
-
-    filterButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const filter = btn.getAttribute('data-filter');
-
-        filterButtons.forEach((button) => {
-          button.setAttribute('aria-pressed', 'false');
-          button.classList.remove('border-[var(--accent)]', 'text-[var(--text-primary)]');
-          button.classList.add('border-transparent', 'text-[var(--text-muted)]');
-        });
-
-        btn.setAttribute('aria-pressed', 'true');
-        btn.classList.add('border-[var(--accent)]', 'text-[var(--text-primary)]');
-        btn.classList.remove('border-transparent', 'text-[var(--text-muted)]');
-
-        let visibleCount = 0;
-        projects.forEach((project) => {
-          const status = project.getAttribute('data-project-status');
-          const visible = filter === 'all' || status === filter;
-          project.style.display = visible ? 'grid' : 'none';
-          if (visible) visibleCount++;
-        });
-
-        emptyState?.classList.toggle('hidden', visibleCount > 0);
-      });
-    });
-  </script>
 </BaseLayout>
