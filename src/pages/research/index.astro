@@ -183,6 +183,20 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
 
         const symbol = button.querySelector<HTMLElement>('[data-tldr-symbol]');
         if (symbol) symbol.textContent = expanded ? '+' : '−';
+
+        if (!expanded) {
+          panel.setAttribute('tabindex', '-1');
+
+          requestAnimationFrame(() => {
+            panel.focus({ preventScroll: true });
+
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            panel.scrollIntoView({
+              behavior: reduceMotion ? 'auto' : 'smooth',
+              block: 'nearest',
+            });
+          });
+        }
       });
     });
 
