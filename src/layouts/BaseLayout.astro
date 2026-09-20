@@ -52,6 +52,30 @@ const umamiEnabled = import.meta.env.PROD;
       schemaType={schemaType}
       noindex={noindex}
     />
+    <script is:inline>
+      (() => {
+        try {
+          const storageKey = 'orielsy-theme';
+          const legacyStorageKey = 'theme';
+          const saved = localStorage.getItem(storageKey) || localStorage.getItem(legacyStorageKey);
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const theme = saved === 'light' || saved === 'dark'
+            ? saved
+            : prefersDark ? 'dark' : 'light';
+
+          const root = document.documentElement;
+          root.classList.toggle('dark', theme === 'dark');
+          root.classList.toggle('light', theme === 'light');
+
+          localStorage.setItem(storageKey, theme);
+          if (localStorage.getItem(legacyStorageKey)) {
+            localStorage.removeItem(legacyStorageKey);
+          }
+        } catch {
+          // Fall back to the light theme defined by the document when storage is unavailable.
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link
