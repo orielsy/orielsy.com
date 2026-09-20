@@ -1,0 +1,148 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const stages = [
+  {
+    number: '01',
+    label: 'Observe',
+    title: 'Assess context health',
+    detail: 'Notice drift, superseded state, collisions, and accumulated residue while normal work continues.',
+  },
+  {
+    number: '02',
+    label: 'Distill',
+    title: 'Reconstruct current state',
+    detail: 'Preserve active decisions, constraints, artifacts, rejected paths worth remembering, and the next step.',
+  },
+  {
+    number: '03',
+    label: 'Handoff',
+    title: 'Create a fresh boundary',
+    detail: 'Package the authoritative state for continuation without carrying the entire conversation forward.',
+  },
+];
+---
+
+<ResearchFigureFrame
+  eyebrow="Context Zen lifecycle"
+  title="Observe the context, distill the state, then hand off at a clean boundary."
+  status="Opt-in · continuation-aware"
+  caption="The skill does not need background execution to follow this lifecycle; it evaluates context health while participating in normal turns."
+>
+  <ol class="lifecycle-grid" aria-label="Context Zen observe, distill, handoff lifecycle">
+    {stages.map((stage, index) => (
+      <li class:list={['stage', index === stages.length - 1 && 'is-output']}>
+        <div class="stage-topline">
+          <span class="number">{stage.number}</span>
+          <span class="label">{stage.label}</span>
+        </div>
+        <strong>{stage.title}</strong>
+        <p>{stage.detail}</p>
+        {index < stages.length - 1 && <span class="arrow" aria-hidden="true">→</span>}
+      </li>
+    ))}
+  </ol>
+</ResearchFigureFrame>
+
+<style>
+  .lifecycle-grid {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--border-subtle);
+    gap: 1px;
+  }
+
+  .stage {
+    position: relative;
+    min-width: 0;
+    min-height: 10rem;
+    background: var(--bg-card);
+    padding: 1rem;
+  }
+
+  .stage.is-output {
+    background: color-mix(in srgb, var(--accent) 6%, var(--bg-card));
+  }
+
+  .stage-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .number,
+  .label {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .number {
+    color: var(--accent);
+    font-size: 0.5rem;
+    letter-spacing: 0.09em;
+  }
+
+  .label {
+    color: var(--text-muted);
+    font-size: 0.45rem;
+    letter-spacing: 0.11em;
+  }
+
+  .stage strong,
+  .stage p {
+    display: block;
+    margin: 0;
+  }
+
+  .stage strong {
+    margin-top: 1.35rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .stage p {
+    margin-top: 0.45rem;
+    color: var(--text-secondary);
+    font-size: 0.67rem;
+    line-height: 1.55;
+  }
+
+  .arrow {
+    position: absolute;
+    right: -0.5rem;
+    top: 50%;
+    z-index: 2;
+    display: none;
+    transform: translateY(-50%);
+    background: var(--bg-card);
+    padding: 0.1rem;
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+  }
+
+  @media (min-width: 720px) {
+    .lifecycle-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .arrow {
+      display: block;
+    }
+  }
+
+  @media (max-width: 719px) {
+    .stage {
+      min-height: 0;
+    }
+
+    .stage strong {
+      margin-top: 0.8rem;
+    }
+  }
+</style>
