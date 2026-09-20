@@ -70,11 +70,13 @@ The question becomes less "Which model can run the whole experience?" and more "
 
 Traditional progressive enhancement keeps the baseline useful and adds capability when the environment supports it.
 
-The same principle can apply to intelligent interfaces.
+Progressive enhancement does not require every tier to produce an identical experience. Here, the **baseline** is useful application behavior; the **environment** includes hardware, connectivity, privacy constraints, and available inference; and **intelligence is the enhancement**. Capability may vary substantially across those tiers. **Application truth and action boundaries should not.**
 
-A capability might begin with deterministic behavior, gain lightweight or local inference when available, and use a stronger remote model when the task justifies it. The interaction can remain stable while the implementation underneath it changes.
+A capability might begin with deterministic behavior, gain lightweight or local inference when available, and use a stronger remote model when the task justifies it.
 
 Semantic search, for example, might begin with indexed filtering and synonyms, add local embeddings, or use a remote reranker. The user still experiences **search**.
+
+**Capability can degrade gracefully. Authority should remain bounded by evidence.**
 
 The goal is not to force every feature through every tier. It is to avoid making the interface dependent on the most expensive or powerful tier when the task does not require it.
 
