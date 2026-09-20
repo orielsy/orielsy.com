@@ -38,15 +38,11 @@ A transcript is chronological. Working state is authoritative.
   <ContextDistillationVisual />
 </ResearchBreakout>
 
-That difference is the foundation of Context Zen.
-
 I use *context distillation* to mean reconstructing the smallest reliable state required to continue the work while intentionally dropping history that no longer has forward value.
 
 A good handoff preserves the current objective, decisions still in force, relevant constraints, rejected approaches likely to be rediscovered, active artifacts, unresolved questions, and the immediate next step. It compresses chronology, abandoned exploration, obsolete assumptions, repeated explanations, and agent self-commentary.
 
-The goal is not the shortest possible handoff.
-
-It is the smallest one that still preserves **correct continuation**.
+The goal is the smallest handoff that still preserves **correct continuation**.
 
 ---
 
@@ -84,19 +80,13 @@ It does not assume it can create or navigate to a new conversation on the user's
 
 ## What Does "Context Health" Mean?
 
-This is the part of the project I do **not** want to fake precision around.
-
-It would be easy to invent a numeric score, but without a tested scoring model that mostly creates the appearance of measurement.
-
-The first version instead uses three qualitative states:
+I do **not** want to fake precision around context health. Without a validated scoring model, v0.1 uses three qualitative states:
 
 <ResearchBreakout mode="wide">
   <ContextHealthStatesVisual />
 </ResearchBreakout>
 
-The skill can use hard signals when the host exposes them, such as context or token load, turn count, active artifact count, or tool-result volume.
-
-But length alone should not force a handoff. A very long conversation can remain coherent.
+The skill can use hard signals such as context load, turn count, active artifact count, or tool-result volume, but length alone should not force a handoff.
 
 The more interesting signals are semantic:
 
@@ -153,11 +143,7 @@ A host does not need durable cross-chat state for this model to work; the handof
 
 ## Target-Aware Handoffs
 
-The same authoritative state may need different emphasis depending on the next environment.
-
-The missing piece is **who chooses the target**.
-
-For v0.1, the honest answer is the user.
+For v0.1, the user chooses the target.
 
 A manual request can be explicit:
 
@@ -175,7 +161,7 @@ A research profile can foreground the research question, established findings, s
 
 Targeting may change organization, emphasis, and compression, but it must not change or omit state that could materially alter continuation.
 
-That makes target awareness deterministic rather than magical. Context Zen does not need to discover installed agents or infer destinations it cannot actually see.
+Context Zen does not need to discover installed agents or infer destinations it cannot see.
 
 The working model is:
 
@@ -189,13 +175,9 @@ This is closer to **context recompilation** than ordinary summarization: preserv
 
 ## What v0.1 Tests
 
-The first public version is intentionally modest.
+The repository defines opt-in activation, continuation-lineage propagation, qualitative context-health assessment, manual handoff, distillation rules, a canonical handoff format, clipboard behavior where supported, and coding and research target profiles.
 
-The repository currently defines explicit opt-in activation, continuation-lineage propagation, qualitative context-health assessment, manual handoff, distillation rules, a canonical handoff format, clipboard behavior where supported, and coding and research target profiles.
-
-What it does **not** yet provide is a validated model proving exactly when long context becomes worse than distilled context.
-
-That is the research opportunity.
+What it does **not** provide is a validated model for when long context becomes worse than distilled context.
 
 A useful experiment should compare continuation from three conditions:
 
@@ -211,8 +193,6 @@ Different kinds of work may benefit from different amounts of raw history, and r
 
 The more interesting possibility is that the handoff threshold depends less on token count than on **state entropy**: the share of retained context occupied by superseded, conflicting, or no-longer-actionable state.
 
-Those are the questions that make the project interesting to me.
-
 ---
 
 ## The Broader Context-Engineering Question
@@ -225,13 +205,9 @@ Context Zen explores the complementary question:
 
 > **When should we deliberately remove information from the active context?**
 
-Good context engineering may eventually require both.
-
 Retrieval brings relevant state in. Distillation decides what deserves to stay. Handoff creates a clean boundary at which to reset the rest.
 
 > **A healthy agent context is not the one that remembers the most. It is the one that preserves the right state with the least ambiguity.**
-
-That is the idea I want Context Zen to test.
 
 The experimental skill, handoff schema, health heuristic, lifecycle model, and examples are available in the companion repository:
 
