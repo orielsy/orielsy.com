@@ -126,31 +126,42 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
 
         <article class="grid gap-8 border-t border-[var(--accent)] pt-6 lg:col-span-9 lg:grid-cols-[minmax(0,1fr)_260px]">
           <div>
-            <div class="flex flex-wrap items-start gap-x-5 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.09em] text-[var(--text-muted)]">
+            <div class="flex flex-wrap gap-x-5 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.09em] text-[var(--text-muted)]">
               <span>{featuredResearch.data.type}</span>
               <time datetime={featuredResearch.data.pubDate.toISOString()}>{formatDate(featuredResearch.data.pubDate)}</time>
               {featuredResearch.data.readingTime && <span>{featuredResearch.data.readingTime}</span>}
-              {featuredResearch.data.tldr && (
-                <details class="group/tldr open:basis-full open:w-full">
-                  <summary class="inline-flex cursor-pointer list-none items-center gap-1.5 text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)] [&::-webkit-details-marker]:hidden">
-                    <span>TL;DR</span>
-                    <span class="group-open/tldr:hidden" aria-hidden="true">+</span>
-                    <span class="hidden group-open/tldr:inline" aria-hidden="true">−</span>
-                  </summary>
-                  <div class="mt-3 border-l border-[var(--accent)] bg-[var(--bg-card)] px-4 py-3">
-                    <p class="font-sans text-sm font-normal normal-case leading-7 tracking-normal text-[var(--text-secondary)]">{featuredResearch.data.tldr}</p>
-                  </div>
-                </details>
-              )}
             </div>
 
-            <h2 class="font-display mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.035em] text-[var(--text-primary)] sm:text-4xl">
-              <a href={`/research/${featuredResearch.id}`} class="hover:text-[var(--accent)]">{featuredResearch.data.title}</a>
-            </h2>
+            <div class="mt-5 flex max-w-3xl flex-wrap items-baseline gap-x-3 gap-y-2">
+              <h2 class="font-display text-3xl font-semibold leading-tight tracking-[-0.035em] text-[var(--text-primary)] sm:text-4xl">
+                <a href={`/research/${featuredResearch.id}`} class="transition-colors hover:text-[var(--accent)]">{featuredResearch.data.title}</a>
+              </h2>
+              {featuredResearch.data.tldr && (
+                <button
+                  type="button"
+                  class="shrink-0 cursor-pointer font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)]"
+                  aria-expanded="false"
+                  aria-controls={`tldr-home-featured-${featuredResearch.id}`}
+                  data-tldr-toggle
+                >
+                  TL;DR <span data-tldr-symbol aria-hidden="true">+</span>
+                </button>
+              )}
+            </div>
 
             <p class="mt-5 max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">
               {featuredResearch.data.description}
             </p>
+
+            {featuredResearch.data.tldr && (
+              <div
+                id={`tldr-home-featured-${featuredResearch.id}`}
+                class="mt-4 hidden max-w-3xl border-l border-[var(--accent)] bg-[var(--bg-card)] px-4 py-3"
+                data-tldr-panel
+              >
+                <p class="text-sm leading-7 text-[var(--text-secondary)]">{featuredResearch.data.tldr}</p>
+              </div>
+            )}
 
             <a href={`/research/${featuredResearch.id}`} class="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--accent)]">
               Read publication <span aria-hidden="true" class="text-xs">→</span>
@@ -199,26 +210,37 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
               </div>
 
               <div>
-                <div class="flex flex-wrap items-start gap-x-4 gap-y-1 font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
+                <div class="flex flex-wrap gap-x-4 gap-y-1 font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
                   <span>{entry.data.type}</span>
                   {entry.data.readingTime && <span>{entry.data.readingTime}</span>}
+                </div>
+                <div class="mt-3 flex max-w-3xl flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <h3 class="font-display text-xl font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)] sm:text-2xl">
+                    <a href={`/research/${entry.id}`} class="transition-colors hover:text-[var(--accent)]">{entry.data.title}</a>
+                  </h3>
                   {entry.data.tldr && (
-                    <details class="group/tldr open:basis-full open:w-full">
-                      <summary class="inline-flex cursor-pointer list-none items-center gap-1.5 text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)] [&::-webkit-details-marker]:hidden">
-                        <span>TL;DR</span>
-                        <span class="group-open/tldr:hidden" aria-hidden="true">+</span>
-                        <span class="hidden group-open/tldr:inline" aria-hidden="true">−</span>
-                      </summary>
-                      <div class="mt-3 border-l border-[var(--accent)] bg-[var(--bg-card)] px-4 py-3">
-                        <p class="font-sans text-sm font-normal normal-case leading-7 tracking-normal text-[var(--text-secondary)]">{entry.data.tldr}</p>
-                      </div>
-                    </details>
+                    <button
+                      type="button"
+                      class="shrink-0 cursor-pointer font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)]"
+                      aria-expanded="false"
+                      aria-controls={`tldr-home-${entry.id}`}
+                      data-tldr-toggle
+                    >
+                      TL;DR <span data-tldr-symbol aria-hidden="true">+</span>
+                    </button>
                   )}
                 </div>
-                <h3 class="font-display mt-3 max-w-3xl text-xl font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)] sm:text-2xl">
-                  <a href={`/research/${entry.id}`} class="group-hover:text-[var(--accent)]">{entry.data.title}</a>
-                </h3>
                 <p class="mt-3 max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">{entry.data.description}</p>
+
+                {entry.data.tldr && (
+                  <div
+                    id={`tldr-home-${entry.id}`}
+                    class="mt-4 hidden max-w-3xl border-l border-[var(--accent)] bg-[var(--bg-card)] px-4 py-3"
+                    data-tldr-panel
+                  >
+                    <p class="text-sm leading-7 text-[var(--text-secondary)]">{entry.data.tldr}</p>
+                  </div>
+                )}
 
               </div>
 
@@ -278,4 +300,20 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
       </div>
     </section>
   )}
+  <script>
+    document.querySelectorAll<HTMLButtonElement>('[data-tldr-toggle]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const panelId = button.getAttribute('aria-controls');
+        const panel = panelId ? document.getElementById(panelId) : null;
+        if (!panel) return;
+
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!expanded));
+        panel.classList.toggle('hidden', expanded);
+
+        const symbol = button.querySelector<HTMLElement>('[data-tldr-symbol]');
+        if (symbol) symbol.textContent = expanded ? '+' : '−';
+      });
+    });
+  </script>
 </BaseLayout>
