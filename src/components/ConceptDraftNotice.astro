@@ -4,39 +4,31 @@ export interface Props {
 }
 
 const { kind } = Astro.props;
-const statusLabel = kind === 'research' ? 'Research status' : 'Project status';
-const description = kind === 'research'
-  ? 'Published in public while the framing, examples, and conclusions continue to evolve.'
-  : 'Published in public while the implementation, framing, and case study continue to evolve.';
 const headingId = `concept-draft-${kind}-heading`;
 ---
 
 <section
-  class="my-8 overflow-hidden rounded-lg border border-[var(--border-subtle)] border-l-2 border-l-amber-600 dark:border-l-amber-400 bg-[var(--bg-card)]"
+  class="my-8 overflow-hidden rounded-md border border-[var(--border-subtle)] border-l-2 border-l-amber-600 bg-[var(--bg-card)] dark:border-l-amber-400"
   aria-labelledby={headingId}
 >
-  <div class="flex gap-4 px-5 py-5 sm:px-6">
+  <div class="flex items-center gap-3 px-4 py-3 sm:px-5">
     <div
-      class="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full border border-amber-200 bg-amber-50/60 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/20 dark:text-amber-300"
+      class="flex size-7 shrink-0 items-center justify-center rounded-full border border-amber-200 bg-amber-50/60 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/20 dark:text-amber-300"
       aria-hidden="true"
     >
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="size-4">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="size-3.5">
         <path d="M10 2v6.5L5.4 17a2.6 2.6 0 0 0 2.3 3.8h8.6a2.6 2.6 0 0 0 2.3-3.8L14 8.5V2" />
         <path d="M8.5 2h7" />
         <path d="M7.2 16h9.6" />
       </svg>
     </div>
 
-    <div class="min-w-0">
-      <p class="font-editorial-mono text-[9px] font-medium uppercase tracking-[0.12em] text-[var(--accent)]">
-        {statusLabel}
-      </p>
-      <h2 id={headingId} class="font-display mt-1.5 text-base font-semibold tracking-[-0.02em] text-[var(--text-primary)] sm:text-lg">
+    <h2 id={headingId} class="min-w-0 text-sm leading-6 text-[var(--text-secondary)]">
+      <span class="font-editorial-mono font-semibold uppercase tracking-[0.09em] text-amber-700 dark:text-amber-300">
         Concept Draft
-      </h2>
-      <p class="mt-1.5 max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
-        {description}
-      </p>
-    </div>
+      </span>
+      <span class="mx-2 text-[var(--text-muted)]" aria-hidden="true">·</span>
+      <span>Published while still evolving</span>
+    </h2>
   </div>
 </section>
