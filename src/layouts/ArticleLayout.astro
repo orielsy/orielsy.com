@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import ContentStatus from '../components/ContentStatus.astro';
+import ConceptDraftNotice from '../components/ConceptDraftNotice.astro';
 import Callout from '../components/Callout.astro';
 import '../styles/research-article.css';
 import '../styles/research-publication.css';
@@ -126,6 +127,12 @@ const formattedUpdateDate = data.updatedDate
         </div>
       </div>
     </header>
+
+    {published && isConceptDraft && (
+      <div class="reading-shell pt-8">
+        <ConceptDraftNotice kind="research" />
+      </div>
+    )}
 
     {published ? (
       <>
