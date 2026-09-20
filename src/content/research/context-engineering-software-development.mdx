@@ -11,6 +11,8 @@ featured: false
 ---
 
 import Callout from '../../components/Callout.astro';
+import ContextSelection from '../../components/ContextSelection.astro';
+import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 
 <Callout type="note" title="DRAFT · REPURPOSED RESEARCH DIRECTION">
   This exploration begins after durable project memory exists. Its question is not how to preserve repository knowledge, but how to select and deliver the subset relevant to the coding task at hand.
@@ -34,6 +36,10 @@ Repository Context Engine
 ```
 
 The problem changes as durable repository memory grows. A coding task rarely needs every specification, ADR, component contract, convention, and historical implementation detail at once. The useful question becomes: **which context is relevant now, at what scope, and through which delivery mechanism?**
+
+<ResearchBreakout mode="wide">
+  <ContextSelection />
+</ResearchBreakout>
 
 ## Selection Questions
 
