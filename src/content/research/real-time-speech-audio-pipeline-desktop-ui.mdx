@@ -11,11 +11,10 @@ status: "published"
 published: true
 featured: false
 github: "https://github.com/orielsy/whisper-api"
-readingTime: "10 min read"
+readingTime: "9 min read"
 demo: "/projects/local-ai-real-time-captioning"
 ---
 
-import Callout from '../../components/Callout.astro';
 import AsyncSpeechPipelineVisual from '../../components/research/AsyncSpeechPipelineVisual.astro';
 import AudioFormatReductionVisual from '../../components/research/AudioFormatReductionVisual.astro';
 import ChunkingTradeoffVisual from '../../components/research/ChunkingTradeoffVisual.astro';
@@ -30,7 +29,7 @@ import TranscriptionFilteringTruthVisual from '../../components/research/Transcr
   This exploration is grounded in the current public `speechBubbles` and `whisper-api` source. Format calculations below are arithmetic derived from the stated sample formats, not measured runtime benchmarks.
 </ResearchSourceNote>
 
-Before following the audio through the pipeline, it helps to establish the current source-grounded system boundary.
+First, the current public system boundary:
 
 <ResearchBreakout mode="publication">
   <SpeechStreamingPipelineVisual />
@@ -155,11 +154,9 @@ Segments above those thresholds are discarded by the client. This helps suppress
 
 ## Async Inference & UI Rendering
 
-The backend uses `asyncio.to_thread()` around `model.transcribe()`. This moves blocking model inference off the async event loop so the WebSocket server can remain responsive while transcription runs.
+The backend uses `asyncio.to_thread()` around `model.transcribe()`, moving blocking inference off the async event loop. The same principle—keep blocking work off the responsive path—applies in the renderer.
 
-The same goal—keep blocking work off the responsive path—shows up on both sides of the pipeline.
-
-On the renderer side, `CaptionsView.vue` measures caption geometry after Vue's `nextTick()`, then uses nested `requestAnimationFrame()` callbacks to apply the transition styles:
+`CaptionsView.vue` measures caption geometry after Vue's `nextTick()`, then uses nested `requestAnimationFrame()` callbacks to apply the transition styles:
 
 <ResearchSourceExcerpt file="CaptionsView.vue">
 
@@ -182,8 +179,6 @@ const performAnimation = (multiplier = 1) => {
 
 The current prototype still performs synchronous geometry reads when captions mount, including a second `getBoundingClientRect()` after style changes. That is acceptable as implementation evidence for the current prototype, but it is not presented here as an optimized rendering strategy; a production pass should batch geometry reads before DOM writes to reduce forced-layout risk.
 
-The result is a separation of responsibilities: audio capture and downsampling happen in the client, blocking model inference is moved off the async event loop, and caption layout/animation remains in the Electron/Vue rendering layer.
-
 <ResearchBreakout mode="publication">
   <AsyncSpeechPipelineVisual />
 </ResearchBreakout>
@@ -198,6 +193,6 @@ Building on-device intelligent UI systems suggests several useful design princip
   <SpeechArchitectureTakeawaysVisual />
 </ResearchBreakout>
 
-The next experiments are already implied by the current boundaries: wire the existing VAD path into the active transcription flow and evaluate its behavior; test chunk-duration strategies rather than treating the three-second default as fixed; and batch caption geometry reads before DOM writes to reduce forced-layout risk. Those are implementation questions for a future pass, not conclusions from the current source.
+The next experiments are implied by the current boundaries: wire the existing VAD path into the active transcription flow, test chunk-duration strategies, and batch caption geometry reads before DOM writes.
 
 For the practical implementation and video demonstration of this architecture in action, visit the [speechBubbles Project Case Study](/projects/local-ai-real-time-captioning).
