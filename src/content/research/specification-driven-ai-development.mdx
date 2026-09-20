@@ -16,7 +16,6 @@ readingTime: "10 min read"
 
 import Callout from '../../components/Callout.astro';
 import ProjectMemoryStack from '../../components/ProjectMemoryStack.astro';
-import ContextSelection from '../../components/ContextSelection.astro';
 import ConversationVsMemoryVisual from '../../components/research/ConversationVsMemoryVisual.astro';
 import DecisionPersistenceVisual from '../../components/research/DecisionPersistenceVisual.astro';
 import FutureContextRoutingVisual from '../../components/research/FutureContextRoutingVisual.astro';
@@ -41,6 +40,45 @@ The distinction looks roughly like this:
 </ResearchBreakout>
 
 The point is not that conversation is bad. The point is that **a project should not depend on one conversation remaining available forever**.
+
+---
+
+## A Real Failure: When an Old Decision Came Back
+
+One of the reasons I care about this is that I have already seen the opposite fail.
+
+During work on this site, we had established that my professional background supports claims around:
+
+- reusable UI components
+- component architecture
+- frontend patterns
+- frontend systems
+- UI architecture
+- engineering standards
+
+What we had **not** established was formal design-system ownership.
+
+That distinction had been discussed and rejected in prior work. But later, the homepage contained this line:
+
+> "15+ years of experience designing scalable web architectures, design systems, and enterprise platforms."
+
+The wording was plausible. It even sounded professionally polished.
+
+It was also not supported by the evidence we had established.
+
+This was not primarily a coding error. It was a context-persistence failure.
+
+The correction was not just to change the homepage sentence. The durable project memory also needed to change.
+
+The constitution now explicitly says not to describe my professional experience as design systems unless that experience is established later. `specs/001-site-foundation/spec.md` carries the same positioning constraint at the site-foundation level.
+
+That gives future work a different path:
+
+<ResearchBreakout mode="wide">
+  <DecisionPersistenceVisual />
+</ResearchBreakout>
+
+"Less likely" is intentional. A rule in a repository is not a proof that an agent will always follow it. But it gives the next session something durable to recover that the previous conversation alone did not.
 
 ---
 
@@ -117,43 +155,6 @@ The goal is not to maximize the amount of text sent to an agent. The goal is to 
 
 ---
 
-## A Real Failure: When an Old Decision Came Back
-
-One of the reasons I care about this is that I have already seen the opposite fail.
-
-During work on this site, we had established that my professional background supports claims around:
-
-- reusable UI components
-- component architecture
-- frontend patterns
-- frontend systems
-- UI architecture
-- engineering standards
-
-What we had **not** established was formal design-system ownership.
-
-That distinction had been discussed and rejected in prior work. But later, the homepage contained this line:
-
-> "15+ years of experience designing scalable web architectures, design systems, and enterprise platforms."
-
-The wording was plausible. It even sounded professionally polished.
-
-It was also not supported by the evidence we had established.
-
-This was not primarily a coding error. It was a context-persistence failure.
-
-The correction was not just to change the homepage sentence. The durable project memory also needed to change.
-
-The constitution now explicitly says not to describe my professional experience as design systems unless that experience is established later. `specs/001-site-foundation/spec.md` carries the same positioning constraint at the site-foundation level.
-
-That gives future work a different path:
-
-<ResearchBreakout mode="wide">
-  <DecisionPersistenceVisual />
-</ResearchBreakout>
-
-"Less likely" is intentional. A rule in a repository is not a proof that an agent will always follow it. But it gives the next session something durable to recover that the previous conversation alone did not.
-
 ---
 
 ## Updating the Source of Truth Before the Code
@@ -178,33 +179,11 @@ That costs more than changing one component. It also means the next agent does n
 
 ---
 
-## Context Selection, Not Context Accumulation
+## From Durable Memory to Context Selection
 
-This connects directly to how I think about context engineering more broadly.
+Durable repository memory creates the next problem: once the project can remember, an agent still needs to decide **which parts of that memory matter for the current task**.
 
-**More context is not automatically better context.**
-
-<ResearchBreakout mode="wide">
-  <ContextSelection />
-</ResearchBreakout>
-
-The objective is not:
-
-> Put every document in the prompt.
-
-The objective is to:
-
-1. externalize knowledge that should survive the current conversation
-2. organize it by scope
-3. keep the entry point small
-4. retrieve or read the artifacts relevant to the current task
-5. avoid dragging unrelated project history into every working context
-
-A publishing change may need the publication-gating spec and deployment ADR. An About-page rewrite may need the site constitution and About spec. A typography change probably does not need the entire history of the speech transcription project.
-
-This is where Spec-Driven Development and context engineering meet for me.
-
-The value of the spec is not merely that it exists. The value is that it can become **selectable project context**.
+That selection problem is a separate research direction. This paper stays focused on the first layer—externalizing and maintaining project knowledge so it survives beyond one conversation. Task-aware retrieval, scoped context delivery, and MCP-based dispatch belong to the Context Engineering work that follows.
 
 ---
 
