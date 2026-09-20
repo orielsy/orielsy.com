@@ -1,7 +1,7 @@
 ---
 title: "Which Parts of Today’s Framework Become Tomorrow’s Platform?"
 description: "A preliminary investigation into how Signals, Web Components, native navigation, View Transitions, DOM primitives, and Open UI may shift responsibilities from frameworks into the web platform."
-tldr: "Frameworks are not disappearing. But capabilities they once provided almost exclusively are increasingly moving into the web platform, which may change what future frameworks need to own—and where the boundary between framework and platform sits. This is a working model, and its conclusions may change as the underlying proposals evolve."
+tldr: "Likely platform-bound: component identity, reactive graphs, navigation mechanics, transitions, DOM update primitives, and common controls. Likely framework-owned: scheduling and batching policy, rendering composition, routing conventions, server integration, compilation, and developer experience. The likely shift is a thinner primitive layer and a more concentrated coordination layer."
 tldrLabel: "TL;DR — PRELIMINARY RESEARCH"
 pubDate: 2026-09-17
 researchNumber: 5
@@ -11,7 +11,7 @@ status: "published"
 published: true
 draft: true
 featured: false
-readingTime: "12 min read"
+readingTime: "9 min read"
 ---
 
 import Callout from '../../components/Callout.astro';
@@ -22,137 +22,96 @@ import ResearchSourceNote from '../../components/research/ResearchSourceNote.ast
 import SignalStandardizationPathVisual from '../../components/research/SignalStandardizationPathVisual.astro';
 
 <ResearchSourceNote>
-  Standards work moves. This draft is a dated snapshot of the primary sources reviewed on **September 17, 2026**. At that point the TC39 Signals proposal identifies itself as Stage 1; the Navigation API is part of the HTML Living Standard; CSS View Transitions Level 2 is an editor's draft; DOM Parts remains a Web Components proposal; and Open UI operates as a W3C Community Group. The source list at the end of the article links directly to those materials.
+  Standards work moves. This draft reflects primary sources reviewed on **September 17, 2026**. At that point the TC39 Signals proposal identified itself as Stage 1; the Navigation API was part of the HTML Living Standard; CSS View Transitions Level 2 was an editor's draft; DOM Parts remained a Web Components proposal; and Open UI operated as a W3C Community Group. The source list at the end links directly to those materials.
 </ResearchSourceNote>
 
 ## The Question I Started With
 
 I started this investigation with a stronger assumption than the evidence supported: **were standards bodies moving enough framework responsibilities into the platform that much of the framework layer could eventually disappear?**
 
-That is not quite what I found. The more useful question became:
+The evidence pushed me toward a different question:
 
 > **If more framework-era ideas become native primitives, how will the responsibilities of the browser platform, frameworks, compilers, libraries, servers, and application code be redistributed?**
 
-That feels like the more realistic architectural direction to study.
+That revised question changes the shape of the investigation. Instead of asking whether frameworks vanish, I am looking at where responsibilities are moving.
 
 ---
 
-## What I Had Misunderstood About Signals
+## A Working Boundary Between Platform and Framework
 
-The [TC39 Signals proposal](https://github.com/tc39/proposal-signals) is especially revealing because its stated goal is narrower than a native framework-level reactivity system.
+The web platform tends to absorb **capabilities whose semantics have become broadly understood and useful across many architectures**. Frameworks can then coordinate those capabilities and impose application policy above them.
 
-As of September 17, 2026, Signals remains a [Stage 1 TC39 proposal](https://github.com/tc39/proposals/blob/main/stage-1-proposals.md). The proposal explicitly focuses on a common underlying signal graph and auto-tracking model that frameworks could build on top of. It is not primarily trying to define the developer-facing reactive API that application authors would use directly.
-
-That distinction matters.
-
-A standardized reactive primitive could reduce the need for every framework to implement the same low-level dependency graph semantics independently. It could improve interoperability between reactive libraries and give tooling a shared model to inspect. It could even become useful underneath future HTML or DOM work.
-
-But it does **not** imply that the rest of framework behavior becomes native automatically.
-
-The proposal deliberately leaves framework-specific concerns such as effect scheduling, ownership, disposal, batching policy, and rendering coordination above the primitive. In other words, Signals is interesting partly because it demonstrates a likely pattern for the future:
-
-<ResearchBreakout mode="wide">
-  <SignalStandardizationPathVisual />
-</ResearchBreakout>
-
-
----
-
-## Web Components Solve a Different Layer
-
-[Custom Elements](https://html.spec.whatwg.org/multipage/custom-elements.html), Shadow DOM, templates, slots, and related Web Components work give the web a standardized component substrate.
-
-That is significant. A component can have a browser-recognized identity, lifecycle, encapsulated tree, styling boundaries, and reusable markup without belonging to a particular application framework.
-
-But a component model is not an application architecture.
-
-Web Components do not, by themselves, decide:
-
-- how application state is organized
-- how reactive work is scheduled
-- how asynchronous data dependencies are coordinated
-- how routing and nested layouts behave
-- how server rendering and hydration are structured
-- how code is split or compiled
-- how mutations are batched
-- how forms, caches, errors, transitions, and loading states compose across an application
-- how a team should structure a large codebase
-
-This is where my original mental model was too compressed. **Standard components are not equivalent to a standardized framework.** They remove one reason for framework ownership, but not all of the others.
-
----
-
-## There Is No Single “Replace Frameworks” Roadmap
-
-Looking across the work now happening in TC39, WHATWG, CSSWG, WICG, the Web Components community, and Open UI, I do not see one unified roadmap whose stated destination is “make frameworks unnecessary.”
-
-Instead, I see multiple efforts attacking different pieces of the problem independently.
-
-That fragmentation is not necessarily a weakness. Standards work generally advances by isolating capabilities that are sufficiently understood to become durable platform contracts.
-
-The emerging picture looks more like this:
-
-### 1. Component substrate
-
-Custom Elements and Shadow DOM move reusable component identity and encapsulation into the platform.
-
-### 2. Reactive substrate
-
-The TC39 Signals proposal explores whether a common reactive graph can sit beneath multiple frameworks rather than each framework owning incompatible semantics.
-
-### 3. Navigation substrate
-
-The [Navigation API](https://html.spec.whatwg.org/multipage/nav-history-apis.html#the-navigation-api) provides a modern application-oriented model for navigation and session history, including interception of same-document navigations.
-
-That does not replace a router, but it gives routers a better native foundation than reconstructing application navigation almost entirely on top of `history.pushState()` and `popstate`.
-
-### 4. Transition substrate
-
-The [CSS View Transitions specification](https://drafts.csswg.org/css-view-transitions-2/) is moving visual state transitions into a browser-coordinated primitive.
-
-Again, the browser provides the mechanism. Applications and frameworks still decide what transition is appropriate, when it should happen, and how it participates in application state.
-
-### 5. Dynamic DOM and templating substrate
-
-The Web Components community continues to explore proposals such as [DOM Parts](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/DOM-Parts.md), intended to give code efficient handles to mutable positions in DOM rather than forcing template systems to repeatedly rediscover dynamic boundaries.
-
-There is also a long history of [template-instantiation exploration](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/Template-Instantiation.md). These efforts are important precisely because templating remains one of the areas where frameworks still provide substantial infrastructure above standard HTML.
-
-These are exploratory proposals, not evidence that native framework-style templating is settled.
-
-### 6. Common UI controls and patterns
-
-[Open UI](https://open-ui.org/) is studying common controls, component anatomy, state, behavior, styling, and accessibility patterns that are repeatedly reinvented by frameworks and design-system libraries.
-
-Its charter is especially interesting because it explicitly studies patterns already common in third-party frameworks and component systems, then recommends pieces that may belong in HTML, CSS, JavaScript, ARIA, or related platform work.
-
-This is another form of platform absorption: widely repeated application-layer behavior becomes input to future primitives.
-
----
-
-## The Platform Is Absorbing Mature Primitives, Not Entire Frameworks
-
-A pattern is starting to become clearer.
-
-The web platform tends to absorb **capabilities whose semantics have become broadly understood and useful across many architectures**. Frameworks remain free to build policy and composition above them.
-
-That suggests a division something like this:
+That produces a working boundary:
 
 <ResearchBreakout mode="publication">
   <PlatformFrameworkBoundaryVisual />
 </ResearchBreakout>
 
-The interesting movement is at the boundary between the middle two layers.
-
-If native primitives become more capable, frameworks may own less low-level machinery. But that does not mean they own less **architecture**.
-
-They may instead move upward.
+The movement to watch is between platform primitives and framework coordination. If native primitives become more capable, frameworks may own less low-level machinery while still owning higher-level composition, policy, and application architecture.
 
 ---
 
-## What Frameworks Still Do That Standards Bodies May Not Want to Do
+## Signals: A Primitive Below Framework Policy
 
-Frameworks are useful partly because they can make opinionated decisions that standards bodies often should not make for every application.
+The [TC39 Signals proposal](https://github.com/tc39/proposal-signals) is revealing because its stated goal is narrower than a native framework-level reactivity system. As of September 17, 2026, Signals remains a [Stage 1 TC39 proposal](https://github.com/tc39/proposals/blob/main/stage-1-proposals.md), focused on a common underlying signal graph and auto-tracking model that frameworks could build on top of rather than a complete developer-facing reactive runtime.
+
+A standardized reactive primitive could reduce the need for every framework to implement the same low-level dependency graph semantics independently. It could improve interoperability between reactive libraries, give tooling a shared model to inspect, and potentially support future HTML or DOM work.
+
+But the proposal deliberately leaves effect scheduling, ownership, disposal, batching policy, and rendering coordination above the primitive. Its boundaries are what make it useful evidence for the larger model:
+
+<ResearchBreakout mode="wide">
+  <SignalStandardizationPathVisual />
+</ResearchBreakout>
+
+---
+
+## Web Components: Standard Components, Not Standardized Applications
+
+[Custom Elements](https://html.spec.whatwg.org/multipage/custom-elements.html), Shadow DOM, templates, slots, and related Web Components work give the web a standardized component substrate.
+
+That is significant. A component can have a browser-recognized identity, lifecycle, encapsulated tree, styling boundaries, and reusable markup without belonging to a particular application framework.
+
+But a component model is not an application architecture. Web Components do not determine application state and scheduling, routing and data coordination, server/client execution, compilation strategy, or the organizational conventions used to structure a large codebase.
+
+That was a key correction to my original mental model: **standard components remove one reason for framework ownership without standardizing the rest of application architecture.**
+
+---
+
+## Additional Signals From the Platform
+
+Looking across TC39, WHATWG, CSSWG, WICG, the Web Components community, and Open UI, I do not see one unified roadmap whose stated destination is "make frameworks unnecessary."
+
+Instead, multiple efforts are moving different mechanisms into durable platform contracts.
+
+### Navigation mechanics
+
+The [Navigation API](https://html.spec.whatwg.org/multipage/nav-history-apis.html#the-navigation-api) provides a modern application-oriented model for navigation and session history, including interception of same-document navigations.
+
+That moves more navigation mechanics into the platform without deciding an application's routing conventions, nested layouts, or data-loading model.
+
+### Transition mechanics
+
+The [CSS View Transitions specification](https://drafts.csswg.org/css-view-transitions-2/) moves visual state-transition mechanics into a browser-coordinated primitive.
+
+The browser can provide the mechanism while applications and frameworks still decide when a transition is appropriate and how it participates in application state.
+
+### Dynamic DOM and templating
+
+The Web Components community continues to explore proposals such as [DOM Parts](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/DOM-Parts.md), intended to give code efficient handles to mutable positions in the DOM.
+
+There is also a long history of [template-instantiation exploration](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/Template-Instantiation.md). These remain exploratory proposals, not evidence that native framework-style templating is settled, but they show continued interest in moving more reusable DOM machinery beneath framework-specific template systems.
+
+### Common UI controls and patterns
+
+[Open UI](https://open-ui.org/) studies common controls, component anatomy, state, behavior, styling, and accessibility patterns that are repeatedly reinvented by frameworks and design-system libraries.
+
+Its charter is especially interesting because it examines patterns already common in third-party systems and considers which pieces may belong in HTML, CSS, JavaScript, ARIA, or related platform work.
+
+---
+
+## What Frameworks Still Own: Coordination and Policy
+
+These platform efforts matter because they move mechanisms downward. Frameworks remain useful partly because they can make opinionated decisions that standards bodies often should not make for every application.
 
 A framework can decide:
 
@@ -169,66 +128,46 @@ A framework can decide:
 
 Those are not all missing standards. Some are **policy choices**.
 
-A browser primitive must remain general enough to support many application models. A framework can deliberately narrow the design space and give developers a coherent way to build one.
-
-That is why framing this research as a fight against frameworks would be misleading. The stronger possibility is that frameworks become **more platform-native while remaining responsible for coordination, policy, compilation, server integration, and developer experience**.
+A browser primitive must remain general enough to support many application models. A framework can deliberately narrow the design space and provide a coherent way to compose those primitives into an application.
 
 ---
 
-## Decomposition, Then Recomposition
+## The Likely Recomposition
 
-Frontend history repeatedly decomposes responsibilities and then recomposes them at a different layer.
+Frontend history repeatedly decomposes responsibilities and then recomposes them at a different layer. Browsers gain capabilities, build tools absorb transforms, servers re-enter rendering, compilers move work out of the runtime, and frameworks reorganize around the new boundaries.
 
-Browsers gain capabilities. Libraries become thinner in one area and thicker in another. Build tools absorb transforms. Servers re-enter application rendering. Compilers move work out of the runtime. Frameworks adopt platform APIs and then provide higher-level conventions around them.
-
-A useful pattern to watch is that repeated framework behavior can become legible enough to standardize at a lower layer, after which frameworks reorganize around the new primitive:
+Repeated framework behavior can become legible enough to standardize at a lower layer, after which frameworks build new coordination and conventions above it:
 
 <ResearchBreakout mode="wide">
   <PrimitiveAbsorptionCycleVisual />
 </ResearchBreakout>
 
-
----
-
-## A Working Hypothesis for the Future Frontend Stack
-
-My current working hypothesis is that frontend architecture will become increasingly layered around a more capable shared platform, while frameworks compete less on proprietary implementations of low-level primitives and more on how those primitives are composed.
+My working hypothesis is that frontend architecture will become increasingly layered around a more capable shared platform, while frameworks compete less on proprietary implementations of low-level primitives and more on how those primitives are composed.
 
 That could mean:
 
 - more reactive and component code that is portable across rendering systems
-- less framework-specific machinery for capabilities the browser can provide directly
+- less framework-specific machinery where the browser can provide the primitive directly
 - more framework differentiation around compilers, routing, server execution, data flow, and application conventions
 - better interoperability between libraries because lower-level contracts are shared
-- a larger role for meta-frameworks and build systems in coordinating application architecture
-- gradual migration of proven framework ideas into HTML, CSS, JavaScript, and Web APIs
 
-This is not a claim that the ecosystem will converge on one stack.
-
-It is a claim that **the boundary between platform and framework is still moving**.
-
-That boundary is the subject I want to keep investigating.
+The point is not that the ecosystem converges on one stack. The point is that **the boundary between platform and framework remains an active architectural design space**.
 
 ---
 
 ## Research Questions From Here
 
-This draft leaves several questions open:
+This draft leaves four questions I want to keep pushing on:
 
 1. **What is the minimum useful framework if components, reactivity, navigation, transitions, and more templating infrastructure become native?**
 2. **Which current framework responsibilities are truly missing platform primitives, and which are intentionally application-level policy?**
-3. **Does compilation become more important as runtime primitives become standardized?**
-4. **Do meta-frameworks become the dominant abstraction while UI runtimes become thinner?**
-5. **How much framework portability becomes possible if state graphs, components, DOM update boundaries, and navigation share standard contracts?**
-6. **Which ideas should never become web standards because standardizing them would over-constrain application architecture?**
-7. **What does a serious application built deliberately around the platform-first version of this architecture look like?**
+3. **Do compilers and meta-frameworks become more important as UI runtimes become thinner?**
+4. **What does a serious application built deliberately around the platform-first version of this architecture look like?**
 
 The last question is the one that may eventually turn this research into an implementation project.
 
-For now, the useful result is a more grounded premise for studying where frontend architecture appears to be going:
-
-<Callout type="architecture" title="WORKING PREMISE">
-  The likely future is not framework extinction. It is a redistribution of responsibility: mature primitives move downward into the platform while frameworks move upward into coordination, compilation, server integration, application policy, and developer experience.
+<Callout type="architecture" title="NEXT RESEARCH STEP">
+  Test this boundary model against a serious application built deliberately around platform primitives, then document which responsibilities still demand framework-level coordination.
 </Callout>
 
 ## Primary Sources Reviewed
