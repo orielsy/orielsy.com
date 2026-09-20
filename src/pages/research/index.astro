@@ -230,7 +230,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
         articles.forEach((article) => {
           const type = article.getAttribute('data-article-type');
           const visible = filter === 'all' || type === filter;
-          article.style.display = visible ? 'grid' : 'none';
+          article.style.display = visible ? '' : 'none';
           if (visible) visibleCount++;
         });
 
