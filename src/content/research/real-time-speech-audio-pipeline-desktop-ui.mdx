@@ -30,6 +30,8 @@ import TranscriptionFilteringTruthVisual from '../../components/research/Transcr
   This exploration is grounded in the current public `speechBubbles` and `whisper-api` source. Format calculations below are arithmetic derived from the stated sample formats, not measured runtime benchmarks.
 </ResearchSourceNote>
 
+Before following the audio through the pipeline, it helps to establish the current source-grounded system boundary.
+
 <ResearchBreakout mode="publication">
   <SpeechStreamingPipelineVisual />
 </ResearchBreakout>
@@ -81,7 +83,7 @@ function downsampleBuffer(buffer, inputSampleRate, outputSampleRate = 16000) {
 
 </ResearchSourceExcerpt>
 
-The filtered float array is then clamped and converted to signed 16-bit integers (`Int16Array`). At 16 kHz × 16-bit mono, that format is approximately **32 kB/s (32,000 bytes/s)** before WebSocket overhead—a mathematically derived reduction of about **91.7%** compared with the 48 kHz stereo 32-bit-float example above. These are format calculations, not measured runtime benchmarks.
+The filtered float array is then clamped and converted to signed 16-bit integers (`Int16Array`). At 16 kHz × 16-bit mono, that format is approximately **32 kB/s (32,000 bytes/s)** before WebSocket overhead—a mathematically derived reduction of about **91.7%** compared with the 48 kHz stereo 32-bit-float example above.
 
 ---
 
@@ -93,9 +95,9 @@ Speech transcription needs enough surrounding audio to resolve word boundaries a
   <ChunkingTradeoffVisual />
 </ResearchBreakout>
 
-The public backend currently defaults to a **3-second chunk threshold** when no client override is supplied. This is an implementation setting, not evidence that three seconds is an optimal latency/accuracy point.
+The public backend currently defaults to a **3-second chunk threshold** when no client override is supplied.
 
-In `fastapi_app.py`, the server uses a fixed-duration chunk accumulator rather than an overlapping sliding window:
+In `fastapi_app.py`, the server uses a fixed-duration chunk accumulator:
 
 <ResearchSourceExcerpt file="fastapi_app.py">
 
@@ -121,8 +123,6 @@ Continuous microphone input can cause Whisper to emit undesirable text during si
 ### Current Backend Behavior
 
 `whisper-api` includes a `VADFactory`, PyAnnote dependencies, and a lazy `get_vad()` helper. However, the current public `process_buffer()` implementation does **not** invoke that VAD pipeline before `model.transcribe()`.
-
-That means the public implementation should not be described as actively dropping silence chunks with PyAnnote before Whisper inference. The streaming path currently performs buffered Whisper transcription directly.
 
 ### Client-Side Probabilistic Filtering
 
@@ -156,6 +156,8 @@ Segments above those thresholds are discarded by the client. This helps suppress
 ## Async Inference & UI Rendering
 
 The backend uses `asyncio.to_thread()` around `model.transcribe()`. This moves blocking model inference off the async event loop so the WebSocket server can remain responsive while transcription runs.
+
+The same goal—keep blocking work off the responsive path—shows up on both sides of the pipeline.
 
 On the renderer side, `CaptionsView.vue` measures caption geometry after Vue's `nextTick()`, then uses nested `requestAnimationFrame()` callbacks to apply the transition styles:
 
@@ -195,5 +197,7 @@ Building on-device intelligent UI systems suggests several useful design princip
 <ResearchBreakout mode="wide">
   <SpeechArchitectureTakeawaysVisual />
 </ResearchBreakout>
+
+The next experiments are already implied by the current boundaries: wire the existing VAD path into the active transcription flow and evaluate its behavior; test chunk-duration strategies rather than treating the three-second default as fixed; and batch caption geometry reads before DOM writes to reduce forced-layout risk. Those are implementation questions for a future pass, not conclusions from the current source.
 
 For the practical implementation and video demonstration of this architecture in action, visit the [speechBubbles Project Case Study](/projects/local-ai-real-time-captioning).
