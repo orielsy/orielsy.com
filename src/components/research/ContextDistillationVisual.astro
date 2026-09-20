@@ -30,7 +30,14 @@ const workingState = [
       </div>
       <ol>
         {transcript.map((item) => (
-          <li class:list={['transcript-step', item.state === 'authoritative' && 'is-current']}>
+          <li
+            class:list={[
+              'transcript-step',
+              item.state === 'retained signal' && 'is-retained',
+              (item.state === 'superseded' || item.state === 'rejected') && 'is-discarded',
+              item.state === 'authoritative' && 'is-current',
+            ]}
+          >
             <span class="step-label">{item.label}</span>
             <span class="step-copy">
               <strong>{item.text}</strong>
@@ -43,7 +50,8 @@ const workingState = [
 
     <div class="transform" aria-hidden="true">
       <span>distill</span>
-      <strong>→</strong>
+      <strong class="arrow-down">↓</strong>
+      <strong class="arrow-right">→</strong>
     </div>
 
     <section class="lane state-lane">
@@ -135,8 +143,18 @@ const workingState = [
     border-bottom: 0;
   }
 
-  .transcript-step:not(.is-current) {
-    opacity: 0.62;
+  .transcript-step.is-retained {
+    box-shadow: inset 2px 0 0 color-mix(in srgb, var(--accent) 30%, var(--border-strong));
+  }
+
+  .transcript-step.is-discarded {
+    opacity: 0.48;
+  }
+
+  .transcript-step.is-discarded .step-copy strong {
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--text-muted);
   }
 
   .transcript-step.is-current {
@@ -191,6 +209,10 @@ const workingState = [
     font-size: 0.85rem;
   }
 
+  .arrow-right {
+    display: none;
+  }
+
   dl {
     display: grid;
     gap: 0.55rem;
@@ -233,6 +255,14 @@ const workingState = [
 
     .transform {
       flex-direction: column;
+    }
+
+    .arrow-down {
+      display: none;
+    }
+
+    .arrow-right {
+      display: inline;
     }
   }
 </style>
