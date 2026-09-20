@@ -1,0 +1,122 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const stages = [
+  {
+    number: '01',
+    label: 'Conversation',
+    detail: 'Useful history, decisions, corrections, exploration, and residue.',
+  },
+  {
+    number: '02',
+    label: 'Authoritative state',
+    detail: 'Current objective, active constraints, decisions, artifacts, and unresolved work.',
+  },
+  {
+    number: '03',
+    label: 'Target profile',
+    detail: 'General, coding, or research emphasis selected by the user.',
+  },
+  {
+    number: '04',
+    label: 'Continuation package',
+    detail: 'The same truth reorganized for the environment that consumes it next.',
+  },
+];
+---
+
+<ResearchFigureFrame
+  eyebrow="Target-aware handoff"
+  title="Preserve the truth first. Recompile its representation for the next environment."
+  status="General · Coding · Research"
+  caption="Targeting can change organization, emphasis, and compression, but not state that could materially alter continuation."
+>
+  <ol class="recompile-grid" aria-label="Context Zen target-aware handoff pipeline">
+    {stages.map((stage, index) => (
+      <li class:list={['node', index === 1 && 'is-state', index === 3 && 'is-output']}>
+        <span class="number">{stage.number}</span>
+        <strong>{stage.label}</strong>
+        <p>{stage.detail}</p>
+        {index < stages.length - 1 && <span class="arrow" aria-hidden="true">→</span>}
+      </li>
+    ))}
+  </ol>
+</ResearchFigureFrame>
+
+<style>
+  .recompile-grid {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .node {
+    position: relative;
+    min-width: 0;
+    background: var(--bg-card);
+    padding: 1rem;
+  }
+
+  .node.is-state {
+    box-shadow: inset 2px 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+  }
+
+  .node.is-output {
+    background: color-mix(in srgb, var(--accent) 7%, var(--bg-card));
+  }
+
+  .number {
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.49rem;
+    letter-spacing: 0.1em;
+  }
+
+  .node strong,
+  .node p {
+    display: block;
+    margin: 0;
+  }
+
+  .node strong {
+    margin-top: 1.1rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .node p {
+    margin-top: 0.42rem;
+    color: var(--text-secondary);
+    font-size: 0.65rem;
+    line-height: 1.5;
+  }
+
+  .arrow {
+    position: absolute;
+    right: -0.5rem;
+    top: 50%;
+    z-index: 2;
+    display: none;
+    transform: translateY(-50%);
+    background: var(--bg-card);
+    padding: 0.12rem;
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+  }
+
+  @media (min-width: 760px) {
+    .recompile-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .arrow {
+      display: block;
+    }
+  }
+</style>
