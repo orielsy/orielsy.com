@@ -11,7 +11,7 @@ status: "published"
 published: true
 draft: true
 featured: false
-readingTime: "9 min read"
+readingTime: "8 min read"
 ---
 
 import PlatformFrameworkBoundaryVisual from '../../components/research/PlatformFrameworkBoundaryVisual.astro';
@@ -26,27 +26,25 @@ import SignalStandardizationPathVisual from '../../components/research/SignalSta
 
 ## The Question I Started With
 
-I started this investigation with a stronger assumption than the evidence supported: **were standards bodies moving enough framework responsibilities into the platform that much of the framework layer could eventually disappear?**
+I started with a stronger assumption than the evidence supported: **were standards bodies moving enough framework responsibilities into the platform that much of the framework layer could disappear?**
 
-The evidence pushed me toward a different question:
+The evidence pushed me toward a better question:
 
-> **If more framework-era ideas become native primitives, how will the responsibilities of the browser platform, frameworks, compilers, libraries, servers, and application code be redistributed?**
+> **If more framework-era ideas become native primitives, how will responsibilities be redistributed across the browser platform, frameworks, compilers, libraries, servers, and application code?**
 
-That revised question changes the shape of the investigation. Instead of asking whether frameworks vanish, I am looking at where responsibilities are moving.
+The investigation is therefore about where responsibilities move, not whether frameworks vanish.
 
 ---
 
 ## A Working Boundary Between Platform and Framework
 
-The web platform tends to absorb **capabilities whose semantics have become broadly understood and useful across many architectures**. Frameworks can then coordinate those capabilities and impose application policy above them.
-
-That produces a working boundary:
+The web platform tends to absorb **capabilities whose semantics have become broadly understood across many architectures**. Frameworks can coordinate those primitives and impose application policy above them:
 
 <ResearchBreakout mode="publication">
   <PlatformFrameworkBoundaryVisual />
 </ResearchBreakout>
 
-The movement to watch is between platform primitives and framework coordination. If native primitives become more capable, frameworks may own less low-level machinery while still owning higher-level composition, policy, and application architecture.
+As native primitives become more capable, frameworks may own less low-level machinery while retaining composition, policy, and application architecture.
 
 ---
 
@@ -68,9 +66,7 @@ But the proposal deliberately leaves effect scheduling, ownership, disposal, bat
 
 [Custom Elements](https://html.spec.whatwg.org/multipage/custom-elements.html), Shadow DOM, templates, slots, and related Web Components work give the web a standardized component substrate.
 
-That is significant. A component can have a browser-recognized identity, lifecycle, encapsulated tree, styling boundaries, and reusable markup without belonging to a particular application framework.
-
-But a component model is not an application architecture. Web Components do not determine application state and scheduling, routing and data coordination, server/client execution, compilation strategy, or the organizational conventions used to structure a large codebase.
+A component can have browser-recognized identity, lifecycle, encapsulation, styling boundaries, and reusable markup without belonging to a framework. But a component model is not an application architecture. Web Components do not determine application state and scheduling, routing and data coordination, server/client execution, compilation strategy, or the organizational conventions used to structure a large codebase.
 
 That was a key correction to my original mental model: **standard components establish portable component identity without defining how an application should be coordinated around those components.**
 
@@ -90,36 +86,32 @@ Looking across TC39, WHATWG, CSSWG, WICG, the Web Components community, and Open
 
 ## What Frameworks Still Own: Coordination and Policy
 
-These platform efforts matter because they move mechanisms downward. Frameworks remain useful partly because they can make opinionated decisions that standards bodies often should not make for every application.
-
-Those decisions cluster into three kinds of policy:
+These efforts move mechanisms downward while frameworks retain opinionated coordination. Those decisions cluster into three kinds of policy:
 
 - **Execution policy** — when work is scheduled, how updates batch, how rendering composes, and how pending or error states propagate.
 - **Application architecture** — how routing, data loading, nested layouts, and server/client execution fit together.
 - **Developer contract** — which templating model, compiler strategy, optimization pipeline, conventions, and developer experience define how a team builds the application.
 
-Those are not all missing standards. Some are **policy choices**.
-
-A browser primitive must remain general enough to support many application models. A framework can deliberately narrow the design space and provide a coherent way to compose those primitives into an application.
+These are not all missing standards. Many are **policy choices**: the platform stays general while frameworks deliberately narrow the design space.
 
 ---
 
 ## The Likely Recomposition
 
-Frontend responsibilities repeatedly move between browser, runtime, compiler, server, and application layers as lower-level capabilities mature. When repeated framework behavior becomes legible enough to standardize, frameworks can reorganize around the new primitive:
+As lower-level capabilities mature, repeated framework behavior can become legible enough to standardize, letting frameworks reorganize around the new primitive:
 
 <ResearchBreakout mode="wide">
   <PrimitiveAbsorptionCycleVisual />
 </ResearchBreakout>
 
-If that pattern continues, the practical consequences could be more specific than simply "thinner frameworks":
+If that pattern continues:
 
 - reactive libraries could share a standardized dependency graph while keeping their own scheduling, effect, and rendering policies
 - routers could delegate more navigation and session-history mechanics to the Navigation API while concentrating on route matching, data loading, and layout conventions
 - transition systems could coordinate application state around native View Transitions instead of owning the full visual-transition mechanism
 - component systems, design systems, and compilers could increasingly target shared platform primitives while differentiating through composition, optimization, server integration, and developer experience
 
-In that version of the stack, framework differentiation shifts upward: less value comes from privately reimplementing common substrate, and more comes from how effectively the framework coordinates the platform into an application model.
+Framework differentiation then shifts upward: from privately reimplementing substrate to coordinating platform primitives into an application model.
 
 ---
 
@@ -130,9 +122,7 @@ This draft leaves four questions I want to keep pushing on:
 1. **What is the minimum useful framework if components, reactivity, navigation, transitions, and more templating infrastructure become native?**
 2. **Which current framework responsibilities are truly missing platform primitives, and which are intentionally application-level policy?**
 3. **Do compilers and meta-frameworks become more important as UI runtimes become thinner?**
-4. **What does a serious application built deliberately around the platform-first version of this architecture look like?**
-
-The last question is the most concrete next step: **test this boundary model against a serious application built deliberately around platform primitives, then document which responsibilities still demand framework-level coordination.**
+4. **What does a serious application built deliberately around platform primitives reveal about which responsibilities still require framework-level coordination?**
 
 ## Primary Sources Reviewed
 
