@@ -4,6 +4,7 @@
 }
 
 .project-hero-facts dt,
+.project-hero-brief dt,
 .project-brief dt {
   color: var(--text-muted);
   font-family: var(--font-mono-ui);
@@ -15,6 +16,7 @@
 }
 
 .project-hero-facts dd,
+.project-hero-brief dd,
 .project-brief dd {
   margin: 0.45rem 0 0;
   color: var(--text-secondary);
