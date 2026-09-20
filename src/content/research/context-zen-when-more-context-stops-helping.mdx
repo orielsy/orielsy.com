@@ -1,6 +1,8 @@
 ---
 title: "Context Zen: When More Context Stops Helping"
 description: "An experimental context-engineering skill that watches long-running AI conversations, distills authoritative working state, and creates continuation handoffs before accumulated history becomes a liability."
+tldr: "Large context windows solve capacity, not context quality. Context Zen is an early context-engineering experiment exploring handoffs to a fresh conversation once accumulated history becomes less useful than distilled working state. The handoff model is implemented as a public skill specification; the context-health heuristic remains provisional."
+tldrLabel: "TL;DR — EXPERIMENTAL SKILL"
 pubDate: 2026-09-19
 researchNumber: 6
 type: "Architecture Exploration"
@@ -14,10 +16,6 @@ readingTime: "5 min read"
 ---
 
 import Callout from '../../components/Callout.astro';
-
-<Callout type="note" title="TL;DR — EXPERIMENTAL SKILL">
-  Large context windows solve capacity, not context quality. Context Zen is an early context-engineering experiment exploring handoffs to a fresh conversation once accumulated history becomes less useful than distilled working state. The handoff model is implemented as a public skill specification; the context-health heuristic remains provisional.
-</Callout>
 
 ## When More Context Stops Helping
 
