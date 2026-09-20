@@ -95,32 +95,30 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                   {entry.data.readingTime && <span>{entry.data.readingTime}</span>}
                   {entry.data.draft && <span class="text-[var(--accent)]">Concept Draft</span>}
                 </div>
-                <div class="mt-3 flex max-w-3xl flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <h2 class="font-display text-xl font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)] sm:text-2xl">
-                    <a href={`/research/${entry.id}`} class="transition-colors hover:text-[var(--accent)]">{entry.data.title}</a>
-                  </h2>
-                  {entry.data.tldr && (
+                <h2 class="font-display mt-3 max-w-3xl text-xl font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)] sm:text-2xl">
+                  <a href={`/research/${entry.id}`} class="transition-colors hover:text-[var(--accent)]">{entry.data.title}</a>
+                </h2>
+                <p class="mt-3 max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">{entry.data.description}</p>
+
+                {entry.data.tldr && (
+                  <>
                     <button
                       type="button"
-                      class="shrink-0 cursor-pointer font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)]"
+                      class="mt-3 cursor-pointer font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)]"
                       aria-expanded="false"
                       aria-controls={`tldr-archive-${entry.id}`}
                       data-tldr-toggle
                     >
                       TL;DR <span data-tldr-symbol aria-hidden="true">+</span>
                     </button>
-                  )}
-                </div>
-                <p class="mt-3 max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">{entry.data.description}</p>
-
-                {entry.data.tldr && (
-                  <div
-                    id={`tldr-archive-${entry.id}`}
-                    class="mt-4 hidden max-w-3xl border-l border-[var(--accent)] bg-[var(--bg-card)] px-4 py-3"
-                    data-tldr-panel
-                  >
-                    <p class="text-sm leading-7 text-[var(--text-secondary)]">{entry.data.tldr}</p>
-                  </div>
+                    <div
+                      id={`tldr-archive-${entry.id}`}
+                      class="mt-3 hidden max-w-3xl border-l border-[var(--accent)] bg-[var(--bg-card)] px-4 py-3"
+                      data-tldr-panel
+                    >
+                      <p class="text-sm leading-7 text-[var(--text-secondary)]">{entry.data.tldr}</p>
+                    </div>
+                  </>
                 )}
 
                 {entry.data.tags?.length > 0 && (
