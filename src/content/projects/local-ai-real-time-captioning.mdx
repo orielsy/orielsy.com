@@ -29,16 +29,13 @@ socialCard:
 import Callout from '../../components/Callout.astro';
 import DiagramFigure from '../../components/DiagramFigure.astro';
 import ProjectBreakout from '../../components/projects/ProjectBreakout.astro';
-import SpeechBubblesSystemTiers from '../../components/projects/SpeechBubblesSystemTiers.astro';
 import SpeechStreamingPipelineVisual from '../../components/research/SpeechStreamingPipelineVisual.astro';
 
 ## Project Overview
 
 **speechBubbles** is an on-device desktop overlay and live-broadcast graphics platform designed to bring television-style dynamic graphics and automated speech transcription to streamers, presenters, and video creators without relying on cloud transcription APIs.
 
-The implementation is split into two decoupled tiers so the desktop graphics surface and the local transcription service can evolve independently:
-
-<SpeechBubblesSystemTiers />
+The desktop graphics surface and the local transcription service remain decoupled so they can evolve independently.
 
 ## System Architecture
 
@@ -77,9 +74,7 @@ The transcription side is intentionally summarized here as part of the built art
 - The FastAPI backend accumulates fixed-duration audio chunks and runs `model.transcribe()` through `asyncio.to_thread()`, moving blocking inference off the async event loop.
 - Returned Whisper segments are filtered in `CaptionControl.vue`; accepted segments require `no_speech_prob <= 0.6`, `temperature <= 0.8`, and non-empty text before entering the caption queue.
 
-At 16 kHz × 16-bit mono, the audio payload is approximately **32 KB/sec** before protocol overhead. That number is derived from the sample format, not measured as a runtime performance benchmark.
-
-The backend repository also contains PyAnnote VAD scaffolding and dependencies, but the current public `process_buffer()` path does not invoke that VAD pipeline before Whisper inference.
+At 16 kHz × 16-bit mono, the audio payload is approximately **32 kB/s (32,000 bytes/s)** before protocol overhead. That number is derived from the sample format, not measured as a runtime performance benchmark.
 
 <Callout type="note" title="ARCHITECTURE RESEARCH">
   For the source-grounded reasoning behind chunk size, filtering, VAD status, and rendering behavior, read [Architecture Notes: Audio Chunking, Transcription Filtering, and Real-Time Speech UI Systems](/research/real-time-speech-audio-pipeline-desktop-ui).
@@ -98,6 +93,6 @@ This keeps caption layout and visual motion in the Electron/Vue renderer rather 
 
 - **Desktop Shell**: Electron with `electron-acrylic-window` transparency and `qhotkeys` system bindings.
 - **Frontend Layer**: Vue 3 (Composition API / `<script setup>`), Pinia state management, and Vite.
-- **Audio Capture**: Web Audio API (`AudioContext`, `createScriptProcessor` / `MediaStreamAudioSourceNode`).
-- **Inference Engine**: Python, FastAPI, Uvicorn, and OpenAI Whisper. The backend also contains PyAnnote Audio VAD scaffolding, but VAD is not active in the current streaming transcription path.
+- **Audio Capture**: Web Audio API (`AudioContext`, `MediaStreamAudioSourceNode`, and the prototype's legacy `ScriptProcessorNode` path via `createScriptProcessor`).
+- **Inference Engine**: Python, FastAPI, Uvicorn, and OpenAI Whisper.
 - **Video Production**: OBS Studio window capture and transparent/chroma-key overlay compositing.
