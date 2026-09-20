@@ -5,8 +5,12 @@ import ContentPreviewNotice from '../../components/ContentPreviewNotice.astro';
 
 export async function getStaticPaths() {
   const projectEntries = await getCollection('projects');
+  const previewUnpublished = import.meta.env.DEV && import.meta.env.MODE === 'content-preview';
+  const routableProjects = previewUnpublished
+    ? projectEntries
+    : projectEntries.filter((entry) => entry.data.published);
 
-  return projectEntries.map((entry) => ({
+  return routableProjects.map((entry) => ({
     params: { slug: entry.id },
     props: { entry, published: entry.data.published },
   }));
