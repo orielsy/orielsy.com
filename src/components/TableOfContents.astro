@@ -25,10 +25,10 @@ const filteredHeadings = headings.filter((heading) => heading.depth === 2);
             href={`#${heading.slug}`}
             class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"
           >
-            <span class="font-editorial-mono text-[8px] text-[var(--accent)]">
+            <span class="font-editorial-mono text-[9px] text-[var(--accent)]">
               {String(index + 1).padStart(2, '0')}
             </span>
-            <span class="text-[11px] leading-5 text-[var(--text-muted)] transition-colors group-hover:text-[var(--text-primary)]">
+            <span class="text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]">
               {heading.text}
             </span>
           </a>
