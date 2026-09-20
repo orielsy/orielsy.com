@@ -112,7 +112,9 @@ That is different from saying, "make unpublished cards look disabled." The durab
 
 The plan records how the repository intends to satisfy the feature. Tasks record the work being performed now.
 
-This distinction matters because an implementation strategy can change without necessarily changing the requirement itself.
+The publication-gating feature makes that distinction concrete. Its [plan.md](https://github.com/orielsy/orielsy.com/blob/main/specs/003-content-publication-gating/plan.md) translates the specification into technical strategy: fail-closed publication fields, status-only unpublished routes, local content preview, and publication-aware RSS and sitemap behavior. Its [tasks.md](https://github.com/orielsy/orielsy.com/blob/main/specs/003-content-publication-gating/tasks.md) turns that strategy into an execution checklist covering schema changes, route behavior, metadata, preview tooling, and verification.
+
+The requirement can remain stable while the implementation plan and task state evolve underneath it.
 
 ### ADRs: durable reasons
 
@@ -177,14 +179,6 @@ That costs more than changing one component. It also means the next agent does n
 
 ---
 
-## From Durable Memory to Context Selection
-
-Durable repository memory creates the next problem: once the project can remember, an agent still needs to decide **which parts of that memory matter for the current task**.
-
-That selection problem is a separate research direction. This paper stays focused on the first layer—externalizing and maintaining project knowledge so it survives beyond one conversation. Task-aware retrieval, scoped context delivery, and MCP-based dispatch belong to the Context Engineering work that follows.
-
----
-
 ## What This Does Not Solve
 
 Version-controlled project memory creates new responsibilities. It does not remove the old ones.
@@ -219,21 +213,19 @@ The system only helps if the memory itself is maintained.
 
 ## Where This Could Go Next
 
-Today, the flow in this repository is mostly explicit and human-authored:
+Durable repository memory creates the next problem: once the project can remember, an agent still needs to decide **which parts of that memory matter for the current task**.
+
+Today, that selection is mostly explicit and human-authored:
 
 <ResearchBreakout mode="wide">
   <FutureContextRoutingVisual />
 </ResearchBreakout>
 
-A natural next step is to investigate whether some of that selection can become more task-aware without turning the repository into one giant context payload.
+The next research layer is not more repository text. It is better selection and delivery of the knowledge already there. That breaks into three distinct directions:
 
-That could involve ideas such as:
-
-- relevance-aware retrieval
-- MCP-based context delivery
-- repository-specific architectural knowledge
-- selective context loading
-- automated routing to the right specs and decisions
+- **task-aware selection** of the specs, decisions, and repository patterns relevant to the current work
+- **context delivery** through MCP or another explicit mechanism that can supply the selected material when needed
+- **repository-specific routing** that keeps architectural knowledge discoverable without loading the entire project memory at once
 
 There is already an unpublished **Repository Context Engine for Coding Agents** concept in this repository that explores that direction. It is still a proposed architecture, not a finished implementation.
 
