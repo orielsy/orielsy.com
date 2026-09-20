@@ -182,9 +182,11 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
       ))}
     </div>
 
-    <div id="no-filtered-projects" class="mt-6 hidden border-y border-[var(--border-subtle)] py-10 text-center">
-      <p class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">No projects found matching this status filter.</p>
-    </div>
+    {showProjectFilters && (
+      <div id="no-filtered-projects" class="mt-6 hidden border-y border-[var(--border-subtle)] py-10 text-center">
+        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">No projects found matching this status filter.</p>
+      </div>
+    )}
 
     {sortedProjects.length === 0 && (
       <div class="border-y border-[var(--border-subtle)] py-10 text-center">
