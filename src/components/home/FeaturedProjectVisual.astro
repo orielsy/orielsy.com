@@ -34,9 +34,15 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
         <span class="caption caption-three">The overlay composites in OBS.</span>
       </div>
 
-      <div class="lower-third absolute inset-x-4 bottom-4 border-l-2 border-[var(--accent)] bg-black/55 px-3 py-2.5 backdrop-blur-sm" aria-hidden="true">
-        <p class="font-editorial-mono text-[7px] uppercase tracking-[0.12em] text-white/45">Orielsy Diaz</p>
-        <p class="mt-1 text-[11px] font-medium leading-4 text-white/90">Creator · Developer</p>
+      <div class="lower-third absolute inset-x-4 bottom-4 overflow-hidden border-l-2 border-[var(--accent)] bg-black/55 backdrop-blur-sm" aria-hidden="true">
+        <div class="lower-third-entry lower-third-entry-one">
+          <p class="font-editorial-mono text-[7px] uppercase tracking-[0.12em] text-white/45">Orielsy Diaz</p>
+          <p class="mt-1 text-[11px] font-medium leading-4 text-white/90">Creator · Developer</p>
+        </div>
+        <div class="lower-third-entry lower-third-entry-two">
+          <p class="font-editorial-mono text-[7px] uppercase tracking-[0.12em] text-white/45">speechBubbles</p>
+          <p class="mt-1 text-[11px] font-medium leading-4 text-white/90">Local AI Broadcast Overlay</p>
+        </div>
       </div>
     </div>
   </div>
@@ -96,7 +102,20 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
   }
 
   .lower-third {
-    animation: lower-third-cycle 9s ease-in-out infinite;
+    min-height: 3.25rem;
+  }
+
+  .lower-third-entry {
+    position: absolute;
+    inset: 0;
+    padding: 0.625rem 0.75rem;
+    opacity: 0;
+    transform: translateX(10px);
+    animation: lower-third-entry-cycle 20s ease-in-out infinite;
+  }
+
+  .lower-third-entry-two {
+    animation-delay: 10s;
   }
 
   @keyframes live-pulse {
@@ -134,25 +153,25 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
     }
   }
 
-  @keyframes lower-third-cycle {
-    0%, 7% {
-      opacity: 0.82;
-      transform: translateY(2px);
+  @keyframes lower-third-entry-cycle {
+    0% {
+      opacity: 0;
+      transform: translateX(10px);
     }
-    14%, 92% {
+    5%, 43% {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateX(0);
     }
-    100% {
-      opacity: 0.9;
-      transform: translateY(1px);
+    50%, 100% {
+      opacity: 0;
+      transform: translateX(-10px);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .caption,
     .waveform span,
-    .lower-third,
+    .lower-third-entry,
     .preview-live-dot {
       animation: none !important;
       transform: none !important;
@@ -171,8 +190,13 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
       opacity: 0.82;
     }
 
-    .lower-third {
+    .lower-third-entry-one {
       opacity: 1;
+      transform: none;
+    }
+
+    .lower-third-entry-two {
+      display: none;
     }
   }
 </style>
