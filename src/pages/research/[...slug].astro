@@ -10,8 +10,10 @@ export async function getStaticPaths() {
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );
   const publishedEntries = sorted.filter((entry) => entry.data.published);
+  const previewUnpublished = import.meta.env.DEV && import.meta.env.MODE === 'content-preview';
+  const routableEntries = previewUnpublished ? sorted : publishedEntries;
 
-  return sorted.map((entry) => {
+  return routableEntries.map((entry) => {
     const publishedIndex = publishedEntries.findIndex(
       (publishedEntry) => publishedEntry.id === entry.id
     );
