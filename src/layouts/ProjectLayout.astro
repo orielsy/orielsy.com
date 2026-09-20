@@ -68,6 +68,12 @@ const associatedResearchEntries = data.associatedResearch
         <div class="lg:col-span-8 lg:col-start-5">
           {published ? (
             <>
+              {data.projectName && (
+                <p class="font-editorial-mono mb-4 text-[9px] uppercase tracking-[0.14em] text-[var(--accent)] sm:text-[10px]">
+                  {data.projectName}
+                </p>
+              )}
+
               <div class="font-editorial-mono flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.09em] text-[var(--text-muted)] sm:text-[10px]">
                 <span class="text-[var(--accent)]">{data.status}</span>
                 <span>{data.role}</span>
@@ -82,78 +88,26 @@ const associatedResearchEntries = data.associatedResearch
                 {data.summary}
               </p>
 
-              {(data.architecture || data.technologies.length > 0) && (
-                <dl class="project-hero-facts mt-9 grid gap-px border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-2">
-                  {data.architecture && (
-                    <div class="bg-[var(--bg-card)] p-5">
-                      <dt>Architecture paradigm</dt>
-                      <dd>{data.architecture}</dd>
-                    </div>
-                  )}
-                  {data.technologies.length > 0 && (
-                    <div class="bg-[var(--bg-card)] p-5">
-                      <dt>Technologies</dt>
-                      <dd>
-                        <ul class="project-hero-technology-list" aria-label="Project technologies">
-                          {data.technologies.map((technology) => <li>{technology}</li>)}
-                        </ul>
-                      </dd>
-                    </div>
-                  )}
-                </dl>
-              )}
-
-              {(data.github || data.demo) && (
-                <div class="font-editorial-mono mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-[var(--border-subtle)] pt-5 text-[9px] uppercase tracking-[0.08em] sm:text-[10px]">
-                  {data.demo && (
-                    <a
-                      href={data.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-analytics-event="project_demo"
-                      data-analytics-project={id}
-                      class="text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)]"
-                    >
-                      Live demonstration ↗
-                    </a>
-                  )}
-                  {data.github && (
-                    <a
-                      href={data.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-analytics-event="project_repo"
-                      data-analytics-project={id}
-                      class="text-[var(--text-primary)] transition-colors hover:text-[var(--accent)]"
-                    >
-                      Repository ↗
-                    </a>
-                  )}
-                </div>
-              )}
-
-              {associatedResearchEntries.length > 0 && (
-                <div class="mt-8 border-t border-[var(--border-subtle)] pt-5">
-                  <p class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)] sm:text-[10px]">
-                    Associated Research
+              {(data.problem || data.solution) && (
+                <section class="project-hero-brief mt-9 border-t border-[var(--border-subtle)] pt-5" aria-label="Project brief">
+                  <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)] sm:text-[10px]">
+                    Project brief
                   </p>
-                  <ul class="mt-3 grid gap-2">
-                    {associatedResearchEntries.map((researchEntry) => (
-                      <li>
-                        <a
-                          href={`/research/${researchEntry.id}`}
-                          data-analytics-event="project_to_research"
-                          data-analytics-project={id}
-                          data-analytics-research={researchEntry.id}
-                          class="group inline-flex items-start gap-2 text-sm leading-6 text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
-                        >
-                          <span>{researchEntry.data.title}</span>
-                          <span class="font-editorial-mono shrink-0 text-[var(--accent)] transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  <dl class="mt-5 grid gap-5 sm:grid-cols-2">
+                    {data.problem && (
+                      <div>
+                        <dt>Problem</dt>
+                        <dd>{data.problem}</dd>
+                      </div>
+                    )}
+                    {data.solution && (
+                      <div>
+                        <dt>Built response</dt>
+                        <dd>{data.solution}</dd>
+                      </div>
+                    )}
+                  </dl>
+                </section>
               )}
 
               {demoIsVideo && data.demo && (
@@ -191,36 +145,94 @@ const associatedResearchEntries = data.associatedResearch
     {published ? (
       <div class="site-shell py-10 sm:py-14 lg:py-16">
         <div class="project-publication-grid grid gap-10 lg:grid-cols-12 lg:gap-0">
-          <aside class="project-brief lg:col-span-3 lg:pr-8" aria-label="Project brief">
-            <div class="border-t border-[var(--border-subtle)] pt-4">
-              <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">
-                Project brief
-              </p>
-
-              <dl class="mt-5 grid gap-5">
-                {data.problem && (
-                  <div>
-                    <dt>Problem</dt>
-                    <dd>{data.problem}</dd>
-                  </div>
-                )}
-
-                {data.solution && (
-                  <div>
-                    <dt>Built response</dt>
-                    <dd>{data.solution}</dd>
-                  </div>
-                )}
-              </dl>
-            </div>
-          </aside>
-
           <div class="project-reading min-w-0 lg:col-span-8 lg:col-start-5">
             {isConceptDraft && <ConceptDraftNotice kind="project" />}
 
             <div class="prose project-prose max-w-none">
               <slot />
             </div>
+
+            {(data.architecture || data.technologies.length > 0 || data.github || data.demo || associatedResearchEntries.length > 0) && (
+              <section class="mt-14 border-t border-[var(--border-subtle)] pt-6" aria-label="Project reference">
+                <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)] sm:text-[10px]">
+                  Project reference
+                </p>
+
+                {(data.architecture || data.technologies.length > 0) && (
+                  <dl class="project-hero-facts mt-5 grid gap-px border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-2">
+                    {data.architecture && (
+                      <div class="bg-[var(--bg-card)] p-5">
+                        <dt>Architecture paradigm</dt>
+                        <dd>{data.architecture}</dd>
+                      </div>
+                    )}
+                    {data.technologies.length > 0 && (
+                      <div class="bg-[var(--bg-card)] p-5">
+                        <dt>Technologies</dt>
+                        <dd>
+                          <ul class="project-hero-technology-list" aria-label="Project technologies">
+                            {data.technologies.map((technology) => <li>{technology}</li>)}
+                          </ul>
+                        </dd>
+                      </div>
+                    )}
+                  </dl>
+                )}
+
+                {(data.github || data.demo) && (
+                  <div class="font-editorial-mono mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-[9px] uppercase tracking-[0.08em] sm:text-[10px]">
+                    {data.demo && (
+                      <a
+                        href={data.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-analytics-event="project_demo"
+                        data-analytics-project={id}
+                        class="text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)]"
+                      >
+                        Live demonstration ↗
+                      </a>
+                    )}
+                    {data.github && (
+                      <a
+                        href={data.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-analytics-event="project_repo"
+                        data-analytics-project={id}
+                        class="text-[var(--text-primary)] transition-colors hover:text-[var(--accent)]"
+                      >
+                        Repository ↗
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {associatedResearchEntries.length > 0 && (
+                  <div class="mt-6">
+                    <p class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)] sm:text-[10px]">
+                      Associated Research
+                    </p>
+                    <ul class="mt-3 grid gap-2">
+                      {associatedResearchEntries.map((researchEntry) => (
+                        <li>
+                          <a
+                            href={`/research/${researchEntry.id}`}
+                            data-analytics-event="project_to_research"
+                            data-analytics-project={id}
+                            data-analytics-research={researchEntry.id}
+                            class="group inline-flex items-start gap-2 text-sm leading-6 text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
+                          >
+                            <span>{researchEntry.data.title}</span>
+                            <span class="font-editorial-mono shrink-0 text-[var(--accent)] transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </section>
+            )}
           </div>
         </div>
       </div>
