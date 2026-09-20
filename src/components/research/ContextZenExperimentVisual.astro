@@ -1,0 +1,142 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const conditions = [
+  {
+    number: '01',
+    label: 'Full conversation',
+    detail: 'the complete long-running conversation',
+    kind: 'transcript',
+  },
+  {
+    number: '02',
+    label: 'Conventional summary',
+    detail: 'a conventional conversation summary',
+    kind: 'summary',
+  },
+  {
+    number: '03',
+    label: 'Context Zen handoff',
+    detail: 'a Context Zen distilled handoff',
+    kind: 'handoff',
+  },
+];
+---
+
+<ResearchFigureFrame
+  eyebrow="Proposed evaluation"
+  title="Compare three continuation conditions, not just long context versus compression."
+  status="Research design · not yet validated"
+  caption="The third arm matters because the experiment should distinguish ordinary summarization from reconstruction of authoritative working state."
+>
+  <ol class="experiment-grid" aria-label="Three proposed Context Zen evaluation conditions">
+    {conditions.map((condition) => (
+      <li class:list={['condition', condition.kind === 'handoff' && 'is-handoff']}>
+        <div class="condition-topline">
+          <span class="number">{condition.number}</span>
+
+          {condition.kind === 'transcript' && (
+            <svg class="condition-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <path d="M5 5h14v10H9l-4 4V5Z" />
+              <path d="M8 9h8M8 12h5" />
+            </svg>
+          )}
+
+          {condition.kind === 'summary' && (
+            <svg class="condition-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <path d="M6 3h9l3 3v15H6V3Z" />
+              <path d="M14 3v4h4" />
+              <path d="M9 11h6M9 14h6M9 17h4" />
+            </svg>
+          )}
+
+          {condition.kind === 'handoff' && (
+            <svg class="condition-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <path d="M4 7h9" />
+              <path d="m10 4 3 3-3 3" />
+              <path d="M20 17h-9" />
+              <path d="m14 14-3 3 3 3" />
+            </svg>
+          )}
+        </div>
+
+        <strong>{condition.label}</strong>
+        <p>{condition.detail}</p>
+      </li>
+    ))}
+  </ol>
+</ResearchFigureFrame>
+
+<style>
+  .experiment-grid {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .condition {
+    min-width: 0;
+    background: var(--bg-card);
+    padding: 1rem;
+  }
+
+  .condition.is-handoff {
+    background: color-mix(in srgb, var(--accent) 7%, var(--bg-card));
+    box-shadow: inset 2px 0 0 var(--accent);
+  }
+
+  .condition-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .number {
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  .condition-icon {
+    width: 1rem;
+    height: 1rem;
+    color: var(--text-muted);
+  }
+
+  .is-handoff .condition-icon {
+    color: var(--accent);
+  }
+
+  .condition strong,
+  .condition p {
+    display: block;
+    margin: 0;
+  }
+
+  .condition strong {
+    margin-top: 1.2rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .condition p {
+    margin-top: 0.42rem;
+    color: var(--text-secondary);
+    font-size: 0.66rem;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 720px) {
+    .experiment-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
