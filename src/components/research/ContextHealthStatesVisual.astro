@@ -1,0 +1,155 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const states = [
+  {
+    label: 'Healthy',
+    signal: 'Retained history is still helping.',
+    cue: 'Continue',
+    accent: false,
+  },
+  {
+    label: 'Watch',
+    signal: 'Accumulation is becoming noticeable.',
+    cue: 'Assess',
+    accent: false,
+  },
+  {
+    label: 'Handoff',
+    signal: 'A distilled continuation is likely clearer than the full history.',
+    cue: 'Reset',
+    accent: true,
+  },
+];
+---
+
+<ResearchFigureFrame
+  eyebrow="Context health"
+  title="Use qualitative states before pretending the heuristic is a precise score."
+  status="v0.1 · provisional"
+  caption="Length can contribute to the assessment, but semantic drift and obsolete state matter more than token count alone."
+>
+  <div class="health-body">
+    <div class="score-rejection">
+      <span>Not this</span>
+      <strong>63 / 100</strong>
+      <p>An unvalidated numeric score creates an appearance of measurement the experiment has not earned.</p>
+    </div>
+
+    <div class="state-grid">
+      {states.map((state) => (
+        <section class:list={['state', state.accent && 'is-handoff']}>
+          <div class="state-topline">
+            <span>{state.label}</span>
+            <small>{state.cue}</small>
+          </div>
+          <p>{state.signal}</p>
+        </section>
+      ))}
+    </div>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  .health-body {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .score-rejection {
+    background: var(--bg-secondary);
+    padding: 1rem 1.1rem;
+  }
+
+  .score-rejection span,
+  .state-topline span,
+  .state-topline small {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
+  }
+
+  .score-rejection span {
+    color: var(--text-muted);
+    font-size: 0.46rem;
+    letter-spacing: 0.11em;
+  }
+
+  .score-rejection strong {
+    display: block;
+    margin-top: 0.45rem;
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+  }
+
+  .score-rejection p {
+    margin: 0.45rem 0 0;
+    max-width: 36rem;
+    color: var(--text-secondary);
+    font-size: 0.67rem;
+    line-height: 1.55;
+  }
+
+  .state-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .state {
+    min-width: 0;
+    background: var(--bg-card);
+    padding: 1rem;
+  }
+
+  .state.is-handoff {
+    background: color-mix(in srgb, var(--accent) 6%, var(--bg-card));
+    box-shadow: inset 2px 0 0 var(--accent);
+  }
+
+  .state-topline {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .state-topline span {
+    color: var(--text-primary);
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+
+  .state-topline small {
+    color: var(--text-muted);
+    font-size: 0.42rem;
+    letter-spacing: 0.09em;
+  }
+
+  .is-handoff .state-topline span,
+  .is-handoff .state-topline small {
+    color: var(--accent);
+  }
+
+  .state p {
+    margin: 0.65rem 0 0;
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 760px) {
+    .health-body {
+      grid-template-columns: minmax(13rem, 0.65fr) minmax(0, 1.8fr);
+    }
+
+    .state-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
