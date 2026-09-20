@@ -117,17 +117,23 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
               {featuredResearch.data.description}
             </p>
 
-            {featuredResearch.data.tldr && (
-              <button
-                type="button"
-                class="mt-4 cursor-pointer font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)]"
-                aria-expanded="false"
-                aria-controls={`tldr-home-featured-${featuredResearch.id}`}
-                data-tldr-toggle
-              >
-                TL;DR <span data-tldr-symbol aria-hidden="true">+</span>
-              </button>
-            )}
+            <div class="mt-7 flex flex-wrap items-center gap-x-4 gap-y-3">
+              {featuredResearch.data.tldr && (
+                <button
+                  type="button"
+                  class="cursor-pointer font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)]"
+                  aria-expanded="false"
+                  aria-controls={`tldr-home-featured-${featuredResearch.id}`}
+                  data-tldr-toggle
+                >
+                  TL;DR <span data-tldr-symbol aria-hidden="true">+</span>
+                </button>
+              )}
+
+              <a href={`/research/${featuredResearch.id}`} class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--accent)]">
+                Read publication <span aria-hidden="true" class="text-xs">→</span>
+              </a>
+            </div>
 
             {featuredResearch.data.tldr && (
               <div
@@ -138,10 +144,6 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                 <p class="text-sm leading-7 text-[var(--text-secondary)]">{featuredResearch.data.tldr}</p>
               </div>
             )}
-
-            <a href={`/research/${featuredResearch.id}`} class="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--accent)]">
-              Read publication <span aria-hidden="true" class="text-xs">→</span>
-            </a>
           </div>
 
           {featuredResearch.data.home?.visual === 'adaptive-interface' ? (
