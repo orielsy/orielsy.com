@@ -18,6 +18,8 @@ const research = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    tldr: z.string().optional(),
+    tldrLabel: z.string().optional(),
     pubDate: z.coerce.date(),
     researchNumber: z.number().int().positive().optional(),
     updatedDate: z.coerce.date().optional(),
