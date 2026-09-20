@@ -1,6 +1,8 @@
 ---
 title: "Architecture Notes: Audio Chunking, Transcription Filtering, and Real-Time Speech UI Systems"
 description: "A technical exploration of streaming audio chunk management, Whisper transcription filtering, and high-performance Electron overlay rendering, grounded in the current public speechBubbles and whisper-api source."
+tldr: "Real-time speech UI is a pipeline problem. This article uses speechBubbles to show why separating capture, inference, filtering, and rendering makes the system easier to reason about; the project case study contains the full system and 1080p demo."
+tldrLabel: "TL;DR — COMPANION PROJECT"
 pubDate: 2026-08-25
 researchNumber: 3
 type: "Architecture Exploration"
@@ -23,10 +25,6 @@ import ResearchSourceNote from '../../components/research/ResearchSourceNote.ast
 import SpeechArchitectureTakeawaysVisual from '../../components/research/SpeechArchitectureTakeawaysVisual.astro';
 import SpeechStreamingPipelineVisual from '../../components/research/SpeechStreamingPipelineVisual.astro';
 import TranscriptionFilteringTruthVisual from '../../components/research/TranscriptionFilteringTruthVisual.astro';
-
-<Callout type="note" title="TL;DR — COMPANION PROJECT">
-  Real-time speech UI is a pipeline problem. This article uses **speechBubbles** to show why separating capture, inference, filtering, and rendering makes the system easier to reason about; the [project case study](/projects/local-ai-real-time-captioning) contains the full system and 1080p demo.
-</Callout>
 
 <ResearchSourceNote>
   This exploration is grounded in the current public `speechBubbles` and `whisper-api` source. Format calculations below are arithmetic derived from the stated sample formats, not measured runtime benchmarks.
