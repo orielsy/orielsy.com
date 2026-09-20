@@ -12,19 +12,18 @@ const headingId = `concept-draft-${kind}-heading`;
 ---
 
 <section
-  class="my-8 overflow-hidden rounded-lg border border-[var(--border-subtle)] border-l-2 border-l-[var(--accent)] bg-[var(--bg-card)]"
+  class="my-8 overflow-hidden rounded-lg border border-[var(--border-subtle)] border-l-2 border-l-amber-600 dark:border-l-amber-400 bg-[var(--bg-card)]"
   aria-labelledby={headingId}
 >
   <div class="flex gap-4 px-5 py-5 sm:px-6">
     <div
-      class="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--accent)_24%,var(--border-subtle))] bg-[color-mix(in_srgb,var(--accent)_6%,var(--bg-card))] text-[var(--accent)]"
+      class="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full border border-amber-200 bg-amber-50/60 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/20 dark:text-amber-300"
       aria-hidden="true"
     >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="size-4">
-        <path d="M6 3.75h8.5L18 7.25V20.25H6z" />
-        <path d="M14 3.75v4h4" />
-        <path d="M9 13.5h6" />
-        <path d="M9 16.5h4" />
+        <path d="M10 2v6.5L5.4 17a2.6 2.6 0 0 0 2.3 3.8h8.6a2.6 2.6 0 0 0 2.3-3.8L14 8.5V2" />
+        <path d="M8.5 2h7" />
+        <path d="M7.2 16h9.6" />
       </svg>
     </div>
 
