@@ -15,7 +15,11 @@ github: "https://github.com/orielsy/context-zen"
 readingTime: "5 min read"
 ---
 
-import Callout from '../../components/Callout.astro';
+import ContextDistillationVisual from '../../components/research/ContextDistillationVisual.astro';
+import ContextHealthStatesVisual from '../../components/research/ContextHealthStatesVisual.astro';
+import ContextRecompilationVisual from '../../components/research/ContextRecompilationVisual.astro';
+import ContextZenLifecycleVisual from '../../components/research/ContextZenLifecycleVisual.astro';
+import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 
 ## When More Context Stops Helping
 
@@ -29,28 +33,9 @@ Context Zen starts from a different question:
 
 A transcript is chronological. Working state is authoritative.
 
-A fresh agent may not need this:
-
-```text
-We considered A.
-Then B.
-Then modified B into C.
-Then C was rejected.
-Then D replaced it.
-```
-
-It may need this:
-
-```text
-Current decision: D.
-
-Do not revive:
-- B
-- C
-
-Constraint discovered while exploring A:
-- ...
-```
+<ResearchBreakout mode="wide">
+  <ContextDistillationVisual />
+</ResearchBreakout>
 
 That difference is the foundation of Context Zen.
 
@@ -68,26 +53,9 @@ It is the smallest one that still preserves **correct continuation**.
 
 Context Zen is structured around three operations:
 
-```text
-             CONTEXT ZEN
-
-        ┌───────────────┐
-        │    OBSERVE    │
-        │ Context health│
-        └───────┬───────┘
-                │
-                ▼
-        ┌───────────────┐
-        │    DISTILL    │
-        │ Current state │
-        └───────┬───────┘
-                │
-                ▼
-        ┌───────────────┐
-        │    HANDOFF    │
-        │ Fresh context │
-        └───────────────┘
-```
+<ResearchBreakout mode="wide">
+  <ContextZenLifecycleVisual />
+</ResearchBreakout>
 
 ### Observe
 
@@ -150,26 +118,13 @@ A host does not need durable cross-chat state for this model to work; the handof
 
 This is the part of the project I do **not** want to fake precision around.
 
-It would be easy to invent a number:
-
-```text
-Context Health: 63 / 100
-```
-
-But without a tested scoring model, that mostly creates the appearance of measurement.
+It would be easy to invent a numeric score, but without a tested scoring model that mostly creates the appearance of measurement.
 
 The first version instead uses three qualitative states:
 
-```text
-HEALTHY
-Retained history is still helping.
-
-WATCH
-Accumulation is becoming noticeable.
-
-HANDOFF
-A distilled continuation is likely to be clearer than the full history.
-```
+<ResearchBreakout mode="wide">
+  <ContextHealthStatesVisual />
+</ResearchBreakout>
 
 The skill can use hard signals when the host exposes them, such as context or token load, turn count, active artifact count, or tool-result volume.
 
@@ -221,15 +176,9 @@ That makes target awareness deterministic rather than magical. Context Zen does 
 
 The working model is:
 
-```text
-conversation
-     ↓
-authoritative working state
-     ↓
-target profile
-     ↓
-continuation package
-```
+<ResearchBreakout mode="wide">
+  <ContextRecompilationVisual />
+</ResearchBreakout>
 
 This is closer to **context recompilation** than ordinary summarization: preserve the truth, then represent it for the environment that will consume it next.
 
