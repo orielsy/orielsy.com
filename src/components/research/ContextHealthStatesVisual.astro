@@ -40,7 +40,27 @@ const states = [
       {states.map((state) => (
         <section class:list={['state', state.accent && 'is-handoff']}>
           <div class="state-topline">
-            <span>{state.label}</span>
+            <span class="state-label">
+              {state.label === 'Healthy' && (
+                <svg class="state-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="m5 12 4 4L19 6" />
+                </svg>
+              )}
+              {state.label === 'Watch' && (
+                <svg class="state-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 3 2.8 19h18.4L12 3Z" />
+                  <path d="M12 9v4" />
+                  <path d="M12 16.5h.01" />
+                </svg>
+              )}
+              {state.label === 'Handoff' && (
+                <svg class="state-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M5 12h13" />
+                  <path d="m14 8 4 4-4 4" />
+                </svg>
+              )}
+              <span>{state.label}</span>
+            </span>
             <small>{state.cue}</small>
           </div>
           <p>{state.signal}</p>
@@ -118,11 +138,24 @@ const states = [
     gap: 0.75rem;
   }
 
-  .state-topline span {
+  .state-topline > span {
     color: var(--text-primary);
     font-size: 0.58rem;
     font-weight: 500;
     letter-spacing: 0.1em;
+  }
+
+  .state-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .state-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    flex: 0 0 auto;
+    color: var(--text-muted);
   }
 
   .state-topline small {
@@ -131,8 +164,9 @@ const states = [
     letter-spacing: 0.09em;
   }
 
-  .is-handoff .state-topline span,
-  .is-handoff .state-topline small {
+  .is-handoff .state-topline > span,
+  .is-handoff .state-topline small,
+  .is-handoff .state-icon {
     color: var(--accent);
   }
 
