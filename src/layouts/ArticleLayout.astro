@@ -2,7 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import ContentStatus from '../components/ContentStatus.astro';
-import ConceptDraftNotice from '../components/ConceptDraftNotice.astro';
+import Callout from '../components/Callout.astro';
 import '../styles/research-article.css';
 import '../styles/research-publication.css';
 import '../styles/research-graphics.css';
@@ -127,15 +127,17 @@ const formattedUpdateDate = data.updatedDate
       </div>
     </header>
 
-    {published && isConceptDraft && (
-      <div class="reading-shell pt-8">
-        <ConceptDraftNotice kind="research" />
-      </div>
-    )}
-
     {published ? (
       <>
         <div class="site-shell py-10 sm:py-14 lg:py-16">
+          {data.tldr && (
+            <div class="research-reading mx-auto w-full min-w-0 lg:hidden">
+              <Callout type="note" title={data.tldrLabel ?? 'TL;DR'}>
+                {data.tldr}
+              </Callout>
+            </div>
+          )}
+
           <div class="research-publication-grid grid gap-10 lg:grid-cols-12 lg:gap-0">
             <aside class="lg:col-span-3" aria-label="Research navigation">
               <div class="research-toc-sticky lg:pr-8" data-research-toc-shell>
@@ -144,6 +146,14 @@ const formattedUpdateDate = data.updatedDate
             </aside>
 
             <div class="research-reading mx-auto w-full min-w-0 lg:col-span-8 lg:col-start-5 lg:mx-0">
+              {data.tldr && (
+                <div class="hidden lg:block">
+                  <Callout type="note" title={data.tldrLabel ?? 'TL;DR'}>
+                    {data.tldr}
+                  </Callout>
+                </div>
+              )}
+
               <div class="prose research-prose max-w-none">
                 <slot />
               </div>
