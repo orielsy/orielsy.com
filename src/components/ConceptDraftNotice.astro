@@ -12,11 +12,13 @@ const headingId = `concept-draft-${kind}-heading`;
   class="my-8 p-6 rounded-lg border border-amber-200 dark:border-amber-900/60 bg-amber-50/60 dark:bg-amber-950/20"
   aria-labelledby={headingId}
 >
-  <div class="text-xs font-mono uppercase tracking-widest text-amber-700 dark:text-amber-300 font-semibold mb-2">
-    Concept Draft
-  </div>
-  <h2 id={headingId} class="text-lg font-semibold tracking-tight text-[var(--text-primary)] mb-2">
-    Published while still evolving
+  <h2 id={headingId} class="mb-2 flex items-baseline gap-3 whitespace-nowrap">
+    <span class="text-xs font-mono uppercase tracking-widest text-amber-700 dark:text-amber-300 font-semibold">
+      Concept Draft
+    </span>
+    <span class="text-lg font-semibold tracking-tight text-[var(--text-primary)]">
+      Published while still evolving
+    </span>
   </h2>
   <p class="text-sm text-[var(--text-secondary)] leading-relaxed">
     Early {contentLabel} shared in public while the framing, examples, and conclusions are still taking shape.
