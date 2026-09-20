@@ -114,7 +114,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                 {entry.data.tldr && (
                   <div
                     id={`tldr-archive-${entry.id}`}
-                    class="mt-3 hidden max-w-3xl border-l border-[var(--accent)] bg-[var(--bg-card)] px-4 py-3"
+                    class="mt-3 hidden max-w-3xl scroll-mt-[30px] border-l border-[var(--accent)] bg-[var(--bg-card)] px-4 py-3"
                     data-tldr-panel
                   >
                     <p class="text-sm leading-7 text-[var(--text-secondary)]">{entry.data.tldr}</p>
@@ -193,7 +193,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             panel.scrollIntoView({
               behavior: reduceMotion ? 'auto' : 'smooth',
-              block: 'nearest',
+              block: 'start',
             });
           });
         }
