@@ -189,15 +189,6 @@ const associatedResearchEntries = data.associatedResearch
         </div>
       </div>
     </header>
-
-    {published && isConceptDraft && (
-      <div class="site-shell">
-        <div class="lg:ml-[33.333333%] lg:w-[66.666667%]">
-          <ConceptDraftNotice kind="project" />
-        </div>
-      </div>
-    )}
-
     {published ? (
       <div class="site-shell py-10 sm:py-14 lg:py-16">
         <div class="project-publication-grid grid gap-10 lg:grid-cols-12 lg:gap-0">
@@ -226,6 +217,8 @@ const associatedResearchEntries = data.associatedResearch
           </aside>
 
           <div class="project-reading min-w-0 lg:col-span-8 lg:col-start-5">
+            {isConceptDraft && <ConceptDraftNotice kind="project" />}
+
             <div class="prose project-prose max-w-none">
               <slot />
             </div>
