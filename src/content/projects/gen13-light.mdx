@@ -59,7 +59,6 @@ Scene + Command
 - **Trace** records what happened and the quantities needed to explain why.
 - **SVG** renders the result but does not calculate the physics.
 
-That last boundary is central to the project: the renderer is a view of the simulation, not the source of truth.
 
 ## What v0.1 Implements
 
@@ -74,7 +73,6 @@ The current browser experiment includes:
 - an inspector populated directly from `Trace`
 - the exact last command displayed alongside the resulting state
 
-The renderer does not calculate Snell's law, Fresnel behavior, or total internal reflection. It consumes directions and values already produced by the solver.
 
 ## Physics as Inspectable Evidence
 
@@ -82,7 +80,7 @@ Gen13 uses established geometrical-optics and ray-intersection equations rather 
 
 The repository documents the equations and implementation references for:
 
-- Snell's law
+- Snell's law and its vector refraction form
 - total internal reflection and the critical angle
 - reflection vectors
 - Fresnel equations
