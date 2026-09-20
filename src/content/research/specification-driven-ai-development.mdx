@@ -11,10 +11,9 @@ status: "published"
 published: true
 draft: false
 featured: false
-readingTime: "10 min read"
+readingTime: "8 min read"
 ---
 
-import Callout from '../../components/Callout.astro';
 import ProjectMemoryStack from '../../components/ProjectMemoryStack.astro';
 import ConversationVsMemoryVisual from '../../components/research/ConversationVsMemoryVisual.astro';
 import DecisionPersistenceVisual from '../../components/research/DecisionPersistenceVisual.astro';
@@ -25,116 +24,79 @@ import SourceOfTruthWorkflowVisual from '../../components/research/SourceOfTruth
 
 ## Conversation Context Is Not Project Memory
 
-A conversation is useful working context. It contains the immediate objective, discussion, tradeoffs, corrections, and discoveries that happen while a task is active.
+A conversation is useful working context: objectives, tradeoffs, corrections, and discoveries. It is not durable project memory.
 
-But conversational context and project memory are not the same thing.
-
-A new coding session may not have access to the discussion that happened yesterday. A different tool may see only the repository. Even when chat history exists somewhere, it may not be the thing an engineer or agent naturally inspects before changing the code.
-
-For this project, I have been moving durable decisions into version-controlled artifacts that live beside the implementation.
-
-The distinction looks roughly like this:
+A new session or tool may see only the repository, so durable decisions need version-controlled artifacts beside the implementation.
 
 <ResearchBreakout mode="wide">
   <ConversationVsMemoryVisual />
 </ResearchBreakout>
 
-The point is not that conversation is bad. The point is that **a project should not depend on one conversation remaining available forever**.
+**A project should not depend on one conversation remaining available forever.**
 
 ---
 
 ## A Real Failure: When an Old Decision Came Back
 
-One of the reasons I care about this is that I have already seen the opposite fail.
+I have already seen the opposite fail.
 
-During work on this site, we had established that my professional background supports claims around:
+During work on this site, we had established experience with reusable UI components, component architecture, frontend patterns and systems, UI architecture, and engineering standards—but not formal design-system ownership.
 
-- reusable UI components
-- component architecture
-- frontend patterns
-- frontend systems
-- UI architecture
-- engineering standards
-
-What we had **not** established was formal design-system ownership.
-
-That distinction had been discussed and rejected in prior work. But later, the homepage contained this line:
+Later, the homepage contained this line:
 
 > "15+ years of experience designing scalable web architectures, design systems, and enterprise platforms."
 
-The wording was plausible. It even sounded professionally polished.
+The wording was plausible and polished. It was also unsupported.
 
-It was also not supported by the evidence we had established.
+This was a context-persistence failure, not primarily a coding error.
 
-This was not primarily a coding error. It was a context-persistence failure.
-
-The correction was not just to change the homepage sentence. The durable project memory also needed to change.
-
-The constitution now explicitly says not to describe my professional experience as design systems unless that experience is established later. `specs/001-site-foundation/spec.md` carries the same positioning constraint at the site-foundation level.
-
-That gives future work a different path:
+The fix had two layers: correct the homepage and correct the durable project memory. The constitution now explicitly blocks that design-systems claim unless the experience is established later, and `specs/001-site-foundation/spec.md` carries the same positioning constraint.
 
 <ResearchBreakout mode="wide">
   <DecisionPersistenceVisual />
 </ResearchBreakout>
 
-"Less likely" is intentional. A rule in a repository is not a proof that an agent will always follow it. But it gives the next session something durable to recover that the previous conversation alone did not.
+"Less likely" is intentional. A repository rule cannot guarantee agent behavior, but it gives later sessions something durable to recover.
 
 ---
 
 ## Externalizing Intent
 
-orielsy.com uses a lightweight Spec-Driven Development structure. The repository currently separates project knowledge into several layers.
+orielsy.com uses a lightweight Spec-Driven Development structure with several scopes of project memory.
 
 <ResearchBreakout mode="wide">
   <ProjectMemoryStack />
 </ResearchBreakout>
 
-These are not interchangeable documents.
-
 ### Constitution: project-wide invariants
 
-[.specify/memory/constitution.md](https://github.com/orielsy/orielsy.com/blob/main/.specify/memory/constitution.md) contains rules that should survive individual features and sessions. Examples include factual-accuracy constraints, content taxonomy, repository-link rules, static-first architecture, and editorial voice.
+[.specify/memory/constitution.md](https://github.com/orielsy/orielsy.com/blob/main/.specify/memory/constitution.md) holds rules that should survive individual features and sessions: factual-accuracy constraints, content taxonomy, repository-link rules, static-first architecture, and editorial voice.
 
-One current rule is especially important for this article: quantitative claims require evidence, proposed architecture must not be written as implemented work, and source code outranks generated prose when the two disagree.
-
-Those constraints are broader than any one page. They belong above feature-level implementation.
+For this article, one rule matters especially: quantitative claims require evidence, proposed architecture must not be written as implemented work, and source code outranks generated prose when they disagree.
 
 ### Feature specs: desired behavior and scope
 
-A feature spec narrows the problem.
+A feature spec narrows the requirement. [specs/003-content-publication-gating/spec.md](https://github.com/orielsy/orielsy.com/blob/main/specs/003-content-publication-gating/spec.md), for example, defines how unpublished Research and Project entries remain visible without exposing unfinished body content or becoming indexable published pages.
 
-For example, [specs/003-content-publication-gating/spec.md](https://github.com/orielsy/orielsy.com/blob/main/specs/003-content-publication-gating/spec.md) defines the behavior of unpublished Research and Project entries: they remain visible as in-progress summaries, do not expose unfinished body content, and do not become indexable published pages.
-
-That is different from saying, "make unpublished cards look disabled." The durable artifact captures the product behavior that future UI changes still need to preserve.
+That durable behavior survives changes to the card or interaction design.
 
 ### Plans and tasks: implementation and execution state
 
-The plan records how the repository intends to satisfy the feature. Tasks record the work being performed now.
+The same feature's [plan.md](https://github.com/orielsy/orielsy.com/blob/main/specs/003-content-publication-gating/plan.md) translates the requirement into technical strategy; [tasks.md](https://github.com/orielsy/orielsy.com/blob/main/specs/003-content-publication-gating/tasks.md) turns that strategy into executable work.
 
-The publication-gating feature makes that distinction concrete. Its [plan.md](https://github.com/orielsy/orielsy.com/blob/main/specs/003-content-publication-gating/plan.md) translates the specification into technical strategy: fail-closed publication fields, status-only unpublished routes, local content preview, and publication-aware RSS and sitemap behavior. Its [tasks.md](https://github.com/orielsy/orielsy.com/blob/main/specs/003-content-publication-gating/tasks.md) turns that strategy into an execution checklist covering schema changes, route behavior, metadata, preview tooling, and verification.
-
-The requirement can remain stable while the implementation plan and task state evolve underneath it.
+Requirements can remain stable while implementation strategy and task state change.
 
 ### ADRs: durable reasons
 
-Decision records preserve choices that affect future work but are not obvious from code alone.
+Decision records preserve choices whose rationale is not obvious from code. [docs/decisions/003-manual-production-publishing.md](https://github.com/orielsy/orielsy.com/blob/main/docs/decisions/003-manual-production-publishing.md), for example, records that pushing source does **not** publish the site; production deployment is an explicit `npm run live` action.
 
-This site has ADRs for content taxonomy, manual production publishing, publication gating, and canonical URL/SEO behavior.
-
-For example, [docs/decisions/003-manual-production-publishing.md](https://github.com/orielsy/orielsy.com/blob/main/docs/decisions/003-manual-production-publishing.md) establishes that pushing source code does **not** publish the site. Production deployment is an explicit `npm run live` action that builds and publishes generated output to `gh-pages`.
-
-A future agent modifying deployment behavior should not have to rediscover that intent from package scripts alone.
+That intent should not have to be rediscovered from package scripts.
 
 ---
 
 ## The Agent Entry Point
 
-The most useful part of this structure may be the smallest file.
-
-[AGENTS.md](https://github.com/orielsy/orielsy.com/blob/main/AGENTS.md) is intentionally thin. It does not try to contain the entire project.
-
-Instead, it tells an agent how to navigate the project's existing memory:
+[AGENTS.md](https://github.com/orielsy/orielsy.com/blob/main/AGENTS.md) stays deliberately thin. Its job is to route an agent into the project's existing memory:
 
 <ResearchSourceExcerpt file="AGENTS.md">
 
@@ -149,86 +111,55 @@ Instead, it tells an agent how to navigate the project's existing memory:
 
 </ResearchSourceExcerpt>
 
-I think of this as a **routing layer**, not a mega-prompt.
+It is a **routing layer, not a mega-prompt**. Copying every rule, requirement, task, and decision into one instruction file would recreate the context problem in another form.
 
-That distinction matters. If every architectural rule, editorial constraint, feature requirement, task, and historical decision were copied into one enormous instruction file, the project would recreate the same context problem in a different form.
-
-The goal is not to maximize the amount of text sent to an agent. The goal is to make the right knowledge discoverable at the right scope.
+The goal is discoverability at the right scope.
 
 ---
 
 ## Updating the Source of Truth Before the Code
 
-The workflow I want is not to patch implementation while leaving the old specification behind.
-
-That produces a repository where the code and the project's stated intent slowly diverge.
-
-Instead, when a requirement changes materially, the durable artifact should change with it:
+When a requirement changes materially, the durable artifact should change with the implementation rather than leave stale intent behind.
 
 <ResearchBreakout mode="wide">
   <SourceOfTruthWorkflowVisual />
 </ResearchBreakout>
 
-The publication-gating feature is a good example.
+Publication gating provides a concrete example. When unpublished cards changed from non-clickable summaries to inline status interactions, the feature spec, README, publication-gating ADR, and URL/SEO policy changed with the implementation.
 
-The original behavior described unpublished entries as non-clickable summaries. Later, the interaction changed so those cards could reveal an inline status message without navigating to unfinished content.
-
-The implementation was not the only thing updated. The feature spec, README, publication-gating ADR, and URL/SEO policy were updated to describe the new behavior as well.
-
-That costs more than changing one component. It also means the next agent does not have to infer the product requirement from whichever implementation detail happens to be present.
+The next agent therefore inherits the requirement instead of inferring it from whichever component happens to exist.
 
 ---
 
 ## What This Does Not Solve
 
-Version-controlled project memory creates new responsibilities. It does not remove the old ones.
+Version-controlled memory still has failure modes:
 
-### Specs can be wrong
+- **Wrong specs stay wrong.** Durability does not make an assumption true.
+- **Specs can become stale.** Implementation can outrun the artifact.
+- **Agents can misread explicit context.** Documentation reduces ambiguity; it does not eliminate interpretation errors.
+- **Documentation can become noise.** Overlapping or redundant artifacts make retrieval harder and can disagree.
+- **Specifications do not replace tests.** Requirements and passing behavior are different evidence.
+- **Human judgment remains necessary.** Engineers still decide what becomes durable, which artifact owns a decision, and whether implementation satisfies intent.
 
-Moving an incorrect assumption into a durable file makes it durable; it does not make it true.
-
-### Specs can become stale
-
-If implementation changes without updating the corresponding artifact, an agent may confidently follow obsolete guidance.
-
-### Agents can still misunderstand the documents
-
-Explicit context reduces ambiguity but does not eliminate interpretation errors.
-
-### Documentation can become noise
-
-Too many overlapping rules can make retrieval harder. Redundant artifacts can also disagree with each other.
-
-### Specifications do not replace tests
-
-A written requirement and a passing implementation are different forms of evidence. Behavioral claims still need verification.
-
-### Human judgment still matters
-
-Deciding what should become durable, which rule owns a decision, when a specification should change, and whether an implementation actually satisfies intent remains engineering work.
-
-The system only helps if the memory itself is maintained.
+The system only helps if its memory is maintained.
 
 ---
 
 ## Where This Could Go Next
 
-Durable repository memory creates the next problem: once the project can remember, an agent still needs to decide **which parts of that memory matter for the current task**.
-
-Today, that selection is mostly explicit and human-authored:
+Once the project can remember, an agent still needs to decide **which parts of that memory matter for the current task**.
 
 <ResearchBreakout mode="wide">
   <FutureContextRoutingVisual />
 </ResearchBreakout>
 
-The next research layer is not more repository text. It is better selection and delivery of the knowledge already there. That breaks into three distinct directions:
+The next research layer is selection and delivery:
 
-- **task-aware selection** of the specs, decisions, and repository patterns relevant to the current work
-- **context delivery** through MCP or another explicit mechanism that can supply the selected material when needed
-- **repository-specific routing** that keeps architectural knowledge discoverable without loading the entire project memory at once
+- **task-aware selection** of relevant specs, decisions, and repository patterns
+- **context delivery** through MCP or another explicit mechanism
+- **repository-specific routing** that avoids loading the entire memory at once
 
-There is already an unpublished **Repository Context Engine for Coding Agents** concept in this repository that explores that direction. It is still a proposed architecture, not a finished implementation.
+An unpublished **Repository Context Engine for Coding Agents** concept explores that direction; it remains proposed architecture.
 
-For now, the simpler system is useful on its own: important decisions move out of transient conversation, into version-controlled project memory, and become available to the next session that needs them.
-
-That is the part I find most interesting—not replacing prompts, but giving coding agents a project that can remember more than the conversation they happen to be in.
+For now, the useful result is simpler: important decisions can outlive the conversation that produced them.
