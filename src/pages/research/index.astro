@@ -4,6 +4,7 @@ import ArticleCard from '../../components/ArticleCard.astro';
 import TldrToggleButton from '../../components/TldrToggleButton.astro';
 import ResearchFollowsBadge from '../../components/ResearchFollowsBadge.astro';
 import ResearchContinuationBadge from '../../components/ResearchContinuationBadge.astro';
+import ResearchProjectBadge from '../../components/ResearchProjectBadge.astro';
 import { getCollection } from 'astro:content';
 
 const allResearch = await getCollection('research');
@@ -23,6 +24,16 @@ const researchContinuationCounts = new Map(
   allResearch.map((entry) => [
     entry.id,
     allResearch.filter((candidate) => candidate.data.originSlug === entry.id).length,
+  ] as const),
+);
+const allProjects = await getCollection('projects');
+const publishedProjects = allProjects.filter((entry) => entry.data.published);
+const researchProjectEntries = new Map(
+  allResearch.map((entry) => [
+    entry.id,
+    publishedProjects.filter((project) =>
+      project.data.associatedResearch.includes(`/research/${entry.id}`),
+    ),
   ] as const),
 );
 const previewUnpublished = import.meta.env.DEV && import.meta.env.MODE === 'content-preview';
@@ -109,7 +120,9 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                   <time datetime={entry.data.pubDate.toISOString()} class="font-editorial-mono block text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
                     {formatDate(entry.data.pubDate)}
                   </time>
-                  {(researchOrigins.get(entry.id) || (researchContinuationCounts.get(entry.id) ?? 0) > 0) && (
+                  {(researchOrigins.get(entry.id) ||
+                    (researchContinuationCounts.get(entry.id) ?? 0) > 0 ||
+                    (researchProjectEntries.get(entry.id)?.length ?? 0) > 0) && (
                     <div class="mt-2 flex min-w-0 flex-col items-start gap-2">
                       {researchOrigins.get(entry.id) && (
                         <ResearchFollowsBadge {...researchOrigins.get(entry.id)!} />
@@ -118,6 +131,14 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                         <ResearchContinuationBadge
                           href={`/research/${entry.id}#research-lineage`}
                           count={researchContinuationCounts.get(entry.id)!}
+                        />
+                      )}
+                      {(researchProjectEntries.get(entry.id)?.length ?? 0) > 0 && (
+                        <ResearchProjectBadge
+                          href={researchProjectEntries.get(entry.id)!.length === 1
+                            ? `/projects/${researchProjectEntries.get(entry.id)![0].id}`
+                            : `/research/${entry.id}#research-lineage`}
+                          count={researchProjectEntries.get(entry.id)!.length}
                         />
                       )}
                     </div>
