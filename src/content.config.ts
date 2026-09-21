@@ -13,6 +13,10 @@ const homeFeature = z.object({
   visual: z.string().optional(),
 }).optional();
 
+const projectArchive = z.object({
+  visual: z.enum(['speech-broadcast', 'adaptive-ui-lab']).optional(),
+}).optional();
+
 const research = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/research' }),
   schema: z.object({
@@ -79,6 +83,7 @@ const projects = defineCollection({
     heroImage: z.string().optional(),
     socialCard,
     home: homeFeature,
+    archive: projectArchive,
   }),
 });
 
