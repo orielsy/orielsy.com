@@ -48,8 +48,11 @@ html.dark .prose [data-adaptive-enterprise-ui-lab] {
   padding-block: 1.35rem;
 }
 
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) h3,
 .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) h4,
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) h3,
 .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) h4,
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) h3,
 .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) h4 {
   color: var(--lab-muted);
   font-size: 0.67rem;
@@ -177,6 +180,7 @@ html.dark .prose [data-adaptive-enterprise-ui-lab] {
   letter-spacing: 0.15em;
 }
 
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article h4,
 .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article h5 {
   margin-top: 0.28rem;
   font-size: 1.02rem;
