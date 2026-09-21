@@ -6,6 +6,7 @@ import FeaturedProjectVisual from '../components/home/FeaturedProjectVisual.astr
 import TldrToggleButton from '../components/TldrToggleButton.astro';
 import ResearchFollowsBadge from '../components/ResearchFollowsBadge.astro';
 import ResearchContinuationBadge from '../components/ResearchContinuationBadge.astro';
+import ProjectResearchBadge from '../components/ProjectResearchBadge.astro';
 import { getCollection } from 'astro:content';
 
 const allResearch = await getCollection('research');
@@ -41,6 +42,10 @@ const recentResearchList = recentResearch
   .filter((entry) => entry.id !== featuredResearch?.id)
   .slice(0, 3);
 const featuredProject = recentProjects.find((entry) => entry.data.featured) ?? recentProjects[0];
+const publishedResearchPaths = new Set(publishedResearch.map((entry) => `/research/${entry.id}`));
+const featuredProjectResearchPaths = featuredProject
+  ? featuredProject.data.associatedResearch.filter((path) => publishedResearchPaths.has(path))
+  : [];
 
 const explorationAreas = [
   {
@@ -315,10 +320,22 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
 
         <article class="mt-10 grid gap-8 border-t border-[var(--accent)] pt-6 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div>
-            <div class="flex flex-wrap gap-x-4 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">
+            <div class="flex flex-wrap items-start gap-x-4 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">
               <span>{featuredProject.data.status}</span>
               <span>{featuredProject.data.role}</span>
-              <span>{featuredProject.data.dateLabel ?? formatDate(featuredProject.data.date)}</span>
+              <div class="flex min-w-0 flex-col items-start">
+                <span>{featuredProject.data.dateLabel ?? formatDate(featuredProject.data.date)}</span>
+                {featuredProjectResearchPaths.length > 0 && (
+                  <div class="mt-2">
+                    <ProjectResearchBadge
+                      href={featuredProjectResearchPaths.length === 1
+                        ? featuredProjectResearchPaths[0]
+                        : `/projects/${featuredProject.id}#associated-research`}
+                      count={featuredProjectResearchPaths.length}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
             <h3 class="font-display mt-4 max-w-3xl text-2xl font-semibold leading-tight tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">
               <a href={`/projects/${featuredProject.id}`} class="hover:text-[var(--accent)]">{featuredProject.data.title}</a>
