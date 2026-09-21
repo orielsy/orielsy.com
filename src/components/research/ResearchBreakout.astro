@@ -39,19 +39,27 @@ const { maxWidth, mode = 'wide' } = Astro.props;
   }
 
   /*
-   * On the 12-column article layout the reading region occupies eight columns.
-   * A publication plate therefore reaches the full twelve-column canvas at
-   * 150% of that region, shifted left by half of the eight-column width.
-   * This keeps the breakout tied to the editorial grid without introducing a
-   * size-containment ancestor around the sticky contents rail.
+   * The article switches to its 12-column desktop layout at 1024px. That
+   * breakpoint is still too tight to safely expand figures beyond the reading
+   * column, so keep breakouts contained until the viewport has more room.
    */
-  @media (min-width: 1024px) {
-    /*
-     * Wide figures expand into the left-side article gutter instead of
-     * growing symmetrically around the reading column. This keeps their
-     * right edge aligned with the prose at intermediate desktop widths,
-     * preventing viewport clipping while still giving diagrams more room.
-     */
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .research-breakout[data-breakout-mode='wide'],
+    .research-breakout[data-breakout-mode='publication'] {
+      left: auto;
+      width: 100%;
+      max-width: 100%;
+      margin-left: 0;
+      transform: none;
+    }
+  }
+
+  /*
+   * Once the viewport is comfortably wider, allow figures to borrow space
+   * from the left-side article gutter while keeping their right edge aligned
+   * with the prose column.
+   */
+  @media (min-width: 1280px) {
     .research-breakout[data-breakout-mode='wide'] {
       left: auto;
       width: min(var(--research-breakout-max), 125%);
