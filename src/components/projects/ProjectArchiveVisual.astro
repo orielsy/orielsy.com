@@ -11,7 +11,7 @@ const { visual, technologies } = Astro.props;
 ---
 
 {visual === 'speech-broadcast' ? (
-  <FeaturedProjectVisual />
+  <FeaturedProjectVisual ariaLabel="speechBubbles project preview" />
 ) : visual === 'adaptive-ui-lab' ? (
   <AdaptiveUiLabArchiveVisual />
 ) : (
