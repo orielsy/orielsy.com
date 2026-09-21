@@ -7,6 +7,7 @@ import TldrToggleButton from '../components/TldrToggleButton.astro';
 import ResearchFollowsBadge from '../components/ResearchFollowsBadge.astro';
 import ResearchContinuationBadge from '../components/ResearchContinuationBadge.astro';
 import ProjectResearchBadge from '../components/ProjectResearchBadge.astro';
+import ResearchProjectBadge from '../components/ResearchProjectBadge.astro';
 import { getCollection } from 'astro:content';
 
 const allResearch = await getCollection('research');
@@ -36,6 +37,14 @@ const allProjects = await getCollection('projects');
 const publishedProjects = allProjects.filter((entry) => entry.data.published);
 const recentProjects = publishedProjects
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const researchProjectEntries = new Map(
+  allResearch.map((entry) => [
+    entry.id,
+    publishedProjects.filter((project) =>
+      project.data.associatedResearch.includes(`/research/${entry.id}`),
+    ),
+  ] as const),
+);
 
 const featuredResearch = recentResearch.find((entry) => entry.data.featured) ?? recentResearch[0];
 const recentResearchList = recentResearch
@@ -130,7 +139,9 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
           </div>
 
           <div class="flex flex-col items-start gap-3 sm:items-end">
-            {(researchOrigins.get(featuredResearch.id) || (researchContinuationCounts.get(featuredResearch.id) ?? 0) > 0) && (
+            {(researchOrigins.get(featuredResearch.id) ||
+              (researchContinuationCounts.get(featuredResearch.id) ?? 0) > 0 ||
+              (researchProjectEntries.get(featuredResearch.id)?.length ?? 0) > 0) && (
               <div class="flex flex-wrap items-center gap-2 sm:justify-end">
                 {researchOrigins.get(featuredResearch.id) && (
                   <ResearchFollowsBadge {...researchOrigins.get(featuredResearch.id)!} />
@@ -139,6 +150,14 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                   <ResearchContinuationBadge
                     href={`/research/${featuredResearch.id}#research-lineage`}
                     count={researchContinuationCounts.get(featuredResearch.id)!}
+                  />
+                )}
+                {(researchProjectEntries.get(featuredResearch.id)?.length ?? 0) > 0 && (
+                  <ResearchProjectBadge
+                    href={researchProjectEntries.get(featuredResearch.id)!.length === 1
+                      ? `/projects/${researchProjectEntries.get(featuredResearch.id)![0].id}`
+                      : `/research/${featuredResearch.id}#research-lineage`}
+                    count={researchProjectEntries.get(featuredResearch.id)!.length}
                   />
                 )}
               </div>
@@ -255,7 +274,9 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                   <time datetime={entry.data.pubDate.toISOString()} class="font-editorial-mono block text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
                     {formatDate(entry.data.pubDate)}
                   </time>
-                  {(researchOrigins.get(entry.id) || (researchContinuationCounts.get(entry.id) ?? 0) > 0) && (
+                  {(researchOrigins.get(entry.id) ||
+                    (researchContinuationCounts.get(entry.id) ?? 0) > 0 ||
+                    (researchProjectEntries.get(entry.id)?.length ?? 0) > 0) && (
                     <div class="mt-2 flex min-w-0 flex-col items-start gap-2">
                       {researchOrigins.get(entry.id) && (
                         <ResearchFollowsBadge {...researchOrigins.get(entry.id)!} />
@@ -264,6 +285,14 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                         <ResearchContinuationBadge
                           href={`/research/${entry.id}#research-lineage`}
                           count={researchContinuationCounts.get(entry.id)!}
+                        />
+                      )}
+                      {(researchProjectEntries.get(entry.id)?.length ?? 0) > 0 && (
+                        <ResearchProjectBadge
+                          href={researchProjectEntries.get(entry.id)!.length === 1
+                            ? `/projects/${researchProjectEntries.get(entry.id)![0].id}`
+                            : `/research/${entry.id}#research-lineage`}
+                          count={researchProjectEntries.get(entry.id)!.length}
                         />
                       )}
                     </div>
