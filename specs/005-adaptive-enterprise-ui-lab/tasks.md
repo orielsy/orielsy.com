@@ -45,6 +45,7 @@
 - [x] Add an embedded Lab presentation mode so article/project surfaces do not repeat the Lab title while preserving semantic heading hierarchy.
 - [x] Extract repeated Lab presentation primitives into focused Astro components without changing resolver ownership.
 - [x] Add the deterministic Phase 1 pipeline visual to the Project page as an architecture-at-a-glance lead-in to the working Lab.
+- [x] Clarify experiment boundaries with an explicit Scenario Controller → Shared Application Truth → Demo Workbench flow, distinguishing test controls from the actual user-facing forms.
 
 ## Phase 2 Definition
 
