@@ -6,7 +6,6 @@ import FeaturedProjectVisual from '../components/home/FeaturedProjectVisual.astr
 import TldrToggleButton from '../components/TldrToggleButton.astro';
 import ResearchFollowsBadge from '../components/ResearchFollowsBadge.astro';
 import ResearchContinuationBadge from '../components/ResearchContinuationBadge.astro';
-import ProjectResearchBadge from '../components/ProjectResearchBadge.astro';
 import ResearchProjectBadge from '../components/ResearchProjectBadge.astro';
 import { getCollection } from 'astro:content';
 
@@ -51,10 +50,6 @@ const recentResearchList = recentResearch
   .filter((entry) => entry.id !== featuredResearch?.id)
   .slice(0, 3);
 const featuredProject = recentProjects.find((entry) => entry.data.featured) ?? recentProjects[0];
-const publishedResearchPaths = new Set(publishedResearch.map((entry) => `/research/${entry.id}`));
-const featuredProjectResearchPaths = featuredProject
-  ? featuredProject.data.associatedResearch.filter((path) => publishedResearchPaths.has(path))
-  : [];
 
 const explorationAreas = [
   {
@@ -205,19 +200,13 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                 </div>
               )}
 
-              <div class="mt-8 flex flex-col items-start gap-3">
+              <div class="mt-8">
                 <a
                   href={`/research/${featuredResearch.id}`}
                   class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--accent)]"
                 >
                   Read publication <span aria-hidden="true">→</span>
                 </a>
-                {(researchContinuationCounts.get(featuredResearch.id) ?? 0) > 0 && (
-                  <ResearchContinuationBadge
-                    href={`/research/${featuredResearch.id}#research-lineage`}
-                    count={researchContinuationCounts.get(featuredResearch.id)!}
-                  />
-                )}
               </div>
             </div>
 
@@ -359,18 +348,10 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             <p class="mt-4 max-w-2xl text-sm leading-7 text-[var(--text-secondary)]">
               {featuredProject.data.home?.blurb ?? featuredProject.data.summary}
             </p>
-            <div class="mt-7 flex flex-col items-start gap-3">
+            <div class="mt-7">
               <a href={`/projects/${featuredProject.id}`} class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--accent)]">
                 View implementation <span aria-hidden="true">→</span>
               </a>
-              {featuredProjectResearchPaths.length > 0 && (
-                <ProjectResearchBadge
-                  href={featuredProjectResearchPaths.length === 1
-                    ? featuredProjectResearchPaths[0]
-                    : `/projects/${featuredProject.id}#associated-research`}
-                  count={featuredProjectResearchPaths.length}
-                />
-              )}
             </div>
           </div>
 
