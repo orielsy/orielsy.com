@@ -1,0 +1,16 @@
+---
+export interface Props {
+  label: string;
+  value: string;
+}
+
+const { label, value } = Astro.props;
+---
+
+<div class="bg-[var(--bg-card)] p-4 sm:p-5">
+  <div class="mb-4 flex items-center justify-between gap-3">
+    <span class="text-xs text-[var(--text-secondary)]">{label}</span>
+    <span class="font-mono text-[10px] uppercase text-[var(--accent)]"><slot name="value">{value}</slot></span>
+  </div>
+  <slot />
+</div>

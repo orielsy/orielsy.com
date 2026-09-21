@@ -1,0 +1,18 @@
+---
+export interface Props {
+  number: string;
+  title: string;
+  embedded?: boolean;
+}
+
+const { number, title, embedded = false } = Astro.props;
+---
+
+<div class="flex items-center gap-3">
+  <span class="font-mono text-[10px] text-[var(--accent)]">{number}</span>
+  {embedded ? (
+    <h3 class="m-0 font-mono text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-secondary)]">{title}</h3>
+  ) : (
+    <h4 class="m-0 font-mono text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-secondary)]">{title}</h4>
+  )}
+</div>

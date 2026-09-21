@@ -439,8 +439,11 @@ html.dark .prose [data-adaptive-enterprise-ui-lab] {
   padding-block: 1.5rem;
 }
 
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) h3,
 .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) h4,
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) h3,
 .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) h4,
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) h3,
 .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) h4 {
   font-family: var(--font-mono-ui);
   font-size: 0.7rem;
@@ -450,14 +453,14 @@ html.dark .prose [data-adaptive-enterprise-ui-lab] {
   color: var(--lab-muted);
 }
 
-.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) > div:last-child {
-  margin-top: 0.8rem;
+.prose [data-adaptive-enterprise-ui-lab] [data-scenario-grid] {
+  margin-top: 1.25rem;
   border-color: var(--lab-border);
   background: var(--lab-border);
   border-radius: 0.35rem;
 }
 
-.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) > div:last-child > div {
+.prose [data-adaptive-enterprise-ui-lab] [data-scenario-grid] > div {
   background: var(--lab-surface);
   padding: 0.9rem 1rem;
 }
@@ -500,6 +503,7 @@ html.dark .prose [data-adaptive-enterprise-ui-lab] {
   border-color: var(--lab-border);
 }
 
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article h4,
 .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article h5 {
   margin-top: 0.35rem;
   font-family: var(--font-display);

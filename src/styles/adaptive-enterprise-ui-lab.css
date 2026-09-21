@@ -31,7 +31,7 @@ html.dark .prose [data-adaptive-enterprise-ui-lab] {
 }
 
 .prose [data-adaptive-enterprise-ui-lab] #adaptive-lab-title {
-  margin-top: 0.7rem;
+  margin-top: 1.25rem;
   font-size: clamp(1.9rem, 3vw, 2.45rem);
   line-height: 1.04;
 }
@@ -48,8 +48,11 @@ html.dark .prose [data-adaptive-enterprise-ui-lab] {
   padding-block: 1.35rem;
 }
 
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) h3,
 .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) h4,
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) h3,
 .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) h4,
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) h3,
 .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(4) h4 {
   color: var(--lab-muted);
   font-size: 0.67rem;
@@ -57,28 +60,28 @@ html.dark .prose [data-adaptive-enterprise-ui-lab] {
 }
 
 /* Scenario controller */
-.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) > div:last-child {
-  margin-top: 0.7rem;
+.prose [data-adaptive-enterprise-ui-lab] [data-scenario-grid] {
+  margin-top: 1.25rem;
   border-color: var(--lab-border);
   background: var(--lab-border);
   border-radius: 0.4rem;
 }
 
-.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) > div:last-child > div {
+.prose [data-adaptive-enterprise-ui-lab] [data-scenario-grid] > div {
   padding: 0.82rem 0.9rem;
   background: var(--lab-surface);
 }
 
-.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) > div:last-child > div > div:first-child {
+.prose [data-adaptive-enterprise-ui-lab] [data-scenario-grid] > div > div:first-child {
   margin-bottom: 0.65rem;
 }
 
-.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) > div:last-child > div > div:first-child > span:first-child {
+.prose [data-adaptive-enterprise-ui-lab] [data-scenario-grid] > div > div:first-child > span:first-child {
   color: var(--lab-muted);
   font-size: 0.72rem;
 }
 
-.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(1) > div:last-child > div > div:first-child > span:last-child {
+.prose [data-adaptive-enterprise-ui-lab] [data-scenario-grid] > div > div:first-child > span:last-child {
   font-size: 0.58rem;
   letter-spacing: 0.08em;
 }
@@ -177,6 +180,7 @@ html.dark .prose [data-adaptive-enterprise-ui-lab] {
   letter-spacing: 0.15em;
 }
 
+.prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article h4,
 .prose [data-adaptive-enterprise-ui-lab] > div:nth-of-type(3) article h5 {
   margin-top: 0.28rem;
   font-size: 1.02rem;

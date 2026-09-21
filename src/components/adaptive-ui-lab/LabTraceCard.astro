@@ -1,0 +1,13 @@
+---
+export interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
+  <slot name="icon" />
+  <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">{label}</p>
+  <slot />
+</div>
