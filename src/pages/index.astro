@@ -5,6 +5,7 @@ import ProgressiveEnhancementVisual from '../components/home/ProgressiveEnhancem
 import FeaturedProjectVisual from '../components/home/FeaturedProjectVisual.astro';
 import TldrToggleButton from '../components/TldrToggleButton.astro';
 import ResearchFollowsBadge from '../components/ResearchFollowsBadge.astro';
+import ResearchContinuationBadge from '../components/ResearchContinuationBadge.astro';
 import { getCollection } from 'astro:content';
 
 const allResearch = await getCollection('research');
@@ -19,6 +20,12 @@ const researchOrigins = new Map(
       origin ? { href: `/research/${origin.id}`, title: origin.data.title } : null,
     ] as const;
   }),
+);
+const researchContinuationCounts = new Map(
+  allResearch.map((entry) => [
+    entry.id,
+    allResearch.filter((candidate) => candidate.data.originSlug === entry.id).length,
+  ] as const),
 );
 const publishedResearch = allResearch.filter((entry) => entry.data.published);
 const recentResearch = publishedResearch
@@ -125,6 +132,12 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
               {researchOrigins.get(featuredResearch.id) && (
                 <ResearchFollowsBadge {...researchOrigins.get(featuredResearch.id)!} />
               )}
+              {(researchContinuationCounts.get(featuredResearch.id) ?? 0) > 0 && (
+                <ResearchContinuationBadge
+                  href={`/research/${featuredResearch.id}#research-lineage`}
+                  count={researchContinuationCounts.get(featuredResearch.id)!}
+                />
+              )}
             </div>
 
             <h2 class="font-display mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.035em] text-[var(--text-primary)] sm:text-4xl">
@@ -205,6 +218,12 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                   {entry.data.readingTime && <span>{entry.data.readingTime}</span>}
                   {researchOrigins.get(entry.id) && (
                     <ResearchFollowsBadge {...researchOrigins.get(entry.id)!} />
+                  )}
+                  {(researchContinuationCounts.get(entry.id) ?? 0) > 0 && (
+                    <ResearchContinuationBadge
+                      href={`/research/${entry.id}#research-lineage`}
+                      count={researchContinuationCounts.get(entry.id)!}
+                    />
                   )}
                 </div>
                 <h3 class="font-display mt-3 max-w-3xl text-xl font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)] sm:text-2xl">
