@@ -34,14 +34,25 @@ const { embedded = false } = Astro.props;
       "max-w-3xl text-sm leading-7 text-[var(--text-secondary)] sm:text-base",
       embedded ? "mt-3" : "mt-4",
     ]}>
-      Change the scenario, then compare how two interface policies respond to the same Data Connection truth. No AI, inference, or semantic retrieval is used.
+      Set the scenario outside the demo, then compare how two Data Connection forms respond to that same application truth. No AI, inference, or semantic retrieval is used.
     </p>
   </header>
 
   <div class="py-8">
-    <LabSectionHeading number="01" title="Set the shared scenario" {embedded} />
+    <div data-scenario-controller class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4 sm:p-5">
+      <div class="flex flex-col gap-3 border-b border-[var(--border-subtle)] pb-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <LabSectionHeading number="01" title="Scenario controller" {embedded} />
+          <p class="mt-3 max-w-2xl text-xs leading-5 text-[var(--text-secondary)]">
+            These controls set the test conditions. They are not part of either Data Connection form.
+          </p>
+        </div>
+        <span class="w-fit rounded border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--text-muted)]">
+          Controls demo state
+        </span>
+      </div>
 
-    <div class="mt-4 grid gap-px overflow-hidden rounded-md border border-[var(--border-subtle)] bg-[var(--border-subtle)] md:grid-cols-3">
+      <div data-scenario-grid class="mt-5 grid gap-px overflow-hidden rounded-md border border-[var(--border-subtle)] bg-[var(--border-subtle)] md:grid-cols-3">
       <LabScenarioControl label="User familiarity" value="new">
         <span slot="value" data-scenario-familiarity>new</span>
         <div class="grid grid-cols-2 gap-1.5" role="group" aria-label="User familiarity">
@@ -65,8 +76,11 @@ const { embedded = false } = Astro.props;
           <button type="button" data-connection-count="3" aria-pressed="true" class="h-9 rounded-sm border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-3 text-xs font-medium text-[var(--accent)] transition">Several</button>
         </div>
       </LabScenarioControl>
+      </div>
     </div>
   </div>
+
+  <span class="mx-auto block h-8 w-px bg-[var(--border-subtle)]" aria-hidden="true"></span>
 
   <div class="border-y border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-4 py-4 sm:px-5">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -77,12 +91,22 @@ const { embedded = false } = Astro.props;
           <p data-truth-summary class="mt-1 text-sm text-[var(--text-primary)]">3 compatible connections · product 4.2 · new user</p>
         </div>
       </div>
-      <span class="font-mono text-[11px] text-[var(--text-secondary)]">SAME STATE → DIFFERENT POLICY</span>
+      <span class="font-mono text-[11px] text-[var(--text-secondary)]">ONE STATE → TWO DEMO FORMS</span>
     </div>
   </div>
 
-  <div class="py-8">
-    <LabSectionHeading number="02" title="Compare the interface policy" {embedded} />
+  <div class="border-t border-[var(--border-subtle)] pt-8">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <LabSectionHeading number="02" title="Demo workbench" {embedded} />
+        <p class="mt-3 max-w-2xl text-xs leading-5 text-[var(--text-secondary)]">
+          Both forms receive the same application truth. The adaptive form adds only the intervention authorized by the resolver's evidence and response policy.
+        </p>
+      </div>
+      <span class="w-fit rounded border border-[var(--accent-border)] bg-[var(--bg-primary)] px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]">
+        Actual user task
+      </span>
+    </div>
 
     <div class="mt-4 grid gap-5 lg:grid-cols-2">
       <article class="flex min-h-[32rem] flex-col rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 sm:p-6">
