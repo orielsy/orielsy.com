@@ -554,7 +554,7 @@ html.dark .prose [data-adaptive-enterprise-ui-lab] {
   line-height: 1.55;
 }
 
-.prose [data-adaptive-enterprise-ui-lab] [data-version-source] {
+.prose [data-adaptive-enterprise-ui-lab] [data-adaptive-source] {
   margin-top: 0.7rem;
   padding-top: 0.6rem;
   border-color: var(--lab-border);
