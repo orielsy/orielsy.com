@@ -2,9 +2,22 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import TldrToggleButton from '../../components/TldrToggleButton.astro';
+import ResearchFollowsBadge from '../../components/ResearchFollowsBadge.astro';
 import { getCollection } from 'astro:content';
 
 const allResearch = await getCollection('research');
+const researchOrigins = new Map(
+  allResearch.map((entry) => {
+    const origin = entry.data.originSlug
+      ? allResearch.find((candidate) => candidate.id === entry.data.originSlug)
+      : undefined;
+
+    return [
+      entry.id,
+      origin ? { href: `/research/${origin.id}`, title: origin.data.title } : null,
+    ] as const;
+  }),
+);
 const previewUnpublished = import.meta.env.DEV && import.meta.env.MODE === 'content-preview';
 
 const publishedResearch = allResearch.filter((entry) => entry.data.published);
@@ -94,6 +107,9 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                 <div class="flex flex-wrap gap-x-4 gap-y-1 font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
                   <span>{entry.data.type}</span>
                   {entry.data.readingTime && <span>{entry.data.readingTime}</span>}
+                  {researchOrigins.get(entry.id) && (
+                    <ResearchFollowsBadge {...researchOrigins.get(entry.id)!} />
+                  )}
                   {entry.data.draft && <span class="text-[var(--accent)]">Concept Draft</span>}
                 </div>
                 <h2 class="font-display mt-3 max-w-3xl text-xl font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)] sm:text-2xl">
