@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import FeaturedProjectVisual from '../../components/home/FeaturedProjectVisual.astro';
+import ProjectArchiveVisual from '../../components/projects/ProjectArchiveVisual.astro';
 import ProjectResearchBadge from '../../components/ProjectResearchBadge.astro';
 import { getCollection } from 'astro:content';
 
@@ -173,34 +173,35 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
 
               <p class="mt-5 max-w-2xl text-sm leading-7 text-[var(--text-secondary)]">{project.data.summary}</p>
 
-              {project.data.architecture && (
+              {(project.data.archive?.signals?.length ?? 0) > 0 ? (
+                <ul
+                  class="mt-7 grid max-w-2xl gap-px border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-2"
+                  aria-label="Project architecture signals"
+                >
+                  {project.data.archive!.signals.map((signal) => (
+                    <li class="bg-[var(--bg-card)] px-4 py-3 font-editorial-mono text-[9px] uppercase leading-5 tracking-[0.06em] text-[var(--text-secondary)]">
+                      {signal}
+                    </li>
+                  ))}
+                </ul>
+              ) : project.data.architecture ? (
                 <div class="mt-7 max-w-2xl border-l border-[var(--accent)] pl-4">
                   <p class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Architecture</p>
                   <p class="font-editorial-mono mt-2 text-[9px] uppercase leading-5 tracking-[0.06em] text-[var(--text-secondary)]">
                     {project.data.architecture}
                   </p>
                 </div>
-              )}
+              ) : null}
 
               <a href={`/projects/${project.id}`} class="font-editorial-mono mt-7 inline-flex items-center gap-2 text-[9px] uppercase tracking-[0.08em] text-[var(--text-primary)] hover:text-[var(--accent)]">
                 Open project detail <span aria-hidden="true">→</span>
               </a>
             </div>
 
-            {project.data.home?.visual === 'speech-broadcast' ? (
-              <FeaturedProjectVisual />
-            ) : (
-              <aside class="border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5">
-                <p class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Technology</p>
-                <ul class="mt-4 border-t border-[var(--border-subtle)]">
-                  {project.data.technologies.slice(0, 6).map((technology) => (
-                    <li class="border-b border-[var(--border-subtle)] py-2.5 font-editorial-mono text-[9px] uppercase tracking-[0.06em] text-[var(--text-secondary)]">
-                      {technology}
-                    </li>
-                  ))}
-                </ul>
-              </aside>
-            )}
+            <ProjectArchiveVisual
+              visual={project.data.archive?.visual}
+              technologies={project.data.technologies}
+            />
           </div>
         </article>
       ))}
