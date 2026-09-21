@@ -5,12 +5,12 @@ interface Props {
 }
 
 const { href, count } = Astro.props;
-const label = count === 1 ? '1 project' : `${count} projects`;
+const label = count === 1 ? '1 Project' : `${count} Projects`;
 ---
 
 <a
   href={href}
-  title={`Built as ${label}`}
+  title={label}
   class="inline-flex items-center gap-1.5 rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-card)] px-2 py-1 font-editorial-mono text-[8px] tracking-[0.12em] text-[var(--text-muted)] transition-colors hover:border-[var(--accent-border)] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
 >
   <svg
@@ -26,7 +26,5 @@ const label = count === 1 ? '1 project' : `${count} projects`;
     <rect x="2.5" y="3" width="11" height="10" rx="1.5" />
     <path d="M5.5 3V2h5v1M5 6.5h6M5 9.5h4" />
   </svg>
-  <span class="uppercase text-[var(--text-muted)]">Built as</span>
-  <span aria-hidden="true" class="text-[var(--text-muted)]">·</span>
   <span class="normal-case tracking-normal text-[var(--text-primary)]">{label}</span>
 </a>
