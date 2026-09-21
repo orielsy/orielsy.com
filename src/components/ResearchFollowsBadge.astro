@@ -1,0 +1,34 @@
+---
+interface Props {
+  href: string;
+  title: string;
+}
+
+const { href, title } = Astro.props;
+---
+
+<span class="block min-w-0 w-full max-w-[calc(100vw-2.5rem)] basis-full overflow-hidden sm:w-auto sm:max-w-full sm:basis-auto">
+  <a
+    href={href}
+    title={`Follows ${title}`}
+    class="group/follows flex min-w-0 max-w-full items-center gap-1.5 overflow-hidden rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-card)] px-2 py-1 font-editorial-mono text-[8px] tracking-[0.12em] text-[var(--text-muted)] transition-colors hover:border-[var(--accent-border)] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] sm:inline-flex"
+  >
+    <svg
+      class="h-2.5 w-2.5 shrink-0 text-[var(--accent)]"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M5 2.5v7a3 3 0 0 0 3 3h3.5" />
+      <path d="m9.5 10.5 2 2-2 2" />
+      <path d="M5 5.5h4a2 2 0 0 0 2-2v-1" />
+    </svg>
+    <span class="shrink-0 uppercase text-[var(--text-muted)]">Follows</span>
+    <span aria-hidden="true" class="shrink-0 text-[var(--text-muted)]">·</span>
+    <span class="min-w-0 truncate normal-case tracking-normal text-[var(--text-primary)]">{title}</span>
+  </a>
+</span>
