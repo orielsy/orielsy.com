@@ -5,6 +5,7 @@ export interface Props {
   status?: string;
   caption: string;
   bodyMode?: 'flush' | 'padded';
+  className?: string;
 }
 
 const {
@@ -13,10 +14,11 @@ const {
   status,
   caption,
   bodyMode = 'flush',
+  className,
 } = Astro.props;
 ---
 
-<figure class="research-figure-frame not-prose">
+<figure class:list={['research-figure-frame', 'not-prose', className]}>
   <header>
     <div class="heading">
       <p class="eyebrow">{eyebrow}</p>
