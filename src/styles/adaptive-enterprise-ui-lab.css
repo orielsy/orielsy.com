@@ -262,7 +262,7 @@ html.dark .prose [data-adaptive-enterprise-ui-lab] select {
   line-height: 1.5;
 }
 
-.prose [data-adaptive-enterprise-ui-lab] [data-version-source] {
+.prose [data-adaptive-enterprise-ui-lab] [data-adaptive-source] {
   margin-top: 0.58rem;
   padding-top: 0.52rem;
   font-size: 0.58rem;
