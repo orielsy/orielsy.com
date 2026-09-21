@@ -10,7 +10,7 @@ const label = count === 1 ? '1 piece' : `${count} pieces`;
 
 <a
   href={href}
-  title={`Continued in ${label}`}
+  title={`Leads to ${label}`}
   class="inline-flex items-center gap-1.5 rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-card)] px-2 py-1 font-editorial-mono text-[8px] tracking-[0.12em] text-[var(--text-muted)] transition-colors hover:border-[var(--accent-border)] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
 >
   <svg
@@ -27,7 +27,7 @@ const label = count === 1 ? '1 piece' : `${count} pieces`;
     <path d="m9.5 10.5 2 2-2 2" />
     <path d="M5 5.5h4a2 2 0 0 0 2-2v-1" />
   </svg>
-  <span class="uppercase text-[var(--text-muted)]">Continued in</span>
+  <span class="uppercase text-[var(--text-muted)]">Leads to</span>
   <span aria-hidden="true" class="text-[var(--text-muted)]">·</span>
   <span class="normal-case tracking-normal text-[var(--text-primary)]">{label}</span>
 </a>
