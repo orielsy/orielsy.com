@@ -27,6 +27,7 @@ import ApplicabilityVsPolicyVisual from '../../components/research/Applicability
 import DocumentationDrivenAdaptiveVisual from '../../components/research/DocumentationDrivenAdaptiveVisual.astro';
 import Phase1DeterministicPipelineVisual from '../../components/research/Phase1DeterministicPipelineVisual.astro';
 import Phase1FindingsVisual from '../../components/research/Phase1FindingsVisual.astro';
+import Phase1LimitationsVisual from '../../components/research/Phase1LimitationsVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import WhereAiCouldEnterLaterVisual from '../../components/research/WhereAiCouldEnterLaterVisual.astro';
 import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEnterpriseUiLab.astro';
@@ -159,12 +160,7 @@ Evidence changes authority; the system does not guess.
 
 Phase 1 is a reference experiment, not a production adaptive-UX platform. It excludes:
 
-<ul className="paper-limitations">
-  <li><strong>Inference and retrieval:</strong> document ingestion, semantic search, embeddings, natural-language intent resolution, and generated guidance.</li>
-  <li><strong>Production infrastructure:</strong> backend services, persistence, and authentication.</li>
-  <li><strong>Learning and personalization:</strong> telemetry, behavioral learning, and inferred user profiles.</li>
-  <li><strong>Runtime integrations:</strong> WebLLM, MCP, and remote AI APIs.</li>
-</ul>
+<Phase1LimitationsVisual />
 
 Product knowledge is fixture data, compatibility scenarios are fixed, and user familiarity is a simulation control.
 
