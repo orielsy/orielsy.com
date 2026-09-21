@@ -134,19 +134,25 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
         <article class="mt-6 border-t border-[var(--accent)] pt-7">
           <div class="grid gap-10 lg:grid-cols-12 lg:gap-12">
             <div class="lg:col-span-7">
-              <div class="flex flex-wrap items-center gap-x-4 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.09em] text-[var(--text-muted)]">
+              <div class="flex flex-wrap items-start gap-x-4 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.09em] text-[var(--text-muted)]">
                 <span class="text-[var(--accent)]">{featuredResearch.data.type}</span>
-                <time datetime={featuredResearch.data.pubDate.toISOString()}>{formatDate(featuredResearch.data.pubDate)}</time>
+                <div class="flex min-w-0 flex-col items-start">
+                  <time datetime={featuredResearch.data.pubDate.toISOString()}>{formatDate(featuredResearch.data.pubDate)}</time>
+                  {(researchOrigins.get(featuredResearch.id) || (researchContinuationCounts.get(featuredResearch.id) ?? 0) > 0) && (
+                    <div class="mt-2 flex min-w-0 flex-col items-start gap-2">
+                      {researchOrigins.get(featuredResearch.id) && (
+                        <ResearchFollowsBadge {...researchOrigins.get(featuredResearch.id)!} />
+                      )}
+                      {(researchContinuationCounts.get(featuredResearch.id) ?? 0) > 0 && (
+                        <ResearchContinuationBadge
+                          href={`/research/${featuredResearch.id}#research-lineage`}
+                          count={researchContinuationCounts.get(featuredResearch.id)!}
+                        />
+                      )}
+                    </div>
+                  )}
+                </div>
                 {featuredResearch.data.readingTime && <span>{featuredResearch.data.readingTime}</span>}
-                {researchOrigins.get(featuredResearch.id) && (
-                  <ResearchFollowsBadge {...researchOrigins.get(featuredResearch.id)!} />
-                )}
-                {(researchContinuationCounts.get(featuredResearch.id) ?? 0) > 0 && (
-                  <ResearchContinuationBadge
-                    href={`/research/${featuredResearch.id}#research-lineage`}
-                    count={researchContinuationCounts.get(featuredResearch.id)!}
-                  />
-                )}
               </div>
 
               <h2 class="font-display mt-4 max-w-3xl text-3xl font-semibold leading-[1.12] tracking-[-0.035em] text-[var(--text-primary)] sm:text-4xl">
@@ -239,24 +245,30 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             <article class="group grid gap-4 border-b border-[var(--border-subtle)] py-7 last:border-b-0 sm:grid-cols-[130px_minmax(0,1fr)_auto] sm:gap-8">
               <div class="flex items-start gap-3 sm:block">
                 <span class="font-editorial-mono text-[9px] text-[var(--accent)]">{String(entry.data.researchNumber ?? index + 1).padStart(2, '0')}</span>
-                <time datetime={entry.data.pubDate.toISOString()} class="font-editorial-mono sm:mt-3 sm:block text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
-                  {formatDate(entry.data.pubDate)}
-                </time>
+                <div class="min-w-0 sm:mt-3">
+                  <time datetime={entry.data.pubDate.toISOString()} class="font-editorial-mono block text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
+                    {formatDate(entry.data.pubDate)}
+                  </time>
+                  {(researchOrigins.get(entry.id) || (researchContinuationCounts.get(entry.id) ?? 0) > 0) && (
+                    <div class="mt-2 flex min-w-0 flex-col items-start gap-2">
+                      {researchOrigins.get(entry.id) && (
+                        <ResearchFollowsBadge {...researchOrigins.get(entry.id)!} />
+                      )}
+                      {(researchContinuationCounts.get(entry.id) ?? 0) > 0 && (
+                        <ResearchContinuationBadge
+                          href={`/research/${entry.id}#research-lineage`}
+                          count={researchContinuationCounts.get(entry.id)!}
+                        />
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div>
                 <div class="flex flex-wrap gap-x-4 gap-y-1 font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
                   <span>{entry.data.type}</span>
                   {entry.data.readingTime && <span>{entry.data.readingTime}</span>}
-                  {researchOrigins.get(entry.id) && (
-                    <ResearchFollowsBadge {...researchOrigins.get(entry.id)!} />
-                  )}
-                  {(researchContinuationCounts.get(entry.id) ?? 0) > 0 && (
-                    <ResearchContinuationBadge
-                      href={`/research/${entry.id}#research-lineage`}
-                      count={researchContinuationCounts.get(entry.id)!}
-                    />
-                  )}
                 </div>
                 <h3 class="font-display mt-3 max-w-3xl text-xl font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)] sm:text-2xl">
                   <a href={`/research/${entry.id}`} class="transition-colors hover:text-[var(--accent)]">{entry.data.title}</a>
