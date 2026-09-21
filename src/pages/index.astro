@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FeaturedResearchVisual from '../components/home/FeaturedResearchVisual.astro';
+import ProgressiveEnhancementVisual from '../components/home/ProgressiveEnhancementVisual.astro';
 import FeaturedProjectVisual from '../components/home/FeaturedProjectVisual.astro';
 import TldrToggleButton from '../components/TldrToggleButton.astro';
 import ResearchFollowsBadge from '../components/ResearchFollowsBadge.astro';
@@ -155,7 +156,9 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             )}
           </div>
 
-          {featuredResearch.data.home?.visual === 'adaptive-interface' ? (
+          {featuredResearch.data.home?.visual === 'progressive-enhancement' ? (
+            <ProgressiveEnhancementVisual />
+          ) : featuredResearch.data.home?.visual === 'adaptive-interface' ? (
             <FeaturedResearchVisual />
           ) : (
             <aside class="border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5" aria-label="Featured research metadata">
