@@ -10,7 +10,7 @@ const { controls, class: className = '' } = Astro.props;
 <button
   type="button"
   class:list={[
-    'tldr-toggle group inline-flex cursor-pointer items-stretch overflow-hidden rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-card)] text-left transition-colors hover:border-[var(--accent-border)] hover:bg-[var(--bg-card-hover)]',
+    'tldr-toggle group inline-flex cursor-pointer items-stretch overflow-hidden rounded-sm border border-[var(--border-subtle)] rounded-xl bg-[var(--bg-card)] text-left transition-colors hover:border-[var(--accent-border)] hover:bg-[var(--bg-card-hover)]',
     className,
   ]}
   aria-expanded="false"
@@ -18,7 +18,7 @@ const { controls, class: className = '' } = Astro.props;
   data-tldr-toggle
 >
   <span
-    class="tldr-toggle__icon flex h-6 w-6 shrink-0 items-center justify-center border-r border-[var(--border-subtle)] bg-[var(--bg-secondary)] font-editorial-mono text-[9px] text-[var(--accent)] transition-colors"
+    class="tldr-toggle__icon flex h-6 w-6 shrink-0 items-center justify-center border-r border-[var(--border-subtle)] bg-[var(--bg-secondary)] font-editorial-mono text-[14px] text-[var(--accent)] transition-colors"
     aria-hidden="true"
   >
     <span data-tldr-symbol>+</span>
