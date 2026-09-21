@@ -15,12 +15,10 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 export interface Props {
   entry: CollectionEntry<'research'>;
   headings: { depth: number; slug: string; text: string }[];
-  prevEntry?: CollectionEntry<'research'>;
-  nextEntry?: CollectionEntry<'research'>;
   published?: boolean;
 }
 
-const { entry, headings, prevEntry, nextEntry, published = false } = Astro.props;
+const { entry, headings, published = false } = Astro.props;
 const { data } = entry;
 const allResearch = await getCollection('research');
 const originEntry = data.originSlug
@@ -197,35 +195,7 @@ const formattedUpdateDate = data.updatedDate
           }))}
         />
 
-        <footer class="border-t border-[var(--border-subtle)] py-10 sm:py-12">
-          <div class="site-shell grid gap-8 sm:grid-cols-2">
-            <div>
-              {prevEntry ? (
-                <a href={`/research/${prevEntry.id}`} class="group block max-w-lg">
-                  <span class="font-editorial-mono text-[9px] uppercase tracking-[0.09em] text-[var(--text-muted)] group-hover:text-[var(--accent)]">
-                    ← Previous Research
-                  </span>
-                  <span class="font-display mt-2 block text-base font-semibold leading-snug text-[var(--text-primary)] group-hover:text-[var(--accent)]">
-                    {prevEntry.data.title}
-                  </span>
-                </a>
-              ) : null}
-            </div>
 
-            <div class="sm:text-right">
-              {nextEntry ? (
-                <a href={`/research/${nextEntry.id}`} class="group ml-auto block max-w-lg">
-                  <span class="font-editorial-mono text-[9px] uppercase tracking-[0.09em] text-[var(--text-muted)] group-hover:text-[var(--accent)]">
-                    Next Research →
-                  </span>
-                  <span class="font-display mt-2 block text-base font-semibold leading-snug text-[var(--text-primary)] group-hover:text-[var(--accent)]">
-                    {nextEntry.data.title}
-                  </span>
-                </a>
-              ) : null}
-            </div>
-          </div>
-        </footer>
       </>
     ) : (
       <div class="reading-shell py-12">
