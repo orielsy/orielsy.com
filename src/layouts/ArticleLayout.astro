@@ -5,6 +5,7 @@ import ContentStatus from '../components/ContentStatus.astro';
 import ConceptDraftNotice from '../components/ConceptDraftNotice.astro';
 import ResearchFollowsBadge from '../components/ResearchFollowsBadge.astro';
 import ResearchContinuationBadge from '../components/ResearchContinuationBadge.astro';
+import ResearchProjectBadge from '../components/ResearchProjectBadge.astro';
 import ResearchLineageSummary from '../components/ResearchLineageSummary.astro';
 import Callout from '../components/Callout.astro';
 import '../styles/research-article.css';
@@ -35,7 +36,7 @@ allResearch.forEach((candidate) => {
 const relatedEntries = allResearch.filter((candidate) => relatedSlugSet.has(candidate.id));
 
 const allProjects = await getCollection('projects');
-const relatedProject = allProjects.find(
+const relatedProjects = allProjects.filter(
   (project) =>
     project.data.published &&
     project.data.associatedResearch.includes(`/research/${entry.id}`),
@@ -86,13 +87,19 @@ const formattedUpdateDate = data.updatedDate
             Research archive
           </a>
 
-          {published && (originEntry || descendantEntries.length > 0) && (
+          {published && (originEntry || descendantEntries.length > 0 || relatedProjects.length > 0) && (
             <div class="mt-5 hidden min-w-0 flex-col items-start gap-2 lg:flex" aria-label="Research lineage shortcuts">
               {originEntry && (
                 <ResearchFollowsBadge href={`/research/${originEntry.id}`} title={originEntry.data.title} />
               )}
               {descendantEntries.length > 0 && (
                 <ResearchContinuationBadge href="#research-lineage" count={descendantEntries.length} />
+              )}
+              {relatedProjects.length > 0 && (
+                <ResearchProjectBadge
+                  href={relatedProjects.length === 1 ? `/projects/${relatedProjects[0].id}` : '#research-lineage'}
+                  count={relatedProjects.length}
+                />
               )}
             </div>
           )}
@@ -146,13 +153,19 @@ const formattedUpdateDate = data.updatedDate
                 </p>
               )}
 
-              {(originEntry || descendantEntries.length > 0) && (
+              {(originEntry || descendantEntries.length > 0 || relatedProjects.length > 0) && (
                 <div class="mt-5 flex min-w-0 flex-col items-start gap-2 lg:hidden" aria-label="Research lineage shortcuts">
                   {originEntry && (
                     <ResearchFollowsBadge href={`/research/${originEntry.id}`} title={originEntry.data.title} />
                   )}
                   {descendantEntries.length > 0 && (
                     <ResearchContinuationBadge href="#research-lineage" count={descendantEntries.length} />
+                  )}
+                  {relatedProjects.length > 0 && (
+                    <ResearchProjectBadge
+                      href={relatedProjects.length === 1 ? `/projects/${relatedProjects[0].id}` : '#research-lineage'}
+                      count={relatedProjects.length}
+                    />
                   )}
                 </div>
               )}
@@ -230,10 +243,10 @@ const formattedUpdateDate = data.updatedDate
             title: candidate.data.title,
             published: candidate.data.published,
           }))}
-          relatedWork={relatedProject ? {
-            href: `/projects/${relatedProject.id}`,
-            label: relatedProject.data.projectName ?? relatedProject.data.title,
-          } : undefined}
+          relatedWorks={relatedProjects.map((project) => ({
+            href: `/projects/${project.id}`,
+            label: project.data.projectName ?? project.data.title,
+          }))}
         />
 
 
