@@ -46,7 +46,8 @@
 - [x] Extract repeated Lab presentation primitives into focused Astro components without changing resolver ownership.
 - [x] Add the deterministic Phase 1 pipeline visual to the Project page as an architecture-at-a-glance lead-in to the working Lab.
 - [x] Clarify experiment boundaries with an explicit Scenario Controller → Shared Application Truth → Demo Workbench flow, distinguishing test controls from the actual user-facing forms.
-- [x] Strengthen the public Project case study with a compact thesis/research-thread strip and findings-first Phase 1 summary, without replacing the shared Project layout with a bespoke page shell.
+- [x] Evaluate a compact thesis/research-thread treatment, then remove it after whole-page review showed it repeated framing already handled by the Project layout and associated research.
+- [x] Keep the Project page artifact-first with the final sequence: Working Lab → three findings → Architecture at a Glance → concise Next roadmap.
 
 ## Phase 2 Definition
 
