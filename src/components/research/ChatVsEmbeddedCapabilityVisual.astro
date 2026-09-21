@@ -1,0 +1,182 @@
+<figure
+  class="interaction-path-figure not-prose overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]"
+  aria-labelledby="interaction-path-title"
+>
+  <header class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-6">
+    <p class="font-editorial-mono text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]">Interaction path</p>
+    <h3 id="interaction-path-title" class="font-display mt-2 text-xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-2xl">
+      Same intent. Different interface path.
+    </h3>
+  </header>
+
+  <div class="grid lg:grid-cols-2">
+    <section class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-6 lg:border-r lg:border-b-0" aria-labelledby="chat-path-title">
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <svg class="h-4 w-4 text-[var(--text-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <path d="M6.5 17.5 4 20v-5.3A7.5 7.5 0 1 1 19.5 12a7.5 7.5 0 0 1-8 7.5 8 8 0 0 1-5-2Z"/>
+            <path d="M8 11.5h.01M12 11.5h.01M16 11.5h.01"/>
+          </svg>
+          <h4 id="chat-path-title" class="font-display text-base font-semibold text-[var(--text-primary)]">Chat</h4>
+        </div>
+        <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Multi-step</span>
+      </div>
+
+      <ol class="path-list mt-5">
+        <li class="path-node">
+          <span class="path-index">01</span>
+          <div>
+            <span class="path-label">User request</span>
+            <p>"Filter this table to active accounts over $10k"</p>
+          </div>
+        </li>
+        <li class="path-node">
+          <span class="path-index">02</span>
+          <div>
+            <span class="path-label">Model response</span>
+          </div>
+        </li>
+        <li class="path-node">
+          <span class="path-index">03</span>
+          <div>
+            <span class="path-label">User interprets the response</span>
+          </div>
+        </li>
+        <li class="path-node">
+          <span class="path-index">04</span>
+          <div>
+            <span class="path-label">User applies the result</span>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="px-5 py-5 sm:px-6" aria-labelledby="embedded-path-title">
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <svg class="h-4 w-4 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <rect x="4" y="4" width="16" height="16" rx="2"/>
+            <path d="M4 9h16M9 9v11"/>
+          </svg>
+          <h4 id="embedded-path-title" class="font-display text-base font-semibold text-[var(--text-primary)]">Embedded capability</h4>
+        </div>
+        <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">In-interface</span>
+      </div>
+
+      <ol class="path-list mt-5">
+        <li class="path-node path-node-accent">
+          <span class="path-index">01</span>
+          <div>
+            <span class="path-label">User intent</span>
+            <p>"high value active"</p>
+          </div>
+        </li>
+        <li class="path-node path-node-accent">
+          <span class="path-index">02</span>
+          <div>
+            <span class="path-label">Semantic ranking / filtering</span>
+          </div>
+        </li>
+        <li class="path-node path-node-accent">
+          <span class="path-index">03</span>
+          <div>
+            <span class="path-label">Grid updates</span>
+          </div>
+        </li>
+      </ol>
+    </section>
+  </div>
+
+  <figcaption class="flex flex-col gap-2 border-t border-[var(--border-subtle)] px-5 py-3 text-[10px] text-[var(--text-muted)] sm:flex-row sm:items-center sm:justify-between sm:px-6">
+    <span>The intelligence has a narrower job.</span>
+    <span class="font-editorial-mono uppercase tracking-[0.12em] text-[var(--accent)]">The interface carries the result</span>
+  </figcaption>
+</figure>
+
+<style>
+  .interaction-path-figure :global(p),
+  .interaction-path-figure :global(h3),
+  .interaction-path-figure :global(h4),
+  .interaction-path-figure :global(ol),
+  .interaction-path-figure :global(li) {
+    margin: 0;
+  }
+
+  .interaction-path-figure :global(ol) {
+    padding-left: 0;
+  }
+
+  .interaction-path-figure :global(p) {
+    margin-top: 0.3rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.7rem;
+    line-height: 1.6;
+  }
+
+  .path-list {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .path-node {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.9rem minmax(0, 1fr);
+    gap: 0.75rem;
+    align-items: start;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.5rem;
+    background: var(--bg-secondary);
+    padding: 0.8rem 0.85rem;
+  }
+
+  .path-node:not(:last-child)::after {
+    content: "↓";
+    position: absolute;
+    left: 0.95rem;
+    bottom: -0.83rem;
+    z-index: 2;
+    background: var(--bg-card);
+    padding: 0 0.15rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.68rem;
+    line-height: 1;
+  }
+
+  .path-node-accent {
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--border-subtle));
+    background: color-mix(in srgb, var(--accent) 5%, var(--bg-secondary));
+  }
+
+  .path-node-accent:not(:last-child)::after {
+    color: var(--accent);
+  }
+
+  .path-index {
+    display: inline-flex;
+    min-height: 1.55rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+  }
+
+  .path-node-accent .path-index {
+    border-color: var(--accent-border);
+    color: var(--accent);
+  }
+
+  .path-label {
+    display: block;
+    color: var(--text-primary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.7rem;
+    line-height: 1.5;
+  }
+</style>
