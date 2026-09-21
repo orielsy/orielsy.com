@@ -40,6 +40,8 @@
 - [x] Preserve Research publication as a separate explicit decision; Documentation-Driven Adaptive UX is currently published after explicit approval.
 - [x] Add an `Adaptive Enterprise UI Lab` Project entry pointing to the real in-repository Lab source and associated Research.
 - [x] Publish that Project entry while retaining `status: In Progress`, clearly distinguishing implemented Phase 1 from later planned phases.
+- [x] Make the Project page artifact-first by embedding the working Phase 1 Lab directly on the public project detail page.
+- [x] Associate the Project with both the Progressive Enhancement and Documentation-Driven Adaptive UX publications that directly frame the implemented architecture.
 
 ## Phase 2 Definition
 
