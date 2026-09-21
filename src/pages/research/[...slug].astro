@@ -13,26 +13,16 @@ export async function getStaticPaths() {
   const previewUnpublished = import.meta.env.DEV && import.meta.env.MODE === 'content-preview';
   const routableEntries = previewUnpublished ? sorted : publishedEntries;
 
-  return routableEntries.map((entry) => {
-    const publishedIndex = publishedEntries.findIndex(
-      (publishedEntry) => publishedEntry.id === entry.id
-    );
-
-    return {
-      params: { slug: entry.id },
-      props: {
-        entry,
-        published: entry.data.published,
-        prevEntry: publishedIndex >= 0 && publishedIndex < publishedEntries.length - 1
-          ? publishedEntries[publishedIndex + 1]
-          : undefined,
-        nextEntry: publishedIndex > 0 ? publishedEntries[publishedIndex - 1] : undefined,
-      },
-    };
-  });
+  return routableEntries.map((entry) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      published: entry.data.published,
+    },
+  }));
 }
 
-const { entry, prevEntry, nextEntry, published } = Astro.props;
+const { entry, published } = Astro.props;
 const { Content, headings } = await render(entry);
 const previewUnpublished = import.meta.env.DEV && import.meta.env.MODE === 'content-preview' && !published;
 const renderFullContent = published || previewUnpublished;
@@ -41,8 +31,6 @@ const renderFullContent = published || previewUnpublished;
 <ArticleLayout
   entry={entry}
   headings={headings}
-  prevEntry={prevEntry}
-  nextEntry={nextEntry}
   published={renderFullContent}
 >
   {previewUnpublished && <ContentPreviewNotice kind="research" />}
