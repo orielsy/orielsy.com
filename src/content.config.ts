@@ -39,6 +39,7 @@ const research = defineCollection({
     github: z.string().url().optional(),
     demo: z.string().optional(),
     readingTime: z.string().optional(),
+    originSlug: z.string().regex(/^[a-z0-9]+(?:[/-][a-z0-9]+)*$/).optional(),
     heroImage: z.string().optional(),
     socialCard,
     home: homeFeature,
