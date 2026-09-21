@@ -1,1 +1,0 @@
-import{t as e}from"./analytics.BYERs4jP.js";document.querySelectorAll(`[data-speechbubbles-video]`).forEach(t=>{t.dataset.analyticsBound!==`true`&&(t.dataset.analyticsBound=`true`,t.addEventListener(`play`,()=>{e(`speechbubbles_video_play`,{project:`local-ai-real-time-captioning`})},{once:!0}))});
