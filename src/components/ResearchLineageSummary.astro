@@ -14,56 +14,62 @@ const { origin, descendants = [] } = Astro.props;
 ---
 
 {(origin || descendants.length > 0) && (
-  <div id="research-lineage" class="mt-6 max-w-3xl scroll-mt-24 border-l border-[var(--border-subtle)] pl-3">
-    <div class="flex items-center gap-1.5">
-      <svg
-        class="h-3 w-3 shrink-0 text-[var(--accent)]"
-        viewBox="0 0 16 16"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M5 2.5v7a3 3 0 0 0 3 3h3.5" />
-        <path d="m9.5 10.5 2 2-2 2" />
-        <path d="M5 5.5h4a2 2 0 0 0 2-2v-1" />
-      </svg>
-      <span class="font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]">Lineage</span>
+  <section id="research-lineage" class="scroll-mt-24 border-t border-[var(--border-subtle)] py-10 sm:py-12" aria-labelledby="research-lineage-title">
+    <div class="site-shell grid gap-6 lg:grid-cols-12">
+      <div class="lg:col-span-3">
+        <div class="flex items-center gap-1.5">
+          <svg
+            class="h-3 w-3 shrink-0 text-[var(--accent)]"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M5 2.5v7a3 3 0 0 0 3 3h3.5" />
+            <path d="m9.5 10.5 2 2-2 2" />
+            <path d="M5 5.5h4a2 2 0 0 0 2-2v-1" />
+          </svg>
+          <h2 id="research-lineage-title" class="font-editorial-mono text-[9px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
+            Research lineage
+          </h2>
+        </div>
+      </div>
+
+      <dl class="space-y-4 lg:col-span-8 lg:col-start-5">
+        {origin && (
+          <div class="grid gap-1.5 sm:grid-cols-[7rem_minmax(0,1fr)] sm:items-baseline">
+            <dt class="font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]">Grew out of</dt>
+            <dd>
+              <a href={origin.href} class="text-sm leading-6 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]">
+                {origin.title} <span aria-hidden="true">→</span>
+              </a>
+            </dd>
+          </div>
+        )}
+
+        {descendants.length > 0 && (
+          <div class="grid gap-1.5 sm:grid-cols-[7rem_minmax(0,1fr)] sm:items-start">
+            <dt class="font-editorial-mono pt-1 text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]">Led to</dt>
+            <dd class="flex flex-col items-start gap-2">
+              {descendants.map((item) => (
+                item.published ? (
+                  <a href={item.href} class="text-sm leading-6 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]">
+                    {item.title} <span aria-hidden="true">→</span>
+                  </a>
+                ) : (
+                  <span class="inline-flex flex-wrap items-center gap-1.5 text-sm leading-6 text-[var(--text-muted)]">
+                    {item.title}
+                    <span class="font-editorial-mono text-[8px] uppercase tracking-[0.12em]">not published</span>
+                  </span>
+                )
+              ))}
+            </dd>
+          </div>
+        )}
+      </dl>
     </div>
-
-    <dl class="mt-2 space-y-1.5">
-      {origin && (
-        <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <dt class="font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]">Grew out of</dt>
-          <dd>
-            <a href={origin.href} class="text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]">
-              {origin.title} <span aria-hidden="true">→</span>
-            </a>
-          </dd>
-        </div>
-      )}
-
-      {descendants.length > 0 && (
-        <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <dt class="font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]">Led to</dt>
-          <dd class="flex flex-wrap gap-x-4 gap-y-1">
-            {descendants.map((item) => (
-              item.published ? (
-                <a href={item.href} class="text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]">
-                  {item.title} <span aria-hidden="true">→</span>
-                </a>
-              ) : (
-                <span class="inline-flex items-center gap-1.5 text-xs leading-5 text-[var(--text-muted)]">
-                  {item.title}
-                  <span class="font-editorial-mono text-[8px] uppercase tracking-[0.12em]">not published</span>
-                </span>
-              )
-            ))}
-          </dd>
-        </div>
-      )}
-    </dl>
-  </div>
+  </section>
 )}
