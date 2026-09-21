@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import ContentStatus from '../components/ContentStatus.astro';
 import ConceptDraftNotice from '../components/ConceptDraftNotice.astro';
+import ProjectResearchBadge from '../components/ProjectResearchBadge.astro';
 import '../styles/project-article.css';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
@@ -63,6 +64,17 @@ const associatedResearchEntries = data.associatedResearch
             <span aria-hidden="true">←</span>
             Projects archive
           </a>
+
+          {published && associatedResearchEntries.length > 0 && (
+            <div class="mt-5 hidden lg:block">
+              <ProjectResearchBadge
+                href={associatedResearchEntries.length === 1
+                  ? `/research/${associatedResearchEntries[0].id}`
+                  : '#associated-research'}
+                count={associatedResearchEntries.length}
+              />
+            </div>
+          )}
         </div>
 
         <div class="lg:col-span-8 lg:col-start-5">
@@ -87,6 +99,17 @@ const associatedResearchEntries = data.associatedResearch
               <p class="mt-7 max-w-3xl text-base leading-8 text-[var(--text-secondary)] sm:text-lg">
                 {data.summary}
               </p>
+
+              {associatedResearchEntries.length > 0 && (
+                <div class="mt-5 lg:hidden">
+                  <ProjectResearchBadge
+                    href={associatedResearchEntries.length === 1
+                      ? `/research/${associatedResearchEntries[0].id}`
+                      : '#associated-research'}
+                    count={associatedResearchEntries.length}
+                  />
+                </div>
+              )}
 
               {(data.problem || data.solution) && (
                 <section class="project-hero-brief mt-9 border-t border-[var(--border-subtle)] pt-5" aria-label="Project brief">
@@ -209,7 +232,7 @@ const associatedResearchEntries = data.associatedResearch
                 )}
 
                 {associatedResearchEntries.length > 0 && (
-                  <div class="mt-6">
+                  <div id="associated-research" class="mt-6 scroll-mt-24">
                     <p class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)] sm:text-[10px]">
                       Associated Research
                     </p>
