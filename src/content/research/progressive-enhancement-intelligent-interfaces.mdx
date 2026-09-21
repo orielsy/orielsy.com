@@ -17,6 +17,9 @@ home:
   visual: "progressive-enhancement"
 ---
 
+import ChatVsEmbeddedCapabilityVisual from '../../components/research/ChatVsEmbeddedCapabilityVisual.astro';
+import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+
 AI does not need to become the interface to make an interface intelligent.
 
 Treating AI as a UI capability—not just a chatbot—creates a more useful possibility: the intelligence behind an interaction can vary without changing the interaction itself.
@@ -31,18 +34,9 @@ A chat surface is useful when conversation is the task. It is less natural when 
 
 Compare two paths:
 
-```text
-Chat:
-"Filter this table to active accounts over $10k"
-→ model response
-→ user interprets the response
-→ user applies the result
-
-Embedded capability:
-"high value active"
-→ semantic ranking / filtering
-→ grid updates
-```
+<ResearchBreakout mode="wide">
+  <ChatVsEmbeddedCapabilityVisual />
+</ResearchBreakout>
 
 The second path does not make the intelligence less capable. It gives the capability a narrower job and lets the existing interface carry the result.
 
