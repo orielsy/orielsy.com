@@ -18,6 +18,7 @@ home:
 ---
 
 import ChatVsEmbeddedCapabilityVisual from '../../components/research/ChatVsEmbeddedCapabilityVisual.astro';
+import ProgressiveEnhancementTiersVisual from '../../components/research/ProgressiveEnhancementTiersVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 
 AI does not need to become the interface to make an interface intelligent.
@@ -74,6 +75,10 @@ A capability might begin with deterministic behavior, gain lightweight or local 
 Semantic search, for example, might begin with indexed filtering and synonyms, add local embeddings, or use a remote reranker. The user still experiences **search**.
 
 **Capability can degrade gracefully. Authority should remain bounded by evidence.**
+
+<ResearchBreakout mode="wide">
+  <ProgressiveEnhancementTiersVisual />
+</ResearchBreakout>
 
 The goal is not to force every feature through every tier. It is to avoid making the interface dependent on the most expensive or powerful tier when the task does not require it.
 
