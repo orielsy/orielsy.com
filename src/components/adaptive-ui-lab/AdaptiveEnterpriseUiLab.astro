@@ -1,65 +1,70 @@
 ---
 import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
+import LabExperienceHeader from './LabExperienceHeader.astro';
+import LabScenarioControl from './LabScenarioControl.astro';
+import LabSectionHeading from './LabSectionHeading.astro';
+import LabTraceCard from './LabTraceCard.astro';
+
+export interface Props {
+  embedded?: boolean;
+}
+
+const { embedded = false } = Astro.props;
 ---
 
 <section
   class="not-prose my-10 text-[var(--text-primary)]"
   data-adaptive-enterprise-ui-lab
-  aria-labelledby="adaptive-lab-title"
+  data-lab-context={embedded ? 'embedded' : 'standalone'}
+  aria-labelledby={embedded ? undefined : 'adaptive-lab-title'}
+  aria-label={embedded ? 'Adaptive Enterprise UI Lab' : undefined}
 >
   <header class="border-b border-[var(--border-subtle)] pb-8">
     <div class="flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
-      <span>Interactive reference implementation</span>
+      <span>{embedded ? 'Working Phase 1 instrument' : 'Interactive reference implementation'}</span>
       <span aria-hidden="true" class="h-px w-8 bg-[var(--border-strong)]"></span>
       <span>Phase 1 · deterministic</span>
     </div>
-    <h3 id="adaptive-lab-title" class="mt-4 mb-0 max-w-4xl text-3xl font-semibold leading-tight text-[var(--text-primary)] sm:text-4xl">
-      Adaptive Enterprise UI Lab
-    </h3>
-    <p class="mt-4 max-w-3xl text-sm leading-7 text-[var(--text-secondary)] sm:text-base">
+    {!embedded && (
+      <h3 id="adaptive-lab-title" class="mt-4 mb-0 max-w-4xl text-3xl font-semibold leading-tight text-[var(--text-primary)] sm:text-4xl">
+        Adaptive Enterprise UI Lab
+      </h3>
+    )}
+    <p class:list={[
+      "max-w-3xl text-sm leading-7 text-[var(--text-secondary)] sm:text-base",
+      embedded ? "mt-3" : "mt-4",
+    ]}>
       Change the scenario, then compare how two interface policies respond to the same Data Connection truth. No AI, inference, or semantic retrieval is used.
     </p>
   </header>
 
   <div class="py-8">
-    <div class="flex items-center gap-3">
-      <span class="font-mono text-[10px] text-[var(--accent)]">01</span>
-      <h4 class="m-0 font-mono text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-secondary)]">Set the shared scenario</h4>
-    </div>
+    <LabSectionHeading number="01" title="Set the shared scenario" {embedded} />
 
     <div class="mt-4 grid gap-px overflow-hidden rounded-md border border-[var(--border-subtle)] bg-[var(--border-subtle)] md:grid-cols-3">
-      <div class="bg-[var(--bg-card)] p-4 sm:p-5">
-        <div class="mb-4 flex items-center justify-between gap-3">
-          <span class="text-xs text-[var(--text-secondary)]">User familiarity</span>
-          <span data-scenario-familiarity class="font-mono text-[10px] uppercase text-[var(--accent)]">new</span>
-        </div>
+      <LabScenarioControl label="User familiarity" value="new">
+        <span slot="value" data-scenario-familiarity>new</span>
         <div class="grid grid-cols-2 gap-1.5" role="group" aria-label="User familiarity">
           <button type="button" data-familiarity="new" aria-pressed="true" class="h-9 rounded-sm border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-3 text-xs font-medium text-[var(--accent)] transition">New</button>
           <button type="button" data-familiarity="experienced" aria-pressed="false" class="h-9 rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-xs text-[var(--text-secondary)] transition hover:bg-[var(--bg-card-hover)] hover:text-[var(--text-primary)]">Experienced</button>
         </div>
-      </div>
+      </LabScenarioControl>
 
-      <div class="bg-[var(--bg-card)] p-4 sm:p-5">
-        <div class="mb-4 flex items-center justify-between gap-3">
-          <span class="text-xs text-[var(--text-secondary)]">Product version</span>
-          <span data-scenario-version class="font-mono text-[10px] uppercase text-[var(--accent)]">v4.2</span>
-        </div>
+      <LabScenarioControl label="Product version" value="v4.2">
+        <span slot="value" data-scenario-version>v4.2</span>
         <div class="grid grid-cols-2 gap-1.5" role="group" aria-label="Product version">
           <button type="button" data-version="4.1" aria-pressed="false" class="h-9 rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-xs text-[var(--text-secondary)] transition hover:bg-[var(--bg-card-hover)] hover:text-[var(--text-primary)]">4.1</button>
           <button type="button" data-version="4.2" aria-pressed="true" class="h-9 rounded-sm border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-3 text-xs font-medium text-[var(--accent)] transition">4.2</button>
         </div>
-      </div>
+      </LabScenarioControl>
 
-      <div class="bg-[var(--bg-card)] p-4 sm:p-5">
-        <div class="mb-4 flex items-center justify-between gap-3">
-          <span class="text-xs text-[var(--text-secondary)]">Compatible connections</span>
-          <span data-scenario-connections class="font-mono text-[10px] uppercase text-[var(--accent)]">3 matches</span>
-        </div>
+      <LabScenarioControl label="Compatible connections" value="3 matches">
+        <span slot="value" data-scenario-connections>3 matches</span>
         <div class="grid grid-cols-2 gap-1.5" role="group" aria-label="Compatible Data Connections">
           <button type="button" data-connection-count="1" aria-pressed="false" class="h-9 rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-xs text-[var(--text-secondary)] transition hover:bg-[var(--bg-card-hover)] hover:text-[var(--text-primary)]">One</button>
           <button type="button" data-connection-count="3" aria-pressed="true" class="h-9 rounded-sm border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-3 text-xs font-medium text-[var(--accent)] transition">Several</button>
         </div>
-      </div>
+      </LabScenarioControl>
     </div>
   </div>
 
@@ -77,21 +82,15 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
   </div>
 
   <div class="py-8">
-    <div class="flex items-center gap-3">
-      <span class="font-mono text-[10px] text-[var(--accent)]">02</span>
-      <h4 class="m-0 font-mono text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-secondary)]">Compare the interface policy</h4>
-    </div>
+    <LabSectionHeading number="02" title="Compare the interface policy" {embedded} />
 
     <div class="mt-4 grid gap-5 lg:grid-cols-2">
       <article class="flex min-h-[32rem] flex-col rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 sm:p-6">
-        <div class="mb-8 flex items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-5">
-          <div>
-            <p class="m-0 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--text-muted)]">Conventional experience</p>
-            <h5 class="mt-2 mb-0 text-lg font-semibold text-[var(--text-primary)]">Configuration</h5>
-            <p class="mt-2 max-w-md text-xs leading-5 text-[var(--text-secondary)]">The form exposes the available values and leaves interpretation to the user.</p>
-          </div>
-          <svg class="mt-1 size-4 shrink-0 text-[var(--text-muted)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 9l-3 3 3 3"/><path d="M2 12h16"/><path d="M19 5l3 3-3 3"/><path d="M22 8H6"/></svg>
-        </div>
+        <LabExperienceHeader
+          eyebrow="Conventional experience"
+          description="The form exposes the available values and leaves interpretation to the user."
+          {embedded}
+        />
 
         <div class="flex flex-1 flex-col">
           <div>
@@ -112,14 +111,12 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
       </article>
 
       <article class="flex min-h-[32rem] flex-col rounded-md border border-[var(--accent-border)] bg-[var(--bg-card)] p-5 sm:p-6">
-        <div class="mb-8 flex items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-5">
-          <div>
-            <p class="m-0 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--accent)]">Adaptive experience</p>
-            <h5 class="mt-2 mb-0 text-lg font-semibold text-[var(--text-primary)]">Configuration</h5>
-            <p class="mt-2 max-w-md text-xs leading-5 text-[var(--text-secondary)]">The form adds only the intervention supported by the current evidence.</p>
-          </div>
-          <svg class="mt-1 size-4 shrink-0 text-[var(--text-muted)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 9l-3 3 3 3"/><path d="M2 12h16"/><path d="M19 5l3 3-3 3"/><path d="M22 8H6"/></svg>
-        </div>
+        <LabExperienceHeader
+          eyebrow="Adaptive experience"
+          description="The form adds only the intervention supported by the current evidence."
+          adaptive
+          {embedded}
+        />
 
         <div class="flex flex-1 flex-col">
           <div data-adaptive-intervention class="mb-5 rounded-md border border-[var(--accent-border)] bg-[var(--bg-primary)] p-4" aria-live="polite">
@@ -164,35 +161,28 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
     <details data-decision-trace open>
       <summary class="cursor-pointer list-none">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div class="flex items-center gap-3">
-            <span class="font-mono text-[10px] text-[var(--accent)]">03</span>
-            <h4 class="m-0 font-mono text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-secondary)]">Inspect the deterministic decision</h4>
-          </div>
+          <LabSectionHeading number="03" title="Inspect the deterministic decision" {embedded} />
           <span data-trace-toggle-label class="inline-flex items-center gap-2 rounded-md px-3 py-2 text-xs text-[var(--text-secondary)] transition hover:bg-[var(--bg-card)] hover:text-[var(--text-primary)]">Hide trace <span aria-hidden="true">⌃</span></span>
         </div>
       </summary>
 
       <div class="mt-4 grid gap-px overflow-hidden rounded-md border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-2 xl:grid-cols-4">
-        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
-          <svg class="size-4 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
-          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Application state</p>
+        <LabTraceCard label="Application state">
+          <svg slot="icon" class="size-4 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
           <p data-trace-state class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">4.2 · new · 3 matches</p>
-        </div>
-        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
-          <svg class="size-4 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 3l8 4v5c0 5-3.4 8.4-8 9-4.6-.6-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
-          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Validation</p>
+        </LabTraceCard>
+        <LabTraceCard label="Validation">
+          <svg slot="icon" class="size-4 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 3l8 4v5c0 5-3.4 8.4-8 9-4.6-.6-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
           <p data-trace-validation class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Data Connection is required.</p>
-        </div>
-        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
-          <svg class="size-4 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4"/></svg>
-          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Applicable knowledge</p>
+        </LabTraceCard>
+        <LabTraceCard label="Applicable knowledge">
+          <svg slot="icon" class="size-4 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4"/></svg>
           <p data-trace-knowledge class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Authored product guidance</p>
-        </div>
-        <div class="min-h-36 bg-[var(--bg-card)] p-4 sm:p-5">
-          <svg class="size-4 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 3v6"/><path d="M6 15v6"/><path d="M18 3v4"/><path d="M18 13v8"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="10" r="3"/></svg>
-          <p class="mt-4 mb-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Response policy</p>
+        </LabTraceCard>
+        <LabTraceCard label="Response policy">
+          <svg slot="icon" class="size-4 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 3v6"/><path d="M6 15v6"/><path d="M18 3v4"/><path d="M18 13v8"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="10" r="3"/></svg>
           <p data-trace-policy class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Explain the ambiguity; do not infer or preselect a value.</p>
-        </div>
+        </LabTraceCard>
       </div>
 
       <div class="mt-4 flex items-start gap-3 rounded-md border border-dashed border-[var(--border-subtle)] px-4 py-3 text-xs leading-5 text-[var(--text-secondary)]">
