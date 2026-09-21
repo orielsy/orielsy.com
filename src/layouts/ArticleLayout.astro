@@ -127,18 +127,6 @@ const formattedUpdateDate = data.updatedDate
                 </p>
               )}
 
-              <ResearchLineageSummary
-                origin={originEntry ? {
-                  href: `/research/${originEntry.id}`,
-                  title: originEntry.data.title,
-                  published: originEntry.data.published,
-                } : undefined}
-                descendants={descendantEntries.map((candidate) => ({
-                  href: `/research/${candidate.id}`,
-                  title: candidate.data.title,
-                  published: candidate.data.published,
-                }))}
-              />
             </>
           ) : (
             <>
@@ -195,6 +183,19 @@ const formattedUpdateDate = data.updatedDate
             </div>
           </div>
         </div>
+
+        <ResearchLineageSummary
+          origin={originEntry ? {
+            href: `/research/${originEntry.id}`,
+            title: originEntry.data.title,
+            published: originEntry.data.published,
+          } : undefined}
+          descendants={descendantEntries.map((candidate) => ({
+            href: `/research/${candidate.id}`,
+            title: candidate.data.title,
+            published: candidate.data.published,
+          }))}
+        />
 
         <footer class="border-t border-[var(--border-subtle)] py-10 sm:py-12">
           <div class="site-shell grid gap-8 sm:grid-cols-2">
