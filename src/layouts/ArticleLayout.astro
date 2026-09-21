@@ -4,6 +4,8 @@ import TableOfContents from '../components/TableOfContents.astro';
 import ContentStatus from '../components/ContentStatus.astro';
 import ConceptDraftNotice from '../components/ConceptDraftNotice.astro';
 import ResearchFollowsBadge from '../components/ResearchFollowsBadge.astro';
+import ResearchContinuationBadge from '../components/ResearchContinuationBadge.astro';
+import ResearchLineageSummary from '../components/ResearchLineageSummary.astro';
 import Callout from '../components/Callout.astro';
 import '../styles/research-article.css';
 import '../styles/research-publication.css';
@@ -20,9 +22,11 @@ export interface Props {
 
 const { entry, headings, prevEntry, nextEntry, published = false } = Astro.props;
 const { data } = entry;
+const allResearch = await getCollection('research');
 const originEntry = data.originSlug
-  ? (await getCollection('research')).find((candidate) => candidate.id === data.originSlug)
+  ? allResearch.find((candidate) => candidate.id === data.originSlug)
   : undefined;
+const descendantEntries = allResearch.filter((candidate) => candidate.data.originSlug === entry.id);
 const isConceptDraft = published && data.draft;
 const statusTitle = 'Research in Progress';
 const statusDescription = 'This research entry is still being developed and is not publicly available yet.';
@@ -79,6 +83,9 @@ const formattedUpdateDate = data.updatedDate
                 {originEntry && (
                   <ResearchFollowsBadge href={`/research/${originEntry.id}`} title={originEntry.data.title} />
                 )}
+                {descendantEntries.length > 0 && (
+                  <ResearchContinuationBadge href="#research-lineage" count={descendantEntries.length} />
+                )}
               </div>
 
               <h1 class="font-display mt-6 max-w-5xl text-4xl font-semibold leading-[1.04] tracking-[-0.045em] text-[var(--text-primary)] sm:text-5xl lg:text-6xl">
@@ -119,6 +126,19 @@ const formattedUpdateDate = data.updatedDate
                   Last revised {formattedUpdateDate}
                 </p>
               )}
+
+              <ResearchLineageSummary
+                origin={originEntry ? {
+                  href: `/research/${originEntry.id}`,
+                  title: originEntry.data.title,
+                  published: originEntry.data.published,
+                } : undefined}
+                descendants={descendantEntries.map((candidate) => ({
+                  href: `/research/${candidate.id}`,
+                  title: candidate.data.title,
+                  published: candidate.data.published,
+                }))}
+              />
             </>
           ) : (
             <>
