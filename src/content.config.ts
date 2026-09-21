@@ -15,6 +15,7 @@ const homeFeature = z.object({
 
 const projectArchive = z.object({
   visual: z.enum(['speech-broadcast', 'adaptive-ui-lab']).optional(),
+  signals: z.array(z.string()).max(6).default([]),
 }).optional();
 
 const research = defineCollection({
