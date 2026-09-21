@@ -61,7 +61,7 @@ html.dark .prose [data-adaptive-enterprise-ui-lab] {
 
 /* Scenario controller */
 .prose [data-adaptive-enterprise-ui-lab] [data-scenario-grid] {
-  margin-top: 0.7rem;
+  margin-top: 1.25rem;
   border-color: var(--lab-border);
   background: var(--lab-border);
   border-radius: 0.4rem;
