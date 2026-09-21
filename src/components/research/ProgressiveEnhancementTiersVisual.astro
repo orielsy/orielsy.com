@@ -30,7 +30,7 @@
         <li class="tier-row tier-row-baseline">
           <span class="tier-node tier-node-baseline" aria-hidden="true"></span>
           <div class="tier-card tier-card-baseline">
-            <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+            <div class="tier-card-header">
               <span class="tier-number">01</span>
               <span class="tier-title">Baseline</span>
               <span class="tier-badge tier-badge-baseline">Always on</span>
@@ -42,7 +42,7 @@
         <li class="tier-row">
           <span class="tier-node" aria-hidden="true"></span>
           <div class="tier-card tier-card-optional">
-            <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+            <div class="tier-card-header">
               <span class="tier-number">02</span>
               <span class="tier-title">Local enhancement</span>
               <span class="tier-badge">Optional AI</span>
@@ -54,7 +54,7 @@
         <li class="tier-row">
           <span class="tier-node" aria-hidden="true"></span>
           <div class="tier-card tier-card-optional">
-            <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+            <div class="tier-card-header">
               <span class="tier-number">03</span>
               <span class="tier-title">Stronger inference</span>
               <span class="tier-badge">Optional AI</span>
@@ -68,7 +68,7 @@
     <div class="mx-auto mt-7 max-w-3xl">
       <div class="flex items-center gap-3">
         <span class="h-px flex-1 bg-[var(--accent)]" aria-hidden="true"></span>
-        <span class="font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--accent)]">
+        <span class="whitespace-nowrap font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--accent)]">
           Authority stays bounded
         </span>
         <span class="h-px flex-1 bg-[var(--accent)]" aria-hidden="true"></span>
@@ -135,14 +135,25 @@
     background: var(--bg-secondary);
   }
 
+  .tier-card-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 0.65rem;
+    row-gap: 0.3rem;
+    min-width: 0;
+  }
+
   .tier-number {
     color: var(--accent);
     font-family: var(--font-mono-ui);
     font-size: 0.5rem;
     letter-spacing: 0.1em;
+    white-space: nowrap;
   }
 
   .tier-title {
+    min-width: 0;
     color: var(--text-primary);
     font-family: var(--font-mono-ui);
     font-size: 0.68rem;
@@ -153,7 +164,8 @@
   }
 
   .tier-badge {
-    margin-left: auto;
+    justify-self: end;
+    white-space: nowrap;
     border: 1px solid var(--accent-border);
     border-radius: 0.2rem;
     padding: 0.1rem 0.35rem;
@@ -178,9 +190,34 @@
     line-height: 1.55;
   }
 
-  @media (max-width: 420px) {
+  @media (max-width: 560px) {
+    .tier-card-header {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
     .tier-badge {
-      margin-left: 0;
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .tier-row {
+      grid-template-columns: 0.8rem minmax(0, 1fr);
+      gap: 0.7rem;
+    }
+
+    .tier-node {
+      width: 0.8rem;
+      height: 0.8rem;
+    }
+
+    .tier-rail {
+      left: 6px;
+    }
+
+    .tier-card {
+      padding: 0.85rem;
     }
   }
 </style>
