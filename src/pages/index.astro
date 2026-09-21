@@ -3,9 +3,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import FeaturedResearchVisual from '../components/home/FeaturedResearchVisual.astro';
 import FeaturedProjectVisual from '../components/home/FeaturedProjectVisual.astro';
 import TldrToggleButton from '../components/TldrToggleButton.astro';
+import ResearchFollowsBadge from '../components/ResearchFollowsBadge.astro';
 import { getCollection } from 'astro:content';
 
 const allResearch = await getCollection('research');
+const researchOrigins = new Map(
+  allResearch.map((entry) => {
+    const origin = entry.data.originSlug
+      ? allResearch.find((candidate) => candidate.id === entry.data.originSlug)
+      : undefined;
+
+    return [
+      entry.id,
+      origin ? { href: `/research/${origin.id}`, title: origin.data.title } : null,
+    ] as const;
+  }),
+);
 const publishedResearch = allResearch.filter((entry) => entry.data.published);
 const recentResearch = publishedResearch
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -108,6 +121,9 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
               <span>{featuredResearch.data.type}</span>
               <time datetime={featuredResearch.data.pubDate.toISOString()}>{formatDate(featuredResearch.data.pubDate)}</time>
               {featuredResearch.data.readingTime && <span>{featuredResearch.data.readingTime}</span>}
+              {researchOrigins.get(featuredResearch.id) && (
+                <ResearchFollowsBadge {...researchOrigins.get(featuredResearch.id)!} />
+              )}
             </div>
 
             <h2 class="font-display mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.035em] text-[var(--text-primary)] sm:text-4xl">
@@ -184,6 +200,9 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                 <div class="flex flex-wrap gap-x-4 gap-y-1 font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
                   <span>{entry.data.type}</span>
                   {entry.data.readingTime && <span>{entry.data.readingTime}</span>}
+                  {researchOrigins.get(entry.id) && (
+                    <ResearchFollowsBadge {...researchOrigins.get(entry.id)!} />
+                  )}
                 </div>
                 <h3 class="font-display mt-3 max-w-3xl text-xl font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)] sm:text-2xl">
                   <a href={`/research/${entry.id}`} class="transition-colors hover:text-[var(--accent)]">{entry.data.title}</a>
