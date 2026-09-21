@@ -1,0 +1,32 @@
+---
+interface Props {
+  href: string;
+  count: number;
+}
+
+const { href, count } = Astro.props;
+const label = count === 1 ? '1 piece' : `${count} pieces`;
+---
+
+<a
+  href={href}
+  title={`Related research: ${label}`}
+  class="inline-flex items-center gap-1.5 rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-card)] px-2 py-1 font-editorial-mono text-[8px] tracking-[0.12em] text-[var(--text-muted)] transition-colors hover:border-[var(--accent-border)] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
+>
+  <svg
+    class="h-2.5 w-2.5 shrink-0 text-[var(--accent)]"
+    viewBox="0 0 16 16"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M3 3.5h4.5a2 2 0 0 1 2 2V13H5a2 2 0 0 0-2 2V3.5Z" />
+    <path d="M13 3.5H9.5a2 2 0 0 0-2 2V13H11a2 2 0 0 1 2 2V3.5Z" />
+  </svg>
+  <span class="uppercase text-[var(--text-muted)]">Research</span>
+  <span aria-hidden="true" class="text-[var(--text-muted)]">·</span>
+  <span class="normal-case tracking-normal text-[var(--text-primary)]">{label}</span>
+</a>
