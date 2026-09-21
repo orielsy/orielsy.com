@@ -315,6 +315,7 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
         case 'help': return 'help';
         case 'warning': return 'warn';
       }
+      return 'none';
     };
 
     const interventionHeadline = (response?: UIResponse) => {
@@ -327,6 +328,7 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
         case 'help': return 'Data Connection guidance';
         case 'warning': return 'Review this configuration';
       }
+      return 'Configuration guidance';
     };
 
     const policySummary = (response?: UIResponse) => {
@@ -339,6 +341,7 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
         case 'help': return 'Surface contextual help while leaving application state unchanged.';
         case 'warning': return 'Warn about the current state without taking action.';
       }
+      return 'Keep the current interface state unchanged.';
     };
 
     let pendingSetValueAction: UIAction | undefined;
