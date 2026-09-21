@@ -140,17 +140,10 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
 
           <div class="flex flex-col items-start gap-3 sm:items-end">
             {(researchOrigins.get(featuredResearch.id) ||
-              (researchContinuationCounts.get(featuredResearch.id) ?? 0) > 0 ||
               (researchProjectEntries.get(featuredResearch.id)?.length ?? 0) > 0) && (
               <div class="flex flex-wrap items-center gap-2 sm:justify-end">
                 {researchOrigins.get(featuredResearch.id) && (
                   <ResearchFollowsBadge {...researchOrigins.get(featuredResearch.id)!} />
-                )}
-                {(researchContinuationCounts.get(featuredResearch.id) ?? 0) > 0 && (
-                  <ResearchContinuationBadge
-                    href={`/research/${featuredResearch.id}#research-lineage`}
-                    count={researchContinuationCounts.get(featuredResearch.id)!}
-                  />
                 )}
                 {(researchProjectEntries.get(featuredResearch.id)?.length ?? 0) > 0 && (
                   <ResearchProjectBadge
@@ -179,6 +172,15 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                 <time datetime={featuredResearch.data.pubDate.toISOString()}>{formatDate(featuredResearch.data.pubDate)}</time>
                 {featuredResearch.data.readingTime && <span>{featuredResearch.data.readingTime}</span>}
               </div>
+
+              {(researchContinuationCounts.get(featuredResearch.id) ?? 0) > 0 && (
+                <div class="mt-3">
+                  <ResearchContinuationBadge
+                    href={`/research/${featuredResearch.id}#research-lineage`}
+                    count={researchContinuationCounts.get(featuredResearch.id)!}
+                  />
+                </div>
+              )}
 
               <h2 class="font-display mt-4 max-w-3xl text-3xl font-semibold leading-[1.12] tracking-[-0.035em] text-[var(--text-primary)] sm:text-4xl">
                 <a href={`/research/${featuredResearch.id}`} class="transition-colors hover:text-[var(--accent)]">
