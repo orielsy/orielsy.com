@@ -25,6 +25,22 @@ const originEntry = data.originSlug
   ? allResearch.find((candidate) => candidate.id === data.originSlug)
   : undefined;
 const descendantEntries = allResearch.filter((candidate) => candidate.data.originSlug === entry.id);
+
+const relatedSlugSet = new Set(data.relatedSlugs ?? []);
+allResearch.forEach((candidate) => {
+  if ((candidate.data.relatedSlugs ?? []).includes(entry.id)) {
+    relatedSlugSet.add(candidate.id);
+  }
+});
+const relatedEntries = allResearch.filter((candidate) => relatedSlugSet.has(candidate.id));
+
+const allProjects = await getCollection('projects');
+const relatedProject = allProjects.find(
+  (project) =>
+    project.data.published &&
+    project.data.associatedResearch.includes(`/research/${entry.id}`),
+);
+
 const isConceptDraft = published && data.draft;
 const statusTitle = 'Research in Progress';
 const statusDescription = 'This research entry is still being developed and is not publicly available yet.';
@@ -193,6 +209,15 @@ const formattedUpdateDate = data.updatedDate
             title: candidate.data.title,
             published: candidate.data.published,
           }))}
+          related={relatedEntries.map((candidate) => ({
+            href: `/research/${candidate.id}`,
+            title: candidate.data.title,
+            published: candidate.data.published,
+          }))}
+          relatedWork={relatedProject ? {
+            href: `/projects/${relatedProject.id}`,
+            label: relatedProject.data.projectName ?? relatedProject.data.title,
+          } : undefined}
         />
 
 
