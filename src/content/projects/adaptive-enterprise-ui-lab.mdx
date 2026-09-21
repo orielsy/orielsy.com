@@ -21,18 +21,31 @@ associatedResearch:
 
 import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEnterpriseUiLab.astro';
 import ProjectBreakout from '../../components/projects/ProjectBreakout.astro';
+import Phase1DeterministicPipelineVisual from '../../components/research/Phase1DeterministicPipelineVisual.astro';
 
 The Adaptive Enterprise UI Lab is a shared reference application for testing how product knowledge can participate in an enterprise interface without displacing deterministic application truth. It grows out of [Progressive Enhancement for Intelligent Interfaces](/research/progressive-enhancement-intelligent-interfaces) and provides the working implementation behind [Documentation-Driven Adaptive UX](/research/documentation-driven-adaptive-ux).
 
 Phase 1 is implemented today. Later phases are intentionally separated so selective inference and runtime placement can be added without rewriting the deterministic core.
 
+## Architecture at a Glance
+
+The current implementation deliberately keeps application truth, authored knowledge, response policy, and rendering as separate concerns.
+
 <ProjectBreakout mode="publication">
-  <AdaptiveEnterpriseUiLab />
+  <Phase1DeterministicPipelineVisual />
 </ProjectBreakout>
 
-## Phase 1 · Implemented
+## Working Phase 1 Lab
 
-The working Phase 1 instrument demonstrates a focused Data Connection scenario built around:
+Change the scenario and compare how a conventional interface and an adaptive interface respond to the same application truth.
+
+<ProjectBreakout mode="publication">
+  <AdaptiveEnterpriseUiLab embedded />
+</ProjectBreakout>
+
+## What Phase 1 Demonstrates
+
+The working instrument uses a focused Data Connection scenario built around:
 
 - application/domain state
 - deterministic validation
