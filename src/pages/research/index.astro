@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import TldrToggleButton from '../../components/TldrToggleButton.astro';
 import ResearchFollowsBadge from '../../components/ResearchFollowsBadge.astro';
+import ResearchContinuationBadge from '../../components/ResearchContinuationBadge.astro';
 import { getCollection } from 'astro:content';
 
 const allResearch = await getCollection('research');
@@ -17,6 +18,12 @@ const researchOrigins = new Map(
       origin ? { href: `/research/${origin.id}`, title: origin.data.title } : null,
     ] as const;
   }),
+);
+const researchContinuationCounts = new Map(
+  allResearch.map((entry) => [
+    entry.id,
+    allResearch.filter((candidate) => candidate.data.originSlug === entry.id).length,
+  ] as const),
 );
 const previewUnpublished = import.meta.env.DEV && import.meta.env.MODE === 'content-preview';
 
@@ -109,6 +116,12 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                   {entry.data.readingTime && <span>{entry.data.readingTime}</span>}
                   {researchOrigins.get(entry.id) && (
                     <ResearchFollowsBadge {...researchOrigins.get(entry.id)!} />
+                  )}
+                  {(researchContinuationCounts.get(entry.id) ?? 0) > 0 && (
+                    <ResearchContinuationBadge
+                      href={`/research/${entry.id}#research-lineage`}
+                      count={researchContinuationCounts.get(entry.id)!}
+                    />
                   )}
                   {entry.data.draft && <span class="text-[var(--accent)]">Concept Draft</span>}
                 </div>
