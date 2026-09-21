@@ -1,0 +1,156 @@
+---
+const exclusions = [
+  {
+    title: 'Inference and retrieval',
+    description: 'Document ingestion, semantic search, embeddings, natural-language intent resolution, and generated guidance.',
+    inference: true,
+  },
+  {
+    title: 'Production infrastructure',
+    description: 'Backend services, persistence, and authentication.',
+    inference: false,
+  },
+  {
+    title: 'Learning and personalization',
+    description: 'Telemetry, behavioral learning, and inferred user profiles.',
+    inference: false,
+  },
+  {
+    title: 'Runtime integrations',
+    description: 'WebLLM, MCP, and remote AI APIs.',
+    inference: true,
+  },
+] as const;
+---
+
+<figure
+  class="phase-one-limitations not-prose my-10 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]"
+  aria-labelledby="phase-one-limitations-title"
+>
+  <header class="grid gap-3 border-b border-[var(--border-subtle)] px-5 py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:px-6">
+    <h3
+      id="phase-one-limitations-title"
+      class="font-editorial-mono text-[9px] uppercase tracking-[0.14em] text-[var(--text-primary)]"
+    >
+      Phase 1 scope boundary · intentionally not included
+    </h3>
+
+    <div class="flex items-center gap-2 border-l-2 border-[var(--accent-border)] pl-3">
+      <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">
+        Accent rule = AI / inference
+      </span>
+    </div>
+  </header>
+
+  <ol class="limitations-grid" aria-label="Capabilities excluded from Phase 1">
+    {exclusions.map((item, index) => (
+      <li class:list={['limitation-card', item.inference && 'limitation-card-inference']}>
+        <span class="limitation-number">{String(index + 1).padStart(2, '0')}</span>
+
+        <div class="min-w-0">
+          <strong>{item.title}</strong>
+          <p>{item.description}</p>
+        </div>
+
+        <span class="limitation-status">Outside</span>
+      </li>
+    ))}
+  </ol>
+</figure>
+
+<style>
+  .phase-one-limitations :global(h3),
+  .phase-one-limitations :global(ol),
+  .phase-one-limitations :global(li),
+  .phase-one-limitations :global(p) {
+    margin: 0;
+  }
+
+  .phase-one-limitations :global(ol) {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .limitations-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .limitation-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    gap: 0.8rem;
+    align-items: start;
+    min-width: 0;
+    background: var(--bg-card);
+    padding: 1rem;
+  }
+
+  .limitation-card-inference {
+    box-shadow: inset 2px 0 0 color-mix(in srgb, var(--accent) 42%, transparent);
+  }
+
+  .limitation-number {
+    padding-top: 0.12rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.52rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+
+  .limitation-card :global(strong) {
+    display: block;
+    color: var(--text-primary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .limitation-card :global(p) {
+    margin-top: 0.35rem;
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    line-height: 1.55;
+  }
+
+  .limitation-status {
+    align-self: start;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    padding: 0.22rem 0.45rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.45rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 720px) {
+    .limitations-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .limitation-card {
+      min-height: 7.5rem;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .limitation-card {
+      grid-template-columns: 1.7rem minmax(0, 1fr);
+      gap: 0.65rem;
+      padding: 0.9rem;
+    }
+
+    .limitation-status {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+</style>
