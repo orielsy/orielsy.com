@@ -46,6 +46,20 @@ const { maxWidth, mode = 'wide' } = Astro.props;
    * size-containment ancestor around the sticky contents rail.
    */
   @media (min-width: 1024px) {
+    /*
+     * Wide figures expand into the left-side article gutter instead of
+     * growing symmetrically around the reading column. This keeps their
+     * right edge aligned with the prose at intermediate desktop widths,
+     * preventing viewport clipping while still giving diagrams more room.
+     */
+    .research-breakout[data-breakout-mode='wide'] {
+      left: auto;
+      width: min(var(--research-breakout-max), 125%);
+      max-width: 125%;
+      margin-left: calc(100% - min(var(--research-breakout-max), 125%));
+      transform: none;
+    }
+
     .research-breakout[data-breakout-mode='publication'] {
       left: auto;
       width: min(var(--research-breakout-max), 150%);
