@@ -130,8 +130,12 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
                   <p data-adaptive-headline class="m-0 text-sm font-medium text-[var(--text-primary)]">Choose among compatible connections</p>
                   <span data-adaptive-authority class="rounded border border-[var(--accent-border)] px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">EXPLAIN</span>
                 </div>
-                <p data-adaptive-guidance class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Several connections satisfy the product rules. Check the system label and choose the connection that matches your task.</p>
-                <p data-version-source class="mt-3 border-t border-[var(--border-subtle)] pt-3 font-mono text-[10px] leading-5 text-[var(--text-muted)]">DEMO KNOWLEDGE · Applies to product 4.2</p>
+                <p data-adaptive-guidance class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Choose the connection for the system this workflow needs to access.</p>
+                <p data-adaptive-source class="mt-3 border-t border-[var(--border-subtle)] pt-3 font-mono text-[10px] leading-5 text-[var(--text-muted)]">DOCUMENTATION · Choosing a Data Connection</p>
+                <details data-guidance-details class="mt-3 border-t border-[var(--border-subtle)] pt-3">
+                  <summary class="cursor-pointer text-xs font-medium text-[var(--text-secondary)] transition hover:text-[var(--text-primary)]">Why this guidance?</summary>
+                  <ul data-guidance-details-list class="mt-2 space-y-1.5 text-xs leading-5 text-[var(--text-muted)]"></ul>
+                </details>
               </div>
             </div>
           </div>
@@ -204,7 +208,7 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
   import { ONE_DATA_CONNECTION, THREE_DATA_CONNECTIONS } from './fixtures.ts';
   import { KNOWLEDGE } from './knowledge.ts';
   import { resolveInterface } from './resolver.ts';
-  import type { AutomationConfiguration, ProductVersion, RuntimeContext, UserFamiliarity } from './types.ts';
+  import type { AutomationConfiguration, ProductVersion, RuntimeContext, UIAction, UIResponse, UserFamiliarity } from './types.ts';
 
   let labInteractionTracked = false;
 
@@ -223,7 +227,9 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
     const adaptiveHeadline = lab.querySelector<HTMLElement>('[data-adaptive-headline]');
     const adaptiveAuthority = lab.querySelector<HTMLElement>('[data-adaptive-authority]');
     const adaptiveGuidance = lab.querySelector<HTMLElement>('[data-adaptive-guidance]');
-    const versionSource = lab.querySelector<HTMLElement>('[data-version-source]');
+    const adaptiveSource = lab.querySelector<HTMLElement>('[data-adaptive-source]');
+    const guidanceDetails = lab.querySelector<HTMLDetailsElement>('[data-guidance-details]');
+    const guidanceDetailsList = lab.querySelector<HTMLUListElement>('[data-guidance-details-list]');
     const useSoleConnection = lab.querySelector<HTMLButtonElement>('[data-use-sole-connection]');
     const truthSummary = lab.querySelector<HTMLElement>('[data-truth-summary]');
     const scenarioFamiliarity = lab.querySelector<HTMLElement>('[data-scenario-familiarity]');
@@ -299,34 +305,57 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
       });
     };
 
-    const presentationDecision = () => {
-      const oneMatch = connectionCount === 1;
-      const detailed = familiarity === 'new';
-      return {
-        authority: oneMatch ? 'offer' : 'explain',
-        headline: oneMatch ? 'One compatible connection found' : 'Choose among compatible connections',
-        guidance: oneMatch
-          ? detailed
-            ? 'The current configuration has one compatible Data Connection. Review it, then apply it if it is the connection you intended.'
-            : 'Only one connection matches the current configuration.'
-          : detailed
-            ? 'Several connections satisfy the product rules. Check the system label and choose the connection that matches your task.'
-            : 'Several valid matches remain. A user choice is required.',
-        validation: oneMatch
-          ? 'Deterministic validation returned exactly one compatible value.'
-          : 'Deterministic validation returned several compatible values.',
-        policy: oneMatch
-          ? 'Offer the sole valid value; require confirmation before changing the field.'
-          : 'Explain the ambiguity; do not infer or preselect a value.',
-      };
+    const authorityLabel = (response?: UIResponse) => {
+      if (!response) return 'none';
+      switch (response.type) {
+        case 'preconfiguration': return 'offer';
+        case 'suggestion': return 'guide';
+        case 'highlight': return 'highlight';
+        case 'explanation': return 'explain';
+        case 'help': return 'help';
+        case 'warning': return 'warn';
+      }
     };
+
+    const interventionHeadline = (response?: UIResponse) => {
+      if (!response) return 'Configuration ready';
+      switch (response.type) {
+        case 'preconfiguration': return 'One compatible connection found';
+        case 'suggestion': return 'Choose among compatible connections';
+        case 'highlight': return 'Data Connection required';
+        case 'explanation': return 'Why this field is required';
+        case 'help': return 'Data Connection guidance';
+        case 'warning': return 'Review this configuration';
+      }
+    };
+
+    const policySummary = (response?: UIResponse) => {
+      if (!response) return 'No intervention required; the selected value satisfies deterministic requirements.';
+      switch (response.type) {
+        case 'preconfiguration': return 'Offer the sole compatible value; require user confirmation before changing the field.';
+        case 'suggestion': return 'Guide the user without choosing among multiple valid values.';
+        case 'highlight': return 'Highlight the required field without changing its value.';
+        case 'explanation': return 'Explain the deterministic requirement without taking action.';
+        case 'help': return 'Surface contextual help while leaving application state unchanged.';
+        case 'warning': return 'Warn about the current state without taking action.';
+      }
+    };
+
+    let pendingSetValueAction: UIAction | undefined;
 
     const render = () => {
       const connections = currentConnections();
-      const decision = presentationDecision();
       const config: AutomationConfiguration = { dataConnectionId: adaptiveDataConnectionId || null };
       const runtime: RuntimeContext = { productVersion, userFamiliarity: familiarity, availableDataConnections: connections };
       const result = resolveInterface({ config, runtime, ui: uiState, knowledge: KNOWLEDGE });
+      const primaryResponse = result.responses.reduce<UIResponse | undefined>(
+        (selected, response) => !selected || response.authority > selected.authority ? response : selected,
+        undefined,
+      );
+      const supportingResponses = result.responses.filter(
+        (response) => response !== primaryResponse && (response.type === 'help' || response.type === 'explanation'),
+      );
+      pendingSetValueAction = primaryResponse?.actions?.find((action) => action.type === 'set-value');
 
       if (scenarioFamiliarity) scenarioFamiliarity.textContent = familiarity;
       if (scenarioVersion) scenarioVersion.textContent = `v${productVersion}`;
@@ -338,25 +367,54 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
       if (standardOutcome) standardOutcome.textContent = standardDataConnectionId ? 'Ready to continue' : 'Awaiting selection';
       if (adaptiveOutcome) adaptiveOutcome.textContent = adaptiveDataConnectionId ? 'Ready to continue' : 'Awaiting selection';
 
-      if (adaptiveHeadline) adaptiveHeadline.textContent = decision.headline;
-      if (adaptiveAuthority) adaptiveAuthority.textContent = decision.authority;
-      if (adaptiveGuidance) adaptiveGuidance.textContent = decision.guidance;
-      if (versionSource) versionSource.classList.toggle('hidden', productVersion !== '4.2');
+      if (adaptiveHeadline) adaptiveHeadline.textContent = interventionHeadline(primaryResponse);
+      if (adaptiveAuthority) adaptiveAuthority.textContent = authorityLabel(primaryResponse);
+      if (adaptiveGuidance) {
+        adaptiveGuidance.textContent = primaryResponse?.message
+          ?? 'The selected Data Connection satisfies the current requirement.';
+      }
 
-      const soleConnection = connections.length === 1 ? connections[0] : undefined;
+      if (adaptiveSource) {
+        const knowledgeSources = (primaryResponse?.knowledgeIds ?? [])
+          .map((knowledgeId) => result.applicableKnowledge.find((item) => item.id === knowledgeId)?.source.label)
+          .filter((label): label is string => Boolean(label));
+        const sourceLabels = [...new Set(knowledgeSources)];
+        if ((primaryResponse?.validationIds?.length ?? 0) > 0) sourceLabels.unshift('Application validation');
+        if (primaryResponse?.type === 'preconfiguration') sourceLabels.unshift('Application state');
+        adaptiveSource.textContent = sourceLabels.length > 0
+          ? sourceLabels.join(' · ')
+          : 'Application state';
+      }
+
+      if (guidanceDetails && guidanceDetailsList) {
+        guidanceDetailsList.replaceChildren();
+        supportingResponses.forEach((response) => {
+          const item = document.createElement('li');
+          item.textContent = response.message;
+          guidanceDetailsList.append(item);
+        });
+        const showDetails = supportingResponses.length > 0;
+        guidanceDetails.classList.toggle('hidden', !showDetails);
+        if (!showDetails) guidanceDetails.open = false;
+      }
+
       if (useSoleConnection) {
-        const show = Boolean(soleConnection && !adaptiveDataConnectionId);
+        const show = Boolean(pendingSetValueAction?.value && !adaptiveDataConnectionId);
         useSoleConnection.classList.toggle('hidden', !show);
-        if (soleConnection) useSoleConnection.textContent = `✓ Use ${soleConnection.name}`;
+        if (pendingSetValueAction) useSoleConnection.textContent = `✓ ${pendingSetValueAction.label}`;
       }
 
       if (traceState) traceState.textContent = `${productVersion} · ${familiarity} · ${connections.length} ${connections.length === 1 ? 'match' : 'matches'}`;
-      if (traceValidation) traceValidation.textContent = decision.validation;
+      if (traceValidation) {
+        traceValidation.textContent = result.validation.length > 0
+          ? 'Data Connection is required.'
+          : 'No blocking validation issues.';
+      }
       if (traceKnowledge) {
         const labels = [...new Set(result.applicableKnowledge.map((item) => item.source.label))];
         traceKnowledge.textContent = labels.length > 0 ? labels.join(' · ') : 'No authored knowledge applies.';
       }
-      if (tracePolicy) tracePolicy.textContent = decision.policy;
+      if (tracePolicy) tracePolicy.textContent = policySummary(primaryResponse);
     };
 
     standardDataConnection.addEventListener('change', () => {
@@ -382,10 +440,9 @@ import { THREE_DATA_CONNECTIONS } from './fixtures.ts';
     });
 
     useSoleConnection?.addEventListener('click', () => {
-      const soleConnection = currentConnections()[0];
-      if (!soleConnection || connectionCount !== 1) return;
-      adaptiveDataConnectionId = soleConnection.id;
-      adaptiveDataConnection.value = soleConnection.id;
+      if (!pendingSetValueAction?.value) return;
+      adaptiveDataConnectionId = pendingSetValueAction.value;
+      adaptiveDataConnection.value = pendingSetValueAction.value;
       adaptiveAttempted = false;
       render();
     });
