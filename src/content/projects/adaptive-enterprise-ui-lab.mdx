@@ -23,7 +23,36 @@ import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEn
 import ProjectBreakout from '../../components/projects/ProjectBreakout.astro';
 import Phase1DeterministicPipelineVisual from '../../components/research/Phase1DeterministicPipelineVisual.astro';
 
-The Adaptive Enterprise UI Lab is a shared reference application for testing how product knowledge can participate in an enterprise interface without displacing deterministic application truth. It grows out of [Progressive Enhancement for Intelligent Interfaces](/research/progressive-enhancement-intelligent-interfaces) and provides the working implementation behind [Documentation-Driven Adaptive UX](/research/documentation-driven-adaptive-ux).
+The Adaptive Enterprise UI Lab is a shared reference application for testing how product knowledge can participate in an enterprise interface without displacing deterministic application truth.
+
+<div className="not-prose my-10 grid gap-px overflow-hidden border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-[0.9fr_1.1fr]">
+  <aside className="bg-[var(--bg-card)] p-5 sm:p-6">
+    <p className="font-editorial-mono m-0 text-[9px] uppercase tracking-[0.12em] text-[var(--accent)] sm:text-[10px]">Project thesis</p>
+    <p className="font-display mt-4 mb-0 text-lg font-semibold leading-7 text-[var(--text-primary)]">
+      An enterprise interface can become meaningfully adaptive before inference enters the system.
+    </p>
+    <p className="mt-3 mb-0 text-xs leading-6 text-[var(--text-muted)]">
+      The important boundary is not whether the interface can generate help, but whether its evidence justifies a stronger intervention.
+    </p>
+  </aside>
+  <div className="bg-[var(--bg-card)] p-5 sm:p-6">
+    <p className="font-editorial-mono m-0 text-[9px] uppercase tracking-[0.12em] text-[var(--accent)] sm:text-[10px]">Research thread → working artifact</p>
+    <div className="mt-4 grid gap-3 text-sm leading-6">
+      <a className="group flex items-start justify-between gap-4 text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]" href="/research/progressive-enhancement-intelligent-interfaces">
+        <span><strong className="font-medium text-[var(--text-primary)]">Progressive Enhancement for Intelligent Interfaces</strong><br /><span className="text-xs text-[var(--text-muted)]">Keep the useful baseline intact while capability increases.</span></span>
+        <span className="font-editorial-mono shrink-0 text-[var(--accent)] transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+      </a>
+      <a className="group flex items-start justify-between gap-4 border-t border-[var(--border-subtle)] pt-3 text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]" href="/research/documentation-driven-adaptive-ux">
+        <span><strong className="font-medium text-[var(--text-primary)]">Documentation-Driven Adaptive UX</strong><br /><span className="text-xs text-[var(--text-muted)]">Ask how far authored knowledge and deterministic state can adapt the interface.</span></span>
+        <span className="font-editorial-mono shrink-0 text-[var(--accent)] transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+      </a>
+      <div className="border-t border-[var(--accent-border)] pt-3">
+        <strong className="text-sm font-medium text-[var(--text-primary)]">Adaptive Enterprise UI Lab</strong>
+        <p className="mt-1 mb-0 text-xs leading-5 text-[var(--text-muted)]">Turn that research thread into an inspectable working instrument.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 Phase 1 is implemented today. Later phases are intentionally separated so selective inference and runtime placement can be added without rewriting the deterministic core.
 
@@ -45,21 +74,13 @@ Change the scenario and compare how a conventional interface and an adaptive int
 
 ## What Phase 1 Demonstrates
 
-The working instrument uses a focused Data Connection scenario built around:
+1. **The same application truth can support different interface policies.** The conventional and adaptive forms receive the same scenario, validation rule, and compatible options.
+2. **Adaptation does not require generation.** Authored knowledge can become contextual interface behavior through deterministic applicability and response policy.
+3. **Ambiguity limits authority.** Several compatible Data Connections justify explanation and guidance, but not a guessed selection.
+4. **Deterministic evidence can justify a stronger action.** When exactly one compatible option remains, the resolver may offer it as an explicit user-accepted preconfiguration.
+5. **The decision stays inspectable.** Application state, validation, applicable knowledge, provenance, and response policy remain visible before selective inference is introduced.
 
-- application/domain state
-- deterministic validation
-- authored product knowledge
-- product/runtime context
-- user familiarity
-- deterministic knowledge applicability
-- response policy
-- adaptive UI rendering
-- an inspectable decision trace
-
-The resolver keeps application truth authoritative. Several compatible Data Connections permit guidance but not guessing; exactly one compatible option can support a user-accepted preconfiguration offer.
-
-That gives the project an inspectable deterministic baseline: state, validation, authored knowledge, familiarity, applicability, and response policy are all visible before selective inference is introduced.
+The result is a deterministic baseline that later inference has to improve rather than replace.
 
 ## Next · Selective Inference
 
