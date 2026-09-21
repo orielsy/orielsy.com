@@ -3,11 +3,12 @@ import BaseLayout from './BaseLayout.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import ContentStatus from '../components/ContentStatus.astro';
 import ConceptDraftNotice from '../components/ConceptDraftNotice.astro';
+import ResearchFollowsBadge from '../components/ResearchFollowsBadge.astro';
 import Callout from '../components/Callout.astro';
 import '../styles/research-article.css';
 import '../styles/research-publication.css';
 import '../styles/research-graphics.css';
-import type { CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 export interface Props {
   entry: CollectionEntry<'research'>;
@@ -19,6 +20,9 @@ export interface Props {
 
 const { entry, headings, prevEntry, nextEntry, published = false } = Astro.props;
 const { data } = entry;
+const originEntry = data.originSlug
+  ? (await getCollection('research')).find((candidate) => candidate.id === data.originSlug)
+  : undefined;
 const isConceptDraft = published && data.draft;
 const statusTitle = 'Research in Progress';
 const statusDescription = 'This research entry is still being developed and is not publicly available yet.';
@@ -72,6 +76,9 @@ const formattedUpdateDate = data.updatedDate
                 <span class="text-[var(--accent)]">{data.type}</span>
                 <time datetime={data.pubDate.toISOString()}>{formattedPubDate}</time>
                 {data.readingTime && <span>{data.readingTime}</span>}
+                {originEntry && (
+                  <ResearchFollowsBadge href={`/research/${originEntry.id}`} title={originEntry.data.title} />
+                )}
               </div>
 
               <h1 class="font-display mt-6 max-w-5xl text-4xl font-semibold leading-[1.04] tracking-[-0.045em] text-[var(--text-primary)] sm:text-5xl lg:text-6xl">
