@@ -21,26 +21,140 @@
   })();
 </script><script>
       (() => {
-        try {
-          const storageKey = 'orielsy-theme';
-          const legacyStorageKey = 'theme';
-          const saved = localStorage.getItem(storageKey) || localStorage.getItem(legacyStorageKey);
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          const theme = saved === 'light' || saved === 'dark'
-            ? saved
-            : prefersDark ? 'dark' : 'light';
+        const root = document.documentElement;
+        const themeStorageKey = 'orielsy-theme';
+        const legacyThemeStorageKey = 'theme';
+        const motionStorageKey = 'orielsy-motion';
+        const darkMedia = window.matchMedia('(prefers-color-scheme: dark)');
+        const reducedMotionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-          const root = document.documentElement;
+        const readPreference = (key) => {
+          try {
+            return window.localStorage.getItem(key);
+          } catch {
+            return null;
+          }
+        };
+
+        const writePreference = (key, value) => {
+          try {
+            window.localStorage.setItem(key, value);
+          } catch {
+            // The selected preference still applies for the current page.
+          }
+        };
+
+        const applyTheme = (theme) => {
           root.classList.toggle('dark', theme === 'dark');
           root.classList.toggle('light', theme === 'light');
+        };
 
-          localStorage.setItem(storageKey, theme);
-          if (localStorage.getItem(legacyStorageKey)) {
-            localStorage.removeItem(legacyStorageKey);
+        const applyMotion = (motion) => {
+          root.dataset.motion = motion;
+        };
+
+        const resolveTheme = () => {
+          const saved = readPreference(themeStorageKey);
+          if (saved === 'light' || saved === 'dark') return saved;
+
+          const legacy = readPreference(legacyThemeStorageKey);
+          if (legacy === 'light' || legacy === 'dark') {
+            writePreference(themeStorageKey, legacy);
+            try {
+              window.localStorage.removeItem(legacyThemeStorageKey);
+            } catch {
+              // Legacy cleanup is optional.
+            }
+            return legacy;
           }
-        } catch {
-          // Fall back to the light theme defined by the document when storage is unavailable.
+
+          return darkMedia.matches ? 'dark' : 'light';
+        };
+
+        const resolveMotion = () => {
+          const saved = readPreference(motionStorageKey);
+          if (saved === 'full' || saved === 'reduced') return saved;
+          return reducedMotionMedia.matches ? 'reduced' : 'full';
+        };
+
+        const syncPreferenceControls = () => {
+          const theme = root.classList.contains('dark') ? 'dark' : 'light';
+          document.querySelectorAll('[data-theme-option]').forEach((button) => {
+            if (!(button instanceof HTMLButtonElement)) return;
+            button.setAttribute('aria-pressed', String(button.dataset.themeOption === theme));
+          });
+
+          const reduced = root.dataset.motion === 'reduced';
+          document.querySelectorAll('[data-motion-toggle]').forEach((button) => {
+            if (!(button instanceof HTMLButtonElement)) return;
+            button.setAttribute('aria-pressed', String(reduced));
+            button.setAttribute('aria-label', reduced ? 'Resume site animation' : 'Pause site animation');
+
+            const label = button.querySelector('[data-motion-toggle-label]');
+            if (label) label.textContent = reduced ? 'Resume' : 'Pause';
+          });
+        };
+
+        const setTheme = (theme) => {
+          applyTheme(theme);
+          writePreference(themeStorageKey, theme);
+          try {
+            window.localStorage.removeItem(legacyThemeStorageKey);
+          } catch {
+            // Legacy cleanup is optional.
+          }
+          syncPreferenceControls();
+        };
+
+        const setMotion = (motion) => {
+          applyMotion(motion);
+          writePreference(motionStorageKey, motion);
+          syncPreferenceControls();
+        };
+
+        applyTheme(resolveTheme());
+        applyMotion(resolveMotion());
+
+        document.addEventListener('click', (event) => {
+          if (!(event.target instanceof Element)) return;
+
+          const themeButton = event.target.closest('[data-theme-option]');
+          if (themeButton instanceof HTMLButtonElement) {
+            const nextTheme = themeButton.dataset.themeOption;
+            if (nextTheme === 'light' || nextTheme === 'dark') setTheme(nextTheme);
+            return;
+          }
+
+          const motionButton = event.target.closest('[data-motion-toggle]');
+          if (motionButton instanceof HTMLButtonElement) {
+            setMotion(root.dataset.motion === 'reduced' ? 'full' : 'reduced');
+          }
+        });
+
+        const syncWhenReady = () => syncPreferenceControls();
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', syncWhenReady, { once: true });
+        } else {
+          syncWhenReady();
         }
+
+        document.addEventListener('astro:after-swap', syncPreferenceControls);
+
+        darkMedia.addEventListener?.('change', (event) => {
+          const saved = readPreference(themeStorageKey);
+          if (saved !== 'light' && saved !== 'dark') {
+            applyTheme(event.matches ? 'dark' : 'light');
+            syncPreferenceControls();
+          }
+        });
+
+        reducedMotionMedia.addEventListener?.('change', (event) => {
+          const saved = readPreference(motionStorageKey);
+          if (saved !== 'full' && saved !== 'reduced') {
+            applyMotion(event.matches ? 'reduced' : 'full');
+            syncPreferenceControls();
+          }
+        });
       })();
     </script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Sora:wght@500;600&display=swap"><script>(function(){const umamiWebsiteId = "3d13a097-feea-41a8-86e9-9464d0a2fe75";
 const umamiScriptUrl = "https://cloud.umami.is/script.js";
@@ -84,4 +198,4 @@ const umamiScriptUrl = "https://cloud.umami.is/script.js";
           script.dataset.websiteId = umamiWebsiteId;
           document.head.appendChild(script);
         })();
-      })();</script><link rel="stylesheet" href="/_astro/global.fRzjEKfA.css"><link rel="stylesheet" href="/_astro/BaseLayout.8mrw4mwL.css"></head><body class="min-h-screen flex flex-col selection:bg-[var(--accent)] selection:text-white"><header class="sticky top-0 z-40 w-full border-b border-[var(--border-subtle)] bg-[var(--bg-primary)]/95 backdrop-blur-md transition-colors"><div class="site-shell"><div class="flex min-h-16 flex-wrap items-center justify-between gap-x-6 gap-y-0 max-[540px]:py-3"><a href="/" class="group flex min-w-0 items-center gap-3 no-underline" aria-label="Orielsy Diaz, home"><span class="h-2 w-2 shrink-0 rounded-full bg-[var(--accent)] transition-transform duration-200 group-hover:scale-125" aria-hidden="true"></span><span class="min-w-0"><span class="font-display block truncate text-sm font-semibold tracking-[-0.02em] text-[var(--text-primary)]">Orielsy Diaz</span><span class="font-editorial-mono block truncate text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">UI Architecture &bull; Applied AI</span></span></a><div class="flex items-center gap-2 sm:gap-5 max-[540px]:mt-3 max-[540px]:w-full max-[540px]:justify-between max-[540px]:border-t max-[540px]:border-[var(--border-subtle)] max-[540px]:pt-2"><nav aria-label="Main Navigation" class="min-w-0 flex-1"><ul class="flex flex-wrap items-center gap-x-4 gap-y-1 sm:gap-5 max-[540px]:justify-start"><li><a href="/research" class="font-editorial-mono inline-flex min-h-9 items-center border-b text-[10px] uppercase tracking-[0.08em] transition-colors sm:text-[11px] border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]">Research</a></li><li><a href="/projects" class="font-editorial-mono inline-flex min-h-9 items-center border-b text-[10px] uppercase tracking-[0.08em] transition-colors sm:text-[11px] border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]">Projects</a></li><li><a href="/about" class="font-editorial-mono inline-flex min-h-9 items-center border-b text-[10px] uppercase tracking-[0.08em] transition-colors sm:text-[11px] border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]">About</a></li></ul></nav><div class="shrink-0"><div data-theme-toggle class="relative inline-flex items-stretch rounded-full border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-1" role="group" aria-label="Theme"><span data-theme-indicator class="pointer-events-none absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-full border border-[var(--border-subtle)] bg-[var(--bg-primary)] shadow-sm transition-transform duration-300 ease-out dark:translate-x-full" aria-hidden="true"></span><button data-theme-option="light" type="button" class="relative z-10 inline-flex min-h-7 flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.08em] text-[var(--accent)] transition-colors dark:text-[var(--text-muted)] dark:hover:text-[var(--text-secondary)]" aria-label="Use light theme" aria-pressed="true"><svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg><span class="hidden sm:inline">Day</span></button><button data-theme-option="dark" type="button" class="relative z-10 inline-flex min-h-7 flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.08em] text-[var(--text-muted)] transition-colors hover:text-[var(--text-secondary)] dark:text-[var(--accent)]" aria-label="Use dark theme" aria-pressed="false"><svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path></svg><span class="hidden sm:inline">Night</span></button></div><script type="module">var e=e=>{let t=document.documentElement;t.classList.toggle(`dark`,e===`dark`),t.classList.toggle(`light`,e===`light`),document.querySelectorAll(`[data-theme-option]`).forEach(t=>{t.setAttribute(`aria-pressed`,String(t.dataset.themeOption===e))})},t=t=>{e(t);try{localStorage.setItem(`orielsy-theme`,t),localStorage.removeItem(`theme`)}catch{}},n=()=>{e(document.documentElement.classList.contains(`dark`)?`dark`:`light`),document.querySelectorAll(`[data-theme-option]`).forEach(e=>{e.dataset.themeToggleBound!==`true`&&(e.addEventListener(`click`,()=>{let n=e.dataset.themeOption;(n===`light`||n===`dark`)&&t(n)}),e.dataset.themeToggleBound=`true`)})};n(),document.addEventListener(`astro:after-swap`,n);</script></div></div></div></div></header><main class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12"><div class="py-20 text-center max-w-lg mx-auto"><div class="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold mb-3">Error 404</div><h1 class="text-3xl font-bold tracking-tight text-[var(--text-primary)] mb-4">Page Not Found</h1><p class="text-sm text-[var(--text-secondary)] leading-relaxed mb-8">The requested route does not exist or may have moved.</p><div class="flex items-center justify-center gap-4 text-xs font-mono"><a href="/" class="px-4 py-2 rounded bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] font-medium transition-colors">Return Home</a><a href="/research" class="px-4 py-2 rounded border border-[var(--border-subtle)] hover:border-[var(--border-strong)] bg-[var(--bg-card)] text-[var(--text-primary)] transition-colors">Browse Research</a></div></div></main><footer class="mt-24 w-full border-t border-[var(--border-subtle)] bg-[var(--bg-secondary)]/35 py-10 text-[var(--text-muted)]"><div class="site-shell flex flex-col gap-8"><div class="flex flex-col gap-5 border-b border-[var(--border-subtle)] pb-7 sm:flex-row sm:items-end sm:justify-between"><div class="max-w-2xl"><p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Orielsy.com</p><p class="mt-2 text-xs leading-6 text-[var(--text-secondary)]">Research, implementations, and ongoing technical experimentation.</p></div><div class="flex flex-wrap gap-x-5 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.08em]"><a href="https://github.com/orielsy" target="_blank" rel="noopener noreferrer" data-analytics-event="outbound_github" data-analytics-source="footer" class="hover:text-[var(--text-primary)]">GitHub</a><a href="https://www.linkedin.com/in/orielsy" target="_blank" rel="noopener noreferrer" data-analytics-event="outbound_linkedin" data-analytics-source="footer" class="hover:text-[var(--text-primary)]">LinkedIn</a><button type="button" id="footer-email-contact" class="cursor-pointer border-0 bg-transparent p-0 font-inherit uppercase tracking-[inherit] text-inherit hover:text-[var(--text-primary)]">Email</button><a href="/rss.xml" class="hover:text-[var(--text-primary)]">RSS</a></div></div><div class="flex flex-col gap-2 text-[11px] sm:flex-row sm:items-center sm:justify-between"><p>&copy; 2026 Orielsy Diaz. Built with Astro, TypeScript, and Tailwind.</p><p class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Privacy-conscious analytics · minimal client JavaScript · static-first</p></div></div></footer><script type="module" src="/_astro/Footer.astro_astro_type_script_index_0_lang.DpKbN5ii.js"></script><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.BbLxTAQT.js"></script></body></html>
+      })();</script><link rel="stylesheet" href="/_astro/global.HbNZlaS9.css"><link rel="stylesheet" href="/_astro/BaseLayout.8mrw4mwL.css"></head><body class="min-h-screen flex flex-col selection:bg-[var(--accent)] selection:text-[var(--accent-contrast)]"><header class="sticky top-0 z-40 w-full border-b border-[var(--border-subtle)] bg-[var(--bg-primary)]/95 backdrop-blur-md transition-colors"><div class="site-shell"><div class="flex min-h-16 flex-wrap items-center justify-between gap-x-6 gap-y-0 max-[540px]:py-3"><a href="/" class="group flex min-w-0 items-center gap-3 no-underline" aria-label="Orielsy Diaz, home"><span class="h-2 w-2 shrink-0 rounded-full bg-[var(--accent)] transition-transform duration-200 group-hover:scale-125" aria-hidden="true"></span><span class="min-w-0"><span class="font-display block truncate text-sm font-semibold tracking-[-0.02em] text-[var(--text-primary)]">Orielsy Diaz</span><span class="font-editorial-mono block truncate text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">UI Architecture &bull; Applied AI</span></span></a><div class="flex items-center gap-2 sm:gap-5 max-[540px]:mt-3 max-[540px]:w-full max-[540px]:justify-between max-[540px]:border-t max-[540px]:border-[var(--border-subtle)] max-[540px]:pt-2"><nav aria-label="Main Navigation" class="min-w-0 flex-1"><ul class="flex flex-wrap items-center gap-x-4 gap-y-1 sm:gap-5 max-[540px]:justify-start"><li><a href="/research" class="font-editorial-mono inline-flex min-h-9 items-center border-b text-[10px] uppercase tracking-[0.08em] transition-colors sm:text-[11px] border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]">Research</a></li><li><a href="/projects" class="font-editorial-mono inline-flex min-h-9 items-center border-b text-[10px] uppercase tracking-[0.08em] transition-colors sm:text-[11px] border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]">Projects</a></li><li><a href="/about" class="font-editorial-mono inline-flex min-h-9 items-center border-b text-[10px] uppercase tracking-[0.08em] transition-colors sm:text-[11px] border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]">About</a></li></ul></nav><div class="shrink-0"><div data-theme-toggle class="relative inline-flex items-stretch rounded-full border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-1" role="group" aria-label="Theme"><span data-theme-indicator class="pointer-events-none absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-full border border-[var(--border-subtle)] bg-[var(--bg-primary)] shadow-sm transition-transform duration-300 ease-out dark:translate-x-full" aria-hidden="true"></span><button data-theme-option="light" type="button" class="relative z-10 inline-flex min-h-7 flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.08em] text-[var(--accent)] transition-colors dark:text-[var(--text-muted)] dark:hover:text-[var(--text-secondary)]" aria-label="Use light theme" aria-pressed="true"><svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg><span class="hidden sm:inline">Day</span></button><button data-theme-option="dark" type="button" class="relative z-10 inline-flex min-h-7 flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.08em] text-[var(--text-muted)] transition-colors hover:text-[var(--text-secondary)] dark:text-[var(--accent)]" aria-label="Use dark theme" aria-pressed="false"><svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path></svg><span class="hidden sm:inline">Night</span></button></div></div></div></div></div></header><main class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12"><div class="py-20 text-center max-w-lg mx-auto"><div class="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold mb-3">Error 404</div><h1 class="text-3xl font-bold tracking-tight text-[var(--text-primary)] mb-4">Page Not Found</h1><p class="text-sm text-[var(--text-secondary)] leading-relaxed mb-8">The requested route does not exist or may have moved.</p><div class="flex items-center justify-center gap-4 text-xs font-mono"><a href="/" class="px-4 py-2 rounded bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] font-medium transition-colors">Return Home</a><a href="/research" class="px-4 py-2 rounded border border-[var(--border-subtle)] hover:border-[var(--border-strong)] bg-[var(--bg-card)] text-[var(--text-primary)] transition-colors">Browse Research</a></div></div></main><footer class="mt-24 w-full border-t border-[var(--border-subtle)] bg-[var(--bg-secondary)]/35 py-10 text-[var(--text-muted)]"><div class="site-shell flex flex-col gap-8"><div class="flex flex-col gap-5 border-b border-[var(--border-subtle)] pb-7 sm:flex-row sm:items-end sm:justify-between"><div class="max-w-2xl"><p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Orielsy.com</p><p class="mt-2 text-xs leading-6 text-[var(--text-secondary)]">Research, implementations, and ongoing technical experimentation.</p></div><div class="flex flex-wrap gap-x-5 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.08em]"><a href="https://github.com/orielsy" target="_blank" rel="noopener noreferrer" data-analytics-event="outbound_github" data-analytics-source="footer" class="hover:text-[var(--text-primary)]">GitHub</a><a href="https://www.linkedin.com/in/orielsy" target="_blank" rel="noopener noreferrer" data-analytics-event="outbound_linkedin" data-analytics-source="footer" class="hover:text-[var(--text-primary)]">LinkedIn</a><button type="button" id="footer-email-contact" class="cursor-pointer border-0 bg-transparent p-0 font-inherit uppercase tracking-[inherit] text-inherit hover:text-[var(--text-primary)]">Email</button><a href="/rss.xml" class="hover:text-[var(--text-primary)]">RSS</a></div></div><div class="flex flex-col gap-2 text-[11px] sm:flex-row sm:items-center sm:justify-between"><p>&copy; 2026 Orielsy Diaz. Built with Astro, TypeScript, and Tailwind.</p><p class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Privacy-conscious analytics · minimal client JavaScript · static-first</p></div></div></footer><script type="module" src="/_astro/Footer.astro_astro_type_script_index_0_lang.DpKbN5ii.js"></script><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.BbLxTAQT.js"></script></body></html>
