@@ -15,10 +15,21 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
     <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
       Program output
     </p>
-    <span class="font-editorial-mono inline-flex items-center gap-2 text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">
-      <span class="preview-live-dot h-1.5 w-1.5 rounded-full bg-[#ef4444]" aria-hidden="true"></span>
-      Live · Local
-    </span>
+    <div class="font-editorial-mono flex items-center gap-3 text-[8px] uppercase tracking-[0.1em]">
+      <button
+        type="button"
+        data-motion-toggle
+        aria-pressed="false"
+        aria-label="Pause site animation"
+        class="cursor-pointer border-b border-transparent py-1 text-[var(--text-muted)] transition-colors hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"
+      >
+        <span data-motion-toggle-label>Pause</span>
+      </button>
+      <span class="inline-flex items-center gap-2 text-[var(--text-muted)]">
+        <span class="preview-live-dot h-1.5 w-1.5 rounded-full bg-[#ef4444]" aria-hidden="true"></span>
+        Live · Local
+      </span>
+    </div>
   </div>
 
   <div class="preview-window mt-5 overflow-hidden border border-[var(--border-subtle)] bg-[#0f1015]">
@@ -187,6 +198,36 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
       opacity: 0;
       transform: translateX(-10px);
     }
+  }
+
+  :global(html[data-motion="reduced"]) .caption,
+  :global(html[data-motion="reduced"]) .waveform span,
+  :global(html[data-motion="reduced"]) .lower-third-entry,
+  :global(html[data-motion="reduced"]) .preview-live-dot {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  :global(html[data-motion="reduced"]) .caption-one {
+    opacity: 1;
+  }
+
+  :global(html[data-motion="reduced"]) .caption-two,
+  :global(html[data-motion="reduced"]) .caption-three {
+    display: none;
+  }
+
+  :global(html[data-motion="reduced"]) .waveform span {
+    opacity: 0.82;
+  }
+
+  :global(html[data-motion="reduced"]) .lower-third-entry-one {
+    opacity: 1;
+    transform: none;
+  }
+
+  :global(html[data-motion="reduced"]) .lower-third-entry-two {
+    display: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
