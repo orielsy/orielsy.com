@@ -1,0 +1,83 @@
+---
+interface ResearchReference {
+  href: string;
+  title: string;
+  type?: string;
+  published: boolean;
+}
+
+interface Props {
+  items: ResearchReference[];
+  projectId: string;
+}
+
+const { items, projectId } = Astro.props;
+---
+
+{items.length > 0 && (
+  <section
+    id="associated-research"
+    class="scroll-mt-24 border-t border-[var(--border-subtle)] py-12 sm:py-16"
+    aria-labelledby="associated-research-title"
+  >
+    <div class="site-shell grid gap-8 lg:grid-cols-12">
+      <div class="lg:col-span-3">
+        <div class="flex items-center gap-2">
+          <svg
+            class="h-3 w-3 shrink-0 text-[var(--accent)]"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M3 3.5h4.5a2 2 0 0 1 2 2V13H5a2 2 0 0 0-2 2V3.5Z" />
+            <path d="M13 3.5H9.5a2 2 0 0 0-2 2V13H11a2 2 0 0 1 2 2V3.5Z" />
+          </svg>
+          <h2
+            id="associated-research-title"
+            class="font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]"
+          >
+            Associated research
+          </h2>
+        </div>
+        <p class="mt-3 max-w-xs text-xs leading-6 text-[var(--text-muted)]">
+          Research that frames the implementation and records the reasoning behind it.
+        </p>
+      </div>
+
+      <div class="max-w-3xl border-t border-[var(--accent)] pt-5 lg:col-span-8 lg:col-start-5">
+        <ul class="space-y-2.5 border-l border-[var(--border-subtle)] pl-3" aria-label="Associated research publications">
+          {items.map((item) => (
+            <li class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+              {item.type && (
+                <span class="shrink-0 font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
+                  {item.type}
+                </span>
+              )}
+              {item.published ? (
+                <a
+                  href={item.href}
+                  data-analytics-event="project_to_research"
+                  data-analytics-project={projectId}
+                  data-analytics-research={item.href.split('/').filter(Boolean).at(-1)}
+                  class="inline-flex items-center gap-1 text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
+                >
+                  {item.title} <span aria-hidden="true">→</span>
+                </a>
+              ) : (
+                <span class="inline-flex flex-wrap items-center gap-1.5 text-xs leading-5 text-[var(--text-muted)]">
+                  <span aria-hidden="true">▢</span>
+                  {item.title}
+                  <span class="font-editorial-mono text-[8px] uppercase tracking-[0.14em]">local preview</span>
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+)}
