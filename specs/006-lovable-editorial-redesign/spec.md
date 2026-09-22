@@ -329,6 +329,16 @@ Research-detail exemplars may reveal presentation patterns that are useful beyon
 - Promoting a visual pattern into shared infrastructure must not change the authoritative claims or meaning of the underlying Research content.
 - If a redesign-era pattern proves durable beyond this feature, carry the long-lived rule into the applicable site-foundation specification during finalization rather than creating an ADR solely for presentation choreography.
 
+#### Project relationship epilogue
+
+Project-detail pages should present associated Research as a dedicated page-bottom relationship epilogue rather than nesting those links inside the compact Project reference block.
+
+- Use the same editorial relationship grammar established by the Research lineage epilogue: full-width section boundary, left-side context label, and right-side accent rule with compact linked relationships.
+- Keep the Project-specific heading **Associated research** rather than relabeling Project relationships as Research lineage.
+- Preserve the ordering and source-of-truth relationships from each Project's `associatedResearch` frontmatter.
+- Do not invent relationship semantics beyond what the Project metadata establishes. Research type may be shown as factual metadata.
+- The compact header Research badge may continue to act as a shortcut, but the durable detailed relationship presentation belongs at the bottom of the Project page.
+
 ## 13. Existing Stage 1 Work
 
 At the time this spec was created, an initial Stage 1 implementation already existed on `redesign/lovable-editorial`.
