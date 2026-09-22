@@ -17,6 +17,7 @@
     --accent-hover: #4949bd;
     --accent-subtle: #eeeeff;
     --accent-border: #c9c9f7;
+    --accent-contrast: #ffffff;
     --code-bg: #f0f0ed;
     --code-border: #d9d9dd;
     --callout-bg: #f2f2f7;
@@ -41,6 +42,7 @@
     --accent-hover: #9da2ff;
     --accent-subtle: #171830;
     --accent-border: #3b3e79;
+    --accent-contrast: #0b0b0f;
     --code-bg: #0e0f14;
     --code-border: #262833;
     --callout-bg: #10121a;
@@ -124,6 +126,20 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+
+html[data-motion="reduced"] {
+  scroll-behavior: auto !important;
+}
+
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }
 
 /* Custom architectural utilities */
