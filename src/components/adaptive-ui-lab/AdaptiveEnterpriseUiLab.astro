@@ -19,6 +19,8 @@ const { embedded = false } = Astro.props;
   aria-labelledby={embedded ? undefined : 'adaptive-lab-title'}
   aria-label={embedded ? 'Adaptive Enterprise UI Lab' : undefined}
 >
+  <p data-lab-status class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+
   <header class="border-b border-[var(--border-subtle)] pb-8">
     <div class="flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
       <span>{embedded ? 'Working Phase 1 instrument' : 'Interactive reference implementation'}</span>
@@ -119,12 +121,12 @@ const { embedded = false } = Astro.props;
         <div class="flex flex-1 flex-col">
           <div>
             <label for="standard-data-connection" class="text-sm font-medium text-[var(--text-primary)]">Data Connection</label>
-            <p class="mt-1 text-xs text-[var(--text-muted)]">Required for this configuration</p>
-            <select id="standard-data-connection" data-standard-data-connection class="mt-3 h-11 w-full rounded-md border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--accent-border)]">
+            <p id="standard-data-connection-help" class="mt-1 text-xs text-[var(--text-muted)]">Required for this configuration</p>
+            <select id="standard-data-connection" data-standard-data-connection aria-describedby="standard-data-connection-help standard-data-connection-error" aria-errormessage="standard-data-connection-error" aria-invalid="false" class="mt-3 h-11 w-full rounded-md border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--accent-border)]">
               <option value="">Select a Data Connection</option>
               {THREE_DATA_CONNECTIONS.map((connection) => <option value={connection.id}>{connection.name} · {connection.system}</option>)}
             </select>
-            <p data-standard-error class="mt-3 hidden text-xs text-red-600 dark:text-red-400" role="alert">Select a Data Connection to continue.</p>
+            <p id="standard-data-connection-error" data-standard-error class="mt-3 hidden text-xs text-red-600 dark:text-red-400" role="alert">Select a Data Connection to continue.</p>
           </div>
 
           <div class="mt-auto flex flex-col-reverse gap-3 border-t border-[var(--border-subtle)] pt-6 sm:flex-row sm:items-center sm:justify-between">
@@ -143,7 +145,7 @@ const { embedded = false } = Astro.props;
         />
 
         <div class="flex flex-1 flex-col">
-          <div data-adaptive-intervention class="mb-5 rounded-md border border-[var(--accent-border)] bg-[var(--bg-primary)] p-4" aria-live="polite">
+          <div data-adaptive-intervention class="mb-5 rounded-md border border-[var(--accent-border)] bg-[var(--bg-primary)] p-4">
             <div class="flex gap-3">
               <svg data-adaptive-info-icon class="mt-0.5 size-4 shrink-0 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>
               <div class="min-w-0 flex-1">
@@ -163,17 +165,17 @@ const { embedded = false } = Astro.props;
 
           <div>
             <label for="adaptive-data-connection" class="text-sm font-medium text-[var(--text-primary)]">Data Connection</label>
-            <p class="mt-1 text-xs text-[var(--text-muted)]">Required for this configuration</p>
-            <select id="adaptive-data-connection" data-adaptive-data-connection class="mt-3 h-11 w-full rounded-md border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--accent-border)]">
+            <p id="adaptive-data-connection-help" class="mt-1 text-xs text-[var(--text-muted)]">Required for this configuration</p>
+            <select id="adaptive-data-connection" data-adaptive-data-connection aria-describedby="adaptive-data-connection-help adaptive-data-connection-error" aria-errormessage="adaptive-data-connection-error" aria-invalid="false" class="mt-3 h-11 w-full rounded-md border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-[var(--accent-border)]">
               <option value="">Select a Data Connection</option>
               {THREE_DATA_CONNECTIONS.map((connection) => <option value={connection.id}>{connection.name} · {connection.system}</option>)}
             </select>
             <button type="button" data-use-sole-connection class="mt-3 hidden w-fit rounded-md border border-[var(--accent-border)] bg-[var(--bg-primary)] px-3 py-1.5 text-xs font-medium text-[var(--accent)] transition hover:bg-[var(--accent-subtle)]"></button>
-            <p data-adaptive-error class="mt-3 hidden text-xs text-red-600 dark:text-red-400" role="alert">Select a Data Connection to continue.</p>
+            <p id="adaptive-data-connection-error" data-adaptive-error class="mt-3 hidden text-xs text-red-600 dark:text-red-400" role="alert">Select a Data Connection to continue.</p>
           </div>
 
           <div class="mt-auto flex flex-col-reverse gap-3 border-t border-[var(--border-subtle)] pt-6 sm:flex-row sm:items-center sm:justify-between">
-            <button type="button" data-adaptive-continue class="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--accent)] px-3 py-2 text-xs font-medium text-white transition hover:bg-[var(--accent-hover)]">Continue <span aria-hidden="true">→</span></button>
+            <button type="button" data-adaptive-continue class="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--accent)] px-3 py-2 text-xs font-medium text-[var(--accent-contrast)] transition hover:bg-[var(--accent-hover)]">Continue <span aria-hidden="true">→</span></button>
             <span data-adaptive-outcome class="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Awaiting selection</span>
           </div>
         </div>
@@ -255,6 +257,7 @@ const { embedded = false } = Astro.props;
     const tracePolicy = lab.querySelector<HTMLElement>('[data-trace-policy]');
     const decisionTrace = lab.querySelector<HTMLDetailsElement>('[data-decision-trace]');
     const traceToggleLabel = lab.querySelector<HTMLElement>('[data-trace-toggle-label]');
+    const labStatus = lab.querySelector<HTMLElement>('[data-lab-status]');
 
     if (!standardDataConnection || !adaptiveDataConnection) return;
 
@@ -288,6 +291,19 @@ const { embedded = false } = Astro.props;
     const uiState = { expandedHelp: [], highlightedField: null, dismissedGuidance: [] };
 
     const currentConnections = () => connectionCount === 1 ? ONE_DATA_CONNECTION : THREE_DATA_CONNECTIONS;
+
+    const announce = (message: string) => {
+      if (!labStatus) return;
+      labStatus.textContent = '';
+      window.requestAnimationFrame(() => {
+        labStatus.textContent = message;
+      });
+    };
+
+    const announceScenarioUpdate = () => {
+      const connections = currentConnections();
+      announce(`Scenario updated: ${connections.length} compatible ${connections.length === 1 ? 'connection' : 'connections'}, product ${productVersion}, ${familiarity} user. Form selections reset.`);
+    };
 
     const setPressedState = (selector: string, activeValue: string, attribute: string) => {
       lab.querySelectorAll<HTMLButtonElement>(selector).forEach((button) => {
@@ -379,8 +395,13 @@ const { embedded = false } = Astro.props;
       if (scenarioConnections) scenarioConnections.textContent = `${connections.length} ${connections.length === 1 ? 'match' : 'matches'}`;
       if (truthSummary) truthSummary.textContent = `${connections.length} compatible ${connections.length === 1 ? 'connection' : 'connections'} · product ${productVersion} · ${familiarity} user`;
 
-      if (standardError) standardError.classList.toggle('hidden', !(standardAttempted && !standardDataConnectionId));
-      if (adaptiveError) adaptiveError.classList.toggle('hidden', !(adaptiveAttempted && !adaptiveDataConnectionId));
+      const standardInvalid = standardAttempted && !standardDataConnectionId;
+      const adaptiveInvalid = adaptiveAttempted && !adaptiveDataConnectionId;
+
+      if (standardError) standardError.classList.toggle('hidden', !standardInvalid);
+      if (adaptiveError) adaptiveError.classList.toggle('hidden', !adaptiveInvalid);
+      standardDataConnection.setAttribute('aria-invalid', String(standardInvalid));
+      adaptiveDataConnection.setAttribute('aria-invalid', String(adaptiveInvalid));
       if (standardOutcome) standardOutcome.textContent = standardDataConnectionId ? 'Ready to continue' : 'Awaiting selection';
       if (adaptiveOutcome) adaptiveOutcome.textContent = adaptiveDataConnectionId ? 'Ready to continue' : 'Awaiting selection';
 
@@ -438,22 +459,30 @@ const { embedded = false } = Astro.props;
       standardDataConnectionId = standardDataConnection.value;
       standardAttempted = false;
       render();
+      announce(standardDataConnectionId
+        ? 'Standard UI: Data Connection selected. Ready to continue.'
+        : 'Standard UI: Data Connection cleared.');
     });
 
     adaptiveDataConnection.addEventListener('change', () => {
       adaptiveDataConnectionId = adaptiveDataConnection.value;
       adaptiveAttempted = false;
       render();
+      announce(adaptiveDataConnectionId
+        ? 'Adaptive UI: Data Connection selected. Ready to continue.'
+        : 'Adaptive UI: Data Connection cleared.');
     });
 
     standardContinue?.addEventListener('click', () => {
       standardAttempted = true;
       render();
+      if (standardDataConnectionId) announce('Standard UI: configuration is ready to continue.');
     });
 
     adaptiveContinue?.addEventListener('click', () => {
       adaptiveAttempted = true;
       render();
+      if (adaptiveDataConnectionId) announce('Adaptive UI: configuration is ready to continue.');
     });
 
     useSoleConnection?.addEventListener('click', () => {
@@ -461,7 +490,9 @@ const { embedded = false } = Astro.props;
       adaptiveDataConnectionId = pendingSetValueAction.value;
       adaptiveDataConnection.value = pendingSetValueAction.value;
       adaptiveAttempted = false;
+      const selectedLabel = adaptiveDataConnection.selectedOptions[0]?.textContent?.trim();
       render();
+      announce(`Adaptive UI: ${selectedLabel || 'compatible Data Connection'} selected. Ready to continue.`);
     });
 
     decisionTrace?.addEventListener('toggle', () => {
@@ -475,6 +506,7 @@ const { embedded = false } = Astro.props;
       resetSurfaceState();
       rebuildOptions();
       render();
+      announceScenarioUpdate();
     }));
 
     lab.querySelectorAll<HTMLButtonElement>('[data-version]').forEach((button) => button.addEventListener('click', () => {
@@ -483,6 +515,7 @@ const { embedded = false } = Astro.props;
       resetSurfaceState();
       rebuildOptions();
       render();
+      announceScenarioUpdate();
     }));
 
     lab.querySelectorAll<HTMLButtonElement>('[data-connection-count]').forEach((button) => button.addEventListener('click', () => {
@@ -491,6 +524,7 @@ const { embedded = false } = Astro.props;
       resetSurfaceState();
       rebuildOptions();
       render();
+      announceScenarioUpdate();
     }));
 
     rebuildOptions();
