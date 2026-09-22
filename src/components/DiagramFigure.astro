@@ -7,41 +7,92 @@ export interface Props {
 }
 
 const { src, alt, caption, breakout = true } = Astro.props;
+const accessibleName = caption || alt;
 ---
 
-<figure class:list={['my-8 rounded-lg overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-card)] group', breakout && 'media-breakout']}>
-  <!-- Image container with zoom overlay trigger -->
-  <div class="relative cursor-zoom-in overflow-hidden bg-[var(--bg-secondary)]/40 diagram-zoom-trigger" data-img-src={src} data-img-alt={caption || alt}>
-    <img 
-      src={src} 
+<figure
+  data-diagram-figure
+  class:list={['my-8 rounded-lg overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-card)] group', breakout && 'media-breakout']}
+>
+  <button
+    type="button"
+    class="relative block w-full cursor-zoom-in overflow-hidden bg-[var(--bg-secondary)]/40 text-left diagram-zoom-trigger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--accent)]"
+    data-img-src={src}
+    data-img-alt={accessibleName}
+    aria-label={`Expand diagram: ${accessibleName}`}
+    aria-haspopup="dialog"
+  >
+    <img
+      src={src}
       alt={alt}
       class="w-full h-auto object-contain transition-transform duration-200 group-hover:scale-[1.005]"
       loading="lazy"
     />
-    <div class="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity px-2.5 py-1 rounded bg-[var(--bg-card)]/90 backdrop-blur-sm border border-[var(--border-subtle)] text-[11px] font-mono text-[var(--text-secondary)] flex items-center gap-1.5 shadow-sm">
+    <span
+      class="pointer-events-none absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity px-2.5 py-1 rounded bg-[var(--bg-card)]/90 backdrop-blur-sm border border-[var(--border-subtle)] text-[11px] font-mono text-[var(--text-secondary)] flex items-center gap-1.5 shadow-sm"
+      aria-hidden="true"
+    >
       <svg class="w-3.5 h-3.5 text-[var(--accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
       </svg>
-      <span>Click to Expand</span>
-    </div>
-  </div>
+      <span>Expand</span>
+    </span>
+  </button>
 
-  <!-- Caption & Action Bar -->
+  <dialog
+    data-diagram-lightbox
+    aria-label={`Expanded diagram: ${accessibleName}`}
+    class="p-0 bg-transparent backdrop:bg-black/85 backdrop:backdrop-blur-sm max-w-[95vw] max-h-[95vh] rounded-lg border border-[var(--border-strong)] outline-none m-auto overflow-hidden shadow-2xl"
+  >
+    <div class="relative flex flex-col bg-[var(--bg-card)] max-w-full max-h-[92vh]">
+      <div class="flex items-center justify-between px-4 py-2.5 border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)] text-xs font-mono">
+        <span data-lightbox-caption class="text-[var(--text-primary)] font-medium truncate pr-4"></span>
+        <div class="flex items-center gap-3">
+          <a
+            data-lightbox-raw-link
+            href={src}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[var(--text-secondary)] hover:text-[var(--accent)] flex items-center gap-1"
+          >
+            <span>Open Raw</span>
+            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+          <button
+            type="button"
+            data-lightbox-close
+            class="p-1 rounded hover:bg-[var(--bg-card-hover)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
+            aria-label="Close expanded diagram"
+          >
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="p-3 overflow-auto flex items-center justify-center bg-[var(--bg-primary)]">
+        <img data-lightbox-img src="" alt="" class="max-w-full max-h-[82vh] object-contain select-none" />
+      </div>
+    </div>
+  </dialog>
+
   <figcaption class="p-3 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[var(--text-muted)] border-t border-[var(--border-subtle)] bg-[var(--bg-card)]">
     <div class="flex items-center gap-2">
-      <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent)]"></span>
-      <span>{caption || alt}</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" aria-hidden="true"></span>
+      <span>{accessibleName}</span>
     </div>
     <div class="flex items-center gap-3">
-      <a 
-        href={src} 
-        target="_blank" 
-        rel="noopener noreferrer" 
+      <a
+        href={src}
+        target="_blank"
+        rel="noopener noreferrer"
         class="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors flex items-center gap-1 hover:underline"
         title="Open full resolution in new tab"
       >
         <span>Full Resolution (PNG)</span>
-        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
         </svg>
       </a>
@@ -49,61 +100,48 @@ const { src, alt, caption, breakout = true } = Astro.props;
   </figcaption>
 </figure>
 
-<!-- Shared Modal Lightbox for Full-Screen View -->
-<dialog id="diagram-lightbox" class="p-0 bg-transparent backdrop:bg-black/85 backdrop:backdrop-blur-sm max-w-[95vw] max-h-[95vh] rounded-lg border border-[var(--border-strong)] outline-none m-auto overflow-hidden shadow-2xl">
-  <div class="relative flex flex-col bg-[var(--bg-card)] max-w-full max-h-[92vh]">
-    <div class="flex items-center justify-between px-4 py-2.5 border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)] text-xs font-mono">
-      <span id="lightbox-caption" class="text-[var(--text-primary)] font-medium truncate pr-4"></span>
-      <div class="flex items-center gap-3">
-        <a id="lightbox-raw-link" href="#" target="_blank" rel="noopener noreferrer" class="text-[var(--text-secondary)] hover:text-[var(--accent)] flex items-center gap-1">
-          <span>Open Raw</span>
-          <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
-        </a>
-        <button id="lightbox-close" class="p-1 rounded hover:bg-[var(--bg-card-hover)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors cursor-pointer" aria-label="Close modal">
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div class="p-3 overflow-auto flex items-center justify-center bg-[var(--bg-primary)]">
-      <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[82vh] object-contain select-none" />
-    </div>
-  </div>
-</dialog>
-
 <script>
-  function setupDiagramLightbox() {
-    const triggers = document.querySelectorAll('.diagram-zoom-trigger');
-    const dialog = document.getElementById('diagram-lightbox') as HTMLDialogElement | null;
-    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
-    const lightboxCaption = document.getElementById('lightbox-caption');
-    const lightboxRawLink = document.getElementById('lightbox-raw-link') as HTMLAnchorElement | null;
-    const closeBtn = document.getElementById('lightbox-close');
+  function setupDiagramLightboxes() {
+    document.querySelectorAll<HTMLElement>('[data-diagram-figure]').forEach((figure) => {
+      if (figure.dataset.lightboxBound === 'true') return;
 
-    if (!dialog || !lightboxImg) return;
+      const trigger = figure.querySelector<HTMLButtonElement>('.diagram-zoom-trigger');
+      const dialog = figure.querySelector<HTMLDialogElement>('[data-diagram-lightbox]');
+      const lightboxImg = figure.querySelector<HTMLImageElement>('[data-lightbox-img]');
+      const lightboxCaption = figure.querySelector<HTMLElement>('[data-lightbox-caption]');
+      const lightboxRawLink = figure.querySelector<HTMLAnchorElement>('[data-lightbox-raw-link]');
+      const closeBtn = figure.querySelector<HTMLButtonElement>('[data-lightbox-close]');
 
-    triggers.forEach((trigger) => {
-      trigger.addEventListener('click', () => {
-        const src = trigger.getAttribute('data-img-src') || '';
-        const alt = trigger.getAttribute('data-img-alt') || '';
-        lightboxImg.src = src;
-        lightboxImg.alt = alt;
-        if (lightboxCaption) lightboxCaption.textContent = alt;
-        if (lightboxRawLink) lightboxRawLink.href = src;
+      if (!trigger || !dialog || !lightboxImg) return;
+
+      const openDialog = () => {
+        const imageSrc = trigger.dataset.imgSrc || '';
+        const imageAlt = trigger.dataset.imgAlt || '';
+
+        lightboxImg.src = imageSrc;
+        lightboxImg.alt = imageAlt;
+        if (lightboxCaption) lightboxCaption.textContent = imageAlt;
+        if (lightboxRawLink) lightboxRawLink.href = imageSrc;
+
         dialog.showModal();
+        closeBtn?.focus();
+      };
+
+      trigger.addEventListener('click', openDialog);
+      closeBtn?.addEventListener('click', () => dialog.close());
+
+      dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) dialog.close();
       });
-    });
 
-    closeBtn?.addEventListener('click', () => dialog.close());
+      dialog.addEventListener('close', () => {
+        trigger.focus();
+      });
 
-    dialog.addEventListener('click', (e) => {
-      if (e.target === dialog) dialog.close();
+      figure.dataset.lightboxBound = 'true';
     });
   }
 
-  setupDiagramLightbox();
-  document.addEventListener('astro:page-load', setupDiagramLightbox);
+  setupDiagramLightboxes();
+  document.addEventListener('astro:page-load', setupDiagramLightboxes);
 </script>
