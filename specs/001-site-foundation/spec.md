@@ -77,7 +77,7 @@ Use `prose max-w-none` on prose containers nested inside an explicit width-bound
 Technical architecture diagrams, workflow maps, and video demonstrations require high visual legibility. To prevent micro-details from being crushed inside narrow text columns, the site enforces the following presentation standards:
 
 1. **Wide Breakout Containers**: Media figures (diagrams, complex tables, video players) may break out of the standard reading column width up to `max-w-5xl` to provide sufficient canvas for multi-tier system diagrams.
-2. **Interactive Zoom / Lightbox**: High-resolution architecture images must support click-to-expand / lightbox viewing with keyboard escape handling, click-outside dismissal, and a direct full-resolution link.
+2. **Interactive Zoom / Lightbox**: High-resolution architecture images must use a native keyboard-operable trigger, a uniquely scoped and accessibly named modal dialog, native Escape handling, click-outside dismissal, focus restoration to the trigger after close, and a direct full-resolution link.
 3. **Structured Captioning & Metadata**: Every diagram figure must include a semantic `<figcaption>` or caption bar with high-contrast metadata describing the system flow.
 4. **Zero Layout Shift & Accessibility**: Video elements must specify aspect ratios (`aspect-video`) and poster thumbnails; images must provide descriptive `alt` text and `loading="lazy"`.
 
@@ -145,3 +145,16 @@ Do **not** create separate high-level Research entries for terminology that alre
 Research and Project counterparts must remain distinct: Research is reasoning-first; Projects are artifact-first. New overlapping articles should not be created merely because terminology changes.
 
 The existing speech architecture Research article and **speechBubbles** Project remain a separate established Research/Project pair and are unaffected by this roadmap.
+
+
+## 7. Theme & Motion Preference Policy
+
+Theme and motion preferences are shared site-level behaviors rather than component-local scripts.
+
+- A single shared preference controller owns theme and motion state.
+- When no manual theme choice exists, the operating-system color-scheme preference determines the initial theme. A manual Day/Night choice is persisted and overrides later OS changes until the stored choice is cleared.
+- When no manual motion choice exists, `prefers-reduced-motion` determines the initial motion mode.
+- Auto-moving or looping presentation that continues beyond five seconds must expose a visible pause/resume mechanism without removing the designed full-motion experience for visitors who want it.
+- A manual motion choice is persisted as `full` or `reduced` and exposed through the document root so motion-heavy components can share one preference.
+- Reduced/paused states must preserve the information and intended presentation hierarchy in a meaningful static state rather than merely hiding the component.
+- Components must not introduce competing theme or motion preference scripts when the shared controller can own the behavior.
