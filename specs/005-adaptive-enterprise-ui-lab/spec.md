@@ -210,6 +210,8 @@ Phase 1 is complete when:
 - experienced users receive less automatically surfaced explanation than new users without changing underlying rules
 - v4.2-specific guidance is absent for v4.1
 - selecting a valid Data Connection removes the missing-connection intervention
+- validation errors are programmatically associated with the affected Data Connection select and update `aria-invalid` with the actual attempted-validation state
+- meaningful user-triggered scenario, selection, and successful continuation changes are announced through one concise polite status region without making the entire adaptive guidance panel live
 - Phase 1 contains no AI, backend, or production deployment
 
 ## 13. Phase 2 Boundary
