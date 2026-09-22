@@ -54,26 +54,140 @@ const umamiEnabled = import.meta.env.PROD;
     />
     <script is:inline>
       (() => {
-        try {
-          const storageKey = 'orielsy-theme';
-          const legacyStorageKey = 'theme';
-          const saved = localStorage.getItem(storageKey) || localStorage.getItem(legacyStorageKey);
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          const theme = saved === 'light' || saved === 'dark'
-            ? saved
-            : prefersDark ? 'dark' : 'light';
+        const root = document.documentElement;
+        const themeStorageKey = 'orielsy-theme';
+        const legacyThemeStorageKey = 'theme';
+        const motionStorageKey = 'orielsy-motion';
+        const darkMedia = window.matchMedia('(prefers-color-scheme: dark)');
+        const reducedMotionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-          const root = document.documentElement;
+        const readPreference = (key) => {
+          try {
+            return window.localStorage.getItem(key);
+          } catch {
+            return null;
+          }
+        };
+
+        const writePreference = (key, value) => {
+          try {
+            window.localStorage.setItem(key, value);
+          } catch {
+            // The selected preference still applies for the current page.
+          }
+        };
+
+        const applyTheme = (theme) => {
           root.classList.toggle('dark', theme === 'dark');
           root.classList.toggle('light', theme === 'light');
+        };
 
-          localStorage.setItem(storageKey, theme);
-          if (localStorage.getItem(legacyStorageKey)) {
-            localStorage.removeItem(legacyStorageKey);
+        const applyMotion = (motion) => {
+          root.dataset.motion = motion;
+        };
+
+        const resolveTheme = () => {
+          const saved = readPreference(themeStorageKey);
+          if (saved === 'light' || saved === 'dark') return saved;
+
+          const legacy = readPreference(legacyThemeStorageKey);
+          if (legacy === 'light' || legacy === 'dark') {
+            writePreference(themeStorageKey, legacy);
+            try {
+              window.localStorage.removeItem(legacyThemeStorageKey);
+            } catch {
+              // Legacy cleanup is optional.
+            }
+            return legacy;
           }
-        } catch {
-          // Fall back to the light theme defined by the document when storage is unavailable.
+
+          return darkMedia.matches ? 'dark' : 'light';
+        };
+
+        const resolveMotion = () => {
+          const saved = readPreference(motionStorageKey);
+          if (saved === 'full' || saved === 'reduced') return saved;
+          return reducedMotionMedia.matches ? 'reduced' : 'full';
+        };
+
+        const syncPreferenceControls = () => {
+          const theme = root.classList.contains('dark') ? 'dark' : 'light';
+          document.querySelectorAll('[data-theme-option]').forEach((button) => {
+            if (!(button instanceof HTMLButtonElement)) return;
+            button.setAttribute('aria-pressed', String(button.dataset.themeOption === theme));
+          });
+
+          const reduced = root.dataset.motion === 'reduced';
+          document.querySelectorAll('[data-motion-toggle]').forEach((button) => {
+            if (!(button instanceof HTMLButtonElement)) return;
+            button.setAttribute('aria-pressed', String(reduced));
+            button.setAttribute('aria-label', reduced ? 'Resume site animation' : 'Pause site animation');
+
+            const label = button.querySelector('[data-motion-toggle-label]');
+            if (label) label.textContent = reduced ? 'Resume' : 'Pause';
+          });
+        };
+
+        const setTheme = (theme) => {
+          applyTheme(theme);
+          writePreference(themeStorageKey, theme);
+          try {
+            window.localStorage.removeItem(legacyThemeStorageKey);
+          } catch {
+            // Legacy cleanup is optional.
+          }
+          syncPreferenceControls();
+        };
+
+        const setMotion = (motion) => {
+          applyMotion(motion);
+          writePreference(motionStorageKey, motion);
+          syncPreferenceControls();
+        };
+
+        applyTheme(resolveTheme());
+        applyMotion(resolveMotion());
+
+        document.addEventListener('click', (event) => {
+          if (!(event.target instanceof Element)) return;
+
+          const themeButton = event.target.closest('[data-theme-option]');
+          if (themeButton instanceof HTMLButtonElement) {
+            const nextTheme = themeButton.dataset.themeOption;
+            if (nextTheme === 'light' || nextTheme === 'dark') setTheme(nextTheme);
+            return;
+          }
+
+          const motionButton = event.target.closest('[data-motion-toggle]');
+          if (motionButton instanceof HTMLButtonElement) {
+            setMotion(root.dataset.motion === 'reduced' ? 'full' : 'reduced');
+          }
+        });
+
+        const syncWhenReady = () => syncPreferenceControls();
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', syncWhenReady, { once: true });
+        } else {
+          syncWhenReady();
         }
+
+        document.addEventListener('astro:after-swap', syncPreferenceControls);
+
+        darkMedia.addEventListener?.('change', (event) => {
+          const saved = readPreference(themeStorageKey);
+          if (saved !== 'light' && saved !== 'dark') {
+            applyTheme(event.matches ? 'dark' : 'light');
+            syncPreferenceControls();
+          }
+        });
+
+        reducedMotionMedia.addEventListener?.('change', (event) => {
+          const saved = readPreference(motionStorageKey);
+          if (saved !== 'full' && saved !== 'reduced') {
+            applyMotion(event.matches ? 'reduced' : 'full');
+            syncPreferenceControls();
+          }
+        });
       })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -129,7 +243,7 @@ const umamiEnabled = import.meta.env.PROD;
       </script>
     )}
   </head>
-  <body class="min-h-screen flex flex-col selection:bg-[var(--accent)] selection:text-white">
+  <body class="min-h-screen flex flex-col selection:bg-[var(--accent)] selection:text-[var(--accent-contrast)]">
     <Header />
     <main
       class:list={[
