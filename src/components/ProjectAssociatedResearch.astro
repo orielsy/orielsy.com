@@ -18,7 +18,7 @@ const { items, projectId } = Astro.props;
   <section
     id="associated-research"
     class="scroll-mt-24 border-t border-[var(--border-subtle)] py-12 sm:py-16"
-    aria-labelledby="associated-research-title"
+    aria-labelledby="research-basis-title"
   >
     <div class="site-shell grid gap-8 lg:grid-cols-12">
       <div class="lg:col-span-3">
@@ -37,10 +37,10 @@ const { items, projectId } = Astro.props;
             <path d="M13 3.5H9.5a2 2 0 0 0-2 2V13H11a2 2 0 0 1 2 2V3.5Z" />
           </svg>
           <h2
-            id="associated-research-title"
+            id="research-basis-title"
             class="font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]"
           >
-            Associated research
+            Research basis
           </h2>
         </div>
         <p class="mt-3 max-w-xs text-xs leading-6 text-[var(--text-muted)]">
@@ -49,7 +49,7 @@ const { items, projectId } = Astro.props;
       </div>
 
       <div class="max-w-3xl border-t border-[var(--accent)] pt-5 lg:col-span-8 lg:col-start-5">
-        <ul class="space-y-2.5 border-l border-[var(--border-subtle)] pl-3" aria-label="Associated research publications">
+        <ul class="space-y-2.5 border-l border-[var(--border-subtle)] pl-3" aria-label="Research basis publications">
           {items.map((item) => (
             <li class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
               {item.type && (
