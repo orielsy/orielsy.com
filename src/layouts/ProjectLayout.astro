@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import ContentStatus from '../components/ContentStatus.astro';
 import ConceptDraftNotice from '../components/ConceptDraftNotice.astro';
 import ProjectResearchBadge from '../components/ProjectResearchBadge.astro';
+import ProjectAssociatedResearch from '../components/ProjectAssociatedResearch.astro';
 import '../styles/project-article.css';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
@@ -166,7 +167,8 @@ const associatedResearchEntries = data.associatedResearch
       </div>
     </header>
     {published ? (
-      <div class="site-shell py-10 sm:py-14 lg:py-16">
+      <>
+        <div class="site-shell py-10 sm:py-14 lg:py-16">
         <div class="project-publication-grid grid gap-10 lg:grid-cols-12 lg:gap-0">
           <div class="project-reading min-w-0 lg:col-span-8 lg:col-start-5">
             {isConceptDraft && <ConceptDraftNotice kind="project" />}
@@ -175,7 +177,7 @@ const associatedResearchEntries = data.associatedResearch
               <slot />
             </div>
 
-            {(data.architecture || data.technologies.length > 0 || data.github || data.demo || associatedResearchEntries.length > 0) && (
+            {(data.architecture || data.technologies.length > 0 || data.github || data.demo) && (
               <section class="mt-14 border-t border-[var(--border-subtle)] pt-6" aria-label="Project reference">
                 <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)] sm:text-[10px]">
                   Project reference
@@ -231,34 +233,22 @@ const associatedResearchEntries = data.associatedResearch
                   </div>
                 )}
 
-                {associatedResearchEntries.length > 0 && (
-                  <div id="associated-research" class="mt-6 scroll-mt-24">
-                    <p class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)] sm:text-[10px]">
-                      Associated Research
-                    </p>
-                    <ul class="mt-3 grid gap-2">
-                      {associatedResearchEntries.map((researchEntry) => (
-                        <li>
-                          <a
-                            href={`/research/${researchEntry.id}`}
-                            data-analytics-event="project_to_research"
-                            data-analytics-project={id}
-                            data-analytics-research={researchEntry.id}
-                            class="group inline-flex items-start gap-2 text-sm leading-6 text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
-                          >
-                            <span>{researchEntry.data.title}</span>
-                            <span class="font-editorial-mono shrink-0 text-[var(--accent)] transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
               </section>
             )}
           </div>
         </div>
-      </div>
+        </div>
+
+        <ProjectAssociatedResearch
+          projectId={id}
+          items={associatedResearchEntries.map((researchEntry) => ({
+            href: `/research/${researchEntry.id}`,
+            title: researchEntry.data.title,
+            type: researchEntry.data.type,
+            published: researchEntry.data.published,
+          }))}
+        />
+      </>
     ) : (
       <div class="site-shell py-10 sm:py-14">
         <div class="max-w-3xl lg:ml-[33.333333%]">
