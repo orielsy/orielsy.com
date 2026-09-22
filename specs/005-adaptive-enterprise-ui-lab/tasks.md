@@ -75,6 +75,7 @@
 - The Project entry links to the actual `orielsy.com/src/components/adaptive-ui-lab/` source path; no separate repository is claimed.
 - Phase 2's first capability is specified in `phase-2.md`; no inference implementation is claimed yet.
 - No production publishing command is part of this feature work.
+- The September 2026 accessibility pass associates each Data Connection error with its select, reflects attempted validation through `aria-invalid`, and uses one concise polite status region for meaningful user-triggered changes rather than making the whole adaptive guidance surface live.
 
 ## Remaining Verification
 
