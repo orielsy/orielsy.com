@@ -57,23 +57,21 @@ const { items, projectId } = Astro.props;
                   {item.type}
                 </span>
               )}
-              {item.published ? (
-                <a
-                  href={item.href}
-                  data-analytics-event="project_to_research"
-                  data-analytics-project={projectId}
-                  data-analytics-research={item.href.split('/').filter(Boolean).at(-1)}
-                  class="inline-flex items-center gap-1 text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
-                >
-                  {item.title} <span aria-hidden="true">→</span>
-                </a>
-              ) : (
-                <span class="inline-flex flex-wrap items-center gap-1.5 text-xs leading-5 text-[var(--text-muted)]">
-                  <span aria-hidden="true">▢</span>
-                  {item.title}
-                  <span class="font-editorial-mono text-[8px] uppercase tracking-[0.14em]">local preview</span>
-                </span>
-              )}
+              <a
+                href={item.href}
+                data-analytics-event="project_to_research"
+                data-analytics-project={projectId}
+                data-analytics-research={item.href.split('/').filter(Boolean).at(-1)}
+                class="inline-flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
+              >
+                <span>{item.title}</span>
+                {!item.published && (
+                  <span class="font-editorial-mono text-[8px] uppercase tracking-[0.14em] text-[var(--text-muted)] no-underline">
+                    local preview
+                  </span>
+                )}
+                <span aria-hidden="true">→</span>
+              </a>
             </li>
           ))}
         </ul>
