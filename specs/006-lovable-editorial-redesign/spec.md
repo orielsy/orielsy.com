@@ -334,7 +334,7 @@ Research-detail exemplars may reveal presentation patterns that are useful beyon
 Project-detail pages should present associated Research as a dedicated page-bottom relationship epilogue rather than nesting those links inside the compact Project reference block.
 
 - Use the same editorial relationship grammar established by the Research lineage epilogue: full-width section boundary, left-side context label, and right-side accent rule with compact linked relationships.
-- Keep the Project-specific heading **Associated research** rather than relabeling Project relationships as Research lineage.
+- Use the Project-specific heading **Research basis** to describe the research that frames or underpins the implementation, rather than relabeling Project relationships as Research lineage.
 - Preserve the ordering and source-of-truth relationships from each Project's `associatedResearch` frontmatter.
 - Do not invent relationship semantics beyond what the Project metadata establishes. Research type may be shown as factual metadata.
 - The compact header Research badge may continue to act as a shortcut, but the durable detailed relationship presentation belongs at the bottom of the Project page.
