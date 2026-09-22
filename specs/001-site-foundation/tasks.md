@@ -15,6 +15,16 @@
   - Created `DiagramFigure.astro` component with modal zoom, keyboard escape, click-outside dismissal, and full-res raw PNG link.
   - Added `.media-breakout` utilities in `src/styles/global.css` allowing figures and video players to expand cleanly on wide viewports.
   - Applied to speechBubbles architecture and streaming-pipeline diagrams; verified build and responsiveness.
+- [x] Harden diagram zoom accessibility after the September 2026 accessibility audit
+  - Replaced the clickable diagram `<div>` with a native button trigger.
+  - Scoped each lightbox to its own figure instead of repeating document IDs.
+  - Added an accessible dialog name, focus-on-open behavior, native Escape dismissal, and focus restoration.
+- [x] Consolidate theme preference behavior and add a shared motion preference
+  - Moved theme interaction ownership into the shared layout preference controller and removed the competing component script.
+  - Preserve OS-derived theme/motion defaults when no manual preference exists.
+  - Persist explicit motion pause/resume choice without suppressing the default full-motion presentation.
+  - Added a visible pause/resume control to the speechBubbles archive preview and a meaningful static reduced-motion state.
+- [x] Add an explicit on-accent foreground token so dark-mode accent surfaces do not rely on white text when contrast is insufficient.
 
 ## EMR Records (Engineering Decisions With Reasoning)
 
