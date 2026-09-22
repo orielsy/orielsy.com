@@ -88,6 +88,7 @@ Stage 2 was explicitly approved by Orielsy. Begin with the published `documentat
 - [x] Add a shared Project breakout primitive for major artifact evidence without introducing Research-style contents/navigation choreography.
 - [x] Replace the speechBubbles Project's static architecture PNG with the live source-grounded topology and promote the workstation image to a major evidence plate.
 - [x] Keep detailed chunking/filtering reasoning in the associated Research entry while summarizing the built captioning path in the Project case study.
+- [x] Promote Project-associated Research out of the compact Project reference block into a dedicated bottom epilogue aligned with the established Research-lineage editorial pattern.
 - [ ] Verify existing callouts, tables, code, media, and diagrams in both themes.
 - [x] Verify responsive article/project reading layouts. User-verified in mobile QA after final topology and card-height fixes.
 - [ ] Run build and diff verification.
