@@ -231,33 +231,33 @@ const bars = [28, 62, 36, 78, 48, 88, 54, 72, 34, 66, 42, 82, 58, 46];
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .caption,
-    .waveform span,
-    .lower-third-entry,
-    .preview-live-dot {
+    :global(html:not([data-motion="full"])) .caption,
+    :global(html:not([data-motion="full"])) .waveform span,
+    :global(html:not([data-motion="full"])) .lower-third-entry,
+    :global(html:not([data-motion="full"])) .preview-live-dot {
       animation: none !important;
       transform: none !important;
     }
 
-    .caption-one {
+    :global(html:not([data-motion="full"])) .caption-one {
       opacity: 1;
     }
 
-    .caption-two,
-    .caption-three {
+    :global(html:not([data-motion="full"])) .caption-two,
+    :global(html:not([data-motion="full"])) .caption-three {
       display: none;
     }
 
-    .waveform span {
+    :global(html:not([data-motion="full"])) .waveform span {
       opacity: 0.82;
     }
 
-    .lower-third-entry-one {
+    :global(html:not([data-motion="full"])) .lower-third-entry-one {
       opacity: 1;
       transform: none;
     }
 
-    .lower-third-entry-two {
+    :global(html:not([data-motion="full"])) .lower-third-entry-two {
       display: none;
     }
   }
