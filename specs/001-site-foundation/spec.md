@@ -158,3 +158,4 @@ Theme and motion preferences are shared site-level behaviors rather than compone
 - A manual motion choice is persisted as `full` or `reduced` and exposed through the document root so motion-heavy components can share one preference.
 - Reduced/paused states must preserve the information and intended presentation hierarchy in a meaningful static state rather than merely hiding the component.
 - Components must not introduce competing theme or motion preference scripts when the shared controller can own the behavior.
+- Day uses a dedicated page/chrome background of `#f6f2f0` for the document body and sticky header only; existing Day cards, secondary surfaces, borders, text, and accent tokens remain unchanged.
