@@ -163,3 +163,4 @@ Theme and motion preferences are shared site-level behaviors rather than compone
 - Muted text colors must preserve the editorial hierarchy while meeting normal-text contrast across the semantic surfaces where they are used; current values are `#6c6c74` in Day and `#83838f` in Night.
 - Syntax-highlighting themes own token foreground colors only. Site semantic tokens own code-block backgrounds and borders; Shiki theme background variables must not paint individual token spans.
 - Light `--code-bg` matches `--bg-card` at `#fbfbfa`, keeping both code and cards clearly separated from the warmer `--page-bg: #f6f2f0`; code remains differentiated by border, typography, and syntax color rather than a darker gray fill.
+- Night follows the same surface rule: `--code-bg` matches `--bg-card` at `#13141a`, so code and cards share a content surface distinct from the `#0b0b0f` page canvas.
