@@ -162,3 +162,4 @@ Theme and motion preferences are shared site-level behaviors rather than compone
 - The document root uses the same `--page-bg` token as the body so overscroll and browser-edge surfaces cannot reveal a mismatched background.
 - Muted text colors must preserve the editorial hierarchy while meeting normal-text contrast across the semantic surfaces where they are used; current values are `#6c6c74` in Day and `#83838f` in Night.
 - Syntax-highlighting themes own token foreground colors only. Site semantic tokens own code-block backgrounds and borders; Shiki theme background variables must not paint individual token spans.
+- Light `--code-bg` is `#f8f6f3`, calibrated against the unchanged `--bg-card: #fbfbfa` to approximate the same card-to-code luminance contrast used by the Night theme.
