@@ -159,3 +159,6 @@ Theme and motion preferences are shared site-level behaviors rather than compone
 - Reduced/paused states must preserve the information and intended presentation hierarchy in a meaningful static state rather than merely hiding the component.
 - Components must not introduce competing theme or motion preference scripts when the shared controller can own the behavior.
 - Day uses a dedicated page/chrome background of `#f6f2f0` for the document body and sticky header only; existing Day cards, secondary surfaces, borders, text, and accent tokens remain unchanged.
+- The document root uses the same `--page-bg` token as the body so overscroll and browser-edge surfaces cannot reveal a mismatched background.
+- Muted text colors must preserve the editorial hierarchy while meeting normal-text contrast across the semantic surfaces where they are used; current values are `#6c6c74` in Day and `#83838f` in Night.
+- Syntax-highlighting themes own token foreground colors only. Site semantic tokens own code-block backgrounds and borders; Shiki theme background variables must not paint individual token spans.
