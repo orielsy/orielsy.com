@@ -11,7 +11,7 @@
     --bg-card-hover: #f3f3f1;
     --text-primary: #17171b;
     --text-secondary: #55545c;
-    --text-muted: #717179;
+    --text-muted: #6c6c74;
     --border-subtle: #dedde3;
     --border-strong: #c5c4cc;
     --accent: #5b5bd6;
@@ -37,7 +37,7 @@
     --bg-card-hover: #181a21;
     --text-primary: #f0f0f3;
     --text-secondary: #aaaab4;
-    --text-muted: #73737f;
+    --text-muted: #83838f;
     --border-subtle: #24252d;
     --border-strong: #363844;
     --accent: #7c83ff;
@@ -52,7 +52,7 @@
   }
 
   html {
-    background-color: var(--bg-primary);
+    background-color: var(--page-bg);
   }
 
   body {
@@ -280,10 +280,17 @@ html[data-motion="reduced"] *::after {
   margin-bottom: 1.5rem;
 }
 
+.astro-code {
+  background-color: var(--code-bg) !important;
+}
+
+.astro-code span {
+  background-color: transparent !important;
+}
+
 html.dark .astro-code,
 html.dark .astro-code span {
   color: var(--shiki-dark) !important;
-  background-color: var(--shiki-dark-bg) !important;
   font-style: var(--shiki-dark-font-style) !important;
   font-weight: var(--shiki-dark-font-weight) !important;
   text-decoration: var(--shiki-dark-text-decoration) !important;
