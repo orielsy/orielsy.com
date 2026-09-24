@@ -25,6 +25,10 @@
   - Persist explicit motion pause/resume choice without suppressing the default full-motion presentation.
   - Added a visible pause/resume control to the speechBubbles archive preview and a meaningful static reduced-motion state.
 - [x] Add an explicit on-accent foreground token so dark-mode accent surfaces do not rely on white text when contrast is insufficient.
+- [x] Tighten theme color-system consistency after visual review
+  - Raise muted-text contrast in both themes without changing typography scale.
+  - Make the document root share `--page-bg` with the body to remove overscroll seams.
+  - Keep Shiki syntax foreground colors while forcing code surfaces to use the site `--code-bg` token and transparent token-span backgrounds.
 
 ## EMR Records (Engineering Decisions With Reasoning)
 
