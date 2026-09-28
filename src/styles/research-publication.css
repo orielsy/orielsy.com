@@ -29,39 +29,20 @@
 
 /*
  * From Prompts to Project Memory — second research exemplar.
- * Numbering and subheading rails are intentionally scoped to this paper;
- * other research entries inherit the publication system without being forced
- * into the same editorial choreography.
+ * Keep the stronger subheading rail, but let the article headings themselves
+ * carry section hierarchy instead of generating redundant "Section 01" labels.
  */
-[data-research-entry="specification-driven-ai-development"] .research-prose {
-  counter-reset: research-section;
-}
-
 [data-research-entry="specification-driven-ai-development"] .research-prose hr {
   display: none;
 }
 
 [data-research-entry="specification-driven-ai-development"] .research-prose h2 {
-  counter-increment: research-section;
   position: relative;
   margin-top: 4.75rem;
 }
 
 [data-research-entry="specification-driven-ai-development"] .research-prose h2:first-of-type {
   margin-top: 0;
-}
-
-[data-research-entry="specification-driven-ai-development"] .research-prose h2::before {
-  content: "Section " counter(research-section, decimal-leading-zero);
-  display: block;
-  margin-bottom: 0.7rem;
-  color: var(--accent);
-  font-family: var(--font-mono-ui);
-  font-size: 0.58rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  line-height: 1.4;
-  text-transform: uppercase;
 }
 
 [data-research-entry="specification-driven-ai-development"] .research-prose h3 {
@@ -91,7 +72,7 @@
  * outer header/caption treatment for this exemplar.
  */
 [data-research-entry="specification-driven-ai-development"] .research-prose .research-breakout > figure.not-prose {
-  border-radius: 0.7rem;
+  border-radius: 0.25rem;
 }
 
 [data-research-entry="specification-driven-ai-development"] .research-prose .research-breakout > figure.not-prose > header {
@@ -100,7 +81,7 @@
 }
 
 [data-research-entry="specification-driven-ai-development"] .research-prose .research-breakout > figure.not-prose > header .eyebrow {
-  font-size: 0.54rem;
+  font-size: 0.625rem;
   letter-spacing: 0.13em;
 }
 
@@ -121,7 +102,7 @@
   border-top: 1px solid var(--border-subtle);
   padding: 0.8rem 1rem;
   color: var(--text-muted);
-  font-size: 0.62rem;
+  font-size: 0.6875rem;
   line-height: 1.55;
 }
 
@@ -131,35 +112,17 @@
  * breakout rhythm and publication grid. Direct-child selectors prevent prose
  * heading rails from leaking into the Astro/HTML figures embedded below.
  */
-[data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose {
-  counter-reset: research-section;
-}
-
 [data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > hr {
   display: none;
 }
 
 [data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > h2 {
-  counter-increment: research-section;
   position: relative;
   margin-top: 4.75rem;
 }
 
 [data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > h2:first-of-type {
   margin-top: 0;
-}
-
-[data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > h2::before {
-  content: "Section " counter(research-section, decimal-leading-zero);
-  display: block;
-  margin-bottom: 0.7rem;
-  color: var(--accent);
-  font-family: var(--font-mono-ui);
-  font-size: 0.58rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  line-height: 1.4;
-  text-transform: uppercase;
 }
 
 [data-research-entry="real-time-speech-audio-pipeline-desktop-ui"] .research-prose > h3 {
