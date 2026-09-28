@@ -1,0 +1,128 @@
+<figure class="composition-figure not-prose my-10 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]">
+  <header class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-7">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <p class="font-editorial-mono m-0 text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]">Declarative product composition · illustrative example</p>
+      <span class="font-editorial-mono rounded-full border border-[var(--accent-border)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">Not a production implementation</span>
+    </div>
+    <h3 class="font-display mt-2 mb-0 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Compose from trusted capabilities instead of inventing behavior.</h3>
+    <p class="mt-2 max-w-3xl text-sm leading-6 text-[var(--text-secondary)]">Engineering supplies the real capabilities and constraints. Product knowledge contributes intent, relevance, prerequisites, and composition guidance.</p>
+  </header>
+
+  <div class="border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-5 py-5 sm:px-7">
+    <div class="grid gap-3 lg:grid-cols-4">
+      <section class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4">
+        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">Current state</p>
+        <h4 class="font-display mt-2 text-sm font-semibold text-[var(--text-primary)]">Restricted account</h4>
+        <ul class="mt-3 space-y-1.5 text-[11px] leading-4 text-[var(--text-secondary)]">
+          <li>Identity verification: missing</li>
+          <li>Recent activity: available</li>
+          <li>Risk escalation: permitted</li>
+        </ul>
+      </section>
+
+      <section class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4">
+        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">Available capabilities</p>
+        <ul class="mt-3 grid grid-cols-2 gap-1.5 text-[10px] leading-4 text-[var(--text-secondary)]">
+          <li>Customer Profile</li>
+          <li>Account Status</li>
+          <li>Transactions</li>
+          <li>Identity Verification</li>
+          <li>Restriction Action</li>
+          <li>Risk Escalation</li>
+        </ul>
+      </section>
+
+      <section class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4">
+        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">Product knowledge</p>
+        <p class="mt-3 text-[11px] leading-5 text-[var(--text-secondary)]">Purpose: investigate a restricted account. Show identity, restriction reason, activity, and verification state. Explain blocked actions through unmet prerequisites.</p>
+      </section>
+
+      <section class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4">
+        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">Deterministic policy</p>
+        <p class="mt-3 text-[11px] leading-5 text-[var(--text-secondary)]">Restriction removal requires verified identity. Authorization and account mutation remain enforced by application code.</p>
+      </section>
+    </div>
+
+    <div class="mx-auto mt-5 max-w-xl rounded-lg border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-4 py-4 text-center">
+      <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">Context / composition layer</p>
+      <p class="mt-2 text-xs leading-5 text-[var(--text-primary)]">Select relevant capabilities · order the task · apply guidance · respect state and policy</p>
+    </div>
+  </div>
+
+  <section class="px-5 py-6 sm:px-7 sm:py-7" aria-label="Illustrative composed account review interface">
+    <div class="overflow-hidden rounded-lg border border-[var(--border-strong)] bg-[var(--bg-primary)]">
+      <header class="flex flex-col gap-3 border-b border-[var(--border-subtle)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+        <div>
+          <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Operations workspace</p>
+          <h4 class="font-display mt-1 text-lg font-semibold text-[var(--text-primary)]">Account Review</h4>
+        </div>
+        <span class="font-editorial-mono w-fit rounded-full border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">Restricted</span>
+      </header>
+
+      <div class="grid lg:grid-cols-[0.9fr_1.1fr]">
+        <div class="border-b border-[var(--border-subtle)] p-4 sm:p-5 lg:border-r lg:border-b-0">
+          <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+            <article class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4">
+              <p class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Customer profile</p>
+              <p class="mt-2 text-sm font-medium text-[var(--text-primary)]">Jordan Rivera</p>
+              <p class="mt-1 text-[11px] text-[var(--text-secondary)]">Identity record and account metadata</p>
+            </article>
+            <article class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4">
+              <p class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Recent transactions</p>
+              <div class="mt-3 space-y-2">
+                <div class="flex items-center justify-between text-[11px] text-[var(--text-secondary)]"><span>Card purchase</span><span>$82.14</span></div>
+                <div class="flex items-center justify-between text-[11px] text-[var(--text-secondary)]"><span>ACH deposit</span><span>$1,250.00</span></div>
+                <div class="flex items-center justify-between text-[11px] text-[var(--text-secondary)]"><span>Transfer attempt</span><span>Blocked</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5">
+          <article class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4">
+            <div class="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Restriction reason</p>
+                <p class="mt-2 text-sm font-medium text-[var(--text-primary)]">Identity verification required</p>
+              </div>
+              <span class="font-editorial-mono rounded-full border border-[var(--border-subtle)] px-2 py-1 text-[8px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Prerequisite missing</span>
+            </div>
+            <p class="mt-3 text-[11px] leading-5 text-[var(--text-secondary)]">The restriction cannot be removed until identity verification succeeds.</p>
+          </article>
+
+          <article class="mt-3 rounded-md border border-[var(--accent-border)] bg-[var(--accent-subtle)] p-4">
+            <p class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">Relevant next step</p>
+            <p class="mt-2 text-sm font-medium text-[var(--text-primary)]">Request identity verification</p>
+            <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">Verification is the prerequisite currently blocking restriction removal.</p>
+          </article>
+
+          <div class="mt-4 grid gap-2 sm:grid-cols-3">
+            <button type="button" class="rounded-md border border-[var(--accent-border)] bg-[var(--accent)] px-3 py-2.5 text-[10px] font-medium text-white">Request Verification</button>
+            <button type="button" disabled class="cursor-not-allowed rounded-md border border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-3 py-2.5 text-[10px] text-[var(--text-muted)] opacity-70">Remove Restriction</button>
+            <button type="button" class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3 py-2.5 text-[10px] font-medium text-[var(--text-primary)]">Escalate to Risk</button>
+          </div>
+          <p class="mt-2 text-[10px] leading-4 text-[var(--text-muted)]">Remove Restriction is unavailable because identity verification has not succeeded.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <figcaption class="border-t border-[var(--border-subtle)] px-5 py-4 text-[10px] leading-5 text-[var(--text-muted)] sm:px-7">
+    The product-knowledge layer did not implement identity verification, authorization, transaction retrieval, account mutation, or escalation. Those are engineering-built capabilities. The conceptual composition layer uses intent, current state, policy, and available capabilities to shape the page.
+  </figcaption>
+</figure>
+
+<style>
+  .composition-figure :global(p),
+  .composition-figure :global(h3),
+  .composition-figure :global(h4),
+  .composition-figure :global(ul),
+  .composition-figure :global(li) {
+    margin-bottom: 0;
+  }
+
+  .composition-figure :global(ul) {
+    padding-left: 0;
+    list-style: none;
+  }
+</style>
