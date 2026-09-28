@@ -1,0 +1,1 @@
+import{t as e}from"./analytics.BYERs4jP.js";document.getElementById(`footer-email-contact`)?.addEventListener(`click`,()=>{e(`contact_email`,{source:`footer`});let t=`contact@${[`orielsy`,`com`].join(`.`)}`;window.location.href=`mailto:${t}`});

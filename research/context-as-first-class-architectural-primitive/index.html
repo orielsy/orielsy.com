@@ -1,0 +1,460 @@
+<!DOCTYPE html><html lang="en" class="scroll-smooth"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://orielsy.com/research/context-as-first-class-architectural-primitive/"><link rel="sitemap" href="/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="Orielsy Diaz — Research &amp; Writing" href="/rss.xml"><meta name="generator" content="Astro v7.3.5"><!-- Primary Meta Tags --><title>Context as a First-Class Architectural Primitive | Orielsy Diaz</title><meta name="title" content="Context as a First-Class Architectural Primitive | Orielsy Diaz"><meta name="description" content="A working thesis connecting project memory, product knowledge, and declarative interface composition: what changes when context becomes part of the architecture rather than incidental prompt material?"><meta name="author" content="Orielsy Diaz"><!-- Open Graph / Facebook / LinkedIn --><meta property="og:type" content="article"><meta property="og:url" content="https://orielsy.com/research/context-as-first-class-architectural-primitive/"><meta property="og:title" content="Context as a First-Class Architectural Primitive | Orielsy Diaz"><meta property="og:description" content="A working thesis connecting project memory, product knowledge, and declarative interface composition: what changes when context becomes part of the architecture rather than incidental prompt material?"><meta property="og:image" content="https://orielsy.com/social/research/context-as-first-class-architectural-primitive.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Context as a First-Class Architectural Primitive"><meta property="og:site_name" content="Orielsy Diaz"><meta property="article:published_time" content="2026-09-28T00:00:00.000Z"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://orielsy.com/research/context-as-first-class-architectural-primitive/"><meta name="twitter:title" content="Context as a First-Class Architectural Primitive | Orielsy Diaz"><meta name="twitter:description" content="A working thesis connecting project memory, product knowledge, and declarative interface composition: what changes when context becomes part of the architecture rather than incidental prompt material?"><meta name="twitter:image" content="https://orielsy.com/social/research/context-as-first-class-architectural-primitive.png"><meta name="twitter:image:alt" content="Context as a First-Class Architectural Primitive"><!-- Structured Data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Context as a First-Class Architectural Primitive","description":"A working thesis connecting project memory, product knowledge, and declarative interface composition: what changes when context becomes part of the architecture rather than incidental prompt material?","datePublished":"2026-09-28T00:00:00.000Z","image":"https://orielsy.com/social/research/context-as-first-class-architectural-primitive.png","author":{"@type":"Person","name":"Orielsy Diaz","url":"https://orielsy.com/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://orielsy.com/research/context-as-first-class-architectural-primitive/"},"url":"https://orielsy.com/research/context-as-first-class-architectural-primitive/"}</script><!-- Theme Script to prevent FOUC & follow OS preference --><script>
+  (function () {
+    function applyTheme() {
+      const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('theme') : null;
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+    applyTheme();
+
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        if (!localStorage.getItem('theme')) {
+          applyTheme();
+        }
+      });
+    }
+  })();
+</script><script>
+      (() => {
+        const root = document.documentElement;
+        const themeStorageKey = 'orielsy-theme';
+        const legacyThemeStorageKey = 'theme';
+        const motionStorageKey = 'orielsy-motion';
+        const darkMedia = window.matchMedia('(prefers-color-scheme: dark)');
+        const reducedMotionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+        const readPreference = (key) => {
+          try {
+            return window.localStorage.getItem(key);
+          } catch {
+            return null;
+          }
+        };
+
+        const writePreference = (key, value) => {
+          try {
+            window.localStorage.setItem(key, value);
+          } catch {
+            // The selected preference still applies for the current page.
+          }
+        };
+
+        const applyTheme = (theme) => {
+          root.classList.toggle('dark', theme === 'dark');
+          root.classList.toggle('light', theme === 'light');
+        };
+
+        const applyMotion = (motion) => {
+          root.dataset.motion = motion;
+        };
+
+        const resolveTheme = () => {
+          const saved = readPreference(themeStorageKey);
+          if (saved === 'light' || saved === 'dark') return saved;
+
+          const legacy = readPreference(legacyThemeStorageKey);
+          if (legacy === 'light' || legacy === 'dark') {
+            writePreference(themeStorageKey, legacy);
+            try {
+              window.localStorage.removeItem(legacyThemeStorageKey);
+            } catch {
+              // Legacy cleanup is optional.
+            }
+            return legacy;
+          }
+
+          return darkMedia.matches ? 'dark' : 'light';
+        };
+
+        const resolveMotion = () => {
+          const saved = readPreference(motionStorageKey);
+          if (saved === 'full' || saved === 'reduced') return saved;
+          return reducedMotionMedia.matches ? 'reduced' : 'full';
+        };
+
+        const syncPreferenceControls = () => {
+          const theme = root.classList.contains('dark') ? 'dark' : 'light';
+          document.querySelectorAll('[data-theme-option]').forEach((button) => {
+            if (!(button instanceof HTMLButtonElement)) return;
+            button.setAttribute('aria-pressed', String(button.dataset.themeOption === theme));
+          });
+
+          const reduced = root.dataset.motion === 'reduced';
+          document.querySelectorAll('[data-motion-toggle]').forEach((button) => {
+            if (!(button instanceof HTMLButtonElement)) return;
+            button.setAttribute('aria-pressed', String(reduced));
+            button.setAttribute('aria-label', reduced ? 'Resume site animation' : 'Pause site animation');
+
+            const label = button.querySelector('[data-motion-toggle-label]');
+            if (label) label.textContent = reduced ? 'Resume' : 'Pause';
+          });
+        };
+
+        const setTheme = (theme) => {
+          applyTheme(theme);
+          writePreference(themeStorageKey, theme);
+          try {
+            window.localStorage.removeItem(legacyThemeStorageKey);
+          } catch {
+            // Legacy cleanup is optional.
+          }
+          syncPreferenceControls();
+        };
+
+        const setMotion = (motion) => {
+          applyMotion(motion);
+          writePreference(motionStorageKey, motion);
+          syncPreferenceControls();
+        };
+
+        applyTheme(resolveTheme());
+        applyMotion(resolveMotion());
+
+        document.addEventListener('click', (event) => {
+          if (!(event.target instanceof Element)) return;
+
+          const themeButton = event.target.closest('[data-theme-option]');
+          if (themeButton instanceof HTMLButtonElement) {
+            const nextTheme = themeButton.dataset.themeOption;
+            if (nextTheme === 'light' || nextTheme === 'dark') setTheme(nextTheme);
+            return;
+          }
+
+          const motionButton = event.target.closest('[data-motion-toggle]');
+          if (motionButton instanceof HTMLButtonElement) {
+            setMotion(root.dataset.motion === 'reduced' ? 'full' : 'reduced');
+          }
+        });
+
+        const syncWhenReady = () => syncPreferenceControls();
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', syncWhenReady, { once: true });
+        } else {
+          syncWhenReady();
+        }
+
+        document.addEventListener('astro:after-swap', syncPreferenceControls);
+
+        darkMedia.addEventListener?.('change', (event) => {
+          const saved = readPreference(themeStorageKey);
+          if (saved !== 'light' && saved !== 'dark') {
+            applyTheme(event.matches ? 'dark' : 'light');
+            syncPreferenceControls();
+          }
+        });
+
+        reducedMotionMedia.addEventListener?.('change', (event) => {
+          const saved = readPreference(motionStorageKey);
+          if (saved !== 'full' && saved !== 'reduced') {
+            applyMotion(event.matches ? 'reduced' : 'full');
+            syncPreferenceControls();
+          }
+        });
+      })();
+    </script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Sora:wght@500;600&display=swap"><script>(function(){const umamiWebsiteId = "3d13a097-feea-41a8-86e9-9464d0a2fe75";
+const umamiScriptUrl = "https://cloud.umami.is/script.js";
+
+        (() => {
+          const hostname = window.location.hostname;
+          const isLocal = hostname === 'localhost'
+            || hostname === '127.0.0.1'
+            || hostname === '[::1]'
+            || hostname.endsWith('.localhost');
+
+          const analyticsOptOutKey = 'orielsy-analytics-opt-out';
+          const url = new URL(window.location.href);
+          const analyticsMode = url.searchParams.get('analytics')?.toLowerCase();
+          const hasAnalyticsToggle = analyticsMode === 'off' || analyticsMode === 'on';
+          let analyticsOptedOut = analyticsMode === 'off';
+
+          try {
+            if (analyticsMode === 'off') {
+              window.localStorage.setItem(analyticsOptOutKey, 'true');
+            } else if (analyticsMode === 'on') {
+              window.localStorage.removeItem(analyticsOptOutKey);
+            }
+
+            analyticsOptedOut = window.localStorage.getItem(analyticsOptOutKey) === 'true';
+          } catch {
+            // If storage is unavailable, honor the current URL toggle for this page load.
+          }
+
+          if (hasAnalyticsToggle) {
+            url.searchParams.delete('analytics');
+            const cleanUrl = `${url.pathname}${url.search}${url.hash}`;
+            window.history.replaceState(window.history.state, '', cleanUrl);
+          }
+
+          if (isLocal || analyticsOptedOut) return;
+
+          const script = document.createElement('script');
+          script.defer = true;
+          script.src = umamiScriptUrl;
+          script.dataset.websiteId = umamiWebsiteId;
+          document.head.appendChild(script);
+        })();
+      })();</script><link rel="stylesheet" href="/_astro/global.CBo7Wd3B.css"><link rel="stylesheet" href="/_astro/BaseLayout.8mrw4mwL.css"><link rel="stylesheet" href="/_astro/_..2ODJc1Cd.css"><style>.research-breakout[data-astro-cid-7mglmhht]{--research-breakout-max:58rem;box-sizing:border-box;width:min(var(--research-breakout-max), calc(100vw - 2rem));max-width:calc(100vw - 2rem);margin-block:2.5rem;position:relative;left:50%;transform:translate(-50%)}.research-breakout[data-astro-cid-7mglmhht][data-breakout-mode=publication]{--research-breakout-max:80rem}@media (width>=640px){.research-breakout[data-astro-cid-7mglmhht]{width:min(var(--research-breakout-max), calc(100vw - 3rem));max-width:calc(100vw - 3rem)}}@media (width>=1024px) and (width<=1279px){.research-breakout[data-astro-cid-7mglmhht][data-breakout-mode=wide],.research-breakout[data-astro-cid-7mglmhht][data-breakout-mode=publication]{width:100%;max-width:100%;margin-left:0;left:auto;transform:none}}@media (width>=1280px){.research-breakout[data-astro-cid-7mglmhht][data-breakout-mode=wide]{width:min(var(--research-breakout-max), 125%);max-width:125%;margin-left:calc(100% - min(var(--research-breakout-max), 125%));left:auto;transform:none}.research-breakout[data-astro-cid-7mglmhht][data-breakout-mode=publication]{width:min(var(--research-breakout-max), 150%);max-width:150%;margin-left:-50%;left:auto;transform:none}}
+</style><style>.context-architecture-figure[data-astro-cid-3x3qsbbj] p,.context-architecture-figure[data-astro-cid-3x3qsbbj] h3,.context-architecture-figure[data-astro-cid-3x3qsbbj] h4,.composition-figure[data-astro-cid-6wb7rrcw] p,.composition-figure[data-astro-cid-6wb7rrcw] h3,.composition-figure[data-astro-cid-6wb7rrcw] h4,.composition-figure[data-astro-cid-6wb7rrcw] ul,.composition-figure[data-astro-cid-6wb7rrcw] li{margin-bottom:0}.composition-figure[data-astro-cid-6wb7rrcw] ul{padding-left:0;list-style:none}
+</style></head><body class="min-h-screen flex flex-col selection:bg-[var(--accent)] selection:text-[var(--accent-contrast)]"><header class="sticky top-0 z-40 w-full border-b border-[var(--border-subtle)] bg-[var(--page-bg)]/95 backdrop-blur-md transition-colors"><div class="site-shell"><div class="flex min-h-16 flex-wrap items-center justify-between gap-x-6 gap-y-0 max-[540px]:py-3"><a href="/" class="group flex min-w-0 items-center gap-3 no-underline" aria-label="Orielsy Diaz, home"><span class="h-2 w-2 shrink-0 rounded-full bg-[var(--accent)] transition-transform duration-200 group-hover:scale-125" aria-hidden="true"></span><span class="min-w-0"><span class="font-display block truncate text-sm font-semibold tracking-[-0.02em] text-[var(--text-primary)]">Orielsy Diaz</span><span class="font-editorial-mono block truncate text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">UI Architecture &bull; Applied AI</span></span></a><div class="flex items-center gap-2 sm:gap-5 max-[540px]:mt-3 max-[540px]:w-full max-[540px]:justify-between max-[540px]:border-t max-[540px]:border-[var(--border-subtle)] max-[540px]:pt-2"><nav aria-label="Main Navigation" class="min-w-0 flex-1"><ul class="flex flex-wrap items-center gap-x-4 gap-y-1 sm:gap-5 max-[540px]:justify-start"><li><a href="/research" class="font-editorial-mono inline-flex min-h-9 items-center border-b text-[10px] uppercase tracking-[0.08em] transition-colors sm:text-[11px] border-[var(--accent)] text-[var(--text-primary)]" aria-current="page">Research</a></li><li><a href="/projects" class="font-editorial-mono inline-flex min-h-9 items-center border-b text-[10px] uppercase tracking-[0.08em] transition-colors sm:text-[11px] border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]">Projects</a></li><li><a href="/about" class="font-editorial-mono inline-flex min-h-9 items-center border-b text-[10px] uppercase tracking-[0.08em] transition-colors sm:text-[11px] border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]">About</a></li></ul></nav><div class="shrink-0"><div data-theme-toggle class="relative inline-flex items-stretch rounded-full border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-1" role="group" aria-label="Theme"><span data-theme-indicator class="pointer-events-none absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-full border border-[var(--border-subtle)] bg-[var(--bg-primary)] shadow-sm transition-transform duration-300 ease-out dark:translate-x-full" aria-hidden="true"></span><button data-theme-option="light" type="button" class="relative z-10 inline-flex min-h-7 flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.08em] text-[var(--accent)] transition-colors dark:text-[var(--text-muted)] dark:hover:text-[var(--text-secondary)]" aria-label="Use light theme" aria-pressed="true"><svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg><span class="hidden sm:inline">Day</span></button><button data-theme-option="dark" type="button" class="relative z-10 inline-flex min-h-7 flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.08em] text-[var(--text-muted)] transition-colors hover:text-[var(--text-secondary)] dark:text-[var(--accent)]" aria-label="Use dark theme" aria-pressed="false"><svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path></svg><span class="hidden sm:inline">Night</span></button></div></div></div></div></div></header><main class="flex-1 w-full"><article class="w-full" data-research-entry="context-as-first-class-architectural-primitive"><header class="border-b border-[var(--border-subtle)] py-12 sm:py-16 lg:py-20"><div class="site-shell grid gap-10 lg:grid-cols-12"><div class="lg:col-span-3"><a href="/research" class="font-editorial-mono inline-flex items-center gap-2 text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)] transition-colors hover:text-[var(--text-primary)] sm:text-[10px]"><span aria-hidden="true">←</span>Research archive</a></div><div class="lg:col-span-8 lg:col-start-5"><div class="font-editorial-mono flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.09em] text-[var(--text-muted)] sm:text-[10px]"><span class="text-[var(--accent)]">Architecture Exploration</span><time datetime="2026-09-28T00:00:00.000Z">September 28, 2026</time><span>12 min read</span></div><h1 class="font-display mt-6 max-w-5xl text-4xl font-semibold leading-[1.04] tracking-[-0.045em] text-[var(--text-primary)] sm:text-5xl lg:text-6xl">Context as a First-Class Architectural Primitive</h1><p class="mt-7 max-w-3xl text-base leading-8 text-[var(--text-secondary)] sm:text-lg">A working thesis connecting project memory, product knowledge, and declarative interface composition: what changes when context becomes part of the architecture rather than incidental prompt material?</p><div class="mt-8 grid gap-6 border-t border-[var(--border-subtle)] pt-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start"><ul class="flex flex-wrap gap-x-4 gap-y-2" aria-label="Research tags"><li class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">#context-engineering</li><li class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">#ui-architecture</li><li class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">#software-architecture</li><li class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">#applied-ai</li></ul><div class="font-editorial-mono flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.08em] sm:justify-end"></div></div></div></div></header><div class="site-shell py-10 sm:py-14 lg:py-16"><div class="research-reading mx-auto w-full min-w-0 lg:hidden"><aside class="not-prose my-8 border-l border-[var(--accent)] bg-[var(--bg-card)] px-5 py-5 sm:px-6"><div class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--accent)]">TL;DR — WORKING ARCHITECTURAL THESIS</div><div class="mt-3 text-sm leading-7 text-[var(--text-secondary)]">Code owns behavior, application state owns current truth, and schemas own structure. This essay asks whether meaning, intent, policy, and composition need an equally explicit architectural layer—and whether AI makes that layer newly useful without making the model the source of product truth.</div></aside></div><div class="research-publication-grid grid gap-10 lg:grid-cols-12 lg:gap-0"><aside class="lg:col-span-3" aria-label="Research navigation"><div class="research-toc-sticky lg:pr-8" data-research-toc-shell><nav class="research-toc" aria-label="Table of contents"><p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Contents</p><ol class="mt-4 list-none border-l border-[var(--border-subtle)] p-0"><li class="m-0 p-0 leading-5"><a href="#the-pattern-i-kept-running-into" class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"><span class="font-editorial-mono text-[9px] text-[var(--accent)]">01</span><span class="text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]">The Pattern I Kept Running Into</span></a></li><li class="m-0 p-0 leading-5"><a href="#software-has-sources-of-truth--but-not-always-for-meaning" class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"><span class="font-editorial-mono text-[9px] text-[var(--accent)]">02</span><span class="text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]">Software Has Sources of Truth — But Not Always for Meaning</span></a></li><li class="m-0 p-0 leading-5"><a href="#context-becomes-architecture-when-the-system-depends-on-it-deliberately" class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"><span class="font-editorial-mono text-[9px] text-[var(--accent)]">03</span><span class="text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]">Context Becomes Architecture When the System Depends on It Deliberately</span></a></li><li class="m-0 p-0 leading-5"><a href="#development-time-context-project-memory-and-sdd" class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"><span class="font-editorial-mono text-[9px] text-[var(--accent)]">04</span><span class="text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]">Development-Time Context: Project Memory and SDD</span></a></li><li class="m-0 p-0 leading-5"><a href="#runtime-context-product-knowledge-in-the-interface" class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"><span class="font-editorial-mono text-[9px] text-[var(--accent)]">05</span><span class="text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]">Runtime Context: Product Knowledge in the Interface</span></a></li><li class="m-0 p-0 leading-5"><a href="#from-generated-components-to-capability-systems" class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"><span class="font-editorial-mono text-[9px] text-[var(--accent)]">06</span><span class="text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]">From Generated Components to Capability Systems</span></a></li><li class="m-0 p-0 leading-5"><a href="#the-page-may-stop-being-the-primary-authored-artifact" class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"><span class="font-editorial-mono text-[9px] text-[var(--accent)]">07</span><span class="text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]">The Page May Stop Being the Primary Authored Artifact</span></a></li><li class="m-0 p-0 leading-5"><a href="#documentation-is-an-authoring-surface-not-the-whole-architecture" class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"><span class="font-editorial-mono text-[9px] text-[var(--accent)]">08</span><span class="text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]">Documentation Is an Authoring Surface, Not the Whole Architecture</span></a></li><li class="m-0 p-0 leading-5"><a href="#where-ai-actually-fits" class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"><span class="font-editorial-mono text-[9px] text-[var(--accent)]">09</span><span class="text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]">Where AI Actually Fits</span></a></li><li class="m-0 p-0 leading-5"><a href="#a-different-abstraction-boundary-for-product-development" class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"><span class="font-editorial-mono text-[9px] text-[var(--accent)]">10</span><span class="text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]">A Different Abstraction Boundary for Product Development</span></a></li><li class="m-0 p-0 leading-5"><a href="#open-questions" class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"><span class="font-editorial-mono text-[9px] text-[var(--accent)]">11</span><span class="text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]">Open Questions</span></a></li><li class="m-0 p-0 leading-5"><a href="#context-as-a-first-class-primitive" class="group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]"><span class="font-editorial-mono text-[9px] text-[var(--accent)]">12</span><span class="text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]">Context as a First-Class Primitive</span></a></li></ol></nav></div></aside><div class="research-reading mx-auto w-full min-w-0 lg:col-span-8 lg:col-start-5 lg:mx-0"><div class="hidden lg:block"><aside class="not-prose my-8 border-l border-[var(--accent)] bg-[var(--bg-card)] px-5 py-5 sm:px-6"><div class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--accent)]">TL;DR — WORKING ARCHITECTURAL THESIS</div><div class="mt-3 text-sm leading-7 text-[var(--text-secondary)]">Code owns behavior, application state owns current truth, and schemas own structure. This essay asks whether meaning, intent, policy, and composition need an equally explicit architectural layer—and whether AI makes that layer newly useful without making the model the source of product truth.</div></aside></div><div class="prose research-prose max-w-none"><h2 id="the-pattern-i-kept-running-into">The Pattern I Kept Running Into</h2>
+<p>Over several experiments, I kept arriving at what initially looked like different problems.</p>
+<p>How can a coding agent recover important project decisions after the conversation that produced them is gone? How should a repository select only the architectural rules, specifications, and implementation context relevant to the task at hand? Can product documentation participate in an interface without becoming the source of application truth? And if AI makes generating interface components increasingly cheap, what becomes the more valuable architectural layer?</p>
+<p>I had been treating these as related but separate investigations.</p>
+<p>Increasingly, I think they point toward the same deeper question:</p>
+<blockquote>
+<p><strong>What happens when context becomes a first-class architectural primitive?</strong></p>
+</blockquote>
+<p>By context, I do not mean everything that can be stuffed into a prompt. I mean durable knowledge about a system: intent, semantics, policy, relevance, constraints, provenance, relationships, and the information required to interpret what the application already knows.</p>
+<p>The interesting shift is not that software can suddenly read documentation. It is that knowledge which historically existed primarily for humans can increasingly become <strong>input to the systems that build and operate software</strong>.</p>
+<p>That does not mean documentation should replace code. It may mean we have been missing an architectural layer between what a system <em>can do</em> and how those capabilities should be understood, selected, and composed.</p>
+<hr/>
+<h2 id="software-has-sources-of-truth--but-not-always-for-meaning">Software Has Sources of Truth — But Not Always for Meaning</h2>
+<p>Software already has strong conventions for several kinds of authority.</p>
+<p>Code expresses behavior. Databases and application state hold facts about the current world. Schemas describe valid structure and contracts. Tests provide another form of evidence about expected behavior.</p>
+<p>But product meaning is often less coherent.</p>
+<p>Why does this field matter? Which capability is relevant in this situation? Why is an action unavailable? What prerequisite must be satisfied? What should a new user see that an experienced operator may not need? Which product rule explains the current state? Which pieces of the interface belong together for this task?</p>
+<p>Those answers may be scattered across:</p>
+<ul>
+<li>product documentation</li>
+<li>requirements and tickets</li>
+<li>UI copy</li>
+<li>source-code conditionals</li>
+<li>support material</li>
+<li>release notes</li>
+<li>prompts</li>
+<li>onboarding guides</li>
+<li>architecture decisions</li>
+<li>human memory</li>
+</ul>
+<p>The application frequently contains enough machinery to perform the task, but the <em>meaning around that machinery</em> has no equally deliberate home.</p>
+<figure class="context-architecture-figure not-prose my-10 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]" data-astro-cid-3x3qsbbj><header class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-7" data-astro-cid-3x3qsbbj><div class="flex flex-wrap items-center justify-between gap-3" data-astro-cid-3x3qsbbj><p class="font-editorial-mono m-0 text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]" data-astro-cid-3x3qsbbj>Context architecture · working model</p><span class="font-editorial-mono rounded-full border border-[var(--border-subtle)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]" data-astro-cid-3x3qsbbj>Conceptual</span></div><h3 class="font-display mt-2 mb-0 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl" data-astro-cid-3x3qsbbj>What does the system treat as authoritative?</h3><p class="mt-2 max-w-3xl text-sm leading-6 text-[var(--text-secondary)]" data-astro-cid-3x3qsbbj>Code, state, and schemas already have clear architectural homes. The research question is whether meaning and composition deserve equally explicit ones.</p></header><div class="grid gap-px bg-[var(--border-subtle)] md:grid-cols-5" data-astro-cid-3x3qsbbj><article class="bg-[var(--bg-card)] p-5" data-astro-cid-3x3qsbbj><div class="flex items-center justify-between gap-3" data-astro-cid-3x3qsbbj><span class="font-editorial-mono text-[9px] text-[var(--text-muted)]" data-astro-cid-3x3qsbbj>01</span><span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]" data-astro-cid-3x3qsbbj>Established</span></div><p class="font-editorial-mono mt-6 text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]" data-astro-cid-3x3qsbbj>Behavior</p><h4 class="font-display mt-2 text-xl font-semibold text-[var(--text-primary)]" data-astro-cid-3x3qsbbj>Code</h4><p class="mt-3 text-xs leading-5 text-[var(--text-secondary)]" data-astro-cid-3x3qsbbj>Deterministic mechanics, algorithms, side effects, and implementation behavior.</p></article><article class="bg-[var(--bg-card)] p-5" data-astro-cid-3x3qsbbj><div class="flex items-center justify-between gap-3" data-astro-cid-3x3qsbbj><span class="font-editorial-mono text-[9px] text-[var(--text-muted)]" data-astro-cid-3x3qsbbj>02</span><span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]" data-astro-cid-3x3qsbbj>Established</span></div><p class="font-editorial-mono mt-6 text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]" data-astro-cid-3x3qsbbj>State</p><h4 class="font-display mt-2 text-xl font-semibold text-[var(--text-primary)]" data-astro-cid-3x3qsbbj>Data</h4><p class="mt-3 text-xs leading-5 text-[var(--text-secondary)]" data-astro-cid-3x3qsbbj>The authoritative facts the application currently knows about the world.</p></article><article class="bg-[var(--bg-card)] p-5" data-astro-cid-3x3qsbbj><div class="flex items-center justify-between gap-3" data-astro-cid-3x3qsbbj><span class="font-editorial-mono text-[9px] text-[var(--text-muted)]" data-astro-cid-3x3qsbbj>03</span><span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]" data-astro-cid-3x3qsbbj>Established</span></div><p class="font-editorial-mono mt-6 text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]" data-astro-cid-3x3qsbbj>Structure</p><h4 class="font-display mt-2 text-xl font-semibold text-[var(--text-primary)]" data-astro-cid-3x3qsbbj>Schemas</h4><p class="mt-3 text-xs leading-5 text-[var(--text-secondary)]" data-astro-cid-3x3qsbbj>Contracts describing valid shape, fields, relationships, and interfaces.</p></article><article class="relative bg-[var(--bg-secondary)] p-5 md:before:absolute md:before:inset-y-0 md:before:left-0 md:before:w-px md:before:bg-[var(--accent)]" data-astro-cid-3x3qsbbj><div class="flex items-center justify-between gap-3" data-astro-cid-3x3qsbbj><span class="font-editorial-mono text-[9px] text-[var(--accent)]" data-astro-cid-3x3qsbbj>04</span><span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]" data-astro-cid-3x3qsbbj>Research proposition</span></div><p class="font-editorial-mono mt-6 text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]" data-astro-cid-3x3qsbbj>Meaning / intent</p><h4 class="font-display mt-2 text-xl font-semibold text-[var(--text-primary)]" data-astro-cid-3x3qsbbj>Product knowledge</h4><p class="mt-3 text-xs leading-5 text-[var(--text-secondary)]" data-astro-cid-3x3qsbbj>Why something matters, how concepts relate, what guidance applies, and what the product is trying to accomplish.</p></article><article class="bg-[var(--bg-secondary)] p-5" data-astro-cid-3x3qsbbj><div class="flex items-center justify-between gap-3" data-astro-cid-3x3qsbbj><span class="font-editorial-mono text-[9px] text-[var(--accent)]" data-astro-cid-3x3qsbbj>05</span><span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]" data-astro-cid-3x3qsbbj>Research proposition</span></div><p class="font-editorial-mono mt-6 text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]" data-astro-cid-3x3qsbbj>Composition</p><h4 class="font-display mt-2 text-xl font-semibold text-[var(--text-primary)]" data-astro-cid-3x3qsbbj>Context + policy + capabilities</h4><p class="mt-3 text-xs leading-5 text-[var(--text-secondary)]" data-astro-cid-3x3qsbbj>Which trusted capabilities are relevant now, how strongly the system may act, and how the experience should be assembled.</p></article></div><figcaption class="border-t border-[var(--border-subtle)] px-5 py-4 text-[10px] leading-5 text-[var(--text-muted)] sm:px-7" data-astro-cid-3x3qsbbj>The proposal is additive: context and product knowledge do not replace code, application state, schemas, tests, or deterministic enforcement.</figcaption></figure>
+<p>The last two rows in that model are the research proposition.</p>
+<p>I am not arguing that every product needs a new database called <code>context</code>, or that prose should become executable application logic. I am asking whether <strong>meaning, intent, and composition deserve explicit ownership in the architecture</strong> rather than remaining accidental byproducts of implementation.</p>
+<hr/>
+<h2 id="context-becomes-architecture-when-the-system-depends-on-it-deliberately">Context Becomes Architecture When the System Depends on It Deliberately</h2>
+<p>Context is already everywhere in software. A route supplies context. User identity supplies context. Feature flags supply context. A conversation supplies context to an agent.</p>
+<p>What changes when context becomes architectural is that we begin treating it deliberately:</p>
+<ol>
+<li><strong>store</strong> knowledge that should outlive the current interaction</li>
+<li><strong>scope</strong> it so its authority and applicability are understood</li>
+<li><strong>select</strong> the subset relevant to the current task</li>
+<li><strong>validate</strong> it against deterministic application truth and policy</li>
+<li><strong>apply</strong> it through bounded capabilities</li>
+</ol>
+<p>That progression matters because more context is not automatically better context.</p>
+<p>A system that loads every document, every rule, every decision, and every historical artifact into every task has not solved context engineering. It has created a larger filtering problem.</p>
+<p>The useful architecture is one where important knowledge can be durable <strong>and</strong> selectively brought into the working system when it is relevant.</p>
+<p>This is where several pieces of my existing research begin to connect.</p>
+<hr/>
+<h2 id="development-time-context-project-memory-and-sdd">Development-Time Context: Project Memory and SDD</h2>
+<p>In <a href="/research/specification-driven-ai-development">From Prompts to Project Memory: Spec-Driven Development for Coding Agents</a>, I explored this problem from the development side.</p>
+<p>A coding conversation is useful working context, but it is a fragile place to store durable project intent. Specifications, constitutions, ADRs, plans, and repository rules can move important decisions into version-controlled project memory that later sessions can recover.</p>
+<p>That work produced a simple distinction:</p>
+<pre class="astro-code astro-code-themes github-light tokyo-night" style="background-color:#fff;--shiki-dark-bg:#1a1b26;color:#24292e;--shiki-dark:#a9b1d6;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="text"><code><span class="line"><span>conversation context</span></span>
+<span class="line"><span>→ useful now</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>project memory</span></span>
+<span class="line"><span>→ should remain available later</span></span></code></pre>
+<p>Spec-Driven Development is useful here not merely because a specification exists, but because the specification can become <strong>selectable context for future work</strong>.</p>
+<p>That immediately creates a second problem: once a repository has durable memory, which pieces belong in the current task?</p>
+<p>That is the question behind my still-unpublished work on context engineering for software development and repository-specific context delivery. The objective is not a mega-prompt. It is a routing problem: identify the relevant durable knowledge without dragging the entire repository history into every agent session.</p>
+<p>So on the development side, the progression becomes:</p>
+<pre class="astro-code astro-code-themes github-light tokyo-night" style="background-color:#fff;--shiki-dark-bg:#1a1b26;color:#24292e;--shiki-dark:#a9b1d6;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="text"><code><span class="line"><span>make context durable</span></span>
+<span class="line"><span>→ make context selectable</span></span>
+<span class="line"><span>→ make context available to the agent doing the work</span></span></code></pre>
+<p>That is already more architectural than “write a better prompt.”</p>
+<hr/>
+<h2 id="runtime-context-product-knowledge-in-the-interface">Runtime Context: Product Knowledge in the Interface</h2>
+<p><a href="/research/documentation-driven-adaptive-ux">Documentation-Driven Adaptive UX</a> approaches the same pattern from the other side of the product boundary.</p>
+<p>Its Phase 1 experiment keeps application state and validation deterministic, then introduces authored product knowledge as another input to interface behavior.</p>
+<p>The key rule is:</p>
+<blockquote>
+<p><strong>The application remains authoritative.</strong></p>
+</blockquote>
+<p>Documentation may explain why a field matters. It may describe version-specific guidance. It may identify which knowledge applies to the current state. But it does not get to redefine whether a required field is actually required.</p>
+<p>That distinction lets product knowledge influence the experience without turning prose into a shadow execution engine.</p>
+<p>The runtime progression looks different from the development-time one, but the shape is familiar:</p>
+<pre class="astro-code astro-code-themes github-light tokyo-night" style="background-color:#fff;--shiki-dark-bg:#1a1b26;color:#24292e;--shiki-dark:#a9b1d6;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="text"><code><span class="line"><span>current application state</span></span>
+<span class="line"><span>+ relevant product knowledge</span></span>
+<span class="line"><span>+ response policy</span></span>
+<span class="line"><span>→ contextual interface behavior</span></span></code></pre>
+<p>The important commonality is <strong>selection</strong>.</p>
+<p>The interface does not need every support article. It needs the small subset of product knowledge that applies to the current state, user, version, and task.</p>
+<p>Development-time agents and runtime interfaces are different consumers. But both benefit from durable knowledge that can be selected according to context.</p>
+<hr/>
+<h2 id="from-generated-components-to-capability-systems">From Generated Components to Capability Systems</h2>
+<p>This is where the idea becomes more interesting to me.</p>
+<p>Much of the current conversation around AI-generated UI focuses on the ability to produce components or page code from a prompt. That is useful, but I do not think component generation is the deepest architectural consequence.</p>
+<p>Suppose engineering has already built a trustworthy vocabulary of product capabilities:</p>
+<ul>
+<li>customer profile</li>
+<li>account status</li>
+<li>transaction history</li>
+<li>identity verification</li>
+<li>account restriction actions</li>
+<li>risk escalation</li>
+<li>data tables</li>
+<li>forms</li>
+<li>filters</li>
+<li>charts</li>
+<li>workflow actions</li>
+</ul>
+<p>Each capability has real implementation behind it. Inputs and outputs are typed. Authorization exists. Validation exists. Side effects are bounded. Tests can verify the behavior.</p>
+<p>At that point, a different question becomes possible:</p>
+<blockquote>
+<p><strong>How much of the final product experience still has to be authored as imperative page orchestration?</strong></p>
+</blockquote>
+<p>A product or domain author might describe a task in terms closer to the product itself:</p>
+<pre class="astro-code astro-code-themes github-light tokyo-night" style="background-color:#fff;--shiki-dark-bg:#1a1b26;color:#24292e;--shiki-dark:#a9b1d6;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="text"><code><span class="line"><span>Account Review</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Purpose</span></span>
+<span class="line"><span>Investigate a restricted customer account.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Relevant information</span></span>
+<span class="line"><span>- customer identity</span></span>
+<span class="line"><span>- restriction reason</span></span>
+<span class="line"><span>- recent activity</span></span>
+<span class="line"><span>- verification state</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Available actions</span></span>
+<span class="line"><span>- request identity verification</span></span>
+<span class="line"><span>- remove the restriction after verification succeeds</span></span>
+<span class="line"><span>- escalate to risk review</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Guidance</span></span>
+<span class="line"><span>Explain unavailable actions through their unmet prerequisites.</span></span></code></pre>
+<p>That artifact did not implement identity verification. It did not write an authorization system. It did not create the transaction API or the account mutation. Engineering already supplied those capabilities.</p>
+<p>What the artifact supplied was <strong>intent, relevance, prerequisites, policy context, and composition guidance</strong>.</p>
+<div class="research-breakout not-prose" data-breakout-mode="publication" data-astro-cid-7mglmhht><figure class="composition-figure not-prose my-10 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]" data-astro-cid-6wb7rrcw><header class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-7" data-astro-cid-6wb7rrcw><div class="flex flex-wrap items-center justify-between gap-3" data-astro-cid-6wb7rrcw><p class="font-editorial-mono m-0 text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]" data-astro-cid-6wb7rrcw>Declarative product composition · illustrative example</p><span class="font-editorial-mono rounded-full border border-[var(--accent-border)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]" data-astro-cid-6wb7rrcw>Not a production implementation</span></div><h3 class="font-display mt-2 mb-0 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl" data-astro-cid-6wb7rrcw>Compose from trusted capabilities instead of inventing behavior.</h3><p class="mt-2 max-w-3xl text-sm leading-6 text-[var(--text-secondary)]" data-astro-cid-6wb7rrcw>Engineering supplies the real capabilities and constraints. Product knowledge contributes intent, relevance, prerequisites, and composition guidance.</p></header><div class="border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-5 py-5 sm:px-7" data-astro-cid-6wb7rrcw><div class="grid gap-3 lg:grid-cols-4" data-astro-cid-6wb7rrcw><section class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4" data-astro-cid-6wb7rrcw><p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]" data-astro-cid-6wb7rrcw>Current state</p><h4 class="font-display mt-2 text-sm font-semibold text-[var(--text-primary)]" data-astro-cid-6wb7rrcw>Restricted account</h4><ul class="mt-3 space-y-1.5 text-[11px] leading-4 text-[var(--text-secondary)]" data-astro-cid-6wb7rrcw><li data-astro-cid-6wb7rrcw>Identity verification: missing</li><li data-astro-cid-6wb7rrcw>Recent activity: available</li><li data-astro-cid-6wb7rrcw>Risk escalation: permitted</li></ul></section><section class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4" data-astro-cid-6wb7rrcw><p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]" data-astro-cid-6wb7rrcw>Available capabilities</p><ul class="mt-3 grid grid-cols-2 gap-1.5 text-[10px] leading-4 text-[var(--text-secondary)]" data-astro-cid-6wb7rrcw><li data-astro-cid-6wb7rrcw>Customer Profile</li><li data-astro-cid-6wb7rrcw>Account Status</li><li data-astro-cid-6wb7rrcw>Transactions</li><li data-astro-cid-6wb7rrcw>Identity Verification</li><li data-astro-cid-6wb7rrcw>Restriction Action</li><li data-astro-cid-6wb7rrcw>Risk Escalation</li></ul></section><section class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4" data-astro-cid-6wb7rrcw><p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]" data-astro-cid-6wb7rrcw>Product knowledge</p><p class="mt-3 text-[11px] leading-5 text-[var(--text-secondary)]" data-astro-cid-6wb7rrcw>Purpose: investigate a restricted account. Show identity, restriction reason, activity, and verification state. Explain blocked actions through unmet prerequisites.</p></section><section class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4" data-astro-cid-6wb7rrcw><p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]" data-astro-cid-6wb7rrcw>Deterministic policy</p><p class="mt-3 text-[11px] leading-5 text-[var(--text-secondary)]" data-astro-cid-6wb7rrcw>Restriction removal requires verified identity. Authorization and account mutation remain enforced by application code.</p></section></div><div class="mx-auto mt-5 max-w-xl rounded-lg border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-4 py-4 text-center" data-astro-cid-6wb7rrcw><p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]" data-astro-cid-6wb7rrcw>Context / composition layer</p><p class="mt-2 text-xs leading-5 text-[var(--text-primary)]" data-astro-cid-6wb7rrcw>Select relevant capabilities · order the task · apply guidance · respect state and policy</p></div></div><section class="px-5 py-6 sm:px-7 sm:py-7" aria-label="Illustrative composed account review interface" data-astro-cid-6wb7rrcw><div class="overflow-hidden rounded-lg border border-[var(--border-strong)] bg-[var(--bg-primary)]" data-astro-cid-6wb7rrcw><header class="flex flex-col gap-3 border-b border-[var(--border-subtle)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5" data-astro-cid-6wb7rrcw><div data-astro-cid-6wb7rrcw><p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--text-muted)]" data-astro-cid-6wb7rrcw>Operations workspace</p><h4 class="font-display mt-1 text-lg font-semibold text-[var(--text-primary)]" data-astro-cid-6wb7rrcw>Account Review</h4></div><span class="font-editorial-mono w-fit rounded-full border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]" data-astro-cid-6wb7rrcw>Restricted</span></header><div class="grid lg:grid-cols-[0.9fr_1.1fr]" data-astro-cid-6wb7rrcw><div class="border-b border-[var(--border-subtle)] p-4 sm:p-5 lg:border-r lg:border-b-0" data-astro-cid-6wb7rrcw><div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1" data-astro-cid-6wb7rrcw><article class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4" data-astro-cid-6wb7rrcw><p class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]" data-astro-cid-6wb7rrcw>Customer profile</p><p class="mt-2 text-sm font-medium text-[var(--text-primary)]" data-astro-cid-6wb7rrcw>Jordan Rivera</p><p class="mt-1 text-[11px] text-[var(--text-secondary)]" data-astro-cid-6wb7rrcw>Identity record and account metadata</p></article><article class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4" data-astro-cid-6wb7rrcw><p class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]" data-astro-cid-6wb7rrcw>Recent transactions</p><div class="mt-3 space-y-2" data-astro-cid-6wb7rrcw><div class="flex items-center justify-between text-[11px] text-[var(--text-secondary)]" data-astro-cid-6wb7rrcw><span data-astro-cid-6wb7rrcw>Card purchase</span><span data-astro-cid-6wb7rrcw>$82.14</span></div><div class="flex items-center justify-between text-[11px] text-[var(--text-secondary)]" data-astro-cid-6wb7rrcw><span data-astro-cid-6wb7rrcw>ACH deposit</span><span data-astro-cid-6wb7rrcw>$1,250.00</span></div><div class="flex items-center justify-between text-[11px] text-[var(--text-secondary)]" data-astro-cid-6wb7rrcw><span data-astro-cid-6wb7rrcw>Transfer attempt</span><span data-astro-cid-6wb7rrcw>Blocked</span></div></div></article></div></div><div class="p-4 sm:p-5" data-astro-cid-6wb7rrcw><article class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4" data-astro-cid-6wb7rrcw><div class="flex flex-wrap items-start justify-between gap-3" data-astro-cid-6wb7rrcw><div data-astro-cid-6wb7rrcw><p class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]" data-astro-cid-6wb7rrcw>Restriction reason</p><p class="mt-2 text-sm font-medium text-[var(--text-primary)]" data-astro-cid-6wb7rrcw>Identity verification required</p></div><span class="font-editorial-mono rounded-full border border-[var(--border-subtle)] px-2 py-1 text-[8px] uppercase tracking-[0.08em] text-[var(--text-muted)]" data-astro-cid-6wb7rrcw>Prerequisite missing</span></div><p class="mt-3 text-[11px] leading-5 text-[var(--text-secondary)]" data-astro-cid-6wb7rrcw>The restriction cannot be removed until identity verification succeeds.</p></article><article class="mt-3 rounded-md border border-[var(--accent-border)] bg-[var(--accent-subtle)] p-4" data-astro-cid-6wb7rrcw><p class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]" data-astro-cid-6wb7rrcw>Relevant next step</p><p class="mt-2 text-sm font-medium text-[var(--text-primary)]" data-astro-cid-6wb7rrcw>Request identity verification</p><p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]" data-astro-cid-6wb7rrcw>Verification is the prerequisite currently blocking restriction removal.</p></article><div class="mt-4 grid gap-2 sm:grid-cols-3" data-astro-cid-6wb7rrcw><button type="button" class="rounded-md border border-[var(--accent-border)] bg-[var(--accent)] px-3 py-2.5 text-[10px] font-medium text-white" data-astro-cid-6wb7rrcw>Request Verification</button><button type="button" disabled class="cursor-not-allowed rounded-md border border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-3 py-2.5 text-[10px] text-[var(--text-muted)] opacity-70" data-astro-cid-6wb7rrcw>Remove Restriction</button><button type="button" class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3 py-2.5 text-[10px] font-medium text-[var(--text-primary)]" data-astro-cid-6wb7rrcw>Escalate to Risk</button></div><p class="mt-2 text-[10px] leading-4 text-[var(--text-muted)]" data-astro-cid-6wb7rrcw>Remove Restriction is unavailable because identity verification has not succeeded.</p></div></div></div></section><figcaption class="border-t border-[var(--border-subtle)] px-5 py-4 text-[10px] leading-5 text-[var(--text-muted)] sm:px-7" data-astro-cid-6wb7rrcw>The product-knowledge layer did not implement identity verification, authorization, transaction retrieval, account mutation, or escalation. Those are engineering-built capabilities. The conceptual composition layer uses intent, current state, policy, and available capabilities to shape the page.</figcaption></figure></div>
+<p>The non-coder version of this example is useful as an abstraction stress test, not as a staffing proposal.</p>
+<p>If a knowledgeable product or domain expert can describe a large portion of the desired experience without knowing how to implement its mechanics, then perhaps we have found a meaningful boundary: developers build reliable capabilities and constraints; product knowledge describes how those capabilities should participate in a task.</p>
+<p>AI can sit between those layers as an interpreter or composer without being trusted to invent the capabilities themselves.</p>
+<hr/>
+<h2 id="the-page-may-stop-being-the-primary-authored-artifact">The Page May Stop Being the Primary Authored Artifact</h2>
+<p>Today, a web application often treats the page as the main unit of composition.</p>
+<p>A developer imports components, arranges them, wires state, encodes conditionals, decides what is visible, and embeds explanatory copy. Documentation is usually written around the resulting product.</p>
+<p>A capability-oriented architecture suggests another possibility for some classes of interface:</p>
+<pre class="astro-code astro-code-themes github-light tokyo-night" style="background-color:#fff;--shiki-dark-bg:#1a1b26;color:#24292e;--shiki-dark:#a9b1d6;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="text"><code><span class="line"><span>available capabilities</span></span>
+<span class="line"><span>+ current state</span></span>
+<span class="line"><span>+ product knowledge</span></span>
+<span class="line"><span>+ policy</span></span>
+<span class="line"><span>→ composition</span></span>
+<span class="line"><span>→ interface</span></span></code></pre>
+<p>The page becomes more like a <strong>derived view</strong> of those inputs.</p>
+<p>A shorthand for the idea is:</p>
+<pre class="astro-code astro-code-themes github-light tokyo-night" style="background-color:#fff;--shiki-dark-bg:#1a1b26;color:#24292e;--shiki-dark:#a9b1d6;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="text"><code><span class="line"><span>UI = f(state, capabilities, policy, context)</span></span></code></pre>
+<p>That is not an executable formula and it is not a claim that every screen should be generated at runtime.</p>
+<p>Some experiences require carefully authored interaction design. Some layouts encode important spatial meaning. Some workflows should remain deliberately fixed. Predictability can be a product requirement in its own right.</p>
+<p>But enterprise software also contains large amounts of repeated orchestration: the same capabilities rearranged around different roles, states, products, versions, workflows, and policy boundaries.</p>
+<p>That is where declarative composition becomes worth investigating.</p>
+<p>The goal would not be an infinitely malleable UI. It would be a <strong>bounded vocabulary of trusted capabilities whose composition can vary without allowing the system to invent behavior outside its contracts</strong>.</p>
+<hr/>
+<h2 id="documentation-is-an-authoring-surface-not-the-whole-architecture">Documentation Is an Authoring Surface, Not the Whole Architecture</h2>
+<p>This is an important distinction.</p>
+<p>“Documentation as code” is useful shorthand, but it can imply the wrong thing.</p>
+<p>Traditional docs-as-code generally means documentation receives software-engineering practices: version control, reviews, builds, automated checks, and deployment pipelines.</p>
+<p>What I am describing is different.</p>
+<p>Documentation can become one human-friendly authoring surface for <strong>product knowledge</strong>. That product knowledge may then be normalized, structured, tagged with provenance, connected to schemas, constrained by policy, and made selectable by other systems.</p>
+<p>The durable architecture is not necessarily Markdown.</p>
+<p>It is the layer of meaning that the Markdown represents.</p>
+<p>This distinction also prevents documentation from being given responsibilities it should not own.</p>
+<h3 id="product-knowledge-can-reasonably-describe">Product knowledge can reasonably describe</h3>
+<ul>
+<li>intent</li>
+<li>semantics</li>
+<li>explanatory guidance</li>
+<li>concept relationships</li>
+<li>applicability</li>
+<li>prerequisites</li>
+<li>composition guidance</li>
+<li>the reason behind a policy</li>
+</ul>
+<h3 id="deterministic-systems-should-continue-to-enforce">Deterministic systems should continue to enforce</h3>
+<ul>
+<li>authentication</li>
+<li>authorization</li>
+<li>security invariants</li>
+<li>authoritative current state</li>
+<li>transactional side effects</li>
+<li>data-integrity validation</li>
+<li>irreversible operations</li>
+</ul>
+<p>The documentation may explain that identity verification is required before an account restriction can be removed.</p>
+<p>Application policy must still enforce it.</p>
+<p>That separation is not a limitation of the idea. It is what makes the idea usable.</p>
+<hr/>
+<h2 id="where-ai-actually-fits">Where AI Actually Fits</h2>
+<p>AI is what makes this architectural layer newly interesting, but I think it is easy to assign it the wrong job.</p>
+<p>The weakest version of the idea is:</p>
+<pre class="astro-code astro-code-themes github-light tokyo-night" style="background-color:#fff;--shiki-dark-bg:#1a1b26;color:#24292e;--shiki-dark:#a9b1d6;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="text"><code><span class="line"><span>prompt</span></span>
+<span class="line"><span>→ model invents page</span></span>
+<span class="line"><span>→ hope the page obeys the product</span></span></code></pre>
+<p>The stronger version is closer to:</p>
+<pre class="astro-code astro-code-themes github-light tokyo-night" style="background-color:#fff;--shiki-dark-bg:#1a1b26;color:#24292e;--shiki-dark:#a9b1d6;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="text"><code><span class="line"><span>current state</span></span>
+<span class="line"><span>+ trusted capabilities</span></span>
+<span class="line"><span>+ selected product knowledge</span></span>
+<span class="line"><span>+ deterministic policy</span></span>
+<span class="line"><span>→ bounded interpretation / composition</span></span>
+<span class="line"><span>→ validated interface</span></span></code></pre>
+<p>AI can potentially help with the parts that historically required a human to bridge semantic gaps:</p>
+<ul>
+<li>interpret natural-language intent</li>
+<li>map a task to known product concepts</li>
+<li>retrieve relevant product knowledge</li>
+<li>select candidate capabilities</li>
+<li>adapt explanation to the current context</li>
+<li>propose a composition</li>
+<li>translate human-authored knowledge into a structured representation</li>
+</ul>
+<p>But the architecture should still distinguish <strong>interpretation</strong> from <strong>authority</strong>.</p>
+<p>A model may infer that a user asking “Why can’t I remove this restriction?” is referring to identity-verification policy.</p>
+<p>It should not get to invent whether verification actually succeeded.</p>
+<p>The more consequential the action, the more important that distinction becomes.</p>
+<hr/>
+<h2 id="a-different-abstraction-boundary-for-product-development">A Different Abstraction Boundary for Product Development</h2>
+<p>This is the part I find most provocative.</p>
+<p>AI lowers the cost of generating implementation. That does not necessarily make implementation irrelevant. It may instead move engineering effort toward the things generation depends on:</p>
+<ul>
+<li>reliable capabilities</li>
+<li>explicit contracts</li>
+<li>durable product knowledge</li>
+<li>deterministic policy</li>
+<li>useful schemas</li>
+<li>provenance</li>
+<li>validation</li>
+<li>context selection</li>
+</ul>
+<p>In that world, developers spend less time hand-authoring every final composition and more time building the <strong>safe capability layer from which compositions can be produced</strong>.</p>
+<p>Domain and product experts can express more of the product in the language of the domain rather than the language of the framework.</p>
+<p>And AI becomes valuable not because it can generate arbitrary code, but because it can help bridge those two representations.</p>
+<p>That is a different claim from “anyone can build software now.”</p>
+<p>The developer has not disappeared. The abstraction boundary has moved upward.</p>
+<hr/>
+<h2 id="open-questions">Open Questions</h2>
+<p>This is still a working thesis, and the unresolved questions are substantial.</p>
+<h3 id="how-authoritative-should-product-knowledge-become">How authoritative should product knowledge become?</h3>
+<p>Some knowledge is explanatory. Some expresses policy. Some is merely editorial. The architecture needs explicit authority levels rather than treating every document as equally true.</p>
+<h3 id="how-does-structured-product-knowledge-stay-synchronized-with-implementation">How does structured product knowledge stay synchronized with implementation?</h3>
+<p>If code and knowledge diverge, the context layer can become confidently wrong. Versioning, tests, provenance, and ownership become part of the problem.</p>
+<h3 id="how-much-composition-should-be-dynamic">How much composition should be dynamic?</h3>
+<p>A system that can theoretically rearrange every interface does not necessarily produce a better product. Stability, learnability, and intentional interaction design still matter.</p>
+<h3 id="how-do-we-test-a-derived-interface">How do we test a derived interface?</h3>
+<p>If composition is partly declarative, tests may need to verify not only components but also capability selection, policy constraints, knowledge applicability, and allowed compositions.</p>
+<h3 id="where-should-inference-stop">Where should inference stop?</h3>
+<p>The boundary between semantic interpretation and deterministic authority must remain visible enough to inspect, reason about, and govern.</p>
+<h3 id="what-is-the-right-representation-for-product-knowledge">What is the right representation for product knowledge?</h3>
+<p>Markdown may be a useful authoring surface. Schemas may define structure. Knowledge graphs, typed objects, configuration, or domain-specific representations may be better for other parts of the system. The architecture should not prematurely confuse the authoring format with the underlying concept.</p>
+<hr/>
+<h2 id="context-as-a-first-class-primitive">Context as a First-Class Primitive</h2>
+<p>I started with coding-agent memory, adaptive documentation, and runtime interface experiments because they were practical problems in front of me.</p>
+<p>The common thread became clearer only after looking across them.</p>
+<p>Software does not operate on behavior and state alone. It also depends on knowledge about what those things mean, which constraints matter now, which capabilities belong in the task, and how the system should explain itself.</p>
+<p>Historically, much of that knowledge has lived outside the executable architecture because software could not do very much with it directly.</p>
+<p>AI changes that boundary enough to make the layer worth designing explicitly.</p>
+<p>The interesting endpoint, to me, is not a model that can generate more components.</p>
+<p>It is a product architecture in which <strong>state, trusted capabilities, policy, and selected context are explicit enough that useful compositions can be derived without surrendering deterministic control</strong>.</p>
+<p>That is the thesis I want to investigate next.</p></div></div></div></div><section id="research-lineage" class="scroll-mt-24 border-t border-[var(--border-subtle)] py-12 sm:py-16" aria-labelledby="research-lineage-title"><div class="site-shell grid gap-8 lg:grid-cols-12"><div class="lg:col-span-3"><div class="flex items-center gap-2"><svg class="h-3 w-3 shrink-0 text-[var(--accent)]" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 2.5v7a3 3 0 0 0 3 3h3.5"></path><path d="m9.5 10.5 2 2-2 2"></path><path d="M5 5.5h4a2 2 0 0 0 2-2v-1"></path></svg><h2 id="research-lineage-title" class="font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]">Research lineage</h2></div><p class="mt-3 max-w-xs text-xs leading-6 text-[var(--text-muted)]">Where this argument came from and where it continues.</p></div><div class="max-w-3xl border-t border-[var(--accent)] pt-5 lg:col-span-8 lg:col-start-5"><dl class="space-y-2.5 border-l border-[var(--border-subtle)] pl-3"><div class="flex flex-wrap items-baseline gap-x-2 gap-y-1"><dt class="shrink-0 font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]">Runs alongside</dt><dd class="flex flex-wrap gap-x-4 gap-y-1"><span class="inline-flex flex-wrap items-center gap-1.5 text-xs leading-5 text-[var(--text-muted)]"><span aria-hidden="true">▢</span>Adaptive AI Runtime for Enterprise UI<span class="font-editorial-mono text-[8px] uppercase tracking-[0.14em]">not published</span></span><span class="inline-flex flex-wrap items-center gap-1.5 text-xs leading-5 text-[var(--text-muted)]"><span aria-hidden="true">▢</span>Context Engineering for Software Development<span class="font-editorial-mono text-[8px] uppercase tracking-[0.14em]">not published</span></span><a href="/research/documentation-driven-adaptive-ux" class="inline-flex items-center gap-1 text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]">Documentation-Driven Adaptive UX <span aria-hidden="true">→</span></a><a href="/research/specification-driven-ai-development" class="inline-flex items-center gap-1 text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]">From Prompts to Project Memory: Spec-Driven Development for Coding Agents <span aria-hidden="true">→</span></a></dd></div></dl></div></div></section></article></main><footer class="mt-24 w-full border-t border-[var(--border-subtle)] bg-[var(--bg-secondary)]/35 py-10 text-[var(--text-muted)]"><div class="site-shell flex flex-col gap-8"><div class="flex flex-col gap-5 border-b border-[var(--border-subtle)] pb-7 sm:flex-row sm:items-end sm:justify-between"><div class="max-w-2xl"><p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Orielsy.com</p><p class="mt-2 text-xs leading-6 text-[var(--text-secondary)]">Research, implementations, and ongoing technical experimentation.</p></div><div class="flex flex-wrap gap-x-5 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.08em]"><a href="https://github.com/orielsy" target="_blank" rel="noopener noreferrer" data-analytics-event="outbound_github" data-analytics-source="footer" class="hover:text-[var(--text-primary)]">GitHub</a><a href="https://www.linkedin.com/in/orielsy" target="_blank" rel="noopener noreferrer" data-analytics-event="outbound_linkedin" data-analytics-source="footer" class="hover:text-[var(--text-primary)]">LinkedIn</a><button type="button" id="footer-email-contact" class="cursor-pointer border-0 bg-transparent p-0 font-inherit uppercase tracking-[inherit] text-inherit hover:text-[var(--text-primary)]">Email</button><a href="/rss.xml" class="hover:text-[var(--text-primary)]">RSS</a></div></div><div class="flex flex-col gap-2 text-[11px] sm:flex-row sm:items-center sm:justify-between"><p>&copy; 2026 Orielsy Diaz. Built with Astro, TypeScript, and Tailwind.</p><p class="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Privacy-conscious analytics · minimal client JavaScript · static-first</p></div></div></footer><script type="module" src="/_astro/Footer.astro_astro_type_script_index_0_lang.DY1NIiJ_.js"></script><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.Dv3a18VF.js"></script></body></html><script type="module" src="/_astro/ArticleLayout.astro_astro_type_script_index_0_lang.DjvZofsW.js"></script><script type="module">var e=window.matchMedia(`(min-width: 1024px)`),t=document.querySelector(`[data-research-toc-shell]`),n=Array.from(document.querySelectorAll(`[data-breakout-mode="publication"]`));if(t&&n.length>0){let r=null,i,a=e=>{t.toggleAttribute(`data-yielding`,e),e?(t.setAttribute(`aria-hidden`,`true`),t.setAttribute(`inert`,``)):(t.removeAttribute(`aria-hidden`),t.removeAttribute(`inert`))},o=()=>{r?.disconnect(),r=null,a(!1)},s=()=>{if(o(),!e.matches)return;let i=Math.max(1,Math.ceil(t.getBoundingClientRect().height)),s=Math.max(0,window.innerHeight-96-i),c=new Set;r=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting?c.add(e.target):c.delete(e.target)}),a(c.size>0)},{root:null,rootMargin:`-96px 0px -${s}px 0px`,threshold:0}),n.forEach(e=>r?.observe(e))};e.addEventListener(`change`,s),window.addEventListener(`resize`,()=>{window.clearTimeout(i),i=window.setTimeout(s,120)},{passive:!0}),s()}</script>
