@@ -207,7 +207,8 @@ The final question remains:
 - Metadata/SEO title may combine them as **Product Knowledge as Architecture: From Project Memory to Declarative Product Composition**.
 - Research content supports an explicit optional `subtitle` field; display rendering must not infer subtitles by splitting punctuation in `title`.
 - Core thesis phrase: **Context as a First-Class Architectural Primitive**
-- Existing file/route remains `context-as-first-class-architectural-primitive.mdx` to avoid unnecessary route churn after publication.
+- Canonical content file is `product-knowledge-as-architecture.mdx` and canonical public route is `/research/product-knowledge-as-architecture/`.
+- The former working-title route `/research/context-as-first-class-architectural-primitive/` remains only as a compatibility redirect to the canonical route.
 - Publication state remains `status: published`, `published: true`, `draft: false`.
 - Publication date remains 2026-09-28.
 - Repository publication state and production deployment are separate actions.
@@ -248,6 +249,7 @@ The article is in its intended published state when:
 
 - the reader-facing title is **Product Knowledge as Architecture**
 - the reader-facing subtitle is **From Project Memory to Declarative Product Composition**
+- the canonical public route is `/research/product-knowledge-as-architecture/`
 - Context as a First-Class Architectural Primitive remains the thesis
 - the article uses the compressed seven-section editorial structure
 - existing Research is connected without stealing the scope of those pieces
