@@ -1,9 +1,13 @@
-<figure class="context-architecture-figure not-prose my-8 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] px-4 py-5 sm:px-6 sm:py-6">
-  <header class="mb-5 sm:mb-6">
-    <h3 class="m-0 text-base font-semibold tracking-tight text-[var(--text-primary)] sm:text-lg">Where do these concerns live in the architecture?</h3>
-    <p class="mt-1 max-w-2xl text-xs leading-5 text-[var(--text-secondary)] sm:text-sm sm:leading-6">Implemented behavior, current state, and structure already have clear homes. The proposition is to give meaning and composition equally explicit ownership.</p>
-  </header>
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+---
 
+<ResearchFigureFrame
+  className="context-architecture-figure"
+  title="Where do these concerns live in the architecture?"
+  subtitle="Implemented behavior, current state, and structure already have clear homes. The proposition is to give meaning and composition equally explicit ownership."
+  caption="The proposal is additive. Product knowledge does not replace code, application state, schemas, tests, governing specifications, or deterministic enforcement. Authority remains scoped to the concern each artifact owns."
+>
   <section aria-label="Established architectural homes">
     <p class="mb-2 font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Established architectural homes</p>
     <div class="grid gap-px overflow-hidden rounded-md border border-[var(--border-subtle)] bg-[var(--border-subtle)] md:grid-cols-3">
@@ -50,15 +54,10 @@
     <span>Applicable</span><span class="text-[var(--accent)]" aria-hidden="true">→</span>
     <span>Composable</span>
   </div>
-
-  <figcaption class="mt-6 border-t border-[var(--border-subtle)] pt-4 text-[11px] leading-5 text-[var(--text-muted)] sm:text-xs sm:leading-6">
-    The proposal is additive. Product knowledge does not replace code, application state, schemas, tests, governing specifications, or deterministic enforcement. Authority remains scoped to the concern each artifact owns.
-  </figcaption>
-</figure>
+</ResearchFigureFrame>
 
 <style>
   .context-architecture-figure :global(p),
-  .context-architecture-figure :global(h3),
   .context-architecture-figure :global(h4) {
     margin-bottom: 0;
   }
