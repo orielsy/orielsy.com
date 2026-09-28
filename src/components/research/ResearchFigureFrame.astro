@@ -1,9 +1,10 @@
 ---
 export interface Props {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
+  subtitle?: string;
   status?: string;
-  caption: string;
+  caption?: string;
   bodyMode?: 'flush' | 'padded';
   className?: string;
 }
@@ -11,6 +12,7 @@ export interface Props {
 const {
   eyebrow,
   title,
+  subtitle,
   status,
   caption,
   bodyMode = 'flush',
@@ -18,11 +20,12 @@ const {
 } = Astro.props;
 ---
 
-<figure class:list={['research-figure-frame', 'not-prose', className]}>
+<figure class:list={['research-figure-frame', 'not-prose', className]} data-research-diagram>
   <header>
     <div class="heading">
-      <p class="eyebrow">{eyebrow}</p>
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
       <h3>{title}</h3>
+      {subtitle && <p class="subtitle">{subtitle}</p>}
     </div>
     {status && <p class="status">{status}</p>}
   </header>
@@ -31,16 +34,17 @@ const {
     <slot />
   </div>
 
-  <figcaption>{caption}</figcaption>
+  {caption && <figcaption>{caption}</figcaption>}
 </figure>
 
 <style>
   .research-figure-frame {
     overflow: hidden;
-    margin: 0;
+    margin: 2.5rem 0;
     border: 1px solid var(--border-subtle);
-    border-radius: 0.75rem;
+    border-radius: 0.5rem;
     background: var(--bg-card);
+    padding: 1.25rem 1rem;
   }
 
   .research-figure-frame :global(p),
@@ -53,66 +57,87 @@ const {
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 0.85rem 1.5rem;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1.15rem 1.25rem;
+    gap: 0.65rem 1rem;
+    margin-bottom: 1.25rem;
   }
 
   .heading {
     min-width: 0;
+    max-width: 44rem;
   }
 
   .eyebrow,
   .status {
     font-family: var(--font-mono-ui);
+    font-size: 0.5625rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    line-height: 1.45;
     text-transform: uppercase;
   }
 
   .eyebrow {
     color: var(--accent);
-    font-size: 0.52rem;
-    font-weight: 500;
-    letter-spacing: 0.13em;
-  }
-
-  h3 {
-    margin-top: 0.42rem !important;
-    max-width: 45rem;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: clamp(1.15rem, 2vw, 1.5rem);
-    font-weight: 600;
-    line-height: 1.16;
-    letter-spacing: -0.03em;
   }
 
   .status {
-    max-width: 18rem;
     color: var(--text-muted);
-    font-size: 0.45rem;
-    line-height: 1.55;
-    letter-spacing: 0.08em;
+  }
+
+  h3 {
+    margin-top: 0.35rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    margin-top: 0.35rem !important;
+    max-width: 42rem;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.6;
   }
 
   .body.is-padded {
-    padding: 1.15rem;
+    padding: 0.9rem;
   }
 
   figcaption {
+    margin-top: 1.25rem;
     border-top: 1px solid var(--border-subtle);
-    padding: 0.8rem 1rem;
+    padding-top: 0.8rem;
     color: var(--text-muted);
-    font-size: 0.61rem;
+    font-size: 0.6875rem;
     line-height: 1.55;
   }
 
   @media (min-width: 640px) {
+    .research-figure-frame {
+      padding: 1.5rem;
+    }
+
     header {
-      padding: 1.2rem 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h3 {
+      font-size: 1.125rem;
+    }
+
+    .subtitle {
+      font-size: 0.8125rem;
     }
 
     .body.is-padded {
-      padding: 1.35rem;
+      padding: 1rem;
+    }
+
+    figcaption {
+      font-size: 0.75rem;
     }
   }
 </style>
