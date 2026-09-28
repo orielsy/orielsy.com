@@ -1,9 +1,13 @@
-<figure class="composition-figure not-prose my-8 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] px-4 py-5 sm:px-6 sm:py-6">
-  <header class="mb-5 sm:mb-6">
-    <h3 class="m-0 text-base font-semibold tracking-tight text-[var(--text-primary)] sm:text-lg">Compose from trusted capabilities instead of inventing behavior.</h3>
-    <p class="mt-1 max-w-2xl text-xs leading-5 text-[var(--text-secondary)] sm:text-sm sm:leading-6">Engineering supplies the real capabilities and constraints. Authored product knowledge contributes intent, relevance, prerequisites, and composition guidance.</p>
-  </header>
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+---
 
+<ResearchFigureFrame
+  className="composition-figure"
+  title="Compose from trusted capabilities instead of inventing behavior."
+  subtitle="Engineering supplies the real capabilities and constraints. Authored product knowledge contributes intent, relevance, prerequisites, and composition guidance."
+  caption="The authored product-knowledge layer did not implement verification, authorization, transaction retrieval, account mutation, or escalation. Those are engineering-built capabilities. The composition layer uses intent, current state, deterministic policy, and available capabilities to shape the surface."
+>
   <div class="grid gap-2 sm:grid-cols-2">
     <section class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-3.5">
       <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Current state</p>
@@ -42,10 +46,10 @@
   <section class="overflow-hidden rounded-md border border-[var(--border-strong)]" aria-label="Illustrative derived account review surface">
     <header class="flex items-center justify-between gap-4 border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-4 py-3">
       <div>
-        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Derived surface</p>
+        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Derived surface</p>
         <h4 class="mt-1 text-sm font-semibold text-[var(--text-primary)]">Account Review</h4>
       </div>
-      <span class="rounded-full border border-[var(--accent-border)] px-2.5 py-1 font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">Restricted</span>
+      <span class="rounded-full border border-[var(--accent-border)] px-2.5 py-1 font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--accent)]">Restricted</span>
     </header>
 
     <ul class="divide-y divide-[var(--border-subtle)] bg-[var(--bg-primary)]">
@@ -63,29 +67,24 @@
       </li>
       <li class="flex items-center justify-between gap-4 px-4 py-2.5">
         <span class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Request verification</span>
-        <span class="font-editorial-mono text-[10px] text-[var(--accent)]">Prerequisite for removal</span>
+        <span class="font-editorial-mono text-[9px] text-[var(--accent)]">Prerequisite for removal</span>
       </li>
       <li class="flex items-center justify-between gap-4 px-4 py-2.5">
         <span class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Remove restriction</span>
-        <span class="font-editorial-mono text-[10px] text-[var(--text-muted)] line-through decoration-[var(--text-muted)]">Blocked: prerequisite unmet</span>
+        <span class="font-editorial-mono text-[9px] text-[var(--text-muted)] line-through decoration-[var(--text-muted)]">Blocked: prerequisite unmet</span>
       </li>
       <li class="flex items-center justify-between gap-4 px-4 py-2.5">
         <span class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Escalate to risk</span>
-        <span class="font-editorial-mono text-[10px] text-[var(--accent)]">Permitted</span>
+        <span class="font-editorial-mono text-[9px] text-[var(--accent)]">Permitted</span>
       </li>
     </ul>
 
     <p class="border-t border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-4 py-2.5 font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">State, authorization, and side effects remain owned by deterministic systems.</p>
   </section>
-
-  <figcaption class="mt-6 border-t border-[var(--border-subtle)] pt-4 text-[11px] leading-5 text-[var(--text-muted)] sm:text-xs sm:leading-6">
-    The authored product-knowledge layer did not implement verification, authorization, transaction retrieval, account mutation, or escalation. Those are engineering-built capabilities. The composition layer uses intent, current state, deterministic policy, and available capabilities to shape the surface.
-  </figcaption>
-</figure>
+</ResearchFigureFrame>
 
 <style>
   .composition-figure :global(p),
-  .composition-figure :global(h3),
   .composition-figure :global(h4),
   .composition-figure :global(ul),
   .composition-figure :global(li) {
