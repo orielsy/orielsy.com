@@ -79,7 +79,6 @@ const hasLineage = Boolean(origin || descendants.length > 0 || related.length > 
                   </a>
                 ) : (
                   <span class="inline-flex flex-wrap items-center gap-1.5 text-xs leading-5 text-[var(--text-muted)]">
-                    <span aria-hidden="true">▢</span>
                     {origin.title}
                     <span class="font-editorial-mono text-[8px] uppercase tracking-[0.14em]">not published</span>
                   </span>
@@ -93,18 +92,17 @@ const hasLineage = Boolean(origin || descendants.length > 0 || related.length > 
               <dt class="shrink-0 font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
                 Led to
               </dt>
-              <dd class="flex flex-wrap gap-x-4 gap-y-1">
+              <dd class="grid gap-y-1">
                 {descendants.map((item) => (
                   item.published ? (
                     <a
                       href={item.href}
-                      class="text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
+                      class="block text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
                     >
                       {item.title}
                     </a>
                   ) : (
-                    <span class="inline-flex flex-wrap items-center gap-1.5 text-xs leading-5 text-[var(--text-muted)]">
-                      <span aria-hidden="true">▢</span>
+                    <span class="flex flex-wrap items-center gap-1.5 text-xs leading-5 text-[var(--text-muted)]">
                       {item.title}
                       <span class="font-editorial-mono text-[8px] uppercase tracking-[0.14em]">not published</span>
                     </span>
@@ -119,18 +117,17 @@ const hasLineage = Boolean(origin || descendants.length > 0 || related.length > 
               <dt class="shrink-0 font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
                 Runs alongside
               </dt>
-              <dd class="flex flex-wrap gap-x-4 gap-y-1">
+              <dd class="grid gap-y-1">
                 {related.map((item) => (
                   item.published ? (
                     <a
                       href={item.href}
-                      class="text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
+                      class="block text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
                     >
                       {item.title}
                     </a>
                   ) : (
-                    <span class="inline-flex flex-wrap items-center gap-1.5 text-xs leading-5 text-[var(--text-muted)]">
-                      <span aria-hidden="true">▢</span>
+                    <span class="flex flex-wrap items-center gap-1.5 text-xs leading-5 text-[var(--text-muted)]">
                       {item.title}
                       <span class="font-editorial-mono text-[8px] uppercase tracking-[0.14em]">not published</span>
                     </span>
@@ -145,11 +142,11 @@ const hasLineage = Boolean(origin || descendants.length > 0 || related.length > 
               <dt class="shrink-0 font-editorial-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
                 Built as
               </dt>
-              <dd class="flex flex-wrap gap-x-4 gap-y-1">
+              <dd class="grid gap-y-1">
                 {relatedWorks.map((item) => (
                   <a
                     href={item.href}
-                    class="text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
+                    class="block text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
                   >
                     {item.label}
                   </a>
