@@ -130,7 +130,7 @@ Future phases must never be described as implemented before source exists. The L
 
 ### 6.4 Umbrella synthesis and future experiment
 
-- **Context as a First-Class Architectural Primitive** — unpublished synthesis Research draft evolved from the earlier **AI Across the Interface Lifecycle** placeholder. It connects development-time durable/selectable context, runtime product knowledge, and capability-oriented interface composition under deterministic state and policy. It is an architectural working thesis, not a claim that these concerns already form one implemented framework. The focused development-side, interface-side, and runtime Research pieces remain authoritative for their own questions.
+- **Context as a First-Class Architectural Primitive** — published synthesis Research evolved from the earlier **AI Across the Interface Lifecycle** placeholder. It connects development-time durable/selectable context, runtime product knowledge, and capability-oriented interface composition under deterministic state and policy. It is an architectural working thesis, not a claim that these concerns already form one implemented framework. The focused development-side, interface-side, and runtime Research pieces remain authoritative for their own questions.
 - **Browser-Local Inference as a UI Runtime Capability** — unpublished future Experiment subordinate to Adaptive AI Runtime. It is the future home for measured WebGPU/WebLLM browser-local work and must not contain assumed benchmarks, compatibility conclusions, or implementation claims.
 
 ### 6.5 Consolidation rules
