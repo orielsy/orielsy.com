@@ -1,0 +1,224 @@
+---
+const relevantInformation = [
+  'Customer identity',
+  'Restriction reason',
+  'Recent activity',
+  'Verification state',
+];
+
+const availableActions = [
+  'Request identity verification',
+  'Remove the restriction after verification succeeds',
+  'Escalate to risk review',
+];
+---
+
+<section
+  class="product-knowledge-artifact not-prose"
+  aria-labelledby="product-knowledge-artifact-title"
+>
+  <header class="artifact-header">
+    <div class="artifact-identity">
+      <svg
+        class="artifact-icon"
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.7"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M7 3.5h6.25L18 8.25V20.5H7z" />
+        <path d="M13 3.5v5h5" />
+        <path d="M9.75 12h5.5" />
+        <path d="M9.75 15.25h5.5" />
+      </svg>
+
+      <div>
+        <p class="artifact-kicker">Product knowledge document</p>
+        <h3 id="product-knowledge-artifact-title">Account Review</h3>
+      </div>
+    </div>
+
+    <p class="artifact-boundary">Describes the task / implements nothing</p>
+  </header>
+
+  <div class="artifact-body">
+    <section class="artifact-purpose" aria-labelledby="artifact-purpose-title">
+      <h4 id="artifact-purpose-title">Purpose</h4>
+      <p>Investigate a restricted customer account.</p>
+    </section>
+
+    <div class="artifact-columns">
+      <section aria-labelledby="artifact-information-title">
+        <h4 id="artifact-information-title">Relevant information</h4>
+        <ul>
+          {relevantInformation.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+
+      <section aria-labelledby="artifact-actions-title">
+        <h4 id="artifact-actions-title">Available actions</h4>
+        <ul>
+          {availableActions.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+    </div>
+
+    <section class="artifact-guidance" aria-labelledby="artifact-guidance-title">
+      <h4 id="artifact-guidance-title">Guidance</h4>
+      <p>Explain unavailable actions through their unmet prerequisites.</p>
+    </section>
+  </div>
+</section>
+
+<style>
+  .product-knowledge-artifact {
+    overflow: hidden;
+    margin: 2rem 0 2.25rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.75rem;
+    background: var(--bg-card);
+    color: var(--text-primary);
+  }
+
+  .product-knowledge-artifact :global(p),
+  .product-knowledge-artifact :global(h3),
+  .product-knowledge-artifact :global(h4),
+  .product-knowledge-artifact :global(ul),
+  .product-knowledge-artifact :global(li) {
+    margin: 0;
+  }
+
+  .product-knowledge-artifact :global(ul) {
+    padding: 0;
+    list-style: none;
+  }
+
+  .artifact-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.35rem 1.5rem;
+  }
+
+  .artifact-identity {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-width: 0;
+  }
+
+  .artifact-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: 0 0 auto;
+    color: var(--accent);
+  }
+
+  .artifact-kicker,
+  .artifact-boundary,
+  h4 {
+    font-family: var(--font-mono-ui);
+    font-size: 0.5625rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    line-height: 1.45;
+    text-transform: uppercase;
+  }
+
+  .artifact-kicker,
+  h4 {
+    color: var(--text-muted);
+  }
+
+  .artifact-boundary {
+    color: var(--text-muted);
+  }
+
+  h3 {
+    margin-top: 0.3rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  .artifact-body {
+    padding: 1.5rem;
+  }
+
+  .artifact-purpose > p,
+  .artifact-guidance > p,
+  li {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+
+  .artifact-purpose > p {
+    margin-top: 0.7rem !important;
+    color: var(--text-primary);
+  }
+
+  .artifact-columns {
+    display: grid;
+    gap: 1.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .artifact-columns ul {
+    display: grid;
+    gap: 0.42rem;
+    margin-top: 0.7rem !important;
+  }
+
+  .artifact-guidance {
+    margin-top: 1.75rem;
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+  }
+
+  .artifact-guidance > p {
+    margin-top: 0.7rem !important;
+    color: var(--text-primary);
+  }
+
+  @media (min-width: 640px) {
+    .artifact-header {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 1.5rem 2rem;
+    }
+
+    .artifact-boundary {
+      flex: 0 0 auto;
+      text-align: right;
+    }
+
+    h3 {
+      font-size: 1.125rem;
+    }
+
+    .artifact-body {
+      padding: 1.75rem 2rem 2rem;
+    }
+
+    .artifact-columns {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+
+    .artifact-guidance {
+      margin-top: 2rem;
+      padding-left: 1.25rem;
+    }
+  }
+</style>
