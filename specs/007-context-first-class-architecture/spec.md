@@ -6,215 +6,161 @@
 
 ## 1. Goal
 
-Evolve the earlier umbrella concept into a substantive synthesis article titled **Product Knowledge as Architecture: From Project Memory to Declarative Product Composition**.
+Maintain the published synthesis article **Product Knowledge as Architecture: From Project Memory to Declarative Product Composition** as the canonical umbrella piece connecting project memory, context engineering, documentation-driven adaptive UX, and the new proposition of declarative product composition.
 
-The article explains the deeper architectural question connecting several existing research threads on orielsy.com without collapsing those focused pieces into one implemented framework.
+The reader-facing subject is **product knowledge as architecture**. The internal thesis remains:
 
-The reader-facing subject is **product knowledge as architecture**. The core thesis inside the article is:
+> Context is becoming a first-class architectural primitive, and explicit product knowledge may allow parts of an interface to be derived from trusted capabilities rather than imperatively authored.
 
-> Context is becoming a first-class architectural primitive, and some interfaces may become derived views of structured product knowledge over a bounded capability system.
+The article asks:
 
-The new research question is:
+> If reliable capabilities already exist, how much of a product's final composition still needs to be authored imperatively, and how much can instead be derived from state, policy, product knowledge, and context?
 
-> If reliable capabilities already exist, how much of a product's final composition still needs to be encoded imperatively — and how much can instead be derived from state, policy, product knowledge, and context?
+This is an architectural exploration, not a claim that a general framework has already been implemented.
 
-## 2. Core Thesis
+## 2. Architectural Gap
 
-Modern software has deliberate architectural homes for several concerns:
-
-- **implemented behavior** → code
-- **current state** → data / application state
-- **structure** → schemas and contracts
-
-Meaning, intent, relevance, explanation, policy rationale, and composition are often less coherently represented. They may be scattered across documentation, tickets, UI code, support material, prompts, requirements, and human memory.
-
-The article explores whether **product knowledge and context can become a durable architectural layer** that software systems can store, select, validate for applicability, and use during bounded composition.
-
-AI is relevant because models broaden the practical range of structured and semi-structured human-authored knowledge software can interpret. The thesis must not depend on giving a model authority over concerns owned by deterministic systems.
-
-Machine-readable knowledge itself must not be presented as new. Rule engines, expert systems, model-driven systems, configuration-driven products, knowledge graphs, and related approaches predate the current AI wave.
-
-## 3. Relationship to Existing Research
-
-This article is a synthesis layer above, not a replacement for, existing focused Research:
-
-1. **From Prompts to Project Memory: Spec-Driven Development for Coding Agents**
-   - owns durable development-time project memory
-   - shows how specifications, ADRs, constitutions, and repository rules can preserve intent across coding-agent sessions
-
-2. **Context Engineering for Software Development**
-   - owns selection and delivery of relevant development-time repository context
-   - remains unpublished until independently ready
-
-3. **Documentation-Driven Adaptive UX**
-   - owns runtime product knowledge as contextual interface input
-   - keeps application state and validation authoritative for the concerns they own
-
-4. **Adaptive AI Runtime for Enterprise UI**
-   - owns the execution-location question for intelligent capabilities
-   - remains a separate runtime concern
-
-The synthesis should make this progression legible:
-
-```text
-Project Memory          → durable
-Context Engineering     → selectable
-Documentation-Driven UX → applicable
-Declarative Composition → composable
-```
-
-The first three are grounded in existing research threads. **Composable** is the new architectural proposition.
-
-The article must not imply that these are already one implemented system.
-
-## 4. Architectural-Ownership Model
-
-The article and first diagram should introduce this conceptual mapping:
+Modern software has deliberate homes for several concerns:
 
 ```text
 Implemented behavior → Code
 Current state        → Data / application state
 Structure            → Schemas / contracts
-Meaning / Intent     → Product knowledge
-Composition          → Context + policy + capabilities
 ```
 
-The final two rows are the research proposition, not settled industry taxonomy.
+Meaning, intent, relevance, explanation, policy rationale, and composition are often less coherently represented. They may be distributed across product documents, tickets, UI code, support material, requirements, prompts, and human memory.
 
-The framing must be **architectural ownership**, not a universal winner-takes-all hierarchy of authority.
+The article explores whether product knowledge and context deserve more explicit architectural ownership.
 
-Authority depends on the concern:
+Machine-readable knowledge must not be presented as historically new. Rule engines, expert systems, model-driven systems, configuration-driven products, knowledge graphs, and related approaches provide relevant lineage. The current proposition is that AI broadens the practical range of structured and semi-structured human-authored knowledge software can interpret and use as context.
+
+## 3. Research Progression
+
+The synthesis should make this progression legible:
+
+```text
+Project Memory          → Durable
+Context Engineering     → Selectable
+Documentation-Driven UX → Applicable
+Declarative Composition → Composable
+```
+
+The first three properties point to distinct existing research threads. **Composable** is the new proposition owned by this synthesis.
+
+The article is a synthesis layer above, not a replacement for:
+
+1. **From Prompts to Project Memory: Spec-Driven Development for Coding Agents**
+   - owns durable development-time project memory
+2. **Context Engineering for Software Development**
+   - owns selection and delivery of relevant development-time repository context
+   - remains unpublished until independently ready
+3. **Documentation-Driven Adaptive UX**
+   - owns runtime product knowledge as contextual interface input
+4. **Adaptive AI Runtime for Enterprise UI**
+   - owns the execution-location question for intelligent capabilities
+
+The article must not imply that these are already one implemented system.
+
+## 4. Different Consumers, Shared Knowledge Architecture
+
+Development-time and runtime consumers remain distinct.
+
+Development-time agents may consume specifications, ADRs, architecture constraints, repository rules, component contracts, and implementation context.
+
+Runtime interfaces may consume product semantics, applicability metadata, explanatory guidance, policy references, version/audience context, and current application state.
+
+They may draw from a broader knowledge architecture, but they have different lifecycles, authority boundaries, and failure modes. The article must not describe them as literally the same operational layer.
+
+## 5. Concern-Specific Authority
+
+The architectural model is ownership by concern, not one universal source of truth.
 
 ```text
 Current facts            → application state
-Current implementation   → code tells us what happens now
-Intended behavior        → governing specification / policy may outrank defective code
+Implemented behavior     → code
+Intended behavior        → governing specification or policy
 Meaning and explanation  → product knowledge
-Conflict                 → surface the defect rather than silently choose one source
+Disagreement             → expose the defect
 ```
 
-Do not state that “code wins” whenever code and product knowledge disagree. Source code remains evidence for what the implementation currently does; it does not automatically supersede a governing specification describing intended behavior.
+Do not state that code automatically wins every disagreement. Code is authoritative evidence for what the current implementation does. A governing specification or policy may reveal that the implementation is defective.
 
-A useful composition shorthand may be presented as:
+The governing principle is:
 
-```text
-UI = f(state, capabilities, policy, context)
-```
+> **Authority belongs to the artifact responsible for the concern.**
 
-It must be described as a thinking model rather than an executable formula or completed framework.
-
-## 5. One Knowledge Architecture, Different Consumers
-
-Development-time and runtime consumers must remain distinct.
-
-### Development-time consumers may use
-
-- specifications
-- ADRs
-- architecture constraints
-- repository rules
-- component contracts
-- implementation context
-
-### Runtime consumers may use
-
-- product semantics
-- applicability metadata
-- explanatory guidance
-- policy references
-- version / audience / state context
-
-The shared architectural idea is a broader knowledge layer from which each consumer selects what is appropriate to its job. The article must not describe development-time and runtime systems as literally the same operational layer.
+AI belongs on the interpretation/composition side of this boundary. It may retrieve knowledge, connect intent to product concepts, select candidate capabilities, adapt explanation, or propose a composition. It must not invent current state, authorization, successful side effects, or irreversible outcomes.
 
 ## 6. Declarative Product Composition
-
-A central consequence to investigate is **declarative product composition**.
 
 The architecture should distinguish:
 
 ### Engineering responsibility
 
 - implement reliable domain capabilities
-- define component and action contracts
+- define component/action contracts
 - enforce authorization, validation, invariants, and side effects
 - expose bounded, testable capabilities
 
-### Product / domain knowledge responsibility
+### Product/domain knowledge responsibility
 
-- describe intent
-- describe meaning and relevance
+- describe intent and meaning
+- describe relevance and prerequisites
 - describe or reference policy without becoming its enforcement mechanism
-- identify useful capabilities and prerequisites
-- describe explanatory or composition guidance
+- identify useful capabilities
+- describe explanatory and composition guidance
 
-### Context / composition responsibility
+### Context/composition responsibility
 
 - select relevant product knowledge
 - select permitted capabilities
-- order or compose those capabilities for the task
+- order or compose capabilities for the task
 - adapt explanation or emphasis
 - remain constrained by deterministic state and policy
 
-The article may use a non-coder authoring example only as an **abstraction stress test**. It must not frame non-coders or AI as replacing engineering.
+The article may use a non-coder authoring example only as an abstraction stress test. It must not frame non-coders or AI as replacing engineering.
 
-As component/code generation becomes cheaper, the article may argue that deciding what should exist, for whom, under what conditions, and within what constraints becomes comparatively more valuable. It must not claim that implementation “was never the bottleneck.”
+The article may argue that as component/code generation becomes cheaper, deciding what should exist, for whom, under what conditions, and within what constraints becomes comparatively more valuable. It must not claim that implementation was never a bottleneck.
 
-## 7. Required Illustrative UI
+A useful shorthand is:
 
-Include a clearly labeled conceptual interface example based on an account-review workflow.
+```text
+UI = f(state, capabilities, policy, context)
+```
+
+This is a thinking model, not an executable formula or completed framework.
+
+## 7. Required Account-Review Example
+
+Include a clearly labeled conceptual example based on a restricted-account review workflow.
 
 The four inputs are:
 
-1. **Current state** — restricted account, identity verification missing, recent activity available, no active risk review.
-2. **Available capabilities** — Customer Profile, Account Status, Transaction History, Identity Verification, Restriction Action, Risk Escalation.
-3. **Authored product knowledge** — task purpose, relevant information, prerequisite explanation, composition guidance.
-4. **Deterministic policy** — restriction removal requires verified identity; risk escalation is permitted while restricted; authorization and mutation remain enforced by application code.
+1. **Current state**: restricted account, identity verification missing, no active risk review.
+2. **Available capabilities**: Customer Profile, Account Status, Transaction History, Identity Verification, Restriction Action, Risk Escalation.
+3. **Authored product knowledge**: task purpose, relevant information, prerequisite explanation, composition guidance.
+4. **Deterministic policy**: restriction removal requires verified identity; risk escalation is permitted while restricted; authorization and mutation remain enforced by application code.
 
-The rendered **Derived surface** should visibly demonstrate:
+The **Derived surface** should demonstrate:
 
-- current state influencing the composition
+- current state influencing composition
 - relevant capabilities being selected
 - an unavailable action explained by an unmet prerequisite
-- an escalation path remaining available because policy permits it
+- escalation remaining available because policy permits it
 
-The figure caption must state that the authored product-knowledge layer did **not** implement authorization, account mutation, verification, data retrieval, or escalation; engineering supplied those capabilities and contracts.
+The figure caption must state that product knowledge did not implement authorization, account mutation, verification, data retrieval, or escalation. Engineering supplied those capabilities and contracts.
 
 The example is illustrative architecture, not an implemented production product.
 
-## 8. Documentation Is an Authoring Surface
+## 8. Documentation as an Authoring Surface
 
-The article must distinguish the architectural concept from its authoring format.
+Documentation may be a human-friendly authoring surface for product knowledge, but it is not the architecture itself.
 
-Documentation may serve as a human-friendly authoring surface for product knowledge, but the durable architecture is the represented knowledge layer — potentially normalized, structured, versioned, tagged with provenance, connected to schemas, and constrained by policy.
+The durable architectural asset is the represented knowledge layer, potentially normalized, typed, versioned, tagged with provenance, connected to schemas, checked against policy, and made selectable by other systems.
 
-Do not equate this proposal with traditional docs-as-code. Traditional docs-as-code generally gives documentation software-engineering practices; this research asks whether authored product knowledge can participate as system input.
+Do not equate this proposal with traditional docs-as-code. Traditional docs-as-code gives documentation software-engineering practices. This research asks whether authored product knowledge can participate as system input.
 
-## 9. What Product Knowledge Can and Cannot Own
-
-Potentially appropriate concerns include:
-
-- product intent
-- semantic meaning
-- explanatory guidance
-- relationships between capabilities
-- composition guidance
-- applicability
-- prerequisites
-- policy rationale and references
-- provenance metadata
-
-Concerns that must remain owned by deterministic systems unless separately proven otherwise include:
-
-- authentication and authorization
-- transactional side effects
-- security invariants
-- authoritative current state
-- validation that protects data integrity
-- irreversible operations
-
-Documentation may explain these rules. It must not silently redefine or enforce them.
-
-## 10. Required Restraint / Disallowed Claims
+## 9. Required Restraint
 
 Do not state or imply that:
 
@@ -222,7 +168,7 @@ Do not state or imply that:
 - AI should improvise product behavior from prose
 - a language model should become the universal source of product truth
 - non-coders can safely build arbitrary enterprise products without engineering
-- this architecture is already implemented as a general framework
+- the architecture is already implemented as a general framework
 - declarative product composition has been proven at production scale
 - every UI should become dynamically generated
 - the page is obsolete
@@ -231,76 +177,82 @@ Do not state or imply that:
 - development-time and runtime context are literally the same operational layer
 - code automatically wins every conflict with specifications or product knowledge
 
-Use language such as **working thesis**, **architectural exploration**, **proposed model**, **investigate**, and **may** where the evidence is conceptual rather than implemented.
+Use language such as **working thesis**, **architectural exploration**, **proposed model**, **investigate**, and **may** where the evidence is conceptual.
 
-## 11. Article Shape
+## 10. Editorial Structure
 
-The published article should cover:
+The article should use a compressed argument rather than reproducing the full discovery history at section-level resolution.
 
-1. **The Pattern I Kept Running Into**
-2. **Software Has Clear Homes for Behavior, State, and Structure**
-3. **Context as Architecture** — durable, selectable, applicable, composable
-4. **One Knowledge Architecture, Different Consumers**
-5. **From Generated Components to Capability Systems**
-6. **Where AI Actually Fits**
-7. **Documentation Is an Authoring Surface, Not the Architecture**
-8. **The Page May Stop Being the Primary Authored Artifact**
-9. **What Product Knowledge Can and Cannot Own**
-10. **Toward Declarative Product Composition**
+Canonical section structure:
 
-The exact headings may evolve editorially if the argument remains intact.
+1. **The Missing Architectural Home**
+2. **Durable, Selectable, Applicable, Composable**
+3. **A Bounded Composition**
+4. **Authority Belongs to the Concern**
+5. **From Pages to Capability Systems**
+6. **Documentation as an Authoring Surface**
+7. **What the Thesis Still Has to Prove**
 
-## 12. Taxonomy & Publication
+The opening should reach the architectural gap and thesis quickly. Earlier research lineage should support the argument rather than dominate its structure.
+
+The final question remains:
+
+> If those layers are explicit, how much of the final interface still needs to be authored imperatively?
+
+## 11. Publication
 
 - Content type: **Research / Architecture Exploration**
 - Canonical title: **Product Knowledge as Architecture: From Project Memory to Declarative Product Composition**
 - Core thesis phrase: **Context as a First-Class Architectural Primitive**
 - Existing file/route remains `context-as-first-class-architectural-primitive.mdx` to avoid unnecessary route churn after publication.
-- The previous `ai-across-interface-lifecycle.mdx` artifact was unpublished and was replaced before publication rather than preserved as a public route.
-- Orielsy explicitly approved publication on 2026-09-28.
 - Publication state remains `status: published`, `published: true`, `draft: false`.
-- Publication date is 2026-09-28.
-- The article is a finished published Research piece while still describing the architectural model as a working thesis.
+- Publication date remains 2026-09-28.
+- Repository publication state and production deployment are separate actions.
 
-## 13. Visual Requirements
+## 12. Visual Requirements
 
 ### Context architecture figure
 
-- Frame the question as **where concerns live in the architecture**, not “what wins.”
-- Present implemented behavior/code, current state/data, and structure/schemas as established homes.
-- Present meaning/product knowledge and composition/context-policy-capabilities as research propositions.
-- Surface the progression **Durable → Selectable → Applicable → Composable**.
-- State that the proposal is additive and authority remains scoped to the concern each artifact owns.
+- frame the question as where concerns live in the architecture
+- present code/data/schemas as established homes
+- present product knowledge and composition as research propositions
+- surface **Durable → Selectable → Applicable → Composable**
+- state that the proposal is additive and authority remains scoped to the concern each artifact owns
 
 ### Declarative product composition figure
 
-- Use **Authored product knowledge** as the knowledge input label.
-- Keep state and policy semantically distinct; “risk escalation permitted” belongs to deterministic policy, not current state.
-- Label the resulting interface as a **Derived surface**.
-- State inside or below the surface that state, authorization, and side effects remain owned by deterministic systems.
+- use **Authored product knowledge** as the knowledge input label
+- keep state and deterministic policy distinct
+- keep risk-escalation permission in deterministic policy
+- label the resulting interface **Derived surface**
+- keep deterministic ownership of state, authorization, and side effects visible
+
+Both figures use the shared Research publication-diagram system defined by ADR 006 and `ResearchFigureFrame.astro`.
 
 All visuals must:
 
-- use existing semantic site tokens
+- use semantic site tokens
 - work in Day and Night themes
-- remain static-first with no unnecessary client JavaScript
+- remain static-first
 - remain legible on narrow screens
 - use semantic figure/caption structure
-- explicitly identify conceptual/proposed relationships where needed
+- identify conceptual/proposed relationships where needed
+- remain in the reading column by default unless their information architecture genuinely requires `ResearchBreakout`
 
-## 14. Acceptance Criteria
+## 13. Acceptance Criteria
 
 The article is in its intended published state when:
 
-- the reader-facing title is **Product Knowledge as Architecture: From Project Memory to Declarative Product Composition**
-- context-as-first-class-primitive remains the thesis rather than having to carry the entire reader-facing title
-- the synthesis connects existing Research without stealing the scope of those pieces
-- development-time and runtime context are clearly distinguished as different consumers of a broader knowledge architecture
+- the reader-facing title remains **Product Knowledge as Architecture: From Project Memory to Declarative Product Composition**
+- Context as a First-Class Architectural Primitive remains the thesis
+- the article uses the compressed seven-section editorial structure
+- existing Research is connected without stealing the scope of those pieces
+- development-time and runtime context remain clearly distinct consumers
 - authority is concern-specific rather than reduced to “code wins”
-- the article explains capability composition without suggesting arbitrary AI-generated behavior
+- capability composition is explained without suggesting arbitrary AI-generated behavior
 - the account-review example makes state, capabilities, authored product knowledge, deterministic policy, and the derived surface legible
-- deterministic product truth and enforcement remain clearly bounded
-- speculative claims are labeled as such
-- the relevant site-foundation research roadmap reflects the canonical title and framing
+- deterministic product truth and enforcement remain bounded
+- speculative claims remain labeled as such
+- both diagrams follow the shared Research diagram publication system
 - publication frontmatter remains public
 - `npm run build` succeeds before production deployment, or inability to verify the build is reported explicitly
