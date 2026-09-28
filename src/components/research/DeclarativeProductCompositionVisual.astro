@@ -5,23 +5,23 @@
       <span class="font-editorial-mono rounded-full border border-[var(--accent-border)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">Not a production implementation</span>
     </div>
     <h3 class="font-display mt-2 mb-0 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Compose from trusted capabilities instead of inventing behavior.</h3>
-    <p class="mt-2 max-w-3xl text-sm leading-6 text-[var(--text-secondary)]">Engineering supplies the real capabilities and constraints. Product knowledge contributes intent, relevance, prerequisites, and composition guidance.</p>
+    <p class="mt-2 max-w-3xl text-sm leading-6 text-[var(--text-secondary)]">Engineering supplies the real capabilities and constraints. Authored product knowledge contributes intent, relevance, prerequisites, and composition guidance.</p>
   </header>
 
   <div class="border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-5 py-5 sm:px-7">
     <div class="grid gap-3 lg:grid-cols-4">
       <section class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4">
-        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">Current state</p>
+        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">01 · Current state</p>
         <h4 class="font-display mt-2 text-sm font-semibold text-[var(--text-primary)]">Restricted account</h4>
         <ul class="mt-3 space-y-1.5 text-[11px] leading-4 text-[var(--text-secondary)]">
           <li>Identity verification: missing</li>
           <li>Recent activity: available</li>
-          <li>Risk escalation: permitted</li>
+          <li>Risk review: not active</li>
         </ul>
       </section>
 
       <section class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4">
-        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">Available capabilities</p>
+        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">02 · Available capabilities</p>
         <ul class="mt-3 grid grid-cols-2 gap-1.5 text-[10px] leading-4 text-[var(--text-secondary)]">
           <li>Customer Profile</li>
           <li>Account Status</li>
@@ -33,13 +33,13 @@
       </section>
 
       <section class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4">
-        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">Product knowledge</p>
+        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">03 · Authored product knowledge</p>
         <p class="mt-3 text-[11px] leading-5 text-[var(--text-secondary)]">Purpose: investigate a restricted account. Show identity, restriction reason, activity, and verification state. Explain blocked actions through unmet prerequisites.</p>
       </section>
 
       <section class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4">
-        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">Deterministic policy</p>
-        <p class="mt-3 text-[11px] leading-5 text-[var(--text-secondary)]">Restriction removal requires verified identity. Authorization and account mutation remain enforced by application code.</p>
+        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--accent)]">04 · Deterministic policy</p>
+        <p class="mt-3 text-[11px] leading-5 text-[var(--text-secondary)]">Restriction removal requires verified identity. Risk escalation is permitted while the account is restricted. Authorization and mutation remain enforced by application code.</p>
       </section>
     </div>
 
@@ -49,11 +49,11 @@
     </div>
   </div>
 
-  <section class="px-5 py-6 sm:px-7 sm:py-7" aria-label="Illustrative composed account review interface">
+  <section class="px-5 py-6 sm:px-7 sm:py-7" aria-label="Illustrative derived account review interface">
     <div class="overflow-hidden rounded-lg border border-[var(--border-strong)] bg-[var(--bg-primary)]">
       <header class="flex flex-col gap-3 border-b border-[var(--border-subtle)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
         <div>
-          <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Operations workspace</p>
+          <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Derived surface</p>
           <h4 class="font-display mt-1 text-lg font-semibold text-[var(--text-primary)]">Account Review</h4>
         </div>
         <span class="font-editorial-mono w-fit rounded-full border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">Restricted</span>
@@ -97,18 +97,22 @@
           </article>
 
           <div class="mt-4 grid gap-2 sm:grid-cols-3">
-            <button type="button" class="rounded-md border border-[var(--accent-border)] bg-[var(--accent)] px-3 py-2.5 text-[10px] font-medium text-white">Request Verification</button>
-            <button type="button" disabled class="cursor-not-allowed rounded-md border border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-3 py-2.5 text-[10px] text-[var(--text-muted)] opacity-70">Remove Restriction</button>
-            <button type="button" class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3 py-2.5 text-[10px] font-medium text-[var(--text-primary)]">Escalate to Risk</button>
+            <span class="rounded-md border border-[var(--accent-border)] bg-[var(--accent)] px-3 py-2.5 text-center text-[10px] font-medium text-white">Request Verification</span>
+            <span class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-3 py-2.5 text-center text-[10px] text-[var(--text-muted)] opacity-70">Remove Restriction</span>
+            <span class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3 py-2.5 text-center text-[10px] font-medium text-[var(--text-primary)]">Escalate to Risk</span>
           </div>
-          <p class="mt-2 text-[10px] leading-4 text-[var(--text-muted)]">Remove Restriction is unavailable because identity verification has not succeeded.</p>
+          <p class="mt-2 text-[10px] leading-4 text-[var(--text-muted)]">Remove Restriction is unavailable because identity verification has not succeeded. Escalation remains permitted by policy.</p>
         </div>
+      </div>
+
+      <div class="border-t border-[var(--border-subtle)] px-4 py-3 sm:px-5">
+        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.12em] text-[var(--text-muted)]">State, authorization, and side effects remain owned by deterministic systems.</p>
       </div>
     </div>
   </section>
 
   <figcaption class="border-t border-[var(--border-subtle)] px-5 py-4 text-[10px] leading-5 text-[var(--text-muted)] sm:px-7">
-    The product-knowledge layer did not implement identity verification, authorization, transaction retrieval, account mutation, or escalation. Those are engineering-built capabilities. The conceptual composition layer uses intent, current state, policy, and available capabilities to shape the page.
+    The authored product-knowledge layer did not implement identity verification, authorization, transaction retrieval, account mutation, or escalation. Those are engineering-built capabilities. The conceptual composition layer uses intent, current state, deterministic policy, and available capabilities to shape the surface.
   </figcaption>
 </figure>
 
