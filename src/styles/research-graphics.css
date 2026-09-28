@@ -1,24 +1,101 @@
 /*
- * Research-detail publication refinements that sit on top of the shared
- * research system. General prose fixes belong here only when they apply to
- * every research entry; exemplar graphics remain scoped to their entry.
+ * Shared research-graphic system.
+ *
+ * Diagrams keep their own information architecture, but inherit a common
+ * publication scale so titles, technical labels, body copy, captions, and
+ * framing feel like one family across Research.
  */
 
-/*
- * The article intentionally uses hand-written descendant selectors for prose
- * headings. `not-prose` does not neutralize those selectors, so publication
- * figures explicitly opt out of the article h3 rail treatment. Individual
- * components remain responsible for their own type scale and spacing.
- */
-[data-research-entry="documentation-driven-adaptive-ux"] .research-prose figure.not-prose h3,
-[data-research-entry="documentation-driven-adaptive-ux"] .research-prose figure.not-prose h4 {
-  padding-left: 0;
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) {
+  --research-diagram-title: 1rem;
+  --research-diagram-title-wide: 1.125rem;
+  --research-diagram-subtitle: 0.75rem;
+  --research-diagram-subtitle-wide: 0.8125rem;
+  --research-diagram-node: 0.875rem;
+  --research-diagram-copy: 0.6875rem;
+  --research-diagram-label: 0.5625rem;
+  --research-diagram-caption: 0.6875rem;
+  margin-block: 2.5rem;
+  border-radius: 0.5rem;
 }
 
-[data-research-entry="documentation-driven-adaptive-ux"] .research-prose figure.not-prose h3::before,
-[data-research-entry="documentation-driven-adaptive-ux"] .research-prose figure.not-prose h4::before {
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header {
+  padding: 1rem;
+}
+
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header h3 {
+  margin-top: 0.35rem;
+  margin-bottom: 0;
+  padding-left: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: var(--research-diagram-title) !important;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header h3::before {
   content: none;
   display: none;
+}
+
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header .font-editorial-mono,
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header .eyebrow,
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header .status {
+  font-size: var(--research-diagram-label) !important;
+  line-height: 1.45;
+  letter-spacing: 0.12em;
+}
+
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header > p:not(.font-editorial-mono):not(.eyebrow):not(.status),
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header > div > p:not(.font-editorial-mono):not(.eyebrow):not(.status) {
+  font-size: var(--research-diagram-subtitle) !important;
+  line-height: 1.6 !important;
+}
+
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) h4 {
+  padding-left: 0;
+  font-size: var(--research-diagram-node) !important;
+  line-height: 1.4 !important;
+  letter-spacing: -0.015em;
+}
+
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) h4::before {
+  content: none;
+  display: none;
+}
+
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > :not(header):not(figcaption) p:not(.font-editorial-mono) {
+  font-size: var(--research-diagram-copy) !important;
+  line-height: 1.55 !important;
+}
+
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > figcaption {
+  padding: 0.75rem 1rem;
+  color: var(--text-muted);
+  font-size: var(--research-diagram-caption) !important;
+  line-height: 1.55 !important;
+}
+
+@media (min-width: 640px) {
+  .research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header h3 {
+    font-size: var(--research-diagram-title-wide) !important;
+  }
+
+  .research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header > p:not(.font-editorial-mono):not(.eyebrow):not(.status),
+  .research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header > div > p:not(.font-editorial-mono):not(.eyebrow):not(.status) {
+    font-size: var(--research-diagram-subtitle-wide) !important;
+  }
+
+  .research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > figcaption {
+    padding-inline: 1.5rem;
+    font-size: 0.75rem !important;
+  }
 }
 
 /*
@@ -60,9 +137,9 @@
 }
 
 /*
- * Concern grid: compact editorial records rather than stacked numbered cards.
- * The number shares the title line; descriptions stay quiet underneath. The
- * seventh/output concern spans the final row so the grid ends intentionally.
+ * Documentation-Driven Adaptive UX retains a small number of paper-specific
+ * graphics. They use the shared publication scale above while keeping their
+ * content-specific geometry here.
  */
 [data-research-entry="documentation-driven-adaptive-ux"] .paper-concern-grid > li {
   position: relative;
@@ -132,7 +209,7 @@
   overflow: hidden;
   margin: 2.25rem 0 2.75rem;
   border: 1px solid var(--border-subtle);
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
   background: var(--border-subtle);
   padding: 4.35rem 0 0;
   list-style: none;
@@ -156,11 +233,6 @@
   text-transform: uppercase;
 }
 
-/*
- * The accent rule is not decorative: it marks exclusions that belong to the
- * future AI / inference layer. Keep the legend explicit so the grouping does
- * not require readers to infer our color semantics.
- */
 [data-research-entry="documentation-driven-adaptive-ux"] .paper-limitations::after {
   content: "Purple rule = AI / inference";
   position: absolute;
