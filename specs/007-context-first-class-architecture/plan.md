@@ -139,13 +139,14 @@ Both use `ResearchFigureFrame.astro` and the shared Research diagram baseline de
 
 No React, client framework, animation dependency, or new component library is required.
 
-## Route Stability
+## Route Strategy
 
-Keep the existing published route/file:
+The canonical content file and public route are:
 
-- `src/content/research/context-as-first-class-architectural-primitive.mdx`
+- `src/content/research/product-knowledge-as-architecture.mdx`
+- `/research/product-knowledge-as-architecture/`
 
-The reader-facing title may evolve without forcing route churn.
+The earlier working-title route `/research/context-as-first-class-architectural-primitive/` is retained only as a compatibility redirect so existing links do not break. New internal links and publication metadata should use the canonical Product Knowledge route.
 
 ## Publication Strategy
 
@@ -165,10 +166,11 @@ Repository publication state and production deployment remain separate actions. 
 Before any production deployment:
 
 1. confirm publication frontmatter remains public
-2. inspect the title/subtitle hierarchy at narrow and wide widths
-3. inspect the shared diagram system in Day and Night themes
-4. inspect narrow and wide layouts across representative older and newer figures
-5. verify the two synthesis figures remain semantically correct
-6. verify public links do not expose unpublished detail routes as normal navigation
-7. run `npm run build`
-8. report any inability to verify rather than assuming success
+2. confirm the canonical Product Knowledge route and old-route redirect
+3. inspect the title/subtitle hierarchy at narrow and wide widths
+4. inspect the shared diagram system in Day and Night themes
+5. inspect narrow and wide layouts across representative older and newer figures
+6. verify the two synthesis figures remain semantically correct
+7. verify public links do not expose unpublished detail routes as normal navigation
+8. run `npm run build`
+9. report any inability to verify rather than assuming success
