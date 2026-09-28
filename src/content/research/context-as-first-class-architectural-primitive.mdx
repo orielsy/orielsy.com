@@ -16,6 +16,7 @@ relatedSlugs: ["specification-driven-ai-development", "documentation-driven-adap
 ---
 
 import ContextAsArchitectureVisual from '../../components/research/ContextAsArchitectureVisual.astro';
+import ProductKnowledgeArtifact from '../../components/research/ProductKnowledgeArtifact.astro';
 import DeclarativeProductCompositionVisual from '../../components/research/DeclarativeProductCompositionVisual.astro';
 
 Four questions have followed me across several investigations. How can coding agents retain project decisions across sessions? How should a repository select only the context relevant to a task? Can product documentation participate in interface behavior without replacing application state? If reliable interface capabilities already exist, how much of the final experience still needs to be assembled by hand?
@@ -62,26 +63,7 @@ Consider an account-review task. Engineering has already built customer identity
 
 A product or domain author could describe the task without implementing those mechanics:
 
-```text
-Account Review
-
-Purpose
-Investigate a restricted customer account.
-
-Relevant information
-- customer identity
-- restriction reason
-- recent activity
-- verification state
-
-Available actions
-- request identity verification
-- remove the restriction after verification succeeds
-- escalate to risk review
-
-Guidance
-Explain unavailable actions through their unmet prerequisites.
-```
+<ProductKnowledgeArtifact />
 
 The artifact does not retrieve transactions, verify identity, grant permission, or remove a restriction. What it contributes is intent, relevance, prerequisites, explanation, and composition guidance.
 
