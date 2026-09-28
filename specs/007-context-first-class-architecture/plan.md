@@ -2,13 +2,13 @@
 
 ## Objective
 
-Maintain the published synthesis article **Product Knowledge as Architecture: From Project Memory to Declarative Product Composition** as the canonical umbrella piece connecting development-time project memory, context selection, runtime product knowledge, and declarative product composition without overstating implementation maturity.
+Maintain the published synthesis article **Product Knowledge as Architecture: From Project Memory to Declarative Product Composition** as the canonical umbrella piece connecting durable project memory, context selection, runtime product knowledge, and declarative product composition without overstating implementation maturity.
 
 The phrase **Context as a First-Class Architectural Primitive** remains the thesis inside the article rather than the reader-facing title.
 
 ## Source Review
 
-Use the following repository artifacts as the factual and conceptual baseline:
+Use these repository artifacts as the factual and conceptual baseline:
 
 - `.specify/memory/constitution.md`
 - `specs/001-site-foundation/spec.md`
@@ -17,42 +17,35 @@ Use the following repository artifacts as the factual and conceptual baseline:
 - `src/content/research/documentation-driven-adaptive-ux.mdx`
 - `src/content/research/context-engineering-software-development.mdx`
 - `src/content/research/adaptive-ai-runtime-enterprise-ui.mdx`
+- `docs/decisions/006-research-diagram-publication-system.md`
 
-The retired `ai-across-interface-lifecycle.mdx` artifact is historical predecessor context only and must not be restored as a competing public entry.
+The retired `ai-across-interface-lifecycle.mdx` artifact remains historical predecessor context only.
 
-## Content Strategy
+## Editorial Strategy
 
-### 1. Start from the recurring pattern
-
-Open with the observation that several apparently separate investigations keep returning to the same architectural issue: software needs durable, selectable, applicable knowledge that can be used by different consumers without surrendering deterministic control.
-
-The new question added by this synthesis is whether that knowledge can become **composable** — whether it can participate in selecting and arranging trusted capabilities into a useful interface.
-
-### 2. Establish architectural homes without creating one universal hierarchy
-
-Use the conceptual mapping:
+The article should present the argument in a compressed seven-section arc rather than reproducing each stage of the discovery process as its own section.
 
 ```text
-Implemented behavior → Code
-Current state        → Data / application state
-Structure            → Schemas / contracts
-Meaning / Intent     → Product knowledge
-Composition          → Context + policy + capabilities
+The Missing Architectural Home
+        ↓
+Durable / Selectable / Applicable / Composable
+        ↓
+A Bounded Composition
+        ↓
+Authority Belongs to the Concern
+        ↓
+From Pages to Capability Systems
+        ↓
+Documentation as an Authoring Surface
+        ↓
+What the Thesis Still Has to Prove
 ```
 
-Clarify that the final two rows are the research proposition, not settled taxonomy.
+### 1. Reach the architectural gap quickly
 
-Authority is concern-specific:
+Open with the recurring questions, identify the missing architectural home for meaning, and state the working thesis without a long historical preamble.
 
-```text
-Current facts            → application state
-Current implementation   → code tells us what happens now
-Intended behavior        → governing specification / policy may reveal defective code
-Meaning and explanation  → product knowledge
-Conflict                 → surface the disagreement rather than silently choose one winner
-```
-
-### 3. Make the research progression explicit
+### 2. Preserve the research progression
 
 ```text
 Project Memory          → Durable
@@ -61,97 +54,76 @@ Documentation-Driven UX → Applicable
 Declarative Composition → Composable
 ```
 
-The first three stages point to distinct existing research threads. The fourth is the new proposition owned by this synthesis.
+The first three remain distinct research threads. The fourth is the new proposition owned by this synthesis.
 
-### 4. Keep development-time and runtime consumers distinct
+### 3. Keep development-time and runtime consumers distinct
 
-Development-time coding agents and runtime interface systems may draw from a broader knowledge architecture, but they are not the same operational layer.
+Use one concise explanation rather than a standalone long section. Coding agents and runtime interfaces may draw from a broader knowledge architecture, but they consume different projections with different lifecycles, authority boundaries, and failure modes.
 
-Development-time consumers may use specs, ADRs, repository rules, component contracts, and implementation context.
+### 4. Use one bounded capability example
 
-Runtime consumers may use product semantics, applicability, explanatory guidance, policy references, version/audience context, and current application state.
-
-### 5. Introduce capability-oriented composition
-
-Shift the discussion away from unconstrained “AI generates JSX” toward a bounded capability model:
-
-```text
-engineering-built capabilities
-+ current state
-+ authored product knowledge
-+ deterministic policy
-→ context / composition layer
-→ derived interface
-```
-
-The key architectural question is how much page-level orchestration must remain imperative once reliable capabilities and contracts already exist.
-
-Do not claim implementation was never a bottleneck; instead argue that as generation becomes cheaper, deciding what should exist and under what constraints becomes comparatively more valuable.
-
-### 6. Use one concrete conceptual example
-
-Use the account-review example with:
+The account-review example remains the primary concrete illustration:
 
 - restricted account state
 - missing identity verification
 - no active risk review
-- available domain/UI capabilities
+- trusted product capabilities
 - authored task intent and prerequisite explanation
 - deterministic policy that blocks restriction removal and permits escalation
-- a derived interface where verification is the relevant next step
+- a derived surface where verification is the relevant next step
 
-The visual must keep **state** and **policy** semantically separate.
+State and policy remain semantically distinct.
 
-### 7. Bound AI's role
+### 5. Keep authority concern-specific
 
-Position AI as interpreter/composer, not authority:
+Use the model:
 
-- interpret natural-language intent
-- map a task to known product concepts
-- retrieve relevant knowledge
-- select candidate capabilities
-- adapt explanation
-- propose a composition
+```text
+Current facts            → application state
+Implemented behavior     → code
+Intended behavior        → governing specification or policy
+Meaning and explanation  → product knowledge
+Disagreement             → expose the defect
+```
 
-Deterministic systems continue to own current state, authorization, side effects, and irreversible operations.
+The governing principle remains:
 
-### 8. Treat documentation as an authoring surface
+> Authority belongs to the artifact responsible for the concern.
 
-Documentation may be one human-friendly way to express product knowledge, but the architecture is the knowledge layer itself, potentially normalized into typed or structured representations.
+### 6. Position AI as interpreter/composer
 
-Do not equate the thesis with traditional docs-as-code.
+AI may interpret intent, retrieve product knowledge, connect concepts, select candidate capabilities, adapt explanation, or propose composition. It must not become the source of current facts, authorization, or irreversible execution outcomes.
 
-### 9. Finish with open questions rather than a framework launch
+### 7. Treat documentation as an authoring surface
 
-End with research questions around authority levels, synchronization, dynamic range, testing, representation, and inference boundaries.
+Documentation is one human-friendly input format. The durable architecture is the represented knowledge and the contracts governing its use.
 
-The final question should remain:
+### 8. End with what remains unproven
 
-> If state, trusted capabilities, deterministic policy, and product knowledge are explicit, how much of the final interface still needs to be authored imperatively?
+Finish with research questions around authority, synchronization, dynamic range, testing, representation, and inference boundaries rather than presenting a framework launch.
 
 ## Visual Implementation
 
-Maintain static Astro components under `src/components/research/` using current semantic design tokens and existing publication conventions:
+The two article figures remain static Astro components:
 
 - `ContextAsArchitectureVisual.astro`
 - `DeclarativeProductCompositionVisual.astro`
 
-### `ContextAsArchitectureVisual.astro`
+Both use `ResearchFigureFrame.astro` and the shared Research diagram baseline defined by ADR 006.
 
-- asks where concerns live in the architecture, not which artifact universally “wins”
-- separates established architectural homes from research propositions
-- surfaces Durable / Selectable / Applicable / Composable
-- states that authority remains scoped to the concern each artifact owns
+### Shared publication rules
 
-### `DeclarativeProductCompositionVisual.astro`
+- normal reading-column width is the default
+- `ResearchBreakout.astro` is used only when the figure genuinely needs more horizontal room
+- figure title is approximately 16-18px
+- primary nodes are approximately 14px
+- explanatory copy is approximately 11px
+- technical labels are approximately 9px
+- captions are approximately 11-12px
+- card padding is generally 14-16px unless the information structure requires otherwise
+- internal information architecture remains diagram-specific
 
-- separates current state from deterministic policy
-- labels product knowledge as **Authored product knowledge**
-- moves risk-escalation permission into deterministic policy
-- labels the output **Derived surface**
-- keeps deterministic ownership of state, authorization, and side effects visible
-
-Use `ResearchBreakout.astro` for the wider composition figure.
+`research-graphics.css` supplies a compatible baseline to existing Research figures so older visuals inherit the same publication scale while they are incrementally migrated to the shared frame.
 
 No React, client framework, animation dependency, or new component library is required.
 
@@ -161,7 +133,7 @@ Keep the existing published route/file:
 
 - `src/content/research/context-as-first-class-architectural-primitive.mdx`
 
-The reader-facing title may change without forcing route churn.
+The reader-facing title may evolve without forcing route churn.
 
 ## Publication Strategy
 
@@ -181,8 +153,9 @@ Repository publication state and production deployment remain separate actions. 
 Before any production deployment:
 
 1. confirm publication frontmatter remains public
-2. inspect both visuals in Day and Night themes
-3. inspect narrow and wide layouts
-4. verify public links do not expose unpublished detail routes as normal navigation
-5. run `npm run build`
-6. report any inability to verify rather than assuming success
+2. inspect the shared diagram system in Day and Night themes
+3. inspect narrow and wide layouts across representative older and newer figures
+4. verify the two synthesis figures remain semantically correct
+5. verify public links do not expose unpublished detail routes as normal navigation
+6. run `npm run build`
+7. report any inability to verify rather than assuming success
