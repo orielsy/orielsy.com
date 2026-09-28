@@ -73,9 +73,9 @@ const hasLineage = Boolean(origin || descendants.length > 0 || related.length > 
                 {origin.published ? (
                   <a
                     href={origin.href}
-                    class="inline-flex items-center gap-1 text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
+                    class="text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
                   >
-                    {origin.title} <span aria-hidden="true">→</span>
+                    {origin.title}
                   </a>
                 ) : (
                   <span class="inline-flex flex-wrap items-center gap-1.5 text-xs leading-5 text-[var(--text-muted)]">
@@ -98,9 +98,9 @@ const hasLineage = Boolean(origin || descendants.length > 0 || related.length > 
                   item.published ? (
                     <a
                       href={item.href}
-                      class="inline-flex items-center gap-1 text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
+                      class="text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
                     >
-                      {item.title} <span aria-hidden="true">→</span>
+                      {item.title}
                     </a>
                   ) : (
                     <span class="inline-flex flex-wrap items-center gap-1.5 text-xs leading-5 text-[var(--text-muted)]">
@@ -124,9 +124,9 @@ const hasLineage = Boolean(origin || descendants.length > 0 || related.length > 
                   item.published ? (
                     <a
                       href={item.href}
-                      class="inline-flex items-center gap-1 text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
+                      class="text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
                     >
-                      {item.title} <span aria-hidden="true">→</span>
+                      {item.title}
                     </a>
                   ) : (
                     <span class="inline-flex flex-wrap items-center gap-1.5 text-xs leading-5 text-[var(--text-muted)]">
@@ -149,9 +149,9 @@ const hasLineage = Boolean(origin || descendants.length > 0 || related.length > 
                 {relatedWorks.map((item) => (
                   <a
                     href={item.href}
-                    class="inline-flex items-center gap-1 text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
+                    class="text-xs leading-5 text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
                   >
-                    {item.label} <span aria-hidden="true">→</span>
+                    {item.label}
                   </a>
                 ))}
               </dd>
