@@ -22,6 +22,7 @@ const research = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/research' }),
   schema: z.object({
     title: z.string(),
+    subtitle: z.string().optional(),
     description: z.string(),
     tldr: z.string().optional(),
     tldrLabel: z.string().optional(),
