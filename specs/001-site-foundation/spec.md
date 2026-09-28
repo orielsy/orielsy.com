@@ -128,9 +128,9 @@ The Lab's Project entry is expected to accumulate multiple `associatedResearch` 
 
 Future phases must never be described as implemented before source exists. The Lab remains one application across these phases rather than a series of disconnected demos.
 
-### 6.4 Umbrella and future experiment
+### 6.4 Umbrella synthesis and future experiment
 
-- **AI Across the Interface Lifecycle: From Development-Time Generation to Runtime Adaptation** — unpublished umbrella Research placeholder connecting development-time agents/project memory, preparation-time structured knowledge, runtime intelligence, and execution-layer routing without replacing the focused pieces.
+- **Context as a First-Class Architectural Primitive** — unpublished synthesis Research draft evolved from the earlier **AI Across the Interface Lifecycle** placeholder. It connects development-time durable/selectable context, runtime product knowledge, and capability-oriented interface composition under deterministic state and policy. It is an architectural working thesis, not a claim that these concerns already form one implemented framework. The focused development-side, interface-side, and runtime Research pieces remain authoritative for their own questions.
 - **Browser-Local Inference as a UI Runtime Capability** — unpublished future Experiment subordinate to Adaptive AI Runtime. It is the future home for measured WebGPU/WebLLM browser-local work and must not contain assumed benchmarks, compatibility conclusions, or implementation claims.
 
 ### 6.5 Consolidation rules
