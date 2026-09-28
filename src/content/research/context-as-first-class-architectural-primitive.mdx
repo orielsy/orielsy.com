@@ -1,7 +1,7 @@
 ---
-title: "Context as a First-Class Architectural Primitive"
-description: "A working thesis connecting project memory, product knowledge, and declarative interface composition: what changes when context becomes part of the architecture rather than incidental prompt material?"
-tldr: "Code owns behavior, application state owns current truth, and schemas own structure. This essay asks whether meaning, intent, policy, and composition need an equally explicit architectural layer—and whether AI makes that layer newly useful without making the model the source of product truth."
+title: "Product Knowledge as Architecture: From Project Memory to Declarative Product Composition"
+description: "A synthesis of project memory, context engineering, and documentation-driven UX exploring whether product knowledge can become an architectural input to bounded interface composition."
+tldr: "Project memory makes intent durable. Context engineering makes it selectable. Documentation-driven UX makes authored knowledge applicable at runtime. This essay asks what comes next: whether explicit state, trusted capabilities, deterministic policy, and product knowledge can make parts of an interface declaratively composable without making AI the source of product truth."
 tldrLabel: "TL;DR — WORKING ARCHITECTURAL THESIS"
 pubDate: 2026-09-28
 type: "Architecture Exploration"
@@ -18,151 +18,114 @@ import ContextAsArchitectureVisual from '../../components/research/ContextAsArch
 import DeclarativeProductCompositionVisual from '../../components/research/DeclarativeProductCompositionVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 
-## The Pattern I Kept Running Into
+Over the last several months, I have been exploring what initially looked like separate problems.
 
-Over several experiments, I kept arriving at what initially looked like different problems.
+How can coding agents retain important project decisions across sessions? How should a repository select only the context relevant to the task at hand? Can product documentation participate in interface behavior without replacing deterministic application state? And if AI can generate interface components more cheaply, what becomes the more valuable architectural layer?
 
-How can a coding agent recover important project decisions after the conversation that produced them is gone? How should a repository select only the architectural rules, specifications, and implementation context relevant to the task at hand? Can product documentation participate in an interface without becoming the source of application truth? And if AI makes generating interface components increasingly cheap, what becomes the more valuable architectural layer?
+Each question produced its own investigation: durable project memory, task-aware context selection, documentation-driven adaptive UX. Each answered something on its own. But the more of them I work through, the more they appear to be manifestations of one deeper architectural question.
 
-I had been treating these as related but separate investigations.
+Software has long had explicit places for behavior, state, and structure. Code expresses implemented behavior. Databases and application state preserve current facts. Schemas define valid structure and contracts. The meaning surrounding those systems — intent, relevance, explanation, policy rationale, composition — is often more fragmented.
 
-Increasingly, I think they point toward the same deeper question:
+AI changes what software can do with that layer. Not because a language model should be allowed to improvise product behavior, but because product knowledge that was once primarily written for people can increasingly become input to the systems that build and operate software.
 
-> **What happens when context becomes a first-class architectural primitive?**
+That suggests a working thesis:
 
-By context, I do not mean everything that can be stuffed into a prompt. I mean durable knowledge about a system: intent, semantics, policy, relevance, constraints, provenance, relationships, and the information required to interpret what the application already knows.
+> **Context is becoming a first-class architectural primitive, and some interfaces may become derived views of structured product knowledge over a bounded capability system.**
 
-The interesting shift is not that software can suddenly read documentation. It is that knowledge which historically existed primarily for humans can increasingly become **input to the systems that build and operate software**.
+The first half of that sentence is the pattern my earlier work has been circling. The second half is the new question:
 
-That does not mean documentation should replace code. It may mean we have been missing an architectural layer between what a system *can do* and how those capabilities should be understood, selected, and composed.
+> **If reliable capabilities already exist, how much of a product's final composition still needs to be encoded imperatively — and how much can instead be derived from state, policy, product knowledge, and context?**
 
 ---
 
-## Software Has Sources of Truth — But Not Always for Meaning
+## The Pattern I Kept Running Into
 
-Software already has strong conventions for several kinds of authority.
+Each earlier investigation approached one edge of this question.
 
-Code expresses behavior. Databases and application state hold facts about the current world. Schemas describe valid structure and contracts. Tests provide another form of evidence about expected behavior.
+```text
+Project Memory          → make project knowledge durable
+Context Engineering     → select relevant durable knowledge
+Documentation-Driven UX → apply knowledge against runtime context
+Declarative Composition → ask whether knowledge can help assemble the experience
+```
 
-But product meaning is often less coherent.
+[From Prompts to Project Memory: Spec-Driven Development for Coding Agents](/research/specification-driven-ai-development) asked how specifications, decisions, and repository rules could become durable memory for coding agents — knowledge that survives the session that produced it.
 
-Why does this field matter? Which capability is relevant in this situation? Why is an action unavailable? What prerequisite must be satisfied? What should a new user see that an experienced operator may not need? Which product rule explains the current state? Which pieces of the interface belong together for this task?
+My still-unpublished work on context engineering for software development asks the follow-up: once that knowledge is durable, how does an agent receive only the subset relevant to the current task?
 
-Those answers may be scattered across:
+[Documentation-Driven Adaptive UX](/research/documentation-driven-adaptive-ux) moved the same pattern to runtime: authored product knowledge participating in interface behavior while deterministic application state and validation remain authoritative for the concerns they own.
 
-- product documentation
-- requirements and tickets
-- UI copy
-- source-code conditionals
-- support material
-- release notes
-- prompts
-- onboarding guides
-- architecture decisions
-- human memory
+Those pieces remain distinct. This article is the synthesis, but its new claim is not the recap. It is the **composition layer** those investigations begin to expose.
 
-The application frequently contains enough machinery to perform the task, but the *meaning around that machinery* has no equally deliberate home.
+---
+
+## Software Has Clear Homes for Behavior, State, and Structure
+
+Ask where a mature system's current behavior, state, or structural contracts live and there is usually a concrete answer.
+
+Ask where its meaning lives — why this flow exists, who this surface is for, when a capability is appropriate, why an action is unavailable, what should be explained at this moment — and the answer is often distributed across product documents, tickets, UI copy, support material, source-code conditionals, release notes, and human memory.
 
 <ContextAsArchitectureVisual />
 
-The last two rows in that model are the research proposition.
+The bottom half of that model is the research proposition.
 
-I am not arguing that every product needs a new database called `context`, or that prose should become executable application logic. I am asking whether **meaning, intent, and composition deserve explicit ownership in the architecture** rather than remaining accidental byproducts of implementation.
+Machine-readable product knowledge is not new. Rule engines, expert systems, configuration-driven products, model-driven systems, and knowledge graphs have long encoded forms of meaning and policy. What AI changes is the practical range of **structured and semi-structured human-authored knowledge** that software can interpret, connect, and use as context.
 
----
-
-## Context Becomes Architecture When the System Depends on It Deliberately
-
-Context is already everywhere in software. A route supplies context. User identity supplies context. Feature flags supply context. A conversation supplies context to an agent.
-
-What changes when context becomes architectural is that we begin treating it deliberately:
-
-1. **store** knowledge that should outlive the current interaction
-2. **scope** it so its authority and applicability are understood
-3. **select** the subset relevant to the current task
-4. **validate** it against deterministic application truth and policy
-5. **apply** it through bounded capabilities
-
-That progression matters because more context is not automatically better context.
-
-A system that loads every document, every rule, every decision, and every historical artifact into every task has not solved context engineering. It has created a larger filtering problem.
-
-The useful architecture is one where important knowledge can be durable **and** selectively brought into the working system when it is relevant.
-
-This is where several pieces of my existing research begin to connect.
+I am not arguing that every product needs a literal new database called `context`. I am asking whether meaning, intent, and composition deserve more explicit architectural ownership instead of remaining accidental byproducts of implementation.
 
 ---
 
-## Development-Time Context: Project Memory and SDD
+## Context as Architecture
 
-In [From Prompts to Project Memory: Spec-Driven Development for Coding Agents](/research/specification-driven-ai-development), I explored this problem from the development side.
+When I say context is becoming a first-class architectural primitive, I mean something more specific than “stuff in the prompt.”
 
-A coding conversation is useful working context, but it is a fragile place to store durable project intent. Specifications, constitutions, ADRs, plans, and repository rules can move important decisions into version-controlled project memory that later sessions can recover.
+**Durable.** Important context survives the interaction that produced it. Decisions, constraints, and product intent persist as versioned artifacts rather than evaporating with a conversation.
 
-That work produced a simple distinction:
+**Selectable.** Durability without selection is just a larger pile. The system needs the relevant subset of knowledge for the task at hand rather than every document every time.
 
-```text
-conversation context
-→ useful now
+**Applicable.** Knowledge has conditions. Guidance that is correct for one product state, version, role, or audience may be wrong for another. Applicability must be evaluated against explicit context rather than guessed.
 
-project memory
-→ should remain available later
-```
+**Composable.** This is the new question. Once knowledge is durable, selectable, and applicable, can it also participate in choosing and arranging trusted capabilities into a useful product surface?
 
-Spec-Driven Development is useful here not merely because a specification exists, but because the specification can become **selectable context for future work**.
+The first three properties map naturally to the research that came before this article. The fourth is the step I want to investigate next.
 
-That immediately creates a second problem: once a repository has durable memory, which pieces belong in the current task?
-
-That is the question behind my still-unpublished work on context engineering for software development and repository-specific context delivery. The objective is not a mega-prompt. It is a routing problem: identify the relevant durable knowledge without dragging the entire repository history into every agent session.
-
-So on the development side, the progression becomes:
-
-```text
-make context durable
-→ make context selectable
-→ make context available to the agent doing the work
-```
-
-That is already more architectural than “write a better prompt.”
+A primitive earns its place when the architecture is deliberately organized around it — when systems know how to store it, select it, validate where it applies, and constrain how it may affect behavior.
 
 ---
 
-## Runtime Context: Product Knowledge in the Interface
+## One Knowledge Architecture, Different Consumers
 
-[Documentation-Driven Adaptive UX](/research/documentation-driven-adaptive-ux) approaches the same pattern from the other side of the product boundary.
+Development-time context and runtime product knowledge are not operationally the same thing.
 
-Its Phase 1 experiment keeps application state and validation deterministic, then introduces authored product knowledge as another input to interface behavior.
+A coding agent may consume specifications, ADRs, architecture rules, component contracts, and implementation context. A runtime interface may consume product semantics, applicability metadata, explanatory guidance, policy references, and current user or product context.
 
-The key rule is:
+Those consumers have different lifecycles and failure modes. What they can share is a broader **knowledge architecture**: durable product intent represented explicitly enough that different systems can select the parts appropriate to their job.
 
-> **The application remains authoritative.**
-
-Documentation may explain why a field matters. It may describe version-specific guidance. It may identify which knowledge applies to the current state. But it does not get to redefine whether a required field is actually required.
-
-That distinction lets product knowledge influence the experience without turning prose into a shadow execution engine.
-
-The runtime progression looks different from the development-time one, but the shape is familiar:
+The authority model has to remain concern-specific.
 
 ```text
-current application state
-+ relevant product knowledge
-+ response policy
-→ contextual interface behavior
+Current facts            → application state
+Current implementation   → code tells us what happens now
+Intended behavior        → governing specification / policy may outrank defective code
+Meaning and explanation  → product knowledge
+Conflict                 → a defect to surface, not a silent winner-takes-all rule
 ```
 
-The important commonality is **selection**.
+That distinction matters to Spec-Driven Development. If a governing specification says a restriction must not be removed before identity verification and the implementation allows it anyway, the code does not become correct merely because it is executable.
 
-The interface does not need every support article. It needs the small subset of product knowledge that applies to the current state, user, version, and task.
+Likewise, product knowledge may describe a policy or explain why it exists, but deterministic policy and application code must still enforce the consequential rule.
 
-Development-time agents and runtime interfaces are different consumers. But both benefit from durable knowledge that can be selected according to context.
+The useful principle is not “code wins.” It is:
+
+> **Authority belongs to the artifact responsible for the concern.**
 
 ---
 
 ## From Generated Components to Capability Systems
 
-This is where the idea becomes more interesting to me.
+The obvious AI-and-UI story is generation: models can produce components and page code increasingly quickly.
 
-Much of the current conversation around AI-generated UI focuses on the ability to produce components or page code from a prompt. That is useful, but I do not think component generation is the deepest architectural consequence.
+That matters, but as generation becomes cheaper, another part of the problem becomes comparatively more valuable: deciding **what should exist, for whom, under what conditions, and within what constraints**.
 
 Suppose engineering has already built a trustworthy vocabulary of product capabilities:
 
@@ -178,13 +141,13 @@ Suppose engineering has already built a trustworthy vocabulary of product capabi
 - charts
 - workflow actions
 
-Each capability has real implementation behind it. Inputs and outputs are typed. Authorization exists. Validation exists. Side effects are bounded. Tests can verify the behavior.
+Each capability has real implementation behind it. Inputs and outputs are defined. Authorization exists. Validation exists. Side effects are bounded. Tests can verify the mechanics.
 
 At that point, a different question becomes possible:
 
-> **How much of the final product experience still has to be authored as imperative page orchestration?**
+> **How much final product composition still has to be authored as imperative page orchestration?**
 
-A product or domain author might describe a task in terms closer to the product itself:
+A product or domain author might describe an account-review task in the language of the product:
 
 ```text
 Account Review
@@ -207,9 +170,9 @@ Guidance
 Explain unavailable actions through their unmet prerequisites.
 ```
 
-That artifact did not implement identity verification. It did not write an authorization system. It did not create the transaction API or the account mutation. Engineering already supplied those capabilities.
+That artifact did not implement identity verification, authorization, transaction retrieval, or account mutation. Engineering already supplied those capabilities.
 
-What the artifact supplied was **intent, relevance, prerequisites, policy context, and composition guidance**.
+What it supplied was **intent, relevance, prerequisites, policy context, and composition guidance**.
 
 <ResearchBreakout mode="publication">
   <DeclarativeProductCompositionVisual />
@@ -217,101 +180,17 @@ What the artifact supplied was **intent, relevance, prerequisites, policy contex
 
 The non-coder version of this example is useful as an abstraction stress test, not as a staffing proposal.
 
-If a knowledgeable product or domain expert can describe a large portion of the desired experience without knowing how to implement its mechanics, then perhaps we have found a meaningful boundary: developers build reliable capabilities and constraints; product knowledge describes how those capabilities should participate in a task.
+If a knowledgeable domain author can describe a large portion of the desired experience without implementing its mechanics, then perhaps there is a meaningful boundary here: developers build reliable capabilities and constraints; product knowledge describes how those capabilities should participate in a task.
 
-AI can sit between those layers as an interpreter or composer without being trusted to invent the capabilities themselves.
-
----
-
-## The Page May Stop Being the Primary Authored Artifact
-
-Today, a web application often treats the page as the main unit of composition.
-
-A developer imports components, arranges them, wires state, encodes conditionals, decides what is visible, and embeds explanatory copy. Documentation is usually written around the resulting product.
-
-A capability-oriented architecture suggests another possibility for some classes of interface:
-
-```text
-available capabilities
-+ current state
-+ product knowledge
-+ policy
-→ composition
-→ interface
-```
-
-The page becomes more like a **derived view** of those inputs.
-
-A shorthand for the idea is:
-
-```text
-UI = f(state, capabilities, policy, context)
-```
-
-That is not an executable formula and it is not a claim that every screen should be generated at runtime.
-
-Some experiences require carefully authored interaction design. Some layouts encode important spatial meaning. Some workflows should remain deliberately fixed. Predictability can be a product requirement in its own right.
-
-But enterprise software also contains large amounts of repeated orchestration: the same capabilities rearranged around different roles, states, products, versions, workflows, and policy boundaries.
-
-That is where declarative composition becomes worth investigating.
-
-The goal would not be an infinitely malleable UI. It would be a **bounded vocabulary of trusted capabilities whose composition can vary without allowing the system to invent behavior outside its contracts**.
-
----
-
-## Documentation Is an Authoring Surface, Not the Whole Architecture
-
-This is an important distinction.
-
-“Documentation as code” is useful shorthand, but it can imply the wrong thing.
-
-Traditional docs-as-code generally means documentation receives software-engineering practices: version control, reviews, builds, automated checks, and deployment pipelines.
-
-What I am describing is different.
-
-Documentation can become one human-friendly authoring surface for **product knowledge**. That product knowledge may then be normalized, structured, tagged with provenance, connected to schemas, constrained by policy, and made selectable by other systems.
-
-The durable architecture is not necessarily Markdown.
-
-It is the layer of meaning that the Markdown represents.
-
-This distinction also prevents documentation from being given responsibilities it should not own.
-
-### Product knowledge can reasonably describe
-
-- intent
-- semantics
-- explanatory guidance
-- concept relationships
-- applicability
-- prerequisites
-- composition guidance
-- the reason behind a policy
-
-### Deterministic systems should continue to enforce
-
-- authentication
-- authorization
-- security invariants
-- authoritative current state
-- transactional side effects
-- data-integrity validation
-- irreversible operations
-
-The documentation may explain that identity verification is required before an account restriction can be removed.
-
-Application policy must still enforce it.
-
-That separation is not a limitation of the idea. It is what makes the idea usable.
+The limit is real. A requirement no existing capability satisfies still requires implementation. A composition layer assembles what is already trusted; it does not conjure missing behavior into existence.
 
 ---
 
 ## Where AI Actually Fits
 
-AI is what makes this architectural layer newly interesting, but I think it is easy to assign it the wrong job.
+AI is what makes this layer newly practical in more situations, but it is easy to assign it the wrong job.
 
-The weakest version of the idea is:
+The weak version is:
 
 ```text
 prompt
@@ -330,97 +209,130 @@ current state
 → validated interface
 ```
 
-AI can potentially help with the parts that historically required a human to bridge semantic gaps:
+AI can help bridge semantic gaps:
 
 - interpret natural-language intent
 - map a task to known product concepts
 - retrieve relevant product knowledge
 - select candidate capabilities
-- adapt explanation to the current context
+- adapt explanation to current context
 - propose a composition
 - translate human-authored knowledge into a structured representation
 
-But the architecture should still distinguish **interpretation** from **authority**.
+But the architecture must distinguish **interpretation** from **authority**.
 
-A model may infer that a user asking “Why can’t I remove this restriction?” is referring to identity-verification policy.
+A model may infer that “Why can't I remove this restriction?” refers to identity-verification policy. It should not get to invent whether verification succeeded, whether the user is authorized, or whether an irreversible action actually occurred.
 
-It should not get to invent whether verification actually succeeded.
-
-The more consequential the action, the more important that distinction becomes.
+The more consequential the action, the more important that boundary becomes.
 
 ---
 
-## A Different Abstraction Boundary for Product Development
+## Documentation Is an Authoring Surface, Not the Architecture
 
-This is the part I find most provocative.
+This distinction keeps the thesis from collapsing into “Markdown runs the product.”
 
-AI lowers the cost of generating implementation. That does not necessarily make implementation irrelevant. It may instead move engineering effort toward the things generation depends on:
+Traditional docs-as-code generally means documentation receives software-engineering practices: version control, review, build pipelines, automated checks, and deployment.
 
-- reliable capabilities
-- explicit contracts
-- durable product knowledge
-- deterministic policy
-- useful schemas
-- provenance
-- validation
-- context selection
+The claim here is different.
 
-In that world, developers spend less time hand-authoring every final composition and more time building the **safe capability layer from which compositions can be produced**.
+Documentation can become a human-friendly authoring surface for **product knowledge**. That knowledge can then be normalized, structured, tagged with provenance, connected to schemas, constrained by policy, and made selectable by other systems.
 
-Domain and product experts can express more of the product in the language of the domain rather than the language of the framework.
+The durable architecture is not necessarily Markdown.
 
-And AI becomes valuable not because it can generate arbitrary code, but because it can help bridge those two representations.
+It is the layer of meaning the Markdown represents.
 
-That is a different claim from “anyone can build software now.”
+That also keeps documentation from being handed responsibilities it should not own. Product knowledge can describe intent, semantics, applicability, prerequisites, explanation, composition guidance, and the rationale behind a policy. Deterministic systems still need to enforce authentication, authorization, security invariants, authoritative current state, transactional side effects, and irreversible operations.
 
-The developer has not disappeared. The abstraction boundary has moved upward.
+Documentation may explain that identity verification is required before a restriction can be removed. Application policy must still enforce it.
+
+That separation is not a limitation of the idea. It is what makes the idea usable.
 
 ---
 
-## Open Questions
+## The Page May Stop Being the Primary Authored Artifact
 
-This is still a working thesis, and the unresolved questions are substantial.
+The idea that interfaces can be derived rather than handcrafted has real lineage. Server-driven UI, declarative and model-driven systems, configuration-driven interfaces, and other forms of generated composition long predate the current AI wave.
 
-### How authoritative should product knowledge become?
+The shift I want to investigate is narrower: **structured product knowledge participating more directly in the derivation**.
 
-Some knowledge is explanatory. Some expresses policy. Some is merely editorial. The architecture needs explicit authority levels rather than treating every document as equally true.
+A capability-oriented architecture suggests a model like this:
 
-### How does structured product knowledge stay synchronized with implementation?
+```text
+available capabilities
++ current state
++ product knowledge
++ deterministic policy
+→ composition
+→ interface
+```
 
-If code and knowledge diverge, the context layer can become confidently wrong. Versioning, tests, provenance, and ownership become part of the problem.
+The page becomes more like a derived view of those inputs.
 
-### How much composition should be dynamic?
+A shorthand for the idea is:
 
-A system that can theoretically rearrange every interface does not necessarily produce a better product. Stability, learnability, and intentional interaction design still matter.
+```text
+UI = f(state, capabilities, policy, context)
+```
 
-### How do we test a derived interface?
+That is a thinking model, not an executable formula, and it is not a claim that every screen should be generated at runtime.
 
-If composition is partly declarative, tests may need to verify not only components but also capability selection, policy constraints, knowledge applicability, and allowed compositions.
+Some experiences require carefully authored interaction design. Some layouts encode important spatial meaning. Predictability can itself be a product requirement.
 
-### Where should inference stop?
+But enterprise software also contains substantial repeated orchestration: the same trusted capabilities rearranged around different roles, states, products, versions, workflows, and policy boundaries.
 
-The boundary between semantic interpretation and deterministic authority must remain visible enough to inspect, reason about, and govern.
+That is where declarative composition may earn its place.
 
-### What is the right representation for product knowledge?
-
-Markdown may be a useful authoring surface. Schemas may define structure. Knowledge graphs, typed objects, configuration, or domain-specific representations may be better for other parts of the system. The architecture should not prematurely confuse the authoring format with the underlying concept.
+If that holds, engineering does not disappear. Its abstraction boundary moves. Developers spend less time hand-authoring every final composition and more time building the capability, contract, policy, validation, and knowledge infrastructure from which safe compositions can be produced.
 
 ---
 
-## Context as a First-Class Primitive
+## What Product Knowledge Can and Cannot Own
 
-I started with coding-agent memory, adaptive documentation, and runtime interface experiments because they were practical problems in front of me.
+Restraint is what makes the thesis credible.
 
-The common thread became clearer only after looking across them.
+Product knowledge must not become a database. It can describe meaning around state; it does not own the current state itself.
 
-Software does not operate on behavior and state alone. It also depends on knowledge about what those things mean, which constraints matter now, which capabilities belong in the task, and how the system should explain itself.
+It must not become an execution engine. Capabilities execute; knowledge describes intent, relevance, and guidance.
 
-Historically, much of that knowledge has lived outside the executable architecture because software could not do very much with it directly.
+It must not become an authorization system. Permissions are enforced by deterministic systems with real contracts, not by prose.
 
-AI changes that boundary enough to make the layer worth designing explicitly.
+And it is not a substitute for validation. Knowledge that cannot be reconciled with the systems responsible for the concern can drift, and drifted knowledge can make a context layer confidently wrong.
 
-The interesting endpoint, to me, is not a model that can generate more components.
+When representations disagree, the architecture should expose the conflict and ask which artifact owns that concern. Runtime state may settle a question about current facts. Code may settle what the implementation currently does. A governing specification may show that implementation is defective. Product knowledge may need correction if its explanation no longer matches either.
 
-It is a product architecture in which **state, trusted capabilities, policy, and selected context are explicit enough that useful compositions can be derived without surrendering deterministic control**.
+The goal is not to create one universal source of truth. It is to make **authority explicit enough that disagreement becomes inspectable**.
 
-That is the thesis I want to investigate next.
+---
+
+## Toward Declarative Product Composition
+
+The conceptual model remains simple:
+
+```text
+UI = f(state, capabilities, policy, context)
+```
+
+State remains deterministic. Capabilities remain engineered and bounded. Policy constrains what is permitted. Product knowledge and selected context increasingly shape which capabilities are relevant, how they are explained, and how they may be composed into the experience.
+
+None of this removes engineering. It changes where engineering effort concentrates.
+
+The open questions are substantial:
+
+- **Authority levels.** Which product-knowledge artifacts are explanatory, which are normative, and which are merely editorial?
+- **Synchronization.** How do code, specifications, policy, and product knowledge stay aligned as each evolves?
+- **Dynamic range.** Which parts of composition can safely vary, and which should remain deliberately fixed?
+- **Testability.** How do we verify capability selection, knowledge applicability, policy constraints, and allowed compositions?
+- **Representation.** Is Markdown only the authoring surface while typed objects, schemas, knowledge graphs, or another model become the machine-facing representation?
+- **Inference boundaries.** Where should semantic interpretation stop and deterministic authority begin?
+
+I do not have final answers. That is why this is an architectural exploration rather than a framework announcement.
+
+Software already gives behavior, state, and structure deliberate representations. Meaning has often been more fragmented. What changes now is that product knowledge can increasingly become something software consumes rather than merely something people read.
+
+The interesting endpoint is not a model that can generate more components.
+
+It is the possibility that state, trusted capabilities, deterministic policy, and product knowledge become explicit enough that useful portions of an interface can be **derived without surrendering deterministic control**.
+
+Which leaves the question I think this research has been moving toward all along:
+
+> **If those layers are explicit, how much of the final interface still needs to be authored imperatively?**
