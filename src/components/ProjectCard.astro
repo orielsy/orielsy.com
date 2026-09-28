@@ -11,16 +11,6 @@ const { data, id } = entry;
 const isPublished = data.published;
 const isConceptDraft = isPublished && data.draft;
 const canOpen = isPublished || previewUnpublished;
-
-const statusStyles: Record<string, string> = {
-  'Active': 'text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/50 dark:bg-emerald-950/30',
-  'Prototype': 'text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-900/60 bg-amber-50/50 dark:bg-amber-950/30',
-  'Completed': 'text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/30',
-  'In Progress': 'text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-900/60 bg-purple-50/50 dark:bg-purple-950/30',
-  'Archived': 'text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/30',
-};
-
-const statusBadge = statusStyles[data.status] || 'text-[var(--text-secondary)] border-[var(--border-subtle)] bg-[var(--bg-secondary)]';
 ---
 
 <article
@@ -28,9 +18,9 @@ const statusBadge = statusStyles[data.status] || 'text-[var(--text-secondary)] b
   data-project-published={isPublished ? 'true' : 'false'}
   data-project-draft={isConceptDraft ? 'true' : 'false'}
   class:list={[
-    'project-item group relative flex flex-col p-6 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] transition-all duration-150',
-    canOpen && 'hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-strong)]',
-    !canOpen && 'opacity-75 cursor-pointer hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-strong)]',
+    'project-item group relative border-t border-[var(--border-subtle)] py-5 transition-colors first:border-t-0 sm:py-6',
+    canOpen && 'hover:bg-[var(--bg-secondary)]/30',
+    !canOpen && 'cursor-pointer opacity-80 hover:bg-[var(--bg-secondary)]/30',
   ]}
 >
   {!canOpen && (
@@ -40,112 +30,90 @@ const statusBadge = statusStyles[data.status] || 'text-[var(--text-secondary)] b
       aria-controls={`project-status-${id}`}
       aria-expanded="false"
       aria-label={`Show publication status for ${data.title}`}
-      class="absolute inset-0 z-10 rounded-lg border-0 bg-transparent p-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)]"
+      class="absolute inset-0 z-10 cursor-pointer border-0 bg-transparent p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--accent)]"
     ></button>
   )}
 
-  <div class="flex items-center justify-between gap-2 mb-3">
-    {!isPublished && previewUnpublished && (
-      <span class="px-2 py-0.5 rounded text-[11px] font-mono font-medium border text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800 bg-amber-50/80 dark:bg-amber-950/30">
-        Local Preview
-      </span>
-    )}
-    {!isPublished && !previewUnpublished && (
-      <span class="px-2 py-0.5 rounded text-[11px] font-mono font-medium border text-[var(--accent)] border-[var(--accent-border)] bg-[var(--accent-subtle)]">
-        Project in Progress
-      </span>
-    )}
-    {isConceptDraft && (
-      <span class="px-2 py-0.5 rounded text-[11px] font-mono font-medium border text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-900/60 bg-amber-50/60 dark:bg-amber-950/20">
-        Concept Draft
-      </span>
-    )}
-    {isPublished && (
-      <span class:list={['px-2 py-0.5 rounded text-[11px] font-mono font-medium border', statusBadge]}>
-        {data.status}
-      </span>
-    )}
-    {data.role && (
-      <span class="text-xs font-mono text-[var(--text-muted)]">{data.role}</span>
-    )}
-  </div>
-
-  <h3 class="text-lg sm:text-xl font-semibold tracking-tight text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors mb-2">
-    {canOpen ? (
-      <a href={`/projects/${id}`} class="focus:outline-none">
-        <span class="absolute inset-0" aria-hidden="true"></span>
-        {data.title}
-      </a>
-    ) : (
-      <span>{data.title}</span>
-    )}
-  </h3>
-
-  <p class="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed mb-5">
-    {data.summary}
-  </p>
-
-  {!canOpen && (
-    <div
-      id={`project-status-${id}`}
-      hidden
-      role="status"
-      aria-live="polite"
-      class="relative z-20 mb-5 rounded-md border border-amber-200 dark:border-amber-900/60 bg-amber-50/60 dark:bg-amber-950/20 px-3 py-2 text-xs leading-relaxed text-amber-900 dark:text-amber-200"
-    >
-      This project is still being developed and its public case study is not available yet.
-    </div>
-  )}
-
-  {data.architecture && (
-    <div class="mb-5 p-3 rounded bg-[var(--bg-secondary)]/50 border border-[var(--border-subtle)] text-xs font-mono text-[var(--text-secondary)]">
-      <div class="text-[10px] uppercase tracking-wider text-[var(--text-muted)] mb-1">Architecture</div>
-      <div>{data.architecture}</div>
-    </div>
-  )}
-
-  <div class="mt-auto pt-4 border-t border-[var(--border-subtle)] flex flex-wrap items-center justify-between gap-3 z-10">
-    <div class="flex flex-wrap gap-1.5">
-      {data.technologies.map((tech) => (
-        <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[var(--bg-secondary)] text-[var(--text-secondary)] border border-[var(--border-subtle)]">
-          {tech}
-        </span>
-      ))}
+  <div class="grid gap-4 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-8">
+    <div class="font-editorial-mono text-[10px] uppercase leading-5 tracking-[0.08em] text-[var(--text-muted)]">
+      <p class="text-[var(--accent)]">
+        {!isPublished ? (previewUnpublished ? 'Local preview' : 'In progress') : isConceptDraft ? 'Concept draft' : data.status}
+      </p>
+      {data.role && <p class="mt-1">{data.role}</p>}
     </div>
 
-    <div class="flex items-center gap-3 text-xs font-mono">
-      {isPublished && data.github && (
-        <a
-          href={data.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-analytics-event="project_repo"
-          data-analytics-project={id}
-          class="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-1"
-          aria-label={`View ${data.title} GitHub repository`}
+    <div class="min-w-0">
+      <div class="font-editorial-mono flex flex-wrap gap-x-4 gap-y-1 text-[10px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
+        <span>{data.status}</span>
+        {data.dateLabel && <span>{data.dateLabel}</span>}
+      </div>
+
+      <h3 class="font-display mt-2 text-lg font-semibold leading-snug tracking-[-0.025em] text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent)] sm:text-xl">
+        {canOpen ? (
+          <a href={`/projects/${id}`} class="focus:outline-none">
+            <span class="absolute inset-0" aria-hidden="true"></span>
+            {data.title}
+          </a>
+        ) : (
+          <span>{data.title}</span>
+        )}
+      </h3>
+
+      <p class="mt-2 max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">
+        {data.summary}
+      </p>
+
+      {!canOpen && (
+        <div
+          id={`project-status-${id}`}
+          hidden
+          role="status"
+          aria-live="polite"
+          class="relative z-20 mt-4 border-l border-[var(--accent)] pl-4 text-xs leading-6 text-[var(--text-secondary)]"
         >
-          <span>GitHub</span>
-          <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
-        </a>
+          This project is still being developed and its public case study is not available yet.
+        </div>
       )}
-      {isPublished && data.demo && (
-        <a
-          href={data.demo}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-analytics-event="project_demo"
-          data-analytics-project={id}
-          class="text-[var(--accent)] hover:underline flex items-center gap-1"
-          aria-label={`View ${data.title} live demo`}
-        >
-          <span>Demo</span>
-          <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
-        </a>
+
+      {data.architecture && (
+        <div class="mt-4 border-l border-[var(--border-strong)] pl-4">
+          <p class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Architecture</p>
+          <p class="mt-1 text-xs leading-6 text-[var(--text-secondary)]">{data.architecture}</p>
+        </div>
       )}
+
+      <div class="relative z-20 mt-5 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border-subtle)] pt-4">
+        <div class="flex flex-wrap gap-x-4 gap-y-2 font-editorial-mono text-[10px] uppercase tracking-[0.06em] text-[var(--text-muted)]">
+          {data.technologies.map((tech) => <span>{tech}</span>)}
+        </div>
+
+        <div class="font-editorial-mono flex items-center gap-4 text-[10px] uppercase tracking-[0.07em]">
+          {isPublished && data.github && (
+            <a
+              href={data.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics-event="project_repo"
+              data-analytics-project={id}
+              class="text-[var(--text-muted)] transition-colors hover:text-[var(--text-primary)]"
+            >
+              Repository ↗
+            </a>
+          )}
+          {isPublished && data.demo && (
+            <a
+              href={data.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics-event="project_demo"
+              data-analytics-project={id}
+              class="text-[var(--accent)] transition-colors hover:text-[var(--accent-hover)]"
+            >
+              Demo ↗
+            </a>
+          )}
+        </div>
+      </div>
     </div>
   </div>
 </article>
