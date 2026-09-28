@@ -19,6 +19,7 @@ import ContextAsArchitectureVisual from '../../components/research/ContextAsArch
 import ProductKnowledgeArtifact from '../../components/research/ProductKnowledgeArtifact.astro';
 import DeclarativeProductCompositionVisual from '../../components/research/DeclarativeProductCompositionVisual.astro';
 import ClaimAuthorityTable from '../../components/research/ClaimAuthorityTable.astro';
+import CompositionFormula from '../../components/research/CompositionFormula.astro';
 
 Four questions have followed me across several investigations. How can coding agents retain project decisions across sessions? How should a repository select only the context relevant to a task? Can product documentation participate in interface behavior without replacing application state? If reliable interface capabilities already exist, how much of the final experience still needs to be assembled by hand?
 
@@ -98,9 +99,7 @@ Its limit is equally important: composition cannot conjure a missing capability.
 
 The idea that interfaces can be derived has substantial lineage. Server-driven UI, declarative systems, model-driven systems, and configuration-driven products predate the current AI wave. The narrower proposition here is that structured product knowledge can participate more directly in the derivation.
 
-```text
-UI = f(state, capabilities, policy, context)
-```
+<CompositionFormula />
 
 This is a thinking model, not an executable formula and not an argument for generating every screen at runtime. Some interactions require careful authorship. Some layouts encode meaning. Predictability can itself be a requirement.
 
