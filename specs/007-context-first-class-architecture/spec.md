@@ -6,7 +6,7 @@
 
 ## 1. Goal
 
-Maintain the published synthesis article **Product Knowledge as Architecture: From Project Memory to Declarative Product Composition** as the canonical umbrella piece connecting project memory, context engineering, documentation-driven adaptive UX, and the new proposition of declarative product composition.
+Maintain the published synthesis article **Product Knowledge as Architecture**, with the subtitle **From Project Memory to Declarative Product Composition**, as the canonical umbrella piece connecting project memory, context engineering, documentation-driven adaptive UX, and the new proposition of declarative product composition.
 
 The reader-facing subject is **product knowledge as architecture**. The internal thesis remains:
 
@@ -202,7 +202,10 @@ The final question remains:
 ## 11. Publication
 
 - Content type: **Research / Architecture Exploration**
-- Canonical title: **Product Knowledge as Architecture: From Project Memory to Declarative Product Composition**
+- Canonical title: **Product Knowledge as Architecture**
+- Subtitle: **From Project Memory to Declarative Product Composition**
+- Metadata/SEO title may combine them as **Product Knowledge as Architecture: From Project Memory to Declarative Product Composition**.
+- Research content supports an explicit optional `subtitle` field; display rendering must not infer subtitles by splitting punctuation in `title`.
 - Core thesis phrase: **Context as a First-Class Architectural Primitive**
 - Existing file/route remains `context-as-first-class-architectural-primitive.mdx` to avoid unnecessary route churn after publication.
 - Publication state remains `status: published`, `published: true`, `draft: false`.
@@ -243,7 +246,8 @@ All visuals must:
 
 The article is in its intended published state when:
 
-- the reader-facing title remains **Product Knowledge as Architecture: From Project Memory to Declarative Product Composition**
+- the reader-facing title is **Product Knowledge as Architecture**
+- the reader-facing subtitle is **From Project Memory to Declarative Product Composition**
 - Context as a First-Class Architectural Primitive remains the thesis
 - the article uses the compressed seven-section editorial structure
 - existing Research is connected without stealing the scope of those pieces
