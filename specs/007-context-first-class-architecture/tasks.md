@@ -1,6 +1,6 @@
 # Tasks: Context as a First-Class Architectural Primitive
 
-- **Status:** Complete First Draft / Editorial + Build Verification Pending
+- **Status:** Published / Production Deployment Pending
 
 ## Research framing
 
@@ -40,9 +40,10 @@
 - [ ] Review narrow/mobile layout.
 - [ ] Review wide/desktop layout.
 - [ ] Run `npm run build`.
-- [ ] Explicitly review publication frontmatter before making the article public.
+- [x] Explicitly review publication frontmatter before making the article public.
 
 ## Publication
 
-- [ ] Set `status: published`, `published: true`, and a final publication date only after editorial approval.
-- [ ] Update this task file with final verification state before production deployment.
+- [x] Set `status: published`, `published: true`, `draft: false`, and publication date `2026-09-28` after Orielsy's explicit approval.
+- [x] Update the feature specification to record the publication decision.
+- [ ] Complete build/visual verification before production deployment.
