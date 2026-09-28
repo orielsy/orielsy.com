@@ -2,7 +2,7 @@
 
 ## Objective
 
-Maintain the published synthesis article **Product Knowledge as Architecture: From Project Memory to Declarative Product Composition** as the canonical umbrella piece connecting durable project memory, context selection, runtime product knowledge, and declarative product composition without overstating implementation maturity.
+Maintain the published synthesis article **Product Knowledge as Architecture**, with the subtitle **From Project Memory to Declarative Product Composition**, as the canonical umbrella piece connecting durable project memory, context selection, runtime product knowledge, and declarative product composition without overstating implementation maturity.
 
 The phrase **Context as a First-Class Architectural Primitive** remains the thesis inside the article rather than the reader-facing title.
 
@@ -102,6 +102,18 @@ Documentation is one human-friendly input format. The durable architecture is th
 
 Finish with research questions around authority, synchronization, dynamic range, testing, representation, and inference boundaries rather than presenting a framework launch.
 
+## Title Model
+
+Research entries may define an explicit optional `subtitle` field.
+
+For this article:
+
+- title: **Product Knowledge as Architecture**
+- subtitle: **From Project Memory to Declarative Product Composition**
+- metadata/SEO may combine them with a colon
+
+The visible Research header must render the fields directly. It must not infer a subtitle by splitting punctuation inside the title.
+
 ## Visual Implementation
 
 The two article figures remain static Astro components:
@@ -153,9 +165,10 @@ Repository publication state and production deployment remain separate actions. 
 Before any production deployment:
 
 1. confirm publication frontmatter remains public
-2. inspect the shared diagram system in Day and Night themes
-3. inspect narrow and wide layouts across representative older and newer figures
-4. verify the two synthesis figures remain semantically correct
-5. verify public links do not expose unpublished detail routes as normal navigation
-6. run `npm run build`
-7. report any inability to verify rather than assuming success
+2. inspect the title/subtitle hierarchy at narrow and wide widths
+3. inspect the shared diagram system in Day and Night themes
+4. inspect narrow and wide layouts across representative older and newer figures
+5. verify the two synthesis figures remain semantically correct
+6. verify public links do not expose unpublished detail routes as normal navigation
+7. run `npm run build`
+8. report any inability to verify rather than assuming success
