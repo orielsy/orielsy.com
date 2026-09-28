@@ -62,20 +62,14 @@ const formattedUpdateDate = data.updatedDate
     }).format(data.updatedDate)
   : null;
 
-const titleSeparatorIndex = data.title.indexOf(':');
-const displayTitle = titleSeparatorIndex >= 0
-  ? data.title.slice(0, titleSeparatorIndex).trim()
-  : data.title;
-const displaySubtitle = titleSeparatorIndex >= 0
-  ? data.title.slice(titleSeparatorIndex + 1).trim()
-  : null;
+const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
 ---
 
 <BaseLayout
-  title={published ? data.title : statusTitle}
+  title={published ? seoTitle : statusTitle}
   description={published ? data.description : statusDescription}
   image={published ? data.heroImage : undefined}
-  imageAlt={published ? data.title : undefined}
+  imageAlt={published ? seoTitle : undefined}
   articleDate={published ? data.pubDate.toISOString() : undefined}
   modifiedDate={published && data.updatedDate ? data.updatedDate.toISOString() : undefined}
   type={published ? 'article' : 'website'}
@@ -124,11 +118,11 @@ const displaySubtitle = titleSeparatorIndex >= 0
 
               <h1 class="font-display mt-6 max-w-5xl font-semibold text-[var(--text-primary)]">
                 <span class="block text-5xl leading-[1.02] tracking-[-0.05em] sm:text-6xl lg:text-7xl">
-                  {displayTitle}
+                  {data.title}
                 </span>
-                {displaySubtitle && (
+                {data.subtitle && (
                   <span class="mt-7 block max-w-4xl text-2xl font-medium leading-[1.18] tracking-[-0.03em] text-[var(--text-secondary)] sm:text-3xl lg:text-[2.35rem]">
-                    {displaySubtitle}
+                    {data.subtitle}
                   </span>
                 )}
               </h1>
