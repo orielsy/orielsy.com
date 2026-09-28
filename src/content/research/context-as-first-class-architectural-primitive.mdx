@@ -18,6 +18,7 @@ relatedSlugs: ["specification-driven-ai-development", "documentation-driven-adap
 import ContextAsArchitectureVisual from '../../components/research/ContextAsArchitectureVisual.astro';
 import ProductKnowledgeArtifact from '../../components/research/ProductKnowledgeArtifact.astro';
 import DeclarativeProductCompositionVisual from '../../components/research/DeclarativeProductCompositionVisual.astro';
+import ClaimAuthorityTable from '../../components/research/ClaimAuthorityTable.astro';
 
 Four questions have followed me across several investigations. How can coding agents retain project decisions across sessions? How should a repository select only the context relevant to a task? Can product documentation participate in interface behavior without replacing application state? If reliable interface capabilities already exist, how much of the final experience still needs to be assembled by hand?
 
@@ -77,13 +78,7 @@ A requirement no existing capability satisfies still requires implementation. Co
 
 A knowledge architecture does not need one universal source of truth. It needs explicit authority for each kind of claim.
 
-```text
-Current facts            → application state
-Implemented behavior     → code
-Intended behavior        → governing specification or policy
-Meaning and explanation  → product knowledge
-Disagreement             → a defect to expose
-```
+<ClaimAuthorityTable />
 
 This is more accurate than saying either code or documentation always wins. If a governing policy requires identity verification before removing a restriction and the implementation fails to enforce it, executable code does not make the behavior correct. If product guidance says verification succeeded while application state says it did not, the guidance cannot change the fact.
 
