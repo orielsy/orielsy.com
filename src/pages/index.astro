@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import FeaturedResearchVisual from '../components/home/FeaturedResearchVisual.astro';
 import ProgressiveEnhancementVisual from '../components/home/ProgressiveEnhancementVisual.astro';
 import FeaturedProjectVisual from '../components/home/FeaturedProjectVisual.astro';
-import TldrToggleButton from '../components/TldrToggleButton.astro';
 import ResearchFollowsBadge from '../components/ResearchFollowsBadge.astro';
 import ResearchContinuationBadge from '../components/ResearchContinuationBadge.astro';
 import ResearchProjectBadge from '../components/ResearchProjectBadge.astro';
@@ -91,7 +90,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
   <section class="border-b border-[var(--border-subtle)] py-16 sm:py-24 lg:py-28">
     <div class="site-shell grid gap-12 lg:grid-cols-12 lg:items-end">
       <div class="lg:col-span-8">
-        <div class="flex items-center gap-3 font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)] sm:text-[10px]">
+        <div class="flex items-center gap-3 font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">
           <span class="h-px w-10 bg-[var(--accent)]" aria-hidden="true"></span>
           <span>Orielsy Diaz &bull; Senior Frontend Engineer &bull; UI Architect</span>
         </div>
@@ -123,7 +122,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
       <div class="site-shell">
         <div class="flex flex-wrap items-end justify-between gap-5">
           <div>
-            <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
+            <p class="font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">
               Featured Research
             </p>
           </div>
@@ -131,7 +130,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
           <div class="flex flex-col items-start gap-3 sm:items-end">
             {(researchOrigins.get(featuredResearch.id) ||
               (researchProjectEntries.get(featuredResearch.id)?.length ?? 0) > 0) && (
-              <div class="flex flex-wrap items-center gap-2 sm:justify-end">
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-2 sm:justify-end">
                 {researchOrigins.get(featuredResearch.id) && (
                   <ResearchFollowsBadge {...researchOrigins.get(featuredResearch.id)!} />
                 )}
@@ -157,7 +156,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
         <article class="mt-6 border-t border-[var(--accent)] pt-7">
           <div class="grid gap-10 lg:grid-cols-12 lg:gap-12">
             <div class="lg:col-span-7">
-              <div class="flex flex-wrap items-center gap-x-4 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.09em] text-[var(--text-muted)]">
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-2 font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)]">
                 <span class="text-[var(--accent)]">{featuredResearch.data.type}</span>
                 <time datetime={featuredResearch.data.pubDate.toISOString()}>{formatDate(featuredResearch.data.pubDate)}</time>
                 {featuredResearch.data.readingTime && <span>{featuredResearch.data.readingTime}</span>}
@@ -173,24 +172,8 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                 {featuredResearch.data.description}
               </p>
 
-              {featuredResearch.data.tldr && (
-                <div class="mt-6">
-                  <TldrToggleButton controls={`tldr-home-featured-${featuredResearch.id}`} />
-                </div>
-              )}
-
-              {featuredResearch.data.tldr && (
-                <div
-                  id={`tldr-home-featured-${featuredResearch.id}`}
-                  class="mt-4 hidden max-w-2xl border-l border-[var(--accent-border)] pl-4"
-                  data-tldr-panel
-                >
-                  <p class="text-sm leading-7 text-[var(--text-secondary)]">{featuredResearch.data.tldr}</p>
-                </div>
-              )}
-
               {featuredResearch.data.tags?.length > 0 && (
-                <div class="mt-6 flex flex-wrap gap-x-4 gap-y-2 font-editorial-mono text-[8px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
+                <div class="mt-6 flex flex-wrap gap-x-4 gap-y-2 font-editorial-mono text-[10px] uppercase tracking-[0.06em] text-[var(--text-muted)]">
                   {featuredResearch.data.tags.map((tag) => <span>#{tag}</span>)}
                 </div>
               )}
@@ -211,7 +194,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                   <div class="border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5">
                     <ProgressiveEnhancementVisual />
                   </div>
-                  <figcaption class="mt-3 font-editorial-mono text-[9px] uppercase tracking-[0.14em] text-[var(--text-muted)]">
+                  <figcaption class="mt-3 font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">
                     Capability scales with environment; authority stays bounded
                   </figcaption>
                 </>
@@ -219,12 +202,12 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                 <FeaturedResearchVisual />
               ) : (
                 <aside class="border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5" aria-label="Featured research metadata">
-                  <p class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Topics</p>
+                  <p class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Topics</p>
                   <div class="mt-7 border-t border-[var(--border-subtle)]">
                     {featuredResearch.data.tags.map((tag, index) => (
                       <div class="flex items-center justify-between gap-4 border-b border-[var(--border-subtle)] py-3">
-                        <span class="font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-secondary)]">#{tag}</span>
-                        <span class="font-editorial-mono text-[8px] text-[var(--text-muted)]">0{index + 1}</span>
+                        <span class="font-editorial-mono text-[10px] uppercase tracking-[0.06em] text-[var(--text-secondary)]">#{tag}</span>
+                        <span class="font-editorial-mono text-[10px] text-[var(--text-muted)]">0{index + 1}</span>
                       </div>
                     ))}
                   </div>
@@ -242,7 +225,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
       <div class="site-shell">
         <div class="flex flex-wrap items-end justify-between gap-5">
           <div>
-            <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Latest Publications</p>
+            <p class="font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Latest Publications</p>
             <h2 class="font-display mt-3 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Research & Explorations</h2>
           </div>
           <a href="/research" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all →</a>
@@ -252,15 +235,15 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
           {recentResearchList.map((entry, index) => (
             <article class="group grid gap-4 border-b border-[var(--border-subtle)] py-7 last:border-b-0 sm:grid-cols-[130px_minmax(0,1fr)_auto] sm:gap-8">
               <div class="flex items-start gap-3 sm:block">
-                <span class="font-editorial-mono text-[9px] text-[var(--accent)]">{String(entry.data.researchNumber ?? index + 1).padStart(2, '0')}</span>
+                <span class="font-editorial-mono text-[10px] text-[var(--accent)]">{String(entry.data.researchNumber ?? index + 1).padStart(2, '0')}</span>
                 <div class="min-w-0 sm:mt-3">
-                  <time datetime={entry.data.pubDate.toISOString()} class="font-editorial-mono block text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
+                  <time datetime={entry.data.pubDate.toISOString()} class="font-editorial-mono block text-[10px] uppercase tracking-[0.06em] text-[var(--text-muted)]">
                     {formatDate(entry.data.pubDate)}
                   </time>
                   {(researchOrigins.get(entry.id) ||
                     (researchContinuationCounts.get(entry.id) ?? 0) > 0 ||
                     (researchProjectEntries.get(entry.id)?.length ?? 0) > 0) && (
-                    <div class="mt-2 flex min-w-0 flex-col items-start gap-2">
+                    <div class="mt-3 flex min-w-0 flex-col items-start gap-2">
                       {researchOrigins.get(entry.id) && (
                         <ResearchFollowsBadge {...researchOrigins.get(entry.id)!} />
                       )}
@@ -284,7 +267,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
               </div>
 
               <div>
-                <div class="flex flex-wrap gap-x-4 gap-y-1 font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
+                <div class="flex flex-wrap gap-x-4 gap-y-1 font-editorial-mono text-[10px] uppercase tracking-[0.06em] text-[var(--text-muted)]">
                   <span>{entry.data.type}</span>
                   {entry.data.readingTime && <span>{entry.data.readingTime}</span>}
                 </div>
@@ -292,23 +275,6 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                   <a href={`/research/${entry.id}`} class="transition-colors hover:text-[var(--accent)]">{entry.data.title}</a>
                 </h3>
                 <p class="mt-3 max-w-3xl text-sm leading-7 text-[var(--text-secondary)]">{entry.data.description}</p>
-
-                {entry.data.tldr && (
-                  <div class="mt-5">
-                    <TldrToggleButton controls={`tldr-home-${entry.id}`} />
-                  </div>
-                )}
-
-                {entry.data.tldr && (
-                  <div
-                    id={`tldr-home-${entry.id}`}
-                    class="mt-4 hidden max-w-3xl border-l border-[var(--accent-border)] pl-4"
-                    data-tldr-panel
-                  >
-                    <p class="text-sm leading-7 text-[var(--text-secondary)]">{entry.data.tldr}</p>
-                  </div>
-                )}
-
               </div>
 
               <span class="hidden text-[var(--text-muted)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:block" aria-hidden="true">→</span>
@@ -324,7 +290,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
       <div class="site-shell">
         <div class="flex flex-wrap items-end justify-between gap-5">
           <div>
-            <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">From Theory to Practice</p>
+            <p class="font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">From Theory to Practice</p>
             <h2 class="font-display mt-3 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Selected Implementation</h2>
           </div>
           <a href="/projects" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all →</a>
@@ -332,7 +298,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
 
         <article class="mt-10 grid gap-8 border-t border-[var(--accent)] pt-6 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div>
-            <div class="flex flex-wrap items-start gap-x-4 gap-y-2 font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">
+            <div class="flex flex-wrap items-start gap-x-4 gap-y-2 font-editorial-mono text-[10px] uppercase tracking-[0.07em] text-[var(--text-muted)]">
               <span>{featuredProject.data.status}</span>
               <span>{featuredProject.data.role}</span>
               <span>{featuredProject.data.dateLabel ?? formatDate(featuredProject.data.date)}</span>
@@ -354,12 +320,12 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             <FeaturedProjectVisual />
           ) : (
             <aside class="border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5" aria-label="Selected project technologies">
-              <p class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Technology</p>
+              <p class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Technology</p>
               <ul class="mt-7 border-t border-[var(--border-subtle)]">
                 {featuredProject.data.technologies.slice(0, 6).map((technology, index) => (
                   <li class="flex items-center justify-between gap-4 border-b border-[var(--border-subtle)] py-3">
-                    <span class="font-editorial-mono text-[9px] uppercase tracking-[0.07em] text-[var(--text-secondary)]">{technology}</span>
-                    <span class="font-editorial-mono text-[8px] text-[var(--text-muted)]">0{index + 1}</span>
+                    <span class="font-editorial-mono text-[10px] uppercase tracking-[0.06em] text-[var(--text-secondary)]">{technology}</span>
+                    <span class="font-editorial-mono text-[10px] text-[var(--text-muted)]">0{index + 1}</span>
                   </li>
                 ))}
               </ul>
@@ -370,69 +336,24 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
     </section>
   )}
 
-  <section class="border-t border-[var(--border-subtle)] bg-[var(--bg-secondary)]/40 py-7">
-    <div class="site-shell flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
-      <div class="shrink-0 font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
+  <section class="border-t border-[var(--border-subtle)] bg-[var(--bg-secondary)]/40 py-10 sm:py-12">
+    <div class="site-shell grid gap-6 lg:grid-cols-12 lg:gap-8">
+      <div class="font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] lg:col-span-3">
         Areas of Inquiry
       </div>
 
-      <ol class="grid flex-1 border-l border-t border-[var(--border-subtle)] sm:grid-cols-2 lg:grid-cols-4">
+      <ol class="border-y border-[var(--border-subtle)] lg:col-span-9">
         {explorationAreas.map((area, index) => (
-          <li class="border-b border-r border-[var(--border-subtle)] px-4 py-4">
-            <div class="flex gap-3">
-              <span class="font-editorial-mono text-[9px] text-[var(--accent)]">{String(index + 1).padStart(2, '0')}</span>
-              <div>
-                <h2 class="font-display text-xs font-semibold leading-5 text-[var(--text-primary)]">{area.title}</h2>
-                <p class="font-editorial-mono mt-2 text-[8px] uppercase tracking-[0.08em] text-[var(--text-muted)]">{area.tag}</p>
-                <p class="mt-3 text-[11px] leading-5 text-[var(--text-secondary)]">{area.description}</p>
-              </div>
+          <li class="grid gap-2 border-b border-[var(--border-subtle)] py-4 last:border-b-0 sm:grid-cols-[42px_minmax(0,1fr)_160px] sm:items-start sm:gap-6">
+            <span class="font-editorial-mono text-[10px] text-[var(--accent)]">{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <h2 class="font-display text-sm font-semibold leading-6 text-[var(--text-primary)]">{area.title}</h2>
+              <p class="mt-1 text-xs leading-5 text-[var(--text-secondary)]">{area.description}</p>
             </div>
+            <p class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] sm:text-right">{area.tag}</p>
           </li>
         ))}
       </ol>
     </div>
   </section>
-
-  <script>
-    document.querySelectorAll<HTMLButtonElement>('[data-tldr-toggle]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const panelId = button.getAttribute('aria-controls');
-        const panel = panelId ? document.getElementById(panelId) : null;
-        if (!panel) return;
-
-        const expanded = button.getAttribute('aria-expanded') === 'true';
-        button.setAttribute('aria-expanded', String(!expanded));
-        panel.classList.toggle('hidden', expanded);
-
-        const symbol = button.querySelector<HTMLElement>('[data-tldr-symbol]');
-        if (symbol) symbol.textContent = expanded ? '+' : '−';
-
-        if (!expanded) {
-          panel.setAttribute('tabindex', '-1');
-
-          requestAnimationFrame(() => {
-            panel.focus({ preventScroll: true });
-
-            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const rect = panel.getBoundingClientRect();
-            const margin = 30;
-            let scrollDelta = 0;
-
-            if (rect.bottom > window.innerHeight - margin) {
-              scrollDelta = rect.bottom - window.innerHeight + margin;
-            } else if (rect.top < margin) {
-              scrollDelta = rect.top - margin;
-            }
-
-            if (scrollDelta !== 0) {
-              window.scrollBy({
-                top: scrollDelta,
-                behavior: reduceMotion ? 'auto' : 'smooth',
-              });
-            }
-          });
-        }
-      });
-    });
-  </script>
 </BaseLayout>
