@@ -1,73 +1,58 @@
-<figure class="context-architecture-figure not-prose my-10 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]">
-  <header class="border-b border-[var(--border-subtle)] px-4 py-4 sm:px-6">
-    <div class="flex flex-wrap items-center justify-between gap-3">
-      <p class="font-editorial-mono m-0 text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]">Context architecture</p>
-      <span class="font-editorial-mono rounded-full border border-[var(--border-subtle)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Working model</span>
-    </div>
-    <h3 class="font-display mt-2 mb-0 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Where do these concerns live in the architecture?</h3>
-    <p class="mt-2 max-w-3xl text-sm leading-6 text-[var(--text-secondary)]">Implemented behavior, current state, and structure already have clear homes. The research question is whether meaning and composition deserve equally explicit ones.</p>
+<figure class="context-architecture-figure not-prose my-8 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)] px-4 py-5 sm:px-6 sm:py-6">
+  <header class="mb-5 sm:mb-6">
+    <h3 class="m-0 text-base font-semibold tracking-tight text-[var(--text-primary)] sm:text-lg">Where do these concerns live in the architecture?</h3>
+    <p class="mt-1 max-w-2xl text-xs leading-5 text-[var(--text-secondary)] sm:text-sm sm:leading-6">Implemented behavior, current state, and structure already have clear homes. The proposition is to give meaning and composition equally explicit ownership.</p>
   </header>
 
-  <div class="border-b border-[var(--border-subtle)]">
-    <section aria-label="Established architectural homes">
-      <div class="px-4 pt-3 pb-2 sm:px-5">
-        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.14em] text-[var(--text-muted)]">Established architectural homes</p>
-      </div>
-      <div class="grid gap-px bg-[var(--border-subtle)] md:grid-cols-3">
-        <article class="bg-[var(--bg-card)] p-4 sm:p-5">
-          <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Implemented behavior</p>
-          <h4 class="font-display mt-2 text-xl font-semibold text-[var(--text-primary)]">Code</h4>
-          <p class="mt-3 text-xs leading-5 text-[var(--text-secondary)]">Deterministic mechanics, side effects, algorithms, and what the current implementation actually does.</p>
-        </article>
+  <section aria-label="Established architectural homes">
+    <p class="mb-2 font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Established architectural homes</p>
+    <div class="grid gap-px overflow-hidden rounded-md border border-[var(--border-subtle)] bg-[var(--border-subtle)] md:grid-cols-3">
+      <article class="bg-[var(--bg-card)] p-4">
+        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Implemented behavior</p>
+        <h4 class="mt-1.5 text-sm font-semibold text-[var(--text-primary)]">Code</h4>
+        <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">Mechanics, side effects, algorithms, and what the system does now.</p>
+      </article>
 
-        <article class="bg-[var(--bg-card)] p-4 sm:p-5">
-          <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Current state</p>
-          <h4 class="font-display mt-2 text-xl font-semibold text-[var(--text-primary)]">Data</h4>
-          <p class="mt-3 text-xs leading-5 text-[var(--text-secondary)]">The authoritative current facts the application knows about the world.</p>
-        </article>
+      <article class="bg-[var(--bg-card)] p-4">
+        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Current state</p>
+        <h4 class="mt-1.5 text-sm font-semibold text-[var(--text-primary)]">Data</h4>
+        <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">The authoritative current facts the application knows.</p>
+      </article>
 
-        <article class="bg-[var(--bg-card)] p-4 sm:p-5">
-          <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Structure</p>
-          <h4 class="font-display mt-2 text-xl font-semibold text-[var(--text-primary)]">Schemas</h4>
-          <p class="mt-3 text-xs leading-5 text-[var(--text-secondary)]">Contracts describing valid shapes, fields, relationships, and interfaces.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="border-t border-[var(--accent-border)] bg-[var(--bg-secondary)]" aria-label="Research proposition">
-      <div class="px-4 pt-3 pb-2 sm:px-5">
-        <p class="font-editorial-mono text-[8px] uppercase tracking-[0.14em] text-[var(--accent)]">Research proposition</p>
-      </div>
-      <div class="grid gap-px bg-[var(--accent-border)] md:grid-cols-2">
-        <article class="bg-[var(--bg-secondary)] p-4 sm:p-5">
-          <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Meaning / intent</p>
-          <h4 class="font-display mt-2 text-xl font-semibold text-[var(--text-primary)]">Product knowledge</h4>
-          <p class="mt-3 text-xs leading-5 text-[var(--text-secondary)]">Why something matters, what guidance applies, how concepts relate, and what the product is trying to accomplish.</p>
-        </article>
-
-        <article class="bg-[var(--bg-secondary)] p-4 sm:p-5">
-          <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Composition</p>
-          <h4 class="font-display mt-2 text-xl font-semibold text-[var(--text-primary)]">Context + policy + capabilities</h4>
-          <p class="mt-3 text-xs leading-5 text-[var(--text-secondary)]">Which trusted capabilities are relevant now, which policies constrain them, and how the experience may be assembled.</p>
-        </article>
-      </div>
-    </section>
-  </div>
-
-  <div class="px-4 py-3 sm:px-6">
-    <div class="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
-      <p class="font-editorial-mono m-0 text-[8px] uppercase tracking-[0.14em] text-[var(--text-muted)]">A context primitive becomes useful when it is</p>
-      <p class="font-editorial-mono m-0 flex flex-wrap items-center gap-x-2 gap-y-1 text-[8px] uppercase tracking-[0.12em] text-[var(--text-primary)]" aria-label="Durable, selectable, applicable, composable">
-        <span>Durable</span><span class="text-[var(--accent)]" aria-hidden="true">→</span>
-        <span>Selectable</span><span class="text-[var(--accent)]" aria-hidden="true">→</span>
-        <span>Applicable</span><span class="text-[var(--accent)]" aria-hidden="true">→</span>
-        <span>Composable</span>
-      </p>
+      <article class="bg-[var(--bg-card)] p-4">
+        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Structure</p>
+        <h4 class="mt-1.5 text-sm font-semibold text-[var(--text-primary)]">Schemas</h4>
+        <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">Contracts for valid shapes, fields, relationships, and interfaces.</p>
+      </article>
     </div>
+  </section>
+
+  <section class="mt-5" aria-label="Research proposition">
+    <p class="mb-2 font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">Research proposition</p>
+    <div class="grid gap-px overflow-hidden rounded-md border border-[var(--accent-border)] bg-[var(--accent-border)] md:grid-cols-2">
+      <article class="bg-[var(--bg-secondary)] p-4">
+        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Meaning and intent</p>
+        <h4 class="mt-1.5 text-sm font-semibold text-[var(--text-primary)]">Product knowledge</h4>
+        <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">Purpose, relevance, explanation, prerequisites, and policy rationale.</p>
+      </article>
+
+      <article class="bg-[var(--bg-secondary)] p-4">
+        <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Composition</p>
+        <h4 class="mt-1.5 text-sm font-semibold text-[var(--text-primary)]">Context + policy + capabilities</h4>
+        <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">Which trusted capabilities matter now and how they may be assembled.</p>
+      </article>
+    </div>
+  </section>
+
+  <div class="mt-6 flex flex-wrap items-center gap-2 font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-primary)]" aria-label="Durable, selectable, applicable, composable">
+    <span>Durable</span><span class="text-[var(--accent)]" aria-hidden="true">→</span>
+    <span>Selectable</span><span class="text-[var(--accent)]" aria-hidden="true">→</span>
+    <span>Applicable</span><span class="text-[var(--accent)]" aria-hidden="true">→</span>
+    <span>Composable</span>
   </div>
 
-  <figcaption class="border-t border-[var(--border-subtle)] px-4 py-3 text-[10px] leading-5 text-[var(--text-muted)] sm:px-6">
-    The proposal is additive: context and product knowledge do not replace code, application state, schemas, tests, governing specifications, or deterministic enforcement. Authority remains scoped to the concern each artifact owns.
+  <figcaption class="mt-6 border-t border-[var(--border-subtle)] pt-4 text-[11px] leading-5 text-[var(--text-muted)] sm:text-xs sm:leading-6">
+    The proposal is additive. Product knowledge does not replace code, application state, schemas, tests, governing specifications, or deterministic enforcement. Authority remains scoped to the concern each artifact owns.
   </figcaption>
 </figure>
 
