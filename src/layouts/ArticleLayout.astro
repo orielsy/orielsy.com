@@ -172,7 +172,7 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
                   {relatedProjects.length > 0 && (
                     <ResearchProjectBadge
                       href={relatedProjects.length === 1 ? `/projects/${relatedProjects[0].id}` : '#research-lineage'}
-                      count={relatedProjects.get?.length}
+                      count={relatedProjects.length}
                     />
                   )}
                 </div>
