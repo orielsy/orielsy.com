@@ -52,28 +52,28 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       <span class="rounded-full border border-[var(--accent-border)] px-2.5 py-1 font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--accent)]">Restricted</span>
     </header>
 
-    <ul class="m-0 divide-y divide-[var(--border-subtle)] bg-[var(--bg-primary)] p-0">
-      <li class="m-0 flex items-stretch justify-between gap-2 p-0">
+    <ul data-derived-surface-list class="divide-y divide-[var(--border-subtle)] bg-[var(--bg-primary)]">
+      <li class="flex items-stretch justify-between gap-2">
         <span class="flex min-w-0 flex-1 items-center py-2.5 pl-4 pr-2 font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Customer profile</span>
         <span class="flex min-w-0 items-center justify-end py-2.5 pl-2 pr-4 text-right text-[11px] text-[var(--text-primary)]">Jordan Rivera</span>
       </li>
-      <li class="m-0 flex items-stretch justify-between gap-2 p-0">
+      <li class="flex items-stretch justify-between gap-2">
         <span class="flex min-w-0 flex-1 items-center py-2.5 pl-4 pr-2 font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Recent transactions</span>
         <span class="flex min-w-0 items-center justify-end py-2.5 pl-2 pr-4 text-right text-[11px] text-[var(--text-primary)]">3 entries, 1 blocked transfer</span>
       </li>
-      <li class="m-0 flex items-stretch justify-between gap-2 p-0">
+      <li class="flex items-stretch justify-between gap-2">
         <span class="flex min-w-0 flex-1 items-center py-2.5 pl-4 pr-2 font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Restriction reason</span>
         <span class="flex min-w-0 items-center justify-end py-2.5 pl-2 pr-4 text-right text-[11px] text-[var(--text-primary)]">Identity verification required</span>
       </li>
-      <li class="m-0 flex items-stretch justify-between gap-2 p-0">
+      <li class="flex items-stretch justify-between gap-2">
         <span class="flex min-w-0 flex-1 items-center py-2.5 pl-4 pr-2 font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Request verification</span>
         <span class="flex min-w-0 items-center justify-end py-2.5 pl-2 pr-4 text-right font-editorial-mono text-[9px] text-[var(--accent)]">Prerequisite for removal</span>
       </li>
-      <li class="m-0 flex items-stretch justify-between gap-2 p-0">
+      <li class="flex items-stretch justify-between gap-2">
         <span class="flex min-w-0 flex-1 items-center py-2.5 pl-4 pr-2 font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Remove restriction</span>
         <span class="flex min-w-0 items-center justify-end py-2.5 pl-2 pr-4 text-right font-editorial-mono text-[9px] text-[var(--text-muted)] line-through decoration-[var(--text-muted)]">Blocked: prerequisite unmet</span>
       </li>
-      <li class="m-0 flex items-stretch justify-between gap-2 p-0">
+      <li class="flex items-stretch justify-between gap-2">
         <span class="flex min-w-0 flex-1 items-center py-2.5 pl-4 pr-2 font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Escalate to risk</span>
         <span class="flex min-w-0 items-center justify-end py-2.5 pl-2 pr-4 text-right font-editorial-mono text-[9px] text-[var(--accent)]">Permitted</span>
       </li>
@@ -85,18 +85,20 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 <style>
   .composition-figure :global(p),
-  .composition-figure :global(h4),
-  .composition-figure :global(ul),
-  .composition-figure :global(li) {
-    margin: 0;
+  .composition-figure :global(h4) {
+    margin-bottom: 0;
+  }
+</style>
+
+<style is:global>
+  [data-derived-surface-list] {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
   }
 
-  .composition-figure :global(ul),
-  .composition-figure :global(li) {
-    padding: 0;
-  }
-
-  .composition-figure :global(ul) {
-    list-style: none;
+  [data-derived-surface-list] > li {
+    margin: 0 !important;
+    padding: 0 !important;
   }
 </style>
