@@ -1,6 +1,6 @@
 # Specification: Context as a First-Class Architectural Primitive
 
-- **Status:** Drafting / Editorial Review Pending
+- **Status:** Published / Active Research
 - **Owner:** Orielsy Diaz
 - **Feature Directory:** `specs/007-context-first-class-architecture/`
 
@@ -181,7 +181,7 @@ Use language such as **working thesis**, **architectural exploration**, **propos
 
 ## 9. Article Shape
 
-The first complete draft should cover:
+The published article covers:
 
 1. **The Pattern I Kept Running Into**
 2. **Software Has Sources of Truth — But Not Always for Meaning**
@@ -199,10 +199,12 @@ The exact headings may evolve editorially if the argument remains intact.
 ## 10. Taxonomy & Publication
 
 - Content type: **Research / Architecture Exploration**
-- Working title: **Context as a First-Class Architectural Primitive**
-- The previous `ai-across-interface-lifecycle.mdx` artifact is unpublished and may be replaced before publication rather than preserved as a public route.
-- The new article should remain `published: false` during initial editorial and visual review.
-- Once the article itself is complete and reviewed, it may be published as a finished Research piece while still describing the architectural model as a working thesis.
+- Title: **Context as a First-Class Architectural Primitive**
+- The previous `ai-across-interface-lifecycle.mdx` artifact was unpublished and was replaced before publication rather than preserved as a public route.
+- Orielsy explicitly approved publication on 2026-09-28.
+- Publication state is `status: published`, `published: true`, `draft: false`.
+- Publication date is 2026-09-28.
+- The article is a finished published Research piece while still describing the architectural model as a working thesis.
 - Do not use the site's public **In Progress** state merely because the research direction remains open; publication state describes whether the article itself is ready.
 
 ## 11. Visual Requirements
@@ -223,7 +225,7 @@ Visuals must:
 
 ## 12. Acceptance Criteria
 
-The feature is ready for publication when:
+The article is published when:
 
 - the old umbrella placeholder has been replaced by a coherent synthesis rather than duplicated by a competing article
 - the thesis connects existing Research without stealing the scope of those pieces
@@ -234,4 +236,5 @@ The feature is ready for publication when:
 - speculative claims are labeled as such
 - the article is editorially complete enough to stand alone
 - the relevant site-foundation research roadmap is updated to reflect the evolved umbrella thesis
-- `npm run build` succeeds, or inability to verify the build is reported explicitly
+- publication frontmatter is public
+- `npm run build` succeeds before production deployment, or inability to verify the build is reported explicitly
