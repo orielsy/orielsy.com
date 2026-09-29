@@ -1,4 +1,14 @@
 /*
+ * Publication metadata should remain small, but not miniature. Keep the mono
+ * system at a 10px floor across research headers, callouts, and embedded
+ * publication graphics so Overview remains approachable as well as compact.
+ */
+[data-research-entry] > header .font-editorial-mono,
+.research-reading .font-editorial-mono {
+  font-size: 0.625rem;
+}
+
+/*
  * Shared publication rhythm for research details.
  * ResearchBreakout owns horizontal geometry; this layer owns the vertical
  * cadence around those plates so papers do not have to reinvent it.
