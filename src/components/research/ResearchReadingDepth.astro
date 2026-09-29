@@ -18,15 +18,11 @@ const {
     </p>
   </div>
 
-  <div class="reading-depth__tabs" role="tablist" aria-label="Choose reading depth">
+  <div class="reading-depth__tabs" role="group" aria-label="Choose reading depth">
     <button
       class="reading-depth__tab"
       type="button"
-      role="tab"
-      id="reading-depth-tab-overview"
-      aria-controls="reading-depth-overview"
-      aria-selected="true"
-      tabindex="0"
+      aria-pressed="true"
       data-reading-depth-target="overview"
     >
       <span class="reading-depth__label">Overview</span>
@@ -36,11 +32,7 @@ const {
     <button
       class="reading-depth__tab"
       type="button"
-      role="tab"
-      id="reading-depth-tab-full"
-      aria-controls="reading-depth-full"
-      aria-selected="false"
-      tabindex="-1"
+      aria-pressed="false"
       data-reading-depth-target="full"
     >
       <span class="reading-depth__label">Full Research</span>
@@ -52,31 +44,42 @@ const {
 <script>
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+  const getFullResearchElements = (article: HTMLElement) => {
+    const marker = article.querySelector<HTMLElement>('[data-reading-depth-marker="full"]');
+    if (!marker) return { marker: null, elements: [] as HTMLElement[] };
+
+    const elements: HTMLElement[] = [];
+    let sibling = marker.nextElementSibling;
+
+    while (sibling) {
+      if (sibling instanceof HTMLElement) elements.push(sibling);
+      sibling = sibling.nextElementSibling;
+    }
+
+    return { marker, elements };
+  };
+
   const activateReadingDepth = (
     article: HTMLElement,
     depth: 'overview' | 'full',
-    options: { updateUrl?: boolean; scrollToPanel?: boolean; focusTab?: boolean } = {},
+    options: { updateUrl?: boolean; scrollToContent?: boolean } = {},
   ) => {
-    const { updateUrl = false, scrollToPanel = false, focusTab = false } = options;
+    const { updateUrl = false, scrollToContent = false } = options;
     const switcher = article.querySelector<HTMLElement>('[data-reading-depth-switcher]');
-    if (!switcher) return;
+    const overview = article.querySelector<HTMLElement>('[data-reading-depth-overview]');
+    const { marker, elements: fullResearch } = getFullResearchElements(article);
+    if (!switcher || !overview || !marker) return;
 
     article.dataset.readingDepth = depth;
     article.dataset.readingDepthEnhanced = 'true';
 
-    const tabs = Array.from(switcher.querySelectorAll<HTMLButtonElement>('[data-reading-depth-target]'));
-    tabs.forEach((tab) => {
-      const selected = tab.dataset.readingDepthTarget === depth;
-      tab.setAttribute('aria-selected', String(selected));
-      tab.tabIndex = selected ? 0 : -1;
-      if (selected && focusTab) tab.focus();
+    switcher.querySelectorAll<HTMLButtonElement>('[data-reading-depth-target]').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.readingDepthTarget === depth));
     });
 
-    const panels = Array.from(article.querySelectorAll<HTMLElement>('[data-reading-depth-panel]'));
-    panels.forEach((panel) => {
-      const selected = panel.dataset.readingDepthPanel === depth;
-      panel.hidden = !selected;
-      panel.toggleAttribute('inert', !selected);
+    overview.hidden = depth !== 'overview';
+    fullResearch.forEach((element) => {
+      element.hidden = depth !== 'full';
     });
 
     const toc = article.querySelector<HTMLElement>('aside[aria-label="Research navigation"]');
@@ -92,9 +95,9 @@ const {
       history.replaceState(history.state, '', `${url.pathname}${url.search}${url.hash}`);
     }
 
-    if (scrollToPanel) {
-      const panel = article.querySelector<HTMLElement>(`[data-reading-depth-panel="${depth}"]`);
-      panel?.scrollIntoView({
+    if (scrollToContent) {
+      const target = depth === 'overview' ? overview : marker;
+      target.scrollIntoView({
         behavior: reducedMotion.matches ? 'auto' : 'smooth',
         block: 'start',
       });
@@ -106,45 +109,27 @@ const {
     if (!switcher || switcher.dataset.readingDepthBound === 'true') return;
     switcher.dataset.readingDepthBound = 'true';
 
+    const { marker, elements: fullResearch } = getFullResearchElements(article);
     let initialDepth: 'overview' | 'full' = new URL(window.location.href).searchParams.get('depth') === 'full'
       ? 'full'
       : 'overview';
 
     if (window.location.hash) {
       const hashTarget = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
-      if (hashTarget?.closest('[data-reading-depth-panel="full"]')) initialDepth = 'full';
+      if (hashTarget && fullResearch.some((element) => element === hashTarget || element.contains(hashTarget))) {
+        initialDepth = 'full';
+      }
     }
 
+    if (!marker) return;
     activateReadingDepth(article, initialDepth);
 
     switcher.addEventListener('click', (event) => {
       if (!(event.target instanceof Element)) return;
-      const tab = event.target.closest<HTMLButtonElement>('[data-reading-depth-target]');
-      const depth = tab?.dataset.readingDepthTarget;
+      const button = event.target.closest<HTMLButtonElement>('[data-reading-depth-target]');
+      const depth = button?.dataset.readingDepthTarget;
       if (depth !== 'overview' && depth !== 'full') return;
       activateReadingDepth(article, depth, { updateUrl: true });
-    });
-
-    switcher.addEventListener('keydown', (event) => {
-      if (!(event instanceof KeyboardEvent)) return;
-      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
-
-      const tabs = Array.from(switcher.querySelectorAll<HTMLButtonElement>('[data-reading-depth-target]'));
-      const currentIndex = tabs.findIndex((tab) => tab === document.activeElement);
-      if (currentIndex === -1) return;
-
-      event.preventDefault();
-      let nextIndex = currentIndex;
-      if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-      if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % tabs.length;
-      if (event.key === 'Home') nextIndex = 0;
-      if (event.key === 'End') nextIndex = tabs.length - 1;
-
-      const nextTab = tabs[nextIndex];
-      const depth = nextTab?.dataset.readingDepthTarget;
-      if (depth === 'overview' || depth === 'full') {
-        activateReadingDepth(article, depth, { updateUrl: true, focusTab: true });
-      }
     });
 
     article.addEventListener('click', (event) => {
@@ -155,7 +140,7 @@ const {
 
       activateReadingDepth(article, depth, {
         updateUrl: true,
-        scrollToPanel: true,
+        scrollToContent: true,
       });
     });
   });
@@ -221,7 +206,7 @@ const {
     color: var(--text-primary);
   }
 
-  .reading-depth__tab[aria-selected='true'] {
+  .reading-depth__tab[aria-pressed='true'] {
     border-color: color-mix(in srgb, var(--accent) 55%, var(--border-subtle));
     background: color-mix(in srgb, var(--accent) 7%, var(--bg-card));
     color: var(--text-primary);
@@ -246,6 +231,13 @@ const {
     line-height: 1.4;
     text-transform: uppercase;
     color: var(--text-muted);
+  }
+
+  :global([data-reading-depth-marker='full']) {
+    height: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    scroll-margin-top: 6rem;
   }
 
   @media (max-width: 639px) {
