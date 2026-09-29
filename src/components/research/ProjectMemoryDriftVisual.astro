@@ -5,7 +5,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 <ResearchFigureFrame
   className="is-open"
-  figureNumber="05"
+  figureNumber="07"
   eyebrow="Observed repository inconsistency"
   title="Persistence without reconciliation"
   caption="Version control makes drift visible; it does not perform maintenance. This figure does not assert that either artifact automatically outranks the other."
@@ -50,14 +50,8 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     padding: 0.25rem 0 1.5rem;
   }
 
-  section {
-    min-width: 0;
-  }
-
-  .heading-row {
-    display: grid;
-    gap: 0.25rem;
-  }
+  section { min-width: 0; }
+  .heading-row { display: grid; gap: 0.25rem; }
 
   .current-heading {
     display: flex;
@@ -66,10 +60,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     gap: 1rem;
   }
 
-  .current-heading :global(.branch-icon) {
-    flex: none;
-    color: var(--accent);
-  }
+  .current-heading :global(.branch-icon) { flex: none; color: var(--accent); }
 
   .label,
   .date,
@@ -77,9 +68,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   .source-note,
   .drift-outcomes span,
   li span,
-  code {
-    font-family: var(--font-mono-ui);
-  }
+  code { font-family: var(--font-mono-ui); }
 
   .label,
   .date,
@@ -92,9 +81,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   .label,
   .date,
-  .source-note {
-    color: var(--text-muted);
-  }
+  .source-note { color: var(--text-muted); }
 
   section > strong {
     display: block;
@@ -129,13 +116,11 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   }
 
   .divergence::before,
-  .divergence::after {
-    display: none;
-  }
+  .divergence::after { display: none; }
 
   .divergence span {
-    background: var(--bg-card);
     border: 1px solid var(--accent);
+    background: var(--bg-card);
     padding: 0.25rem 0.55rem;
     color: var(--accent);
   }
@@ -180,13 +165,8 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     padding: 0.85rem;
   }
 
-  .drift-outcomes > div + div {
-    border-top: 1px solid var(--border-strong);
-  }
-
-  .drift-outcomes span {
-    color: var(--accent);
-  }
+  .drift-outcomes > div + div { border-top: 1px solid var(--border-strong); }
+  .drift-outcomes span { color: var(--accent); }
 
   .drift-outcomes p {
     margin: 0.25rem 0 0 !important;
@@ -221,13 +201,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       content: '';
     }
 
-    .drift-outcomes {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .drift-outcomes > div {
-      padding: 0.85rem 1rem;
-    }
+    .drift-outcomes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
     .drift-outcomes > div + div {
       border-top: 0;
