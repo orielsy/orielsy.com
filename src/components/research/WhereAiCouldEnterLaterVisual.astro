@@ -2,13 +2,13 @@
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 const stages = [
-  { title: 'Application truth', detail: 'Authoritative state' },
-  { title: 'Deterministic validation', detail: 'Known requirements' },
-  { title: 'Context filtering', detail: 'Reduce candidates' },
-  { title: 'Inference', detail: 'Resolve remaining ambiguity', inference: true },
-  { title: 'Evidence reconciliation', detail: 'Constrain inferred candidates' },
-  { title: 'Response policy', detail: 'Decide UI authority' },
-  { title: 'UI response', detail: 'Explanation or action', output: true },
+  { title: 'Application truth', detail: 'Authoritative state', inference: false, output: false },
+  { title: 'Deterministic validation', detail: 'Known requirements', inference: false, output: false },
+  { title: 'Context filtering', detail: 'Reduce candidates', inference: false, output: false },
+  { title: 'Inference', detail: 'Resolve remaining ambiguity', inference: true, output: false },
+  { title: 'Evidence reconciliation', detail: 'Constrain inferred candidates', inference: false, output: false },
+  { title: 'Response policy', detail: 'Decide UI authority', inference: false, output: false },
+  { title: 'UI response', detail: 'Explanation or action', inference: false, output: true },
 ] as const;
 ---
 
