@@ -37,12 +37,12 @@ The baseline diagram scale is intentionally compact and internally consistent:
 - figure title: approximately 16-18px
 - subtitle: approximately 12-13px
 - primary node/value: approximately 14px
-- technical/category labels: approximately 9px
-- explanatory copy: approximately 11px
+- technical/category labels: **10px minimum**
+- explanatory copy: approximately 11-12px
 - caption: approximately 11-12px
 - ordinary card padding: approximately 14-16px unless the information structure requires otherwise
 
-The goal is not to make every element small. It is to avoid mixing oversized presentation headlines with undersized microcopy inside the same technical figure.
+The goal is not to make every element small. It is to avoid mixing oversized presentation headlines with undersized microcopy inside the same technical figure. Research-diagram metadata and category labels must not drop below 10px merely to preserve density.
 
 ### Shared Research baseline
 
@@ -68,6 +68,7 @@ A pipeline should still read like a pipeline. A comparison should still read lik
 - Shared scale changes can be tuned centrally instead of repeated across many components.
 - Existing diagrams can migrate incrementally to `ResearchFigureFrame` while receiving the shared baseline immediately.
 - New diagram work should begin with the shared frame unless a documented content-specific reason requires a different shell.
+- Technical labels and diagram metadata should remain legible at a 10px minimum rather than collapsing into decorative microtype.
 - No React, client framework, animation library, or new component dependency is introduced.
 
 ## Non-goals
