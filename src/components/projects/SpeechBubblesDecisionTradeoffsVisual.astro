@@ -1,0 +1,157 @@
+---
+import ResearchFigureFrame from '../research/ResearchFigureFrame.astro';
+
+const rows = [
+  {
+    number: '01',
+    decision: 'Separate graphics and inference',
+    gain: 'UI can evolve apart from the model runtime',
+    cost: 'Local process setup and coordination',
+  },
+  {
+    number: '02',
+    decision: 'Accept transcripts in the client',
+    gain: 'Presentation policy stays near the caption UI',
+    cost: 'Other clients need compatible or shared policy',
+  },
+  {
+    number: '03',
+    decision: 'Electron output, OBS composition',
+    gain: 'Operator controls stay apart from the on-air surface',
+    cost: 'Specific to a desktop broadcast workflow',
+  },
+];
+---
+
+<ResearchFigureFrame
+  figureNumber="03"
+  eyebrow="Three source-stated decisions"
+  title="Separation has a cost"
+  caption="These are the case study's stated rationales and trade-offs, not measured improvements. The source describes the system as a working prototype, not a production distribution."
+>
+  <div class="table-head" aria-hidden="true">
+    <span></span>
+    <span>Decision</span>
+    <span class="accent">Responsibility gained</span>
+    <span>Cost retained</span>
+  </div>
+
+  <div class="decision-list">
+    {rows.map(({ number, decision, gain, cost }) => (
+      <section class="decision-row">
+        <span class="row-number">{number}</span>
+        <strong>{decision}</strong>
+        <p class="gain">
+          <span class="mobile-label">Responsibility gained</span>
+          {gain}
+        </p>
+        <p class="cost">
+          <span class="mobile-label">Cost retained</span>
+          {cost}
+        </p>
+      </section>
+    ))}
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-figure-frame) :global(p) {
+    margin: 0;
+  }
+
+  .table-head {
+    display: none;
+  }
+
+  .decision-list {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .decision-row {
+    display: grid;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.15rem 0;
+  }
+
+  .row-number,
+  .mobile-label,
+  .table-head {
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .row-number {
+    color: var(--text-muted);
+  }
+
+  strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .gain,
+  .cost {
+    padding-left: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  .gain {
+    border-left: 2px solid var(--accent);
+  }
+
+  .cost {
+    border-left: 2px solid var(--border-strong);
+  }
+
+  .mobile-label {
+    display: block;
+    margin-bottom: 0.2rem;
+    color: var(--text-muted);
+  }
+
+  .gain .mobile-label {
+    color: var(--accent);
+  }
+
+  @media (min-width: 768px) {
+    .table-head,
+    .decision-row {
+      grid-template-columns: 2rem minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1.25rem;
+    }
+
+    .table-head {
+      display: grid;
+      padding-bottom: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .table-head .accent {
+      color: var(--accent);
+    }
+
+    .decision-row {
+      align-items: start;
+      padding: 1rem 0;
+    }
+
+    .gain,
+    .cost {
+      border-left: 0;
+      padding-left: 0;
+    }
+
+    .mobile-label {
+      display: none;
+    }
+  }
+</style>
