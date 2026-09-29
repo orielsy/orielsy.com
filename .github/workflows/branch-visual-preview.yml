@@ -1,0 +1,133 @@
+name: Branch Visual Preview
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - gh-pages
+      - production-deploy-trigger
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: branch-visual-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    name: Build and capture branch preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      ASTRO_TELEMETRY_DISABLED: "1"
+      PREVIEW_ORIGIN: http://127.0.0.1:4321
+
+    steps:
+      - name: Check out requested branch
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build branch
+        run: npm run build
+
+      - name: Install Chromium for visual capture
+        run: npx --yes playwright@1.55.0 install --with-deps chromium
+
+      - name: Start built site
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/orielsy-preview.log 2>&1 &
+          echo $! > /tmp/orielsy-preview.pid
+          for attempt in {1..30}; do
+            if curl --fail --silent "$PREVIEW_ORIGIN/" > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/orielsy-preview.log
+          exit 1
+
+      - name: Capture configured routes
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p branch-preview/screenshots
+
+          while IFS= read -r route || [[ -n "$route" ]]; do
+            route="${route%%#*}"
+            route="$(echo "$route" | xargs)"
+            [[ -z "$route" ]] && continue
+
+            slug="$(echo "$route" | sed -E 's#^/##; s#/$##; s#[^A-Za-z0-9._-]+#-#g')"
+            [[ -z "$slug" ]] && slug="home"
+            url="$PREVIEW_ORIGIN$route"
+
+            echo "Capturing $url"
+
+            npx --yes playwright@1.55.0 screenshot \
+              --browser chromium \
+              --color-scheme light \
+              --viewport-size "1440,1100" \
+              --full-page \
+              "$url" \
+              "branch-preview/screenshots/${slug}--desktop-light.png"
+
+            npx --yes playwright@1.55.0 screenshot \
+              --browser chromium \
+              --color-scheme dark \
+              --viewport-size "1440,1100" \
+              --full-page \
+              "$url" \
+              "branch-preview/screenshots/${slug}--desktop-dark.png"
+
+            npx --yes playwright@1.55.0 screenshot \
+              --browser chromium \
+              --color-scheme light \
+              --viewport-size "390,844" \
+              --full-page \
+              "$url" \
+              "branch-preview/screenshots/${slug}--mobile-light.png"
+
+            npx --yes playwright@1.55.0 screenshot \
+              --browser chromium \
+              --color-scheme dark \
+              --viewport-size "390,844" \
+              --full-page \
+              "$url" \
+              "branch-preview/screenshots/${slug}--mobile-dark.png"
+          done < .preview/routes.txt
+
+      - name: Write preview manifest
+        run: |
+          cat > branch-preview/manifest.txt <<EOF
+          repository=${GITHUB_REPOSITORY}
+          branch=${GITHUB_REF_NAME}
+          commit=${GITHUB_SHA}
+          run_id=${GITHUB_RUN_ID}
+          routes_file=.preview/routes.txt
+          production_deployed=false
+          EOF
+          cp .preview/routes.txt branch-preview/routes.txt
+          cp /tmp/orielsy-preview.log branch-preview/server.log
+
+      - name: Include built site
+        run: cp -R dist branch-preview/dist
+
+      - name: Upload branch visual preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: branch-visual-preview-${{ github.run_id }}
+          path: branch-preview/
+          if-no-files-found: error
+          retention-days: 7
