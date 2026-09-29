@@ -22,18 +22,15 @@ const {
 } = Astro.props;
 ---
 
-<figure class:list={['research-figure-frame', 'not-prose', className]} data-research-diagram>
+<figure class:list={['research-figure-frame', 'not-prose', figureNumber && 'has-figure-number', className]} data-research-diagram>
   <header>
     <div class="heading">
-      {(figureNumber || eyebrow) && (
-        <div class="figure-meta">
-          {figureNumber && <p class="figure-number">Figure {figureNumber}</p>}
-          {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-        </div>
-      )}
+      {figureNumber && <p class="figure-number">Figure {figureNumber}</p>}
+      {!figureNumber && eyebrow && <p class="eyebrow">{eyebrow}</p>}
       <h3>{title}</h3>
       {subtitle && <p class="subtitle">{subtitle}</p>}
     </div>
+    {figureNumber && eyebrow && <p class="figure-basis">{eyebrow}</p>}
     {status && <p class="status">{status}</p>}
   </header>
 
@@ -75,6 +72,7 @@ const {
   }
 
   .figure-number,
+  .figure-basis,
   .eyebrow,
   .status {
     font-family: var(--font-mono-ui);
@@ -85,25 +83,13 @@ const {
     text-transform: uppercase;
   }
 
-  .figure-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.25rem 0.8rem;
-  }
-
   .figure-number {
     color: var(--accent);
   }
 
+  .figure-basis,
   .eyebrow {
     color: var(--text-muted);
-  }
-
-  .figure-number + .eyebrow::before {
-    margin-right: 0.8rem;
-    color: var(--border-strong);
-    content: '/';
   }
 
   .status {
@@ -168,10 +154,39 @@ const {
       font-size: 0.75rem;
     }
   }
-  /* Enlarged type for the project-memory figures; the standard card surface remains intact. */
+  /* Project-memory figures inherit the lab's publication header/body/caption composition. */
+  .has-figure-number {
+    padding: 0;
+  }
+
+  .has-figure-number header {
+    align-items: center;
+    margin: 0;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1rem !important;
+  }
+
+  .has-figure-number .heading {
+    flex: 1 1 20rem;
+  }
+
+  .has-figure-number .figure-basis {
+    flex-basis: 100%;
+    text-align: left;
+  }
+
+  .has-figure-number .body {
+    padding: 1.25rem 1rem;
+  }
+
+  .has-figure-number figcaption {
+    margin: 0;
+    padding: 0.9rem 1rem !important;
+  }
+
   .is-open h3 {
-    margin-top: 0.5rem !important;
-    font-size: 1.25rem;
+    margin-top: 0.2rem !important;
+    font-size: 1.125rem;
   }
 
   .is-open figcaption {
@@ -179,12 +194,25 @@ const {
   }
 
   @media (min-width: 640px) {
-    .is-open header {
-      margin-bottom: 1.65rem;
+    .has-figure-number header {
+      padding: 1rem 1.5rem !important;
+    }
+
+    .has-figure-number .figure-basis {
+      flex: 0 1 24rem;
+      text-align: right;
+    }
+
+    .has-figure-number .body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .has-figure-number figcaption {
+      padding: 0.9rem 1.5rem !important;
     }
 
     .is-open h3 {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
     }
   }
 </style>

@@ -1,5 +1,5 @@
 ---
-import { ArrowRight } from '@lucide/astro';
+import { ArrowDown, ArrowRight, Route } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 ---
 
@@ -17,15 +17,16 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       <p>The task supplies scope, not every document in the repository.</p>
     </section>
 
-    <ArrowRight class="arrow" size={18} stroke-width={1.75} aria-hidden="true" />
+    <span class="flow-arrow" aria-hidden="true"><ArrowDown class="arrow-down" size={16} stroke-width={1.75} /><ArrowRight class="arrow-right" size={16} stroke-width={1.75} /></span>
 
     <section class="router">
-      <span class="label">Explicit routing</span>
+      <Route class="route-icon" size={20} stroke-width={1.75} aria-hidden="true" />
       <code>AGENTS.md</code>
       <p>Read the constitution, then the relevant spec, plan/tasks, and ADRs before structural changes.</p>
+      <span class="label routing-label">Explicit routing</span>
     </section>
 
-    <ArrowRight class="arrow" size={18} stroke-width={1.75} aria-hidden="true" />
+    <span class="flow-arrow" aria-hidden="true"><ArrowDown class="arrow-down" size={16} stroke-width={1.75} /><ArrowRight class="arrow-right" size={16} stroke-width={1.75} /></span>
 
     <section class="selected">
       <span class="label">Selected context</span>
@@ -90,15 +91,33 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   }
 
   .router {
-    border-left: 2px solid var(--accent);
-    padding-left: 0.8rem;
+    position: relative;
+    padding-block: 0.4rem;
   }
 
-  .routing-flow :global(.arrow) {
+  .routing-flow :global(.route-icon),
+  .routing-flow :global(.arrow-down),
+  .routing-flow :global(.arrow-right) {
+    color: var(--accent);
+  }
+
+  .flow-arrow {
+    display: flex;
     align-self: center;
     justify-self: center;
-    color: var(--accent);
-    transform: rotate(90deg);
+  }
+
+  .flow-arrow :global(.arrow-right) {
+    display: none;
+  }
+
+  .routing-label {
+    margin-top: 0.65rem;
+  }
+
+  .selected {
+    border-left: 1px solid var(--border-subtle);
+    padding-left: 1rem;
   }
 
   ol {
@@ -144,8 +163,19 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       align-items: center;
     }
 
-    .routing-flow :global(.arrow) {
-      transform: none;
+    .flow-arrow :global(.arrow-down) {
+      display: none;
+    }
+
+    .flow-arrow :global(.arrow-right) {
+      display: block;
+    }
+
+    .routing-label {
+      position: absolute;
+      top: 0;
+      right: -0.25rem;
+      margin: 0;
     }
   }
 </style>

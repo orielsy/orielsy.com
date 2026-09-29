@@ -1,4 +1,5 @@
 ---
+import { ArrowDown } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 ---
 
@@ -16,7 +17,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       <p>The article reports that this unsupported wording appeared and was corrected.</p>
     </section>
 
-    <div class="boundary" aria-hidden="true"><span>evidence boundary</span></div>
+    <div class="boundary" aria-hidden="true"><ArrowDown class="boundary-arrow" size={16} stroke-width={1.75} /></div>
 
     <section class="repository-evidence">
       <span class="label">What the branch directly shows</span>
@@ -55,8 +56,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     padding-left: 1rem;
   }
 
-  .label,
-  .boundary span {
+  .label {
     color: var(--text-muted);
     font-family: var(--font-mono-ui);
     font-size: 0.6875rem;
@@ -93,29 +93,26 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   .boundary {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
   }
 
-  .boundary::before,
-  .boundary::after {
-    height: 1px;
-    flex: 1;
-    background: var(--border-subtle);
-    content: '';
+  .boundary :global(.boundary-arrow) {
+    color: var(--text-muted);
   }
 
   .evidence-rows {
     display: grid;
-    gap: 0;
+    gap: 1px;
     margin-top: 0.8rem;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.2rem;
+    background: var(--border-subtle);
   }
 
   .evidence-rows > div {
-    padding: 0.8rem 0;
-  }
-
-  .evidence-rows > div + div {
-    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-page);
+    padding: 0.9rem;
   }
 
   code {
@@ -129,8 +126,8 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   .boundary-note {
     margin-top: 0.85rem !important;
-    padding-left: 0.75rem;
-    border-left: 1px solid var(--accent);
+    border-top: 1px dashed var(--border-subtle);
+    padding-top: 0.8rem;
     color: var(--text-muted) !important;
     font-family: var(--font-mono-ui);
     font-size: 0.6875rem !important;
@@ -149,15 +146,16 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       justify-content: center;
     }
 
-    .boundary::before,
-    .boundary::after {
+    .boundary::before {
       width: 1px;
-      height: auto;
+      height: 100%;
       flex: 1;
+      border-left: 1px dashed var(--border-subtle);
+      content: '';
     }
 
-    .boundary span {
-      text-align: center;
+    .boundary :global(.boundary-arrow) {
+      display: none;
     }
 
     .evidence-rows {
@@ -165,14 +163,11 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     }
 
     .evidence-rows > div {
-      padding: 0.8rem 1rem 0.8rem 0;
+      padding: 0.9rem;
     }
 
     .evidence-rows > div + div {
-      border-top: 0;
-      border-left: 1px solid var(--border-subtle);
-      padding-right: 0;
-      padding-left: 1rem;
+      padding: 0.9rem;
     }
   }
 </style>
