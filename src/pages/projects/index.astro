@@ -135,7 +135,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
               Project · {String(project.data.projectNumber ?? index + 1).padStart(2, '0')}
             </p>
             <p class="font-editorial-mono mt-4 text-[10px] uppercase tracking-[0.06em] text-[var(--text-secondary)]">
-              {project.data.status}
+              {project.data.statusLabel ?? project.data.status}
             </p>
             {project.data.dateLabel?.includes(':') ? (
               <div class="font-editorial-mono mt-2 text-[10px] uppercase leading-5 tracking-[0.06em] text-[var(--text-muted)]">
@@ -179,7 +179,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
                   aria-label="Project architecture signals"
                 >
                   {project.data.archive!.signals.map((signal) => (
-                    <li class="bg-[var(--bg-card)] px-4 py-3 font-editorial-mono text-[9px] uppercase leading-5 tracking-[0.06em] text-[var(--text-secondary)]">
+                    <li class="bg-[var(--bg-card)] px-4 py-3 font-editorial-mono text-[10px] uppercase leading-5 tracking-[0.06em] text-[var(--text-secondary)]">
                       {signal}
                     </li>
                   ))}
