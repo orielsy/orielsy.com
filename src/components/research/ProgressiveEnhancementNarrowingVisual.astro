@@ -1,0 +1,199 @@
+---
+import { ArrowDown, ArrowRight } from '@lucide/astro';
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const constraints = ['State', 'Validation', 'Schemas', 'Available actions', 'Product rules'];
+const jobs = [
+  ['Classify', 'this intent'],
+  ['Rank', 'these items'],
+  ['Extract', 'these fields'],
+  ['Transform', 'this selection'],
+  ['Transcribe', 'this audio'],
+  ['Route', 'this command'],
+];
+---
+
+<ResearchFigureFrame
+  figureNumber="02"
+  eyebrow="Source-stated constraints + jobs · editorial arrangement"
+  title="The application narrows the job before the model sees it"
+  caption="The source argues that application state, validation, schemas, available actions, and product rules can reduce a broad problem to a narrower one. The wedge-like arrangement is an editorial visualization of that claim."
+>
+  <div class="narrowing-grid">
+    <section aria-labelledby="broad-request-label">
+      <span id="broad-request-label" class="label">Broad request</span>
+      <p class="broad-copy">Interpret what the user means in the context of the application.</p>
+
+      <div class="constraints" aria-label="Constraints already supplied by the application">
+        {constraints.map((constraint, index) => (
+          <div class="constraint" style={`--indent:${index}`}>
+            <span class="constraint-line" aria-hidden="true"></span>
+            <span>{constraint}</span>
+          </div>
+        ))}
+      </div>
+      <p class="source-note">Supplied by the application</p>
+    </section>
+
+    <div class="arrow" aria-hidden="true">
+      <ArrowDown class="arrow-down" size={18} strokeWidth={1.7} />
+      <ArrowRight class="arrow-right" size={18} strokeWidth={1.7} />
+    </div>
+
+    <section aria-labelledby="narrow-job-label">
+      <span id="narrow-job-label" class="label label-accent">Narrow job</span>
+      <ul class="jobs">
+        {jobs.map(([verb, object]) => (
+          <li><strong>{verb}</strong> <span>{object}</span></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+
+  <p class="question-shift">
+    <strong>Question shift ·</strong>
+    “Which model can run the whole experience?” becomes “What is the smallest capability this interaction actually needs?”
+  </p>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-figure-frame) :global(p),
+  :global(.research-figure-frame) :global(ul),
+  :global(.research-figure-frame) :global(li) {
+    margin: 0;
+  }
+
+  .narrowing-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  section {
+    min-width: 0;
+  }
+
+  .label,
+  .source-note {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .label-accent {
+    color: var(--accent);
+  }
+
+  .broad-copy {
+    margin-top: 0.45rem !important;
+    max-width: 26rem;
+    color: var(--text-secondary);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .constraints {
+    display: grid;
+    gap: 0.42rem;
+    margin-top: 1.25rem;
+  }
+
+  .constraint {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding-left: calc(var(--indent) * 0.7rem);
+    color: var(--text-primary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+    text-transform: uppercase;
+  }
+
+  .constraint-line {
+    width: 1.2rem;
+    height: 1px;
+    flex: 0 0 auto;
+    background: var(--accent);
+  }
+
+  .source-note {
+    margin-top: 0.75rem !important;
+  }
+
+  .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+  }
+
+  .arrow-right {
+    display: none;
+  }
+
+  .jobs {
+    display: grid;
+    margin-top: 0.75rem !important;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.25rem;
+    background: var(--border-subtle);
+    gap: 1px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .jobs li {
+    background: var(--bg-secondary);
+    padding: 0.75rem 0.85rem;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .jobs strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .question-shift {
+    margin-top: 1.5rem !important;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  .question-shift strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  @media (min-width: 640px) {
+    .jobs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 900px) {
+    .narrowing-grid {
+      grid-template-columns: minmax(0, 1fr) 3.5rem minmax(0, 1.15fr);
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .arrow-down {
+      display: none;
+    }
+
+    .arrow-right {
+      display: block;
+    }
+  }
+</style>
