@@ -25,7 +25,7 @@ import ResearchBreakout from './ResearchBreakout.astro';
   </div>
 
   <div class="pk-overview__section">
-    <h3>Give product meaning an architectural home</h3>
+    <h3 id="product-meaning-home">Give product meaning an architectural home</h3>
     <p>
       The goal is not a new universal source of truth. It is explicit ownership for the meaning around a product so that intent, relevance, prerequisites, explanation, and composition guidance are represented deliberately.
     </p>
@@ -36,7 +36,7 @@ import ResearchBreakout from './ResearchBreakout.astro';
   </ResearchBreakout>
 
   <div class="pk-overview__section">
-    <h3>A concrete example: account review</h3>
+    <h3 id="account-review-example">A concrete example: account review</h3>
     <p>
       Engineering already provides trusted capabilities such as customer identity, transaction history, verification, restriction management, and risk escalation. Product knowledge can describe why the task exists, what information matters, which prerequisites apply, and what should be explained.
     </p>
@@ -49,7 +49,7 @@ import ResearchBreakout from './ResearchBreakout.astro';
   </p>
 
   <div class="pk-overview__section">
-    <h3>Keep the boundaries clear</h3>
+    <h3 id="keep-boundaries-clear">Keep the boundaries clear</h3>
     <p>
       Application state owns current facts. Code owns implemented behavior. Governing policy or specification owns intended constraints. Product knowledge owns meaning and explanation. When those artifacts disagree, the conflict should be exposed rather than silently resolved by AI.
     </p>
@@ -58,7 +58,7 @@ import ResearchBreakout from './ResearchBreakout.astro';
   <ClaimAuthorityTable />
 
   <div class="pk-overview__section">
-    <h3>What might the interface become?</h3>
+    <h3 id="interface-composition">What might the interface become?</h3>
     <p>
       If state, policy, available capabilities, and product knowledge are explicit, parts of an interface can potentially be composed from trusted capabilities that already exist instead of being authored as one fixed page every time.
     </p>
@@ -75,7 +75,7 @@ import ResearchBreakout from './ResearchBreakout.astro';
   </p>
 
   <div class="pk-overview__section pk-overview__closing">
-    <h3>What remains open</h3>
+    <h3 id="what-remains-open">What remains open</h3>
     <p>
       The unresolved work includes authority, synchronization between knowledge, code, and policy, testability, allowed composition boundaries, representation, and inference boundaries. This is an architectural hypothesis and research direction, not proof that the approach is already reliable.
     </p>
@@ -85,6 +85,69 @@ import ResearchBreakout from './ResearchBreakout.astro';
     </button>
   </div>
 </section>
+
+<script>
+  const article = document.querySelector<HTMLElement>('[data-research-entry="product-knowledge-as-architecture"]');
+  const overview = article?.querySelector<HTMLElement>('[data-reading-depth-overview] .pk-overview');
+  const tocAside = article?.querySelector<HTMLElement>('aside[aria-label="Research navigation"]');
+  const tocShell = tocAside?.querySelector<HTMLElement>('[data-research-toc-shell]');
+  const fullToc = tocShell?.querySelector<HTMLElement>('.research-toc');
+
+  if (article && overview && tocAside && tocShell && fullToc) {
+    const headings = Array.from(overview.querySelectorAll<HTMLHeadingElement>('h3[id]'));
+
+    if (headings.length > 2 && !tocShell.querySelector('[data-reading-depth-toc="overview"]')) {
+      fullToc.dataset.readingDepthToc = 'full';
+
+      const overviewToc = fullToc.cloneNode(true) as HTMLElement;
+      overviewToc.dataset.readingDepthToc = 'overview';
+      overviewToc.setAttribute('aria-label', 'Overview contents');
+
+      const list = overviewToc.querySelector<HTMLOListElement>('ol');
+      list?.replaceChildren();
+
+      headings.forEach((heading, index) => {
+        if (!list) return;
+
+        const item = document.createElement('li');
+        item.className = 'm-0 p-0 leading-5';
+
+        const link = document.createElement('a');
+        link.href = `#${heading.id}`;
+        link.className = 'group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]';
+
+        const number = document.createElement('span');
+        number.className = 'font-editorial-mono text-[9px] text-[var(--accent)]';
+        number.textContent = String(index + 1).padStart(2, '0');
+
+        const label = document.createElement('span');
+        label.className = 'text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]';
+        label.textContent = heading.textContent?.trim() ?? '';
+
+        link.append(number, label);
+        item.append(link);
+        list.append(item);
+      });
+
+      tocShell.append(overviewToc);
+
+      const syncToc = () => {
+        const depth = article.dataset.readingDepth === 'full' ? 'full' : 'overview';
+        tocAside.hidden = false;
+        overviewToc.hidden = depth !== 'overview';
+        fullToc.hidden = depth !== 'full';
+      };
+
+      const observer = new MutationObserver(syncToc);
+      observer.observe(article, {
+        attributes: true,
+        attributeFilter: ['data-reading-depth'],
+      });
+
+      queueMicrotask(syncToc);
+    }
+  }
+</script>
 
 <style>
   .pk-overview {
@@ -143,6 +206,7 @@ import ResearchBreakout from './ResearchBreakout.astro';
 
   .pk-overview h3 {
     margin: 0 0 0.75rem;
+    scroll-margin-top: 6rem;
     color: var(--text-primary);
     font-family: var(--font-display);
     font-size: 1.35rem;
