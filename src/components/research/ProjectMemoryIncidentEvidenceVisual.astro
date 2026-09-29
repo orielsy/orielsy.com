@@ -1,0 +1,170 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+---
+
+<ResearchFigureFrame
+  eyebrow="Observed account + repository evidence"
+  title="What the branch can and cannot corroborate"
+  caption="The correction now has two durable addresses at different scopes. That makes recurrence less likely; it does not make recurrence impossible."
+>
+  <div class="incident-evidence">
+    <section class="observed-account">
+      <span class="label">Author's observed account</span>
+      <blockquote>“15+ years of experience designing scalable web architectures, <mark>design systems</mark>, and enterprise platforms.”</blockquote>
+      <p>The article reports that this unsupported wording appeared and was corrected.</p>
+    </section>
+
+    <div class="boundary" aria-hidden="true"><span>evidence boundary</span></div>
+
+    <section class="repository-evidence">
+      <span class="label">What the branch directly shows</span>
+      <div class="evidence-rows">
+        <div>
+          <code>.specify/memory/constitution.md</code>
+          <p>Do not describe the experience as design systems unless explicitly established.</p>
+        </div>
+        <div>
+          <code>specs/001-site-foundation/spec.md</code>
+          <p>Use grounded positioning; do not claim formal design-system ownership.</p>
+        </div>
+      </div>
+      <p class="boundary-note">The branch corroborates the resulting guardrails, not necessarily the complete original chronology.</p>
+    </section>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  .incident-evidence {
+    display: grid;
+    gap: 1.25rem;
+    border-block: 1px solid var(--border-subtle);
+    padding: 1rem 0;
+  }
+
+  .observed-account {
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+  }
+
+  .label,
+  .boundary span {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  blockquote {
+    margin: 0.7rem 0 0 !important;
+    border: 0;
+    padding: 0 !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-style: normal;
+    line-height: 1.55;
+  }
+
+  mark {
+    background: color-mix(in srgb, var(--accent) 16%, transparent);
+    color: inherit;
+    padding: 0.04em 0.12em;
+  }
+
+  .observed-account p,
+  .repository-evidence p {
+    margin: 0.55rem 0 0 !important;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.55;
+  }
+
+  .boundary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .boundary::before,
+  .boundary::after {
+    height: 1px;
+    flex: 1;
+    background: var(--border-subtle);
+    content: '';
+  }
+
+  .evidence-rows {
+    display: grid;
+    gap: 0;
+    margin-top: 0.8rem;
+    border-block: 1px solid var(--border-subtle);
+  }
+
+  .evidence-rows > div {
+    padding: 0.8rem 0;
+  }
+
+  .evidence-rows > div + div {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  code {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+  }
+
+  .boundary-note {
+    border-top: 1px dashed var(--border-subtle);
+    padding-top: 0.65rem;
+    color: var(--text-muted) !important;
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 760px) {
+    .incident-evidence {
+      grid-template-columns: minmax(0, 0.9fr) 5rem minmax(0, 1.2fr);
+      align-items: stretch;
+      padding: 1.1rem 0;
+    }
+
+    .boundary {
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .boundary::before,
+    .boundary::after {
+      width: 1px;
+      height: auto;
+      flex: 1;
+    }
+
+    .boundary span {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+
+    .evidence-rows {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .evidence-rows > div {
+      padding: 0.8rem 1rem 0.8rem 0;
+    }
+
+    .evidence-rows > div + div {
+      border-top: 0;
+      border-left: 1px solid var(--border-subtle);
+      padding-right: 0;
+      padding-left: 1rem;
+    }
+  }
+</style>
