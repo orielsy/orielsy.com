@@ -18,6 +18,11 @@ const projectArchive = z.object({
   signals: z.array(z.string()).max(6).default([]),
 }).optional();
 
+const projectHeroAction = z.object({
+  label: z.string(),
+  href: z.string(),
+}).optional();
+
 const research = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/research' }),
   schema: z.object({
@@ -65,6 +70,7 @@ const projects = defineCollection({
     dateLabel: z.string().optional(),
     projectNumber: z.number().int().positive().optional(),
     status: z.enum(['Active', 'Prototype', 'Completed', 'Archived', 'In Progress']).default('Active'),
+    statusLabel: z.string().optional(),
     published: z.boolean().default(false),
     draft: z.boolean().default(false),
     role: z.string().default('Creator / Developer'),
@@ -83,6 +89,7 @@ const projects = defineCollection({
       ),
     ).default([]),
     heroImage: z.string().optional(),
+    heroAction: projectHeroAction,
     socialCard,
     home: homeFeature,
     archive: projectArchive,
