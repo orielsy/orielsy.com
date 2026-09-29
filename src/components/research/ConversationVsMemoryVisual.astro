@@ -20,9 +20,9 @@ const artifacts = ['AGENTS.md', 'Constitution', 'Feature specs', 'ADRs'];
 ---
 
 <ResearchFigureFrame
-  title="Conversation context is temporary. Project memory persists."
+  title="Conversation context can end. Project memory persists."
   subtitle="Each session gets its own working context. Version-controlled repository knowledge remains available across sessions."
-  caption="The conversation can end without taking durable project state with it. Later sessions can read the repository again instead of depending on the original transcript."
+  caption="Conversation history is not guaranteed to carry forward. Durable project state remains in the repository for later sessions to recover."
 >
   <div class="memory-timeline">
     <div class="time-axis" aria-hidden="true">
@@ -39,7 +39,7 @@ const artifacts = ['AGENTS.md', 'Constitution', 'Feature specs', 'ADRs'];
             <strong>Working context</strong>
           </div>
           <p>{session.detail}</p>
-          <div class="session-boundary">Ends with this session</div>
+          <div class="session-boundary">Not guaranteed to carry forward</div>
           <div class="mobile-read">Reads the same durable repository memory</div>
         </li>
       ))}
