@@ -40,6 +40,7 @@ const research = defineCollection({
       'Architecture Exploration',
       'Experiment',
       'Essay',
+      'Editorial',
       'Field Note',
     ]).default('Research Note'),
     tags: z.array(z.string()).default([]),
