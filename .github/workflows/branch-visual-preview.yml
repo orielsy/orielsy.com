@@ -42,8 +42,10 @@ jobs:
       - name: Build branch
         run: npm run build
 
-      - name: Install Chromium for visual capture
-        run: npx --yes playwright@1.55.0 install --with-deps chromium
+      - name: Install Playwright and Chromium for visual capture
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
 
       - name: Start built site
         run: |
@@ -59,54 +61,18 @@ jobs:
           exit 1
 
       - name: Capture configured routes
+        run: node .preview/capture.mjs
+
+      - name: Include built HTML
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p branch-preview/screenshots
-
-          while IFS= read -r route || [[ -n "$route" ]]; do
-            route="${route%%#*}"
-            route="$(echo "$route" | xargs)"
-            [[ -z "$route" ]] && continue
-
-            slug="$(echo "$route" | sed -E 's#^/##; s#/$##; s#[^A-Za-z0-9._-]+#-#g')"
-            [[ -z "$slug" ]] && slug="home"
-            url="$PREVIEW_ORIGIN$route"
-
-            echo "Capturing $url"
-
-            npx --yes playwright@1.55.0 screenshot \
-              --browser chromium \
-              --color-scheme light \
-              --viewport-size "1440,1100" \
-              --full-page \
-              "$url" \
-              "branch-preview/screenshots/${slug}--desktop-light.png"
-
-            npx --yes playwright@1.55.0 screenshot \
-              --browser chromium \
-              --color-scheme dark \
-              --viewport-size "1440,1100" \
-              --full-page \
-              "$url" \
-              "branch-preview/screenshots/${slug}--desktop-dark.png"
-
-            npx --yes playwright@1.55.0 screenshot \
-              --browser chromium \
-              --color-scheme light \
-              --viewport-size "390,844" \
-              --full-page \
-              "$url" \
-              "branch-preview/screenshots/${slug}--mobile-light.png"
-
-            npx --yes playwright@1.55.0 screenshot \
-              --browser chromium \
-              --color-scheme dark \
-              --viewport-size "390,844" \
-              --full-page \
-              "$url" \
-              "branch-preview/screenshots/${slug}--mobile-dark.png"
-          done < .preview/routes.txt
+          mkdir -p branch-preview/html
+          while IFS= read -r html_file; do
+            relative="${html_file#dist/}"
+            mkdir -p "branch-preview/html/$(dirname "$relative")"
+            cp "$html_file" "branch-preview/html/$relative"
+          done < <(find dist -type f -name '*.html' | sort)
 
       - name: Write preview manifest
         run: |
@@ -127,7 +93,7 @@ jobs:
       - name: Upload branch visual preview
         uses: actions/upload-artifact@v4
         with:
-          name: branch-visual-preview-${{ github.run_id }}
+          name: branch-visual-preview-${{ github.ref_name }}
           path: branch-preview/
           if-no-files-found: error
           retention-days: 7
