@@ -14,6 +14,12 @@ featured: false
 readingTime: "8 min read"
 ---
 
+import ProjectMemoryAuthorityMapVisual from '../../components/research/ProjectMemoryAuthorityMapVisual.astro';
+import ProjectMemoryDriftVisual from '../../components/research/ProjectMemoryDriftVisual.astro';
+import ProjectMemoryIncidentEvidenceVisual from '../../components/research/ProjectMemoryIncidentEvidenceVisual.astro';
+import ProjectMemoryRoutingVisual from '../../components/research/ProjectMemoryRoutingVisual.astro';
+import PublicationGatingEvidenceChainVisual from '../../components/research/PublicationGatingEvidenceChainVisual.astro';
+import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import ResearchSourceExcerpt from '../../components/research/ResearchSourceExcerpt.astro';
 
 ## The Claim Came Back
@@ -29,6 +35,10 @@ What I could support was substantial experience with reusable UI components, com
 I treat that mistake as a context-persistence failure. A distinction we had already made did not survive into a later piece of generated copy.
 
 Correcting the sentence fixed the page. Recording the constraint in the repository made the same silent regression less likely.
+
+<ResearchBreakout mode="wide">
+  <ProjectMemoryIncidentEvidenceVisual />
+</ResearchBreakout>
 
 That second fix is the subject of this article.
 
@@ -74,6 +84,10 @@ These files are not interchangeable documentation. Each answers a different ques
 
 **Implementation and tests** - What behavior actually exists, and what behavior has been verified?
 
+<ResearchBreakout mode="wide">
+  <ProjectMemoryAuthorityMapVisual />
+</ResearchBreakout>
+
 That separation matters when sources disagree. Durability alone does not make an artifact authoritative for every concern.
 
 A requirement can outlive a particular implementation strategy. Code can reveal that an old plan was never completed. A decision record can preserve useful reasoning while its operational details become stale. When artifacts diverge, the conflict has to be exposed rather than silently flattened into one story.
@@ -103,6 +117,10 @@ A positioning change begins with project-wide factual guardrails and the site-fo
 
 Today, that routing is mostly explicit and human-authored. The repository does not contain an automated relevance engine.
 
+<ResearchBreakout mode="wide">
+  <ProjectMemoryRoutingVisual />
+</ResearchBreakout>
+
 This is **context selection rather than context accumulation**.
 
 ## Worked Example: Publication Gating
@@ -116,6 +134,10 @@ published: z.boolean().default(false)
 ```
 
 The specification then defines what unpublished state means across public listings, detail pages, indexing, RSS, and local preview behavior. The publication-gating decision record preserves why publication state is separate from lifecycle status.
+
+<ResearchBreakout mode="wide">
+  <PublicationGatingEvidenceChainVisual />
+</ResearchBreakout>
 
 Those are different forms of evidence.
 
@@ -132,6 +154,10 @@ The deployment documentation in this repository provides a useful example.
 ADR 003 records an explicit manual publishing model centered on `npm run live` from `main`, and it says no repository-authored GitHub Actions workflow is required for that model.
 
 Current `AGENTS.md`, however, documents three supported production paths: local `npm run live`, a GitHub Actions workflow, and a remote trigger branch. The repository now contains the workflow that the earlier ADR said was unnecessary.
+
+<ResearchBreakout mode="wide">
+  <ProjectMemoryDriftVisual />
+</ResearchBreakout>
 
 The important point is not which document should win automatically. The important point is that **durable memory can preserve an earlier truth after the operating model has changed**.
 
