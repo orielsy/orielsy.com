@@ -1,79 +1,157 @@
-<figure class="applicability-policy-figure not-prose my-10 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]">
-  <header class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-6">
-    <div class="flex flex-wrap items-center justify-between gap-3">
-      <p class="font-editorial-mono text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]">Separation of concerns</p>
-      <span class="font-editorial-mono rounded-full border border-[var(--border-subtle)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Applicability ≠ policy</span>
-    </div>
-    <h3 class="font-display mt-2 text-xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-2xl">Knowing something applies does not decide what the UI should do.</h3>
-  </header>
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
-  <div class="grid lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
-    <section class="boundary-stage border-b border-[var(--border-subtle)] px-5 py-5 sm:px-6 lg:border-b-0" aria-labelledby="applicability-stage-title">
-      <div class="flex items-center justify-between gap-3">
-        <span class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">01 · Applicability</span>
-        <svg class="h-4 w-4 text-[var(--text-muted)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
-      </div>
-      <h4 id="applicability-stage-title" class="font-display mt-4 text-base font-semibold text-[var(--text-primary)]">Does this knowledge match the current context?</h4>
-      <div class="mt-5 grid gap-2 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-        <span class="fact-chip">Product state</span>
-        <span class="fact-chip">Version</span>
-        <span class="fact-chip">Audience</span>
-      </div>
-      <div class="mt-5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-4">
-        <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Output</span>
-        <p class="mt-2 text-xs leading-5 text-[var(--text-primary)]">Applicable authored knowledge</p>
+const applicabilityFacts = ['Product state', 'Version', 'Audience'];
+const policyFacts = ['Application state', 'Validation result', 'Available knowledge', 'Evidence certainty'];
+---
+
+<ResearchFigureFrame
+  className="applicability-policy-figure"
+  eyebrow="Separation of concerns"
+  title="Knowing something applies does not decide what the UI should do."
+  subtitle="Applicability identifies relevance. Response policy controls interface authority."
+  caption="The knowledge layer identifies relevance; policy decides whether the UI should explain, highlight, suggest, or offer a user-accepted action."
+>
+  <div class="comparison">
+    <section aria-labelledby="applicability-stage-title">
+      <p class="stage-meta">01 · Applicability</p>
+      <h4 id="applicability-stage-title">Does this knowledge match the current context?</h4>
+
+      <ul class="fact-ledger">
+        {applicabilityFacts.map((fact) => <li>{fact}</li>)}
+      </ul>
+
+      <div class="stage-output">
+        <span>Output</span>
+        <strong>Applicable authored knowledge</strong>
       </div>
     </section>
 
-    <div class="boundary-divider flex items-center justify-center border-b border-[var(--border-subtle)] px-5 py-3 lg:border-r lg:border-b-0 lg:border-l lg:px-3" aria-hidden="true">
-      <span class="font-editorial-mono text-xs text-[var(--text-muted)] lg:rotate-0">→</span>
-    </div>
+    <div class="divider" aria-hidden="true">→</div>
 
-    <section class="boundary-stage px-5 py-5 sm:px-6" aria-labelledby="policy-stage-title">
-      <div class="flex items-center justify-between gap-3">
-        <span class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">02 · Response policy</span>
-        <svg class="h-4 w-4 text-[var(--text-muted)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 5h14v14H5z"/><path d="M8 9h8M8 13h5"/><path d="m14 16 2 2 3-4"/></svg>
-      </div>
-      <h4 id="policy-stage-title" class="font-display mt-4 text-base font-semibold text-[var(--text-primary)]">How strongly should the interface intervene?</h4>
-      <div class="mt-5 grid gap-2 sm:grid-cols-2">
-        <span class="fact-chip">Application state</span>
-        <span class="fact-chip">Validation result</span>
-        <span class="fact-chip">Available knowledge</span>
-        <span class="fact-chip">Evidence certainty</span>
-      </div>
-      <div class="mt-5 rounded-lg border border-[var(--accent-border)] bg-[var(--accent-subtle)] p-4">
-        <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">Possible UI response</span>
-        <p class="mt-2 text-xs leading-5 text-[var(--text-primary)]">Help text · highlight · suggestion · user-accepted action</p>
+    <section aria-labelledby="policy-stage-title">
+      <p class="stage-meta">02 · Response policy</p>
+      <h4 id="policy-stage-title">How strongly should the interface intervene?</h4>
+
+      <ul class="fact-ledger">
+        {policyFacts.map((fact) => <li>{fact}</li>)}
+      </ul>
+
+      <div class="stage-output is-policy-output">
+        <span>Possible UI response</span>
+        <strong>Help text · highlight · suggestion · user-accepted action</strong>
       </div>
     </section>
   </div>
-
-  <figcaption class="flex flex-col gap-2 border-t border-[var(--border-subtle)] px-5 py-3 text-[10px] text-[var(--text-muted)] sm:flex-row sm:items-center sm:justify-between sm:px-6">
-    <span>The knowledge layer identifies relevance.</span>
-    <span class="font-editorial-mono uppercase tracking-[0.12em] text-[var(--accent)]">Policy controls UI authority</span>
-  </figcaption>
-</figure>
+</ResearchFigureFrame>
 
 <style>
   .applicability-policy-figure :global(p),
-  .applicability-policy-figure :global(h3),
-  .applicability-policy-figure :global(h4) {
+  .applicability-policy-figure :global(h4),
+  .applicability-policy-figure :global(ul),
+  .applicability-policy-figure :global(li) {
     margin: 0;
   }
 
-  .fact-chip {
-    display: flex;
-    min-height: 2.25rem;
-    align-items: center;
-    border: 1px solid var(--border-subtle);
-    border-radius: 0.4rem;
-    background: var(--bg-card);
-    padding: 0.5rem 0.65rem;
+  .applicability-policy-figure :global(ul) {
+    padding: 0;
+    list-style: none;
+  }
+
+  .comparison {
+    display: grid;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .comparison section {
+    min-width: 0;
+    padding: 1rem 0.25rem;
+  }
+
+  .comparison section + section {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .stage-meta,
+  .stage-output span {
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.45;
+    text-transform: uppercase;
+  }
+
+  h4 {
+    margin-top: 0.4rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .fact-ledger {
+    margin-top: 1rem !important;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .fact-ledger li {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.55rem 0;
     color: var(--text-secondary);
     font-family: var(--font-mono-ui);
-    font-size: 0.52rem;
-    letter-spacing: 0.06em;
-    line-height: 1.35;
-    text-transform: uppercase;
+    font-size: 0.6875rem;
+    line-height: 1.45;
+  }
+
+  .stage-output {
+    margin-top: 1rem;
+    border-left: 2px solid var(--border-strong);
+    padding-left: 0.75rem;
+  }
+
+  .stage-output strong {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .is-policy-output {
+    border-left-color: var(--accent);
+  }
+
+  .divider {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.75rem;
+  }
+
+  @media (min-width: 800px) {
+    .comparison {
+      grid-template-columns: minmax(0, 1fr) 3rem minmax(0, 1fr);
+    }
+
+    .comparison section {
+      padding: 1rem;
+    }
+
+    .comparison section + section {
+      border-top: 0;
+    }
+
+    .divider {
+      display: flex;
+      border-right: 1px solid var(--border-subtle);
+      border-left: 1px solid var(--border-subtle);
+    }
   }
 </style>
