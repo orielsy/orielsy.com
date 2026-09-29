@@ -23,7 +23,7 @@ import ContextZenExperimentVisual from '../../components/research/ContextZenExpe
 import ContextZenLifecycleVisual from '../../components/research/ContextZenLifecycleVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 
-## When More Context Stops Helping
+## The Problem Is Not Capacity
 
 A long-running conversation can contain useful history while also accumulating abandoned directions, superseded decisions, repeated explanations, contradictory instructions, and residue that no longer helps the current task.
 
@@ -45,8 +45,6 @@ A good handoff preserves the current objective, decisions still in force, releva
 
 The goal is the smallest handoff that still preserves **correct continuation**.
 
----
-
 ## Observe, Distill, Handoff
 
 Context Zen is structured around three operations:
@@ -59,7 +57,7 @@ Context Zen is structured around three operations:
 
 Context Zen is opt-in. Once enabled, it performs lightweight context-health checks while it is already participating in normal turns.
 
-"Automatic" does not mean background execution. If the host has no background execution model, Context Zen does not pretend to be a daemon.
+Context Zen can evaluate context health automatically during ordinary turns; that does not imply background execution. If the host has no background execution model, Context Zen does not pretend to be a daemon.
 
 ### Distill
 
@@ -76,8 +74,6 @@ The distilled state is packaged so another context can continue the work. The au
 If the host exposes clipboard access, Context Zen can copy the complete handoff automatically. Otherwise it returns one clean, self-contained artifact for the user to copy.
 
 It does not assume it can create or navigate to a new conversation on the user's behalf.
-
----
 
 ## What Does "Context Health" Mean?
 
@@ -105,8 +101,6 @@ The final test is deliberately simple:
 
 If the answer becomes clearly yes, Context Zen should hand off.
 
----
-
 ## Activation Follows the Work
 
 If activation belonged only to one conversation, Context Zen would disable itself every time it successfully recommended leaving that conversation.
@@ -115,7 +109,7 @@ Instead, activation belongs to a **continuation lineage**: the chain of work tha
 
 When Context Zen creates a handoff, it carries a small marker:
 
-<span className="font-editorial-mono text-[9px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Continuation marker</span>
+<span className="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Continuation marker</span>
 
 ```yaml
 ---
@@ -139,8 +133,6 @@ even when monitoring is off. In that case the handoff is still a continuation, b
 The user can therefore opt in once for a chain of work and remain opted in until explicitly turning Context Zen off.
 
 A host does not need durable cross-chat state for this model to work; the handoff itself can carry the state forward.
-
----
 
 ## Target-Aware Handoffs
 
@@ -170,9 +162,9 @@ The working model is:
   <ContextRecompilationVisual />
 </ResearchBreakout>
 
-This is closer to **context recompilation** than ordinary summarization: preserve the truth, then represent it for the environment that will consume it next.
-
----
+<p className="font-display border-l border-[var(--accent)] pl-4 text-lg font-medium leading-8 tracking-[-0.02em] text-[var(--text-primary)]">
+  This is closer to <strong>context recompilation</strong> than ordinary summarization: preserve the truth, then represent it for the environment that will consume it next.
+</p>
 
 ## What v0.1 Tests
 
@@ -194,7 +186,9 @@ Different kinds of work may benefit from different amounts of raw history, and r
 
 The more interesting possibility is that the handoff threshold depends less on token count than on **state entropy**: the share of retained context occupied by superseded, conflicting, or no-longer-actionable state.
 
----
+I am using *state entropy* here as a working architectural metaphor, not a validated quantitative measure. Low working-state entropy means most retained context still agrees with and contributes to the active task. High working-state entropy means a growing share represents superseded decisions, conflicting constraints, abandoned paths, or state whose relevance is uncertain.
+
+That distinction may eventually help bridge the qualitative health model and a more testable handoff heuristic, but the experiment has not established such a metric yet.
 
 ## The Broader Context-Engineering Question
 
