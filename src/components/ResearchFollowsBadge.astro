@@ -11,7 +11,7 @@ const { href, title } = Astro.props;
   <a
     href={href}
     title={`Follows ${title}`}
-    class="group/follows flex min-w-0 max-w-full items-center gap-1.5 overflow-hidden font-editorial-mono text-[10px] tracking-[0.08em] text-[var(--text-muted)] transition-colors hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] sm:inline-flex"
+    class="group/follows flex min-w-0 max-w-full items-center gap-1.5 overflow-hidden font-editorial-mono text-[10px] tracking-[0.08em] text-[var(--text-muted)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] sm:inline-flex"
   >
     <svg
       class="h-2.5 w-2.5 shrink-0 text-[var(--accent)]"
@@ -28,6 +28,6 @@ const { href, title } = Astro.props;
     </svg>
     <span class="shrink-0 uppercase text-[var(--text-muted)]">Follows</span>
     <span aria-hidden="true" class="shrink-0 text-[var(--text-muted)]">·</span>
-    <span class="min-w-0 truncate normal-case tracking-normal text-[var(--text-primary)]">{title}</span>
+    <span class="min-w-0 truncate normal-case tracking-normal text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors group-hover/follows:text-[var(--accent)] group-hover/follows:decoration-[var(--accent)]">{title}</span>
   </a>
 </span>
