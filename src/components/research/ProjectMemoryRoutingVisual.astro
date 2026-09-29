@@ -5,7 +5,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 <ResearchFigureFrame
   className="is-open"
-  figureNumber="03"
+  figureNumber="04"
   eyebrow="Current human-authored workflow"
   title="Route, then narrow"
   caption="A human-authored entry point and task scope guide selection; the repository does not detect relevance automatically. Other project memory remains available for other work."
@@ -37,7 +37,6 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       </ol>
     </section>
   </div>
-
 </ResearchFigureFrame>
 
 <style>
@@ -47,16 +46,11 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     padding: 0.25rem 0 0;
   }
 
-  section {
-    min-width: 0;
-  }
+  section { min-width: 0; }
 
   .label,
   code,
-  li span,
-  .routing-note strong {
-    font-family: var(--font-mono-ui);
-  }
+  li span { font-family: var(--font-mono-ui); }
 
   .label {
     display: block;
@@ -83,24 +77,18 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     font-size: 0.9375rem;
   }
 
-  section p,
-  .routing-note {
+  section p {
     margin: 0.45rem 0 0 !important;
     color: var(--text-secondary);
     font-size: 0.875rem;
     line-height: 1.55;
   }
 
-  .router {
-    position: relative;
-    padding-block: 0.4rem;
-  }
+  .router { position: relative; padding-block: 0.4rem; }
 
   .routing-flow :global(.route-icon),
   .routing-flow :global(.arrow-down),
-  .routing-flow :global(.arrow-right) {
-    color: var(--accent);
-  }
+  .routing-flow :global(.arrow-right) { color: var(--accent); }
 
   .flow-arrow {
     display: flex;
@@ -108,16 +96,13 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     justify-self: center;
   }
 
-  .flow-arrow :global(.arrow-right) {
-    display: none;
-  }
-
-  .routing-label {
-    margin-top: 0.65rem;
-  }
+  .flow-arrow :global(.arrow-right) { display: none; }
+  .routing-label { margin-top: 0.65rem; }
 
   .selected {
-    border-left: 1px solid var(--accent); border-radius: 0 0.375rem 0.375rem 0; background: color-mix(in srgb, var(--accent) 5%, var(--bg-secondary));
+    border-left: 1px solid var(--accent);
+    border-radius: 0 0.375rem 0.375rem 0;
+    background: color-mix(in srgb, var(--accent) 5%, var(--bg-secondary));
     padding: 0.75rem 1rem;
   }
 
@@ -144,33 +129,14 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     font-size: 0.6875rem;
   }
 
-  .routing-note {
-    margin-top: 0.75rem !important;
-    border-top: 1px dashed var(--border-subtle);
-    padding-top: 0.65rem;
-    color: var(--text-muted);
-  }
-
-  .routing-note strong {
-    color: var(--accent);
-    font-size: 0.6875rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
   @media (min-width: 820px) {
     .routing-flow {
       grid-template-columns: minmax(0, 1fr) 2rem minmax(0, 1.1fr) 2rem minmax(0, 1.15fr);
       align-items: center;
     }
 
-    .flow-arrow :global(.arrow-down) {
-      display: none;
-    }
-
-    .flow-arrow :global(.arrow-right) {
-      display: block;
-    }
+    .flow-arrow :global(.arrow-down) { display: none; }
+    .flow-arrow :global(.arrow-right) { display: block; }
 
     .routing-label {
       position: absolute;
