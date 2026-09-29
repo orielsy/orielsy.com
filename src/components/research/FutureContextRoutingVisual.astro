@@ -1,4 +1,6 @@
 ---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
 const flows = [
   {
     label: 'Current repository flow',
@@ -15,12 +17,10 @@ const flows = [
 ];
 ---
 
-<figure class="future-routing not-prose">
-  <header>
-    <p class="eyebrow">Where this could go next</p>
-    <h3>From explicit lookup to task-aware context routing.</h3>
-  </header>
-
+<ResearchFigureFrame
+  title="From explicit lookup to task-aware context routing."
+  caption="The second path is a research direction, not a claim about the current repository implementation."
+>
   <div class="flows">
     {flows.map((flow) => (
       <section class:list={['flow', flow.accent && 'is-future']}>
@@ -39,64 +39,13 @@ const flows = [
       </section>
     ))}
   </div>
-
-  <figcaption>The second path is a research direction, not a claim about the current repository implementation.</figcaption>
-</figure>
+</ResearchFigureFrame>
 
 <style>
-  .future-routing {
-    overflow: hidden;
-    margin: 0;
-    border: 1px solid var(--border-subtle);
-    border-radius: 0.75rem;
-    background: var(--bg-card);
-  }
-
-  .future-routing :global(p),
-  .future-routing :global(h3),
-  .future-routing :global(ol),
-  .future-routing :global(li) {
-    margin: 0;
-  }
-
-  .future-routing :global(ol) {
-    padding-left: 0;
-    list-style: none;
-  }
-
-  header {
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1.2rem 1.35rem;
-  }
-
-  .eyebrow,
-  .flow-heading span,
-  .index {
-    font-family: var(--font-mono-ui);
-    text-transform: uppercase;
-  }
-
-  .eyebrow {
-    color: var(--accent);
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-  }
-
-  h3 {
-    margin-top: 0.45rem !important;
-    max-width: 48rem;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: clamp(1.2rem, 2vw, 1.55rem);
-    font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.035em;
-  }
-
   .flows {
     display: grid;
     gap: 1px;
+    border-block: 1px solid var(--border-subtle);
     background: var(--border-subtle);
   }
 
@@ -106,6 +55,7 @@ const flows = [
   }
 
   .flow.is-future {
+    box-shadow: inset 2px 0 0 var(--accent);
     background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
   }
 
@@ -121,13 +71,20 @@ const flows = [
   .flow-heading strong {
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 0.8rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .flow-heading span,
+  .index {
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
   .flow-heading span {
     color: var(--text-muted);
-    font-size: 0.46rem;
-    letter-spacing: 0.1em;
   }
 
   .is-future .flow-heading span {
@@ -137,6 +94,9 @@ const flows = [
   ol {
     display: grid;
     gap: 0.42rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   li {
@@ -145,11 +105,12 @@ const flows = [
     align-items: center;
     gap: 0.65rem;
     min-height: 2.7rem;
+    margin: 0;
     border-left: 1px solid var(--border-strong);
     background: var(--bg-secondary);
-    padding: 0.5rem 0.65rem;
+    padding: 0.55rem 0.7rem;
     color: var(--text-secondary);
-    font-size: 0.66rem;
+    font-size: 0.75rem;
     line-height: 1.45;
   }
 
@@ -159,20 +120,11 @@ const flows = [
 
   .index {
     color: var(--text-muted);
-    font-size: 0.46rem;
     letter-spacing: 0.08em;
   }
 
   .is-future .index {
     color: var(--accent);
-  }
-
-  figcaption {
-    border-top: 1px solid var(--border-subtle);
-    padding: 0.85rem 1rem;
-    color: var(--text-muted);
-    font-size: 0.62rem;
-    line-height: 1.55;
   }
 
   @media (min-width: 760px) {
