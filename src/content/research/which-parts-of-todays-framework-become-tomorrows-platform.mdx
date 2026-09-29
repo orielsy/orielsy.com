@@ -34,8 +34,6 @@ The evidence pushed me toward a better question:
 
 The investigation is therefore about where responsibilities move, not whether frameworks vanish.
 
----
-
 ## A Working Boundary Between Platform and Framework
 
 The web platform tends to absorb **capabilities whose semantics have become broadly understood across many architectures**. Frameworks can coordinate those primitives and impose application policy above them:
@@ -45,8 +43,6 @@ The web platform tends to absorb **capabilities whose semantics have become broa
 </ResearchBreakout>
 
 As native primitives become more capable, frameworks may own less low-level machinery while retaining composition, policy, and application architecture.
-
----
 
 ## Signals: A Primitive Below Framework Policy
 
@@ -60,8 +56,6 @@ But the proposal deliberately leaves effect scheduling, ownership, disposal, bat
   <SignalStandardizationPathVisual />
 </ResearchBreakout>
 
----
-
 ## Web Components: Standard Components, Not Standardized Applications
 
 [Custom Elements](https://html.spec.whatwg.org/multipage/custom-elements.html), Shadow DOM, templates, slots, and related Web Components work give the web a standardized component substrate.
@@ -69,8 +63,6 @@ But the proposal deliberately leaves effect scheduling, ownership, disposal, bat
 A component can have browser-recognized identity, lifecycle, encapsulation, styling boundaries, and reusable markup without belonging to a framework. But a component model is not an application architecture. Web Components do not determine application state and scheduling, routing and data coordination, server/client execution, compilation strategy, or the organizational conventions used to structure a large codebase.
 
 That was a key correction to my original mental model: **standard components establish portable component identity without defining how an application should be coordinated around those components.**
-
----
 
 ## Additional Signals From the Platform
 
@@ -82,8 +74,6 @@ Looking across TC39, WHATWG, CSSWG, WICG, the Web Components community, and Open
 
 **Control primitives.** [Open UI](https://open-ui.org/) studies common controls, component anatomy, state, behavior, styling, and accessibility patterns already repeated across frameworks and design systems, then considers which pieces may belong in HTML, CSS, JavaScript, ARIA, or related platform work.
 
----
-
 ## What Frameworks Still Own: Coordination and Policy
 
 These efforts move mechanisms downward while frameworks retain opinionated coordination. Those decisions cluster into three kinds of policy:
@@ -93,8 +83,6 @@ These efforts move mechanisms downward while frameworks retain opinionated coord
 - **Developer contract** — which templating model, compiler strategy, optimization pipeline, conventions, and developer experience define how a team builds the application.
 
 These are not all missing standards. Many are **policy choices**: the platform stays general while frameworks deliberately narrow the design space.
-
----
 
 ## The Likely Recomposition
 
@@ -112,8 +100,6 @@ If that pattern continues:
 - component systems, design systems, and compilers could increasingly target shared platform primitives while differentiating through composition, optimization, server integration, and developer experience
 
 Framework differentiation then shifts upward: from privately reimplementing substrate to coordinating platform primitives into an application model.
-
----
 
 ## Research Questions From Here
 
