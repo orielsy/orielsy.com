@@ -1,148 +1,272 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
-const paths = [
+const repairs = [
   {
-    label: 'Conversation-only decision',
-    badge: 'Failure path',
-    accent: false,
-    steps: [
-      'Decision exists only in conversation',
-      'New coding session',
-      'Prior discussion is absent from working context',
-      'Plausible wording reappears',
-    ],
+    label: '01 · Correct the output',
+    title: 'Fix the homepage wording',
+    detail: 'Remove the unsupported design-systems claim from the public copy.',
   },
   {
-    label: 'Durable project rule',
-    badge: 'Recovery path',
-    accent: true,
-    steps: [
-      'Decision becomes a project rule',
-      'Agent reads AGENTS.md',
-      'AGENTS.md routes to constitution / specs',
-      'Constraint enters working context',
-      'Silent regression becomes less likely',
-    ],
+    label: '02 · Correct the memory',
+    title: 'Record the constraint durably',
+    detail: 'The constitution and site-foundation spec now preserve the positioning constraint for later sessions.',
   },
 ];
 ---
 
 <ResearchFigureFrame
-  title="The same decision behaves differently depending on where it lives."
+  title="A real wording regression exposed the memory problem."
+  subtitle="The failure was not that the wording sounded implausible. It was that a later session had no durable route back to the established constraint."
   status="Observed on this repository"
-  caption="The recovery path gives later sessions a durable route back to the constraint."
+  caption="Fixing the output repaired the page. Fixing project memory made the same silent regression less likely in later sessions."
 >
-  <div class="paths">
-    {paths.map((path) => (
-      <section class:list={['path', path.accent && 'is-recovery']}>
-        <div class="path-heading">
-          <span>{path.badge}</span>
-          <strong>{path.label}</strong>
-        </div>
-        <ol>
-          {path.steps.map((step, index) => (
-            <li>
-              <span class="step-index">{String(index + 1).padStart(2, '0')}</span>
-              <span>{step}</span>
-            </li>
-          ))}
-        </ol>
-      </section>
-    ))}
+  <div class="incident">
+    <ol class="incident-track" aria-label="Observed decision-persistence failure">
+      <li class="incident-stage">
+        <span class="stage-label">Established constraint</span>
+        <strong>Grounded frontend experience</strong>
+        <p>Reusable UI components, component architecture, frontend patterns and systems, UI architecture, and engineering standards.</p>
+        <p class="constraint">Not formal design-system ownership.</p>
+      </li>
+
+      <li class="incident-stage">
+        <span class="stage-label">Later session</span>
+        <strong>The earlier discussion is absent</strong>
+        <p>The session can still produce polished, plausible wording without recovering the project-specific constraint.</p>
+      </li>
+
+      <li class="incident-stage is-output">
+        <span class="stage-label">Unsupported output</span>
+        <strong>Homepage wording regresses</strong>
+        <blockquote>
+          “15+ years of experience designing scalable web architectures, <mark>design systems</mark>, and enterprise platforms.”
+        </blockquote>
+      </li>
+    </ol>
+
+    <section class="repair" aria-label="Two-layer recovery">
+      <div class="repair-heading">
+        <span>Recovery</span>
+        <strong>Correct the output and the durable memory.</strong>
+      </div>
+
+      <div class="repair-actions">
+        {repairs.map((repair) => (
+          <div class="repair-action">
+            <span>{repair.label}</span>
+            <strong>{repair.title}</strong>
+            <p>{repair.detail}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="result">
+        <span>Later sessions</span>
+        <strong>AGENTS.md can route the agent back to the constraint before new wording is written.</strong>
+        <em>Regression becomes less likely, not impossible.</em>
+      </div>
+    </section>
   </div>
 </ResearchFigureFrame>
 
 <style>
-  .paths {
-    display: grid;
-    gap: 1px;
+  .incident {
+    min-width: 0;
     border-block: 1px solid var(--border-subtle);
-    background: var(--border-subtle);
   }
 
-  .path {
-    background: var(--bg-card);
-    padding: 1rem;
-  }
-
-  .path.is-recovery {
-    box-shadow: inset 2px 0 0 var(--accent);
-    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
-  }
-
-  .path-heading {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.4rem 1rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .path-heading span,
-  .step-index {
-    font-family: var(--font-mono-ui);
-    text-transform: uppercase;
-  }
-
-  .path-heading span {
-    color: var(--text-muted);
-    font-size: 0.625rem;
-    letter-spacing: 0.1em;
-  }
-
-  .is-recovery .path-heading span {
-    color: var(--accent);
-  }
-
-  .path-heading strong {
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.875rem;
-    line-height: 1.4;
-  }
-
-  ol {
+  .incident-track {
     display: grid;
-    gap: 0.45rem;
     margin: 0;
     padding: 0;
     list-style: none;
+    background: var(--bg-card);
   }
 
-  li {
-    display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr);
-    gap: 0.65rem;
-    align-items: center;
-    min-height: 2.8rem;
+  .incident-stage {
+    position: relative;
+    min-width: 0;
     margin: 0;
-    border-left: 1px solid var(--border-strong);
-    background: var(--bg-secondary);
-    padding: 0.6rem 0.7rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.95rem 0.8rem;
+  }
+
+  .stage-label,
+  .repair-heading span,
+  .repair-action > span,
+  .result > span {
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .stage-label {
+    color: var(--text-muted);
+  }
+
+  .incident-stage > strong,
+  .repair-heading strong,
+  .repair-action strong,
+  .result strong {
+    display: block;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    line-height: 1.4;
+  }
+
+  .incident-stage > strong {
+    margin-top: 0.3rem;
+    font-size: 0.875rem;
+  }
+
+  .incident-stage p,
+  .repair-action p {
+    margin: 0.5rem 0 0 !important;
     color: var(--text-secondary);
     font-size: 0.75rem;
-    line-height: 1.45;
+    line-height: 1.55;
   }
 
-  .is-recovery li {
-    border-left-color: var(--accent);
+  .incident-stage .constraint {
+    border-left: 2px solid var(--accent);
+    padding-left: 0.6rem;
+    color: var(--text-primary);
+    font-weight: 600;
   }
 
-  .step-index {
-    color: var(--text-muted);
-    font-size: 0.625rem;
-    letter-spacing: 0.08em;
+  .incident-stage.is-output {
+    background: color-mix(in srgb, var(--accent) 3%, var(--bg-card));
   }
 
-  .is-recovery .step-index {
+  .incident-stage.is-output .stage-label {
     color: var(--accent);
   }
 
+  blockquote {
+    margin: 0.65rem 0 0 !important;
+    border: 0;
+    background: var(--bg-secondary);
+    padding: 0.75rem !important;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-style: normal;
+    line-height: 1.6;
+  }
+
+  mark {
+    background: color-mix(in srgb, var(--accent) 16%, transparent);
+    color: var(--text-primary);
+    box-decoration-break: clone;
+    padding: 0.05em 0.15em;
+  }
+
+  .repair {
+    box-shadow: inset 2px 0 0 var(--accent);
+    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
+    padding: 1rem 0.8rem;
+  }
+
+  .repair-heading span,
+  .repair-action > span,
+  .result > span {
+    color: var(--accent);
+  }
+
+  .repair-heading strong {
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+  }
+
+  .repair-actions {
+    display: grid;
+    gap: 0;
+    margin-top: 0.8rem;
+    border-block: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border-subtle));
+  }
+
+  .repair-action {
+    min-width: 0;
+    padding: 0.8rem 0;
+  }
+
+  .repair-action + .repair-action {
+    border-top: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border-subtle));
+  }
+
+  .repair-action strong {
+    margin-top: 0.25rem;
+    font-size: 0.82rem;
+  }
+
+  .result {
+    margin-top: 0.85rem;
+    border-left: 1px solid var(--accent);
+    padding-left: 0.75rem;
+  }
+
+  .result strong {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+  }
+
+  .result em {
+    display: block;
+    margin-top: 0.3rem;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-style: normal;
+    line-height: 1.5;
+  }
+
   @media (min-width: 760px) {
-    .paths {
+    .incident-track {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .incident-stage {
+      min-height: 13rem;
+      border-right: 1px solid var(--border-subtle);
+      border-bottom: 0;
+      padding: 1rem;
+    }
+
+    .incident-stage:last-child {
+      border-right: 0;
+    }
+
+    .incident-stage:not(:last-child)::after {
+      position: absolute;
+      top: 1.1rem;
+      right: -0.43rem;
+      z-index: 2;
+      background: var(--bg-card);
+      padding: 0 0.15rem;
+      color: var(--text-muted);
+      content: '→';
+      font-family: var(--font-mono-ui);
+      font-size: 0.75rem;
+    }
+
+    .repair {
+      padding: 1rem 1.1rem;
+    }
+
+    .repair-actions {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .repair-action {
+      padding: 0.85rem 1rem 0.85rem 0;
+    }
+
+    .repair-action + .repair-action {
+      border-top: 0;
+      border-left: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border-subtle));
+      padding-right: 0;
+      padding-left: 1rem;
     }
   }
 </style>
