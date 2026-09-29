@@ -94,7 +94,9 @@ import ResearchBreakout from './ResearchBreakout.astro';
   const desktopResearchLayout = window.matchMedia('(min-width: 1024px)');
 
   if (article && overview && tocAside && tocShell && fullToc) {
-    const headings = Array.from(overview.querySelectorAll<HTMLHeadingElement>('h3[id]'));
+    const headings = Array.from(
+      overview.querySelectorAll<HTMLHeadingElement>('.pk-overview__section > h3[id]'),
+    );
 
     if (headings.length > 2 && !tocShell.querySelector('[data-reading-depth-toc="overview"]')) {
       fullToc.dataset.readingDepthToc = 'full';
