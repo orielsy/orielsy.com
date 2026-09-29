@@ -91,6 +91,7 @@ import ResearchBreakout from './ResearchBreakout.astro';
   const tocAside = article?.querySelector<HTMLElement>('aside[aria-label="Research navigation"]');
   const tocShell = tocAside?.querySelector<HTMLElement>('[data-research-toc-shell]');
   const fullToc = tocShell?.querySelector<HTMLElement>('.research-toc');
+  const desktopResearchLayout = window.matchMedia('(min-width: 1024px)');
 
   if (article && overview && tocAside && tocShell && fullToc) {
     const headings = Array.from(overview.querySelectorAll<HTMLHeadingElement>('h3[id]'));
@@ -132,10 +133,10 @@ import ResearchBreakout from './ResearchBreakout.astro';
       tocShell.append(overviewToc);
 
       const syncToc = () => {
-        const depth = article.dataset.readingDepth === 'full' ? 'full' : 'overview';
-        tocAside.hidden = false;
-        overviewToc.hidden = depth !== 'overview';
-        fullToc.hidden = depth !== 'full';
+        const overviewActive = article.dataset.readingDepth !== 'full';
+        tocAside.hidden = overviewActive && !desktopResearchLayout.matches;
+        overviewToc.hidden = !overviewActive;
+        fullToc.hidden = overviewActive;
       };
 
       const observer = new MutationObserver(syncToc);
@@ -144,6 +145,7 @@ import ResearchBreakout from './ResearchBreakout.astro';
         attributeFilter: ['data-reading-depth'],
       });
 
+      desktopResearchLayout.addEventListener('change', syncToc);
       queueMicrotask(syncToc);
     }
   }
