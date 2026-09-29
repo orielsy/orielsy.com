@@ -1,143 +1,91 @@
-<figure class="knowledge-path-figure not-prose my-10 overflow-hidden rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]">
-  <header class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-7">
-    <p class="font-editorial-mono m-0 text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]">Documentation-driven adaptive UX</p>
-    <h3 class="font-display mt-2 mb-0 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Move the knowledge, not the user.</h3>
-    <p class="mt-2 max-w-3xl text-sm leading-6 text-[var(--text-secondary)]">The same authored product knowledge can produce two very different paths through an enterprise task.</p>
-  </header>
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
-  <div class="grid lg:grid-cols-2">
-    <section class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-7 lg:border-r lg:border-b-0">
-      <div class="flex items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <span class="font-editorial-mono text-[9px] text-[var(--text-muted)]">01</span>
-          <h4 class="m-0 font-display text-lg font-semibold text-[var(--text-primary)]">Conventional</h4>
-        </div>
-        <span class="font-editorial-mono rounded-full border border-[var(--border-subtle)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">External detour</span>
+const conventionalSteps = [
+  { title: 'Work in product', detail: 'Continue the active task.', external: false },
+  { title: 'Hit a blocker', detail: 'Meaning or configuration becomes unclear.', external: false },
+  { title: 'Leave product', detail: 'The task crosses the application boundary.', external: true },
+  { title: 'Search documents', detail: 'Find and interpret the relevant guidance.', external: true },
+  { title: 'Return to product', detail: 'Recover context and resume the task.', external: false },
+];
+---
+
+<ResearchFigureFrame
+  className="knowledge-path-figure"
+  eyebrow="Documentation-driven adaptive UX"
+  title="Move the knowledge, not the user."
+  subtitle="The same authored product knowledge can produce two very different paths through an enterprise task."
+  caption="One task. The difference is where product knowledge meets the workflow."
+>
+  <div class="paths">
+    <section class="path conventional" aria-labelledby="conventional-path-title">
+      <div class="path-heading">
+        <p class="path-meta">01 · Conventional</p>
+        <h4 id="conventional-path-title">The user leaves the task to recover missing context.</h4>
       </div>
-      <p class="mt-3 text-xs leading-5 text-[var(--text-secondary)]">The task crosses the product boundary before it can continue.</p>
 
-      <ol class="relative mt-5 space-y-3 before:absolute before:bottom-4 before:left-[18px] before:top-4 before:border-l before:border-dashed before:border-[var(--border-subtle)]">
-        <li class="relative grid grid-cols-[38px_minmax(0,1fr)] items-center gap-3">
-          <span class="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-primary)] text-[var(--text-muted)]">
-            <svg class="h-3.5 w-3.5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9h17"/><path d="M8 14h3"/></svg>
-          </span>
-          <div class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-4 py-3">
-            <div class="flex items-center justify-between gap-3"><p class="m-0 text-sm font-medium text-[var(--text-primary)]">Work in product</p><span class="font-editorial-mono text-[8px] text-[var(--text-muted)]">01</span></div>
-            <p class="mt-1 text-[11px] text-[var(--text-muted)]">Active task</p>
-          </div>
-        </li>
-
-        <li class="relative grid grid-cols-[38px_minmax(0,1fr)] items-center gap-3">
-          <span class="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-primary)] text-[var(--text-muted)]">
-            <svg class="h-3.5 w-3.5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5"/><path d="M12 16.5h.01"/></svg>
-          </span>
-          <div class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-4 py-3">
-            <div class="flex items-center justify-between gap-3"><p class="m-0 text-sm font-medium text-[var(--text-primary)]">Hit a blocker</p><span class="font-editorial-mono text-[8px] text-[var(--text-muted)]">02</span></div>
-            <p class="mt-1 text-[11px] text-[var(--text-muted)]">Meaning or configuration is unclear</p>
-          </div>
-        </li>
-
-        <li class="relative grid grid-cols-[38px_minmax(0,1fr)] items-center gap-3">
-          <span class="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-strong)] bg-[var(--bg-primary)] text-[var(--text-muted)]">
-            <svg class="h-3.5 w-3.5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M7 12h10"/><path d="M13 8l4 4-4 4"/></svg>
-          </span>
-          <div class="rounded-lg border border-dashed border-[var(--border-strong)] bg-[var(--bg-primary)] px-4 py-3">
-            <div class="flex items-center justify-between gap-3"><p class="m-0 text-sm font-medium text-[var(--text-primary)]">Leave product</p><span class="font-editorial-mono text-[8px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Outside app</span></div>
-            <p class="mt-1 text-[11px] text-[var(--text-muted)]">Context breaks</p>
-          </div>
-        </li>
-
-        <li class="relative grid grid-cols-[38px_minmax(0,1fr)] items-center gap-3">
-          <span class="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-strong)] bg-[var(--bg-primary)] text-[var(--text-muted)]">
-            <svg class="h-3.5 w-3.5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 4 4"/></svg>
-          </span>
-          <div class="rounded-lg border border-dashed border-[var(--border-strong)] bg-[var(--bg-primary)] px-4 py-3">
-            <div class="flex items-center justify-between gap-3"><p class="m-0 text-sm font-medium text-[var(--text-primary)]">Search documents</p><span class="font-editorial-mono text-[8px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Outside app</span></div>
-            <p class="mt-1 text-[11px] text-[var(--text-muted)]">Find and interpret guidance</p>
-          </div>
-        </li>
-
-        <li class="relative grid grid-cols-[38px_minmax(0,1fr)] items-center gap-3">
-          <span class="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-primary)] text-[var(--text-muted)]">
-            <svg class="h-3.5 w-3.5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M8 7H5v3"/><path d="M5 10a7 7 0 1 0 2-5"/></svg>
-          </span>
-          <div class="rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-4 py-3">
-            <div class="flex items-center justify-between gap-3"><p class="m-0 text-sm font-medium text-[var(--text-primary)]">Return to product</p><span class="font-editorial-mono text-[8px] text-[var(--text-muted)]">05</span></div>
-            <p class="mt-1 text-[11px] text-[var(--text-muted)]">Resume the task</p>
-          </div>
-        </li>
+      <ol class="journey">
+        {conventionalSteps.map((step, index) => (
+          <li class:list={[step.external && 'is-external']}>
+            <span class="step-number">{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <div class="step-title-row">
+                <strong>{step.title}</strong>
+                {step.external && <span class="step-state">Outside app</span>}
+              </div>
+              <p>{step.detail}</p>
+            </div>
+          </li>
+        ))}
       </ol>
     </section>
 
-    <section class="px-5 py-5 sm:px-7">
-      <div class="flex items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <span class="font-editorial-mono text-[9px] text-[var(--accent)]">02</span>
-          <h4 class="m-0 font-display text-lg font-semibold text-[var(--text-primary)]">Adaptive</h4>
-        </div>
-        <span class="font-editorial-mono rounded-full border border-[var(--accent-border)] px-2.5 py-1 text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">In-product path</span>
+    <section class="path adaptive" aria-labelledby="adaptive-path-title">
+      <div class="path-heading">
+        <p class="path-meta">02 · Adaptive</p>
+        <h4 id="adaptive-path-title">The task stays in place while applicable knowledge reaches it.</h4>
       </div>
-      <p class="mt-3 text-xs leading-5 text-[var(--text-secondary)]">The task stays in place while applicable product knowledge reaches the interface.</p>
 
-      <div class="mt-5 rounded-lg border border-[var(--accent-border)] bg-[var(--bg-primary)] p-4">
-        <div class="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
-          <span class="font-editorial-mono flex items-center gap-2 text-[9px] uppercase tracking-[0.1em] text-[var(--text-primary)]">
-            <svg class="h-3.5 w-3.5 text-[var(--accent)]" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9h17"/><path d="M8 14h3"/></svg>
-            Application
-          </span>
-          <span class="flex items-center gap-2 text-[10px] text-[var(--accent)]"><span class="h-1.5 w-1.5 rounded-full bg-[var(--accent)]"></span>User stays here</span>
+      <div class="application-boundary">
+        <div class="application-label">
+          <span>Application</span>
+          <span>User stays here</span>
         </div>
 
-        <div class="mt-4 grid gap-3 md:grid-cols-[1.08fr_0.9fr_1fr] md:items-stretch">
-          <div class="grid gap-3">
-            <div class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-3">
-              <div class="flex items-center gap-2 text-[var(--text-muted)]"><svg class="h-3.5 w-3.5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 10h16"/></svg><span class="font-editorial-mono text-[8px] uppercase tracking-[0.08em]">Input</span></div>
-              <p class="mt-2 text-xs font-medium text-[var(--text-primary)]">Current state</p>
-              <p class="mt-1 text-[10px] leading-4 text-[var(--text-muted)]">Active task + product context</p>
+        <div class="adaptive-flow">
+          <div class="flow-cell inputs">
+            <p class="flow-meta">Inputs</p>
+            <div class="input-row">
+              <strong>Current state</strong>
+              <span>Active task + product context</span>
             </div>
-            <div class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-3">
-              <div class="flex items-center gap-2 text-[var(--text-muted)]"><svg class="h-3.5 w-3.5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v15h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></svg><span class="font-editorial-mono text-[8px] uppercase tracking-[0.08em]">Input</span></div>
-              <p class="mt-2 text-xs font-medium text-[var(--text-primary)]">Authored knowledge</p>
-              <p class="mt-1 text-[10px] leading-4 text-[var(--text-muted)]">Docs · release notes · guidance</p>
+            <div class="input-row">
+              <strong>Authored knowledge</strong>
+              <span>Docs, release notes, guidance</span>
             </div>
           </div>
 
-          <div class="relative rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-3 md:flex md:flex-col md:justify-center">
-            <div class="flex items-center gap-2 text-[var(--text-muted)]"><svg class="h-3.5 w-3.5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M8 3h8l4 4v14H4V3z"/><path d="M16 3v5h5"/></svg><span class="font-editorial-mono text-[8px] uppercase tracking-[0.08em]">Context layer</span></div>
-            <p class="mt-2 text-xs font-medium leading-5 text-[var(--text-primary)]">Applicability + response rules</p>
-            <p class="mt-1 text-[10px] leading-4 text-[var(--text-muted)]">Deterministic selection and policy</p>
-            <span class="absolute -right-2 top-1/2 hidden -translate-y-1/2 bg-[var(--bg-primary)] px-0.5 text-[var(--text-muted)] md:block" aria-hidden="true">→</span>
+          <div class="flow-cell context-layer">
+            <p class="flow-meta">Context layer</p>
+            <strong>Applicability + response rules</strong>
+            <span>Deterministic selection and policy</span>
           </div>
 
-          <div class="rounded-md border border-[var(--accent-border)] bg-[var(--accent-subtle)] p-3 md:flex md:flex-col md:justify-center">
-            <div class="flex items-center gap-2 text-[var(--accent)]"><svg class="h-3.5 w-3.5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="m5 12 4 4L19 6"/></svg><span class="font-editorial-mono text-[8px] uppercase tracking-[0.08em]">Output</span></div>
-            <p class="mt-2 text-xs font-medium text-[var(--text-primary)]">Timely guidance</p>
-            <p class="mt-1 text-[10px] leading-4 text-[var(--text-muted)]">Relevant explanation + action</p>
+          <div class="flow-cell output">
+            <p class="flow-meta">Output</p>
+            <strong>Timely guidance</strong>
+            <span>Relevant explanation + action</span>
           </div>
         </div>
       </div>
 
-      <div class="mt-4 border-l-2 border-[var(--accent)] pl-3">
-        <p class="m-0 text-xs leading-5 text-[var(--text-secondary)]">Guidance appears only when authored rules and current state support it. Phase 1 does not need to guess.</p>
-      </div>
+      <p class="guidance-note">Guidance appears only when authored rules and current state support it. Phase 1 does not need to guess.</p>
     </section>
   </div>
-
-  <figcaption class="flex flex-col gap-2 border-t border-[var(--border-subtle)] px-5 py-3 text-[10px] text-[var(--text-muted)] sm:flex-row sm:items-center sm:justify-between sm:px-7">
-    <span>One task · the difference is where product knowledge meets the workflow.</span>
-    <span class="font-editorial-mono uppercase tracking-[0.12em]">Deterministic by design</span>
-  </figcaption>
-</figure>
+</ResearchFigureFrame>
 
 <style>
-  /*
-   * This figure is rendered inside `.prose`, whose custom global rules target
-   * raw descendants (`.prose p`, `.prose ol`, `.prose li`, `.prose h3`, ...).
-   * `not-prose` does not automatically neutralize those hand-written selectors,
-   * so explicitly establish the diagram's own typographic rhythm here.
-   */
   .knowledge-path-figure :global(p),
-  .knowledge-path-figure :global(h3),
   .knowledge-path-figure :global(h4),
   .knowledge-path-figure :global(ol),
   .knowledge-path-figure :global(li) {
@@ -145,39 +93,209 @@
   }
 
   .knowledge-path-figure :global(ol) {
-    padding-left: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .knowledge-path-figure :global(li) {
-    margin-block: 0;
+  .paths {
+    display: grid;
+    border-top: 1px solid var(--border-subtle);
   }
 
-  .knowledge-path-figure :global(p) {
-    line-height: 1.5;
+  .path {
+    min-width: 0;
+    padding: 1rem 0;
   }
 
-  .knowledge-path-figure :global(h3) {
-    margin-top: 0.5rem;
-    margin-bottom: 0;
+  .path + .path {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .path-heading {
+    padding: 0 0.25rem 0.9rem;
+  }
+
+  .path-meta,
+  .flow-meta,
+  .step-number,
+  .step-state,
+  .application-label {
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.45;
+    text-transform: uppercase;
+  }
+
+  .path-meta,
+  .adaptive .flow-meta {
+    color: var(--accent);
+  }
+
+  .conventional .path-meta,
+  .flow-meta,
+  .step-number,
+  .step-state {
+    color: var(--text-muted);
+  }
+
+  .path h4 {
+    margin-top: 0.35rem !important;
+    color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 1.5rem;
-    line-height: 1.2;
+    font-size: 1rem;
     font-weight: 600;
-    letter-spacing: -0.03em;
-  }
-
-  .knowledge-path-figure :global(h4) {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: 1.125rem;
     line-height: 1.35;
-    font-weight: 600;
-    letter-spacing: -0.02em;
   }
 
-  @media (min-width: 640px) {
-    .knowledge-path-figure :global(h3) {
-      font-size: 1.875rem;
+  .journey {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .journey li {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.72rem 0.25rem;
+  }
+
+  .journey li.is-external {
+    background: color-mix(in srgb, var(--bg-secondary) 58%, transparent);
+  }
+
+  .step-number {
+    padding-top: 0.1rem;
+  }
+
+  .step-title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.35rem 0.75rem;
+  }
+
+  .journey strong,
+  .flow-cell > strong,
+  .input-row strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .journey li p,
+  .flow-cell > span,
+  .input-row span,
+  .guidance-note {
+    color: var(--text-secondary);
+    font-size: 0.71875rem;
+    line-height: 1.55;
+  }
+
+  .journey li p {
+    margin-top: 0.2rem !important;
+  }
+
+  .application-boundary {
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .application-label {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    padding: 0.65rem 0.25rem;
+    color: var(--text-muted);
+  }
+
+  .application-label span:first-child {
+    color: var(--text-primary);
+  }
+
+  .application-label span:last-child {
+    color: var(--accent);
+  }
+
+  .adaptive-flow {
+    display: grid;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .flow-cell {
+    min-width: 0;
+    padding: 0.85rem 0.25rem;
+  }
+
+  .flow-cell + .flow-cell {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .flow-cell > strong,
+  .flow-cell > span {
+    display: block;
+  }
+
+  .flow-cell > strong {
+    margin-top: 0.35rem;
+  }
+
+  .flow-cell > span {
+    margin-top: 0.25rem;
+  }
+
+  .inputs {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .input-row {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .output {
+    box-shadow: inset 2px 0 0 var(--accent);
+    background: color-mix(in srgb, var(--accent) 5%, transparent);
+    padding-left: 0.8rem;
+  }
+
+  .guidance-note {
+    margin-top: 0.9rem !important;
+    border-left: 2px solid var(--accent);
+    padding-left: 0.75rem;
+  }
+
+  @media (min-width: 860px) {
+    .paths {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .path {
+      padding: 1rem;
+    }
+
+    .path + .path {
+      border-top: 0;
+      border-left: 1px solid var(--border-subtle);
+    }
+
+    .adaptive-flow {
+      grid-template-columns: 1.08fr 0.95fr 0.95fr;
+    }
+
+    .flow-cell {
+      padding: 0.85rem;
+    }
+
+    .flow-cell + .flow-cell {
+      border-top: 0;
+      border-left: 1px solid var(--border-subtle);
     }
   }
 </style>
