@@ -70,6 +70,29 @@ const {
       return label === 'QUICK ORIENTATION';
     });
 
+  const positionQuickOrientationAfterSwitcher = (article: HTMLElement, switcher: HTMLElement) => {
+    let anchor: Element = switcher;
+
+    getQuickOrientationCallouts(article).forEach((callout) => {
+      if (callout.dataset.readingDepthPositioned === 'true') {
+        anchor = callout;
+        return;
+      }
+
+      const wrapper = callout.parentElement;
+      const mobileOnly = wrapper?.classList.contains('lg:hidden');
+      const desktopOnly = wrapper?.classList.contains('hidden') && wrapper?.classList.contains('lg:block');
+
+      if (mobileOnly) callout.classList.add('lg:hidden');
+      if (desktopOnly) callout.classList.add('hidden', 'lg:block');
+
+      callout.dataset.readingDepthOrientation = 'true';
+      callout.dataset.readingDepthPositioned = 'true';
+      anchor.insertAdjacentElement('afterend', callout);
+      anchor = callout;
+    });
+  };
+
   const updateHeroReadingTime = (
     article: HTMLElement,
     switcher: HTMLElement,
@@ -143,6 +166,8 @@ const {
     const switcher = article.querySelector<HTMLElement>('[data-reading-depth-switcher]');
     if (!switcher || switcher.dataset.readingDepthBound === 'true') return;
     switcher.dataset.readingDepthBound = 'true';
+
+    positionQuickOrientationAfterSwitcher(article, switcher);
 
     const { marker, elements: fullResearch } = getFullResearchElements(article);
     let initialDepth: 'overview' | 'full' = new URL(window.location.href).searchParams.get('depth') === 'full'
@@ -266,6 +291,11 @@ const {
     line-height: 1.4;
     text-transform: uppercase;
     color: var(--text-muted);
+  }
+
+  :global([data-reading-depth-orientation='true']) {
+    margin-top: 0 !important;
+    margin-bottom: 2.5rem !important;
   }
 
   :global([data-reading-depth-marker='full']) {
