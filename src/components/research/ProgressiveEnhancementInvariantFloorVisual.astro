@@ -1,0 +1,291 @@
+---
+import { Cpu, Globe, ListChecks } from '@lucide/astro';
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const tiers = [
+  {
+    key: 'deterministic',
+    name: 'Deterministic',
+    when: 'Baseline',
+    implementation: 'Indexed filtering + synonyms',
+    Icon: ListChecks,
+  },
+  {
+    key: 'local',
+    name: 'Local inference',
+    when: 'When available',
+    implementation: 'Local embeddings',
+    Icon: Cpu,
+  },
+  {
+    key: 'remote',
+    name: 'Remote inference',
+    when: 'When the task justifies it',
+    implementation: 'Remote reranker',
+    Icon: Globe,
+  },
+];
+---
+
+<ResearchFigureFrame
+  figureNumber="03"
+  eyebrow="Architectural model · semantic-search example from source"
+  title="Capability varies; application truth and action boundaries do not"
+  caption="These are implementation options for a capability, not a required ladder. The source does not prescribe how a product selects among them at runtime."
+>
+  <div class="desktop-model" aria-label="Three implementation tiers over a shared invariant floor">
+    <div class="tier-grid tier-headings">
+      <div></div>
+      {tiers.map(({ name, when, Icon }, index) => (
+        <div class:list={['tier-heading', index > 0 && 'tier-divider']}>
+          <Icon size={16} strokeWidth={1.7} aria-hidden="true" />
+          <strong>{name}</strong>
+          <span>{when}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="tier-grid data-row">
+      <span class="row-label">Implementation</span>
+      {tiers.map(({ implementation }, index) => (
+        <div class:list={['data-cell', index > 0 && 'tier-divider']}>{implementation}</div>
+      ))}
+    </div>
+
+    <div class="tier-grid data-row">
+      <span class="row-label">User experiences</span>
+      <div class="shared-experience">Search</div>
+    </div>
+  </div>
+
+  <div class="mobile-model" aria-label="Three implementation tiers sharing the same application boundaries">
+    {tiers.map(({ name, when, implementation, Icon }) => (
+      <section>
+        <div class="mobile-tier-heading">
+          <Icon size={16} strokeWidth={1.7} aria-hidden="true" />
+          <div>
+            <strong>{name}</strong>
+            <span>{when}</span>
+          </div>
+        </div>
+        <dl>
+          <div><dt>Implementation</dt><dd>{implementation}</dd></div>
+          <div><dt>User experiences</dt><dd>Search</dd></div>
+        </dl>
+      </section>
+    ))}
+  </div>
+
+  <div class="invariant-floor">
+    <div class="floor-heading">
+      <span>Invariant floor</span>
+      <span>Constant across every tier</span>
+    </div>
+    <p>Application truth · action boundaries</p>
+  </div>
+
+  <p class="closing-line"><strong>Capability can degrade gracefully.</strong> Authority should remain bounded by what the application can justify.</p>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-figure-frame) :global(p),
+  :global(.research-figure-frame) :global(dl),
+  :global(.research-figure-frame) :global(dd),
+  :global(.research-figure-frame) :global(dt) {
+    margin: 0;
+  }
+
+  .desktop-model {
+    display: none;
+  }
+
+  .mobile-model {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .mobile-model section {
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.25rem;
+    background: var(--bg-secondary);
+    padding: 0.9rem;
+  }
+
+  .mobile-tier-heading {
+    display: flex;
+    gap: 0.65rem;
+    align-items: flex-start;
+    color: var(--accent);
+  }
+
+  .mobile-tier-heading strong {
+    display: block;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .mobile-tier-heading span {
+    display: block;
+    margin-top: 0.15rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.07em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  dl {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 0.8rem !important;
+  }
+
+  dl > div {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+
+  dt,
+  .row-label {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  dd {
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .invariant-floor {
+    margin-top: 1.25rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 48%, var(--border-subtle));
+    border-radius: 0.25rem;
+    background: color-mix(in srgb, var(--accent) 8%, var(--bg-card));
+    padding: 0.85rem 1rem;
+  }
+
+  .floor-heading {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.3rem 1rem;
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .floor-heading span:first-child {
+    color: var(--accent);
+  }
+
+  .floor-heading span:last-child {
+    color: var(--text-muted);
+  }
+
+  .invariant-floor p {
+    margin-top: 0.35rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .closing-line {
+    margin-top: 1.1rem !important;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  .closing-line strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  @media (min-width: 720px) {
+    .mobile-model {
+      display: none;
+    }
+
+    .desktop-model {
+      display: block;
+    }
+
+    .tier-grid {
+      display: grid;
+      grid-template-columns: 7.5rem repeat(3, minmax(0, 1fr));
+    }
+
+    .tier-heading {
+      min-width: 0;
+      padding: 0 1rem 1rem;
+      color: var(--accent);
+    }
+
+    .tier-divider {
+      border-left: 1px solid var(--border-subtle);
+    }
+
+    .tier-heading strong {
+      display: block;
+      margin-top: 0.5rem;
+      color: var(--text-primary);
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .tier-heading span {
+      display: block;
+      margin-top: 0.18rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono-ui);
+      font-size: 0.625rem;
+      letter-spacing: 0.06em;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
+    .data-row {
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .row-label {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 0;
+    }
+
+    .data-cell {
+      padding: 0.75rem 1rem;
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+      line-height: 1.5;
+    }
+
+    .shared-experience {
+      grid-column: 2 / -1;
+      padding: 0.75rem 1rem;
+      color: var(--text-primary);
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 600;
+      line-height: 1.5;
+      text-align: center;
+    }
+  }
+</style>
