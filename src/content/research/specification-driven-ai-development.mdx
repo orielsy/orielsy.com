@@ -34,8 +34,6 @@ A new session or tool may see only the repository, so durable decisions need ver
 
 **A project should not depend on one conversation remaining available forever.**
 
----
-
 ## A Real Failure: When an Old Decision Came Back
 
 I have already seen the opposite fail.
@@ -57,8 +55,6 @@ The fix had two layers: correct the homepage and correct the durable project mem
 </ResearchBreakout>
 
 "Less likely" is intentional. A repository rule cannot guarantee agent behavior, but it gives later sessions something durable to recover.
-
----
 
 ## Externalizing Intent
 
@@ -92,8 +88,6 @@ Decision records preserve choices whose rationale is not obvious from code. [doc
 
 That intent should not have to be rediscovered from package scripts.
 
----
-
 ## The Agent Entry Point
 
 [AGENTS.md](https://github.com/orielsy/orielsy.com/blob/main/AGENTS.md) stays deliberately thin. Its job is to route an agent into the project's existing memory:
@@ -115,8 +109,6 @@ It is a **routing layer, not a mega-prompt**. Copying every rule, requirement, t
 
 The goal is discoverability at the right scope.
 
----
-
 ## Updating the Source of Truth Before the Code
 
 When a requirement changes materially, the durable artifact should change with the implementation rather than leave stale intent behind.
@@ -128,8 +120,6 @@ When a requirement changes materially, the durable artifact should change with t
 Publication gating provides a concrete example. When unpublished cards changed from non-clickable summaries to inline status interactions, the feature spec, README, publication-gating ADR, and URL/SEO policy changed with the implementation.
 
 The next agent therefore inherits the requirement instead of inferring it from whichever component happens to exist.
-
----
 
 ## What This Does Not Solve
 
@@ -143,8 +133,6 @@ Version-controlled memory still has failure modes:
 - **Human judgment remains necessary.** Engineers still decide what becomes durable, which artifact owns a decision, and whether implementation satisfies intent.
 
 The system only helps if its memory is maintained.
-
----
 
 ## Where This Could Go Next
 
