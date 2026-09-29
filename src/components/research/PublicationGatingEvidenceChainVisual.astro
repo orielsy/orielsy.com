@@ -1,0 +1,151 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const steps = [
+  {
+    label: 'Requirement',
+    file: 'specs/003-content-publication-gating/spec.md',
+    text: 'New entries fail closed until deliberately published.',
+  },
+  {
+    label: 'Schema default',
+    file: 'src/content.config.ts',
+    text: 'published: z.boolean().default(false)',
+  },
+  {
+    label: 'Route behavior',
+    file: 'src/pages/research/[...slug].astro',
+    text: 'Published entries render; local preview is gated by development preview mode.',
+  },
+  {
+    label: 'Feed behavior',
+    file: 'src/pages/rss.xml.ts',
+    text: 'RSS filters the collection to published entries.',
+  },
+];
+---
+
+<ResearchFigureFrame
+  eyebrow="Direct repository evidence"
+  title="One concern, four forms of evidence"
+  caption="The chain does not treat the specification as proof of implementation. Each surface contributes a different kind of evidence."
+>
+  <ol class="evidence-chain">
+    {steps.map((step, index) => (
+      <li class:list={[index % 2 === 1 && 'is-right']}>
+        <span class="node" aria-hidden="true">0{index + 1}</span>
+        <div class="evidence-copy">
+          <span class="label">{step.label}</span>
+          <code>{step.file}</code>
+          <p>{step.text}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</ResearchFigureFrame>
+
+<style>
+  .evidence-chain {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    border-block: 1px solid var(--border-subtle);
+    padding: 1rem 0;
+    list-style: none;
+  }
+
+  .evidence-chain::before {
+    position: absolute;
+    top: 1rem;
+    bottom: 1rem;
+    left: 0.8rem;
+    width: 1px;
+    background: var(--border-subtle);
+    content: '';
+  }
+
+  li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.6rem minmax(0, 1fr);
+    gap: 0.75rem;
+    margin: 0;
+  }
+
+  .node {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 1.6rem;
+    height: 1.6rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    background: var(--bg-card);
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+  }
+
+  .label {
+    display: block;
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  code {
+    display: block;
+    margin-top: 0.25rem;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: var(--text-primary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  p {
+    margin: 0.35rem 0 0 !important;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 760px) {
+    .evidence-chain {
+      gap: 1.4rem;
+    }
+
+    .evidence-chain::before {
+      left: 50%;
+    }
+
+    li {
+      grid-template-columns: minmax(0, 1fr) 3rem minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .node {
+      grid-column: 2;
+      justify-self: center;
+    }
+
+    .evidence-copy {
+      grid-column: 1;
+      grid-row: 1;
+      text-align: right;
+    }
+
+    li.is-right .evidence-copy {
+      grid-column: 3;
+      text-align: left;
+    }
+  }
+</style>
