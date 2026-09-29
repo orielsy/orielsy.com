@@ -3,10 +3,16 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 ---
 
 <ResearchFigureFrame
-  eyebrow="Observed repository inconsistency"
+  eyebrow="Figure 05"
+  status="Observed repository inconsistency"
   title="Persistence without reconciliation"
   caption="Version control makes drift visible; it does not perform maintenance. This figure does not assert that either artifact automatically outranks the other."
 >
+  <div class="drift-status">
+    <span>Divergence</span>
+    <p>An accepted decision record and the repository's current operating guidance now describe different production-publishing models.</p>
+  </div>
+
   <div class="drift-comparison">
     <section>
       <div class="heading-row">
@@ -17,17 +23,13 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       <p>Centers production publishing on <code>npm run live</code> from <code>main</code> and says a repository-authored Actions workflow is not required.</p>
     </section>
 
-    <div class="divergence" aria-label="Documents disagree">
-      <span>Divergence</span>
-    </div>
-
     <section>
       <span class="label">Current guidance + implementation</span>
       <strong>Three supported paths</strong>
       <ol>
-        <li><span>01</span>Local <code>npm run live</code></li>
-        <li><span>02</span>GitHub Actions manual dispatch</li>
-        <li><span>03</span>Remote trigger branch</li>
+        <li><span>01</span><span>Local <code>npm run live</code></span></li>
+        <li><span>02</span><span>GitHub Actions manual dispatch</span></li>
+        <li><span>03</span><span>Remote trigger branch</span></li>
       </ol>
       <p class="source-note">Confirmed in AGENTS.md, README.md, and .github/workflows/deploy-production.yml</p>
     </section>
@@ -41,11 +43,49 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 </ResearchFigureFrame>
 
 <style>
+  .drift-status {
+    display: grid;
+    gap: 0.45rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .drift-status span,
+  .label,
+  .date,
+  .source-note,
+  .drift-outcomes span,
+  li > span:first-child,
+  code {
+    font-family: var(--font-mono-ui);
+  }
+
+  .drift-status span,
+  .label,
+  .date,
+  .drift-outcomes span {
+    font-size: 0.625rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .drift-status span,
+  .drift-outcomes span {
+    color: var(--accent);
+  }
+
+  .drift-status p {
+    margin: 0 !important;
+    max-width: 48rem;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
   .drift-comparison {
     display: grid;
-    gap: 1rem;
-    border-block: 1px solid var(--border-subtle);
-    padding: 1rem 0;
+    gap: 1.1rem;
   }
 
   section {
@@ -54,27 +94,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   .heading-row {
     display: grid;
-    gap: 0.25rem;
-  }
-
-  .label,
-  .date,
-  .divergence span,
-  .source-note,
-  .drift-outcomes span,
-  li span,
-  code {
-    font-family: var(--font-mono-ui);
-  }
-
-  .label,
-  .date,
-  .source-note,
-  .drift-outcomes span,
-  .divergence span {
-    font-size: 0.625rem;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
+    gap: 0.3rem;
   }
 
   .label,
@@ -85,52 +105,35 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   section > strong {
     display: block;
-    margin-top: 0.45rem;
+    margin-top: 0.5rem;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 0.9rem;
+    font-size: 1rem;
     line-height: 1.4;
   }
 
   section > p {
-    margin: 0.45rem 0 0 !important;
+    margin: 0.5rem 0 0 !important;
     color: var(--text-secondary);
-    font-size: 0.75rem;
-    line-height: 1.6;
+    font-size: 0.8rem;
+    line-height: 1.65;
   }
 
   code {
+    display: inline;
     border: 0;
     background: transparent;
     padding: 0;
     color: var(--text-primary);
-    font-size: 0.7rem;
-  }
-
-  .divergence {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-  }
-
-  .divergence::before,
-  .divergence::after {
-    height: 1px;
-    flex: 1;
-    background: var(--border-subtle);
-    content: '';
-  }
-
-  .divergence span {
-    border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border-subtle));
-    padding: 0.2rem 0.4rem;
-    color: var(--accent);
+    font-size: 0.72rem;
+    white-space: nowrap;
+    text-transform: none;
   }
 
   ol {
     display: grid;
-    gap: 0.45rem;
-    margin: 0.55rem 0 0;
+    gap: 0.55rem;
+    margin: 0.65rem 0 0;
     padding: 0;
     list-style: none;
   }
@@ -138,68 +141,75 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   li {
     display: grid;
     grid-template-columns: 1.8rem minmax(0, 1fr);
-    gap: 0.45rem;
+    gap: 0.5rem;
     color: var(--text-secondary);
-    font-size: 0.75rem;
-    line-height: 1.5;
+    font-size: 0.8rem;
+    line-height: 1.55;
   }
 
-  li span {
+  li > span:first-child {
     color: var(--accent);
     font-size: 0.625rem;
   }
 
   .source-note {
-    margin-top: 0.7rem !important;
+    margin-top: 0.8rem !important;
     color: var(--text-muted) !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 0.02em;
+    line-height: 1.6 !important;
+    text-transform: none;
+    overflow-wrap: anywhere;
   }
 
   .drift-outcomes {
     display: grid;
-    margin-top: 0.8rem;
-    border-block: 1px solid var(--border-subtle);
+    margin-top: 1rem;
+    border-top: 1px solid var(--border-subtle);
   }
 
   .drift-outcomes > div {
-    padding: 0.7rem 0;
+    padding: 0.8rem 0;
   }
 
   .drift-outcomes > div + div {
     border-top: 1px solid var(--border-subtle);
   }
 
-  .drift-outcomes span {
-    color: var(--accent);
-  }
-
   .drift-outcomes p {
-    margin: 0.25rem 0 0 !important;
+    margin: 0.3rem 0 0 !important;
     color: var(--text-secondary);
-    font-size: 0.75rem;
-    line-height: 1.5;
+    font-size: 0.8rem;
+    line-height: 1.55;
   }
 
   @media (min-width: 760px) {
+    .drift-status {
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 1rem;
+      align-items: baseline;
+    }
+
     .drift-comparison {
-      grid-template-columns: minmax(0, 1fr) 6rem minmax(0, 1fr);
-      align-items: stretch;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      align-items: start;
+    }
+
+    .drift-comparison section {
+      padding-right: 1.5rem;
+    }
+
+    .drift-comparison section + section {
+      border-left: 1px solid var(--border-subtle);
+      padding-right: 0;
+      padding-left: 1.5rem;
     }
 
     .heading-row {
       grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
-    }
-
-    .divergence {
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .divergence::before,
-    .divergence::after {
-      width: 1px;
-      height: auto;
-      flex: 1;
+      align-items: baseline;
+      gap: 0.75rem;
     }
 
     .drift-outcomes {
@@ -207,7 +217,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     }
 
     .drift-outcomes > div {
-      padding: 0.7rem 0.9rem;
+      padding: 0.8rem 0.9rem;
     }
 
     .drift-outcomes > div + div {
