@@ -15,7 +15,7 @@ const steps = [
   {
     label: 'Route behavior',
     file: 'src/pages/research/[...slug].astro',
-    text: 'Published entries render; local preview is gated by development preview mode.',
+    text: 'Published entries render; local preview requires DEV plus content-preview mode.',
   },
   {
     label: 'Feed behavior',
@@ -26,6 +26,7 @@ const steps = [
 ---
 
 <ResearchFigureFrame
+  className="is-open"
   eyebrow="Direct repository evidence"
   title="One concern, four forms of evidence"
   caption="The chain does not treat the specification as proof of implementation. Each surface contributes a different kind of evidence."
@@ -45,12 +46,20 @@ const steps = [
 </ResearchFigureFrame>
 
 <style>
+  code {
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+  }
+
   .evidence-chain {
     position: relative;
     display: grid;
     gap: 1rem;
     margin: 0;
-    border-block: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
     padding: 1rem 0;
     list-style: none;
   }
@@ -86,14 +95,14 @@ const steps = [
     background: var(--bg-card);
     color: var(--accent);
     font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
   }
 
   .label {
     display: block;
     color: var(--accent);
     font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
@@ -106,7 +115,7 @@ const steps = [
     padding: 0;
     color: var(--text-primary);
     font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
     line-height: 1.5;
     overflow-wrap: anywhere;
   }
@@ -114,7 +123,7 @@ const steps = [
   p {
     margin: 0.35rem 0 0 !important;
     color: var(--text-secondary);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     line-height: 1.55;
   }
 

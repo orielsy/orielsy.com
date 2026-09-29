@@ -3,9 +3,10 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 ---
 
 <ResearchFigureFrame
+  className="is-open"
   eyebrow="Current human-authored workflow"
   title="Route, then narrow"
-  caption="Selection bounds the present task. Other project memory remains available for other work; the repository does not currently detect relevance automatically."
+  caption="A human-authored entry point and task scope guide selection; the repository does not detect relevance automatically. Other project memory remains available for other work."
 >
   <div class="routing-flow">
     <section>
@@ -34,14 +35,13 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     </section>
   </div>
 
-  <p class="routing-note"><strong>Boundary:</strong> a human-authored entry point and task scope guide selection today. Automated relevance detection is not implemented.</p>
 </ResearchFigureFrame>
 
 <style>
   .routing-flow {
     display: grid;
     gap: 0.8rem;
-    border-block: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
     padding: 1rem 0;
   }
 
@@ -59,7 +59,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   .label {
     display: block;
     color: var(--text-muted);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
     letter-spacing: 0.09em;
     text-transform: uppercase;
   }
@@ -69,7 +69,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     display: block;
     margin-top: 0.35rem;
     color: var(--text-primary);
-    font-size: 0.9rem;
+    font-size: 1.125rem;
     line-height: 1.4;
   }
 
@@ -77,14 +77,14 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     border: 0;
     background: transparent;
     padding: 0;
-    font-size: 0.8rem;
+    font-size: 0.9375rem;
   }
 
   section p,
   .routing-note {
     margin: 0.45rem 0 0 !important;
     color: var(--text-secondary);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     line-height: 1.55;
   }
 
@@ -110,17 +110,18 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   }
 
   li {
-    display: grid;
-    grid-template-columns: 1.8rem minmax(0, 1fr);
-    gap: 0.45rem;
+    display: block;
+    margin: 0 !important;
     color: var(--text-secondary);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     line-height: 1.5;
   }
 
   li span {
+    display: inline-block;
+    min-width: 1.8rem;
     color: var(--accent);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
   }
 
   .routing-note {
@@ -132,7 +133,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   .routing-note strong {
     color: var(--accent);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }

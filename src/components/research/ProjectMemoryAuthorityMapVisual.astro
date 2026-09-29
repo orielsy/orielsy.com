@@ -12,6 +12,7 @@ const rows = [
 ---
 
 <ResearchFigureFrame
+  className="is-open"
   eyebrow="Interpretive model grounded in repository roles"
   title="Authority depends on the question"
   caption="This is an editorial model of the repository's artifact roles, not a claim that the repository contains an automatic precedence engine."
@@ -44,7 +45,7 @@ const rows = [
 
 <style>
   .authority-table {
-    border-block: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
   }
 
   .authority-head {
@@ -71,12 +72,12 @@ const rows = [
 
   .index {
     color: var(--accent);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
   }
 
   .authority-row strong {
     color: var(--text-primary);
-    font-size: 0.8rem;
+    font-size: 0.9375rem;
     font-weight: 600;
     line-height: 1.45;
   }
@@ -84,7 +85,7 @@ const rows = [
   .authority-row > span:not(.index) {
     grid-column: 2;
     color: var(--text-secondary);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     line-height: 1.5;
   }
 
@@ -92,7 +93,7 @@ const rows = [
     margin-right: 0.4rem;
     color: var(--text-muted);
     content: attr(data-label) ':';
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
@@ -106,7 +107,7 @@ const rows = [
   .authority-rule p {
     margin: 0 !important;
     color: var(--text-secondary);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     line-height: 1.5;
   }
 
@@ -128,7 +129,7 @@ const rows = [
       display: grid;
       padding: 0.65rem 0;
       color: var(--text-muted);
-      font-size: 0.625rem;
+      font-size: 0.6875rem;
       letter-spacing: 0.07em;
       text-transform: uppercase;
     }

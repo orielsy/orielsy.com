@@ -143,4 +143,33 @@ const {
       font-size: 0.75rem;
     }
   }
+  /* Open variant: no card box, larger type, caption as accent rule. */
+  .research-figure-frame.is-open {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+  }
+
+  .is-open h3 {
+    font-size: 1.25rem;
+  }
+
+  .is-open figcaption {
+    border-top: 0;
+    border-left: 2px solid var(--accent);
+    padding: 0 0 0 0.9rem !important;
+    font-size: 0.8125rem;
+  }
+
+  @media (min-width: 640px) {
+    .research-figure-frame.is-open {
+      margin: 3.5rem 0;
+      padding: 0;
+    }
+
+    .is-open h3 {
+      font-size: 1.5rem;
+    }
+  }
 </style>

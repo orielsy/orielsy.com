@@ -3,6 +3,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 ---
 
 <ResearchFigureFrame
+  className="is-open"
   eyebrow="Observed repository inconsistency"
   title="Persistence without reconciliation"
   caption="Version control makes drift visible; it does not perform maintenance. This figure does not assert that either artifact automatically outranks the other."
@@ -44,8 +45,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   .drift-comparison {
     display: grid;
     gap: 1rem;
-    border-block: 1px solid var(--border-subtle);
-    padding: 1rem 0;
+    padding: 0.5rem 0 1.25rem;
   }
 
   section {
@@ -69,10 +69,9 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   .label,
   .date,
-  .source-note,
   .drift-outcomes span,
   .divergence span {
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
     letter-spacing: 0.07em;
     text-transform: uppercase;
   }
@@ -88,14 +87,14 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     margin-top: 0.45rem;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 0.9rem;
+    font-size: 1.125rem;
     line-height: 1.4;
   }
 
   section > p {
     margin: 0.45rem 0 0 !important;
     color: var(--text-secondary);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     line-height: 1.6;
   }
 
@@ -104,13 +103,14 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     background: transparent;
     padding: 0;
     color: var(--text-primary);
-    font-size: 0.7rem;
+    font-size: 0.8125rem;
   }
 
   .divergence {
     display: flex;
     align-items: center;
-    gap: 0.45rem;
+    gap: 0;
+    align-self: stretch;
   }
 
   .divergence::before,
@@ -136,17 +136,18 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   }
 
   li {
-    display: grid;
-    grid-template-columns: 1.8rem minmax(0, 1fr);
-    gap: 0.45rem;
+    display: block;
+    margin: 0 !important;
     color: var(--text-secondary);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     line-height: 1.5;
   }
 
   li span {
+    display: inline-block;
+    min-width: 1.8rem;
     color: var(--accent);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
   }
 
   .source-note {
@@ -156,7 +157,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   .drift-outcomes {
     display: grid;
-    margin-top: 0.8rem;
+    margin-top: 0.25rem;
     border-block: 1px solid var(--border-subtle);
   }
 
@@ -175,7 +176,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   .drift-outcomes p {
     margin: 0.25rem 0 0 !important;
     color: var(--text-secondary);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     line-height: 1.5;
   }
 
