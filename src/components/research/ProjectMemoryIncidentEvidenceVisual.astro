@@ -102,12 +102,10 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   .evidence-rows {
     display: grid;
-    gap: 1px;
     margin-top: 0.8rem;
     overflow: hidden;
     border: 1px solid var(--border-subtle);
     border-radius: 0.2rem;
-    background: var(--border-subtle);
   }
 
   .evidence-rows > div {
@@ -115,11 +113,15 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     padding: 0.9rem;
   }
 
+  .evidence-rows > div + div {
+    border-top: 1px solid var(--border-subtle);
+  }
+
   code {
     border: 0;
     background: transparent;
     padding: 0;
-    color: var(--accent);
+    color: var(--accent) !important;
     font-family: var(--font-mono-ui);
     font-size: 0.6875rem;
   }
@@ -167,6 +169,8 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     }
 
     .evidence-rows > div + div {
+      border-top: 0;
+      border-left: 1px solid var(--border-subtle);
       padding: 0.9rem;
     }
   }

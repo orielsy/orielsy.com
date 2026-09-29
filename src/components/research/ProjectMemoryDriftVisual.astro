@@ -170,16 +170,18 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   .drift-outcomes {
     display: grid;
-    gap: 1px;
     overflow: hidden;
     border: 1px solid var(--border-subtle);
     border-radius: 0.2rem;
-    background: var(--border-subtle);
   }
 
   .drift-outcomes > div {
     background: var(--bg-page);
     padding: 0.85rem;
+  }
+
+  .drift-outcomes > div + div {
+    border-top: 1px solid var(--border-subtle);
   }
 
   .drift-outcomes span {
@@ -225,6 +227,11 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
     .drift-outcomes > div {
       padding: 0.85rem 1rem;
+    }
+
+    .drift-outcomes > div + div {
+      border-top: 0;
+      border-left: 1px solid var(--border-subtle);
     }
   }
 </style>
