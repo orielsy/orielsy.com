@@ -1,676 +1,194 @@
 ---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const domains = [
+  {
+    kicker: 'Electron client',
+    title: 'Capture + caption policy',
+    steps: ['Capture', 'Downsample', 'Caption policy'],
+    detail: 'The client owns microphone capture and decides which returned transcript segments enter caption state.',
+  },
+  {
+    kicker: 'Local transcription service',
+    title: 'Buffer + Whisper inference',
+    steps: ['Buffer', 'Infer'],
+    detail: 'The local service owns audio accumulation and speech-to-text inference.',
+  },
+  {
+    kicker: 'Broadcast rendering',
+    title: 'Caption state + overlay + OBS',
+    steps: ['Caption state', 'Electron overlay', 'OBS'],
+    detail: 'The rendering layer owns caption presentation and live broadcast compositing.',
+  },
+];
 ---
 
-<figure class="speech-topology not-prose">
-  <header>
-    <div>
-      <p class="eyebrow">System topology</p>
-      <h3>speechBubbles live transcription and broadcast path.</h3>
-      <p class="dek">
-        One broadcast workstation, three architectural domains, and a runtime path that keeps capture,
-        local inference, client policy, and broadcast rendering distinct.
-      </p>
-    </div>
-    <span class="badge">Current public architecture</span>
-  </header>
-
-  <div class="workstation" aria-label="speechBubbles broadcast workstation architecture">
-    <div class="boundary-label">
-      <span>Broadcast workstation</span>
-      <span>On-device · local inference</span>
-    </div>
-
-    <div class="architecture-grid">
-      <section class="domain client-domain" aria-labelledby="client-domain-title">
-        <div class="domain-heading">
-          <span class="domain-index">01</span>
-          <div>
-            <span class="domain-kicker">Electron client</span>
-            <h4 id="client-domain-title">Capture, control, and caption policy</h4>
-          </div>
-          <span class="domain-stack">Vue 3 · Pinia</span>
+<ResearchFigureFrame
+  eyebrow="System topology"
+  title="speechBubbles keeps capture, inference, and broadcast rendering separate."
+  subtitle="One broadcast workstation contains three architectural domains. Later sections examine the format, chunking, filtering, and render details inside those boundaries."
+  status="Current public architecture"
+  caption="The overview establishes ownership and transport boundaries without duplicating the implementation details examined later in the article."
+>
+  <div class="domain-grid" aria-label="speechBubbles architectural domains">
+    {domains.map((domain, index) => (
+      <section class="domain">
+        <span class="domain-index">{String(index + 1).padStart(2, '0')}</span>
+        <p class="domain-kicker">{domain.kicker}</p>
+        <h4>{domain.title}</h4>
+        <div class="steps" aria-label={`${domain.kicker} responsibility flow`}>
+          {domain.steps.map((step, stepIndex) => (
+            <>
+              <span>{step}</span>
+              {stepIndex < domain.steps.length - 1 && <span class="step-arrow" aria-hidden="true">→</span>}
+            </>
+          ))}
         </div>
-
-        <div class="domain-body client-body">
-          <div class="subnode capture-node">
-            <div class="subnode-heading">
-              <span>Capture module</span>
-              <span class="status-dot" aria-hidden="true"></span>
-            </div>
-            <strong>Microphone → Web Audio API</strong>
-            <p>Sample microphone input and reduce it before transport.</p>
-            <div class="fact-row" aria-label="Audio format after client downsampling">
-              <span>16 kHz</span>
-              <span>mono PCM</span>
-              <span>Int16</span>
-            </div>
-          </div>
-
-          <div class="subnode policy-node">
-            <div class="subnode-heading">
-              <span>Caption control</span>
-              <code>CaptionControl.vue</code>
-            </div>
-            <strong>State + confidence filtering</strong>
-            <p>Returned Whisper segments are evaluated before accepted text enters the caption queue.</p>
-            <div class="rule-list">
-              <code>no_speech_prob ≤ 0.6</code>
-              <code>temperature ≤ 0.8</code>
-              <code>text is not empty</code>
-            </div>
-          </div>
-        </div>
+        <p class="detail">{domain.detail}</p>
       </section>
-
-      <div class="service-connection" aria-label="Client and local service transport">
-        <div class="connection-lane outbound-lane">
-          <span class="connection-label">01 · Binary PCM</span>
-          <code>/listen</code>
-          <span class="connection-line" aria-hidden="true"></span>
-          <span class="connection-arrow" aria-hidden="true">→</span>
-        </div>
-        <div class="connection-lane return-lane">
-          <span class="connection-label">02 · Segment JSON</span>
-          <span class="connection-arrow" aria-hidden="true">←</span>
-          <span class="connection-line" aria-hidden="true"></span>
-          <span class="connection-note">text + metadata</span>
-        </div>
-      </div>
-
-      <section class="domain service-domain" aria-labelledby="service-domain-title">
-        <div class="domain-heading">
-          <span class="domain-index">02</span>
-          <div>
-            <span class="domain-kicker">Local transcription service</span>
-            <h4 id="service-domain-title">Buffer and decode</h4>
-          </div>
-          <span class="domain-stack">FastAPI</span>
-        </div>
-
-        <div class="domain-body">
-          <div class="subnode">
-            <div class="subnode-heading">
-              <span>Streaming buffer</span>
-              <span>fixed-duration</span>
-            </div>
-            <strong>PCM accumulation</strong>
-            <p>The public backend defaults to a three-second chunk threshold when the client does not override it.</p>
-          </div>
-
-          <div class="subnode inference-node">
-            <div class="subnode-heading">
-              <span>Transcription</span>
-              <span class="accent-label">active path</span>
-            </div>
-            <strong>Local Whisper STT</strong>
-            <p><code>asyncio.to_thread()</code> moves blocking transcription away from the async event loop.</p>
-          </div>
-
-          <aside class="vad-sidecar" aria-label="Voice activity detection implementation status">
-            <span class="sidecar-mark" aria-hidden="true"></span>
-            <div>
-              <strong>PyAnnote VAD infrastructure</strong>
-              <span>Present in the repository · not invoked by the current public <code>process_buffer()</code> path.</span>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      <div class="render-connection" aria-hidden="true">
-        <span class="connection-label">03 · Accepted caption state</span>
-        <span class="connection-line"></span>
-        <span class="connection-arrow">→</span>
-      </div>
-
-      <section class="domain render-domain" aria-labelledby="render-domain-title">
-        <div class="domain-heading">
-          <span class="domain-index">03</span>
-          <div>
-            <span class="domain-kicker">Broadcast rendering</span>
-            <h4 id="render-domain-title">Overlay and live compositing</h4>
-          </div>
-          <span class="domain-stack">Output</span>
-        </div>
-
-        <div class="domain-body render-body">
-          <div class="subnode overlay-node">
-            <div class="subnode-heading">
-              <span>Electron renderer</span>
-              <code>CaptionsView.vue</code>
-            </div>
-            <strong>Transparent Vue overlay</strong>
-            <p>Caption layout and transitions stay in the desktop rendering layer.</p>
-            <div class="fact-row">
-              <span>caption state</span>
-              <span>frame transitions</span>
-              <span>transparent surface</span>
-            </div>
-          </div>
-
-          <div class="render-arrow" aria-hidden="true">↓</div>
-
-          <div class="subnode obs-node">
-            <div class="subnode-heading">
-              <span>Compositor</span>
-              <span class="accent-label">broadcast output</span>
-            </div>
-            <strong>OBS Studio</strong>
-            <p>Transparent Electron graphics are composited over the live video feed.</p>
-            <div class="fact-row">
-              <span>alpha</span>
-              <span>color masking</span>
-              <span>live overlay</span>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <div class="accepted-state-rail" aria-label="Accepted caption state moves from client policy to broadcast rendering">
-      <span class="rail-origin">Client policy</span>
-      <span class="rail-line" aria-hidden="true"></span>
-      <span class="rail-label">accepted captions</span>
-      <span class="rail-arrow" aria-hidden="true">→</span>
-      <span class="rail-target">renderer</span>
-    </div>
+    ))}
   </div>
 
-  <figcaption>
-    The system runs on one broadcast workstation, but ownership stays separated across capture and policy, local transcription, and broadcast rendering.
-  </figcaption>
-</figure>
+  <div class="transport-map" aria-label="transport between speechBubbles architectural domains">
+    <div>
+      <span>Client ↔ local service</span>
+      <strong>PCM → <span aria-hidden="true">·</span> transcript segments ←</strong>
+    </div>
+    <div>
+      <span>Client → renderer</span>
+      <strong>Accepted caption state → broadcast overlay</strong>
+    </div>
+  </div>
+</ResearchFigureFrame>
 
 <style>
-  .speech-topology {
-    overflow: hidden;
-    margin: 0;
-    border: 1px solid var(--border-subtle);
-    border-radius: 0.7rem;
-    background: var(--bg-card);
-    color: var(--text-primary);
-  }
-
-  .speech-topology :global(p),
-  .speech-topology :global(h3),
-  .speech-topology :global(h4),
-  .speech-topology :global(code) {
-    margin: 0;
-  }
-
-  header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1.25rem;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1.2rem 1.3rem;
-  }
-
-  .eyebrow,
-  .badge,
-  .boundary-label,
-  .domain-heading,
-  .subnode-heading,
-  .fact-row,
-  .connection-lane,
-  .render-connection,
-  .accepted-state-rail {
-    font-family: var(--font-mono-ui);
-  }
-
-  .eyebrow {
-    color: var(--accent);
-    font-size: 0.54rem;
-    font-weight: 500;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-  }
-
-  h3 {
-    margin-top: 0.45rem !important;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: clamp(1.2rem, 2vw, 1.55rem);
-    font-weight: 600;
-    line-height: 1.16;
-    letter-spacing: -0.035em;
-  }
-
-  .dek {
-    margin-top: 0.45rem !important;
-    max-width: 48rem;
-    color: var(--text-secondary);
-    font-size: 0.78rem;
-    line-height: 1.6;
-  }
-
-  .badge {
-    flex: 0 0 auto;
-    color: var(--text-muted);
-    font-size: 0.47rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .workstation {
-    position: relative;
-    margin: 1.1rem;
-    border: 1px solid var(--border-subtle);
-    background: color-mix(in srgb, var(--bg-secondary) 46%, transparent);
-    padding: 2.9rem 0.85rem 0.85rem;
-  }
-
-  .boundary-label {
-    position: absolute;
-    inset: 0 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 0.7rem 0.85rem;
-    color: var(--text-muted);
-    font-size: 0.47rem;
-    letter-spacing: 0.11em;
-    text-transform: uppercase;
-  }
-
-  .boundary-label span:first-child {
-    color: var(--accent);
-  }
-
-  .architecture-grid {
+  .domain-grid {
     display: grid;
-    gap: 0.65rem;
+    gap: 1px;
+    background: var(--border-subtle);
   }
 
   .domain {
+    position: relative;
     min-width: 0;
-    border: 1px solid var(--border-subtle);
+    margin: 0;
     background: var(--bg-card);
+    padding: 1rem;
   }
 
-  .domain-heading {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: start;
-    gap: 0.65rem;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 0.8rem 0.85rem;
+  .domain:nth-child(2) {
+    background: color-mix(in srgb, var(--accent) 3%, var(--bg-card));
+  }
+
+  .domain-index,
+  .domain-kicker,
+  .transport-map span,
+  .steps {
+    font-family: var(--font-mono-ui);
   }
 
   .domain-index {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
     color: var(--accent);
-    font-size: 0.48rem;
+    font-size: 0.625rem;
+    font-weight: 500;
     letter-spacing: 0.08em;
-    padding-top: 0.12rem;
   }
 
-  .domain-kicker,
-  .domain-stack {
+  .domain-kicker {
+    margin: 0;
+    padding-right: 2.2rem;
     color: var(--text-muted);
-    font-size: 0.44rem;
+    font-size: 0.625rem;
+    font-weight: 500;
     letter-spacing: 0.1em;
+    line-height: 1.45;
     text-transform: uppercase;
   }
 
-  .domain-heading h4 {
-    margin-top: 0.24rem !important;
+  h4 {
+    margin: 0.4rem 0 0;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 0.84rem;
+    font-size: 0.875rem;
     font-weight: 600;
-    line-height: 1.25;
-    letter-spacing: -0.02em;
+    line-height: 1.4;
   }
 
-  .domain-body {
-    display: grid;
-    gap: 0.55rem;
-    padding: 0.7rem;
-  }
-
-  .subnode {
-    min-width: 0;
-    border: 1px solid var(--border-subtle);
-    background: var(--bg-secondary);
-    padding: 0.75rem;
-  }
-
-  .subnode-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.65rem;
-    color: var(--text-muted);
-    font-size: 0.44rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .subnode-heading code {
-    border: 0;
-    background: transparent;
-    padding: 0;
-    color: inherit;
-    font-family: inherit;
-    font-size: inherit;
-  }
-
-  .status-dot {
-    width: 0.36rem;
-    height: 0.36rem;
-    border-radius: 999px;
-    background: var(--accent);
-  }
-
-  .subnode > strong,
-  .vad-sidecar strong {
-    display: block;
-    margin-top: 0.5rem;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.72rem;
-    font-weight: 600;
-    line-height: 1.35;
-  }
-
-  .subnode > p {
-    margin-top: 0.35rem !important;
-    color: var(--text-secondary);
-    font-size: 0.59rem;
-    line-height: 1.48;
-  }
-
-  .fact-row {
+  .steps {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.32rem;
-    margin-top: 0.6rem;
-  }
-
-  .fact-row span {
-    border: 1px solid var(--border-subtle);
-    background: var(--bg-card);
-    padding: 0.28rem 0.38rem;
-    color: var(--text-muted);
-    font-size: 0.44rem;
-    letter-spacing: 0.05em;
-  }
-
-  .rule-list {
-    display: grid;
-    gap: 0.3rem;
-    margin-top: 0.6rem;
-  }
-
-  .rule-list code {
-    display: block;
-    border-left: 1px solid var(--border-strong);
-    background: transparent;
-    padding: 0.28rem 0 0.28rem 0.5rem;
-    color: var(--text-muted);
-    font-family: var(--font-mono-ui);
-    font-size: 0.48rem;
-    line-height: 1.35;
-  }
-
-  .inference-node {
-    border-left: 2px solid var(--accent);
-  }
-
-  .accent-label {
-    color: var(--accent);
-  }
-
-  .vad-sidecar {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 0.55rem;
-    border: 1px dashed color-mix(in srgb, var(--accent) 38%, var(--border-subtle));
-    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
-    padding: 0.65rem;
-  }
-
-  .sidecar-mark {
-    width: 0.38rem;
-    height: 0.38rem;
-    margin-top: 0.1rem;
-    border: 1px solid var(--accent);
-    border-radius: 999px;
-  }
-
-  .vad-sidecar strong {
-    margin-top: 0;
-    font-size: 0.62rem;
-  }
-
-  .vad-sidecar span:last-child {
-    display: block;
-    margin-top: 0.18rem;
-    color: var(--text-muted);
-    font-size: 0.5rem;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.85rem;
+    color: var(--text-primary);
+    font-size: 0.6875rem;
     line-height: 1.45;
   }
 
-  .vad-sidecar code {
-    border: 0;
-    background: transparent;
-    padding: 0;
-    color: inherit;
-    font-family: var(--font-mono-ui);
-    font-size: inherit;
+  .steps > span:not(.step-arrow) {
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    padding: 0.35rem 0.5rem;
   }
 
-  .service-connection,
-  .render-connection {
-    display: grid;
-    gap: 0.55rem;
-    padding: 0.2rem 0.3rem;
-  }
-
-  .connection-lane,
-  .render-connection {
-    display: grid;
-    align-items: center;
-    gap: 0.3rem;
-    color: var(--text-muted);
-    font-size: 0.43rem;
-    line-height: 1.25;
-    text-transform: uppercase;
-  }
-
-  .connection-lane code {
-    border: 0;
-    background: transparent;
-    padding: 0;
+  .step-arrow {
     color: var(--accent);
-    font-family: inherit;
-    font-size: inherit;
   }
 
-  .connection-line {
-    border-top: 1px dashed var(--border-strong);
-  }
-
-  .connection-arrow {
-    color: var(--accent);
-    font-size: 0.72rem;
-    line-height: 1;
-  }
-
-  .connection-note {
-    color: var(--text-muted);
-    font-size: 0.4rem;
-    text-transform: none;
-  }
-
-  .render-arrow {
-    text-align: center;
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.8rem;
-  }
-
-  .accepted-state-rail {
-    display: grid;
-    grid-template-columns: auto minmax(1rem, 1fr) auto auto auto;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.7rem;
-    border-top: 1px solid var(--border-subtle);
-    padding: 0.65rem 0.25rem 0;
-    color: var(--text-muted);
-    font-size: 0.43rem;
-    text-transform: uppercase;
-  }
-
-  .rail-origin,
-  .rail-target {
+  .detail {
+    margin: 0.8rem 0 0;
     color: var(--text-secondary);
-  }
-
-  .rail-line {
-    border-top: 1px dashed var(--border-strong);
-  }
-
-  .rail-label {
-    color: var(--text-muted);
-  }
-
-  .rail-arrow {
-    color: var(--accent);
-    font-size: 0.72rem;
-  }
-
-  figcaption {
-    border-top: 1px solid var(--border-subtle);
-    padding: 0.8rem 1rem;
-    color: var(--text-muted);
-    font-size: 0.62rem;
+    font-size: 0.6875rem;
     line-height: 1.55;
   }
 
-  @media (min-width: 720px) {
-    .client-body {
+  .transport-map {
+    display: grid;
+    gap: 1px;
+    margin-top: 1px;
+    background: var(--border-subtle);
+  }
+
+  .transport-map > div {
+    display: grid;
+    gap: 0.3rem;
+    background: var(--bg-secondary);
+    padding: 0.75rem 1rem;
+  }
+
+  .transport-map span {
+    color: var(--text-muted);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.45;
+    text-transform: uppercase;
+  }
+
+  .transport-map strong {
+    color: var(--text-primary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .transport-map strong span {
+    color: var(--accent);
+    font-size: inherit;
+    letter-spacing: 0;
+  }
+
+  @media (min-width: 760px) {
+    .domain-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .transport-map {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .architecture-grid {
-      grid-template-columns:
-        minmax(0, 1.15fr)
-        minmax(4.5rem, 0.18fr)
-        minmax(0, 0.9fr)
-        minmax(3.5rem, 0.14fr)
-        minmax(0, 1fr);
-      align-items: stretch;
-    }
-
-    .service-connection,
-    .render-connection {
-      align-content: center;
-      padding: 0.5rem 0;
-    }
-
-    .connection-lane,
-    .render-connection {
-      grid-template-columns: auto minmax(0, 1fr) auto;
-    }
-
-    .outbound-lane {
-      grid-template-areas:
-        "label label label"
-        "code line arrow";
-    }
-
-    .outbound-lane .connection-label { grid-area: label; }
-    .outbound-lane code { grid-area: code; }
-    .outbound-lane .connection-line { grid-area: line; }
-    .outbound-lane .connection-arrow { grid-area: arrow; }
-
-    .return-lane {
-      grid-template-areas:
-        "label label label"
-        "arrow line note";
-    }
-
-    .return-lane .connection-label { grid-area: label; }
-    .return-lane .connection-arrow { grid-area: arrow; }
-    .return-lane .connection-line { grid-area: line; }
-    .return-lane .connection-note { grid-area: note; }
-
-    .render-connection {
-      grid-template-columns: 1fr;
-      justify-items: center;
-      text-align: center;
-    }
-
-    .render-connection .connection-line {
-      width: 100%;
-    }
-
-    .accepted-state-rail {
-      grid-template-columns: auto minmax(0, 1fr) auto auto auto;
-    }
-  }
-
-  @media (max-width: 1023px) {
-    .service-connection,
-    .render-connection {
-      border-left: 1px dashed var(--border-strong);
-      margin-left: 1rem;
-      padding-left: 0.75rem;
-    }
-
-    .connection-lane,
-    .render-connection {
-      grid-template-columns: auto auto minmax(0, 1fr);
-    }
-
-    .connection-line {
-      display: none;
-    }
-
-    .return-lane {
-      grid-template-columns: auto auto minmax(0, 1fr);
-    }
-
-    .accepted-state-rail {
-      display: none;
-    }
-  }
-
-  @media (max-width: 560px) {
-    header {
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .workstation {
-      margin: 0.7rem;
-      padding: 0;
-    }
-
-    .boundary-label {
-      position: static;
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 0.2rem;
-      padding: 0.7rem 0.75rem;
-    }
-
-    .architecture-grid {
-      padding: 0.55rem;
-    }
-
-    .domain-heading {
-      grid-template-columns: auto minmax(0, 1fr);
-    }
-
-    .domain-stack {
-      grid-column: 2;
     }
   }
 </style>
