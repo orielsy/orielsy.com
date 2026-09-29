@@ -50,6 +50,11 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     padding: 1rem 0;
   }
 
+  .observed-account {
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+  }
+
   .label,
   .boundary span {
     color: var(--text-muted);
@@ -59,9 +64,10 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     text-transform: uppercase;
   }
 
-  blockquote {
+  .observed-account blockquote {
     margin: 0.7rem 0 0 !important;
-    border: 0;
+    border: 0 !important;
+    border-left: 0 !important;
     padding: 0 !important;
     color: var(--text-primary);
     font-family: var(--font-display);
