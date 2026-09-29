@@ -1,4 +1,6 @@
 ---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
 const flows = [
   {
     label: 'Drift pattern',
@@ -15,12 +17,10 @@ const flows = [
 ];
 ---
 
-<figure class="truth-workflow not-prose">
-  <header>
-    <p class="eyebrow">Source-of-truth discipline</p>
-    <h3>Update durable intent before letting the implementation become the only record.</h3>
-  </header>
-
+<ResearchFigureFrame
+  title="Update durable intent before letting the implementation become the only record."
+  caption="Requirement changes should update durable project intent and implementation together so later work does not inherit a stale source of truth."
+>
   <div class="flows">
     {flows.map((flow) => (
       <section class:list={['flow', flow.accent && 'is-preferred']}>
@@ -40,59 +40,13 @@ const flows = [
       </section>
     ))}
   </div>
-
-  <figcaption>
-    Requirement changes should update durable project intent and implementation together so later work does not inherit a stale source of truth.
-  </figcaption>
-</figure>
+</ResearchFigureFrame>
 
 <style>
-  .truth-workflow {
-    overflow: hidden;
-    margin: 0;
-    border: 1px solid var(--border-subtle);
-    border-radius: 0.75rem;
-    background: var(--bg-card);
-  }
-
-  .truth-workflow :global(p),
-  .truth-workflow :global(h3) {
-    margin: 0;
-  }
-
-  header {
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1.2rem 1.35rem;
-  }
-
-  .eyebrow,
-  .flow-label,
-  .step span {
-    font-family: var(--font-mono-ui);
-    text-transform: uppercase;
-  }
-
-  .eyebrow {
-    color: var(--accent);
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-  }
-
-  h3 {
-    margin-top: 0.45rem !important;
-    max-width: 44rem;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: clamp(1.2rem, 2vw, 1.55rem);
-    font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.035em;
-  }
-
   .flows {
     display: grid;
     gap: 1px;
+    border-block: 1px solid var(--border-subtle);
     background: var(--border-subtle);
   }
 
@@ -102,13 +56,20 @@ const flows = [
   }
 
   .flow.is-preferred {
+    box-shadow: inset 2px 0 0 var(--accent);
     background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
+  }
+
+  .flow-label,
+  .step span {
+    font-family: var(--font-mono-ui);
+    text-transform: uppercase;
   }
 
   .flow-label {
     margin-bottom: 0.75rem;
     color: var(--text-muted);
-    font-size: 0.5rem;
+    font-size: 0.625rem;
     letter-spacing: 0.1em;
   }
 
@@ -130,16 +91,16 @@ const flows = [
   .step span {
     display: block;
     color: var(--text-muted);
-    font-size: 0.46rem;
+    font-size: 0.625rem;
     letter-spacing: 0.08em;
   }
 
   .step strong {
     display: block;
-    margin-top: 0.22rem;
+    margin-top: 0.25rem;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 0.72rem;
+    font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.4;
   }
@@ -155,23 +116,15 @@ const flows = [
   .outcome {
     margin-top: 0.7rem;
     border-left: 2px solid var(--border-strong);
-    padding: 0.5rem 0.65rem;
+    padding: 0.55rem 0.7rem;
     color: var(--text-secondary);
-    font-size: 0.64rem;
+    font-size: 0.75rem;
     line-height: 1.5;
   }
 
   .is-preferred .outcome {
     border-left-color: var(--accent);
     color: var(--text-primary);
-  }
-
-  figcaption {
-    border-top: 1px solid var(--border-subtle);
-    padding: 0.85rem 1rem;
-    color: var(--text-muted);
-    font-size: 0.62rem;
-    line-height: 1.55;
   }
 
   @media (min-width: 760px) {
