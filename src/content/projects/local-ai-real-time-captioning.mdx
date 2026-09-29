@@ -83,19 +83,17 @@ The point is not simply that the application has multiple windows. It is that op
 
 That separation makes the prototype specific to a desktop broadcast workflow, but it also keeps the operator interface from becoming the thing viewers see.
 
-## Move Audio Locally, Keep Acceptance in the Client
+## Keep the System Boundary Explicit
 
-The microphone stream is converted to 16 kHz mono PCM and sent over WebSocket to the local FastAPI service. The backend accumulates fixed-duration chunks and runs Whisper inference off the async event loop.
-
-Returned segments and metadata do not move directly into the visible caption queue. The client evaluates them first, keeping transcript acceptance policy close to the UI that consumes it.
+Microphone audio crosses from the Electron client into the local transcription service. The service returns transcript segments and metadata to client policy, and only accepted caption state proceeds to the transparent overlay and final OBS composition.
 
 <ProjectBreakout mode="publication">
   <SpeechBubblesCaptionPathVisual />
 </ProjectBreakout>
 
-That boundary has a trade-off: another client would need compatible acceptance rules or a shared policy layer.
+That boundary is where this project case study deliberately stops going deeper. The companion [architecture research](/research/real-time-speech-audio-pipeline-desktop-ui) examines the source-level details behind it: audio-format reduction, chunking behavior, filtering thresholds and VAD status, asynchronous inference, and caption rendering.
 
-The companion [architecture research](/research/real-time-speech-audio-pipeline-desktop-ui) owns the source-level analysis of chunking, filtering, VAD status, audio-format calculations, and renderer behavior. Those details are implementation evidence, not the center of this case study.
+The project-level trade-off remains important: keeping transcript acceptance in the client places presentation policy close to the UI that consumes it, while another client would need compatible acceptance rules or a shared policy layer.
 
 ## Design Decisions, Costs Included
 
@@ -109,7 +107,9 @@ None of those decisions is free. Separate processes require local setup and coor
 
 ## Prototype, Evidence, and Open Work
 
-This is a working prototype, not a production distribution. The current source still contains choices I would revisit for sustained use: the legacy `ScriptProcessorNode` capture path, fixed-duration chunking, packaging and setup, automated testing, and the inactive PyAnnote VAD path.
+This is a working prototype, not a production distribution. The product-level constraints remain the ones implied by its architecture: local process setup and coordination, transcript-policy reuse across clients, and dependence on a desktop broadcast workflow.
+
+The companion [architecture research](/research/real-time-speech-audio-pipeline-desktop-ui) owns the source-grounded implementation questions and next experiments rather than turning them into a checklist here.
 
 The public repositories were published in August 2026, after the January–June 2024 initial development period shown here. The public history therefore demonstrates the current source, not the original development timeline.
 
