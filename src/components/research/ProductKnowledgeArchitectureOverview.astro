@@ -9,7 +9,6 @@ import ResearchBreakout from './ResearchBreakout.astro';
 
 <section class="pk-overview not-prose" aria-labelledby="product-knowledge-overview-title">
   <div class="pk-overview__intro">
-    <p class="pk-overview__eyebrow">Overview · Conceptual version</p>
     <h2 id="product-knowledge-overview-title">
       Software has clear homes for behavior and state. Product meaning usually has no equivalent home.
     </h2>
@@ -77,7 +76,7 @@ import ResearchBreakout from './ResearchBreakout.astro';
   <div class="pk-overview__section pk-overview__closing">
     <h3 id="what-remains-open">What remains open</h3>
     <p>
-      The unresolved work includes authority, synchronization between knowledge, code, and policy, testability, allowed composition boundaries, representation, and inference boundaries. This is an architectural hypothesis and research direction, not proof that the approach is already reliable.
+      The hard problem is making this knowledge trustworthy: establishing who owns it, keeping it aligned with code and policy, and proving that a proposed composition is allowed. This remains an architectural hypothesis, not proof that the model is reliable.
     </p>
 
     <button class="pk-overview__continue" type="button" data-reading-depth-open="full">
@@ -102,6 +101,7 @@ import ResearchBreakout from './ResearchBreakout.astro';
       const overviewToc = fullToc.cloneNode(true) as HTMLElement;
       overviewToc.dataset.readingDepthToc = 'overview';
       overviewToc.setAttribute('aria-label', 'Overview contents');
+      overviewToc.classList.add('hidden', 'lg:block');
 
       const list = overviewToc.querySelector<HTMLOListElement>('ol');
       list?.replaceChildren();
@@ -163,7 +163,7 @@ import ResearchBreakout from './ResearchBreakout.astro';
 
   .pk-overview__intro h2 {
     max-width: 46rem;
-    margin: 0.55rem 0 1.25rem;
+    margin: 0 0 1.25rem;
     color: var(--text-primary);
     font-family: var(--font-display);
     font-size: clamp(1.75rem, 4vw, 2.6rem);
@@ -191,17 +191,6 @@ import ResearchBreakout from './ResearchBreakout.astro';
     color: var(--text-primary);
     font-size: 1.06rem !important;
     line-height: 1.7 !important;
-  }
-
-  .pk-overview__eyebrow {
-    margin: 0 !important;
-    color: var(--accent) !important;
-    font-family: var(--font-mono-ui);
-    font-size: 0.625rem !important;
-    font-weight: 600;
-    letter-spacing: 0.11em;
-    line-height: 1.5 !important;
-    text-transform: uppercase;
   }
 
   .pk-overview h3 {
