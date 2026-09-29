@@ -33,13 +33,13 @@ When conversation is the task, chat is a natural interface. But many application
 
 Consider a user who already knows the state they want a table to reach.
 
-A conversation-mediated path can still work: describe the desired state, let a model interpret the request, receive a result, then bring that result back into the application. An embedded capability can instead operate inside the table and update the existing interface.
+A conversation-mediated path can still work: describe the desired state and let a model interpret the request. Depending on the integration, that conversation may trigger an application action directly or return a result that still has to be brought back into the table. An embedded capability instead operates inside the table and makes the existing interface the result surface.
 
 <ResearchBreakout mode="wide">
   <ProgressiveEnhancementInteractionPathsVisual />
 </ResearchBreakout>
 
-The point is not that one path is inherently more capable, faster, or more accurate. The architectural difference is the handoff. In one path, the user carries the result back into application state. In the other, the interface does.
+The point is not that one path is inherently more capable, faster, or more accurate. The architectural difference is where the result lives and how the handoff is integrated. When chat returns only a result outside the application, the user may have to transfer it back. A directly integrated chat action can avoid that handoff; an embedded capability starts with the application itself as the result surface.
 
 That makes embedded intelligence useful for tables, forms, editors, dashboards, command palettes, and other interfaces whose structure already expresses part of the user's intent.
 
@@ -55,21 +55,21 @@ State, validation, schemas, available actions, and product rules can turn a broa
 
 That changes the architectural question. Instead of asking which model can run the whole experience, ask what the smallest capability is that this interaction actually needs.
 
-This is also where interface architecture and AI architecture meet. The more of the problem the application can express deterministically, the less ambiguity the inference layer has to resolve.
+This is also where interface architecture and AI architecture meet. The more of the problem the application can express deterministically, the less ambiguity the inference layer has to resolve. That can narrow the job; it does not guarantee the inference will be correct.
 
 ## Treat Intelligence as the Enhancement Layer
 
 Traditional progressive enhancement starts with useful baseline behavior and adds capability when the environment supports it.
 
-For an intelligent interface, the same idea can be applied to inference. The baseline is useful application behavior. The environment may include available hardware, connectivity, privacy constraints, and available inference. Intelligence becomes an enhancement rather than the source of application truth.
+For an intelligent interface, the same idea can be applied to inference. The baseline is useful application behavior without requiring inference. The environment may include available hardware, connectivity, privacy constraints, and available inference. Intelligence becomes an enhancement rather than the source of application truth.
 
-A search capability illustrates the pattern. It might begin with indexed filtering and synonyms, add local embeddings when they are available, or use a remote reranker when the task justifies the additional capability or cost. The implementation can change while the user still experiences **search**.
+A search capability illustrates the pattern. It could use indexed filtering and synonyms as a deterministic baseline, optionally add local embeddings when they are viable, or use a remote reranker when the task justifies that implementation. Neither local nor remote inference is a required next rung. The implementation can change while the user still experiences **search**.
 
 <ResearchBreakout mode="wide">
   <ProgressiveEnhancementInvariantFloorVisual />
 </ResearchBreakout>
 
-What should remain stable is more important than what changes. **Application truth** means the state, validation, and rules the application can establish directly. **Action boundaries** define what the interface is permitted to do with that truth. A more capable inference tier may improve interpretation or ranking; it should not silently redefine either one.
+What should remain stable is more important than what changes. **Application truth** means the state, validation, and rules the application can establish directly. **Action boundaries** define what the interface is permitted to do with that truth. Those are architectural terms used in this editorial, not claims of universal industry vocabulary. A more capable inference path may improve interpretation or ranking; it should not silently redefine either one.
 
 This editorial does not prescribe how a product chooses among deterministic, local, and remote implementations at runtime. The point is architectural: a capability does not need to depend on the strongest tier in order to exist.
 
@@ -79,7 +79,9 @@ Keeping the baseline useful preserves implementation options.
 
 A product may need to operate with unreliable connectivity, limited hardware, restrictions on sending data to a remote provider, or simply a task for which deterministic logic is sufficient. A narrow capability makes it possible to choose among those implementations without redesigning the surrounding interaction each time.
 
-That does not guarantee lower cost, stronger privacy, better access, or equivalent model capability. Those outcomes depend on the implementation. What the architecture provides is separation: the usefulness of the interface is not automatically coupled to the availability of the most powerful inference path.
+That does not guarantee lower cost, stronger privacy, better access, offline operation, or equivalent model capability. Those outcomes depend on the implementation. What the architecture provides is separation: the usefulness of the interface is not automatically coupled to the availability of the most powerful inference path.
+
+Designing against constrained environments can also encourage a team to make application truth, capability boundaries, and fallback behavior explicit. The constraint itself does not guarantee that discipline; those boundaries still have to be authored and verified.
 
 The same separation can make fallback behavior easier to reason about. A product can deliberately provide a weaker fallback when local or remote inference is unavailable, while preserving the same application truth and action boundaries. The architecture makes that separation possible; the fallback and its authority constraints still have to be implemented explicitly.
 
@@ -89,7 +91,7 @@ Two projects on this site approach the same preference from different directions
 
 **speechBubbles** uses local Whisper inference for one narrow job: speech recognition. The interface does not need a cloud transcription service for that capability.
 
-**Documentation-Driven Adaptive UX** starts from the opposite direction. Phase 1 uses no inference at all. Deterministic application state, validation, authored knowledge, and explicit response policy handle the baseline. Future inference is reserved for ambiguity the application cannot resolve cleanly itself.
+**Documentation-Driven Adaptive UX** starts from the opposite direction. Phase 1 uses no inference at all. Deterministic application state, validation, authored knowledge, and explicit response policy handle the current phase. Future inference is reserved for ambiguity the application cannot resolve cleanly itself.
 
 <ResearchBreakout mode="wide">
   <ProgressiveEnhancementImplementationChoicesVisual />
