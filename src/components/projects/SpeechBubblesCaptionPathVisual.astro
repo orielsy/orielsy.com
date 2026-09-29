@@ -1,0 +1,189 @@
+---
+import { ArrowRight, AudioLines, Captions, ClipboardList, Server } from '@lucide/astro';
+import ResearchFigureFrame from '../research/ResearchFigureFrame.astro';
+
+const stages = [
+  {
+    name: 'Capture',
+    detail: 'Microphone → 16 kHz mono PCM',
+    owner: 'Electron / client',
+    Icon: AudioLines,
+  },
+  {
+    name: 'Transport',
+    detail: 'Audio over WebSocket',
+    owner: 'Process boundary',
+    Icon: ArrowRight,
+  },
+  {
+    name: 'Inference',
+    detail: 'Fixed-duration chunks → Whisper off async event loop',
+    owner: 'Local FastAPI service',
+    Icon: Server,
+  },
+  {
+    name: 'Acceptance',
+    detail: 'Segment metadata evaluated before queue entry',
+    owner: 'Client policy',
+    Icon: ClipboardList,
+  },
+  {
+    name: 'Presentation',
+    detail: 'Accepted text → captions',
+    owner: 'Transparent overlay',
+    Icon: Captions,
+  },
+];
+---
+
+<ResearchFigureFrame
+  figureNumber="02"
+  eyebrow="Source implementation · simplified"
+  title="From audio to on-air text"
+  caption="Stages and ownership come from the source. The sequence describes data flow, not timing or latency. Exact chunk duration, thresholds, filtering rules, bandwidth, and rendering behavior belong to the companion architecture research."
+>
+  <ol class="pipeline" aria-label="Caption data path">
+    {stages.map(({ name, detail, owner, Icon }, index) => (
+      <li class:list={['stage', index === 3 && 'is-acceptance']}>
+        <span class="stage-dot" aria-hidden="true"></span>
+        <div class="stage-index">
+          <Icon size={16} strokeWidth={1.7} aria-hidden="true" />
+          <span>0{index + 1}</span>
+        </div>
+        <h4>{name}</h4>
+        <p class="stage-detail">{detail}</p>
+        <p class="stage-owner">{owner}</p>
+      </li>
+    ))}
+  </ol>
+
+  <div class="return-line">
+    <span>Service returns segments + metadata</span>
+    <span>Client decides queue entry</span>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-figure-frame) :global(p),
+  :global(.research-figure-frame) :global(ol),
+  :global(.research-figure-frame) :global(li),
+  :global(.research-figure-frame) :global(h4) {
+    margin: 0;
+  }
+
+  .pipeline {
+    position: relative;
+    display: grid;
+    padding: 0;
+    list-style: none;
+  }
+
+  .stage {
+    position: relative;
+    min-width: 0;
+    border-left: 1px solid var(--border-subtle);
+    padding: 0.9rem 0 0.9rem 1.25rem;
+  }
+
+  .stage.is-acceptance {
+    border-left-color: var(--accent);
+    background: var(--bg-secondary);
+  }
+
+  .stage-dot {
+    position: absolute;
+    top: 1.3rem;
+    left: -0.25rem;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+    background: var(--border-strong);
+  }
+
+  .is-acceptance .stage-dot {
+    background: var(--accent);
+  }
+
+  .stage-index {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+  }
+
+  .stage-index span {
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    line-height: 1.5;
+  }
+
+  .is-acceptance .stage-index {
+    color: var(--accent);
+  }
+
+  h4 {
+    margin-top: 0.45rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .stage-detail {
+    margin-top: 0.45rem !important;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.55;
+  }
+
+  .stage-owner {
+    margin-top: 0.8rem !important;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.5625rem;
+    letter-spacing: 0.07em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .return-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.06em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .return-line span:last-child {
+    color: var(--accent);
+  }
+
+  @media (min-width: 768px) {
+    .pipeline {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .stage {
+      border-top: 1px solid var(--border-subtle);
+      border-left: 0;
+      padding: 1.25rem 0.75rem 0.5rem;
+    }
+
+    .stage.is-acceptance {
+      border-top-color: var(--accent);
+    }
+
+    .stage-dot {
+      top: -0.25rem;
+      left: 1rem;
+    }
+  }
+</style>
