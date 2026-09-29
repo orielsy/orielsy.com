@@ -18,7 +18,7 @@ const steps = [
   {
     label: 'Route behavior',
     file: 'src/pages/research/[...slug].astro',
-    text: 'Published entries render; local preview requires DEV plus content-preview mode.',
+    text: 'Unpublished body preview requires development plus explicit content-preview mode.',
     icon: FileCode2,
   },
   {
@@ -32,10 +32,10 @@ const steps = [
 
 <ResearchFigureFrame
   className="is-open"
-  figureNumber="04"
+  figureNumber="05"
   eyebrow="Direct repository evidence"
   title="One concern, four forms of evidence"
-  caption="The chain does not treat the specification as proof of implementation. Each surface contributes a different kind of evidence."
+  caption="The specification defines intended behavior; the schema, route, and feed expose separate implementation surfaces. This sampled chain is not exhaustive proof that every publication-gating acceptance criterion is satisfied."
 >
   <ol class="evidence-chain">
     {steps.map((step, index) => (
@@ -119,14 +119,10 @@ const steps = [
   code {
     display: block;
     margin-top: 0.25rem;
-    border: 0;
-    background: transparent;
-    padding: 0;
     color: var(--accent) !important;
     font-family: var(--font-mono-ui);
     font-size: 0.6875rem;
     line-height: 1.5;
-    overflow-wrap: anywhere;
   }
 
   p {
@@ -137,13 +133,8 @@ const steps = [
   }
 
   @media (min-width: 760px) {
-    .evidence-chain {
-      gap: 1.4rem;
-    }
-
-    .evidence-chain::before {
-      left: 50%;
-    }
+    .evidence-chain { gap: 1.4rem; }
+    .evidence-chain::before { left: 50%; }
 
     li {
       grid-template-columns: minmax(0, 1fr) 3rem minmax(0, 1fr);
