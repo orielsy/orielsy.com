@@ -14,23 +14,13 @@ featured: false
 readingTime: "8 min read"
 ---
 
-import ProjectMemoryStack from '../../components/ProjectMemoryStack.astro';
-import ConversationVsMemoryVisual from '../../components/research/ConversationVsMemoryVisual.astro';
-import DecisionPersistenceVisual from '../../components/research/DecisionPersistenceVisual.astro';
-import FutureContextRoutingVisual from '../../components/research/FutureContextRoutingVisual.astro';
-import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import ResearchSourceExcerpt from '../../components/research/ResearchSourceExcerpt.astro';
-import SourceOfTruthWorkflowVisual from '../../components/research/SourceOfTruthWorkflowVisual.astro';
 
 ## Conversation Context Is Not Project Memory
 
 A conversation is useful working context: objectives, tradeoffs, corrections, and discoveries. It is not durable project memory.
 
 A new session or tool may see only the repository, so durable decisions need version-controlled artifacts beside the implementation.
-
-<ResearchBreakout mode="wide">
-  <ConversationVsMemoryVisual />
-</ResearchBreakout>
 
 **A project should not depend on one conversation remaining available forever.**
 
@@ -50,19 +40,11 @@ This was a context-persistence failure, not primarily a coding error.
 
 The fix had two layers: correct the homepage and correct the durable project memory. The constitution now explicitly blocks that design-systems claim unless the experience is established later, and `specs/001-site-foundation/spec.md` carries the same positioning constraint.
 
-<ResearchBreakout mode="wide">
-  <DecisionPersistenceVisual />
-</ResearchBreakout>
-
 "Less likely" is intentional. A repository rule cannot guarantee agent behavior, but it gives later sessions something durable to recover.
 
 ## Externalizing Intent
 
 orielsy.com uses a lightweight Spec-Driven Development structure with several scopes of project memory.
-
-<ResearchBreakout mode="wide">
-  <ProjectMemoryStack />
-</ResearchBreakout>
 
 ### Constitution: project-wide invariants
 
@@ -113,10 +95,6 @@ The goal is discoverability at the right scope.
 
 When a requirement changes materially, the durable artifact should change with the implementation rather than leave stale intent behind.
 
-<ResearchBreakout mode="wide">
-  <SourceOfTruthWorkflowVisual />
-</ResearchBreakout>
-
 Publication gating provides a concrete example. When unpublished cards changed from non-clickable summaries to inline status interactions, the feature spec, README, publication-gating ADR, and URL/SEO policy changed with the implementation.
 
 The next agent therefore inherits the requirement instead of inferring it from whichever component happens to exist.
@@ -137,10 +115,6 @@ The system only helps if its memory is maintained.
 ## Where This Could Go Next
 
 Once the project can remember, an agent still needs to decide **which parts of that memory matter for the current task**.
-
-<ResearchBreakout mode="wide">
-  <FutureContextRoutingVisual />
-</ResearchBreakout>
 
 The next research layer is selection and delivery:
 
