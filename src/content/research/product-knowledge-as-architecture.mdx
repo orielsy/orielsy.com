@@ -2,8 +2,8 @@
 title: "Product Knowledge as Architecture"
 subtitle: "From Project Memory to Declarative Product Composition"
 description: "A synthesis of project memory, context engineering, and documentation-driven UX exploring whether product knowledge can become an architectural input to bounded interface composition."
-tldr: "Project memory makes intent durable. Context engineering makes it selectable. Documentation-driven UX makes authored knowledge applicable at runtime. This essay asks what comes next: whether explicit state, trusted capabilities, deterministic policy, and product knowledge can make parts of an interface declaratively composable without making AI the source of product truth."
-tldrLabel: "TL;DR: WORKING ARCHITECTURAL THESIS"
+tldr: "Software already gives behavior, current state, and structure clear architectural homes. This research asks whether product meaning — intent, relevance, explanation, prerequisites, and composition guidance — can become equally explicit, helping systems assemble trusted capabilities without letting AI replace deterministic state, policy, authorization, or execution."
+tldrLabel: "QUICK ORIENTATION"
 pubDate: 2026-09-28
 type: "Architecture Exploration"
 tags: ["context-engineering", "ui-architecture", "software-architecture", "applied-ai"]
@@ -20,6 +20,16 @@ import ProductKnowledgeArtifact from '../../components/research/ProductKnowledge
 import DeclarativeProductCompositionVisual from '../../components/research/DeclarativeProductCompositionVisual.astro';
 import ClaimAuthorityTable from '../../components/research/ClaimAuthorityTable.astro';
 import CompositionFormula from '../../components/research/CompositionFormula.astro';
+import ProductKnowledgeArchitectureOverview from '../../components/research/ProductKnowledgeArchitectureOverview.astro';
+import ResearchReadingDepth from '../../components/research/ResearchReadingDepth.astro';
+
+<ResearchReadingDepth overviewTime="4 min" fullResearchTime="8 min" />
+
+<div data-reading-depth-overview>
+  <ProductKnowledgeArchitectureOverview />
+</div>
+
+<div data-reading-depth-marker="full" aria-hidden="true"></div>
 
 Four questions have followed me across several investigations. How can coding agents retain project decisions across sessions? How should a repository select only the context relevant to a task? Can product documentation participate in interface behavior without replacing application state? If reliable interface capabilities already exist, how much of the final experience still needs to be assembled by hand?
 
