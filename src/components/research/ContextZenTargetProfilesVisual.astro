@@ -1,0 +1,172 @@
+---
+import { ArrowDown, ArrowRight, Braces, Code2, Search } from '@lucide/astro';
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const canonical = ['Objective', 'Decisions', 'Constraints', 'Rejected paths', 'Open questions'];
+---
+
+<ResearchFigureFrame
+  figureNumber="04"
+  eyebrow="v0.1 target profiles · proposal"
+  title="Same state, different emphasis"
+  caption="Coding and research profiles are specified examples. The figure treats a canonical handoff as shared authoritative state and the target profiles as different representations of it. The source proposes that targeting must not omit materially consequential state; that guarantee has not been validated."
+>
+  <div class="recompile-grid">
+    <section class="canonical" aria-labelledby="context-zen-canonical-label">
+      <div class="section-label section-label-accent" id="context-zen-canonical-label">
+        <Braces size={16} strokeWidth={1.7} aria-hidden="true" />
+        <span>Canonical handoff</span>
+      </div>
+      <ul>
+        {canonical.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <div class="recompile-arrow" aria-hidden="true">
+      <ArrowDown class="arrow-down" size={19} strokeWidth={1.7} />
+      <ArrowRight class="arrow-right" size={19} strokeWidth={1.7} />
+    </div>
+
+    <div class="profiles">
+      <section>
+        <Code2 size={16} strokeWidth={1.7} aria-hidden="true" />
+        <div>
+          <span class="profile-label">Coding profile foregrounds</span>
+          <p>Repository state · branch · files · architecture decisions · tests · failures · next implementation step</p>
+        </div>
+      </section>
+      <section>
+        <Search size={16} strokeWidth={1.7} aria-hidden="true" />
+        <div>
+          <span class="profile-label">Research profile foregrounds</span>
+          <p>Question · findings · sources · assumptions · unresolved questions · next investigation</p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <p class="bottom-line">Same authoritative state. Different receiving environment.</p>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-figure-frame) :global(p),
+  :global(.research-figure-frame) :global(ul),
+  :global(.research-figure-frame) :global(li) {
+    margin: 0;
+  }
+
+  .recompile-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .canonical {
+    background: var(--bg-secondary);
+    padding: 1rem;
+  }
+
+  .section-label,
+  .profile-label {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .section-label-accent,
+  .recompile-arrow,
+  .profiles :global(svg) {
+    color: var(--accent);
+  }
+
+  .canonical ul {
+    display: grid;
+    margin-top: 0.9rem !important;
+    padding: 0;
+    list-style: none;
+  }
+
+  .canonical li {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.45rem 0;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .canonical li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .recompile-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .arrow-right {
+    display: none;
+  }
+
+  .profiles {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .profiles section {
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: 0.7rem;
+  }
+
+  .profiles section + section {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1.25rem;
+  }
+
+  .profile-label {
+    display: block;
+  }
+
+  .profiles p {
+    margin-top: 0.3rem !important;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  .bottom-line {
+    margin-top: 1.5rem !important;
+    border-left: 2px solid var(--accent);
+    padding-left: 0.9rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 900px) {
+    .recompile-grid {
+      grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1.2fr);
+      align-items: center;
+    }
+
+    .arrow-down {
+      display: none;
+    }
+
+    .arrow-right {
+      display: block;
+    }
+  }
+</style>
