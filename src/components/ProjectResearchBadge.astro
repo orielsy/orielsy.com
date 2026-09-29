@@ -11,7 +11,7 @@ const label = count === 1 ? '1 piece' : `${count} pieces`;
 <a
   href={href}
   title={`Related research: ${label}`}
-  class="inline-flex items-center gap-1.5 font-editorial-mono text-[10px] tracking-[0.08em] text-[var(--text-muted)] transition-colors hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
+  class="group/research-basis inline-flex items-center gap-1.5 font-editorial-mono text-[10px] tracking-[0.08em] text-[var(--text-muted)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
 >
   <svg
     class="h-2.5 w-2.5 shrink-0 text-[var(--accent)]"
@@ -28,5 +28,5 @@ const label = count === 1 ? '1 piece' : `${count} pieces`;
   </svg>
   <span class="uppercase text-[var(--text-muted)]">Research</span>
   <span aria-hidden="true" class="text-[var(--text-muted)]">·</span>
-  <span class="normal-case tracking-normal text-[var(--text-primary)]">{label}</span>
+  <span class="normal-case tracking-normal text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors group-hover/research-basis:text-[var(--accent)] group-hover/research-basis:decoration-[var(--accent)]">{label}</span>
 </a>
