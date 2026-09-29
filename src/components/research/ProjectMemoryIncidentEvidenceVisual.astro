@@ -3,6 +3,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 ---
 
 <ResearchFigureFrame
+  className="is-open"
   eyebrow="Observed account + repository evidence"
   title="What the branch can and cannot corroborate"
   caption="The correction now has two durable addresses at different scopes. That makes recurrence less likely; it does not make recurrence impossible."
@@ -34,10 +35,18 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 </ResearchFigureFrame>
 
 <style>
+  code {
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+  }
+
   .incident-evidence {
     display: grid;
     gap: 1.25rem;
-    border-block: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
     padding: 1rem 0;
   }
 
@@ -50,7 +59,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   .boundary span {
     color: var(--text-muted);
     font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
     letter-spacing: 0.09em;
     text-transform: uppercase;
   }
@@ -76,7 +85,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   .repository-evidence p {
     margin: 0.55rem 0 0 !important;
     color: var(--text-secondary);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     line-height: 1.55;
   }
 
@@ -115,7 +124,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     padding: 0;
     color: var(--accent);
     font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
   }
 
   .boundary-note {
@@ -123,9 +132,8 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     padding-top: 0.65rem;
     color: var(--text-muted) !important;
     font-family: var(--font-mono-ui);
-    font-size: 0.625rem !important;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    font-size: 0.6875rem !important;
+    letter-spacing: 0.02em;
   }
 
   @media (min-width: 760px) {
