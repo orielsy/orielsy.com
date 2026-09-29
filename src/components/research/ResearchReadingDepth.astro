@@ -1,0 +1,254 @@
+---
+export interface Props {
+  overviewTime?: string;
+  fullResearchTime?: string;
+}
+
+const {
+  overviewTime = '4 min',
+  fullResearchTime = '8 min',
+} = Astro.props;
+---
+
+<div class="reading-depth not-prose" data-reading-depth-switcher>
+  <div class="reading-depth__intro">
+    <p class="reading-depth__eyebrow">Reading depth</p>
+    <p class="reading-depth__note">
+      Same research, two levels of detail. Start with the idea, or go straight to the complete technical argument.
+    </p>
+  </div>
+
+  <div class="reading-depth__tabs" role="group" aria-label="Choose reading depth">
+    <button
+      class="reading-depth__tab"
+      type="button"
+      aria-pressed="true"
+      data-reading-depth-target="overview"
+    >
+      <span class="reading-depth__label">Overview</span>
+      <span class="reading-depth__meta">Conceptual · {overviewTime}</span>
+    </button>
+
+    <button
+      class="reading-depth__tab"
+      type="button"
+      aria-pressed="false"
+      data-reading-depth-target="full"
+    >
+      <span class="reading-depth__label">Full Research</span>
+      <span class="reading-depth__meta">Evidence + architecture · {fullResearchTime}</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const getFullResearchElements = (article: HTMLElement) => {
+    const marker = article.querySelector<HTMLElement>('[data-reading-depth-marker="full"]');
+    if (!marker) return { marker: null, elements: [] as HTMLElement[] };
+
+    const elements: HTMLElement[] = [];
+    let sibling = marker.nextElementSibling;
+
+    while (sibling) {
+      if (sibling instanceof HTMLElement) elements.push(sibling);
+      sibling = sibling.nextElementSibling;
+    }
+
+    return { marker, elements };
+  };
+
+  const activateReadingDepth = (
+    article: HTMLElement,
+    depth: 'overview' | 'full',
+    options: { updateUrl?: boolean; scrollToContent?: boolean } = {},
+  ) => {
+    const { updateUrl = false, scrollToContent = false } = options;
+    const switcher = article.querySelector<HTMLElement>('[data-reading-depth-switcher]');
+    const overview = article.querySelector<HTMLElement>('[data-reading-depth-overview]');
+    const { marker, elements: fullResearch } = getFullResearchElements(article);
+    if (!switcher || !overview || !marker) return;
+
+    article.dataset.readingDepth = depth;
+    article.dataset.readingDepthEnhanced = 'true';
+
+    switcher.querySelectorAll<HTMLButtonElement>('[data-reading-depth-target]').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.readingDepthTarget === depth));
+    });
+
+    overview.hidden = depth !== 'overview';
+    fullResearch.forEach((element) => {
+      element.hidden = depth !== 'full';
+    });
+
+    const toc = article.querySelector<HTMLElement>('aside[aria-label="Research navigation"]');
+    if (toc) toc.hidden = depth === 'overview';
+
+    if (updateUrl) {
+      const url = new URL(window.location.href);
+      if (depth === 'full') {
+        url.searchParams.set('depth', 'full');
+      } else {
+        url.searchParams.delete('depth');
+      }
+      history.replaceState(history.state, '', `${url.pathname}${url.search}${url.hash}`);
+    }
+
+    if (scrollToContent) {
+      const target = depth === 'overview' ? overview : marker;
+      target.scrollIntoView({
+        behavior: reducedMotion.matches ? 'auto' : 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-research-entry]').forEach((article) => {
+    const switcher = article.querySelector<HTMLElement>('[data-reading-depth-switcher]');
+    if (!switcher || switcher.dataset.readingDepthBound === 'true') return;
+    switcher.dataset.readingDepthBound = 'true';
+
+    const { marker, elements: fullResearch } = getFullResearchElements(article);
+    let initialDepth: 'overview' | 'full' = new URL(window.location.href).searchParams.get('depth') === 'full'
+      ? 'full'
+      : 'overview';
+
+    if (window.location.hash) {
+      const hashTarget = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+      if (hashTarget && fullResearch.some((element) => element === hashTarget || element.contains(hashTarget))) {
+        initialDepth = 'full';
+      }
+    }
+
+    if (!marker) return;
+    activateReadingDepth(article, initialDepth);
+
+    switcher.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element)) return;
+      const button = event.target.closest<HTMLButtonElement>('[data-reading-depth-target]');
+      const depth = button?.dataset.readingDepthTarget;
+      if (depth !== 'overview' && depth !== 'full') return;
+      activateReadingDepth(article, depth, { updateUrl: true });
+    });
+
+    article.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element)) return;
+      const trigger = event.target.closest<HTMLElement>('[data-reading-depth-open]');
+      const depth = trigger?.dataset.readingDepthOpen;
+      if (depth !== 'overview' && depth !== 'full') return;
+
+      activateReadingDepth(article, depth, {
+        updateUrl: true,
+        scrollToContent: true,
+      });
+    });
+  });
+</script>
+
+<style>
+  .reading-depth {
+    margin-bottom: 2.5rem;
+    border-block: 1px solid var(--border-subtle);
+    padding-block: 1.25rem;
+  }
+
+  .reading-depth__intro {
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .reading-depth__eyebrow {
+    margin: 0;
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .reading-depth__note {
+    max-width: 44rem;
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+
+  .reading-depth__tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .reading-depth__tab {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.25rem;
+    background: var(--bg-card);
+    padding: 0.9rem 1rem;
+    text-align: left;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .reading-depth__tab:hover {
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+  }
+
+  .reading-depth__tab[aria-pressed='true'] {
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--border-subtle));
+    background: color-mix(in srgb, var(--accent) 7%, var(--bg-card));
+    color: var(--text-primary);
+  }
+
+  .reading-depth__tab:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .reading-depth__label {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .reading-depth__meta {
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  :global([data-reading-depth-marker='full']) {
+    height: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    scroll-margin-top: 6rem;
+  }
+
+  @media (max-width: 639px) {
+    .reading-depth__tabs {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reading-depth__tab {
+      transition: none;
+    }
+  }
+</style>

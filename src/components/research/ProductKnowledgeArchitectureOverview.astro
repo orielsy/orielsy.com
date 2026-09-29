@@ -1,0 +1,330 @@
+---
+import ClaimAuthorityTable from './ClaimAuthorityTable.astro';
+import CompositionFormula from './CompositionFormula.astro';
+import ContextAsArchitectureVisual from './ContextAsArchitectureVisual.astro';
+import DeclarativeProductCompositionVisual from './DeclarativeProductCompositionVisual.astro';
+import ProductKnowledgeArtifact from './ProductKnowledgeArtifact.astro';
+import ResearchBreakout from './ResearchBreakout.astro';
+---
+
+<section class="pk-overview not-prose" aria-labelledby="product-knowledge-overview-title">
+  <div class="pk-overview__intro">
+    <p class="pk-overview__eyebrow">Overview · Conceptual version</p>
+    <h2 id="product-knowledge-overview-title">Software knows what it can do. But where does it know why?</h2>
+    <p class="pk-overview__lead">
+      Mature products usually have clear places for behavior, current facts, and data structure. The meaning around the product — why a flow exists, when something is relevant, what should be explained, and how trusted capabilities should fit together — is often scattered across documentation, tickets, UI copy, and people's memory.
+    </p>
+    <p>
+      This research asks whether that <strong>product knowledge can become an explicit architectural input</strong> instead of remaining an accidental byproduct of implementation.
+    </p>
+  </div>
+
+  <div class="pk-overview__answer" aria-label="Short answer">
+    <p class="pk-overview__eyebrow">The short answer</p>
+    <p>
+      Product knowledge can help a system understand intent, relevance, prerequisites, explanation, and composition — while code, application state, and deterministic policy remain authoritative for behavior, facts, permissions, and side effects.
+    </p>
+  </div>
+
+  <ResearchBreakout mode="wide">
+    <ContextAsArchitectureVisual />
+  </ResearchBreakout>
+
+  <div class="pk-overview__explanation">
+    <div>
+      <p class="pk-overview__eyebrow">Already explicit</p>
+      <h3>Behavior, facts, and structure</h3>
+      <p>
+        Code implements behavior. Application state stores current facts. Schemas define valid structure and contracts. Software already treats these as architectural concerns.
+      </p>
+    </div>
+    <div>
+      <p class="pk-overview__eyebrow">Usually scattered</p>
+      <h3>Meaning and product intent</h3>
+      <p>
+        Why a capability matters, who it is for, when it applies, what should be explained, and how capabilities relate are often spread across less formal artifacts.
+      </p>
+    </div>
+  </div>
+
+  <div class="pk-overview__section">
+    <p class="pk-overview__eyebrow">A concrete example</p>
+    <h3>A product document can describe a task without implementing the task.</h3>
+    <p>
+      Imagine an account-review workflow. Engineering has already built customer identity, transactions, verification, restriction management, and risk escalation. Product knowledge can describe which of those capabilities matter for the task, the prerequisites between them, and what should be explained to the user.
+    </p>
+  </div>
+
+  <ProductKnowledgeArtifact />
+
+  <div class="pk-overview__boundary">
+    <p class="pk-overview__eyebrow">Important boundary</p>
+    <p>
+      That document does <strong>not</strong> retrieve transactions, verify identity, grant permission, remove a restriction, or perform an escalation. It contributes meaning and guidance. The actual capabilities remain implemented and controlled elsewhere.
+    </p>
+  </div>
+
+  <div class="pk-overview__section">
+    <p class="pk-overview__eyebrow">What composition could look like</p>
+    <h3>Use knowledge to assemble trusted capabilities, not to invent behavior.</h3>
+    <p>
+      A composition layer can consider the current state, the capabilities engineering has actually built, deterministic policy, and authored product knowledge. From those inputs, it can decide which trusted pieces belong on the surface and how they should be presented.
+    </p>
+  </div>
+
+  <ResearchBreakout mode="wide">
+    <DeclarativeProductCompositionVisual />
+  </ResearchBreakout>
+
+  <div class="pk-overview__section">
+    <p class="pk-overview__eyebrow">Who gets the final word?</p>
+    <h3>There is no single source of truth for every kind of claim.</h3>
+    <p>
+      The system works only if authority stays attached to the concern that owns it. Product knowledge can explain what something means, but it cannot overrule current application state. Code can perform an action, but executable behavior does not automatically make a policy violation correct.
+    </p>
+  </div>
+
+  <ClaimAuthorityTable />
+
+  <div class="pk-overview__section">
+    <p class="pk-overview__eyebrow">The architectural shorthand</p>
+    <h3>The interface becomes a view derived from several explicit inputs.</h3>
+    <p>
+      The idea is not that every screen should be generated at runtime. It is that some interfaces may no longer need to be authored as one fixed page when their ingredients are already explicit and trustworthy.
+    </p>
+  </div>
+
+  <CompositionFormula />
+
+  <div class="pk-overview__takeaways">
+    <p class="pk-overview__eyebrow">What I came away with</p>
+    <div class="pk-overview__takeaway-grid">
+      <article>
+        <span>01</span>
+        <h3>Engineering still builds the real capabilities.</h3>
+        <p>Validation, authorization, state changes, side effects, and missing behavior remain engineering responsibilities.</p>
+      </article>
+      <article>
+        <span>02</span>
+        <h3>Product knowledge can become architectural input.</h3>
+        <p>Intent, relevance, explanation, prerequisites, and composition guidance can be represented explicitly instead of scattered across the organization.</p>
+      </article>
+      <article>
+        <span>03</span>
+        <h3>Authority stays bounded.</h3>
+        <p>State owns current facts, code owns implemented behavior, policy owns governing constraints, and product knowledge owns meaning and explanation.</p>
+      </article>
+      <article>
+        <span>04</span>
+        <h3>Some pages may become derived views.</h3>
+        <p>Where trusted capabilities already exist, a system may be able to compose useful surfaces from explicit state, policy, and context.</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="pk-overview__why">
+    <p class="pk-overview__eyebrow">Why this matters</p>
+    <h3>This shifts the AI question away from “can it generate a UI?”</h3>
+    <p>
+      A more useful question is whether a product can make enough of its capabilities, state, policy, and meaning explicit that a system can assemble parts of the experience without surrendering deterministic control.
+    </p>
+    <p>
+      The full research develops the progression from durable project memory to selectable context, runtime applicability, bounded composition, authority boundaries, and the open problems that would have to be solved before this becomes a reliable architecture.
+    </p>
+
+    <button class="pk-overview__continue" type="button" data-reading-depth-open="full">
+      <span>Continue to full research</span>
+      <span aria-hidden="true">→</span>
+    </button>
+  </div>
+</section>
+
+<style>
+  .pk-overview {
+    color: var(--text-secondary);
+  }
+
+  .pk-overview__intro,
+  .pk-overview__section,
+  .pk-overview__why {
+    max-width: 46rem;
+  }
+
+  .pk-overview__intro h2 {
+    max-width: 46rem;
+    margin: 0.55rem 0 1.25rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.045em;
+  }
+
+  .pk-overview p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  .pk-overview p + p {
+    margin-top: 1rem;
+  }
+
+  .pk-overview strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .pk-overview__lead {
+    color: var(--text-primary);
+    font-size: 1.12rem !important;
+    line-height: 1.75 !important;
+  }
+
+  .pk-overview__eyebrow {
+    margin: 0 !important;
+    color: var(--accent) !important;
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem !important;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    line-height: 1.5 !important;
+    text-transform: uppercase;
+  }
+
+  .pk-overview__answer,
+  .pk-overview__boundary {
+    margin-top: 2.5rem;
+    border-left: 2px solid var(--accent);
+    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
+    padding: 1.2rem 1.25rem;
+  }
+
+  .pk-overview__answer p:last-child,
+  .pk-overview__boundary p:last-child {
+    max-width: 45rem;
+    margin-top: 0.65rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: -0.02em;
+  }
+
+  .pk-overview__explanation {
+    display: grid;
+    gap: 1px;
+    margin: 2.75rem 0 3.5rem;
+    border: 1px solid var(--border-subtle);
+    background: var(--border-subtle);
+  }
+
+  .pk-overview__explanation > div {
+    background: var(--bg-card);
+    padding: 1.25rem;
+  }
+
+  .pk-overview h3 {
+    margin: 0.45rem 0 0.75rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+  }
+
+  .pk-overview__section {
+    margin-top: 3.5rem;
+  }
+
+  .pk-overview__takeaways {
+    margin: 3.75rem 0;
+  }
+
+  .pk-overview__takeaway-grid {
+    display: grid;
+    gap: 1px;
+    margin-top: 0.9rem;
+    border: 1px solid var(--border-subtle);
+    background: var(--border-subtle);
+  }
+
+  .pk-overview__takeaway-grid article {
+    background: var(--bg-card);
+    padding: 1.25rem;
+  }
+
+  .pk-overview__takeaway-grid article > span {
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.09em;
+  }
+
+  .pk-overview__takeaway-grid h3 {
+    margin-top: 0.55rem;
+    font-size: 1.05rem;
+  }
+
+  .pk-overview__takeaway-grid p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+
+  .pk-overview__why {
+    margin-top: 4rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 2rem;
+  }
+
+  .pk-overview__continue {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-top: 1.5rem;
+    border: 1px solid var(--accent);
+    border-radius: 0.2rem;
+    background: transparent;
+    padding: 0.8rem 1rem;
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .pk-overview__continue:hover {
+    background: var(--accent);
+    color: var(--accent-contrast);
+  }
+
+  .pk-overview__continue:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (min-width: 720px) {
+    .pk-overview__explanation {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pk-overview__takeaway-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pk-overview__continue {
+      transition: none;
+    }
+  }
+</style>
