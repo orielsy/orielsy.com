@@ -24,11 +24,11 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       <div class="evidence-rows">
         <div>
           <code>.specify/memory/constitution.md</code>
-          <p>Do not describe the experience as design systems unless explicitly established.</p>
+          <span class="desc">Do not describe the experience as design systems unless explicitly established.</span>
         </div>
         <div>
           <code>specs/001-site-foundation/spec.md</code>
-          <p>Use grounded positioning; do not claim formal design-system ownership.</p>
+          <span class="desc">Use grounded positioning; do not claim formal design-system ownership.</span>
         </div>
       </div>
       <p class="boundary-note">The branch corroborates the resulting guardrails, not necessarily the complete original chronology.</p>
@@ -123,7 +123,20 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     padding: 0;
     color: var(--accent) !important;
     font-family: var(--font-mono-ui);
-    font-size: 0.6875rem;
+    /* !important: the article's .prose code rule (0.875em) outranks the
+       scoped selector and re-enlarges these repository paths. */
+    font-size: 0.6875rem !important;
+  }
+
+  /* .desc instead of <p>: the shared figure stylesheet forces every <p> in a
+     figure body down to the 11px diagram floor; these descriptions are the
+     cell's content and read at body size. */
+  .evidence-rows .desc {
+    display: block;
+    margin-top: 0.55rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.55;
   }
 
   .boundary-note {
