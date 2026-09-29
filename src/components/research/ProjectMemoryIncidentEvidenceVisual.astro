@@ -15,6 +15,8 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       <p>The article reports that this unsupported wording appeared and was corrected.</p>
     </section>
 
+    <div class="boundary" aria-hidden="true"><span>evidence boundary</span></div>
+
     <section class="repository-evidence">
       <span class="label">What the branch directly shows</span>
       <div class="evidence-rows">
@@ -48,17 +50,8 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     padding: 1rem 0;
   }
 
-  .observed-account {
-    border-left: 2px solid var(--accent);
-    padding-left: 1rem;
-  }
-
-  .repository-evidence {
-    border-top: 1px solid var(--border-subtle);
-    padding-top: 1.25rem;
-  }
-
-  .label {
+  .label,
+  .boundary span {
     color: var(--text-muted);
     font-family: var(--font-mono-ui);
     font-size: 0.6875rem;
@@ -89,6 +82,20 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     color: var(--text-secondary);
     font-size: 0.875rem;
     line-height: 1.55;
+  }
+
+  .boundary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .boundary::before,
+  .boundary::after {
+    height: 1px;
+    flex: 1;
+    background: var(--border-subtle);
+    content: '';
   }
 
   .evidence-rows {
@@ -126,21 +133,25 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   @media (min-width: 760px) {
     .incident-evidence {
-      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-      gap: 0;
+      grid-template-columns: minmax(0, 0.9fr) 7rem minmax(0, 1.2fr);
       align-items: stretch;
       padding: 1.1rem 0;
     }
 
-    .observed-account {
-      padding-right: 1.5rem;
+    .boundary {
+      flex-direction: column;
+      justify-content: center;
     }
 
-    .repository-evidence {
-      border-top: 0;
-      border-left: 1px solid var(--border-subtle);
-      padding-top: 0;
-      padding-left: 1.5rem;
+    .boundary::before,
+    .boundary::after {
+      width: 1px;
+      height: auto;
+      flex: 1;
+    }
+
+    .boundary span {
+      text-align: center;
     }
 
     .evidence-rows {
