@@ -25,12 +25,12 @@ const {
 <figure class:list={['research-figure-frame', 'not-prose', figureNumber && 'has-figure-number', className]} data-research-diagram>
   <header>
     <div class="heading">
-      {figureNumber && <p class="figure-number">Figure {figureNumber}</p>}
+      {figureNumber && <p class="figure-number font-editorial-mono">Figure {figureNumber}</p>}
       {!figureNumber && eyebrow && <p class="eyebrow">{eyebrow}</p>}
       <h3>{title}</h3>
       {subtitle && <p class="subtitle">{subtitle}</p>}
     </div>
-    {figureNumber && eyebrow && <p class="figure-basis">{eyebrow}</p>}
+    {figureNumber && eyebrow && <p class="figure-basis font-editorial-mono">{eyebrow}</p>}
     {status && <p class="status">{status}</p>}
   </header>
 
