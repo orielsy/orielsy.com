@@ -18,9 +18,9 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
   </div>
 
   <div class="overview__answer" aria-label="Short answer">
-    <p class="overview__eyebrow">The short answer</p>
+    <h3>The short answer</h3>
     <p>
-      Frameworks probably do not disappear. Instead, their job moves upward. The browser can take on more reusable mechanics, while frameworks keep making the opinionated decisions that turn those mechanics into an application.
+      Frameworks probably do not disappear. Their job moves upward: the browser can take on more reusable mechanics while frameworks keep making the opinionated decisions that turn those mechanics into an application.
     </p>
   </div>
 
@@ -30,15 +30,13 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
 
   <div class="overview__explanation">
     <div>
-      <p class="overview__eyebrow">What can move down</p>
-      <h3>Reusable mechanics</h3>
+      <h3>Reusable mechanics can move down.</h3>
       <p>
-        Things such as component identity, navigation mechanics, transitions, common controls, and potentially reactive dependency tracking can become shared browser capabilities once the ecosystem understands them well enough.
+        Component identity, navigation mechanics, transitions, common controls, and potentially reactive dependency tracking can become shared browser capabilities once the ecosystem understands them well enough.
       </p>
     </div>
     <div>
-      <p class="overview__eyebrow">What stays above</p>
-      <h3>Application decisions</h3>
+      <h3>Application decisions stay above.</h3>
       <p>
         Frameworks still decide how work is scheduled, how application pieces compose, how routing and data loading fit together, how servers participate, and what development model a team uses.
       </p>
@@ -46,10 +44,9 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
   </div>
 
   <div class="overview__section">
-    <p class="overview__eyebrow">One example · Signals</p>
-    <h3>The browser can standardize the plumbing without standardizing the whole house.</h3>
+    <h3>Signals show how the boundary can move.</h3>
     <p>
-      Several frameworks already use reactive graphs to track what depends on what. A shared Signals primitive could eventually give them common low-level plumbing. That would not force React, Vue, Angular, or another framework to schedule updates or render applications in the same way.
+      Several frameworks already use reactive graphs to track what depends on what. A shared Signals primitive could eventually give them common low-level plumbing without forcing React, Vue, Angular, or another framework to schedule updates or render applications in the same way.
     </p>
   </div>
 
@@ -58,10 +55,9 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
   </ResearchBreakout>
 
   <div class="overview__section">
-    <p class="overview__eyebrow">The larger pattern</p>
     <h3>Successful framework ideas can become platform building blocks.</h3>
     <p>
-      The web has done this before. Once a useful mechanism becomes common, stable, and broadly understood, some of it can move into the platform. Frameworks can then stop rebuilding that mechanism and spend more of their energy coordinating the pieces above it.
+      Once a useful mechanism becomes common, stable, and broadly understood, some of it can move into the platform. Frameworks can then stop rebuilding that mechanism and spend more of their energy coordinating the pieces above it.
     </p>
   </div>
 
@@ -70,34 +66,39 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
   </ResearchBreakout>
 
   <div class="overview__takeaways">
-    <p class="overview__eyebrow">What I came away with</p>
-    <div class="overview__takeaway-grid">
+    <h3>What this suggests</h3>
+    <div class="overview__takeaway-list">
       <article>
         <span>01</span>
-        <h3>The platform absorbs primitives.</h3>
-        <p>Capabilities with broadly agreed semantics are good candidates to become native building blocks.</p>
+        <div>
+          <h4>The platform absorbs primitives.</h4>
+          <p>Capabilities with broadly agreed semantics are good candidates to become native building blocks.</p>
+        </div>
       </article>
       <article>
         <span>02</span>
-        <h3>Frameworks retain policy.</h3>
-        <p>Scheduling, composition, server integration, conventions, and developer experience remain opinionated choices.</p>
+        <div>
+          <h4>Frameworks retain policy.</h4>
+          <p>Scheduling, composition, server integration, conventions, and developer experience remain opinionated choices.</p>
+        </div>
       </article>
       <article>
         <span>03</span>
-        <h3>The boundary moves, not vanishes.</h3>
-        <p>The likely future is not “browser versus framework.” It is a different division of responsibility between them.</p>
+        <div>
+          <h4>The boundary moves, not vanishes.</h4>
+          <p>The likely future is not “browser versus framework.” It is a different division of responsibility between them.</p>
+        </div>
       </article>
     </div>
   </div>
 
   <div class="overview__why">
-    <p class="overview__eyebrow">Why this matters</p>
-    <h3>This is really an architecture question.</h3>
+    <h3>Why this matters</h3>
     <p>
       If we can tell which abstractions are durable application policy and which exist mainly because the platform has not caught up yet, we can make better long-term frontend architecture decisions.
     </p>
     <p>
-      The full research below examines the standards work, the limits of each primitive, and the responsibilities that still appear to belong above the platform layer.
+      The full research examines the standards work, the limits of each primitive, and the responsibilities that still appear to belong above the platform layer.
     </p>
 
     <button class="overview__continue" type="button" data-reading-depth-open="full">
@@ -114,7 +115,8 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
 
   .overview__intro,
   .overview__section,
-  .overview__why {
+  .overview__why,
+  .overview__takeaways {
     max-width: 46rem;
   }
 
@@ -132,11 +134,11 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
   .overview p {
     margin: 0;
     font-size: 1rem;
-    line-height: 1.85;
+    line-height: 1.8;
   }
 
   .overview p + p {
-    margin-top: 1rem;
+    margin-top: 0.9rem;
   }
 
   .overview strong {
@@ -146,8 +148,8 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
 
   .overview__lead {
     color: var(--text-primary);
-    font-size: 1.12rem !important;
-    line-height: 1.75 !important;
+    font-size: 1.1rem !important;
+    line-height: 1.72 !important;
   }
 
   .overview__eyebrow {
@@ -161,6 +163,26 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
     text-transform: uppercase;
   }
 
+  .overview h3,
+  .overview h4 {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .overview h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.35rem;
+    line-height: 1.25;
+  }
+
+  .overview h4 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
   .overview__answer {
     margin-top: 2.5rem;
     border-left: 2px solid var(--accent);
@@ -168,12 +190,16 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
     padding: 1.2rem 1.25rem;
   }
 
-  .overview__answer p:last-child {
+  .overview__answer h3 {
+    margin-bottom: 0.55rem;
+    font-size: 1rem;
+  }
+
+  .overview__answer p {
     max-width: 45rem;
-    margin-top: 0.65rem;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 500;
     line-height: 1.55;
     letter-spacing: -0.02em;
@@ -182,7 +208,7 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
   .overview__explanation {
     display: grid;
     gap: 1px;
-    margin: 2.75rem 0 3.5rem;
+    margin: 2.75rem 0 3.25rem;
     border: 1px solid var(--border-subtle);
     background: var(--border-subtle);
   }
@@ -192,57 +218,48 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
     padding: 1.25rem;
   }
 
-  .overview h3 {
-    margin: 0.45rem 0 0.75rem;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 1.35rem;
-    font-weight: 600;
-    line-height: 1.25;
-    letter-spacing: -0.03em;
+  .overview__explanation h3 {
+    font-size: 1.05rem;
   }
 
   .overview__section {
-    margin-top: 3.5rem;
+    margin-top: 3.25rem;
   }
 
   .overview__takeaways {
-    margin: 3.75rem 0;
+    margin: 3.5rem 0;
   }
 
-  .overview__takeaway-grid {
-    display: grid;
-    gap: 1px;
+  .overview__takeaway-list {
     margin-top: 0.9rem;
-    border: 1px solid var(--border-subtle);
-    background: var(--border-subtle);
+    border-top: 1px solid var(--border-subtle);
   }
 
-  .overview__takeaway-grid article {
-    background: var(--bg-card);
-    padding: 1.25rem;
+  .overview__takeaway-list article {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: 0.85rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1rem 0;
   }
 
-  .overview__takeaway-grid article > span {
+  .overview__takeaway-list article > span {
+    padding-top: 0.14rem;
     color: var(--accent);
     font-family: var(--font-mono-ui);
     font-size: 0.625rem;
     letter-spacing: 0.09em;
   }
 
-  .overview__takeaway-grid h3 {
-    margin-top: 0.55rem;
-    font-size: 1.05rem;
-  }
-
-  .overview__takeaway-grid p {
+  .overview__takeaway-list p {
+    margin-top: 0.3rem;
     color: var(--text-muted);
     font-size: 0.875rem;
     line-height: 1.65;
   }
 
   .overview__why {
-    margin-top: 4rem;
+    margin-top: 3.75rem;
     border-top: 1px solid var(--border-subtle);
     padding-top: 2rem;
   }
@@ -281,10 +298,6 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
   @media (min-width: 720px) {
     .overview__explanation {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .overview__takeaway-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 
