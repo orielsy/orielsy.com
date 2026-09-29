@@ -29,8 +29,8 @@ const stages = [
   },
   {
     name: 'Presentation',
-    detail: 'Accepted text → captions',
-    owner: 'Transparent overlay',
+    detail: 'Accepted caption state → Electron overlay → OBS composition',
+    owner: 'Electron overlay / OBS',
     Icon: Captions,
   },
 ];
@@ -57,9 +57,9 @@ const stages = [
     ))}
   </ol>
 
-  <div class="return-line">
-    <span>Service returns segments + metadata</span>
-    <span>Client decides queue entry</span>
+  <div class="return-line" aria-label="Cross-process transport directions">
+    <span>PCM: client → local service</span>
+    <span>Segments + metadata: local service → client policy</span>
   </div>
 </ResearchFigureFrame>
 
