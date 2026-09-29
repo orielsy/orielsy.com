@@ -1,158 +1,256 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
-const steps = [
-  {
-    label: 'Framework-owned technique',
-    detail: 'Different libraries solve the same low-level problem with incompatible internal machinery.',
-  },
-  {
-    label: 'Ecosystem convergence',
-    detail: 'Repeated experience makes the shared semantics easier to identify across implementations.',
-  },
-  {
-    label: 'Standardized lower layer',
-    detail: 'A durable platform primitive can absorb the common mechanism without dictating application policy.',
-  },
-  {
-    label: 'Framework recomposition',
-    detail: 'Frameworks rebuild above the primitive and differentiate at a higher architectural layer.',
-  },
+const beforeMechanisms = [
+  'Reactivity',
+  'Navigation',
+  'Transitions',
+  'DOM machinery',
+];
+
+const platformPrimitives = [
+  'Reactive graph primitives',
+  'Navigation mechanics',
+  'View transitions',
+  'DOM update primitives',
+  'Common controls',
+];
+
+const frameworkResponsibilities = [
+  'Scheduling & batching',
+  'Rendering composition',
+  'Routing & data',
+  'Server integration',
+  'Compilation & DX',
 ];
 ---
 
 <ResearchFigureFrame
-  eyebrow="Platformization cycle"
-  title="The framework can get thinner in one place and more architectural in another."
-  status="How the stack recomposes over time"
-  caption="Standardization can remove duplicated mechanism while leaving coordination, compilation, server integration, and product conventions above the platform."
+  title="The framework's center of gravity moves upward."
+  caption="Standardization can move durable mechanisms into the platform while frameworks concentrate on coordination, policy, composition, server integration, and developer experience."
 >
-  <div class="absorption-cycle">
-    <ol>
-      {steps.map((step, index) => (
-        <li>
-          <div class="number">{String(index + 1).padStart(2, '0')}</div>
-          <div>
-            <strong>{step.label}</strong>
-            <p>{step.detail}</p>
-          </div>
-          {index < steps.length - 1 && <span class="arrow" aria-hidden="true">→</span>}
-        </li>
-      ))}
-    </ol>
+  <div class="recomposition-map">
+    <section class="state before-state">
+      <div class="state-heading">
+        <span>Before</span>
+        <strong>Framework owns mechanism and coordination</strong>
+      </div>
 
-    <div class="result">
-      <span>Result</span>
-      <strong>the framework's center of gravity moves upward</strong>
+      <div class="architecture-layer framework-layer is-full">
+        <div class="layer-heading">
+          <span>Framework</span>
+          <strong>Private substrate + application policy</strong>
+        </div>
+        <div class="capabilities">
+          {beforeMechanisms.map((item) => <span>{item}</span>)}
+        </div>
+      </div>
+    </section>
+
+    <div class="shift" aria-hidden="true">
+      <span>standardization</span>
+      <strong class="shift-horizontal">→</strong>
+      <strong class="shift-vertical">↓</strong>
     </div>
+
+    <section class="state after-state">
+      <div class="state-heading">
+        <span>After</span>
+        <strong>Mechanism moves down; framework policy stays above it</strong>
+      </div>
+
+      <div class="architecture-stack">
+        <div class="architecture-layer framework-layer">
+          <div class="layer-heading">
+            <span>Framework</span>
+            <strong>Coordination + policy</strong>
+          </div>
+          <div class="capabilities">
+            {frameworkResponsibilities.map((item) => <span>{item}</span>)}
+          </div>
+        </div>
+
+        <div class="architecture-layer platform-layer">
+          <div class="layer-heading">
+            <span>Platform</span>
+            <strong>Durable primitives</strong>
+          </div>
+          <div class="capabilities">
+            {platformPrimitives.map((item) => <span>{item}</span>)}
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </ResearchFigureFrame>
 
 <style>
-  .absorption-cycle ol {
+  .recomposition-map {
     display: grid;
-    gap: 1px;
-    margin: 0;
-    padding: 0;
-    background: var(--border-subtle);
-    list-style: none;
+    gap: 1rem;
+    align-items: stretch;
   }
 
-  li {
-    position: relative;
-    display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr);
-    gap: 0.8rem;
-    background: var(--bg-card);
-    padding: 1rem;
+  .state {
+    min-width: 0;
   }
 
-  .number,
-  .result span {
+  .state-heading {
+    display: grid;
+    gap: 0.35rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .state-heading span,
+  .layer-heading span,
+  .shift span {
     font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    line-height: 1.45;
     text-transform: uppercase;
   }
 
-  .number {
-    padding-top: 0.08rem;
+  .state-heading span {
     color: var(--accent);
-    font-size: 0.5rem;
-    letter-spacing: 0.08em;
   }
 
-  li strong {
-    display: block;
+  .state-heading strong {
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 0.76rem;
+    font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.4;
   }
 
-  li p {
-    margin: 0.35rem 0 0 !important;
-    color: var(--text-muted);
-    font-size: 0.64rem;
-    line-height: 1.55;
+  .architecture-stack {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
   }
 
-  .arrow {
-    display: none;
+  .architecture-layer {
+    min-width: 0;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    padding: 0.9rem;
   }
 
-  .result {
+  .architecture-stack .architecture-layer {
+    border: 0;
+  }
+
+  .framework-layer {
+    box-shadow: inset 2px 0 0 var(--accent);
+  }
+
+  .framework-layer.is-full {
+    min-height: 100%;
+    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
+  }
+
+  .platform-layer {
+    background: var(--bg-secondary);
+  }
+
+  .layer-heading {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.6rem;
-    border-top: 1px solid var(--border-subtle);
-    border-left: 2px solid var(--accent);
-    background: color-mix(in srgb, var(--accent) 3%, var(--bg-card));
-    padding: 0.8rem 1rem;
+    justify-content: space-between;
+    gap: 0.35rem 0.75rem;
   }
 
-  .result span {
+  .layer-heading span {
+    color: var(--text-muted);
+  }
+
+  .framework-layer .layer-heading span {
     color: var(--accent);
-    font-size: 0.48rem;
-    letter-spacing: 0.09em;
   }
 
-  .result strong {
+  .layer-heading strong {
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 0.74rem;
+    font-size: 0.8125rem;
     font-weight: 600;
+    line-height: 1.4;
   }
 
-  @media (min-width: 760px) {
-    .absorption-cycle ol {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+  .capabilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.8rem;
+  }
+
+  .capabilities span {
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    padding: 0.35rem 0.5rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+  }
+
+  .shift {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    color: var(--text-muted);
+  }
+
+  .shift span {
+    color: var(--text-muted);
+  }
+
+  .shift strong {
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .shift-horizontal {
+    display: none;
+  }
+
+  @media (min-width: 780px) {
+    .recomposition-map {
+      grid-template-columns: minmax(0, 0.9fr) 5rem minmax(0, 1.2fr);
+      gap: 0.75rem;
     }
 
-    li {
-      min-height: 9.5rem;
-      grid-template-columns: 1fr;
-      align-content: start;
-      padding: 1rem 1.1rem;
-    }
-
-    .arrow {
-      position: absolute;
-      right: -0.7rem;
-      top: 50%;
-      z-index: 2;
+    .before-state,
+    .after-state {
       display: flex;
-      width: 1.4rem;
-      height: 1.4rem;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--border-subtle);
-      border-radius: 999px;
-      background: var(--bg-card);
-      color: var(--accent);
-      font-family: var(--font-mono-ui);
-      font-size: 0.7rem;
-      transform: translateY(-50%);
+      min-width: 0;
+      flex-direction: column;
+    }
+
+    .before-state .architecture-layer,
+    .after-state .architecture-stack {
+      flex: 1;
+    }
+
+    .shift {
+      flex-direction: column;
+    }
+
+    .shift span {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+
+    .shift-horizontal {
+      display: block;
+    }
+
+    .shift-vertical {
+      display: none;
     }
   }
 </style>
