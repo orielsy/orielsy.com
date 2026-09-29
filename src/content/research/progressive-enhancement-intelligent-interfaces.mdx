@@ -11,98 +11,92 @@ status: "published"
 published: true
 draft: false
 featured: true
-readingTime: "4 min read"
+readingTime: "5 min read"
 home:
   blurb: "A tiered approach to intelligent interfaces: capability scales with environment while interaction stays stable."
   visual: "progressive-enhancement"
 ---
 
-import ChatVsEmbeddedCapabilityVisual from '../../components/research/ChatVsEmbeddedCapabilityVisual.astro';
-import ProgressiveEnhancementTiersVisual from '../../components/research/ProgressiveEnhancementTiersVisual.astro';
+import ProgressiveEnhancementImplementationChoicesVisual from '../../components/research/ProgressiveEnhancementImplementationChoicesVisual.astro';
+import ProgressiveEnhancementInteractionPathsVisual from '../../components/research/ProgressiveEnhancementInteractionPathsVisual.astro';
+import ProgressiveEnhancementInvariantFloorVisual from '../../components/research/ProgressiveEnhancementInvariantFloorVisual.astro';
+import ProgressiveEnhancementNarrowingVisual from '../../components/research/ProgressiveEnhancementNarrowingVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 
 AI does not need to become the interface to make an interface intelligent.
 
-Treating AI as a UI capability—not just a chatbot—creates a more useful possibility: the intelligence behind an interaction can vary without changing the interaction itself.
+A useful way to frame the architecture is to keep the interaction and the application's authority stable while allowing the capability behind a narrow task to vary. That is where progressive enhancement becomes useful: intelligence can improve an experience without becoming the condition for having a useful experience at all.
 
-That suggests an old frontend principle has a new application: **progressive enhancement for intelligent interfaces**.
+When conversation is the task, chat is a natural interface. But many application tasks already have structure. A table represents rows and filters. A form represents valid fields and constraints. An editor represents a selection and a set of available transformations. In those cases, the application can carry more of the interaction itself.
 
-## AI as a UI Capability, Not Just a Chatbot
+## Let the Interface Carry the Result
 
-A chat surface is useful when conversation is the task. It is less natural when the user already knows the state they want the application to reach.
+Consider a user who already knows the state they want a table to reach.
 
-Compare two paths:
+A conversation-mediated path can still work: describe the desired state, let a model interpret the request, receive a result, then bring that result back into the application. An embedded capability can instead operate inside the table and update the existing interface.
 
 <ResearchBreakout mode="wide">
-  <ChatVsEmbeddedCapabilityVisual />
+  <ProgressiveEnhancementInteractionPathsVisual />
 </ResearchBreakout>
 
-The second path does not make the intelligence less capable. It gives the capability a narrower job and lets the existing interface carry the result.
+The point is not that one path is inherently more capable, faster, or more accurate. The architectural difference is the handoff. In one path, the user carries the result back into application state. In the other, the interface does.
 
-That matters in tables, forms, editors, dashboards, command palettes, and other interfaces whose structure already expresses part of the user's intent.
+That makes embedded intelligence useful for tables, forms, editors, dashboards, command palettes, and other interfaces whose structure already expresses part of the user's intent.
 
 ## Narrow the Job Before Increasing the Intelligence
 
-A model does not need to understand an entire application when the application can supply the constraints.
+A model does not need to understand an entire application when the application can supply constraints it already owns.
 
-State, validation, schemas, available actions, and product rules can reduce a broad problem to a narrow one:
-
-- classify this intent
-- rank these items
-- extract these fields
-- transform this selection
-- transcribe this audio
-- route this command
-
-Better interface architecture can therefore reduce how much intelligence the model itself must provide.
-
-The question becomes less "Which model can run the whole experience?" and more "What is the smallest capability this interaction actually needs?"
-
-## Progressive Enhancement for Intelligent Interfaces
-
-Traditional progressive enhancement keeps the baseline useful and adds capability when the environment supports it.
-
-Progressive enhancement does not require every tier to produce an identical experience. Here, the **baseline** is useful application behavior; the **environment** includes hardware, connectivity, privacy constraints, and available inference; and **intelligence is the enhancement**. Capability may vary substantially across those tiers. **Application truth and action boundaries should not.**
-
-A capability might begin with deterministic behavior, gain lightweight or local inference when available, and use additional or remote inference when the task justifies the extra capability or cost.
-
-Semantic search, for example, might begin with indexed filtering and synonyms, add local embeddings, or use a remote reranker. The user still experiences **search**.
-
-**Capability can degrade gracefully. Authority should remain bounded by evidence.**
+State, validation, schemas, available actions, and product rules can turn a broad request into a smaller task: classify this intent, rank these items, extract these fields, transform this selection, transcribe this audio, or route this command.
 
 <ResearchBreakout mode="wide">
-  <ProgressiveEnhancementTiersVisual />
+  <ProgressiveEnhancementNarrowingVisual />
 </ResearchBreakout>
 
-The goal is not to force every feature through every tier. It is to avoid making the interface dependent on the most expensive or powerful tier when the task does not require it.
+That changes the architectural question. Instead of asking which model can run the whole experience, ask what the smallest capability is that this interaction actually needs.
 
-## The Access Consequence
+This is also where interface architecture and AI architecture meet. The more of the problem the application can express deterministically, the less ambiguity the inference layer has to resolve.
 
-That flexibility matters because users do not share the same constraints.
+## Treat Intelligence as the Enhancement Layer
 
-Some do not have paid AI subscriptions. Some do not want application data sent to a model provider. Some lack reliable connectivity or hardware capable of running large local models.
+Traditional progressive enhancement starts with useful baseline behavior and adds capability when the environment supports it.
 
-A narrow capability creates more implementation options: deterministic logic where it is sufficient, smaller local models where privacy or offline use matters, and stronger remote inference where its additional capability earns the cost.
+For an intelligent interface, the same idea can be applied to inference. The baseline is useful application behavior. The environment may include available hardware, connectivity, privacy constraints, and available inference. Intelligence becomes an enhancement rather than the source of application truth.
 
-The constraint becomes architectural discipline. Designing for weaker models and weaker machines forces the system to make application truth, capability boundaries, and fallback behavior explicit.
+A search capability illustrates the pattern. It might begin with indexed filtering and synonyms, add local embeddings when they are available, or use a remote reranker when the task justifies the additional capability or cost. The implementation can change while the user still experiences **search**.
 
-**The experience can improve with better models, hardware, or connectivity without requiring them as the baseline.**
+<ResearchBreakout mode="wide">
+  <ProgressiveEnhancementInvariantFloorVisual />
+</ResearchBreakout>
 
-## Where This Shows Up
+What should remain stable is more important than what changes. **Application truth** means the state, validation, and rules the application can establish directly. **Action boundaries** define what the interface is permitted to do with that truth. A more capable inference tier may improve interpretation or ranking; it should not silently redefine either one.
 
-The pattern is useful anywhere intelligence can act inside an existing interaction:
+This essay does not prescribe how a product chooses among deterministic, local, and remote implementations at runtime. The point is architectural: a capability does not need to depend on the strongest tier in order to exist.
 
-1. **Semantic filtering and ranking** — interpret fuzzy intent while preserving the table, list, or graph as the primary interface.
-2. **Structured extraction** — turn documents or text into fields the application already understands.
-3. **Contextual transformation** — transform selected code, rows, text, or configuration in place.
-4. **Intent detection and command routing** — map fuzzy language to explicit application actions.
+## What the Baseline Protects
 
-Two projects on this site approach the same principle from different directions.
+Keeping the baseline useful preserves implementation options.
 
-[speechBubbles](/projects/local-ai-real-time-captioning) uses local Whisper inference for one narrow job—speech recognition—without requiring a cloud transcription service.
+A product may need to operate with unreliable connectivity, limited hardware, restrictions on sending data to a remote provider, or simply a task for which deterministic logic is sufficient. A narrow capability makes it possible to choose among those implementations without redesigning the surrounding interaction each time.
 
-[Documentation-Driven Adaptive UX](/research/documentation-driven-adaptive-ux) goes further in the other direction: Phase 1 uses no inference at all. Deterministic application state and authored knowledge handle the baseline, leaving future AI only the ambiguity the application cannot resolve cleanly itself.
+That does not guarantee lower cost, stronger privacy, better access, or equivalent model capability. Those outcomes depend on the implementation. What the architecture provides is separation: the usefulness of the interface is not automatically coupled to the availability of the most powerful inference path.
 
-Those are different implementations of the same architectural preference: **do not ask the model to own work the interface can already structure.**
+The same separation makes fallback behavior easier to reason about. If a local or remote enhancement is unavailable, the product can fall back to a weaker implementation without surrendering application truth or expanding the actions the interface is allowed to take.
 
-AI does not need to become the interface to improve the interface. And the interface should not need the strongest possible AI to remain useful.
+## Two Implementations of the Same Preference
+
+Two projects on this site approach the same preference from different directions.
+
+**speechBubbles** uses local Whisper inference for one narrow job: speech recognition. The interface does not need a cloud transcription service for that capability.
+
+**Documentation-Driven Adaptive UX** starts from the opposite direction. Phase 1 uses no inference at all. Deterministic application state, validation, authored knowledge, and explicit response policy handle the baseline. Future inference is reserved for ambiguity the application cannot resolve cleanly itself.
+
+<ResearchBreakout mode="wide">
+  <ProgressiveEnhancementImplementationChoicesVisual />
+</ResearchBreakout>
+
+These are not points on a measured capability scale. They are two examples of the same architectural choice: **do not ask a model to own work the interface can already structure.**
+
+Progressive enhancement for intelligent interfaces is therefore less about arranging models from weakest to strongest than about deciding what must remain true when the model changes—or when there is no model at all.
+
+AI can improve the interface without becoming the interface, and the interface can remain useful without depending on the strongest AI available.
