@@ -1,0 +1,161 @@
+---
+import { ArrowDown, CircleDot } from '@lucide/astro';
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const contexts = ['Conversation A', 'Conversation B', 'Conversation C'];
+---
+
+<ResearchFigureFrame
+  figureNumber="03"
+  eyebrow="v0.1 behavior · continuation lineage"
+  title="Activation follows the work"
+  caption="The source specifies continuation and enabled markers carried by a handoff. This multi-hop view is an editorial illustration of that lineage model; it does not claim durable host state, automatic chat creation, or successful propagation if the marker is removed."
+>
+  <div class="lineage">
+    <div class="desktop-rail" aria-hidden="true"></div>
+    {contexts.map((name, index) => (
+      <section>
+        <div class="context-heading">
+          <span>{name}</span>
+          <CircleDot size={16} strokeWidth={1.7} aria-hidden="true" />
+        </div>
+        <p class="marker">
+          continuation: {index === 0 ? '—' : 'true'}<br />
+          enabled: true
+        </p>
+        {index < 2 && (
+          <ArrowDown class="handoff-arrow" size={19} strokeWidth={1.7} aria-hidden="true" />
+        )}
+      </section>
+    ))}
+  </div>
+
+  <div class="lineage-notes">
+    <p><strong>Monitoring stays active</strong> across the continuation lineage until explicitly disabled.</p>
+    <span class="note-divider" aria-hidden="true"></span>
+    <p>A manual handoff can still be a continuation with <code>enabled: false</code>.</p>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-figure-frame) :global(p) {
+    margin: 0;
+  }
+
+  .lineage {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .desktop-rail {
+    display: none;
+  }
+
+  .lineage section {
+    position: relative;
+    background: var(--bg-secondary);
+    padding: 1rem;
+  }
+
+  .context-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .context-heading :global(svg) {
+    color: var(--accent);
+  }
+
+  .marker {
+    margin-top: 0.75rem !important;
+    color: var(--text-secondary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    line-height: 1.75;
+  }
+
+  .handoff-arrow {
+    position: absolute;
+    z-index: 2;
+    bottom: -0.95rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-card);
+    color: var(--accent);
+  }
+
+  .lineage-notes {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .lineage-notes p {
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  .lineage-notes strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .lineage-notes code {
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.6875rem;
+  }
+
+  .note-divider {
+    display: none;
+  }
+
+  @media (min-width: 720px) {
+    .lineage {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .desktop-rail {
+      position: absolute;
+      top: 2rem;
+      right: 12%;
+      left: 12%;
+      display: block;
+      border-top: 1px dashed var(--border-subtle);
+    }
+
+    .lineage section {
+      z-index: 1;
+    }
+
+    .handoff-arrow {
+      top: 1.5rem;
+      right: -1rem;
+      bottom: auto;
+      left: auto;
+      transform: rotate(-90deg);
+    }
+
+    .lineage-notes {
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .note-divider {
+      display: block;
+      height: 2.5rem;
+      border-left: 1px solid var(--border-subtle);
+    }
+  }
+</style>
