@@ -15,6 +15,8 @@ readingTime: "8 min read"
 ---
 
 import ProjectMemoryAuthorityMapVisual from '../../components/research/ProjectMemoryAuthorityMapVisual.astro';
+import ProjectMemoryChangeWorkflowVisual from '../../components/research/ProjectMemoryChangeWorkflowVisual.astro';
+import ProjectMemoryContextContinuityVisual from '../../components/research/ProjectMemoryContextContinuityVisual.astro';
 import ProjectMemoryDriftVisual from '../../components/research/ProjectMemoryDriftVisual.astro';
 import ProjectMemoryIncidentEvidenceVisual from '../../components/research/ProjectMemoryIncidentEvidenceVisual.astro';
 import ProjectMemoryRoutingVisual from '../../components/research/ProjectMemoryRoutingVisual.astro';
@@ -52,6 +54,10 @@ In this repository, the durable substrate is version-controlled project memory: 
 
 This does not make an agent correct. It gives the next agent something more stable than recollection to inspect, challenge, and follow.
 
+<ResearchBreakout mode="wide">
+  <ProjectMemoryContextContinuityVisual />
+</ResearchBreakout>
+
 **A project should not depend on one conversation remaining available forever.**
 
 ## What Became Durable
@@ -82,7 +88,7 @@ These files are not interchangeable documentation. Each answers a different ques
 
 **ADR / decision record** - Why was a consequential product or architectural choice made?
 
-**Implementation and tests** - What behavior actually exists, and what behavior has been verified?
+**Implementation and tests** - What behavior exists, and what has been checked?
 
 <ResearchBreakout mode="wide">
   <ProjectMemoryAuthorityMapVisual />
@@ -141,9 +147,23 @@ The specification then defines what unpublished state means across public listin
 
 Those are different forms of evidence.
 
-The specification establishes intended behavior. The schema establishes one implementation default. The route and feed implementations determine whether the rest of the intended behavior actually exists.
+The specification establishes intended behavior. The schema establishes one implementation default. The route and feed implementations expose additional implementation surfaces. The figure samples that chain; it does not certify every publication-gating acceptance criterion.
 
 That distinction prevents repository memory from becoming self-validating documentation. A requirement is not proof that the implementation satisfies it.
+
+## When the Requirement Changes
+
+Durable memory only helps if the records that own a requirement change when the requirement changes.
+
+The historical account for publication gating is that unpublished collection cards moved from non-clickable summaries to inline status interactions. The current branch records the resulting behavior across the feature specification, the publication-gating decision, the URL/SEO policy, and maintainer guidance in the README.
+
+<ResearchBreakout mode="wide">
+  <ProjectMemoryChangeWorkflowVisual />
+</ResearchBreakout>
+
+The current branch shows that these artifacts now describe the same interaction model. It does not, by itself, establish that every record changed in one atomic step.
+
+The maintenance rule is narrower: update the durable artifacts that own intent and rationale with the implementation, then verify what the implementation actually does. Documentation is not a passing test, and code alone does not preserve why a choice was made.
 
 ## Durable Memory Can Drift Too
 
