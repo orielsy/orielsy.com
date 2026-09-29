@@ -16,100 +16,78 @@ readingTime: "5 min read"
 relatedSlugs: ["context-engineering-software-development", "specification-driven-ai-development"]
 ---
 
-import ContextDistillationVisual from '../../components/research/ContextDistillationVisual.astro';
-import ContextHealthStatesVisual from '../../components/research/ContextHealthStatesVisual.astro';
-import ContextRecompilationVisual from '../../components/research/ContextRecompilationVisual.astro';
-import ContextZenExperimentVisual from '../../components/research/ContextZenExperimentVisual.astro';
-import ContextZenLifecycleVisual from '../../components/research/ContextZenLifecycleVisual.astro';
+import ContextZenContinuationLineageVisual from '../../components/research/ContextZenContinuationLineageVisual.astro';
+import ContextZenExperimentBaselineVisual from '../../components/research/ContextZenExperimentBaselineVisual.astro';
+import ContextZenHealthJudgmentVisual from '../../components/research/ContextZenHealthJudgmentVisual.astro';
+import ContextZenStateExtractionVisual from '../../components/research/ContextZenStateExtractionVisual.astro';
+import ContextZenTargetProfilesVisual from '../../components/research/ContextZenTargetProfilesVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 
-## The Problem Is Not Capacity
+A long-running conversation can still fit inside the model's context window while becoming a worse place to continue the work.
 
-A long-running conversation can contain useful history while also accumulating abandoned directions, superseded decisions, repeated explanations, contradictory instructions, and residue that no longer helps the current task.
+Useful history accumulates beside abandoned directions, replaced decisions, repeated explanations, contradictory instructions, and details that no longer affect the next action. Capacity is not the same thing as context quality.
 
-The context may still *fit*. The harder question is whether it is still the best working environment.
+Context Zen starts from a narrower question:
 
-Context Zen starts from a different question:
+> **What state does the next capable agent actually need in order to continue correctly?**
 
-> **How much context should an agent keep?**
+The skill is an early context-engineering experiment. Its handoff behavior is defined as a public skill specification; its judgment about *when* to hand off is still provisional.
 
-A transcript is chronological. Working state is authoritative.
+## Reconstruct State, Not Chronology
 
-<ResearchBreakout mode="wide">
-  <ContextDistillationVisual />
-</ResearchBreakout>
+A transcript records what happened in order. Working state records what is true now.
 
-I use *context distillation* to mean reconstructing the smallest reliable state required to continue the work while intentionally dropping history that no longer has forward value.
-
-A good handoff preserves the current objective, decisions still in force, relevant constraints, rejected approaches likely to be rediscovered, active artifacts, unresolved questions, and the immediate next step. It compresses chronology, abandoned exploration, obsolete assumptions, repeated explanations, and agent self-commentary.
-
-The goal is the smallest handoff that still preserves **correct continuation**.
-
-## Observe, Distill, Handoff
-
-Context Zen is structured around three operations:
+Context Zen uses **context distillation** to mean reconstructing the smallest reliable state required to continue the work while intentionally dropping history that no longer has forward value.
 
 <ResearchBreakout mode="wide">
-  <ContextZenLifecycleVisual />
+  <ContextZenStateExtractionVisual />
 </ResearchBreakout>
 
-### Observe
+A useful handoff preserves the current objective, decisions still in force, relevant constraints, rejected approaches likely to be rediscovered, active artifacts, unresolved questions, and the immediate next step.
 
-Context Zen is opt-in. Once enabled, it performs lightweight context-health checks while it is already participating in normal turns.
+It can compress chronology, abandoned exploration, obsolete assumptions, repeated explanations, and agent self-commentary.
 
-Context Zen can evaluate context health automatically during ordinary turns; that does not imply background execution. If the host has no background execution model, Context Zen does not pretend to be a daemon.
+The goal is not the shortest summary. It is the smallest handoff that still preserves **correct continuation**.
 
-### Distill
+Context Zen's lifecycle is deliberately simple: **Observe → Distill → Handoff**. Observation asks whether accumulated history is still helping. Distillation reconstructs authoritative state. Handoff packages that state for a fresh context.
 
-When the conversation appears to be crossing from useful history into contextual drag, the skill reconstructs the authoritative working state.
+## Judge When History Becomes Drag
 
-The important operation is not "summarize everything."
+Context Zen is opt-in. Once enabled, it evaluates context health during ordinary turns; that does not imply background execution. If the host has no background execution model, the skill does not pretend to be a daemon.
 
-It is "decide what still matters."
+The difficult part is deciding when useful history has become contextual drag.
 
-### Handoff
-
-The distilled state is packaged so another context can continue the work. The authoritative state stays the same, but a different receiving environment may need that state organized and emphasized differently.
-
-If the host exposes clipboard access, Context Zen can copy the complete handoff automatically. Otherwise it returns one clean, self-contained artifact for the user to copy.
-
-It does not assume it can create or navigate to a new conversation on the user's behalf.
-
-## What Does "Context Health" Mean?
-
-I do **not** want to fake precision around context health. Without a validated scoring model, v0.1 uses three qualitative states:
+I do not want to fake precision here. Without a validated scoring model, v0.1 uses qualitative context-health states rather than a numeric threshold.
 
 <ResearchBreakout mode="wide">
-  <ContextHealthStatesVisual />
+  <ContextZenHealthJudgmentVisual />
 </ResearchBreakout>
 
-The skill can use hard signals such as context load, turn count, active artifact count, or tool-result volume, but length alone should not force a handoff.
+Hard signals can inform the judgment: context load, turn count, active artifact count, or tool-result volume. None of them should force a handoff by itself.
 
-The more interesting signals are semantic:
+The more consequential signals are semantic:
 
-- How much retained context describes decisions that have already been replaced?
-- Are old and new instructions colliding?
-- Is the agent rediscovering information the conversation already established?
-- Are important constraints buried beneath unrelated history?
-- Is the agent acting on obsolete state?
-- Is the user increasingly correcting context drift?
-- How much of the retained conversation still materially affects the next action?
+- retained context describes decisions that have already been replaced
+- old and new instructions collide
+- the agent rediscovers information the conversation already established
+- important constraints become buried beneath unrelated history
+- the agent acts on obsolete state
+- the user increasingly corrects context drift
+- a shrinking share of the retained conversation materially affects the next action
 
-The final test is deliberately simple:
+The current decision heuristic is a counterfactual:
 
-> **Would a fresh capable agent with a faithful compact handoff probably have an easier time continuing correctly than the current agent has reasoning over the entire accumulated conversation?**
+> **Would a fresh capable agent with a faithful compact handoff probably have an easier time continuing correctly than the current agent has reasoning over the accumulated conversation?**
 
-If the answer becomes clearly yes, Context Zen should hand off.
+That is a working heuristic, not a validated handoff threshold.
 
 ## Activation Follows the Work
 
-If activation belonged only to one conversation, Context Zen would disable itself every time it successfully recommended leaving that conversation.
+If activation belonged only to one conversation, Context Zen would disable itself every time a handoff successfully moved the work elsewhere.
 
-Instead, activation belongs to a **continuation lineage**: the chain of work that survives across handoffs.
+Instead, v0.1 attaches activation to a **continuation lineage**: the chain of work that survives across handoffs.
 
-When Context Zen creates a handoff, it carries a small marker:
-
-<span className="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)]">Continuation marker</span>
+The handoff carries a small marker:
 
 ```yaml
 ---
@@ -122,19 +100,23 @@ context_zen:
 
 `continuation` identifies the artifact as part of a Context Zen continuation. `enabled` says whether monitoring should remain active in the receiving context.
 
-That distinction also supports manual handoffs. A user can request:
+<ResearchBreakout mode="wide">
+  <ContextZenContinuationLineageVisual />
+</ResearchBreakout>
+
+This also keeps manual checkpoints separate from monitoring. A user can request:
 
 ```text
 context zen handoff
 ```
 
-even when monitoring is off. In that case the handoff is still a continuation, but it carries `enabled: false`. Creating a checkpoint does not silently opt the user into monitoring.
+even when monitoring is off. The artifact can still be a continuation while carrying `enabled: false`. Creating a checkpoint does not silently opt the user into monitoring.
 
-The user can therefore opt in once for a chain of work and remain opted in until explicitly turning Context Zen off.
+A host does not need durable cross-chat state for this model to work; the handoff itself can carry the continuation state forward. If the host exposes clipboard access, Context Zen can copy the complete handoff automatically. Otherwise it returns one self-contained artifact for the user to copy.
 
-A host does not need durable cross-chat state for this model to work; the handoff itself can carry the state forward.
+It does not assume it can create or navigate to a new conversation on the user's behalf.
 
-## Target-Aware Handoffs
+## Compile the Same State for a Receiver
 
 For v0.1, the user chooses the target.
 
@@ -146,64 +128,58 @@ context zen handoff for codex
 context zen handoff for research
 ```
 
-If no target is supplied, Context Zen produces the canonical general-purpose handoff. If a target profile is supplied, it changes the organization and emphasis.
+If no target is supplied, Context Zen produces the canonical general-purpose handoff. A target profile changes organization and emphasis rather than the underlying state.
+
+<ResearchBreakout mode="wide">
+  <ContextZenTargetProfilesVisual />
+</ResearchBreakout>
 
 A coding profile can foreground repository state, branch, current files, architecture decisions, tests, failures, and the next implementation step.
 
 A research profile can foreground the research question, established findings, sources, assumptions, unresolved questions, and the next investigation.
 
-Targeting may change organization, emphasis, and compression, but it must not change or omit state that could materially alter continuation.
+The specification says targeting should not change or omit state that could materially alter continuation. That is an architectural requirement, not a demonstrated guarantee that every generated handoff will satisfy it perfectly.
 
-Context Zen does not need to discover installed agents or infer destinations it cannot see.
+I think of this as closer to **context recompilation** than ordinary summarization: preserve the authoritative state, then represent it for the environment that will consume it next. That is useful framing, but it is not yet an experimentally established category.
 
-The working model is:
-
-<ResearchBreakout mode="wide">
-  <ContextRecompilationVisual />
-</ResearchBreakout>
-
-<p className="font-display border-l border-[var(--accent)] pl-4 text-lg font-medium leading-8 tracking-[-0.02em] text-[var(--text-primary)]">
-  This is closer to <strong>context recompilation</strong> than ordinary summarization: preserve the truth, then represent it for the environment that will consume it next.
-</p>
-
-## What v0.1 Tests
+## Test Distillation Against Compression
 
 The repository defines opt-in activation, continuation-lineage propagation, qualitative context-health assessment, manual handoff, distillation rules, a canonical handoff format, clipboard behavior where supported, and coding and research target profiles.
 
-What it does **not** provide is a validated model for when long context becomes worse than distilled context.
+What it does **not** provide is evidence that a Context Zen handoff improves continuation.
 
-A useful experiment should compare continuation from three conditions:
+A useful experiment needs three conditions:
 
 <ResearchBreakout mode="wide">
-  <ContextZenExperimentVisual />
+  <ContextZenExperimentBaselineVisual />
 </ResearchBreakout>
 
-The third arm matters. Comparing only a full transcript with a distilled handoff would tell us that compression might help, but not whether reconstructing authoritative working state is better than ordinary summarization.
+The ordinary-summary arm matters. Comparing only a full transcript with a distilled handoff would mix two possible effects: making the context shorter and reconstructing authoritative working state. A conventional summary gives the experiment a compression baseline.
 
-Useful measures could include missed active constraints, accidental revival of rejected decisions, repeated questions, user corrections, task completion quality, token use, latency, and target-specific success.
+Candidate measures could include missed active constraints, accidental revival of rejected decisions, repeated questions, user corrections, task completion quality, token use, latency, and target-specific success.
 
-Different kinds of work may benefit from different amounts of raw history, and rejected decisions may prove unusually important to preserve.
+Different work may benefit from different amounts of raw history. Rejected decisions may prove unusually important to preserve. The experiment has not established the answer.
 
-The more interesting possibility is that the handoff threshold depends less on token count than on **state entropy**: the share of retained context occupied by superseded, conflicting, or no-longer-actionable state.
+The idea of **state entropy** may eventually help connect qualitative context health to something more testable: what share of retained context is superseded, conflicting, abandoned, or no longer actionable?
 
-I am using *state entropy* here as a working architectural metaphor, not a validated quantitative measure. Low working-state entropy means most retained context still agrees with and contributes to the active task. High working-state entropy means a growing share represents superseded decisions, conflicting constraints, abandoned paths, or state whose relevance is uncertain.
+I am using *state entropy* as a working architectural metaphor, not a validated quantitative measure. It belongs in the experiment as a hypothesis to investigate, not as a result.
 
-That distinction may eventually help bridge the qualitative health model and a more testable handoff heuristic, but the experiment has not established such a metric yet.
+## The Complement to Retrieval
 
-## The Broader Context-Engineering Question
-
-A lot of current context engineering is naturally focused on retrieval:
+A lot of context engineering is naturally focused on retrieval:
 
 > How do we get more of the right information into the model?
 
-Context Zen explores the complementary question:
+Context Zen explores the complementary operation:
 
-> **When should we deliberately remove information from the active context?**
+> **When should we deliberately remove information from active context?**
 
 Retrieval brings relevant state in. Distillation decides what deserves to stay. Handoff creates a clean boundary at which to reset the rest.
 
+The broader hypothesis is not that less context is always better. It is that chronological completeness and continuation quality are different objectives.
+
 > **A healthy agent context is not the one that remembers the most. It is the one that preserves the right state with the least ambiguity.**
 
-The experimental skill, handoff schema, health heuristic, lifecycle model, and examples are available in the companion repository:
+The experimental skill, handoff schema, health heuristic, target profiles, and examples are available in the companion repository:
 
 [**github.com/orielsy/context-zen**](https://github.com/orielsy/context-zen)
