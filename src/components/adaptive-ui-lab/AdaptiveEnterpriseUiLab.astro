@@ -23,8 +23,12 @@ const { embedded = false } = Astro.props;
 
   <header class="border-b border-[var(--border-subtle)] pb-8">
     <div class="flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
-      <span>{embedded ? 'Working Phase 1 instrument' : 'Interactive reference implementation'}</span>
-      <span aria-hidden="true" class="h-px w-8 bg-[var(--border-strong)]"></span>
+      {!embedded && (
+        <>
+          <span>Interactive reference implementation</span>
+          <span aria-hidden="true" class="h-px w-8 bg-[var(--border-strong)]"></span>
+        </>
+      )}
       <span>Phase 1 · deterministic</span>
     </div>
     {!embedded && (
@@ -49,7 +53,7 @@ const { embedded = false } = Astro.props;
             These controls set the test conditions. They are not part of either Data Connection form.
           </p>
         </div>
-        <span class="w-fit rounded border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--text-muted)]">
+        <span class="w-fit rounded border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">
           Controls demo state
         </span>
       </div>
@@ -105,7 +109,7 @@ const { embedded = false } = Astro.props;
           Both forms receive the same application truth. The adaptive form adds only the intervention authorized by the resolver's evidence and response policy.
         </p>
       </div>
-      <span class="w-fit rounded border border-[var(--accent-border)] bg-[var(--bg-primary)] px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--accent)]">
+      <span class="w-fit rounded border border-[var(--accent-border)] bg-[var(--bg-primary)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--accent)]">
         Actual user task
       </span>
     </div>
@@ -151,7 +155,7 @@ const { embedded = false } = Astro.props;
               <div class="min-w-0 flex-1">
                 <div class="flex flex-wrap items-center gap-2">
                   <p data-adaptive-headline class="m-0 text-sm font-medium text-[var(--text-primary)]">Choose among compatible connections</p>
-                  <span data-adaptive-authority class="rounded border border-[var(--accent-border)] px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)]">EXPLAIN</span>
+                  <span data-adaptive-authority class="rounded border border-[var(--accent-border)] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--accent)]">EXPLAIN</span>
                 </div>
                 <p data-adaptive-guidance class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Choose the connection for the system this workflow needs to access.</p>
                 <p data-adaptive-source class="mt-3 border-t border-[var(--border-subtle)] pt-3 font-mono text-[10px] leading-5 text-[var(--text-muted)]">DOCUMENTATION · Choosing a Data Connection</p>
