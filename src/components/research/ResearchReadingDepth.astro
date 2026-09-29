@@ -80,16 +80,16 @@ const {
     return { marker, elements };
   };
 
-  const getQuickOrientationCallouts = (article: HTMLElement) =>
+  const getDepthSummaryCallouts = (article: HTMLElement) =>
     Array.from(article.querySelectorAll<HTMLElement>('aside')).filter((aside) => {
       const label = aside.firstElementChild?.textContent?.trim().toUpperCase();
-      return label === 'QUICK ORIENTATION' || label === 'TL;DR · QUICK ORIENTATION';
+      return label === 'QUICK ORIENTATION' || label?.startsWith('TL;DR') === true;
     });
 
-  const positionQuickOrientationAfterSwitcher = (article: HTMLElement, switcher: HTMLElement) => {
+  const positionDepthSummaryAfterSwitcher = (article: HTMLElement, switcher: HTMLElement) => {
     let anchor: Element = switcher;
 
-    getQuickOrientationCallouts(article).forEach((callout) => {
+    getDepthSummaryCallouts(article).forEach((callout) => {
       if (callout.dataset.readingDepthPositioned === 'true') {
         anchor = callout;
         return;
@@ -150,7 +150,7 @@ const {
       element.hidden = depth !== 'full';
     });
 
-    getQuickOrientationCallouts(article).forEach((callout) => {
+    getDepthSummaryCallouts(article).forEach((callout) => {
       callout.hidden = depth === 'overview';
     });
 
@@ -183,14 +183,7 @@ const {
     if (!switcher || switcher.dataset.readingDepthBound === 'true') return;
     switcher.dataset.readingDepthBound = 'true';
 
-    if (article.dataset.researchEntry === 'product-knowledge-as-architecture') {
-      getQuickOrientationCallouts(article).forEach((callout) => {
-        const label = callout.firstElementChild;
-        if (label) label.textContent = 'TL;DR · QUICK ORIENTATION';
-      });
-    }
-
-    positionQuickOrientationAfterSwitcher(article, switcher);
+    positionDepthSummaryAfterSwitcher(article, switcher);
 
     const { marker, elements: fullResearch } = getFullResearchElements(article);
     let initialDepth: 'overview' | 'full' = new URL(window.location.href).searchParams.get('depth') === 'full'
