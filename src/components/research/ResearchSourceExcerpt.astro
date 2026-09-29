@@ -2,15 +2,23 @@
 interface Props {
   file: string;
   label?: string;
+  href?: string;
 }
 
-const { file, label = 'Source excerpt' } = Astro.props;
+const { file, label = 'Source excerpt', href } = Astro.props;
 ---
 
 <figure class="research-source-excerpt not-prose">
   <figcaption>
-    <code>{file}</code>
-    <span>{label}</span>
+    {href ? (
+      <a class="source-link" href={href} aria-label={`Open ${file} source on GitHub`}>
+        <code>{file}</code>
+        <span aria-hidden="true">↗</span>
+      </a>
+    ) : (
+      <code>{file}</code>
+    )}
+    <span class="source-label">{label}</span>
   </figcaption>
   <div class="source-code">
     <slot />
@@ -34,7 +42,7 @@ const { file, label = 'Source excerpt' } = Astro.props;
     background: var(--bg-card);
     padding: 0.72rem 0.9rem;
     font-family: var(--font-mono-ui);
-    font-size: 0.52rem;
+    font-size: 0.625rem;
     letter-spacing: 0.1em;
     line-height: 1.4;
     text-transform: uppercase;
@@ -51,7 +59,25 @@ const { file, label = 'Source excerpt' } = Astro.props;
     text-transform: none;
   }
 
-  figcaption span {
+  .source-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .source-link:hover,
+  .source-link:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .source-link span {
+    color: currentColor;
+  }
+
+  .source-label {
     flex: 0 0 auto;
     color: var(--text-muted);
   }
