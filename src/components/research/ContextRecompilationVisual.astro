@@ -2,49 +2,34 @@
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 const stages = [
-  {
-    number: '01',
-    label: 'Conversation',
-    detail: 'Useful history, decisions, corrections, exploration, and residue.',
-  },
-  {
-    number: '02',
-    label: 'Authoritative state',
-    detail: 'Current objective, active constraints, decisions, artifacts, and unresolved work.',
-  },
-  {
-    number: '03',
-    label: 'Target profile',
-    detail: 'General, coding, or research emphasis selected by the user.',
-  },
-  {
-    number: '04',
-    label: 'Continuation package',
-    detail: 'The same truth reorganized for the environment that consumes it next.',
-  },
+  'Conversation',
+  'Authoritative working state',
+  'Target profile',
+  'Continuation package',
 ];
 ---
 
 <ResearchFigureFrame
-  eyebrow="Target-aware handoff"
-  title="Preserve the truth first. Recompile its representation for the next environment."
-  status="General · Coding · Research"
-  caption="One authoritative state can be reorganized for different receiving environments without changing its underlying truth."
+  title="Context recompilation"
+  caption="Preserve the truth, then represent it for the environment that will consume it next."
 >
-  <ol class="recompile-grid" aria-label="Context Zen target-aware handoff pipeline">
+  <ol class="recompile-flow" aria-label="Context Zen target-aware handoff pipeline">
     {stages.map((stage, index) => (
       <li class:list={['node', index === 1 && 'is-state', index === 3 && 'is-output']}>
-        <span class="number">{stage.number}</span>
-        <strong>{stage.label}</strong>
-        <p>{stage.detail}</p>
-        {index < stages.length - 1 && <span class="arrow" aria-hidden="true">→</span>}
+        <strong>{stage}</strong>
+        {index < stages.length - 1 && (
+          <>
+            <span class="arrow arrow-mobile" aria-hidden="true">↓</span>
+            <span class="arrow arrow-desktop" aria-hidden="true">→</span>
+          </>
+        )}
       </li>
     ))}
   </ol>
 </ResearchFigureFrame>
 
 <style>
-  .recompile-grid {
+  .recompile-flow {
     display: grid;
     margin: 0;
     padding: 0;
@@ -68,54 +53,49 @@ const stages = [
     background: color-mix(in srgb, var(--accent) 7%, var(--bg-card));
   }
 
-  .number {
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.49rem;
-    letter-spacing: 0.1em;
-  }
-
-  .node strong,
-  .node p {
+  .node strong {
     display: block;
     margin: 0;
-  }
-
-  .node strong {
-    margin-top: 1.1rem;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 0.8rem;
+    font-size: 0.8125rem;
     font-weight: 600;
-    line-height: 1.35;
-  }
-
-  .node p {
-    margin-top: 0.42rem;
-    color: var(--text-secondary);
-    font-size: 0.65rem;
-    line-height: 1.5;
+    line-height: 1.4;
   }
 
   .arrow {
     position: absolute;
-    right: -0.5rem;
-    top: 50%;
     z-index: 2;
-    display: none;
-    transform: translateY(-50%);
     background: var(--bg-card);
-    padding: 0.12rem;
+    padding: 0.1rem;
     color: var(--accent);
     font-family: var(--font-mono-ui);
+    font-size: 0.75rem;
+  }
+
+  .arrow-mobile {
+    left: 50%;
+    bottom: -0.55rem;
+    transform: translateX(-50%);
+  }
+
+  .arrow-desktop {
+    display: none;
+    right: -0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   @media (min-width: 760px) {
-    .recompile-grid {
+    .recompile-flow {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
-    .arrow {
+    .arrow-mobile {
+      display: none;
+    }
+
+    .arrow-desktop {
       display: block;
     }
   }
