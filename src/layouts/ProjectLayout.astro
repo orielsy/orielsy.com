@@ -60,7 +60,7 @@ const associatedResearchEntries = data.associatedResearch
         <div class="lg:col-span-3">
           <a
             href="/projects"
-            class="font-editorial-mono inline-flex items-center gap-2 text-[9px] uppercase tracking-[0.1em] text-[var(--text-muted)] transition-colors hover:text-[var(--text-primary)] sm:text-[10px]"
+            class="font-editorial-mono inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] transition-colors hover:text-[var(--text-primary)]"
           >
             <span aria-hidden="true">←</span>
             Projects archive
@@ -82,12 +82,12 @@ const associatedResearchEntries = data.associatedResearch
           {published ? (
             <>
               {data.projectName && (
-                <p class="font-editorial-mono mb-4 text-[9px] uppercase tracking-[0.14em] text-[var(--accent)] sm:text-[10px]">
+                <p class="font-editorial-mono mb-4 text-[10px] uppercase tracking-[0.14em] text-[var(--accent)]">
                   {data.projectName}
                 </p>
               )}
 
-              <div class="font-editorial-mono flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.09em] text-[var(--text-muted)] sm:text-[10px]">
+              <div class="font-editorial-mono flex flex-wrap items-center gap-x-4 gap-y-2 text-[10px] uppercase tracking-[0.09em] text-[var(--text-muted)]">
                 <span class="text-[var(--accent)]">{data.status}</span>
                 <span>{data.role}</span>
                 <time datetime={data.date.toISOString()}>{formattedDate}</time>
@@ -100,6 +100,15 @@ const associatedResearchEntries = data.associatedResearch
               <p class="mt-7 max-w-3xl text-base leading-8 text-[var(--text-secondary)] sm:text-lg">
                 {data.summary}
               </p>
+
+              {id === 'adaptive-enterprise-ui-lab' && (
+                <a
+                  href="#working-phase-1-lab"
+                  class="font-editorial-mono mt-6 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.08em] text-[var(--text-primary)] transition-colors hover:text-[var(--accent)]"
+                >
+                  Try the lab <span aria-hidden="true">↓</span>
+                </a>
+              )}
 
               {associatedResearchEntries.length > 0 && (
                 <div class="mt-5 lg:hidden">
@@ -114,7 +123,7 @@ const associatedResearchEntries = data.associatedResearch
 
               {(data.problem || data.solution) && (
                 <section class="project-hero-brief mt-9 border-t border-[var(--border-subtle)] pt-5" aria-label="Project brief">
-                  <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)] sm:text-[10px]">
+                  <p class="font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--accent)]">
                     Project brief
                   </p>
                   <dl class="mt-5 grid gap-5 sm:grid-cols-2">
@@ -155,7 +164,7 @@ const associatedResearchEntries = data.associatedResearch
             </>
           ) : (
             <>
-              <p class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--accent)] sm:text-[10px]">
+              <p class="font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--accent)]">
                 {statusTitle}
               </p>
               <h1 class="font-display mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-[-0.04em] text-[var(--text-primary)] sm:text-5xl">
@@ -179,7 +188,7 @@ const associatedResearchEntries = data.associatedResearch
 
             {(data.architecture || data.technologies.length > 0 || data.github || data.demo) && (
               <section class="mt-14 border-t border-[var(--border-subtle)] pt-6" aria-label="Project reference">
-                <p class="font-editorial-mono text-[9px] uppercase tracking-[0.12em] text-[var(--accent)] sm:text-[10px]">
+                <p class="font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--accent)]">
                   Project reference
                 </p>
 
@@ -205,7 +214,7 @@ const associatedResearchEntries = data.associatedResearch
                 )}
 
                 {(data.github || data.demo) && (
-                  <div class="font-editorial-mono mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-[9px] uppercase tracking-[0.08em] sm:text-[10px]">
+                  <div class="font-editorial-mono mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-[10px] uppercase tracking-[0.08em]">
                     {data.demo && (
                       <a
                         href={data.demo}
