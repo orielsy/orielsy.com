@@ -11,7 +11,7 @@ const label = count === 1 ? '1 Project' : `${count} Projects`;
 <a
   href={href}
   title={label}
-  class="inline-flex items-center gap-1.5 font-editorial-mono text-[10px] tracking-[0.08em] text-[var(--text-muted)] transition-colors hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
+  class="group/project-lineage inline-flex items-center gap-1.5 font-editorial-mono text-[10px] tracking-[0.08em] text-[var(--text-muted)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
 >
   <svg
     class="h-2.5 w-2.5 shrink-0 text-[var(--accent)]"
@@ -26,5 +26,5 @@ const label = count === 1 ? '1 Project' : `${count} Projects`;
     <rect x="2.5" y="3" width="11" height="10" rx="1.5" />
     <path d="M5.5 3V2h5v1M5 6.5h6M5 9.5h4" />
   </svg>
-  <span class="normal-case tracking-normal text-[var(--text-primary)]">{label}</span>
+  <span class="normal-case tracking-normal text-[var(--text-primary)] underline decoration-[var(--border-strong)] decoration-dotted underline-offset-4 transition-colors group-hover/project-lineage:text-[var(--accent)] group-hover/project-lineage:decoration-[var(--accent)]">{label}</span>
 </a>
