@@ -58,22 +58,28 @@ const tiers = [
     </div>
   </div>
 
-  <div class="mobile-model" aria-label="Three implementation tiers sharing the same application boundaries">
-    {tiers.map(({ name, when, implementation, Icon }) => (
-      <section>
-        <div class="mobile-tier-heading">
-          <Icon size={16} strokeWidth={1.7} aria-hidden="true" />
-          <div>
-            <strong>{name}</strong>
-            <span>{when}</span>
+  <div class="mobile-model" aria-label="Three implementation tiers feeding one shared search interaction">
+    <div class="mobile-tier-stack">
+      {tiers.map(({ name, when, implementation, Icon }) => (
+        <section>
+          <div class="mobile-tier-heading">
+            <Icon size={16} strokeWidth={1.7} aria-hidden="true" />
+            <div>
+              <strong>{name}</strong>
+              <span>{when}</span>
+            </div>
           </div>
-        </div>
-        <dl>
-          <div><dt>Implementation</dt><dd>{implementation}</dd></div>
-          <div><dt>User experiences</dt><dd>Search</dd></div>
-        </dl>
-      </section>
-    ))}
+          <div class="mobile-implementation">
+            <span>Implementation</span>
+            <p>{implementation}</p>
+          </div>
+        </section>
+      ))}
+    </div>
+    <div class="mobile-shared-experience">
+      <span>User experiences</span>
+      <strong>Search</strong>
+    </div>
   </div>
 
   <div class="invariant-floor">
@@ -88,10 +94,7 @@ const tiers = [
 </ResearchFigureFrame>
 
 <style>
-  :global(.research-figure-frame) :global(p),
-  :global(.research-figure-frame) :global(dl),
-  :global(.research-figure-frame) :global(dd),
-  :global(.research-figure-frame) :global(dt) {
+  :global(.research-figure-frame) :global(p) {
     margin: 0;
   }
 
@@ -101,14 +104,39 @@ const tiers = [
 
   .mobile-model {
     display: grid;
-    gap: 0.75rem;
+    gap: 0;
   }
 
-  .mobile-model section {
-    border: 1px solid var(--border-subtle);
-    border-radius: 0.25rem;
-    background: var(--bg-secondary);
-    padding: 0.9rem;
+  .mobile-tier-stack {
+    position: relative;
+    border-left: 1px solid var(--border-subtle);
+    padding-left: 1rem;
+  }
+
+  .mobile-tier-stack section {
+    position: relative;
+    padding: 0 0 1rem;
+  }
+
+  .mobile-tier-stack section + section {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1rem;
+  }
+
+  .mobile-tier-stack section::before {
+    content: '';
+    position: absolute;
+    top: 0.35rem;
+    left: -1.24rem;
+    width: 0.45rem;
+    height: 0.45rem;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    background: var(--bg-card);
+  }
+
+  .mobile-tier-stack section + section::before {
+    top: 1.35rem;
   }
 
   .mobile-tier-heading {
@@ -127,9 +155,10 @@ const tiers = [
     line-height: 1.4;
   }
 
-  .mobile-tier-heading span {
-    display: block;
-    margin-top: 0.15rem;
+  .mobile-tier-heading span,
+  .mobile-implementation > span,
+  .mobile-shared-experience > span,
+  .row-label {
     color: var(--text-muted);
     font-family: var(--font-mono-ui);
     font-size: 0.625rem;
@@ -138,32 +167,40 @@ const tiers = [
     text-transform: uppercase;
   }
 
-  dl {
-    display: grid;
-    gap: 0.55rem;
-    margin-top: 0.8rem !important;
+  .mobile-tier-heading span {
+    display: block;
+    margin-top: 0.15rem;
   }
 
-  dl > div {
+  .mobile-implementation {
     display: grid;
-    grid-template-columns: 7.5rem minmax(0, 1fr);
-    gap: 0.75rem;
+    grid-template-columns: 7.25rem minmax(0, 1fr);
+    gap: 0.7rem;
     align-items: baseline;
+    margin-top: 0.65rem;
   }
 
-  dt,
-  .row-label {
-    color: var(--text-muted);
-    font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
-    letter-spacing: 0.08em;
-    line-height: 1.5;
-    text-transform: uppercase;
-  }
-
-  dd {
+  .mobile-implementation p {
     color: var(--text-secondary);
     font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .mobile-shared-experience {
+    display: grid;
+    grid-template-columns: 7.25rem minmax(0, 1fr);
+    gap: 0.7rem;
+    align-items: baseline;
+    margin-top: 0.15rem;
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.85rem 0 0.1rem;
+  }
+
+  .mobile-shared-experience strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
     line-height: 1.5;
   }
 
