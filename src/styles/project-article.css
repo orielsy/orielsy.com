@@ -70,6 +70,7 @@
 }
 
 .project-prose h2 {
+  scroll-margin-top: 6rem;
   margin-top: 4.25rem;
   margin-bottom: 1rem;
   border-top: 1px solid var(--border-subtle);
