@@ -1,0 +1,142 @@
+---
+import { FlaskConical } from '@lucide/astro';
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const arms = [
+  ['A', 'Full transcript', 'Chronology retained'],
+  ['B', 'Conventional summary', 'Compression baseline'],
+  ['C', 'Context Zen handoff', 'Authoritative state reconstructed'],
+];
+---
+
+<ResearchFigureFrame
+  figureNumber="05"
+  eyebrow="Proposed experiment · no results"
+  title="Test against a summary baseline"
+  caption="No outcome is shown because the experiment has not been run. The summary arm isolates whether reconstructing authoritative state adds value beyond ordinary compression. The measures below are candidates from the source, not a validated scorecard."
+>
+  <div class="figure-label">
+    <FlaskConical size={16} strokeWidth={1.7} aria-hidden="true" />
+    <span>Three continuation conditions</span>
+  </div>
+
+  <div class="experiment-grid">
+    {arms.map(([letter, title, note]) => (
+      <section>
+        <span class="arm-letter">{letter}</span>
+        <h4>{title}</h4>
+        <p>{note}</p>
+      </section>
+    ))}
+  </div>
+
+  <div class="experiment-notes">
+    <section>
+      <span class="note-label">Candidate measures</span>
+      <p>Missed constraints · revived decisions · repeated questions · user corrections · task quality · token use · latency · target-specific success</p>
+    </section>
+    <section class="speculative">
+      <span class="note-label note-label-accent">Speculative bridge</span>
+      <p><strong>State entropy</strong> asks what share of retained context is superseded, conflicting, or no longer actionable. It is a working metaphor, not a metric.</p>
+    </section>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-figure-frame) :global(p),
+  :global(.research-figure-frame) :global(h4) {
+    margin: 0;
+  }
+
+  .figure-label,
+  .note-label {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .figure-label {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--accent);
+  }
+
+  .experiment-grid {
+    display: grid;
+    gap: 1px;
+    margin-top: 1.25rem;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.25rem;
+    background: var(--border-subtle);
+  }
+
+  .experiment-grid section {
+    background: var(--bg-secondary);
+    padding: 1rem;
+  }
+
+  .arm-letter {
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    line-height: 1.5;
+  }
+
+  h4 {
+    margin-top: 0.45rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .experiment-grid p,
+  .experiment-notes p {
+    margin-top: 0.3rem !important;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  .experiment-notes {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .note-label {
+    display: block;
+  }
+
+  .note-label-accent {
+    color: var(--accent);
+  }
+
+  .speculative {
+    border-left: 2px dashed color-mix(in srgb, var(--accent) 60%, transparent);
+    padding-left: 0.9rem;
+  }
+
+  .speculative strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  @media (min-width: 720px) {
+    .experiment-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .experiment-notes {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+      gap: 2rem;
+    }
+  }
+</style>
