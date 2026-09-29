@@ -1,0 +1,218 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+---
+
+<ResearchFigureFrame
+  eyebrow="Observed repository inconsistency"
+  title="Persistence without reconciliation"
+  caption="Version control makes drift visible; it does not perform maintenance. This figure does not assert that either artifact automatically outranks the other."
+>
+  <div class="drift-comparison">
+    <section>
+      <div class="heading-row">
+        <span class="label">Earlier accepted record</span>
+        <span class="date">ADR 003 · 2026-08-26</span>
+      </div>
+      <strong>Manual publishing model</strong>
+      <p>Centers production publishing on <code>npm run live</code> from <code>main</code> and says a repository-authored Actions workflow is not required.</p>
+    </section>
+
+    <div class="divergence" aria-label="Documents disagree">
+      <span>Divergence</span>
+    </div>
+
+    <section>
+      <span class="label">Current guidance + implementation</span>
+      <strong>Three supported paths</strong>
+      <ol>
+        <li><span>01</span>Local <code>npm run live</code></li>
+        <li><span>02</span>GitHub Actions manual dispatch</li>
+        <li><span>03</span>Remote trigger branch</li>
+      </ol>
+      <p class="source-note">Confirmed in AGENTS.md, README.md, and .github/workflows/deploy-production.yml</p>
+    </section>
+  </div>
+
+  <div class="drift-outcomes">
+    <div><span>Preserved</span><p>Both accounts remain inspectable.</p></div>
+    <div><span>Not resolved</span><p>The repository does not automatically choose a winner.</p></div>
+    <div><span>Human action</span><p>Amend, supersede, or reconcile the record.</p></div>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  .drift-comparison {
+    display: grid;
+    gap: 1rem;
+    border-block: 1px solid var(--border-subtle);
+    padding: 1rem 0;
+  }
+
+  section {
+    min-width: 0;
+  }
+
+  .heading-row {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .label,
+  .date,
+  .divergence span,
+  .source-note,
+  .drift-outcomes span,
+  li span,
+  code {
+    font-family: var(--font-mono-ui);
+  }
+
+  .label,
+  .date,
+  .source-note,
+  .drift-outcomes span,
+  .divergence span {
+    font-size: 0.625rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .label,
+  .date,
+  .source-note {
+    color: var(--text-muted);
+  }
+
+  section > strong {
+    display: block;
+    margin-top: 0.45rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  section > p {
+    margin: 0.45rem 0 0 !important;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+
+  code {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: var(--text-primary);
+    font-size: 0.7rem;
+  }
+
+  .divergence {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .divergence::before,
+  .divergence::after {
+    height: 1px;
+    flex: 1;
+    background: var(--border-subtle);
+    content: '';
+  }
+
+  .divergence span {
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border-subtle));
+    padding: 0.2rem 0.4rem;
+    color: var(--accent);
+  }
+
+  ol {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0.55rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 1.8rem minmax(0, 1fr);
+    gap: 0.45rem;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  li span {
+    color: var(--accent);
+    font-size: 0.625rem;
+  }
+
+  .source-note {
+    margin-top: 0.7rem !important;
+    color: var(--text-muted) !important;
+  }
+
+  .drift-outcomes {
+    display: grid;
+    margin-top: 0.8rem;
+    border-block: 1px solid var(--border-subtle);
+  }
+
+  .drift-outcomes > div {
+    padding: 0.7rem 0;
+  }
+
+  .drift-outcomes > div + div {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .drift-outcomes span {
+    color: var(--accent);
+  }
+
+  .drift-outcomes p {
+    margin: 0.25rem 0 0 !important;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 760px) {
+    .drift-comparison {
+      grid-template-columns: minmax(0, 1fr) 6rem minmax(0, 1fr);
+      align-items: stretch;
+    }
+
+    .heading-row {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+    }
+
+    .divergence {
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .divergence::before,
+    .divergence::after {
+      width: 1px;
+      height: auto;
+      flex: 1;
+    }
+
+    .drift-outcomes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .drift-outcomes > div {
+      padding: 0.7rem 0.9rem;
+    }
+
+    .drift-outcomes > div + div {
+      border-top: 0;
+      border-left: 1px solid var(--border-subtle);
+    }
+  }
+</style>
