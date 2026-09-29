@@ -1,8 +1,8 @@
 ---
 title: "Which Parts of Today’s Framework Become Tomorrow’s Platform?"
 description: "A preliminary investigation into how Signals, Web Components, native navigation, View Transitions, DOM primitives, and Open UI may shift responsibilities from frameworks into the web platform."
-tldr: "Likely platform-bound: component identity, reactive graphs, navigation mechanics, transitions, DOM update primitives, and common controls. Likely framework-owned: scheduling and batching policy, rendering composition, routing conventions, server integration, compilation, and developer experience. The likely shift is a thinner primitive layer and a more concentrated coordination layer."
-tldrLabel: "TL;DR — PRELIMINARY RESEARCH"
+tldr: "Browsers are absorbing capabilities that frameworks once had to implement themselves. My working conclusion: the platform will keep taking on reusable primitives, while frameworks remain responsible for application-level coordination, policy, server integration, and developer experience."
+tldrLabel: "QUICK ORIENTATION"
 pubDate: 2026-09-17
 researchNumber: 5
 type: "Architecture Exploration"
@@ -14,11 +14,31 @@ featured: false
 readingTime: "8 min read"
 ---
 
+import FrameworkPlatformOverview from '../../components/research/FrameworkPlatformOverview.astro';
 import PlatformFrameworkBoundaryVisual from '../../components/research/PlatformFrameworkBoundaryVisual.astro';
 import PrimitiveAbsorptionCycleVisual from '../../components/research/PrimitiveAbsorptionCycleVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+import ResearchReadingDepth from '../../components/research/ResearchReadingDepth.astro';
 import ResearchSourceNote from '../../components/research/ResearchSourceNote.astro';
 import SignalStandardizationPathVisual from '../../components/research/SignalStandardizationPathVisual.astro';
+
+<ResearchReadingDepth overviewTime="4 min" fullResearchTime="8 min" />
+
+<div
+  id="reading-depth-overview"
+  role="tabpanel"
+  aria-labelledby="reading-depth-tab-overview"
+  data-reading-depth-panel="overview"
+>
+  <FrameworkPlatformOverview />
+</div>
+
+<div
+  id="reading-depth-full"
+  role="tabpanel"
+  aria-labelledby="reading-depth-tab-full"
+  data-reading-depth-panel="full"
+>
 
 <ResearchSourceNote>
   Standards work moves. This draft reflects primary sources reviewed on **September 17, 2026**. At that point the TC39 Signals proposal identified itself as Stage 1; the Navigation API was part of the HTML Living Standard; CSS View Transitions Level 2 was an editor's draft; DOM Parts remained a Web Components proposal; and Open UI operated as a W3C Community Group. The source list at the end links directly to those materials.
@@ -121,3 +141,5 @@ This draft leaves four questions I want to keep pushing on:
 - [CSS View Transitions Module Level 2](https://drafts.csswg.org/css-view-transitions-2/)
 - [Open UI](https://open-ui.org/)
 - [Open UI Charter](https://open-ui.org/charter/)
+
+</div>
