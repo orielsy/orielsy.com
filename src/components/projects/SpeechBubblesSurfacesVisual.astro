@@ -1,0 +1,173 @@
+---
+import { ArrowDown, ArrowRight, Monitor, Radio, SlidersHorizontal } from '@lucide/astro';
+import ResearchFigureFrame from '../research/ResearchFigureFrame.astro';
+---
+
+<ResearchFigureFrame
+  figureNumber="01"
+  eyebrow="Source workflow · editorial layout"
+  title="Two surfaces, one broadcast"
+  caption="The source establishes separate operator controls and transparent output surfaces composed in OBS. This is a responsibility map, not a screenshot of the application or a claim about exact window count."
+>
+  <div class="surface-grid">
+    <section class="operator-surface" aria-labelledby="operator-surface-title">
+      <div class="surface-label">
+        <SlidersHorizontal size={16} strokeWidth={1.7} aria-hidden="true" />
+        <span id="operator-surface-title">Operator-facing application</span>
+      </div>
+      <p class="surface-title">Controls the content</p>
+      <ul>
+        <li>Captions</li>
+        <li>Lower thirds</li>
+        <li>Speaker credentials</li>
+      </ul>
+      <p class="surface-note">Not the on-air composition</p>
+    </section>
+
+    <div class="direction" aria-hidden="true">
+      <ArrowDown class="direction-down" size={18} strokeWidth={1.7} />
+      <ArrowRight class="direction-right" size={18} strokeWidth={1.7} />
+    </div>
+
+    <section class="output-surface" aria-labelledby="output-surface-title">
+      <div class="surface-label surface-label-accent">
+        <Monitor size={16} strokeWidth={1.7} aria-hidden="true" />
+        <span id="output-surface-title">Transparent Electron output</span>
+      </div>
+      <p class="output-copy">Caption and lower-third graphics</p>
+      <div class="output-divider" aria-hidden="true"></div>
+      <div class="surface-label surface-label-accent">
+        <Radio size={16} strokeWidth={1.7} aria-hidden="true" />
+        <span>OBS composition</span>
+      </div>
+      <p class="output-copy">Graphics + camera video → broadcast scene</p>
+    </section>
+  </div>
+
+  <p class="responsibility-line">One workstation · distinct responsibilities for operator UI, output graphics, and final scene</p>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-figure-frame) :global(p),
+  :global(.research-figure-frame) :global(ul),
+  :global(.research-figure-frame) :global(li) {
+    margin: 0;
+  }
+
+  .surface-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .operator-surface,
+  .output-surface {
+    min-width: 0;
+  }
+
+  .operator-surface {
+    border-left: 2px solid var(--border-subtle);
+    padding-left: 1rem;
+  }
+
+  .output-surface {
+    border-left: 2px solid var(--accent);
+    background: var(--bg-secondary);
+    padding: 1.15rem;
+  }
+
+  .surface-label {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .surface-label-accent {
+    color: var(--accent);
+  }
+
+  .surface-title {
+    margin-top: 0.9rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  ul {
+    margin-top: 0.65rem !important;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.7;
+  }
+
+  .surface-note {
+    margin-top: 1rem !important;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .direction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+  }
+
+  .direction-right {
+    display: none;
+  }
+
+  .output-copy {
+    margin-top: 0.65rem !important;
+    color: var(--text-primary);
+    font-size: 0.8125rem;
+    line-height: 1.55;
+  }
+
+  .output-divider {
+    margin: 1.1rem 0;
+    border-top: 1px dashed var(--border-subtle);
+  }
+
+  .responsibility-line {
+    margin-top: 1.5rem !important;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 768px) {
+    .surface-grid {
+      grid-template-columns: minmax(0, 1fr) 2.5rem minmax(0, 1.12fr);
+      align-items: center;
+    }
+
+    .direction-down {
+      display: none;
+    }
+
+    .direction-right {
+      display: block;
+    }
+
+    .output-surface {
+      padding: 1.25rem;
+    }
+  }
+</style>
