@@ -13,7 +13,7 @@
   --research-diagram-subtitle-wide: 0.8125rem;
   --research-diagram-node: 0.875rem;
   --research-diagram-copy: 0.6875rem;
-  --research-diagram-label: 0.5625rem;
+  --research-diagram-label: 0.625rem;
   --research-diagram-caption: 0.6875rem;
   margin-block: 2.5rem;
   border-radius: 0.5rem;
@@ -155,7 +155,7 @@
   margin: 0;
   color: var(--accent);
   font-family: var(--font-mono-ui);
-  font-size: 0.54rem;
+  font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.11em;
   line-height: 1.4;
@@ -226,7 +226,7 @@
   padding: 1rem 13rem 0.9rem 1rem;
   color: var(--text-primary);
   font-family: var(--font-mono-ui);
-  font-size: 0.58rem;
+  font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.12em;
   line-height: 1.45;
@@ -243,7 +243,7 @@
   padding: 0.25rem 0 0.25rem 0.6rem;
   color: var(--accent);
   font-family: var(--font-mono-ui);
-  font-size: 0.48rem;
+  font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   line-height: 1.45;
@@ -272,7 +272,7 @@
   position: static;
   color: var(--text-muted);
   font-family: var(--font-mono-ui);
-  font-size: 0.52rem;
+  font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.08em;
 }
@@ -284,7 +284,7 @@
   padding: 0.22rem 0.45rem;
   color: var(--text-muted);
   font-family: var(--font-mono-ui);
-  font-size: 0.45rem;
+  font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   line-height: 1;
