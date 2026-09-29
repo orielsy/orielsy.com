@@ -5,31 +5,31 @@ import ResearchFigureFrame from '../research/ResearchFigureFrame.astro';
 const stages = [
   {
     name: 'Capture',
-    detail: 'Microphone → 16 kHz mono PCM',
-    owner: 'Electron / client',
+    detail: 'Microphone audio',
+    owner: 'Electron client',
     Icon: AudioLines,
   },
   {
     name: 'Transport',
-    detail: 'Audio over WebSocket',
-    owner: 'Process boundary',
+    detail: 'PCM → local service',
+    owner: 'WebSocket boundary',
     Icon: ArrowRight,
   },
   {
     name: 'Inference',
-    detail: 'Fixed-duration chunks → Whisper off async event loop',
+    detail: 'Whisper transcription',
     owner: 'Local FastAPI service',
     Icon: Server,
   },
   {
     name: 'Acceptance',
-    detail: 'Segment metadata evaluated before queue entry',
+    detail: 'Segments + metadata → client policy',
     owner: 'Client policy',
     Icon: ClipboardList,
   },
   {
     name: 'Presentation',
-    detail: 'Accepted caption state → Electron overlay → OBS composition',
+    detail: 'Accepted state → overlay → OBS composition',
     owner: 'Electron overlay / OBS',
     Icon: Captions,
   },
@@ -38,11 +38,11 @@ const stages = [
 
 <ResearchFigureFrame
   figureNumber="02"
-  eyebrow="Source implementation · simplified"
-  title="From audio to on-air text"
-  caption="Stages and ownership come from the source. The sequence describes data flow, not timing or latency. Exact chunk duration, thresholds, filtering rules, bandwidth, and rendering behavior belong to the companion architecture research."
+  eyebrow="Shared boundary · project topology"
+  title="The system boundary"
+  caption="The project keeps enough topology to show ownership and the bidirectional hand-off. Exact formats, thresholds, chunk duration, VAD status, and render scheduling belong to the companion architecture research."
 >
-  <ol class="pipeline" aria-label="Caption data path">
+  <ol class="pipeline" aria-label="speechBubbles system boundary">
     {stages.map(({ name, detail, owner, Icon }, index) => (
       <li class:list={['stage', index === 3 && 'is-acceptance']}>
         <span class="stage-dot" aria-hidden="true"></span>
@@ -57,9 +57,9 @@ const stages = [
     ))}
   </ol>
 
-  <div class="return-line" aria-label="Cross-process transport directions">
-    <span>PCM: client → local service</span>
+  <div class="return-line" aria-label="Cross-process return direction">
     <span>Segments + metadata: local service → client policy</span>
+    <span>Accepted caption state: client → presentation</span>
   </div>
 </ResearchFigureFrame>
 
