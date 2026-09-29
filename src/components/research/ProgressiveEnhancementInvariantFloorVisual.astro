@@ -6,21 +6,21 @@ const tiers = [
   {
     key: 'deterministic',
     name: 'Deterministic',
-    when: 'Baseline',
+    when: 'Useful baseline',
     implementation: 'Indexed filtering + synonyms',
     Icon: ListChecks,
   },
   {
     key: 'local',
     name: 'Local inference',
-    when: 'When available',
+    when: 'Optional when viable',
     implementation: 'Local embeddings',
     Icon: Cpu,
   },
   {
     key: 'remote',
     name: 'Remote inference',
-    when: 'When the task justifies it',
+    when: 'Optional when justified',
     implementation: 'Remote reranker',
     Icon: Globe,
   },
@@ -30,10 +30,10 @@ const tiers = [
 <ResearchFigureFrame
   figureNumber="03"
   eyebrow="Source model · semantic search"
-  title="Variable capability. Fixed truth and authority."
-  caption="These are implementation options for a capability, not a required ladder. The source does not prescribe how a product selects among them at runtime."
+  title="Optional capability. Stable boundaries."
+  caption="These are possible implementations for search, not a required ladder or a claim of equivalent results. The baseline works without inference; any fallback requires deliberate implementation, and runtime selection is unspecified."
 >
-  <div class="desktop-model" aria-label="Three implementation tiers over a shared invariant floor">
+  <div class="desktop-model" aria-label="Three implementation options over shared application boundaries">
     <div class="tier-grid tier-headings">
       <div></div>
       {tiers.map(({ name, when, Icon }, index) => (
@@ -58,7 +58,7 @@ const tiers = [
     </div>
   </div>
 
-  <div class="mobile-model" aria-label="Three implementation tiers feeding one shared search interaction">
+  <div class="mobile-model" aria-label="Three implementation options feeding one shared search interaction">
     <div class="mobile-tier-stack">
       {tiers.map(({ name, when, implementation, Icon }) => (
         <section>
@@ -84,13 +84,13 @@ const tiers = [
 
   <div class="invariant-floor">
     <div class="floor-heading">
-      <span>Invariant floor</span>
-      <span>Constant across every tier</span>
+      <span>Stable across implementations</span>
+      <span>Editorial architectural framing</span>
     </div>
     <p>Application truth · action boundaries</p>
   </div>
 
-  <p class="closing-line"><strong>Capability can degrade gracefully.</strong> Authority should remain bounded by what the application can justify.</p>
+  <p class="closing-line"><strong>Capability can degrade gracefully when fallback is built.</strong> Authority should remain bounded by what the application can justify.</p>
 </ResearchFigureFrame>
 
 <style>
