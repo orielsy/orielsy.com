@@ -6,20 +6,17 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   className="interaction-path-figure"
   eyebrow="Fig. 01 · Interaction path"
   title="Same intent. Different interface path."
-  status="Multi-step · In-interface"
-  caption="The intelligence has a narrower job. The interface carries the result."
+  status="Conversation-mediated · In-interface"
+  caption="Conversation can still produce direct action. The distinction is how much of the interaction the application itself already structures."
 >
-<div class="grid lg:grid-cols-2">
-    <section class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-6 lg:border-r lg:border-b-0" aria-labelledby="chat-path-title">
-      <div class="flex items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <svg class="h-4 w-4 text-[var(--text-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-            <path d="M6.5 17.5 4 20v-5.3A7.5 7.5 0 1 1 19.5 12a7.5 7.5 0 0 1-8 7.5 8 8 0 0 1-5-2Z"/>
-            <path d="M8 11.5h.01M12 11.5h.01M16 11.5h.01"/>
-          </svg>
-          <h4 id="chat-path-title" class="font-display text-base font-semibold text-[var(--text-primary)]">Chat</h4>
-        </div>
-        <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Multi-step</span>
+  <div class="grid lg:grid-cols-2">
+    <section class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-6 lg:border-r lg:border-b-0" aria-labelledby="conversation-path-title">
+      <div class="flex items-center gap-3">
+        <svg class="h-4 w-4 text-[var(--text-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <path d="M6.5 17.5 4 20v-5.3A7.5 7.5 0 1 1 19.5 12a7.5 7.5 0 0 1-8 7.5 8 8 0 0 1-5-2Z"/>
+          <path d="M8 11.5h.01M12 11.5h.01M16 11.5h.01"/>
+        </svg>
+        <h4 id="conversation-path-title" class="font-display text-base font-semibold text-[var(--text-primary)]">Conversation-mediated path</h4>
       </div>
 
       <ol class="path-list mt-5">
@@ -33,34 +30,25 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
         <li class="path-node">
           <span class="path-index">02</span>
           <div>
-            <span class="path-label">Model response</span>
+            <span class="path-label">Conversational interpretation</span>
           </div>
         </li>
         <li class="path-node">
           <span class="path-index">03</span>
           <div>
-            <span class="path-label">User interprets the response</span>
-          </div>
-        </li>
-        <li class="path-node">
-          <span class="path-index">04</span>
-          <div>
-            <span class="path-label">User applies the result</span>
+            <span class="path-label">Action or result</span>
           </div>
         </li>
       </ol>
     </section>
 
     <section class="px-5 py-5 sm:px-6" aria-labelledby="embedded-path-title">
-      <div class="flex items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <svg class="h-4 w-4 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-            <rect x="4" y="4" width="16" height="16" rx="2"/>
-            <path d="M4 9h16M9 9v11"/>
-          </svg>
-          <h4 id="embedded-path-title" class="font-display text-base font-semibold text-[var(--text-primary)]">Embedded capability</h4>
-        </div>
-        <span class="font-editorial-mono text-[8px] uppercase tracking-[0.1em] text-[var(--accent)]">In-interface</span>
+      <div class="flex items-center gap-3">
+        <svg class="h-4 w-4 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <rect x="4" y="4" width="16" height="16" rx="2"/>
+          <path d="M4 9h16M9 9v11"/>
+        </svg>
+        <h4 id="embedded-path-title" class="font-display text-base font-semibold text-[var(--text-primary)]">Embedded capability</h4>
       </div>
 
       <ol class="path-list mt-5">
@@ -121,7 +109,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     gap: 0.75rem;
     align-items: start;
     border: 1px solid var(--border-subtle);
-    border-radius: 0.5rem;
+    border-radius: 0.3rem;
     background: var(--bg-secondary);
     padding: 0.8rem 0.85rem;
   }
@@ -158,7 +146,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     border-radius: 999px;
     color: var(--text-muted);
     font-family: var(--font-mono-ui);
-    font-size: 0.5rem;
+    font-size: 0.625rem;
     letter-spacing: 0.06em;
   }
 
