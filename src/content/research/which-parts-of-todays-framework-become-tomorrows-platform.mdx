@@ -24,21 +24,11 @@ import SignalStandardizationPathVisual from '../../components/research/SignalSta
 
 <ResearchReadingDepth overviewTime="4 min" fullResearchTime="8 min" />
 
-<div
-  id="reading-depth-overview"
-  role="tabpanel"
-  aria-labelledby="reading-depth-tab-overview"
-  data-reading-depth-panel="overview"
->
+<div data-reading-depth-overview>
   <FrameworkPlatformOverview />
 </div>
 
-<div
-  id="reading-depth-full"
-  role="tabpanel"
-  aria-labelledby="reading-depth-tab-full"
-  data-reading-depth-panel="full"
->
+<div data-reading-depth-marker="full" aria-hidden="true"></div>
 
 <ResearchSourceNote>
   Standards work moves. This draft reflects primary sources reviewed on **September 17, 2026**. At that point the TC39 Signals proposal identified itself as Stage 1; the Navigation API was part of the HTML Living Standard; CSS View Transitions Level 2 was an editor's draft; DOM Parts remained a Web Components proposal; and Open UI operated as a W3C Community Group. The source list at the end links directly to those materials.
@@ -141,5 +131,3 @@ This draft leaves four questions I want to keep pushing on:
 - [CSS View Transitions Module Level 2](https://drafts.csswg.org/css-view-transitions-2/)
 - [Open UI](https://open-ui.org/)
 - [Open UI Charter](https://open-ui.org/charter/)
-
-</div>
