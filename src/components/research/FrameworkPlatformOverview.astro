@@ -7,20 +7,19 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
 
 <section class="overview not-prose" aria-labelledby="framework-platform-overview-title">
   <div class="overview__intro">
-    <p class="overview__eyebrow">Overview · Conceptual version</p>
     <h2 id="framework-platform-overview-title">The browser is learning tricks frameworks used to handle themselves.</h2>
     <p class="overview__lead">
-      React, Vue, Angular, Svelte, and other frameworks grew partly because the browser did not provide enough structure for building large applications. The browser platform is gradually gaining some of those missing pieces.
+      React, Vue, Angular, Svelte, and other frameworks grew partly because the browser did not provide enough structure for building large applications. The platform is gradually gaining some of those missing pieces.
     </p>
     <p>
-      This research asks a simple question: <strong>if more of those lower-level capabilities become native, what is still left for frameworks to do?</strong>
+      My working conclusion is that <strong>frameworks probably do not disappear; their job moves upward</strong>. The platform can absorb reusable mechanics while frameworks keep making the opinionated decisions that turn those mechanics into an application.
     </p>
   </div>
 
-  <div class="overview__answer" aria-label="Short answer">
-    <h3>The short answer</h3>
+  <div class="overview__section">
+    <h3 id="where-the-boundary-moves">Where the boundary moves</h3>
     <p>
-      Frameworks probably do not disappear. Their job moves upward: the browser can take on more reusable mechanics while frameworks keep making the opinionated decisions that turn those mechanics into an application.
+      Capabilities with broadly understood semantics are good candidates to move downward into the platform. Component identity, navigation mechanics, transitions, common controls, and potentially reactive dependency tracking can become shared primitives without deciding how an application should be organized around them.
     </p>
   </div>
 
@@ -28,25 +27,10 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
     <PlatformFrameworkBoundaryVisual />
   </ResearchBreakout>
 
-  <div class="overview__explanation">
-    <div>
-      <h3>Reusable mechanics can move down.</h3>
-      <p>
-        Component identity, navigation mechanics, transitions, common controls, and potentially reactive dependency tracking can become shared browser capabilities once the ecosystem understands them well enough.
-      </p>
-    </div>
-    <div>
-      <h3>Application decisions stay above.</h3>
-      <p>
-        Frameworks still decide how work is scheduled, how application pieces compose, how routing and data loading fit together, how servers participate, and what development model a team uses.
-      </p>
-    </div>
-  </div>
-
   <div class="overview__section">
-    <h3>Signals show how the boundary can move.</h3>
+    <h3 id="signals-show-the-pattern">Signals show the pattern</h3>
     <p>
-      Several frameworks already use reactive graphs to track what depends on what. A shared Signals primitive could eventually give them common low-level plumbing without forcing React, Vue, Angular, or another framework to schedule updates or render applications in the same way.
+      Several frameworks already use reactive graphs to track what depends on what. A shared Signals primitive could eventually provide common low-level plumbing while leaving scheduling, effects, ownership, batching, and rendering policy to frameworks and libraries.
     </p>
   </div>
 
@@ -55,9 +39,16 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
   </ResearchBreakout>
 
   <div class="overview__section">
-    <h3>Successful framework ideas can become platform building blocks.</h3>
+    <h3 id="what-frameworks-still-own">What frameworks still own</h3>
     <p>
-      Once a useful mechanism becomes common, stable, and broadly understood, some of it can move into the platform. Frameworks can then stop rebuilding that mechanism and spend more of their energy coordinating the pieces above it.
+      Application-level coordination remains opinionated. Frameworks still decide how work is scheduled, how routing and data loading compose, how server and client execution fit together, how compilation and optimization work, and what conventions define the developer experience. Those are not necessarily missing standards; many are deliberate policy choices.
+    </p>
+  </div>
+
+  <div class="overview__section">
+    <h3 id="how-platform-absorption-repeats">How platform absorption repeats</h3>
+    <p>
+      A framework can prove out a useful mechanism, ecosystems can converge on its semantics, and the durable part can eventually move into the platform. Frameworks then reorganize around the native primitive instead of privately rebuilding the substrate underneath it.
     </p>
   </div>
 
@@ -65,70 +56,111 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
     <PrimitiveAbsorptionCycleVisual />
   </ResearchBreakout>
 
-  <div class="overview__takeaways">
-    <h3>What this suggests</h3>
-    <div class="overview__takeaway-list">
-      <article>
-        <span>01</span>
-        <div>
-          <h4>The platform absorbs primitives.</h4>
-          <p>Capabilities with broadly agreed semantics are good candidates to become native building blocks.</p>
-        </div>
-      </article>
-      <article>
-        <span>02</span>
-        <div>
-          <h4>Frameworks retain policy.</h4>
-          <p>Scheduling, composition, server integration, conventions, and developer experience remain opinionated choices.</p>
-        </div>
-      </article>
-      <article>
-        <span>03</span>
-        <div>
-          <h4>The boundary moves, not vanishes.</h4>
-          <p>The likely future is not “browser versus framework.” It is a different division of responsibility between them.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-
-  <div class="overview__why">
-    <h3>Why this matters</h3>
+  <div class="overview__section overview__closing">
+    <h3 id="what-remains-open">What remains open</h3>
     <p>
-      If we can tell which abstractions are durable application policy and which exist mainly because the platform has not caught up yet, we can make better long-term frontend architecture decisions.
-    </p>
-    <p>
-      The full research examines the standards work, the limits of each primitive, and the responsibilities that still appear to belong above the platform layer.
+      The unresolved question is how thin a useful framework can become if components, reactivity, navigation, transitions, and more templating infrastructure move native—and which remaining responsibilities are intentionally application-level policy rather than missing platform primitives. This is a working boundary, not a prediction that frameworks disappear.
     </p>
 
     <button class="overview__continue" type="button" data-reading-depth-open="full">
-      <span>Continue to full research</span>
-      <span aria-hidden="true">→</span>
+      Read full research <span aria-hidden="true">→</span>
     </button>
   </div>
 </section>
 
+<script>
+  const article = document.querySelector<HTMLElement>(
+    '[data-research-entry="which-parts-of-todays-framework-become-tomorrows-platform"]',
+  );
+  const overview = article?.querySelector<HTMLElement>('[data-reading-depth-overview] .overview');
+  const tocAside = article?.querySelector<HTMLElement>('aside[aria-label="Research navigation"]');
+  const tocShell = tocAside?.querySelector<HTMLElement>('[data-research-toc-shell]');
+  const fullToc = tocShell?.querySelector<HTMLElement>('.research-toc');
+  const desktopResearchLayout = window.matchMedia('(min-width: 1024px)');
+
+  if (article && overview && tocAside && tocShell && fullToc) {
+    const headings = Array.from(
+      overview.querySelectorAll<HTMLHeadingElement>('.overview__section > h3[id]'),
+    );
+
+    if (headings.length > 2 && !tocShell.querySelector('[data-reading-depth-toc="overview"]')) {
+      fullToc.dataset.readingDepthToc = 'full';
+
+      const overviewToc = fullToc.cloneNode(true) as HTMLElement;
+      overviewToc.dataset.readingDepthToc = 'overview';
+      overviewToc.setAttribute('aria-label', 'Overview contents');
+      overviewToc.classList.add('hidden', 'lg:block');
+
+      const list = overviewToc.querySelector<HTMLOListElement>('ol');
+      list?.replaceChildren();
+
+      headings.forEach((heading, index) => {
+        if (!list) return;
+
+        const item = document.createElement('li');
+        item.className = 'm-0 p-0 leading-5';
+
+        const link = document.createElement('a');
+        link.href = `#${heading.id}`;
+        link.className = 'group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]';
+
+        const number = document.createElement('span');
+        number.className = 'font-editorial-mono text-[9px] text-[var(--accent)]';
+        number.textContent = String(index + 1).padStart(2, '0');
+
+        const label = document.createElement('span');
+        label.className = 'text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]';
+        label.textContent = heading.textContent?.trim() ?? '';
+
+        link.append(number, label);
+        item.append(link);
+        list.append(item);
+      });
+
+      tocShell.append(overviewToc);
+
+      const syncToc = () => {
+        const overviewActive = article.dataset.readingDepth !== 'full';
+        tocAside.hidden = overviewActive && !desktopResearchLayout.matches;
+        overviewToc.hidden = !overviewActive;
+        fullToc.hidden = overviewActive;
+      };
+
+      const observer = new MutationObserver(syncToc);
+      observer.observe(article, {
+        attributes: true,
+        attributeFilter: ['data-reading-depth'],
+      });
+
+      desktopResearchLayout.addEventListener('change', syncToc);
+      queueMicrotask(syncToc);
+    }
+  }
+</script>
+
 <style>
+  :global([data-research-entry='which-parts-of-todays-framework-become-tomorrows-platform'] .reading-depth--editorial) {
+    border-bottom: 0;
+  }
+
   .overview {
     color: var(--text-secondary);
   }
 
   .overview__intro,
-  .overview__section,
-  .overview__why,
-  .overview__takeaways {
+  .overview__section {
     max-width: 46rem;
   }
 
   .overview__intro h2 {
-    max-width: 44rem;
-    margin: 0.55rem 0 1.25rem;
+    max-width: 46rem;
+    margin: 0 0 1.25rem;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-size: clamp(1.75rem, 4vw, 2.6rem);
     font-weight: 600;
-    line-height: 1.05;
-    letter-spacing: -0.045em;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
   }
 
   .overview p {
@@ -148,117 +180,26 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
 
   .overview__lead {
     color: var(--text-primary);
-    font-size: 1.1rem !important;
-    line-height: 1.72 !important;
-  }
-
-  .overview__eyebrow {
-    margin: 0 !important;
-    color: var(--accent) !important;
-    font-family: var(--font-mono-ui);
-    font-size: 0.625rem !important;
-    font-weight: 600;
-    letter-spacing: 0.11em;
-    line-height: 1.5 !important;
-    text-transform: uppercase;
-  }
-
-  .overview h3,
-  .overview h4 {
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-weight: 600;
-    letter-spacing: -0.03em;
+    font-size: 1.06rem !important;
+    line-height: 1.7 !important;
   }
 
   .overview h3 {
     margin: 0 0 0.75rem;
-    font-size: 1.35rem;
-    line-height: 1.25;
-  }
-
-  .overview h4 {
-    margin: 0;
-    font-size: 1rem;
-    line-height: 1.35;
-  }
-
-  .overview__answer {
-    margin-top: 2.5rem;
-    border-left: 2px solid var(--accent);
-    background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
-    padding: 1.2rem 1.25rem;
-  }
-
-  .overview__answer h3 {
-    margin-bottom: 0.55rem;
-    font-size: 1rem;
-  }
-
-  .overview__answer p {
-    max-width: 45rem;
+    scroll-margin-top: 6rem;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 1.1rem;
-    font-weight: 500;
-    line-height: 1.55;
-    letter-spacing: -0.02em;
-  }
-
-  .overview__explanation {
-    display: grid;
-    gap: 1px;
-    margin: 2.75rem 0 3.25rem;
-    border: 1px solid var(--border-subtle);
-    background: var(--border-subtle);
-  }
-
-  .overview__explanation > div {
-    background: var(--bg-card);
-    padding: 1.25rem;
-  }
-
-  .overview__explanation h3 {
-    font-size: 1.05rem;
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
   }
 
   .overview__section {
     margin-top: 3.25rem;
   }
 
-  .overview__takeaways {
-    margin: 3.5rem 0;
-  }
-
-  .overview__takeaway-list {
-    margin-top: 0.9rem;
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .overview__takeaway-list article {
-    display: grid;
-    grid-template-columns: 2.25rem minmax(0, 1fr);
-    gap: 0.85rem;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1rem 0;
-  }
-
-  .overview__takeaway-list article > span {
-    padding-top: 0.14rem;
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
-    letter-spacing: 0.09em;
-  }
-
-  .overview__takeaway-list p {
-    margin-top: 0.3rem;
-    color: var(--text-muted);
-    font-size: 0.875rem;
-    line-height: 1.65;
-  }
-
-  .overview__why {
+  .overview__closing {
     margin-top: 3.75rem;
     border-top: 1px solid var(--border-subtle);
     padding-top: 2rem;
@@ -267,38 +208,34 @@ import SignalStandardizationPathVisual from './SignalStandardizationPathVisual.a
   .overview__continue {
     display: inline-flex;
     align-items: center;
-    gap: 0.65rem;
-    margin-top: 1.5rem;
-    border: 1px solid var(--accent);
-    border-radius: 0.2rem;
+    gap: 0.4rem;
+    margin-top: 1.4rem;
+    border: 0;
     background: transparent;
-    padding: 0.8rem 1rem;
+    padding: 0;
     color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.6875rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
     font-weight: 600;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
     cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.22em;
     transition:
-      background-color 160ms ease,
-      color 160ms ease;
+      color 160ms ease,
+      text-decoration-color 160ms ease;
   }
 
   .overview__continue:hover {
-    background: var(--accent);
-    color: var(--accent-contrast);
+    color: var(--accent-hover);
+    text-decoration-color: currentColor;
   }
 
   .overview__continue:focus-visible {
     outline: 2px solid var(--accent);
-    outline-offset: 3px;
-  }
-
-  @media (min-width: 720px) {
-    .overview__explanation {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    outline-offset: 4px;
   }
 
   @media (prefers-reduced-motion: reduce) {
