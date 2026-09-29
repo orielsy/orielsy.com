@@ -36,16 +36,24 @@ socialCard:
 
 import DiagramFigure from '../../components/DiagramFigure.astro';
 import ProjectBreakout from '../../components/projects/ProjectBreakout.astro';
-import SpeechStreamingPipelineVisual from '../../components/research/SpeechStreamingPipelineVisual.astro';
+import SpeechBubblesCaptionPathVisual from '../../components/projects/SpeechBubblesCaptionPathVisual.astro';
+import SpeechBubblesDecisionTradeoffsVisual from '../../components/projects/SpeechBubblesDecisionTradeoffsVisual.astro';
+import SpeechBubblesSurfacesVisual from '../../components/projects/SpeechBubblesSurfacesVisual.astro';
 
-## What the Prototype Proved
+speechBubbles is a single-workstation broadcast prototype built around a simple separation of responsibilities: local inference hears the speech, the client decides what enters the caption queue, the operator controls the graphics, transparent Electron surfaces render them, and OBS composes the final scene.
 
-The working prototype demonstrated four things on one broadcast workstation:
+That separation is the more interesting engineering story than transcription alone. The model runtime does not own presentation, operator controls do not become the on-air surface, and OBS remains responsible for broadcast composition.
+
+## What Worked on One Workstation
+
+The working prototype demonstrated a complete local path from microphone input to on-air graphics:
 
 - microphone-to-caption operation with local Whisper inference
 - transcription without a cloud speech service
 - operator-controlled captions, lower thirds, and speaker credentials
 - transparent graphics composited into an OBS scene
+
+As creator and developer, I designed and implemented the Electron/Vue interface architecture, overlay surfaces, audio capture and transport integration, client transcript policy, local Whisper integration, and OBS workflow.
 
 <ProjectBreakout mode="publication">
   <DiagramFigure
@@ -55,43 +63,17 @@ The working prototype demonstrated four things on one broadcast workstation:
   />
 </ProjectBreakout>
 
-## My Role
+The demonstrated path is real; production distribution is not claimed.
 
-As creator and developer, I designed and implemented the desktop interface architecture, Electron overlay surfaces, audio capture and transport integration, client transcript policy, local Whisper integration, and OBS broadcast workflow.
+## Separate Control from Output
 
-## Three Architectural Decisions
-
-### 1. Separate graphics from inference
-
-The Electron/Vue application and FastAPI/Whisper service are separate processes. The graphics layer can evolve without owning the model runtime, and the transcription service can change without becoming responsible for broadcast presentation.
-
-The trade-off is operational: a local multi-process system has more setup and coordination than a single application bundle.
-
-### 2. Keep transcript acceptance policy in the client
-
-The backend returns Whisper segments and metadata; the client decides which segments enter the visible caption queue.
-
-That keeps presentation policy close to the UI that consumes it. The trade-off is that another client would need compatible policy or a shared policy layer.
-
-### 3. Use Electron for the broadcast surface and OBS for composition
-
-Transparent Electron windows provide the caption and lower-third surfaces while OBS remains responsible for the final scene.
-
-That separates operator controls from what viewers see. It also makes the prototype desktop- and broadcast-workflow-specific rather than a browser-only product.
-
-## System Architecture
-
-The system separates audio capture, WebSocket transport, local inference, transcript policy, overlay rendering, and final OBS composition.
+The operator-facing application controls what the graphics say: captions, lower thirds, and speaker credentials. Transparent Electron output surfaces carry those graphics while OBS combines them with camera video.
 
 <ProjectBreakout mode="publication">
-  <SpeechStreamingPipelineVisual />
+  <SpeechBubblesSurfacesVisual />
 </ProjectBreakout>
 
-The companion [architecture research](/research/real-time-speech-audio-pipeline-desktop-ui) owns the source-level analysis of chunking, filtering, VAD status, audio-format calculations, and rendering behavior.
-
-## Broadcast Workflow
-
-The operator-facing application controls captions and television-style context such as speaker credentials and lower thirds; transparent output surfaces are then composed with camera video in OBS.
+The point is not simply that the application has multiple windows. It is that operator controls, rendered output, and final scene composition remain different responsibilities.
 
 <DiagramFigure
   src="/projects/speechbubbles/studio-setup.jpg"
@@ -99,16 +81,36 @@ The operator-facing application controls captions and television-style context s
   caption="Dual-display workstation: operator controls on one display and the composed broadcast output on the other."
 />
 
-## Selected Technical Details
+That separation makes the prototype specific to a desktop broadcast workflow, but it also keeps the operator interface from becoming the thing viewers see.
 
-The microphone stream is converted to 16 kHz mono PCM and sent over WebSocket to the local FastAPI service. The backend accumulates fixed-duration chunks and runs Whisper inference off the async event loop. Returned segment metadata is evaluated in the client before accepted text enters the caption queue.
+## Move Audio Locally, Keep Acceptance in the Client
 
-Those details are implementation evidence, not the center of this case study; the associated research entry documents the exact thresholds, derived bandwidth calculation, and renderer behavior.
+The microphone stream is converted to 16 kHz mono PCM and sent over WebSocket to the local FastAPI service. The backend accumulates fixed-duration chunks and runs Whisper inference off the async event loop.
 
-## Current Status
+Returned segments and metadata do not move directly into the visible caption queue. The client evaluates them first, keeping transcript acceptance policy close to the UI that consumes it.
 
-This is a working prototype, not a production distribution. The current source still contains prototype-quality choices I would revisit for sustained use: the legacy `ScriptProcessorNode` capture path, fixed-duration chunking, packaging and setup, automated testing, and the inactive PyAnnote VAD path.
+<ProjectBreakout mode="publication">
+  <SpeechBubblesCaptionPathVisual />
+</ProjectBreakout>
+
+That boundary has a trade-off: another client would need compatible acceptance rules or a shared policy layer.
+
+The companion [architecture research](/research/real-time-speech-audio-pipeline-desktop-ui) owns the source-level analysis of chunking, filtering, VAD status, audio-format calculations, and renderer behavior. Those details are implementation evidence, not the center of this case study.
+
+## Design Decisions, Costs Included
+
+Three decisions define most of the prototype's architecture: separating graphics from inference, keeping transcript acceptance in the client, and using Electron for output while OBS owns final composition.
+
+<ProjectBreakout mode="publication">
+  <SpeechBubblesDecisionTradeoffsVisual />
+</ProjectBreakout>
+
+None of those decisions is free. Separate processes require local setup and coordination. Client-side acceptance keeps presentation policy near the UI but makes policy reuse another architectural concern. Electron and OBS provide a dedicated broadcast surface while tying the prototype to a desktop production workflow.
+
+## Prototype, Evidence, and Open Work
+
+This is a working prototype, not a production distribution. The current source still contains choices I would revisit for sustained use: the legacy `ScriptProcessorNode` capture path, fixed-duration chunking, packaging and setup, automated testing, and the inactive PyAnnote VAD path.
 
 The public repositories were published in August 2026, after the January–June 2024 initial development period shown here. The public history therefore demonstrates the current source, not the original development timeline.
 
-The result is a complete local path from microphone input to on-air graphics, with inference, interface policy, rendering, and broadcast composition kept as distinct responsibilities.
+The result is a complete local path from microphone input to on-air graphics with inference, transcript policy, operator control, rendering, and broadcast composition kept as distinct responsibilities.
