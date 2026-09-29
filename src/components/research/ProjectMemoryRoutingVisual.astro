@@ -1,0 +1,150 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+---
+
+<ResearchFigureFrame
+  eyebrow="Current human-authored workflow"
+  title="Route, then narrow"
+  caption="Selection bounds the present task. Other project memory remains available for other work; the repository does not currently detect relevance automatically."
+>
+  <div class="routing-flow">
+    <section>
+      <span class="label">Task</span>
+      <strong>Change publication behavior</strong>
+      <p>The task supplies scope, not every document in the repository.</p>
+    </section>
+
+    <span class="arrow" aria-hidden="true">→</span>
+
+    <section class="router">
+      <span class="label">Explicit routing</span>
+      <code>AGENTS.md</code>
+      <p>Read the constitution, then the relevant spec, plan/tasks, and ADRs before structural changes.</p>
+    </section>
+
+    <span class="arrow" aria-hidden="true">→</span>
+
+    <section class="selected">
+      <span class="label">Selected context</span>
+      <ol>
+        <li><span>01</span>Project-wide factual guardrails</li>
+        <li><span>02</span>Publication-gating specification and decisions</li>
+        <li><span>03</span>Relevant implementation surfaces</li>
+      </ol>
+    </section>
+  </div>
+
+  <p class="routing-note"><strong>Boundary:</strong> a human-authored entry point and task scope guide selection today. Automated relevance detection is not implemented.</p>
+</ResearchFigureFrame>
+
+<style>
+  .routing-flow {
+    display: grid;
+    gap: 0.8rem;
+    border-block: 1px solid var(--border-subtle);
+    padding: 1rem 0;
+  }
+
+  section {
+    min-width: 0;
+  }
+
+  .label,
+  code,
+  li span,
+  .routing-note strong {
+    font-family: var(--font-mono-ui);
+  }
+
+  .label {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.625rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  section > strong,
+  code {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  code {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    font-size: 0.8rem;
+  }
+
+  section p,
+  .routing-note {
+    margin: 0.45rem 0 0 !important;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.55;
+  }
+
+  .router {
+    border-left: 2px solid var(--accent);
+    padding-left: 0.8rem;
+  }
+
+  .arrow {
+    align-self: center;
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    text-align: center;
+    transform: rotate(90deg);
+  }
+
+  ol {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0.65rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 1.8rem minmax(0, 1fr);
+    gap: 0.45rem;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  li span {
+    color: var(--accent);
+    font-size: 0.625rem;
+  }
+
+  .routing-note {
+    margin-top: 0.75rem !important;
+    border-top: 1px dashed var(--border-subtle);
+    padding-top: 0.65rem;
+    color: var(--text-muted);
+  }
+
+  .routing-note strong {
+    color: var(--accent);
+    font-size: 0.625rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 820px) {
+    .routing-flow {
+      grid-template-columns: minmax(0, 1fr) 2rem minmax(0, 1.1fr) 2rem minmax(0, 1.15fr);
+      align-items: center;
+    }
+
+    .arrow {
+      transform: none;
+    }
+  }
+</style>
