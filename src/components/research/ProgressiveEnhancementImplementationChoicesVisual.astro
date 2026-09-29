@@ -1,0 +1,136 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+---
+
+<ResearchFigureFrame
+  figureNumber="04"
+  eyebrow="Site examples · source-described implementations"
+  title="Two implementations, different inference choices"
+  caption="The comparison reflects only what the source establishes: Documentation-Driven Adaptive UX Phase 1 uses no inference, while speechBubbles uses local Whisper for one narrow job. This is not a measured capability scale."
+>
+  <div class="comparison-axis" aria-hidden="true">
+    <span>No inference</span>
+    <span>Inference for one narrow job</span>
+  </div>
+  <div class="axis-line" aria-hidden="true">
+    <span class="axis-node axis-node-open"></span>
+    <span class="axis-node axis-node-filled"></span>
+  </div>
+
+  <div class="project-grid">
+    <section>
+      <span class="project-label">Documentation-Driven Adaptive UX · Phase 1</span>
+      <p>Deterministic application state and authored knowledge handle the baseline. The current phase requires no LLM or remote inference.</p>
+    </section>
+    <section class="project-accent">
+      <span class="project-label">speechBubbles</span>
+      <p>Local Whisper inference handles one narrow job: speech recognition, without requiring a cloud transcription service.</p>
+    </section>
+  </div>
+
+  <p class="shared-preference">Shared architectural preference: do not ask the model to own work the interface can already structure.</p>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-figure-frame) :global(p) {
+    margin: 0;
+  }
+
+  .comparison-axis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .comparison-axis span:last-child {
+    text-align: right;
+  }
+
+  .axis-line {
+    position: relative;
+    height: 1px;
+    margin-top: 0.7rem;
+    background: var(--border-subtle);
+  }
+
+  .axis-node {
+    position: absolute;
+    top: 50%;
+    width: 0.65rem;
+    height: 0.65rem;
+    transform: translateY(-50%);
+    border-radius: 999px;
+  }
+
+  .axis-node-open {
+    left: 0;
+    border: 1px solid var(--accent);
+    background: var(--bg-card);
+  }
+
+  .axis-node-filled {
+    right: 0;
+    background: var(--accent);
+  }
+
+  .project-grid {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .project-grid section {
+    border-radius: 0.25rem;
+    background: var(--bg-secondary);
+    padding: 1rem;
+  }
+
+  .project-label {
+    display: block;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .project-accent .project-label {
+    color: var(--accent);
+  }
+
+  .project-grid p {
+    margin-top: 0.5rem !important;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.65;
+  }
+
+  .shared-preference {
+    margin-top: 1.25rem !important;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  @media (min-width: 640px) {
+    .project-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .project-accent {
+      text-align: right;
+    }
+  }
+</style>
