@@ -1,0 +1,229 @@
+---
+import { ArrowDown, ArrowRight, Check, Clipboard, History } from '@lucide/astro';
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const history = [
+  ['01', 'Initial objective'],
+  ['02', 'Exploration'],
+  ['03', 'Rejected direction'],
+  ['04', 'Correction'],
+  ['05', 'Superseded decision'],
+  ['06', 'Current implementation'],
+  ['07', 'Unresolved question'],
+];
+
+const workingState = [
+  'Current objective',
+  'Decisions still in force',
+  'Relevant constraints',
+  'Rejected paths worth preserving',
+  'Active artifacts',
+  'Open questions',
+  'Immediate next step',
+];
+---
+
+<ResearchFigureFrame
+  figureNumber="01"
+  eyebrow="Source definition · editorial form"
+  title="From transcript to working state"
+  caption="The transcript sequence is illustrative, not a real conversation. The working-state list comes from the source definition of a good handoff. The figure presents distillation as selection and reconstruction, not as proof that less context always performs better."
+>
+  <div class="state-grid">
+    <section aria-labelledby="context-zen-history-label">
+      <div class="section-label" id="context-zen-history-label">
+        <History size={16} strokeWidth={1.7} aria-hidden="true" />
+        <span>Accumulated transcript</span>
+      </div>
+      <ol class="history-list">
+        {history.map(([index, label], itemIndex) => (
+          <li class:list={[itemIndex >= 5 && 'is-current']}>
+            <span class="history-dot" aria-hidden="true"></span>
+            <span class="index">{index}</span>
+            <span>{label}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <div class="distill-arrow" aria-hidden="true">
+      <span>Distill</span>
+      <ArrowDown class="arrow-down" size={19} strokeWidth={1.7} />
+      <ArrowRight class="arrow-right" size={19} strokeWidth={1.7} />
+    </div>
+
+    <section class="working-state" aria-labelledby="context-zen-state-label">
+      <div class="accent-rail" aria-hidden="true"></div>
+      <div class="section-label section-label-accent" id="context-zen-state-label">
+        <Clipboard size={16} strokeWidth={1.7} aria-hidden="true" />
+        <span>Authoritative working state</span>
+      </div>
+      <ul>
+        {workingState.map((item) => (
+          <li>
+            <Check size={14} strokeWidth={1.7} aria-hidden="true" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+
+  <p class="bottom-line">Smallest reliable state that preserves correct continuation</p>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-figure-frame) :global(p),
+  :global(.research-figure-frame) :global(ol),
+  :global(.research-figure-frame) :global(ul),
+  :global(.research-figure-frame) :global(li) {
+    margin: 0;
+  }
+
+  .state-grid {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  section {
+    min-width: 0;
+  }
+
+  .section-label,
+  .distill-arrow {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .section-label-accent,
+  .distill-arrow {
+    color: var(--accent);
+  }
+
+  .history-list {
+    display: grid;
+    margin-top: 1rem !important;
+    border-left: 1px solid var(--border-subtle);
+    padding-left: 1rem;
+    list-style: none;
+  }
+
+  .history-list li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.6rem minmax(0, 1fr);
+    gap: 0.45rem;
+    padding: 0.38rem 0;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .history-list li.is-current {
+    color: var(--text-primary);
+  }
+
+  .history-dot {
+    position: absolute;
+    top: 0.75rem;
+    left: -1.22rem;
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 999px;
+    background: var(--border-strong);
+  }
+
+  .history-list li.is-current .history-dot {
+    background: var(--accent);
+  }
+
+  .index {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+  }
+
+  .distill-arrow {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .arrow-right {
+    display: none;
+  }
+
+  .working-state {
+    position: relative;
+    background: var(--bg-secondary);
+    padding: 1rem 1rem 1rem 1.25rem;
+  }
+
+  .accent-rail {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 2px;
+    background: var(--accent);
+  }
+
+  .working-state ul {
+    display: grid;
+    gap: 0.55rem 1.25rem;
+    margin-top: 1rem !important;
+    padding: 0;
+    list-style: none;
+  }
+
+  .working-state li {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .working-state li :global(svg) {
+    flex: 0 0 auto;
+    margin-top: 0.15rem;
+    color: var(--accent);
+  }
+
+  .bottom-line {
+    margin-top: 1.5rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  @media (min-width: 640px) {
+    .working-state ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 900px) {
+    .state-grid {
+      grid-template-columns: minmax(0, 0.9fr) 4.5rem minmax(0, 1.1fr);
+      align-items: center;
+    }
+
+    .arrow-down {
+      display: none;
+    }
+
+    .arrow-right {
+      display: block;
+    }
+  }
+</style>
