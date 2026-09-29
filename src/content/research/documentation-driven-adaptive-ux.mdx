@@ -44,8 +44,6 @@ A field may know that a value is missing. The application may know the current v
 
 The opportunity is to **select and surface authored product knowledge according to current application state**, rather than make every user leave the product or receive the same static explanation.
 
----
-
 ## Phase 1 Experiment: One Field, Two Interface Policies
 
 Phase 1 narrows the experiment to one product field: **Data Connection**.
@@ -76,8 +74,6 @@ The Adaptive UI keeps the same field and validation rule, then adds authored pro
 
 The visible decision trace exposes application state, validation, applicable knowledge, and the resulting response policy.
 
----
-
 ## Deriving the Architecture
 
 **The application remains authoritative.**
@@ -100,8 +96,6 @@ The experiment separates seven concerns:
 
 Starting deterministically exposes those boundaries and creates a baseline against which later inference can be evaluated.
 
----
-
 ## Structured Product Knowledge
 
 Phase 1 uses small authored knowledge fragments rather than ingested documentation: a Data Connection summary, required-field help, beginner guidance, version 4.2 guidance, and configuration-selection guidance.
@@ -109,8 +103,6 @@ Phase 1 uses small authored knowledge fragments rather than ingested documentati
 Each fragment carries applicability information such as audience, version, and state conditions, plus simple provenance metadata.
 
 The design goal is **context selection, not context accumulation**: narrow the available knowledge using deterministic facts before deciding whether any of it should affect the interface.
-
----
 
 ## Knowledge Applicability Is Not Response Policy
 
@@ -127,8 +119,6 @@ Response policy asks:
 <ApplicabilityVsPolicyVisual />
 
 Keeping those decisions separate prevents the knowledge layer from becoming an accidental UI controller.
-
----
 
 ## UI Authority Should Follow Evidence
 
@@ -148,13 +138,9 @@ The Data Connection experiment maps directly onto that scale. With several compa
 
 Evidence changes authority; the system does not guess.
 
----
-
 ## What Phase 1 Shows
 
 <Phase1FindingsVisual />
-
----
 
 ## Limitations of the Current Experiment
 
@@ -166,8 +152,6 @@ Product knowledge is fixture data, compatibility scenarios are fixed, and user f
 
 The experiment also leaves production governance unanswered: review, stale guidance, conflicting sources, and measurement of intervention quality.
 
----
-
 ## Where AI Could Enter Later
 
 The deterministic pipeline leaves an explicit seam for optional inference after context filtering and before response policy:
@@ -176,9 +160,15 @@ The deterministic pipeline leaves an explicit seam for optional inference after 
   <WhereAiCouldEnterLaterVisual />
 </ResearchBreakout>
 
-That seam can support intent resolution, semantic retrieval, explanation adaptation, local inference, or runtime routing while application state continues to constrain what the interface may claim or do.
+Potential later uses of that seam remain deliberately narrower than product truth or business policy:
 
----
+- **Intent resolution:** map freeform language to a known product concept while deterministic state remains authoritative.
+- **Semantic retrieval:** rank product knowledge after version, environment, permissions, or feature filters reduce the candidate set.
+- **Explanation adaptation:** rewrite or compress an already-authorized explanation without changing its facts or action boundary.
+- **Browser-local inference:** run narrow classification or ranking locally when the model and hardware are sufficient.
+- **Runtime routing:** eventually decide whether an inference task belongs in the browser, a local service, or a remote model.
+
+These are future capabilities, not Phase 1 behavior. Any inferred result would still need to be reconciled against application state and approved knowledge before response policy or the UI acts on it.
 
 ## From Documentation to Product Capability
 
