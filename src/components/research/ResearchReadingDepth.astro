@@ -1,0 +1,262 @@
+---
+export interface Props {
+  overviewTime?: string;
+  fullResearchTime?: string;
+}
+
+const {
+  overviewTime = '4 min',
+  fullResearchTime = '8 min',
+} = Astro.props;
+---
+
+<div class="reading-depth not-prose" data-reading-depth-switcher>
+  <div class="reading-depth__intro">
+    <p class="reading-depth__eyebrow">Reading depth</p>
+    <p class="reading-depth__note">
+      Same research, two levels of detail. Start with the idea, or go straight to the complete technical argument.
+    </p>
+  </div>
+
+  <div class="reading-depth__tabs" role="tablist" aria-label="Choose reading depth">
+    <button
+      class="reading-depth__tab"
+      type="button"
+      role="tab"
+      id="reading-depth-tab-overview"
+      aria-controls="reading-depth-overview"
+      aria-selected="true"
+      tabindex="0"
+      data-reading-depth-target="overview"
+    >
+      <span class="reading-depth__label">Overview</span>
+      <span class="reading-depth__meta">Conceptual · {overviewTime}</span>
+    </button>
+
+    <button
+      class="reading-depth__tab"
+      type="button"
+      role="tab"
+      id="reading-depth-tab-full"
+      aria-controls="reading-depth-full"
+      aria-selected="false"
+      tabindex="-1"
+      data-reading-depth-target="full"
+    >
+      <span class="reading-depth__label">Full Research</span>
+      <span class="reading-depth__meta">Evidence + architecture · {fullResearchTime}</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const activateReadingDepth = (
+    article: HTMLElement,
+    depth: 'overview' | 'full',
+    options: { updateUrl?: boolean; scrollToPanel?: boolean; focusTab?: boolean } = {},
+  ) => {
+    const { updateUrl = false, scrollToPanel = false, focusTab = false } = options;
+    const switcher = article.querySelector<HTMLElement>('[data-reading-depth-switcher]');
+    if (!switcher) return;
+
+    article.dataset.readingDepth = depth;
+    article.dataset.readingDepthEnhanced = 'true';
+
+    const tabs = Array.from(switcher.querySelectorAll<HTMLButtonElement>('[data-reading-depth-target]'));
+    tabs.forEach((tab) => {
+      const selected = tab.dataset.readingDepthTarget === depth;
+      tab.setAttribute('aria-selected', String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+      if (selected && focusTab) tab.focus();
+    });
+
+    const panels = Array.from(article.querySelectorAll<HTMLElement>('[data-reading-depth-panel]'));
+    panels.forEach((panel) => {
+      const selected = panel.dataset.readingDepthPanel === depth;
+      panel.hidden = !selected;
+      panel.toggleAttribute('inert', !selected);
+    });
+
+    const toc = article.querySelector<HTMLElement>('aside[aria-label="Research navigation"]');
+    if (toc) toc.hidden = depth === 'overview';
+
+    if (updateUrl) {
+      const url = new URL(window.location.href);
+      if (depth === 'full') {
+        url.searchParams.set('depth', 'full');
+      } else {
+        url.searchParams.delete('depth');
+      }
+      history.replaceState(history.state, '', `${url.pathname}${url.search}${url.hash}`);
+    }
+
+    if (scrollToPanel) {
+      const panel = article.querySelector<HTMLElement>(`[data-reading-depth-panel="${depth}"]`);
+      panel?.scrollIntoView({
+        behavior: reducedMotion.matches ? 'auto' : 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-research-entry]').forEach((article) => {
+    const switcher = article.querySelector<HTMLElement>('[data-reading-depth-switcher]');
+    if (!switcher || switcher.dataset.readingDepthBound === 'true') return;
+    switcher.dataset.readingDepthBound = 'true';
+
+    let initialDepth: 'overview' | 'full' = new URL(window.location.href).searchParams.get('depth') === 'full'
+      ? 'full'
+      : 'overview';
+
+    if (window.location.hash) {
+      const hashTarget = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+      if (hashTarget?.closest('[data-reading-depth-panel="full"]')) initialDepth = 'full';
+    }
+
+    activateReadingDepth(article, initialDepth);
+
+    switcher.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element)) return;
+      const tab = event.target.closest<HTMLButtonElement>('[data-reading-depth-target]');
+      const depth = tab?.dataset.readingDepthTarget;
+      if (depth !== 'overview' && depth !== 'full') return;
+      activateReadingDepth(article, depth, { updateUrl: true });
+    });
+
+    switcher.addEventListener('keydown', (event) => {
+      if (!(event instanceof KeyboardEvent)) return;
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+
+      const tabs = Array.from(switcher.querySelectorAll<HTMLButtonElement>('[data-reading-depth-target]'));
+      const currentIndex = tabs.findIndex((tab) => tab === document.activeElement);
+      if (currentIndex === -1) return;
+
+      event.preventDefault();
+      let nextIndex = currentIndex;
+      if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % tabs.length;
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = tabs.length - 1;
+
+      const nextTab = tabs[nextIndex];
+      const depth = nextTab?.dataset.readingDepthTarget;
+      if (depth === 'overview' || depth === 'full') {
+        activateReadingDepth(article, depth, { updateUrl: true, focusTab: true });
+      }
+    });
+
+    article.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element)) return;
+      const trigger = event.target.closest<HTMLElement>('[data-reading-depth-open]');
+      const depth = trigger?.dataset.readingDepthOpen;
+      if (depth !== 'overview' && depth !== 'full') return;
+
+      activateReadingDepth(article, depth, {
+        updateUrl: true,
+        scrollToPanel: true,
+      });
+    });
+  });
+</script>
+
+<style>
+  .reading-depth {
+    margin-bottom: 2.5rem;
+    border-block: 1px solid var(--border-subtle);
+    padding-block: 1.25rem;
+  }
+
+  .reading-depth__intro {
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .reading-depth__eyebrow {
+    margin: 0;
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .reading-depth__note {
+    max-width: 44rem;
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+
+  .reading-depth__tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .reading-depth__tab {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.25rem;
+    background: var(--bg-card);
+    padding: 0.9rem 1rem;
+    text-align: left;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .reading-depth__tab:hover {
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+  }
+
+  .reading-depth__tab[aria-selected='true'] {
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--border-subtle));
+    background: color-mix(in srgb, var(--accent) 7%, var(--bg-card));
+    color: var(--text-primary);
+  }
+
+  .reading-depth__tab:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .reading-depth__label {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .reading-depth__meta {
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 639px) {
+    .reading-depth__tabs {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reading-depth__tab {
+      transition: none;
+    }
+  }
+</style>
