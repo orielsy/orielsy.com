@@ -8,13 +8,13 @@ const rows = [
   ['Plan', 'How is it intended to be built?', 'Implementation approach', 'Strategy'],
   ['Tasks', 'What remains or is complete?', 'Current execution', 'Recorded state'],
   ['ADR', 'Why was this choice made?', 'Decision', 'Rationale'],
-  ['Code + tests', 'What exists and is verified?', 'Runtime behavior', 'Implementation'],
+  ['Code + tests', 'What exists; what was checked?', 'Behavior / checks', 'Implementation / verification'],
 ];
 ---
 
 <ResearchFigureFrame
   className="is-open"
-  figureNumber="02"
+  figureNumber="03"
   eyebrow="Interpretive model grounded in repository roles"
   title="Authority depends on the question"
   caption="This is an editorial model of the repository's artifact roles, not a claim that the repository contains an automatic precedence engine."
@@ -46,9 +46,7 @@ const rows = [
 </ResearchFigureFrame>
 
 <style>
-  .authority-head {
-    display: none;
-  }
+  .authority-head { display: none; }
 
   .authority-row {
     display: grid;
@@ -57,21 +55,14 @@ const rows = [
     padding: 0.8rem 0;
   }
 
-  .authority-row + .authority-row {
-    border-top: 1px solid var(--border-subtle);
-  }
+  .authority-row + .authority-row { border-top: 1px solid var(--border-subtle); }
 
   .index,
   .authority-head,
   .evidence,
-  [data-label]::before {
-    font-family: var(--font-mono-ui);
-  }
+  [data-label]::before { font-family: var(--font-mono-ui); }
 
-  .index {
-    color: var(--accent);
-    font-size: 0.6875rem;
-  }
+  .index { color: var(--accent); font-size: 0.6875rem; }
 
   .authority-row strong {
     color: var(--text-primary);
@@ -100,7 +91,8 @@ const rows = [
     display: grid;
     gap: 0.6rem;
     margin-top: 1rem;
-    border-radius: 0.375rem; background: color-mix(in srgb, var(--accent) 5%, var(--bg-secondary));
+    border-radius: 0.375rem;
+    background: color-mix(in srgb, var(--accent) 5%, var(--bg-secondary));
     padding: 1rem;
   }
 
@@ -135,30 +127,17 @@ const rows = [
       text-transform: uppercase;
     }
 
-    .authority-head span:first-child {
-      grid-column: 2;
-    }
-
+    .authority-head span:first-child { grid-column: 2; }
     .authority-row > span:not(.index),
-    .authority-row strong {
-      grid-column: auto;
-    }
-
-    [data-label]::before {
-      display: none;
-    }
+    .authority-row strong { grid-column: auto; }
+    [data-label]::before { display: none; }
 
     .authority-rule {
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
       align-items: center;
     }
 
-    .authority-rule :global(.rule-arrow) {
-      display: block;
-    }
-
-    .authority-rule p:last-child {
-      text-align: right;
-    }
+    .authority-rule :global(.rule-arrow) { display: block; }
+    .authority-rule p:last-child { text-align: right; }
   }
 </style>
