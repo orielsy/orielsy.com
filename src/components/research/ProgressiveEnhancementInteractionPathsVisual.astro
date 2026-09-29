@@ -1,0 +1,172 @@
+---
+import { MessageSquare, Table2 } from '@lucide/astro';
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+---
+
+<ResearchFigureFrame
+  figureNumber="01"
+  eyebrow="Conceptual comparison · source-derived"
+  title="Same destination, different owner of the result"
+  caption="Both paths can conceptually reach the same application state. The distinction here is who carries the result back into the interface; no speed, accuracy, or capability advantage is claimed."
+>
+  <div class="paths-grid">
+    <section aria-labelledby="chat-path-title">
+      <div class="path-heading">
+        <MessageSquare size={16} strokeWidth={1.7} aria-hidden="true" />
+        <span id="chat-path-title">Chat surface</span>
+      </div>
+      <ol>
+        <li><span>01</span><p>Describe the desired state in prose</p></li>
+        <li><span>02</span><p>Model interprets the request</p></li>
+        <li><span>03</span><p>Result arrives through conversation</p></li>
+        <li class="result"><span>04</span><p>User carries the result back into the interface</p></li>
+      </ol>
+      <p class="handoff">Handoff owned by the user</p>
+    </section>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <section aria-labelledby="embedded-path-title">
+      <div class="path-heading path-heading-accent">
+        <Table2 size={16} strokeWidth={1.7} aria-hidden="true" />
+        <span id="embedded-path-title">Embedded capability</span>
+      </div>
+      <ol>
+        <li><span>01</span><p>Act inside the existing interface</p></li>
+        <li><span>02</span><p>Capability receives a narrow job</p></li>
+        <li class="result"><span>03</span><p>Interface updates in place</p></li>
+      </ol>
+      <p class="handoff handoff-accent">Handoff owned by the interface</p>
+    </section>
+  </div>
+
+  <div class="shared-state">
+    <span>Shared end state</span>
+    <p>The application reflects the state the user was trying to reach.</p>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-figure-frame) :global(p),
+  :global(.research-figure-frame) :global(ol),
+  :global(.research-figure-frame) :global(li) {
+    margin: 0;
+  }
+
+  .paths-grid {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  section {
+    min-width: 0;
+  }
+
+  .path-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .path-heading-accent {
+    color: var(--accent);
+  }
+
+  ol {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1rem !important;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 1.7rem minmax(0, 1fr);
+    gap: 0.45rem;
+    align-items: start;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  li > span {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    line-height: 2.25;
+  }
+
+  li.result {
+    color: var(--text-primary);
+  }
+
+  section:last-child li > span {
+    color: var(--accent);
+  }
+
+  .handoff {
+    margin-top: 1rem !important;
+    border-left: 2px solid var(--border-strong);
+    padding-left: 0.75rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .handoff-accent {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .shared-state {
+    margin-top: 1.75rem;
+    border-radius: 0.25rem;
+    background: var(--bg-secondary);
+    padding: 0.85rem 1rem;
+  }
+
+  .shared-state > span {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .shared-state p {
+    margin-top: 0.3rem !important;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .paths-grid {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    .divider {
+      display: block;
+      width: 1px;
+      min-height: 100%;
+      border-left: 1px dashed var(--border-subtle);
+    }
+  }
+</style>
