@@ -5,9 +5,9 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 <ResearchFigureFrame
   figureNumber="01"
-  eyebrow="Conceptual comparison · source prose"
-  title="Same result, different handoff"
-  caption="Both paths can conceptually reach the same application state. The distinction here is who carries the result back into the interface; no speed, accuracy, or capability advantage is claimed."
+  eyebrow="Conceptual comparison · source + historical figure"
+  title="Same intent, different interface path"
+  caption="Conversation can also trigger an application action directly. The conditional handoff shown here applies when chat returns a result outside the table; embedded capability makes the table itself the result surface. Neither path is inherently faster, more capable, or more accurate."
 >
   <div class="paths-grid">
     <section aria-labelledby="chat-path-title">
@@ -17,11 +17,11 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       </div>
       <ol>
         <li><span>01</span><p>Describe the desired state in prose</p></li>
-        <li><span>02</span><p>Model interprets the request</p></li>
-        <li><span>03</span><p>Result arrives through conversation</p></li>
-        <li class="result"><span>04</span><p>User carries the result back into the interface</p></li>
+        <li><span>02</span><p>Conversation interprets the request</p></li>
+        <li><span>03</span><p>Action or result returns through the integration</p></li>
+        <li class="result"><span>04</span><p>If the result stays outside the table, the user carries it back</p></li>
       </ol>
-      <p class="handoff">Handoff owned by the user</p>
+      <p class="handoff">Handoff depends on the integration</p>
     </section>
 
     <div class="divider" aria-hidden="true"></div>
@@ -36,13 +36,13 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
         <li><span>02</span><p>Capability receives a narrow job</p></li>
         <li class="result"><span>03</span><p>Interface updates in place</p></li>
       </ol>
-      <p class="handoff handoff-accent">Handoff owned by the interface</p>
+      <p class="handoff handoff-accent">Result lives in the interface</p>
     </section>
   </div>
 
   <div class="shared-state">
-    <span>Shared end state</span>
-    <p>The application reflects the state the user was trying to reach.</p>
+    <span>Shared intent</span>
+    <p>Either path can be integrated to reach the application state the user requested.</p>
   </div>
 </ResearchFigureFrame>
 
