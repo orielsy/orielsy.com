@@ -15,7 +15,7 @@ const jobs = [
 
 <ResearchFigureFrame
   figureNumber="02"
-  eyebrow="Source-stated constraints + jobs · editorial arrangement"
+  eyebrow="Source lists · editorial arrangement"
   title="The application narrows the job before the model sees it"
   caption="The source argues that application state, validation, schemas, available actions, and product rules can reduce a broad problem to a narrower one. The wedge-like arrangement is an editorial visualization of that claim."
 >
@@ -164,15 +164,20 @@ const jobs = [
   }
 
   .question-shift {
-    margin-top: 1.5rem !important;
+    margin-top: 1.6rem !important;
     color: var(--text-secondary);
-    font-size: 0.8125rem;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
     line-height: 1.6;
   }
 
   .question-shift strong {
-    color: var(--text-primary);
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
     font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   @media (min-width: 640px) {
