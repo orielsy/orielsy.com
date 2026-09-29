@@ -3,9 +3,9 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 const concerns = [
   {
-    label: 'Transport responsiveness',
+    label: 'Transport path',
     owner: 'Async service path',
-    detail: 'WebSocket handling and buffering should remain responsive while transcription work runs elsewhere.',
+    detail: 'WebSocket handling and buffering remain on the async service path while transcription work is moved elsewhere.',
   },
   {
     label: 'Blocking inference',
@@ -14,7 +14,7 @@ const concerns = [
     accent: true,
   },
   {
-    label: 'Render timing',
+    label: 'Render scheduling',
     owner: 'Electron / Vue renderer',
     detail: 'nextTick() and requestAnimationFrame() coordinate caption layout and visual transitions.',
   },
@@ -22,11 +22,11 @@ const concerns = [
 ---
 
 <ResearchFigureFrame
-  eyebrow="Separation of responsibilities"
-  title="Blocking inference is isolated from transport responsiveness and UI rendering."
-  caption="Transport responsiveness, inference latency, and visual smoothness are separate problems. Keeping them in separate layers makes each easier to improve independently."
+  eyebrow="Execution paths"
+  title="Blocking inference is isolated from transport handling and UI rendering."
+  caption="The source shows separate execution concerns for transport, inference, and rendering. That separation is architectural; it is not a measured latency, throughput, or visual-smoothness result."
 >
-  <div class="concerns" aria-label="runtime responsibility boundaries">
+  <div class="concerns" aria-label="runtime execution boundaries">
     {concerns.map((concern) => (
       <section class:list={['concern', concern.accent && 'is-accent']}>
         <span class="owner">{concern.owner}</span>
