@@ -1,0 +1,186 @@
+---
+import { ArrowDown, ArrowRight } from '@lucide/astro';
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const sessions = [
+  'Session 01 · decision made',
+  'Session 02 · new working context',
+  'Session 03 · later task continues',
+];
+
+const artifacts = [
+  'constitution · spec',
+  'plan · tasks',
+  'decision records',
+  'implementation · tests',
+];
+---
+
+<ResearchFigureFrame
+  className="is-open"
+  figureNumber="01"
+  eyebrow="Editorial model · repository pattern"
+  title="A session ends; the repository remains"
+  caption="This is a continuity model, not a claim that every agent reads these files or that a repository rule guarantees correct behavior."
+>
+  <div class="continuity-map">
+    <section class="working-context">
+      <span class="label">Working context</span>
+      <div class="session-list">
+        {sessions.map((session, index) => (
+          <div class:list={['session', index === 0 && 'is-current']}>
+            <span>{session}</span>
+          </div>
+        ))}
+      </div>
+      <p>Goals, corrections, and trade-offs are useful while they are visible.</p>
+      <span class="boundary-note">Conversation context is not assumed to carry forward.</span>
+    </section>
+
+    <div class="transition" aria-hidden="true">
+      <ArrowDown class="arrow-down" size={17} stroke-width={1.75} />
+      <ArrowRight class="arrow-right" size={17} stroke-width={1.75} />
+    </div>
+
+    <section class="durable-memory">
+      <span class="label accent">Durable project memory</span>
+      <strong>An address for the next task</strong>
+      <div class="artifact-grid">
+        {artifacts.map((artifact) => <code>{artifact}</code>)}
+      </div>
+      <p>Different artifacts preserve different kinds of intent and evidence.</p>
+    </section>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  .continuity-map {
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  section {
+    min-width: 0;
+  }
+
+  .label,
+  .session span,
+  .boundary-note,
+  code {
+    font-family: var(--font-mono-ui);
+  }
+
+  .label {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.6875rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .label.accent {
+    color: var(--accent);
+  }
+
+  .session-list {
+    margin-top: 0.75rem;
+    border-left: 1px dashed var(--border-strong);
+  }
+
+  .session {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.7rem 0 0.7rem 0.9rem;
+  }
+
+  .session:last-child {
+    border-bottom: 0;
+  }
+
+  .session span {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .session.is-current span {
+    color: var(--text-primary);
+  }
+
+  section p {
+    margin: 0.8rem 0 0 !important;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .boundary-note {
+    display: block;
+    margin-top: 0.8rem;
+    color: var(--text-muted);
+    font-size: 0.6875rem;
+    letter-spacing: 0.03em;
+  }
+
+  .transition {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+  }
+
+  .transition :global(.arrow-right) {
+    display: none;
+  }
+
+  .durable-memory {
+    position: relative;
+    border-left: 2px solid var(--accent);
+    background: var(--bg-secondary);
+    padding: 1rem;
+  }
+
+  .durable-memory > strong {
+    display: block;
+    margin-top: 0.45rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+
+  .artifact-grid {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.8rem;
+  }
+
+  code {
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    color: var(--text-secondary) !important;
+    font-size: 0.75rem !important;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 760px) {
+    .continuity-map {
+      grid-template-columns: minmax(0, 1fr) 3rem minmax(0, 1.15fr);
+      align-items: center;
+    }
+
+    .transition :global(.arrow-down) {
+      display: none;
+    }
+
+    .transition :global(.arrow-right) {
+      display: block;
+    }
+
+    .artifact-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
