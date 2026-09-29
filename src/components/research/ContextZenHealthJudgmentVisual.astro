@@ -1,0 +1,178 @@
+---
+import { Activity } from '@lucide/astro';
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const states = [
+  ['Healthy', 'History still supports the next action'],
+  ['Watch', 'Contradictions or buried constraints are appearing'],
+  ['Handoff', 'A faithful compact state would probably be easier to continue from'],
+];
+---
+
+<ResearchFigureFrame
+  figureNumber="02"
+  eyebrow="Qualitative heuristic · provisional"
+  title="Context health is qualitative"
+  caption="The three states are qualitative, not thresholds on a numeric scale. Length and tool volume can inform the judgment, but the source says they should not force a handoff by themselves. The fresh-agent comparison remains an unvalidated heuristic."
+>
+  <div class="figure-label">
+    <Activity size={16} strokeWidth={1.7} aria-hidden="true" />
+    <span>Material effect on the next action</span>
+  </div>
+
+  <div class="state-path">
+    <div class="path-line" aria-hidden="true"></div>
+    {states.map(([name, note], index) => (
+      <section class:list={[index === 2 && 'is-handoff']}>
+        <span class="state-dot" aria-hidden="true"></span>
+        <div>
+          <h4>{name}</h4>
+          <p>{note}</p>
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <div class="signal-grid">
+    <section>
+      <span class="signal-label">Hard signals can inform</span>
+      <p>Context load · turn count · artifact count · tool-result volume</p>
+    </section>
+    <section>
+      <span class="signal-label signal-label-accent">Semantic signals decide</span>
+      <p>Superseded state · colliding instructions · rediscovery · buried constraints · drift</p>
+    </section>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-figure-frame) :global(p),
+  :global(.research-figure-frame) :global(h4) {
+    margin: 0;
+  }
+
+  .figure-label,
+  .signal-label {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .figure-label {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--accent);
+  }
+
+  .state-path {
+    position: relative;
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .path-line {
+    position: absolute;
+    top: 0.35rem;
+    bottom: 0;
+    left: 0.35rem;
+    border-left: 1px dashed var(--border-subtle);
+  }
+
+  .state-path section {
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.8rem minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .state-dot {
+    position: relative;
+    z-index: 1;
+    width: 0.7rem;
+    height: 0.7rem;
+    margin-top: 0.2rem;
+    border: 1px solid var(--text-muted);
+    border-radius: 999px;
+    background: var(--bg-card);
+  }
+
+  .is-handoff .state-dot {
+    border-color: var(--accent);
+    background: var(--accent);
+  }
+
+  h4 {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .is-handoff h4 {
+    color: var(--accent);
+  }
+
+  .state-path p,
+  .signal-grid p {
+    margin-top: 0.3rem !important;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  .signal-grid {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.75rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1.25rem;
+  }
+
+  .signal-label {
+    display: block;
+  }
+
+  .signal-label-accent {
+    color: var(--accent);
+  }
+
+  @media (min-width: 720px) {
+    .state-path {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2rem;
+    }
+
+    .path-line {
+      top: 0.35rem;
+      right: 0;
+      bottom: auto;
+      left: 0;
+      border-top: 1px dashed var(--border-subtle);
+      border-left: 0;
+    }
+
+    .state-path section {
+      display: block;
+    }
+
+    .state-dot {
+      margin-top: 0;
+    }
+
+    .state-path section > div {
+      margin-top: 0.85rem;
+    }
+
+    .signal-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+</style>
