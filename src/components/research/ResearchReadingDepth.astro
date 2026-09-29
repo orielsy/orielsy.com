@@ -83,7 +83,7 @@ const {
   const getQuickOrientationCallouts = (article: HTMLElement) =>
     Array.from(article.querySelectorAll<HTMLElement>('aside')).filter((aside) => {
       const label = aside.firstElementChild?.textContent?.trim().toUpperCase();
-      return label === 'QUICK ORIENTATION';
+      return label === 'QUICK ORIENTATION' || label === 'TL;DR · QUICK ORIENTATION';
     });
 
   const positionQuickOrientationAfterSwitcher = (article: HTMLElement, switcher: HTMLElement) => {
@@ -182,6 +182,13 @@ const {
     const switcher = article.querySelector<HTMLElement>('[data-reading-depth-switcher]');
     if (!switcher || switcher.dataset.readingDepthBound === 'true') return;
     switcher.dataset.readingDepthBound = 'true';
+
+    if (article.dataset.researchEntry === 'product-knowledge-as-architecture') {
+      getQuickOrientationCallouts(article).forEach((callout) => {
+        const label = callout.firstElementChild;
+        if (label) label.textContent = 'TL;DR · QUICK ORIENTATION';
+      });
+    }
 
     positionQuickOrientationAfterSwitcher(article, switcher);
 
