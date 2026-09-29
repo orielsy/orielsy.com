@@ -81,7 +81,7 @@ A product may need to operate with unreliable connectivity, limited hardware, re
 
 That does not guarantee lower cost, stronger privacy, better access, or equivalent model capability. Those outcomes depend on the implementation. What the architecture provides is separation: the usefulness of the interface is not automatically coupled to the availability of the most powerful inference path.
 
-The same separation makes fallback behavior easier to reason about. If a local or remote enhancement is unavailable, the product can fall back to a weaker implementation without surrendering application truth or expanding the actions the interface is allowed to take.
+The same separation can make fallback behavior easier to reason about. A product can deliberately provide a weaker fallback when local or remote inference is unavailable, while preserving the same application truth and action boundaries. The architecture makes that separation possible; the fallback and its authority constraints still have to be implemented explicitly.
 
 ## Two Implementations of the Same Preference
 
