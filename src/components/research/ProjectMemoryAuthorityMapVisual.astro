@@ -1,4 +1,5 @@
 ---
+import { ArrowRight } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 const rows = [
@@ -39,7 +40,7 @@ const rows = [
 
   <div class="authority-rule">
     <p>No single artifact answers every concern.</p>
-    <span aria-hidden="true">→</span>
+    <ArrowRight class="rule-arrow" size={16} stroke-width={1.75} aria-hidden="true" />
     <p>When artifacts diverge, expose the conflict rather than flatten it.</p>
   </div>
 </ResearchFigureFrame>
@@ -109,10 +110,10 @@ const rows = [
     line-height: 1.5;
   }
 
-  .authority-rule span {
+  .authority-rule :global(.rule-arrow) {
     display: none;
+    align-self: center;
     color: var(--accent);
-    font-family: var(--font-mono-ui);
   }
 
   @media (min-width: 760px) {
@@ -150,7 +151,7 @@ const rows = [
       align-items: center;
     }
 
-    .authority-rule span {
+    .authority-rule :global(.rule-arrow) {
       display: block;
     }
 

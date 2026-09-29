@@ -1,4 +1,5 @@
 ---
+import { ArrowRight } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 ---
 
@@ -16,7 +17,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       <p>The task supplies scope, not every document in the repository.</p>
     </section>
 
-    <span class="arrow" aria-hidden="true">→</span>
+    <ArrowRight class="arrow" size={18} stroke-width={1.75} aria-hidden="true" />
 
     <section class="router">
       <span class="label">Explicit routing</span>
@@ -24,7 +25,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       <p>Read the constitution, then the relevant spec, plan/tasks, and ADRs before structural changes.</p>
     </section>
 
-    <span class="arrow" aria-hidden="true">→</span>
+    <ArrowRight class="arrow" size={18} stroke-width={1.75} aria-hidden="true" />
 
     <section class="selected">
       <span class="label">Selected context</span>
@@ -93,11 +94,10 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     padding-left: 0.8rem;
   }
 
-  .arrow {
+  .routing-flow :global(.arrow) {
     align-self: center;
+    justify-self: center;
     color: var(--accent);
-    font-family: var(--font-mono-ui);
-    text-align: center;
     transform: rotate(90deg);
   }
 
@@ -144,7 +144,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
       align-items: center;
     }
 
-    .arrow {
+    .routing-flow :global(.arrow) {
       transform: none;
     }
   }
