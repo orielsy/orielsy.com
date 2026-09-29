@@ -1,7 +1,7 @@
 ---
 title: "From Prompts to Project Memory: Spec-Driven Development for Coding Agents"
 description: "A repository-grounded look at using version-controlled specs, decisions, and project rules as durable memory for coding agents across long-running software work."
-tldr: "Conversation is working context, not project memory. This article examines a repository pattern for giving consequential decisions a durable address, routing agents toward relevant context, and keeping that memory aligned with implementation."
+tldr: "Conversation is working context, not project memory. This article examines a repository pattern for giving consequential decisions a durable address, routing agents toward relevant context, and keeping that memory aligned with implementation. This makes silent regression less likely; it does not make agent output deterministic or correct."
 tldrLabel: "TL;DR — WORKING PATTERN"
 pubDate: 2026-09-11
 researchNumber: 4
@@ -164,6 +164,8 @@ The important point is not which document should win automatically. The importan
 That inconsistency is inspectable because both artifacts survive. It still requires someone to reconcile them.
 
 Project memory therefore has a lifecycle: create it, scope it, consult it, update it, and retire or amend it when the system changes.
+
+When a durable requirement changes, the artifact that owns that requirement should change with the implementation.
 
 ## What This Does Not Solve
 
