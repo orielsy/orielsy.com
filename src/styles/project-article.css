@@ -8,7 +8,7 @@
 .project-brief dt {
   color: var(--text-muted);
   font-family: var(--font-mono-ui);
-  font-size: 0.52rem;
+  font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.11em;
   line-height: 1.45;
@@ -20,7 +20,7 @@
 .project-brief dd {
   margin: 0.45rem 0 0;
   color: var(--text-secondary);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   line-height: 1.65;
 }
 
@@ -41,7 +41,7 @@
   padding-left: 0.7rem;
   color: var(--text-secondary);
   font-family: var(--font-mono-ui);
-  font-size: 0.58rem;
+  font-size: 0.625rem;
   letter-spacing: 0.04em;
 }
 
@@ -184,8 +184,36 @@
 .project-prose .media-breakout figcaption,
 .project-prose .media-breakout > div:last-child {
   font-family: var(--font-mono-ui);
-  font-size: 0.62rem;
+  font-size: 0.625rem;
   line-height: 1.55;
+}
+
+/*
+ * The adaptive lab is the primary project artifact. When embedded in its own
+ * case study, remove duplicate framing and keep persistent lab metadata at a
+ * readable floor without flattening the actual product UI.
+ */
+[data-project-entry="adaptive-enterprise-ui-lab"]
+  [data-adaptive-enterprise-ui-lab][data-lab-context="embedded"]
+  > header
+  > div:first-child
+  > span:first-child,
+[data-project-entry="adaptive-enterprise-ui-lab"]
+  [data-adaptive-enterprise-ui-lab][data-lab-context="embedded"]
+  > header
+  > div:first-child
+  > span:nth-child(2) {
+  display: none;
+}
+
+[data-project-entry="adaptive-enterprise-ui-lab"]
+  [data-adaptive-enterprise-ui-lab]
+  [class*="text-[9px]"] {
+  font-size: 0.625rem;
+}
+
+[data-project-entry="adaptive-enterprise-ui-lab"] .phase-one-pipeline .node-number {
+  font-size: 0.625rem;
 }
 
 @media (min-width: 1024px) {
