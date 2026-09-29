@@ -15,7 +15,7 @@ const steps = [
   {
     label: 'Route behavior',
     file: 'src/pages/research/[...slug].astro',
-    text: 'Published entries render; local preview is gated by development preview mode.',
+    text: 'Published entries render; local preview requires DEV + content-preview mode.',
   },
   {
     label: 'Feed behavior',
@@ -26,13 +26,14 @@ const steps = [
 ---
 
 <ResearchFigureFrame
-  eyebrow="Direct repository evidence"
+  eyebrow="Figure 04"
+  status="Direct repository evidence"
   title="One concern, four forms of evidence"
   caption="The chain does not treat the specification as proof of implementation. Each surface contributes a different kind of evidence."
 >
   <ol class="evidence-chain">
     {steps.map((step, index) => (
-      <li class:list={[index % 2 === 1 && 'is-right']}>
+      <li>
         <span class="node" aria-hidden="true">0{index + 1}</span>
         <div class="evidence-copy">
           <span class="label">{step.label}</span>
@@ -50,15 +51,14 @@ const steps = [
     display: grid;
     gap: 1rem;
     margin: 0;
-    border-block: 1px solid var(--border-subtle);
-    padding: 1rem 0;
+    padding: 0;
     list-style: none;
   }
 
   .evidence-chain::before {
     position: absolute;
-    top: 1rem;
-    bottom: 1rem;
+    top: 0.8rem;
+    bottom: 0.8rem;
     left: 0.8rem;
     width: 1px;
     background: var(--border-subtle);
@@ -69,7 +69,7 @@ const steps = [
     position: relative;
     display: grid;
     grid-template-columns: 1.6rem minmax(0, 1fr);
-    gap: 0.75rem;
+    gap: 0.8rem;
     margin: 0;
   }
 
@@ -100,52 +100,54 @@ const steps = [
 
   code {
     display: block;
-    margin-top: 0.25rem;
+    margin-top: 0.3rem;
     border: 0;
     background: transparent;
     padding: 0;
     color: var(--text-primary);
     font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
-    line-height: 1.5;
+    font-size: 0.7rem;
+    line-height: 1.55;
     overflow-wrap: anywhere;
+    text-transform: none;
   }
 
   p {
-    margin: 0.35rem 0 0 !important;
+    margin: 0.4rem 0 0 !important;
     color: var(--text-secondary);
-    font-size: 0.75rem;
-    line-height: 1.55;
+    font-size: 0.8rem;
+    line-height: 1.6;
   }
 
   @media (min-width: 760px) {
     .evidence-chain {
-      gap: 1.4rem;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.15rem;
+      padding-top: 0.15rem;
     }
 
     .evidence-chain::before {
-      left: 50%;
+      top: 0.8rem;
+      right: calc(12.5% - 0.8rem);
+      bottom: auto;
+      left: calc(12.5% - 0.8rem);
+      width: auto;
+      height: 1px;
     }
 
     li {
-      grid-template-columns: minmax(0, 1fr) 3rem minmax(0, 1fr);
-      align-items: start;
+      grid-template-columns: 1fr;
+      gap: 0.7rem;
+      align-content: start;
+      min-width: 0;
     }
 
     .node {
-      grid-column: 2;
-      justify-self: center;
+      justify-self: start;
     }
 
     .evidence-copy {
-      grid-column: 1;
-      grid-row: 1;
-      text-align: right;
-    }
-
-    li.is-right .evidence-copy {
-      grid-column: 3;
-      text-align: left;
+      min-width: 0;
     }
   }
 </style>
