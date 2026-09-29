@@ -1,7 +1,7 @@
 ---
 title: "Architecture Notes: Audio Chunking, Transcription Filtering, and Real-Time Speech UI Systems"
 description: "A technical exploration of streaming audio chunk management, Whisper transcription filtering, and Electron overlay rendering, grounded in the current public speechBubbles and whisper-api source."
-tldr: "Real-time speech UI is a pipeline problem. This article uses speechBubbles to show why separating capture, inference, filtering, and rendering makes the system easier to reason about; the project case study contains the full system and 1080p demo."
+tldr: "The speechBubbles project establishes the working system and its architectural boundaries. This companion paper opens selected implementation paths—format reduction, chunking, filtering and VAD status, asynchronous inference, and rendering—and examines what the current public source actually supports."
 tldrLabel: "TL;DR — COMPANION PROJECT"
 pubDate: 2026-08-25
 researchNumber: 3
@@ -22,21 +22,13 @@ import ChunkingTradeoffVisual from '../../components/research/ChunkingTradeoffVi
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import ResearchSourceExcerpt from '../../components/research/ResearchSourceExcerpt.astro';
 import ResearchSourceNote from '../../components/research/ResearchSourceNote.astro';
-import SpeechArchitectureTakeawaysVisual from '../../components/research/SpeechArchitectureTakeawaysVisual.astro';
-import SpeechStreamingPipelineVisual from '../../components/research/SpeechStreamingPipelineVisual.astro';
 import TranscriptionFilteringTruthVisual from '../../components/research/TranscriptionFilteringTruthVisual.astro';
 
 <ResearchSourceNote>
-  This exploration is grounded in the current public `speechBubbles` and `whisper-api` source. Format calculations below are arithmetic derived from the stated sample formats, not measured runtime benchmarks.
+  This exploration is grounded in the current public `speechBubbles` and `whisper-api` source. The [speechBubbles project case study](/projects/local-ai-real-time-captioning) establishes the working prototype, creator role, broadcast workflow, and product-level trade-offs; this paper begins inside that system boundary. Format calculations below are arithmetic derived from the stated sample formats, not measured runtime benchmarks.
 </ResearchSourceNote>
 
-Real-time speech UI is a pipeline problem. Capture, format reduction, buffering, inference, filtering, state, and rendering introduce different constraints, so the architecture is easier to reason about when those responsibilities remain separate.
-
-The current public system boundary looks like this:
-
-<ResearchBreakout mode="publication">
-  <SpeechStreamingPipelineVisual />
-</ResearchBreakout>
+The project establishes a local path from microphone input to accepted caption state and final broadcast composition. This paper does not retell that product story. It opens selected implementation paths and asks narrower questions: what leaves the client, how the local service chunks and transcribes it, what the client accepts, and how the renderer schedules visual updates.
 
 ## The Audio Sample Rate Dilemma
 
@@ -149,7 +141,7 @@ Segments above those thresholds are discarded by the client. This helps suppress
 
 ## Async Inference & UI Rendering
 
-The backend uses `asyncio.to_thread()` around `model.transcribe()`, moving blocking inference off the async event loop. The same principle—keep blocking work off the responsive path—applies in the renderer.
+The backend uses `asyncio.to_thread()` around `model.transcribe()`, moving blocking inference off the async event loop. The renderer follows a separate scheduling path.
 
 `CaptionsView.vue` measures caption geometry after Vue's `nextTick()`, then uses nested `requestAnimationFrame()` callbacks to apply the transition styles:
 
@@ -178,14 +170,10 @@ The current prototype still performs synchronous geometry reads when captions mo
   <AsyncSpeechPipelineVisual />
 </ResearchBreakout>
 
-## Architectural Takeaways & Future Directions
+## From Architectural Boundaries to Experiments
 
-Building on-device intelligent UI systems suggests several useful design principles:
+The most defensible principle from the current implementation is narrow: capture, blocking inference, acceptance policy, and rendering are easier to inspect when their ownership remains explicit. That separation does not establish a measured latency or reliability improvement by itself.
 
-<ResearchBreakout mode="wide">
-  <SpeechArchitectureTakeawaysVisual />
-</ResearchBreakout>
+The next experiments follow directly from the source: wire the existing VAD path into the active transcription flow and evaluate it, compare chunk-duration strategies rather than treating the current default as validated, and batch caption geometry reads before DOM writes.
 
-The next experiments are implied by the current boundaries: wire the existing VAD path into the active transcription flow, test chunk-duration strategies, and batch caption geometry reads before DOM writes.
-
-For the practical implementation and video demonstration of this architecture in action, visit the [speechBubbles Project Case Study](/projects/local-ai-real-time-captioning).
+For the working demonstration, creator role, operator workflow, and product-level architectural trade-offs, return to the [speechBubbles Project Case Study](/projects/local-ai-real-time-captioning).
