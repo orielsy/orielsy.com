@@ -30,7 +30,9 @@ import TranscriptionFilteringTruthVisual from '../../components/research/Transcr
   This exploration is grounded in the current public `speechBubbles` and `whisper-api` source. Format calculations below are arithmetic derived from the stated sample formats, not measured runtime benchmarks.
 </ResearchSourceNote>
 
-First, the current public system boundary:
+Real-time speech UI is a pipeline problem. Capture, format reduction, buffering, inference, filtering, state, and rendering introduce different constraints, so the architecture is easier to reason about when those responsibilities remain separate.
+
+The current public system boundary looks like this:
 
 <ResearchBreakout mode="publication">
   <SpeechStreamingPipelineVisual />
@@ -52,7 +54,7 @@ Sending 48 kHz stereo 32-bit float audio directly would produce about **384 KB/s
 
 In `CaptionControl.vue`, downsampling is performed before packet transmission:
 
-<ResearchSourceExcerpt file="CaptionControl.vue">
+<ResearchSourceExcerpt file="CaptionControl.vue" href="https://github.com/orielsy/speechBubbles/blob/main/src/components/CaptionControl.vue">
 
 ```javascript
 function downsampleBuffer(buffer, inputSampleRate, outputSampleRate = 16000) {
@@ -85,8 +87,6 @@ function downsampleBuffer(buffer, inputSampleRate, outputSampleRate = 16000) {
 
 The filtered float array is then clamped and converted to signed 16-bit integers (`Int16Array`). At 16 kHz × 16-bit mono, that format is approximately **32 kB/s (32,000 bytes/s)** before WebSocket overhead—a mathematically derived reduction of about **91.7%** compared with the 48 kHz stereo 32-bit-float example above.
 
----
-
 ## Buffered Chunking: Delay vs. Linguistic Context
 
 Speech transcription needs enough surrounding audio to resolve word boundaries and linguistic context. That creates a practical trade-off:
@@ -95,11 +95,9 @@ Speech transcription needs enough surrounding audio to resolve word boundaries a
   <ChunkingTradeoffVisual />
 </ResearchBreakout>
 
-The public backend currently defaults to a **3-second chunk threshold** when no client override is supplied.
+The implementation of that default is visible in `fastapi_app.py`:
 
-In `fastapi_app.py`, the server uses a fixed-duration chunk accumulator:
-
-<ResearchSourceExcerpt file="fastapi_app.py">
+<ResearchSourceExcerpt file="fastapi_app.py" href="https://github.com/orielsy/whisper-api/blob/main/fastapi_app.py">
 
 ```python
 chunk_length_bytes = int(client.config.get("chunk_length_seconds", 3)) * client.sampling_rate * client.samples_width
@@ -114,8 +112,6 @@ if len(client.buffer) >= chunk_length_bytes:
 
 After transcription finishes, `scratch_buffer` is cleared. Because processed samples are not intentionally retained and reused across overlapping windows, describing this as a sliding window would overstate what the current source implements.
 
----
-
 ## Handling Low-Confidence Transcription Output
 
 Continuous microphone input can cause Whisper to emit undesirable text during silence, ambient noise, or otherwise low-confidence audio. The public source currently addresses this primarily on the client after transcription.
@@ -128,7 +124,7 @@ Continuous microphone input can cause Whisper to emit undesirable text during si
 
 In `CaptionControl.vue`, returned segments are evaluated against Whisper metadata:
 
-<ResearchSourceExcerpt file="CaptionControl.vue">
+<ResearchSourceExcerpt file="CaptionControl.vue" href="https://github.com/orielsy/speechBubbles/blob/main/src/components/CaptionControl.vue">
 
 ```javascript
 function filterSegments(segments) {
@@ -151,15 +147,13 @@ Segments above those thresholds are discarded by the client. This helps suppress
   <TranscriptionFilteringTruthVisual />
 </ResearchBreakout>
 
----
-
 ## Async Inference & UI Rendering
 
 The backend uses `asyncio.to_thread()` around `model.transcribe()`, moving blocking inference off the async event loop. The same principle—keep blocking work off the responsive path—applies in the renderer.
 
 `CaptionsView.vue` measures caption geometry after Vue's `nextTick()`, then uses nested `requestAnimationFrame()` callbacks to apply the transition styles:
 
-<ResearchSourceExcerpt file="CaptionsView.vue">
+<ResearchSourceExcerpt file="CaptionsView.vue" href="https://github.com/orielsy/speechBubbles/blob/main/src/views/CaptionsView.vue">
 
 ```javascript
 const performAnimation = (multiplier = 1) => {
@@ -183,8 +177,6 @@ The current prototype still performs synchronous geometry reads when captions mo
 <ResearchBreakout mode="publication">
   <AsyncSpeechPipelineVisual />
 </ResearchBreakout>
-
----
 
 ## Architectural Takeaways & Future Directions
 
