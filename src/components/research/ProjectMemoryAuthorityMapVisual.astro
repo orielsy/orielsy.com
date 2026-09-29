@@ -13,6 +13,7 @@ const rows = [
 
 <ResearchFigureFrame
   className="is-open"
+  figureNumber="02"
   eyebrow="Interpretive model grounded in repository roles"
   title="Authority depends on the question"
   caption="This is an editorial model of the repository's artifact roles, not a claim that the repository contains an automatic precedence engine."
@@ -44,10 +45,6 @@ const rows = [
 </ResearchFigureFrame>
 
 <style>
-  .authority-table {
-    border-bottom: 1px solid var(--border-subtle);
-  }
-
   .authority-head {
     display: none;
   }
@@ -101,7 +98,8 @@ const rows = [
   .authority-rule {
     display: grid;
     gap: 0.6rem;
-    margin-top: 0.8rem;
+    margin-top: 1rem;
+    padding-top: 0.15rem;
   }
 
   .authority-rule p {

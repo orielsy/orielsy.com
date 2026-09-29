@@ -4,6 +4,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 <ResearchFigureFrame
   className="is-open"
+  figureNumber="05"
   eyebrow="Observed repository inconsistency"
   title="Persistence without reconciliation"
   caption="Version control makes drift visible; it does not perform maintenance. This figure does not assert that either artifact automatically outranks the other."
@@ -45,7 +46,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   .drift-comparison {
     display: grid;
     gap: 1rem;
-    padding: 0.5rem 0 1.25rem;
+    padding: 0.25rem 0 1.5rem;
   }
 
   section {
@@ -122,8 +123,8 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   }
 
   .divergence span {
-    border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border-subtle));
-    padding: 0.2rem 0.4rem;
+    background: var(--bg-card);
+    padding: 0.2rem 0.55rem;
     color: var(--accent);
   }
 
@@ -157,8 +158,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   .drift-outcomes {
     display: grid;
-    margin-top: 0.25rem;
-    border-block: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--border-subtle);
   }
 
   .drift-outcomes > div {
@@ -182,7 +182,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   @media (min-width: 760px) {
     .drift-comparison {
-      grid-template-columns: minmax(0, 1fr) 6rem minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) 7rem minmax(0, 1fr);
       align-items: stretch;
     }
 
@@ -208,7 +208,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     }
 
     .drift-outcomes > div {
-      padding: 0.7rem 0.9rem;
+      padding: 0.85rem 1rem 0;
     }
 
     .drift-outcomes > div + div {

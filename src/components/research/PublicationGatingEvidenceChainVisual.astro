@@ -27,6 +27,7 @@ const steps = [
 
 <ResearchFigureFrame
   className="is-open"
+  figureNumber="04"
   eyebrow="Direct repository evidence"
   title="One concern, four forms of evidence"
   caption="The chain does not treat the specification as proof of implementation. Each surface contributes a different kind of evidence."
@@ -59,15 +60,14 @@ const steps = [
     display: grid;
     gap: 1rem;
     margin: 0;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1rem 0;
+    padding: 0.25rem 0 0;
     list-style: none;
   }
 
   .evidence-chain::before {
     position: absolute;
-    top: 1rem;
-    bottom: 1rem;
+    top: 0.25rem;
+    bottom: 0;
     left: 0.8rem;
     width: 1px;
     background: var(--border-subtle);

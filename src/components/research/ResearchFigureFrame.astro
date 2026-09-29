@@ -1,5 +1,6 @@
 ---
 export interface Props {
+  figureNumber?: string;
   eyebrow?: string;
   title: string;
   subtitle?: string;
@@ -10,6 +11,7 @@ export interface Props {
 }
 
 const {
+  figureNumber,
   eyebrow,
   title,
   subtitle,
@@ -23,7 +25,12 @@ const {
 <figure class:list={['research-figure-frame', 'not-prose', className]} data-research-diagram>
   <header>
     <div class="heading">
-      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      {(figureNumber || eyebrow) && (
+        <div class="figure-meta">
+          {figureNumber && <p class="figure-number">Figure {figureNumber}</p>}
+          {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        </div>
+      )}
       <h3>{title}</h3>
       {subtitle && <p class="subtitle">{subtitle}</p>}
     </div>
@@ -67,6 +74,7 @@ const {
     max-width: 44rem;
   }
 
+  .figure-number,
   .eyebrow,
   .status {
     font-family: var(--font-mono-ui);
@@ -77,8 +85,25 @@ const {
     text-transform: uppercase;
   }
 
-  .eyebrow {
+  .figure-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.8rem;
+  }
+
+  .figure-number {
     color: var(--accent);
+  }
+
+  .eyebrow {
+    color: var(--text-muted);
+  }
+
+  .figure-number + .eyebrow::before {
+    margin-right: 0.8rem;
+    color: var(--border-strong);
+    content: '/';
   }
 
   .status {
@@ -145,6 +170,7 @@ const {
   }
   /* Enlarged type for the project-memory figures; the standard card surface remains intact. */
   .is-open h3 {
+    margin-top: 0.5rem !important;
     font-size: 1.25rem;
   }
 
@@ -153,6 +179,10 @@ const {
   }
 
   @media (min-width: 640px) {
+    .is-open header {
+      margin-bottom: 1.65rem;
+    }
+
     .is-open h3 {
       font-size: 1.5rem;
     }

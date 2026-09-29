@@ -4,6 +4,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 <ResearchFigureFrame
   className="is-open"
+  figureNumber="03"
   eyebrow="Current human-authored workflow"
   title="Route, then narrow"
   caption="A human-authored entry point and task scope guide selection; the repository does not detect relevance automatically. Other project memory remains available for other work."
@@ -41,8 +42,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   .routing-flow {
     display: grid;
     gap: 0.8rem;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1rem 0;
+    padding: 0.25rem 0 0;
   }
 
   section {
@@ -74,9 +74,9 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   }
 
   code {
-    border: 0;
-    background: transparent;
-    padding: 0;
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
     font-size: 0.9375rem;
   }
 
