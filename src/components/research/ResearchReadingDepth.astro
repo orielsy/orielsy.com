@@ -2,25 +2,33 @@
 export interface Props {
   overviewTime?: string;
   fullResearchTime?: string;
+  presentation?: 'cards' | 'editorial';
 }
 
 const {
   overviewTime = '4 min',
   fullResearchTime = '8 min',
+  presentation = 'cards',
 } = Astro.props;
 ---
 
 <div
-  class="reading-depth not-prose"
+  class:list={[
+    'reading-depth',
+    'not-prose',
+    presentation === 'editorial' && 'reading-depth--editorial',
+  ]}
   data-reading-depth-switcher
   data-overview-time={overviewTime}
   data-full-research-time={fullResearchTime}
 >
   <div class="reading-depth__intro">
     <p class="reading-depth__eyebrow">Reading depth</p>
-    <p class="reading-depth__note">
-      Same research, two levels of detail. Start with the idea, or go straight to the complete technical argument.
-    </p>
+    {presentation === 'cards' && (
+      <p class="reading-depth__note">
+        Same research, two levels of detail. Start with the idea, or go straight to the complete technical argument.
+      </p>
+    )}
   </div>
 
   <div class="reading-depth__tabs" role="group" aria-label="Choose reading depth">
@@ -31,7 +39,11 @@ const {
       data-reading-depth-target="overview"
     >
       <span class="reading-depth__label">Overview</span>
-      <span class="reading-depth__meta">Conceptual · {overviewTime}</span>
+      {presentation === 'editorial' ? (
+        <span class="reading-depth__time" aria-hidden="true">· {overviewTime}</span>
+      ) : (
+        <span class="reading-depth__meta">Conceptual · {overviewTime}</span>
+      )}
     </button>
 
     <button
@@ -41,7 +53,11 @@ const {
       data-reading-depth-target="full"
     >
       <span class="reading-depth__label">Full Research</span>
-      <span class="reading-depth__meta">Evidence + architecture · {fullResearchTime}</span>
+      {presentation === 'editorial' ? (
+        <span class="reading-depth__time" aria-hidden="true">· {fullResearchTime}</span>
+      ) : (
+        <span class="reading-depth__meta">Evidence + architecture · {fullResearchTime}</span>
+      )}
     </button>
   </div>
 </div>
@@ -209,8 +225,8 @@ const {
 <style>
   .reading-depth {
     margin-bottom: 2.5rem;
-    border-block: 1px solid var(--border-subtle);
-    padding-block: 1.25rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 1.25rem;
   }
 
   .reading-depth__intro {
@@ -284,13 +300,61 @@ const {
     letter-spacing: -0.02em;
   }
 
-  .reading-depth__meta {
+  .reading-depth__meta,
+  .reading-depth__time {
     font-family: var(--font-mono-ui);
     font-size: 0.625rem;
     letter-spacing: 0.06em;
     line-height: 1.4;
     text-transform: uppercase;
     color: var(--text-muted);
+  }
+
+  .reading-depth--editorial {
+    margin-bottom: 2.75rem;
+    padding-bottom: 0.9rem;
+  }
+
+  .reading-depth--editorial .reading-depth__intro {
+    margin-bottom: 0.55rem;
+  }
+
+  .reading-depth--editorial .reading-depth__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 2rem;
+  }
+
+  .reading-depth--editorial .reading-depth__tab {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    background: transparent;
+    padding: 0.45rem 0 0.55rem;
+    color: var(--text-secondary);
+  }
+
+  .reading-depth--editorial .reading-depth__tab:hover {
+    border-bottom-color: var(--border-strong);
+    color: var(--text-primary);
+  }
+
+  .reading-depth--editorial .reading-depth__tab[aria-pressed='true'] {
+    border-bottom-color: var(--accent);
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .reading-depth--editorial .reading-depth__label {
+    font-size: 0.95rem;
+  }
+
+  .reading-depth--editorial .reading-depth__time {
+    color: currentColor;
+    opacity: 0.72;
   }
 
   :global([data-reading-depth-orientation='true']) {
@@ -308,6 +372,16 @@ const {
   @media (max-width: 639px) {
     .reading-depth__tabs {
       grid-template-columns: 1fr;
+    }
+
+    .reading-depth--editorial .reading-depth__tabs {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .reading-depth--editorial .reading-depth__tab {
+      width: max-content;
     }
   }
 
