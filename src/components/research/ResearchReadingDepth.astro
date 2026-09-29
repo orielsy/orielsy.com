@@ -10,7 +10,12 @@ const {
 } = Astro.props;
 ---
 
-<div class="reading-depth not-prose" data-reading-depth-switcher>
+<div
+  class="reading-depth not-prose"
+  data-reading-depth-switcher
+  data-overview-time={overviewTime}
+  data-full-research-time={fullResearchTime}
+>
   <div class="reading-depth__intro">
     <p class="reading-depth__eyebrow">Reading depth</p>
     <p class="reading-depth__note">
@@ -59,6 +64,30 @@ const {
     return { marker, elements };
   };
 
+  const getQuickOrientationCallouts = (article: HTMLElement) =>
+    Array.from(article.querySelectorAll<HTMLElement>('aside')).filter((aside) => {
+      const label = aside.firstElementChild?.textContent?.trim().toUpperCase();
+      return label === 'QUICK ORIENTATION';
+    });
+
+  const updateHeroReadingTime = (
+    article: HTMLElement,
+    switcher: HTMLElement,
+    depth: 'overview' | 'full',
+  ) => {
+    const publishedTime = article.querySelector<HTMLElement>('header time');
+    const readingTime = publishedTime?.nextElementSibling;
+    if (!(readingTime instanceof HTMLElement)) return;
+
+    const overviewTime = switcher.dataset.overviewTime;
+    const fullResearchTime = switcher.dataset.fullResearchTime;
+    const selectedTime = depth === 'overview' ? overviewTime : fullResearchTime;
+
+    if (!selectedTime) return;
+    readingTime.textContent = `${selectedTime} read`;
+    readingTime.setAttribute('aria-live', 'polite');
+  };
+
   const activateReadingDepth = (
     article: HTMLElement,
     depth: 'overview' | 'full',
@@ -81,6 +110,12 @@ const {
     fullResearch.forEach((element) => {
       element.hidden = depth !== 'full';
     });
+
+    getQuickOrientationCallouts(article).forEach((callout) => {
+      callout.hidden = depth === 'overview';
+    });
+
+    updateHeroReadingTime(article, switcher, depth);
 
     const toc = article.querySelector<HTMLElement>('aside[aria-label="Research navigation"]');
     if (toc) toc.hidden = depth === 'overview';
