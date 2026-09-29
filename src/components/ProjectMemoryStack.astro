@@ -1,154 +1,206 @@
 ---
 import ResearchFigureFrame from './research/ResearchFigureFrame.astro';
 
-const bands = [
-  {
-    scope: 'Entry point',
-    hint: 'Routing layer, not a mega-prompt',
-    accent: true,
-    layers: [{ file: 'AGENTS.md', question: 'How should the agent work?', indent: 0 }],
-  },
-  {
-    scope: 'Project-wide',
-    hint: 'Applies to every change',
-    layers: [{ file: 'Constitution', question: 'What must remain true across the project?', indent: 0 }],
-  },
-  {
-    scope: 'Feature-specific',
-    hint: 'Scope narrows as work gets concrete',
-    layers: [
-      { file: 'Feature Spec', question: 'What are we trying to accomplish?', indent: 0 },
-      { file: 'Plan', question: 'How will this repository implement it?', indent: 1 },
-      { file: 'Tasks', question: 'What needs to happen now?', indent: 2 },
-    ],
-  },
-  {
-    scope: 'Durable history',
-    hint: 'Written once, consulted later',
-    layers: [
-      {
-        file: 'ADR / Decision Record',
-        question: 'Why was a durable product or architectural decision made?',
-        indent: 0,
-        note: 'Can influence implementation at any point — not only after tasks.',
-      },
-    ],
-  },
-  {
-    scope: 'Output',
-    hint: 'A result of intent, not the source of it',
-    layers: [{ file: 'Implementation', question: 'The resulting code and content', indent: 0 }],
-  },
+const featureLayers = [
+  { file: 'Feature Spec', question: 'What are we trying to accomplish?' },
+  { file: 'Plan', question: 'How will this repository implement it?' },
+  { file: 'Tasks', question: 'What needs to happen now?' },
 ];
 ---
 
 <ResearchFigureFrame
   title="The Project Memory Stack"
-  subtitle="Different artifacts preserve different kinds of intent."
-  caption="These are durable knowledge layers with different scopes, not a fixed execution pipeline. A change may read only one or two of them."
+  subtitle="AGENTS.md is the entry point. Durable knowledge remains separated by scope and responsibility."
+  caption="This is a routing and scope model, not a mandatory execution pipeline. A change may need one memory layer, several layers, or an ADR at any point."
 >
-  <ol class="memory-bands" aria-label="Project memory layers">
-    {bands.map((band, bandIndex) => (
-      <li class:list={['memory-band', band.accent && 'is-entry']}>
-        <div class="scope-column">
-          <span class="band-number">{String(bandIndex + 1).padStart(2, '0')}</span>
-          <strong>{band.scope}</strong>
-          <span>{band.hint}</span>
-        </div>
+  <div class="memory-map">
+    <section class="router" aria-label="Agent entry point">
+      <span>Entry / router</span>
+      <code>AGENTS.md</code>
+      <p>Points the agent toward the project memory relevant to the work.</p>
+    </section>
 
-        <div class="layers-column">
-          {band.layers.map((layer) => (
-            <div class:list={['memory-layer', layer.indent === 1 && 'indent-1', layer.indent === 2 && 'indent-2']}>
-              <div class="layer-line">
-                <code>{layer.file}</code>
-                <span>{layer.question}</span>
-              </div>
-              {layer.note && <p class="layer-note">{layer.note}</p>}
+    <div class="map-link map-link-in" aria-hidden="true">
+      <span>Select relevant memory</span>
+    </div>
+
+    <section class="memory-scopes" aria-label="Durable project memory by scope">
+      <div class="scope-row">
+        <div class="scope-label">
+          <span>Project-wide</span>
+          <small>Applies across the repository</small>
+        </div>
+        <div class="scope-content">
+          <code>Constitution</code>
+          <p>What must remain true across the project?</p>
+        </div>
+      </div>
+
+      <div class="scope-row">
+        <div class="scope-label">
+          <span>Feature-specific</span>
+          <small>Scope narrows with the work</small>
+        </div>
+        <div class="scope-content feature-scope">
+          {featureLayers.map((layer) => (
+            <div class="feature-layer">
+              <code>{layer.file}</code>
+              <p>{layer.question}</p>
             </div>
           ))}
         </div>
-      </li>
-    ))}
-  </ol>
+      </div>
+
+      <div class="scope-row">
+        <div class="scope-label">
+          <span>Durable history</span>
+          <small>Reasons that should survive implementation</small>
+        </div>
+        <div class="scope-content">
+          <code>ADR / Decision Record</code>
+          <p>Why was a durable product or architectural decision made?</p>
+          <p class="scope-note">Can influence implementation at any point.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="map-link map-link-out" aria-hidden="true">
+      <span>Informs</span>
+    </div>
+
+    <section class="output" aria-label="Implementation output">
+      <span>Result</span>
+      <strong>Implementation</strong>
+      <p>Code and content produced from the intent relevant to the change.</p>
+    </section>
+  </div>
 </ResearchFigureFrame>
 
 <style>
-  .memory-bands {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  .memory-map {
+    display: grid;
+    gap: 0;
+    min-width: 0;
     border-block: 1px solid var(--border-subtle);
   }
 
-  .memory-band {
-    display: grid;
-    gap: 1rem;
-    margin: 0;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1rem;
+  .router,
+  .output {
+    min-width: 0;
+    padding: 0.95rem 0.8rem;
   }
 
-  .memory-band:last-child {
-    border-bottom: 0;
-  }
-
-  .memory-band.is-entry {
+  .router {
     box-shadow: inset 2px 0 0 var(--accent);
     background: color-mix(in srgb, var(--accent) 4%, var(--bg-card));
   }
 
-  .scope-column {
-    min-width: 0;
+  .output {
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-card);
   }
 
-  .band-number {
-    display: block;
-    color: var(--accent);
+  .router > span,
+  .output > span,
+  .scope-label > span,
+  .map-link span {
     font-family: var(--font-mono-ui);
     font-size: 0.625rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
   }
 
-  .scope-column strong {
+  .router > span,
+  .output > span {
+    color: var(--accent);
+  }
+
+  .router code {
     display: block;
-    margin-top: 0.25rem;
+    width: fit-content;
+    margin-top: 0.3rem;
+    border: 0;
+    background: transparent;
+    padding: 0;
     color: var(--text-primary);
-    font-family: var(--font-display);
+    font-family: var(--font-mono-ui);
     font-size: 0.875rem;
-    line-height: 1.35;
+    font-weight: 500;
+    line-height: 1.4;
   }
 
-  .scope-column > span:last-child {
+  .output strong {
     display: block;
     margin-top: 0.3rem;
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    line-height: 1.5;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    line-height: 1.4;
   }
 
-  .layers-column {
+  .router p,
+  .output p,
+  .scope-content p {
+    margin: 0.45rem 0 0 !important;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.55;
+  }
+
+  .map-link {
+    display: flex;
+    align-items: center;
+    min-height: 2.7rem;
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.55rem 0.8rem;
+    color: var(--text-muted);
+    background: var(--bg-card);
+  }
+
+  .map-link::before {
+    margin-right: 0.5rem;
+    color: var(--accent);
+    content: '↓';
+    font-family: var(--font-mono-ui);
+    font-size: 0.75rem;
+  }
+
+  .memory-scopes {
+    min-width: 0;
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+  }
+
+  .scope-row {
     display: grid;
-    gap: 0.45rem;
+    gap: 0.65rem;
+    min-width: 0;
+    padding: 0.9rem 0.8rem;
+  }
+
+  .scope-row + .scope-row {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .scope-label > span {
+    display: block;
+    color: var(--text-muted);
+  }
+
+  .scope-label small {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    line-height: 1.45;
+  }
+
+  .scope-content {
     min-width: 0;
   }
 
-  .memory-layer {
-    border-left: 1px solid var(--border-strong);
-    padding: 0.65rem 0.75rem;
-    background: var(--bg-secondary);
-  }
-
-  .is-entry .memory-layer {
-    border-left-color: var(--accent);
-  }
-
-  .layer-line {
-    display: grid;
-    gap: 0.35rem;
-  }
-
-  .layer-line code {
-    width: fit-content;
+  .scope-content > code,
+  .feature-layer code {
     border: 0;
     background: transparent;
     padding: 0;
@@ -156,45 +208,122 @@ const bands = [
     font-family: var(--font-mono-ui);
     font-size: 0.75rem;
     font-weight: 500;
-  }
-
-  .is-entry .layer-line code {
-    color: var(--accent);
-  }
-
-  .layer-line span,
-  .layer-note {
-    color: var(--text-secondary);
-    font-size: 0.75rem;
     line-height: 1.5;
   }
 
-  .layer-note {
-    margin: 0.5rem 0 0 !important;
-    border-top: 1px dashed var(--border-subtle);
-    padding-top: 0.5rem;
-    color: var(--text-muted);
+  .feature-scope {
+    display: grid;
+    gap: 0;
   }
 
-  @media (min-width: 700px) {
-    .memory-band {
-      grid-template-columns: minmax(9rem, 0.8fr) minmax(0, 2fr);
-      gap: 1.4rem;
-      padding: 1rem 1.1rem;
+  .feature-layer {
+    min-width: 0;
+    padding: 0.55rem 0;
+  }
+
+  .feature-layer:first-child {
+    padding-top: 0;
+  }
+
+  .feature-layer:last-child {
+    padding-bottom: 0;
+  }
+
+  .feature-layer + .feature-layer {
+    border-top: 1px dashed var(--border-subtle);
+  }
+
+  .feature-layer p {
+    margin-top: 0.2rem !important;
+  }
+
+  .scope-content .scope-note {
+    margin-top: 0.55rem !important;
+    border-left: 1px solid var(--accent);
+    padding-left: 0.6rem;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+  }
+
+  @media (min-width: 820px) {
+    .memory-map {
+      grid-template-columns: minmax(10rem, 0.72fr) 3.6rem minmax(0, 2.15fr) 3.6rem minmax(10rem, 0.72fr);
+      align-items: stretch;
     }
 
-    .layer-line {
-      grid-template-columns: minmax(8.5rem, 0.8fr) minmax(0, 1.7fr);
-      align-items: baseline;
+    .router,
+    .output {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .output {
+      border-top: 0;
+      border-left: 1px solid var(--border-subtle);
+    }
+
+    .map-link {
+      position: relative;
+      justify-content: center;
+      min-height: 0;
+      border-top: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .map-link::before {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      margin: 0;
+      background: color-mix(in srgb, var(--accent) 45%, var(--border-subtle));
+      content: '';
+    }
+
+    .map-link::after {
+      position: absolute;
+      top: calc(50% - 0.55rem);
+      right: 0.2rem;
+      color: var(--accent);
+      content: '→';
+      font-family: var(--font-mono-ui);
+      font-size: 0.75rem;
+    }
+
+    .map-link span {
+      position: relative;
+      z-index: 1;
+      width: min-content;
+      background: var(--bg-card);
+      padding: 0.3rem 0.2rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .memory-scopes {
+      border-top: 0;
+      border-inline: 1px solid var(--border-subtle);
+    }
+
+    .scope-row {
+      grid-template-columns: minmax(8rem, 0.8fr) minmax(0, 1.8fr);
       gap: 1rem;
+      padding: 0.95rem 1rem;
     }
 
-    .memory-layer.indent-1 {
-      margin-left: 1.25rem;
+    .feature-layer {
+      display: grid;
+      grid-template-columns: minmax(7rem, 0.72fr) minmax(0, 1.6fr);
+      gap: 0.8rem;
+      align-items: baseline;
     }
 
-    .memory-layer.indent-2 {
-      margin-left: 2.5rem;
+    .feature-layer p {
+      margin-top: 0 !important;
     }
   }
 </style>
