@@ -15,12 +15,19 @@ readingTime: "8 min read"
 ---
 
 import ProjectMemoryAuthorityMapVisual from '../../components/research/ProjectMemoryAuthorityMapVisual.astro';
+import ProjectMemoryChangeWorkflowVisual from '../../components/research/ProjectMemoryChangeWorkflowVisual.astro';
+import ProjectMemoryContinuityVisual from '../../components/research/ProjectMemoryContinuityVisual.astro';
 import ProjectMemoryDriftVisual from '../../components/research/ProjectMemoryDriftVisual.astro';
 import ProjectMemoryIncidentEvidenceVisual from '../../components/research/ProjectMemoryIncidentEvidenceVisual.astro';
+import ProjectMemoryOverview from '../../components/research/ProjectMemoryOverview.astro';
 import ProjectMemoryRoutingVisual from '../../components/research/ProjectMemoryRoutingVisual.astro';
 import PublicationGatingEvidenceChainVisual from '../../components/research/PublicationGatingEvidenceChainVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import ResearchSourceExcerpt from '../../components/research/ResearchSourceExcerpt.astro';
+
+<ResearchBreakout mode="wide">
+  <ProjectMemoryOverview />
+</ResearchBreakout>
 
 ## The Claim Came Back
 
@@ -53,6 +60,10 @@ In this repository, the durable substrate is version-controlled project memory: 
 This does not make an agent correct. It gives the next agent something more stable than recollection to inspect, challenge, and follow.
 
 **A project should not depend on one conversation remaining available forever.**
+
+<ResearchBreakout mode="wide">
+  <ProjectMemoryContinuityVisual />
+</ResearchBreakout>
 
 ## What Became Durable
 
@@ -154,6 +165,10 @@ The historical account for publication gating is that unpublished collection car
 The current branch shows that these artifacts now describe the same interaction model. It does not, by itself, establish that every record changed in one atomic step.
 
 The maintenance rule is narrower: update the durable artifacts that own intent and rationale with the implementation, then verify what the implementation actually does. Documentation is not a passing test, and code alone does not preserve why a choice was made.
+
+<ResearchBreakout mode="wide">
+  <ProjectMemoryChangeWorkflowVisual />
+</ResearchBreakout>
 
 ## Durable Memory Can Drift Too
 
