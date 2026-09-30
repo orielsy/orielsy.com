@@ -1,112 +1,29 @@
 ---
 const principles = [
-  {
-    title: 'Use specialized models for specialized primitives',
-    detail: 'Speech-to-text can serve transcription directly without routing the task through a general conversational interface.',
-  },
-  {
-    title: 'Treat local inference as an execution option',
-    detail: 'Browser or desktop runtimes can support downstream tasks when the local model and hardware are sufficient.',
-  },
-  {
-    title: 'Keep capture, inference, and rendering decoupled',
-    detail: 'Separating responsibilities makes latency, blocking work, and UI behavior easier to reason about independently.',
-  },
+  { title: 'Use specialized models for specialized primitives', detail: 'Speech-to-text can serve transcription directly without routing the task through a general conversational interface.' },
+  { title: 'Treat local inference as an execution option', detail: 'Browser or desktop runtimes can support downstream tasks when the local model and hardware are sufficient.' },
+  { title: 'Keep capture, inference, and rendering decoupled', detail: 'Separating responsibilities makes latency, blocking work, and UI behavior easier to reason about independently.' },
 ];
 ---
 
-<figure class="speech-takeaways not-prose">
-  <header>
-    <p class="eyebrow">Architectural takeaways</p>
-    <h3>Three principles emerge from the current implementation.</h3>
-  </header>
-
+<div class="speech-takeaways not-prose" aria-label="Architectural takeaways from the current implementation">
   <ol>
     {principles.map((principle, index) => (
       <li>
         <span class="index">{String(index + 1).padStart(2, '0')}</span>
-        <div>
-          <strong>{principle.title}</strong>
-          <p>{principle.detail}</p>
-        </div>
+        <div><strong>{principle.title}</strong><p>{principle.detail}</p></div>
       </li>
     ))}
   </ol>
-</figure>
+</div>
 
 <style>
-  .speech-takeaways {
-    overflow: hidden;
-    margin: 0;
-    border-top: 1px solid var(--border-subtle);
-    border-bottom: 1px solid var(--border-subtle);
-  }
-
-  .speech-takeaways :global(p),
-  .speech-takeaways :global(h3),
-  .speech-takeaways :global(ol),
-  .speech-takeaways :global(li) { margin: 0; }
-
+  .speech-takeaways { margin: 1.5rem 0 2rem; border-block: 1px solid var(--border-subtle); }
+  .speech-takeaways :global(p), .speech-takeaways :global(ol), .speech-takeaways :global(li) { margin: 0; }
   .speech-takeaways :global(ol) { padding: 0; list-style: none; }
-
-  header {
-    padding: 1rem 0 1.05rem;
-  }
-
-  .eyebrow,
-  .index {
-    font-family: var(--font-mono-ui);
-    text-transform: uppercase;
-  }
-
-  .eyebrow {
-    color: var(--accent);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.13em;
-  }
-
-  h3 {
-    margin-top: 0.4rem !important;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: clamp(1.1rem, 2vw, 1.4rem);
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-  }
-
-  ol {
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  li {
-    display: grid;
-    grid-template-columns: 2.5rem minmax(0, 1fr);
-    gap: 0.8rem;
-    border-top: 1px solid var(--border-subtle);
-    padding: 0.95rem 0;
-  }
-
-  li:first-child { border-top: 0; }
-
-  .index {
-    color: var(--accent);
-    font-size: 0.625rem;
-    letter-spacing: 0.1em;
-  }
-
-  li strong {
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.875rem;
-    line-height: 1.4;
-  }
-
-  li p {
-    margin-top: 0.3rem !important;
-    color: var(--text-secondary);
-    font-size: 0.6875rem;
-    line-height: 1.55;
-  }
+  li { display: grid; grid-template-columns: 2.5rem minmax(0,1fr); gap: 0.8rem; padding: 0.95rem 0; }
+  li + li { border-top: 1px solid var(--border-subtle); }
+  .index { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.08em; }
+  li strong { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; line-height: 1.4; }
+  li p { margin-top: 0.3rem !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
 </style>
