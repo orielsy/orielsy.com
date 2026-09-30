@@ -1,4 +1,5 @@
 ---
+import { ArrowDown, ArrowRight } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 const operations = [
   { name: 'Observe', detail: 'Run opt-in, lightweight context-health checks during ordinary turns.', status: 'Provisional judgment' },
@@ -14,7 +15,12 @@ const operations = [
         <li>
           <span class="step">0{index + 1}</span>
           <div><h4>{operation.name}</h4><p>{operation.detail}</p><span class="status">{operation.status}</span></div>
-          {index < operations.length - 1 && <span class="connector" aria-hidden="true">→</span>}
+          {index < operations.length - 1 && (
+            <span class="connector" aria-hidden="true">
+              <ArrowDown class="connector-mobile" size={16} strokeWidth={1.75} />
+              <ArrowRight class="connector-desktop" size={16} strokeWidth={1.75} />
+            </span>
+          )}
         </li>
       ))}
     </ol>
@@ -32,21 +38,24 @@ const operations = [
   .loop { position: relative; }
   ol { display: grid; gap: 1rem; }
   li { position: relative; display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.75rem; background: var(--bg-secondary); padding: 1rem; }
-  .step { position: relative; z-index: 1; display: flex; width: 2rem; height: 2rem; align-items: center; justify-content: center; border: 1px solid var(--accent); border-radius: 999px; color: var(--accent); background: var(--bg-card); font-family: var(--font-mono-ui); font-size: 0.6875rem; }
-  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.45; }
-  li p { margin-top: 0.35rem !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  .status { display: block; margin-top: 0.55rem; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; }
-  .connector { position: absolute; left: 1.65rem; bottom: -0.85rem; z-index: 2; transform: rotate(90deg); color: var(--accent); background: var(--bg-card); padding: 0 0.2rem; }
+  .step { position: relative; z-index: 1; display: flex; width: 2rem; height: 2rem; align-items: center; justify-content: center; border: 1px solid var(--accent); border-radius: 999px; color: var(--accent); background: var(--bg-card); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); }
+  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: var(--research-diagram-node, 0.875rem); font-weight: 600; line-height: 1.45; }
+  li p { margin-top: 0.35rem !important; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
+  .status { display: block; margin-top: 0.55rem; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.06em; text-transform: uppercase; }
+  .connector { position: absolute; left: 1.5rem; bottom: -0.95rem; z-index: 2; display: flex; align-items: center; justify-content: center; color: var(--accent); background: var(--bg-card); padding: 0.15rem; }
+  .connector-desktop { display: none; }
   .host-boundary { display: grid; gap: 0.6rem; margin-top: 1.25rem; border-left: 2px solid var(--accent); padding-left: 1rem; }
-  .host-boundary p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
+  .host-boundary p { color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
   .host-boundary strong { color: var(--text-primary); font-weight: 500; }
-  .limits { margin-top: 0.8rem !important; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.06em; line-height: 1.5; text-transform: uppercase; }
+  .limits { margin-top: 0.8rem !important; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.06em; line-height: 1.5; text-transform: uppercase; }
   @media (min-width: 760px) {
     .loop::before { content: ''; position: absolute; left: 12%; right: 12%; top: 2rem; border-top: 1px dashed var(--border-subtle); }
     ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     li { display: block; min-height: 10rem; }
     h4 { margin-top: 0.8rem !important; }
-    .connector { left: auto; right: -0.85rem; top: 1.5rem; bottom: auto; transform: none; }
+    .connector { left: auto; right: -0.95rem; top: 1.5rem; bottom: auto; }
+    .connector-mobile { display: none; }
+    .connector-desktop { display: block; }
     .host-boundary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 </style>
