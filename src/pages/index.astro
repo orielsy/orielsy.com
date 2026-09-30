@@ -225,8 +225,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
       <div class="site-shell">
         <div class="flex flex-wrap items-end justify-between gap-5">
           <div>
-            <p class="font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Latest Publications</p>
-            <h2 class="font-display mt-3 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Research & Explorations</h2>
+            <h2 class="font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Research & Explorations</h2>
           </div>
           <a href="/research" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all →</a>
         </div>
@@ -290,8 +289,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
       <div class="site-shell">
         <div class="flex flex-wrap items-end justify-between gap-5">
           <div>
-            <p class="font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">From Theory to Practice</p>
-            <h2 class="font-display mt-3 text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Selected Implementation</h2>
+            <h2 class="font-display text-2xl font-semibold tracking-[-0.03em] text-[var(--text-primary)] sm:text-3xl">Selected Implementation</h2>
           </div>
           <a href="/projects" class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] hover:text-[var(--accent)]">View all →</a>
         </div>
@@ -338,16 +336,16 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
 
   <section class="border-t border-[var(--border-subtle)] bg-[var(--bg-secondary)]/40 py-10 sm:py-12">
     <div class="site-shell grid gap-6 lg:grid-cols-12 lg:gap-8">
-      <div class="font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] lg:col-span-3">
+      <h2 class="font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] lg:col-span-3">
         Areas of Inquiry
-      </div>
+      </h2>
 
       <ol class="border-y border-[var(--border-subtle)] lg:col-span-9">
         {explorationAreas.map((area, index) => (
           <li class="grid gap-2 border-b border-[var(--border-subtle)] py-4 last:border-b-0 sm:grid-cols-[42px_minmax(0,1fr)_160px] sm:items-start sm:gap-6">
             <span class="font-editorial-mono text-[10px] text-[var(--accent)]">{String(index + 1).padStart(2, '0')}</span>
             <div>
-              <h2 class="font-display text-sm font-semibold leading-6 text-[var(--text-primary)]">{area.title}</h2>
+              <h3 class="font-display text-sm font-semibold leading-6 text-[var(--text-primary)]">{area.title}</h3>
               <p class="mt-1 text-xs leading-5 text-[var(--text-secondary)]">{area.description}</p>
             </div>
             <p class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)] sm:text-right">{area.tag}</p>
