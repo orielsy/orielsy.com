@@ -1,0 +1,41 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+---
+
+<ResearchFigureFrame
+  className="project-memory-incident"
+  figureNumber="01"
+  title="The correction gained two durable addresses"
+  caption="The article reports the unsupported wording as the initiating incident. The repository directly corroborates the resulting guardrails; that makes recurrence less likely, not impossible."
+>
+  <div class="incident-grid">
+    <section>
+      <p class="label">Author's observed account</p>
+      <blockquote>“15+ years of experience designing scalable web architectures, <mark>design systems</mark>, and enterprise platforms.”</blockquote>
+      <p>The wording was broader than the evidence established for the role.</p>
+    </section>
+    <section class="durable">
+      <p class="label">Durable repository guardrails</p>
+      <dl>
+        <div><dt>.specify/memory/constitution.md</dt><dd>Do not describe the experience as design systems unless explicitly established.</dd></div>
+        <div><dt>specs/001-site-foundation/spec.md</dt><dd>Use grounded positioning; do not claim formal design-system ownership.</dd></div>
+      </dl>
+    </section>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-reading .research-prose figure.project-memory-incident) { border-radius: 0 !important; }
+  .incident-grid { display: grid; gap: 1.5rem; }
+  section { min-width: 0; }
+  .durable { border-top: 1px solid var(--border-subtle); padding-top: 1.25rem; }
+  .label { margin: 0 !important; color: var(--accent); font-family: var(--font-mono-ui); font-size: .6875rem; letter-spacing: .08em; text-transform: uppercase; }
+  blockquote { margin: .7rem 0 0 !important; border: 0 !important; padding: 0 !important; color: var(--text-primary); font-family: var(--font-display); font-size: 1rem; font-style: normal; line-height: 1.6; }
+  mark { background: color-mix(in srgb, var(--accent) 16%, transparent); color: inherit; padding: .04em .12em; }
+  section > p:last-child { margin: .65rem 0 0 !important; color: var(--text-secondary); font-size: .875rem; line-height: 1.6; }
+  dl { margin: .7rem 0 0; border-top: 1px solid var(--border-subtle); }
+  dl > div { padding: .75rem 0; border-bottom: 1px solid var(--border-subtle); }
+  dt { color: var(--text-primary); font-family: var(--font-mono-ui); font-size: .8125rem; overflow-wrap: anywhere; }
+  dd { margin: .3rem 0 0; color: var(--text-secondary); font-size: .875rem; line-height: 1.6; }
+  @media (min-width: 760px) { .incident-grid { grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: 2rem; } .durable { border-top: 0; border-left: 1px solid var(--border-subtle); padding: 0 0 0 2rem; } }
+</style>
