@@ -1,64 +1,82 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const established = [
+  { concern: 'Implemented behavior', owner: 'Code', detail: 'Mechanics, side effects, algorithms' },
+  { concern: 'Current facts', owner: 'Application state / data', detail: 'What the application knows now' },
+  { concern: 'Structure & contracts', owner: 'Schemas', detail: 'Valid shapes, fields, interfaces' },
+];
+const proposed = [
+  { concern: 'Meaning / intent / explanation', owner: 'Product knowledge', detail: 'Purpose, relevance, prerequisites, policy rationale' },
+  { concern: 'Composition', owner: 'Context + policy + trusted capabilities', detail: 'What may be selected and arranged for this task' },
+];
 ---
 
 <ResearchFigureFrame
   className="context-architecture-figure"
-  title="Where do these concerns live in the architecture?"
-  subtitle="Implemented behavior, current state, and structure already have clear homes. The proposition is to give meaning and composition equally explicit ownership."
-  caption="The proposal is additive. Product knowledge does not replace code, application state, schemas, tests, governing specifications, or deterministic enforcement. Authority remains scoped to the concern each artifact owns."
+  figureNumber="01"
+  title="Give meaning an architectural home"
+  caption="The proposed ownership is additive. Code, application state, schemas, tests, governing specifications, and deterministic enforcement retain their responsibilities."
 >
-  <section aria-label="Established architectural homes">
-    <p class="mb-2 font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Established architectural homes</p>
-    <div class="grid gap-px overflow-hidden rounded-md border border-[var(--border-subtle)] bg-[var(--border-subtle)] md:grid-cols-3">
-      <article class="bg-[var(--bg-card)] p-4">
-        <p class="font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Implemented behavior</p>
-        <h4 class="mt-1.5 text-sm font-semibold text-[var(--text-primary)]">Code</h4>
-        <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">Mechanics, side effects, algorithms, and what the system does now.</p>
-      </article>
-
-      <article class="bg-[var(--bg-card)] p-4">
-        <p class="font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Current state</p>
-        <h4 class="mt-1.5 text-sm font-semibold text-[var(--text-primary)]">Data</h4>
-        <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">The authoritative current facts the application knows.</p>
-      </article>
-
-      <article class="bg-[var(--bg-card)] p-4">
-        <p class="font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Structure</p>
-        <h4 class="mt-1.5 text-sm font-semibold text-[var(--text-primary)]">Schemas</h4>
-        <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">Contracts for valid shapes, fields, relationships, and interfaces.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="mt-5" aria-label="Research proposition">
-    <p class="mb-2 font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--accent)]">Research proposition</p>
-    <div class="grid gap-px overflow-hidden rounded-md border border-[var(--accent-border)] bg-[var(--accent-border)] md:grid-cols-2">
-      <article class="bg-[var(--bg-secondary)] p-4">
-        <p class="font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Meaning and intent</p>
-        <h4 class="mt-1.5 text-sm font-semibold text-[var(--text-primary)]">Product knowledge</h4>
-        <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">Purpose, relevance, explanation, prerequisites, and policy rationale.</p>
-      </article>
-
-      <article class="bg-[var(--bg-secondary)] p-4">
-        <p class="font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Composition</p>
-        <h4 class="mt-1.5 text-sm font-semibold text-[var(--text-primary)]">Context + policy + capabilities</h4>
-        <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">Which trusted capabilities matter now and how they may be assembled.</p>
-      </article>
-    </div>
-  </section>
-
-  <div class="mt-6 flex flex-wrap items-center gap-2 font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-primary)]" aria-label="Durable, selectable, applicable, composable">
-    <span>Durable</span><span class="text-[var(--accent)]" aria-hidden="true">→</span>
-    <span>Selectable</span><span class="text-[var(--accent)]" aria-hidden="true">→</span>
-    <span>Applicable</span><span class="text-[var(--accent)]" aria-hidden="true">→</span>
-    <span>Composable</span>
+  <div class="ownership-map">
+    <section aria-label="Established architectural homes">
+      <p class="map-label">Established homes</p>
+      <dl class="ownership-list">
+        {established.map(({ concern, owner, detail }) => (
+          <div class="ownership-row">
+            <dt>{concern}</dt>
+            <dd><strong>{owner}</strong><span>{detail}</span></dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+    <section class="proposed-homes" aria-label="Proposed explicit ownership">
+      <p class="map-label">Proposed explicit ownership</p>
+      <dl class="ownership-list">
+        {proposed.map(({ concern, owner, detail }) => (
+          <div class="ownership-row proposed-row">
+            <dt>{concern}</dt>
+            <dd><strong>{owner}</strong><span>{detail}</span></dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  </div>
+  <div class="progression">
+    <p class="map-label">Research progression</p>
+    <ol aria-label="Durable, then selectable, then applicable, then composable">
+      <li>Durable</li><li>Selectable</li><li>Applicable</li><li>Composable</li>
+    </ol>
   </div>
 </ResearchFigureFrame>
 
-<style>
-  .context-architecture-figure :global(p),
-  .context-architecture-figure :global(h4) {
-    margin-bottom: 0;
+<style is:global>
+  [data-research-entry="product-knowledge-as-architecture"] figure.context-architecture-figure {
+    border-inline: 0;
+    border-radius: 0 !important;
+    background: transparent;
+    padding: 1.25rem 0;
+  }
+  .context-architecture-figure .ownership-map { display: grid; gap: 1.5rem; }
+  .context-architecture-figure .ownership-map > section { min-width: 0; }
+  .context-architecture-figure .proposed-homes { border-left: 2px solid var(--accent); padding-left: 1rem; }
+  .context-architecture-figure .map-label { margin: 0 !important; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem !important; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+  .context-architecture-figure .proposed-homes .map-label { color: var(--accent); }
+  .context-architecture-figure .ownership-list { margin: 0.7rem 0 0; border-top: 1px solid var(--border-subtle); }
+  .context-architecture-figure .ownership-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0.75rem; border-bottom: 1px solid var(--border-subtle); padding: 0.75rem 0; font-size: 0.8125rem; line-height: 1.55; }
+  .context-architecture-figure .ownership-row dt { color: var(--text-secondary); }
+  .context-architecture-figure .ownership-row dd { min-width: 0; margin: 0; color: var(--text-primary); }
+  .context-architecture-figure .ownership-row strong { display: block; font-weight: 600; }
+  .context-architecture-figure .ownership-row dd span { display: block; margin-top: 0.2rem; color: var(--text-muted); font-size: 0.75rem; }
+  .context-architecture-figure .proposed-row { display: block; }
+  .context-architecture-figure .proposed-row dd { margin-top: 0.3rem; }
+  .context-architecture-figure .progression { margin-top: 1.5rem; padding-top: 0.85rem; border-top: 1px solid var(--border-subtle); }
+  .context-architecture-figure .progression ol { display: flex; flex-wrap: wrap; gap: 0.35rem 0; margin: 0.65rem 0 0; padding: 0; list-style: none; font-family: var(--font-mono-ui); font-size: 0.75rem; color: var(--text-primary); }
+  .context-architecture-figure .progression li { display: inline-flex; align-items: center; }
+  .context-architecture-figure .progression li:not(:last-child)::after { content: '→'; color: var(--accent); padding-inline: 0.55rem; }
+  .context-architecture-figure .progression li:last-child { color: var(--accent); }
+  @media (min-width: 640px) {
+    .context-architecture-figure .ownership-map { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 1.75rem; }
+    .context-architecture-figure .proposed-homes { padding-left: 1.25rem; }
   }
 </style>

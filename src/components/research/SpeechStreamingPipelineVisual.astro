@@ -24,8 +24,9 @@ const domains = [
 ---
 
 <ResearchFigureFrame
-  eyebrow="System topology"
-  title="speechBubbles keeps capture, inference, and broadcast rendering separate."
+  className="speech-topology-figure"
+  figureNumber="01"
+  title="Capture, inference, and broadcast rendering stay separate"
   subtitle="One broadcast workstation contains three architectural domains. Later sections examine the format, chunking, filtering, and render details inside those boundaries."
   status="Current public architecture"
   caption="The overview establishes ownership and transport boundaries without duplicating the implementation details examined later in the article."
@@ -36,159 +37,42 @@ const domains = [
         <span class="domain-index">{String(index + 1).padStart(2, '0')}</span>
         <p class="domain-kicker">{domain.kicker}</p>
         <h4>{domain.title}</h4>
-        <div class="steps" aria-label={`${domain.kicker} responsibility flow`}>
-          {domain.steps.map((step, stepIndex) => (
-            <>
-              <span>{step}</span>
-              {stepIndex < domain.steps.length - 1 && <span class="step-arrow" aria-hidden="true">→</span>}
-            </>
-          ))}
-        </div>
+        <p class="steps">{domain.steps.join(' → ')}</p>
         <p class="detail">{domain.detail}</p>
       </section>
     ))}
   </div>
 
   <div class="transport-map" aria-label="transport between speechBubbles architectural domains">
-    <div>
-      <span>Client ↔ local service</span>
-      <strong>PCM → <span aria-hidden="true">·</span> transcript segments ←</strong>
-    </div>
-    <div>
-      <span>Client → renderer</span>
-      <strong>Accepted caption state → broadcast overlay</strong>
-    </div>
+    <div><span>Client ↔ local service</span><strong>PCM → · transcript segments ←</strong></div>
+    <div><span>Client → renderer</span><strong>Accepted caption state → broadcast overlay</strong></div>
   </div>
 </ResearchFigureFrame>
 
 <style>
-  .domain-grid {
-    display: grid;
-    gap: 1px;
-    background: var(--border-subtle);
-  }
-
-  .domain {
-    position: relative;
-    min-width: 0;
-    margin: 0;
-    background: var(--bg-card);
-    padding: 1rem;
-  }
-
-  .domain:nth-child(2) {
-    background: color-mix(in srgb, var(--accent) 3%, var(--bg-card));
-  }
-
-  .domain-index,
-  .domain-kicker,
-  .transport-map span,
-  .steps {
-    font-family: var(--font-mono-ui);
-  }
-
-  .domain-index {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    color: var(--accent);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-  }
-
-  .domain-kicker {
-    margin: 0;
-    padding-right: 2.2rem;
-    color: var(--text-muted);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    line-height: 1.45;
-    text-transform: uppercase;
-  }
-
-  h4 {
-    margin: 0.4rem 0 0;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1.4;
-  }
-
-  .steps {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.4rem;
-    margin-top: 0.85rem;
-    color: var(--text-primary);
-    font-size: 0.6875rem;
-    line-height: 1.45;
-  }
-
-  .steps > span:not(.step-arrow) {
-    border: 1px solid var(--border-subtle);
-    background: var(--bg-secondary);
-    padding: 0.35rem 0.5rem;
-  }
-
-  .step-arrow {
-    color: var(--accent);
-  }
-
-  .detail {
-    margin: 0.8rem 0 0;
-    color: var(--text-secondary);
-    font-size: 0.6875rem;
-    line-height: 1.55;
-  }
-
-  .transport-map {
-    display: grid;
-    gap: 1px;
-    margin-top: 1px;
-    background: var(--border-subtle);
-  }
-
-  .transport-map > div {
-    display: grid;
-    gap: 0.3rem;
-    background: var(--bg-secondary);
-    padding: 0.75rem 1rem;
-  }
-
-  .transport-map span {
-    color: var(--text-muted);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    line-height: 1.45;
-    text-transform: uppercase;
-  }
-
-  .transport-map strong {
-    color: var(--text-primary);
-    font-family: var(--font-mono-ui);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    line-height: 1.5;
-  }
-
-  .transport-map strong span {
-    color: var(--accent);
-    font-size: inherit;
-    letter-spacing: 0;
-  }
-
+  :global(.research-reading .research-prose figure.speech-topology-figure) { border-radius: 0 !important; }
+  .domain-grid { display: grid; border-block: 1px solid var(--border-subtle); }
+  .domain { position: relative; min-width: 0; margin: 0; padding: 1rem 0; }
+  .domain + .domain { border-top: 1px solid var(--border-subtle); }
+  .domain:nth-child(2) { border-left: 2px solid var(--accent); padding-left: 1rem; }
+  .domain-index, .domain-kicker, .transport-map span { font-family: var(--font-mono-ui); }
+  .domain-index { position: absolute; top: 1rem; right: 0; color: var(--accent); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; }
+  .domain-kicker { margin: 0; padding-right: 2.2rem; color: var(--text-muted); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; line-height: 1.45; text-transform: uppercase; }
+  h4 { margin: 0.4rem 0 0; color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.4; }
+  .steps { margin: 0.75rem 0 0 !important; color: var(--text-primary); font-family: var(--font-mono-ui); font-size: 0.8125rem; line-height: 1.55; }
+  .detail { margin: 0.65rem 0 0 !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
+  .transport-map { display: grid; margin-top: 1rem; border-top: 1px solid var(--border-subtle); }
+  .transport-map > div { display: grid; gap: 0.3rem; padding: 0.75rem 0; }
+  .transport-map > div + div { border-top: 1px solid var(--border-subtle); }
+  .transport-map span { color: var(--text-muted); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; line-height: 1.45; text-transform: uppercase; }
+  .transport-map strong { color: var(--text-primary); font-family: var(--font-mono-ui); font-size: 0.8125rem; font-weight: 500; line-height: 1.5; }
   @media (min-width: 760px) {
-    .domain-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .transport-map {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    .domain-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .domain { padding: 1rem; }
+    .domain:first-child { padding-left: 0; }
+    .domain + .domain { border-top: 0; border-left: 1px solid var(--border-subtle); }
+    .domain:nth-child(2) { border-left: 2px solid var(--accent); }
+    .transport-map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .transport-map > div + div { border-top: 0; border-left: 1px solid var(--border-subtle); padding-left: 1rem; }
   }
 </style>

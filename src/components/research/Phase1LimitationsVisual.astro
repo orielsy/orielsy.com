@@ -1,113 +1,20 @@
 ---
-import ResearchFigureFrame from './ResearchFigureFrame.astro';
-
-export interface Props {
-  figureNumber?: string;
-}
-
-const { figureNumber } = Astro.props;
-
 const exclusions = [
-  {
-    title: 'Inference and retrieval',
-    description: 'Document ingestion, semantic search, embeddings, natural-language intent resolution, and generated guidance.',
-  },
-  {
-    title: 'Production infrastructure',
-    description: 'Backend services, persistence, and authentication.',
-  },
-  {
-    title: 'Learning and personalization',
-    description: 'Telemetry, behavioral learning, and inferred user profiles.',
-  },
-  {
-    title: 'Runtime integrations',
-    description: 'WebLLM, MCP, and remote AI APIs.',
-  },
-] as const;
+  ['Inference and retrieval', 'Document ingestion, semantic search, embeddings, natural-language intent resolution, generated guidance'],
+  ['Production infrastructure', 'Backend services, persistence, authentication'],
+  ['Learning and personalization', 'Telemetry, behavioral learning, inferred user profiles'],
+  ['Runtime integrations', 'WebLLM, MCP, remote AI APIs'],
+];
 ---
-
-<ResearchFigureFrame
-  className="phase-one-limitations"
-  {figureNumber}
-  title="Intentionally not included."
-  subtitle="The reference experiment keeps these capabilities outside Phase 1 so the deterministic architecture can be evaluated on its own terms."
->
-  <dl class="limitations-ledger">
-    {exclusions.map((item) => (
-      <div class="limitation-row">
-        <dt>
-          <strong>{item.title}</strong>
-          <span>Not included</span>
-        </dt>
-        <dd>{item.description}</dd>
-      </div>
-    ))}
-  </dl>
-</ResearchFigureFrame>
-
+<dl class="adaptive-limitations not-prose" aria-label="Capabilities outside Phase 1">
+  {exclusions.map(([title, detail]) => <div><dt>{title}</dt><dd>{detail}</dd></div>)}
+</dl>
 <style>
-  .phase-one-limitations :global(dl),
-  .phase-one-limitations :global(dt),
-  .phase-one-limitations :global(dd) {
-    margin: 0;
-  }
-
-  .limitations-ledger {
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .limitation-row {
-    display: grid;
-    gap: 0.35rem;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 0.8rem 0.25rem;
-  }
-
-  dt {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.35rem 1rem;
-  }
-
-  dt strong {
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    line-height: 1.4;
-  }
-
-  dt span {
-    color: var(--text-muted);
-    font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    line-height: 1.45;
-    text-transform: uppercase;
-  }
-
-  dd {
-    max-width: 46rem;
-    color: var(--text-secondary);
-    font-size: 0.71875rem;
-    line-height: 1.55;
-  }
-
-  @media (min-width: 720px) {
-    .limitation-row {
-      grid-template-columns: minmax(12rem, 0.75fr) minmax(0, 1.25fr);
-      gap: 1.5rem;
-      align-items: start;
-      padding: 0.9rem 1rem;
-    }
-
-    dt {
-      display: grid;
-      gap: 0.25rem;
-    }
-  }
+  .adaptive-limitations { margin: 1.5rem 0 2rem; border-block: 1px solid var(--border-subtle); }
+  .adaptive-limitations :global(dt), .adaptive-limitations :global(dd) { margin: 0; }
+  .adaptive-limitations > div { display: grid; gap: .25rem; padding: .75rem 0; }
+  .adaptive-limitations > div + div { border-top: 1px solid var(--border-subtle); }
+  dt { color: var(--text-primary); font-family: var(--font-display); font-size: .875rem; font-weight: 600; }
+  dd { color: var(--text-secondary); font-size: .875rem; line-height: 1.6; }
+  @media (min-width: 640px) { .adaptive-limitations > div { grid-template-columns: 13rem minmax(0,1fr); gap: 1rem; } }
 </style>

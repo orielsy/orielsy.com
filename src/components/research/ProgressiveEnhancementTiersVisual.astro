@@ -1,178 +1,59 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
+const implementations = [
+  { title: 'Deterministic baseline', condition: 'Useful without inference', example: 'Indexed filtering + synonyms' },
+  { title: 'Local inference', condition: 'Optional when viable', example: 'Local embeddings' },
+  { title: 'Remote inference', condition: 'Optional when justified', example: 'Remote reranker' },
+];
 ---
 
 <ResearchFigureFrame
-  className="progressive-tiers-figure"
-  eyebrow="Fig. 02 · Progressive enhancement model"
-  title="The interface remains useful before intelligence is added."
-  status="Capability can increase"
-  caption="Application truth and action boundaries remain stable as capability changes."
+  className="optional-implementation-figure"
+  figureNumber="03"
+  title="Optional capability, stable boundaries"
+  caption="These are possible search implementations, not a mandatory ladder, a runtime router, or a claim of equivalent results. Graceful degradation requires a fallback that has actually been designed and implemented."
 >
-  <div class="px-5 py-6 sm:px-6 sm:py-7">
-    <div class="relative mx-auto max-w-3xl">
-      <span
-        class="tier-rail absolute bottom-6 left-[7px] top-6 w-px bg-[var(--border-strong)]"
-        aria-hidden="true"
-      ></span>
-
-      <ol class="tier-list">
-        <li class="tier-row tier-row-baseline">
-          <span class="tier-node tier-node-baseline" aria-hidden="true"></span>
-          <div class="tier-card tier-card-baseline">
-            <div class="tier-card-header">
-              <span class="tier-number">01</span>
-              <span class="tier-title">Baseline</span>
-            </div>
-            <p>Useful interface without inference.</p>
-          </div>
-        </li>
-
-        <li class="tier-row">
-          <span class="tier-node" aria-hidden="true"></span>
-          <div class="tier-card tier-card-optional">
-            <div class="tier-card-header">
-              <span class="tier-number">02</span>
-              <span class="tier-title">Local enhancement</span>
-            </div>
-            <p>Add narrow intelligence when the environment supports it.</p>
-          </div>
-        </li>
-
-        <li class="tier-row">
-          <span class="tier-node" aria-hidden="true"></span>
-          <div class="tier-card tier-card-optional">
-            <div class="tier-card-header">
-              <span class="tier-number">03</span>
-              <span class="tier-title">Expanded inference</span>
-            </div>
-            <p>Add more capable or remote inference only when the task justifies it.</p>
-          </div>
-        </li>
-      </ol>
-    </div>
-
-    <div class="mx-auto mt-7 max-w-3xl">
-      <div class="flex items-center gap-3">
-        <span class="h-px flex-1 bg-[var(--accent)]" aria-hidden="true"></span>
-        <span class="whitespace-nowrap font-editorial-mono text-[10px] uppercase tracking-[0.16em] text-[var(--accent)]">
-          Authority stays bounded
-        </span>
-        <span class="h-px flex-1 bg-[var(--accent)]" aria-hidden="true"></span>
+  <p class="surface"><span>User interaction</span>Search</p>
+  <div class="implementation-options" role="group" aria-label="Illustrative implementation options for search">
+    {implementations.map((item) => (
+      <div>
+        <p class="condition">{item.condition}</p>
+        <h4>{item.title}</h4>
+        <p class="example">{item.example}</p>
       </div>
-      <p class="mt-3 text-center text-xs leading-5 text-[var(--text-muted)]">
-        Application truth and action boundaries remain stable as capability changes.
-      </p>
-    </div>
+    ))}
+  </div>
+  <div class="invariant">
+    <span>Application-owned boundaries</span>
+    <p>State · Validation · Permitted actions</p>
   </div>
 </ResearchFigureFrame>
 
 <style>
-  .progressive-tiers-figure :global(p),
-  .progressive-tiers-figure :global(h3),
-  .progressive-tiers-figure :global(ol),
-  .progressive-tiers-figure :global(li) {
-    margin: 0;
+  .optional-implementation-figure :global(p), .optional-implementation-figure :global(h4) { margin: 0; }
+  .surface { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 0.9rem; }
+  .surface span, .invariant span, .condition { color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; line-height: 1.5; text-transform: uppercase; }
+  .surface { color: var(--text-primary); font-family: var(--font-display); font-size: 1rem; font-weight: 600; }
+  .implementation-options { display: grid; border-block: 1px solid var(--border-subtle); }
+  .implementation-options > div { min-width: 0; padding: 1rem 0; }
+  .implementation-options > div + div { border-top: 1px solid var(--border-subtle); }
+  .condition { color: var(--accent); }
+  h4 { margin-top: 0.45rem !important; color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.45; }
+  .example { margin-top: 0.45rem !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
+  .invariant { display: grid; gap: 0.35rem 1rem; padding-top: 1rem; }
+  .invariant span { color: var(--accent); }
+  .invariant p { color: var(--text-primary); font-size: 0.875rem; line-height: 1.6; }
+  @media (min-width: 640px) {
+    .implementation-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .implementation-options > div { padding: 1.15rem 1.15rem 1.15rem 0; }
+    .implementation-options > div + div { border-top: 0; border-left: 1px solid var(--border-subtle); padding-left: 1.15rem; }
+    .invariant { grid-template-columns: 12rem minmax(0, 1fr); }
   }
+</style>
 
-  .progressive-tiers-figure :global(ol) {
-    padding-left: 0;
-  }
-
-  .tier-list {
-    display: grid;
-    gap: 0.85rem;
-  }
-
-  .tier-row {
-    position: relative;
-    display: grid;
-    grid-template-columns: 0.95rem minmax(0, 1fr);
-    gap: 0.9rem;
-    align-items: center;
-  }
-
-  .tier-node {
-    position: relative;
-    z-index: 1;
-    width: 0.9rem;
-    height: 0.9rem;
-    border: 2px solid var(--accent);
-    border-radius: 999px;
-    background: var(--bg-card);
-  }
-
-  .tier-node-baseline {
-    background: var(--accent);
-    box-shadow: 0 0 0 3px var(--bg-card);
-  }
-
-  .tier-card {
-    border-radius: 0.3rem;
-    padding: 0.95rem 1rem;
-  }
-
-  .tier-card-baseline {
-    border: 1px solid var(--accent);
-    background: var(--accent-subtle);
-  }
-
-  .tier-card-optional {
-    border: 1px dashed var(--border-strong);
-    background: var(--bg-secondary);
-  }
-
-  .tier-card-header {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
-    column-gap: 0.65rem;
-    min-width: 0;
-  }
-
-  .tier-number {
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
-    letter-spacing: 0.1em;
-    white-space: nowrap;
-  }
-
-  .tier-title {
-    min-width: 0;
-    color: var(--text-primary);
-    font-family: var(--font-mono-ui);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    line-height: 1.5;
-    text-transform: uppercase;
-  }
-
-  .tier-card :global(p) {
-    margin-top: 0.45rem;
-    color: var(--text-secondary);
-    font-size: 0.78rem;
-    line-height: 1.55;
-  }
-
-  @media (max-width: 380px) {
-    .tier-row {
-      grid-template-columns: 0.8rem minmax(0, 1fr);
-      gap: 0.7rem;
-    }
-
-    .tier-node {
-      width: 0.8rem;
-      height: 0.8rem;
-    }
-
-    .tier-rail {
-      left: 6px;
-    }
-
-    .tier-card {
-      padding: 0.85rem;
-    }
-  }
+<style>
+  :global(.research-reading .research-prose figure.optional-implementation-figure) { border-radius: 0 !important; }
+  :global(.research-reading .research-prose figure.optional-implementation-figure) .surface { font-size: 1rem !important; line-height: 1.5 !important; }
+  :global(.research-reading .research-prose figure.optional-implementation-figure) .example,
+  :global(.research-reading .research-prose figure.optional-implementation-figure) .invariant p { font-size: 0.875rem !important; line-height: 1.6 !important; }
 </style>

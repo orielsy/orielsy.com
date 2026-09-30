@@ -1,275 +1,48 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
-
-const transcript = [
-  { label: 'A', text: 'Initial direction explored', state: 'retained signal' },
-  { label: 'B', text: 'Alternative introduced', state: 'superseded' },
-  { label: 'C', text: 'Alternative refined', state: 'rejected' },
-  { label: 'D', text: 'Current decision', state: 'authoritative' },
-];
-
-const workingState = [
-  { label: 'Current decision', text: 'D', accent: true },
-  { label: 'Do not revive', text: 'B · C', accent: false },
-  { label: 'Retained constraint', text: 'Useful discovery from A', accent: false },
-];
+const retained = ['Current objective', 'Decisions still in force', 'Relevant constraints', 'Rejected paths likely to recur', 'Active artifacts', 'Unresolved questions', 'Immediate next step'];
 ---
 
-<ResearchFigureFrame
-  eyebrow="Context distillation"
-  title="Chronology records what happened. A handoff preserves what still matters."
-  status="Working-state reconstruction"
-  caption="Distillation is not a shorter transcript. It reconstructs the smallest reliable state needed for correct continuation."
-  bodyMode="padded"
->
-  <div class="distillation-grid">
-    <section class="lane transcript-lane">
-      <div class="lane-heading">
-        <span>Chronological transcript</span>
-        <strong>History</strong>
-      </div>
+<ResearchFigureFrame className="zen-distillation" figureNumber="01" title="History records events; a handoff reconstructs state" caption="Selecting what still governs continuation is the proposal, not evidence that reduced context performs better. The transcript sequence is illustrative.">
+  <div class="comparison">
+    <section aria-labelledby="zen-history">
+      <h4 id="zen-history">Accumulated transcript <span>Chronology</span></h4>
       <ol>
-        {transcript.map((item) => (
-          <li
-            class:list={[
-              'transcript-step',
-              item.state === 'retained signal' && 'is-retained',
-              (item.state === 'superseded' || item.state === 'rejected') && 'is-discarded',
-              item.state === 'authoritative' && 'is-current',
-            ]}
-          >
-            <span class="step-label">{item.label}</span>
-            <span class="step-copy">
-              <strong>{item.text}</strong>
-              <small>{item.state}</small>
-            </span>
-          </li>
-        ))}
+        <li>Initial objective</li><li>Exploration</li><li>Rejected direction</li><li>Correction</li><li>Superseded decision</li><li>Current implementation</li><li>Unresolved question</li>
       </ol>
     </section>
-
-    <div class="transform" aria-hidden="true">
-      <span>distill</span>
-      <strong class="arrow-down">↓</strong>
-      <strong class="arrow-right">→</strong>
-    </div>
-
-    <section class="lane state-lane">
-      <div class="lane-heading">
-        <span>Authoritative working state</span>
-        <strong>Continuation</strong>
-      </div>
-      <dl>
-        {workingState.map((item) => (
-          <div class:list={['state-item', item.accent && 'is-authoritative']}>
-            <dt>{item.label}</dt>
-            <dd>{item.text}</dd>
-          </div>
-        ))}
-      </dl>
+    <section aria-labelledby="zen-state">
+      <h4 id="zen-state">Authoritative working state <span>Continuation</span></h4>
+      <ul>{retained.map((item) => <li>{item}</li>)}</ul>
     </section>
   </div>
+  <div class="selection-note"><span>May compress</span><p>Chronology · abandoned exploration · obsolete assumptions · repeated explanations · agent self-commentary</p></div>
 </ResearchFigureFrame>
 
 <style>
-  .distillation-grid {
-    display: grid;
-    gap: 0.8rem;
-    align-items: stretch;
+  .zen-distillation :global(p), .zen-distillation :global(h4), .zen-distillation :global(ol), .zen-distillation :global(ul), .zen-distillation :global(li) { margin: 0; }
+  .zen-distillation :global(ol), .zen-distillation :global(ul) { padding: 0; list-style: none; }
+  .comparison { display: grid; gap: 1.5rem; }
+  .comparison section { min-width: 0; }
+  .comparison section + section { border-top: 1px solid var(--border-subtle); padding-top: 1.25rem; }
+  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.5; }
+  h4 span { display: block; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; font-weight: 400; text-transform: uppercase; }
+  .comparison ol, .comparison ul { margin-top: 0.8rem !important; }
+  .comparison li { border-bottom: 1px solid var(--border-subtle); padding: 0.38rem 0; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; }
+  .comparison li:last-child { border-bottom: 0; }
+  .comparison section:last-child li { color: var(--text-primary); }
+  .selection-note { display: grid; gap: 0.35rem 1rem; margin-top: 1.25rem; border-top: 1px solid var(--border-strong); padding-top: 1rem; }
+  .selection-note span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; text-transform: uppercase; }
+  .selection-note p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
+  @media (min-width: 640px) {
+    .comparison { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
+    .comparison section:first-child { padding-right: 1.5rem; }
+    .comparison section + section { border-top: 0; border-left: 1px solid var(--border-subtle); padding: 0 0 0 1.5rem; }
+    .selection-note { grid-template-columns: 8rem minmax(0, 1fr); }
   }
+</style>
 
-  .lane {
-    min-width: 0;
-    border: 1px solid var(--border-subtle);
-    background: var(--bg-card);
-  }
-
-  .lane-heading {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 0.7rem 0.8rem;
-  }
-
-  .lane-heading span,
-  .lane-heading strong,
-  .step-label,
-  .transcript-step small,
-  dt,
-  .transform span {
-    font-family: var(--font-mono-ui);
-    text-transform: uppercase;
-  }
-
-  .lane-heading span,
-  .lane-heading strong,
-  .step-label,
-  .transcript-step small,
-  dt,
-  .transform span {
-    font-size: 0.625rem;
-  }
-
-  .lane-heading span {
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-  }
-
-  .lane-heading strong {
-    color: var(--text-secondary);
-    font-weight: 500;
-    letter-spacing: 0.08em;
-  }
-
-  .state-lane .lane-heading span,
-  .state-lane .lane-heading strong {
-    color: var(--accent);
-  }
-
-  ol,
-  dl {
-    margin: 0;
-    padding: 0.7rem;
-    list-style: none;
-  }
-
-  .transcript-lane ol > .transcript-step {
-    margin: 0;
-  }
-
-  .transcript-step {
-    display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr);
-    gap: 0.65rem;
-    align-items: center;
-    min-height: 3.1rem;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 0.55rem 0.65rem;
-    background: var(--bg-secondary);
-  }
-
-  .transcript-step:last-child {
-    border-bottom: 0;
-  }
-
-  .transcript-step.is-retained {
-    box-shadow: inset 2px 0 0 color-mix(in srgb, var(--accent) 30%, var(--border-strong));
-  }
-
-  .transcript-step.is-discarded {
-    opacity: 0.48;
-  }
-
-  .transcript-step.is-discarded .step-copy strong {
-    text-decoration: line-through;
-    text-decoration-thickness: 1px;
-    text-decoration-color: var(--text-muted);
-  }
-
-  .transcript-step.is-current {
-    box-shadow: inset 2px 0 0 var(--accent);
-  }
-
-  .step-label {
-    color: var(--text-muted);
-    letter-spacing: 0.08em;
-  }
-
-  .is-current .step-label {
-    color: var(--accent);
-  }
-
-  .step-copy strong,
-  .step-copy small {
-    display: block;
-  }
-
-  .step-copy strong {
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.8125rem;
-    font-weight: 600;
-  }
-
-  .step-copy small {
-    margin-top: 0.18rem;
-    color: var(--text-muted);
-    letter-spacing: 0.07em;
-  }
-
-  .transform {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.45rem;
-    color: var(--text-muted);
-  }
-
-  .transform span {
-    letter-spacing: 0.1em;
-  }
-
-  .transform strong {
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.875rem;
-  }
-
-  .arrow-right {
-    display: none;
-  }
-
-  dl {
-    display: grid;
-    gap: 0.55rem;
-  }
-
-  .state-item {
-    border: 1px solid var(--border-subtle);
-    background: var(--bg-secondary);
-    padding: 0.75rem;
-  }
-
-  .state-item.is-authoritative {
-    border-color: color-mix(in srgb, var(--accent) 36%, var(--border-subtle));
-    background: color-mix(in srgb, var(--accent) 6%, var(--bg-card));
-  }
-
-  dt {
-    color: var(--text-muted);
-    letter-spacing: 0.09em;
-  }
-
-  .is-authoritative dt {
-    color: var(--accent);
-  }
-
-  dd {
-    margin: 0.3rem 0 0;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    line-height: 1.4;
-  }
-
-  @media (min-width: 760px) {
-    .distillation-grid {
-      grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr);
-    }
-
-    .transform {
-      flex-direction: column;
-    }
-
-    .arrow-down {
-      display: none;
-    }
-
-    .arrow-right {
-      display: inline;
-    }
-  }
+<style>
+  :global(.research-reading .research-prose figure.zen-distillation) { border-radius: 0 !important; }
+  :global(.research-reading .research-prose figure.zen-distillation) .selection-note p { font-size: 0.875rem !important; line-height: 1.6 !important; }
 </style>

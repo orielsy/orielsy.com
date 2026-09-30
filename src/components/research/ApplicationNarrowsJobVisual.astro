@@ -1,0 +1,54 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+const constraints = ['State', 'Validation', 'Schemas', 'Available actions', 'Product rules'];
+const jobs = ['Classify this intent', 'Rank these items', 'Extract these fields', 'Transform this selection', 'Transcribe this audio', 'Route this command'];
+---
+
+<ResearchFigureFrame
+  className="narrow-job-figure"
+  figureNumber="02"
+  title="The application narrows the job"
+  caption="The application can supply constraints so a capability receives a smaller task. This framing does not guarantee a correct result."
+>
+  <div class="question-shift">
+    <p><span>Broad question</span>Which model can run the whole experience?</p>
+    <p><span>Better question</span>What is the smallest capability this interaction actually needs?</p>
+  </div>
+  <div class="narrowing-model">
+    <div class="inputs">
+      <h4>Application supplies</h4>
+      <p>{constraints.join(' · ')}</p>
+    </div>
+    <div class="jobs">
+      <h4>Capability receives a narrow job</h4>
+      <ul>{jobs.map((job) => <li>{job}</li>)}</ul>
+    </div>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  .narrow-job-figure :global(p), .narrow-job-figure :global(h4),
+  .narrow-job-figure :global(ul), .narrow-job-figure :global(li) { margin: 0; }
+  .narrow-job-figure :global(ul) { padding: 0; list-style: none; }
+  .question-shift { display: grid; gap: 0.5rem; border-left: 2px solid var(--accent); padding-left: 1rem; }
+  .question-shift p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
+  .question-shift p:last-child { color: var(--text-primary); font-weight: 600; }
+  .question-shift span { display: block; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; font-weight: 400; text-transform: uppercase; }
+  .narrowing-model { display: grid; gap: 1.35rem; margin-top: 1.75rem; border-top: 1px solid var(--border-subtle); padding-top: 1.25rem; }
+  .narrowing-model h4 { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; font-weight: 600; line-height: 1.5; text-transform: uppercase; }
+  .inputs p { margin-top: 0.65rem !important; color: var(--text-primary); font-size: 0.875rem; line-height: 1.75; }
+  .jobs ul { display: grid; margin-top: 0.55rem !important; }
+  .jobs li { border-bottom: 1px solid var(--border-subtle); padding: 0.4rem 0; color: var(--text-primary); font-size: 0.875rem; line-height: 1.5; }
+  .jobs li:last-child { border-bottom: 0; }
+  @media (min-width: 640px) {
+    .narrowing-model { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 2rem; }
+    .jobs { border-left: 1px solid var(--border-subtle); padding-left: 2rem; }
+    .jobs ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1rem; }
+  }
+</style>
+
+<style>
+  :global(.research-reading .research-prose figure.narrow-job-figure) { border-radius: 0 !important; }
+  :global(.research-reading .research-prose figure.narrow-job-figure) .question-shift p,
+  :global(.research-reading .research-prose figure.narrow-job-figure) .inputs p { font-size: 0.875rem !important; line-height: 1.65 !important; }
+</style>

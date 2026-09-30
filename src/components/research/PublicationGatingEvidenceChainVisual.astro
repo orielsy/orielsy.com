@@ -1,0 +1,37 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+const steps = [
+  ['Requirement', 'specs/003-content-publication-gating/spec.md', 'New entries fail closed until deliberately published.'],
+  ['Schema default', 'src/content.config.ts', 'published: z.boolean().default(false)'],
+  ['Route behavior', 'src/pages/research/[...slug].astro', 'Unpublished body preview requires development plus explicit content-preview mode.'],
+  ['Feed behavior', 'src/pages/rss.xml.ts', 'RSS filters the collection to published entries.'],
+];
+---
+
+<ResearchFigureFrame
+  className="publication-evidence"
+  figureNumber="04"
+  title="One concern, four forms of evidence"
+  caption="The specification defines intended behavior; schema, route, and feed expose separate implementation surfaces. This sampled chain is not exhaustive proof that every publication-gating acceptance criterion is satisfied."
+>
+  <ol class="evidence-chain">
+    {steps.map(([label,file,text],index) => (
+      <li>
+        <span class="index">0{index + 1}</span>
+        <div><span class="label">{label}</span><code>{file}</code><p>{text}</p></div>
+      </li>
+    ))}
+  </ol>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-reading .research-prose figure.publication-evidence) { border-radius:0 !important; }
+  .evidence-chain { display:grid; margin:0; padding:0; border-block:1px solid var(--border-subtle); list-style:none; }
+  li { display:grid; grid-template-columns:2rem minmax(0,1fr); gap:.75rem; padding:.9rem 0; }
+  li + li { border-top:1px solid var(--border-subtle); }
+  .index { color:var(--accent); font-family:var(--font-mono-ui); font-size:.6875rem; }
+  .label { display:block; color:var(--accent); font-family:var(--font-mono-ui); font-size:.6875rem; letter-spacing:.08em; text-transform:uppercase; }
+  code { display:block; margin-top:.25rem; border:0 !important; background:transparent !important; padding:0 !important; color:var(--text-primary) !important; font-family:var(--font-mono-ui); font-size:.8125rem !important; line-height:1.5; white-space:normal !important; overflow-wrap:anywhere; }
+  p { margin:.35rem 0 0 !important; color:var(--text-secondary); font-size:.875rem; line-height:1.6; }
+  @media (min-width:760px) { .evidence-chain { grid-template-columns:repeat(2,minmax(0,1fr)); } li { padding:1rem; } li:nth-child(odd) { padding-left:0; } li:nth-child(even) { border-left:1px solid var(--border-subtle); } li:nth-child(2) { border-top:0; } }
+</style>

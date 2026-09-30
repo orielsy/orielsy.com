@@ -1,106 +1,39 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
-
-const stages = [
-  'Conversation',
-  'Authoritative working state',
-  'Target profile',
-  'Continuation package',
+const profiles = [
+  { name: 'General-purpose', details: 'Canonical handoff when no target is supplied.' },
+  { name: 'Coding', details: 'Repository state · branch · files · architecture decisions · tests · failures · next implementation step' },
+  { name: 'Research', details: 'Question · findings · sources · assumptions · unresolved questions · next investigation' },
 ];
 ---
 
-<ResearchFigureFrame
-  title="Context recompilation"
-  caption="Preserve the truth, then represent it for the environment that will consume it next."
->
-  <ol class="recompile-flow" aria-label="Context Zen target-aware handoff pipeline">
-    {stages.map((stage, index) => (
-      <li class:list={['node', index === 1 && 'is-state', index === 3 && 'is-output']}>
-        <strong>{stage}</strong>
-        {index < stages.length - 1 && (
-          <>
-            <span class="arrow arrow-mobile" aria-hidden="true">↓</span>
-            <span class="arrow arrow-desktop" aria-hidden="true">→</span>
-          </>
-        )}
-      </li>
-    ))}
-  </ol>
+<ResearchFigureFrame className="zen-targets" figureNumber="04" title="One state, three target representations" caption="The user chooses the target; no destination discovery is required. Changing organization, emphasis, or compression must not materially change continuation state. Preservation is a requirement, not a demonstrated guarantee; “context recompilation” is architectural framing.">
+  <div class="canonical"><span>Canonical handoff</span><p>Objective · decisions · constraints · rejected paths · active artifacts · open questions · next step</p></div>
+  <div class="profiles" role="group" aria-label="User-selected handoff target profiles">
+    {profiles.map((profile) => <div><h4>{profile.name}</h4><p>{profile.details}</p></div>)}
+  </div>
+  <p class="boundary">Same authoritative state; different emphasis for the receiving environment.</p>
 </ResearchFigureFrame>
 
 <style>
-  .recompile-flow {
-    display: grid;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    gap: 1px;
-    background: var(--border-subtle);
+  .zen-targets :global(p), .zen-targets :global(h4) { margin: 0; }
+  .canonical { border-left: 2px solid var(--accent); padding-left: 1rem; }
+  .canonical span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; text-transform: uppercase; }
+  .canonical p { margin-top: 0.35rem !important; color: var(--text-primary); font-size: 0.875rem; line-height: 1.65; }
+  .profiles { display: grid; margin-top: 1.25rem; border-top: 1px solid var(--border-subtle); }
+  .profiles > div { padding: 0.9rem 0; }
+  .profiles > div + div { border-top: 1px solid var(--border-subtle); }
+  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.5; }
+  .profiles p { margin-top: 0.35rem !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
+  .boundary { border-top: 1px solid var(--border-strong); padding-top: 0.9rem; color: var(--text-primary); font-size: 0.875rem; line-height: 1.6; }
+  @media (min-width: 640px) {
+    .profiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .profiles > div { padding: 1rem 1rem 1rem 0; }
+    .profiles > div + div { border-top: 0; border-left: 1px solid var(--border-subtle); padding-left: 1rem; }
   }
+</style>
 
-  .recompile-flow > .node {
-    margin: 0;
-  }
-
-  .node {
-    position: relative;
-    min-width: 0;
-    background: var(--bg-card);
-    padding: 1rem;
-  }
-
-  .node.is-state {
-    box-shadow: inset 2px 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
-  }
-
-  .node.is-output {
-    background: color-mix(in srgb, var(--accent) 7%, var(--bg-card));
-  }
-
-  .node strong {
-    display: block;
-    margin: 0;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    line-height: 1.4;
-  }
-
-  .arrow {
-    position: absolute;
-    z-index: 2;
-    background: var(--bg-card);
-    padding: 0.1rem;
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.75rem;
-  }
-
-  .arrow-mobile {
-    left: 50%;
-    bottom: -0.55rem;
-    transform: translateX(-50%);
-  }
-
-  .arrow-desktop {
-    display: none;
-    right: -0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  @media (min-width: 760px) {
-    .recompile-flow {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .arrow-mobile {
-      display: none;
-    }
-
-    .arrow-desktop {
-      display: block;
-    }
-  }
+<style>
+  :global(.research-reading .research-prose figure.zen-targets) { border-radius: 0 !important; }
+  :global(.research-reading .research-prose figure.zen-targets) .canonical p, :global(.research-reading .research-prose figure.zen-targets) .profiles p, :global(.research-reading .research-prose figure.zen-targets) .boundary { font-size: 0.875rem !important; line-height: 1.6 !important; }
 </style>
