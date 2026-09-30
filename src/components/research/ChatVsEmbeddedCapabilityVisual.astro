@@ -4,162 +4,61 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 <ResearchFigureFrame
   className="interaction-path-figure"
-  eyebrow="Fig. 01 · Interaction path"
-  title="Same intent. Different interface path."
-  status="Conversation-mediated · In-interface"
-  caption="Conversation can still produce direct action. The distinction is how much of the interaction the application itself already structures."
+  figureNumber="01"
+  title="Same intent, different interface path"
+  caption="Conversation can also trigger an action directly. The handoff only applies if its result remains outside the table. Neither path is inherently faster, more capable, or more accurate."
 >
-  <div class="grid lg:grid-cols-2">
-    <section class="border-b border-[var(--border-subtle)] px-5 py-5 sm:px-6 lg:border-r lg:border-b-0" aria-labelledby="conversation-path-title">
-      <div class="flex items-center gap-3">
-        <svg class="h-4 w-4 text-[var(--text-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-          <path d="M6.5 17.5 4 20v-5.3A7.5 7.5 0 1 1 19.5 12a7.5 7.5 0 0 1-8 7.5 8 8 0 0 1-5-2Z"/>
-          <path d="M8 11.5h.01M12 11.5h.01M16 11.5h.01"/>
-        </svg>
-        <h4 id="conversation-path-title" class="font-display text-base font-semibold text-[var(--text-primary)]">Conversation-mediated path</h4>
-      </div>
-
-      <ol class="path-list mt-5">
-        <li class="path-node">
-          <span class="path-index">01</span>
-          <div>
-            <span class="path-label">User request</span>
-            <p>"Filter this table to active accounts over $10k"</p>
-          </div>
-        </li>
-        <li class="path-node">
-          <span class="path-index">02</span>
-          <div>
-            <span class="path-label">Conversational interpretation</span>
-          </div>
-        </li>
-        <li class="path-node">
-          <span class="path-index">03</span>
-          <div>
-            <span class="path-label">Action or result</span>
-          </div>
-        </li>
+  <div class="paths">
+    <section aria-labelledby="conversation-path-title">
+      <h4 id="conversation-path-title">Conversation-mediated</h4>
+      <ol>
+        <li><span class="step">01</span><span>Describe the desired state in prose</span></li>
+        <li><span class="step">02</span><span>Conversational interpretation</span></li>
+        <li><span class="step">03</span><span>Action or result</span></li>
+        <li class="conditional"><span class="step">IF</span><span>When the result lives outside the table, the user carries it back</span></li>
       </ol>
     </section>
-
-    <section class="px-5 py-5 sm:px-6" aria-labelledby="embedded-path-title">
-      <div class="flex items-center gap-3">
-        <svg class="h-4 w-4 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-          <rect x="4" y="4" width="16" height="16" rx="2"/>
-          <path d="M4 9h16M9 9v11"/>
-        </svg>
-        <h4 id="embedded-path-title" class="font-display text-base font-semibold text-[var(--text-primary)]">Embedded capability</h4>
-      </div>
-
-      <ol class="path-list mt-5">
-        <li class="path-node path-node-accent">
-          <span class="path-index">01</span>
-          <div>
-            <span class="path-label">User intent</span>
-            <p>"high value active"</p>
-          </div>
-        </li>
-        <li class="path-node path-node-accent">
-          <span class="path-index">02</span>
-          <div>
-            <span class="path-label">Semantic ranking / filtering</span>
-          </div>
-        </li>
-        <li class="path-node path-node-accent">
-          <span class="path-index">03</span>
-          <div>
-            <span class="path-label">Grid updates</span>
-          </div>
-        </li>
+    <section aria-labelledby="embedded-path-title">
+      <h4 id="embedded-path-title">Embedded capability</h4>
+      <ol>
+        <li><span class="step">01</span><span>Act inside the table</span></li>
+        <li><span class="step">02</span><span>Capability receives a narrow job</span></li>
+        <li><span class="step">03</span><span>Table updates in place</span></li>
       </ol>
     </section>
+  </div>
+  <div class="shared-result">
+    <span>Shared end state</span>
+    <p>The table reflects the requested state if either path is integrated to reach it.</p>
   </div>
 </ResearchFigureFrame>
 
 <style>
-  .interaction-path-figure :global(p),
-  .interaction-path-figure :global(h3),
-  .interaction-path-figure :global(h4),
-  .interaction-path-figure :global(ol),
-  .interaction-path-figure :global(li) {
-    margin: 0;
+  .interaction-path-figure :global(p), .interaction-path-figure :global(h4),
+  .interaction-path-figure :global(ol), .interaction-path-figure :global(li) { margin: 0; }
+  .interaction-path-figure :global(ol) { padding: 0; list-style: none; }
+  .paths { display: grid; gap: 1.75rem; }
+  .paths section { min-width: 0; }
+  .paths section + section { border-top: 1px solid var(--border-subtle); padding-top: 1.5rem; }
+  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.45; }
+  .paths ol { margin-top: 1rem !important; }
+  .paths li { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); gap: 0.75rem; padding: 0.55rem 0; color: var(--text-primary); font-size: 0.875rem; line-height: 1.55; }
+  .paths li + li { border-top: 1px solid var(--border-subtle); }
+  .step { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; line-height: 2; }
+  .conditional { color: var(--text-secondary) !important; }
+  .conditional .step { color: var(--text-muted); }
+  .shared-result { display: grid; gap: 0.35rem 1.5rem; margin-top: 1.5rem; border-top: 1px solid var(--border-strong); padding-top: 1rem; }
+  .shared-result span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; }
+  .shared-result p { color: var(--text-primary); font-size: 0.875rem; line-height: 1.6; }
+  @media (min-width: 640px) {
+    .paths { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
+    .paths section:first-child { padding-right: 1.5rem; }
+    .paths section + section { border-top: 0; border-left: 1px solid var(--border-subtle); padding: 0 0 0 1.5rem; }
+    .shared-result { grid-template-columns: 10rem minmax(0, 1fr); }
   }
+</style>
 
-  .interaction-path-figure :global(ol) {
-    padding-left: 0;
-  }
-
-  .interaction-path-figure :global(p) {
-    margin-top: 0.3rem;
-    color: var(--text-secondary);
-    font-family: var(--font-mono-ui);
-    font-size: 0.7rem;
-    line-height: 1.6;
-  }
-
-  .path-list {
-    display: grid;
-    gap: 0.65rem;
-  }
-
-  .path-node {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1.9rem minmax(0, 1fr);
-    gap: 0.75rem;
-    align-items: start;
-    border: 1px solid var(--border-subtle);
-    border-radius: 0.3rem;
-    background: var(--bg-secondary);
-    padding: 0.8rem 0.85rem;
-  }
-
-  .path-node:not(:last-child)::after {
-    content: "↓";
-    position: absolute;
-    left: 0.95rem;
-    bottom: -0.83rem;
-    z-index: 2;
-    background: var(--bg-card);
-    padding: 0 0.15rem;
-    color: var(--text-muted);
-    font-family: var(--font-mono-ui);
-    font-size: 0.68rem;
-    line-height: 1;
-  }
-
-  .path-node-accent {
-    border-color: color-mix(in srgb, var(--accent) 30%, var(--border-subtle));
-    background: color-mix(in srgb, var(--accent) 5%, var(--bg-secondary));
-  }
-
-  .path-node-accent:not(:last-child)::after {
-    color: var(--accent);
-  }
-
-  .path-index {
-    display: inline-flex;
-    min-height: 1.55rem;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--border-subtle);
-    border-radius: 999px;
-    color: var(--text-muted);
-    font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
-    letter-spacing: 0.06em;
-  }
-
-  .path-node-accent .path-index {
-    border-color: var(--accent-border);
-    color: var(--accent);
-  }
-
-  .path-label {
-    display: block;
-    color: var(--text-primary);
-    font-family: var(--font-mono-ui);
-    font-size: 0.7rem;
-    line-height: 1.5;
-  }
+<style>
+  :global(.research-reading .research-prose figure.interaction-path-figure) { border-radius: 0 !important; }
+  :global(.research-reading .research-prose figure.interaction-path-figure) .shared-result p { font-size: 0.875rem !important; line-height: 1.6 !important; }
 </style>
