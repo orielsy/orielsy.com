@@ -1,104 +1,85 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const inputs = [
+  { label: 'Current state', detail: 'Restricted account · identity verification missing · no active risk review' },
+  { label: 'Trusted capabilities', detail: 'Customer profile / account status · transactions · identity verification · restriction action · risk escalation' },
+  { label: 'Authored product knowledge', detail: 'Purpose · relevance · prerequisites · explanation / composition guidance' },
+  { label: 'Deterministic policy', detail: 'Removal requires verified identity · risk escalation remains permitted while restricted' },
+];
+const facts = [
+  { label: 'Customer profile', value: 'Jordan Rivera' },
+  { label: 'Recent transactions', value: '3 entries, 1 blocked transfer' },
+  { label: 'Restriction reason', value: 'Identity verification required' },
+];
+const actions = [
+  { label: 'Request verification', value: 'Prerequisite for removal' },
+  { label: 'Remove restriction', value: 'Blocked: identity not verified' },
+  { label: 'Escalate to risk', value: 'Permitted while restricted', permitted: true },
+];
 ---
 
 <ResearchFigureFrame
   className="composition-figure"
-  title="Compose from trusted capabilities instead of inventing behavior."
-  subtitle="Engineering supplies the real capabilities and constraints. Authored product knowledge contributes intent, relevance, prerequisites, and composition guidance."
-  caption="The authored product-knowledge layer did not implement verification, authorization, transaction retrieval, account mutation, or escalation. Those are engineering-built capabilities. The composition layer uses intent, current state, deterministic policy, and available capabilities to shape the surface."
+  figureNumber="02"
+  title="A surface assembled within boundaries"
+  caption="Illustrative composition, not an implemented generator. The application owns current state, authorization, validation, and mutation or side effects; composition cannot invent missing behavior."
 >
-  <div class="grid gap-2 sm:grid-cols-2">
-    <section class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-3.5">
-      <p class="font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Current state</p>
-      <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">Restricted account; identity verification missing; no active risk review.</p>
+  <div class="composition-layout">
+    <section class="composition-inputs" aria-label="Inputs to a possible composition">
+      <p class="composition-label">Inputs to a possible composition</p>
+      <dl class="composition-input-list">
+        {inputs.map(({ label, detail }) => <div><dt>{label}</dt><dd>{detail}</dd></div>)}
+      </dl>
     </section>
-
-    <section class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-3.5">
-      <p class="font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Available capabilities</p>
-      <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">Customer profile, account status, transactions, identity verification, restriction action, risk escalation.</p>
-    </section>
-
-    <section class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-3.5">
-      <p class="font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Authored product knowledge</p>
-      <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">Purpose: investigate a restricted account. Explain blocked actions through unmet prerequisites.</p>
-    </section>
-
-    <section class="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-3.5">
-      <p class="font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Deterministic policy</p>
-      <p class="mt-2 text-[11px] leading-5 text-[var(--text-secondary)]">Restriction removal requires verified identity. Risk escalation remains permitted while restricted. Authorization and mutation stay in application code.</p>
-    </section>
+    <div class="composition-result">
+      <section class="composition-layer" aria-label="Proposed composition and context layer">
+        <p class="composition-label">Proposed composition / context layer</p>
+        <p>Select relevant capabilities, order the task, apply guidance, respect state and policy.</p>
+      </section>
+      <section class="derived-surface" aria-labelledby="derived-surface-title">
+        <header>
+          <div><p class="composition-label">Illustrative derived surface</p><h4 id="derived-surface-title">Account Review</h4></div>
+          <span class="surface-status">Restricted</span>
+        </header>
+        <dl class="surface-facts">
+          {facts.map(({ label, value }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
+        </dl>
+        <div class="surface-actions">
+          <p class="composition-label">Next steps under current policy</p>
+          <dl>{actions.map(({ label, value, permitted }) => <div><dt>{label}</dt><dd class:list={{ permitted }}>{value}</dd></div>)}</dl>
+        </div>
+      </section>
+    </div>
   </div>
-
-  <div aria-hidden="true" class="flex justify-center py-1">
-    <div class="h-5 w-px bg-[var(--border-strong)]"></div>
-  </div>
-
-  <div class="rounded-md border border-[var(--accent-border)] bg-[var(--accent-subtle)] px-4 py-3 text-center">
-    <p class="font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--accent)]">Context / composition layer</p>
-    <p class="mt-1.5 text-[11px] leading-5 text-[var(--text-primary)]">Select relevant capabilities, order the task, apply guidance, respect state and policy.</p>
-  </div>
-
-  <div aria-hidden="true" class="flex justify-center py-1">
-    <div class="h-5 w-px bg-[var(--border-strong)]"></div>
-  </div>
-
-  <section class="overflow-hidden rounded-md border border-[var(--border-strong)]" aria-label="Illustrative derived account review surface">
-    <header class="flex items-center justify-between gap-4 border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-4 py-3">
-      <div>
-        <p class="font-editorial-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Derived surface</p>
-        <h4 class="mt-1 text-sm font-semibold text-[var(--text-primary)]">Account Review</h4>
-      </div>
-      <span class="rounded-full border border-[var(--accent-border)] px-2.5 py-1 font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--accent)]">Restricted</span>
-    </header>
-
-    <ul data-derived-surface-list class="divide-y divide-[var(--border-subtle)] bg-[var(--bg-primary)]">
-      <li class="flex items-stretch justify-between gap-2">
-        <span class="flex min-w-0 flex-1 items-center py-2.5 pl-4 pr-2 font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Customer profile</span>
-        <span class="flex min-w-0 items-center justify-end py-2.5 pl-2 pr-4 text-right text-[11px] text-[var(--text-primary)]">Jordan Rivera</span>
-      </li>
-      <li class="flex items-stretch justify-between gap-2">
-        <span class="flex min-w-0 flex-1 items-center py-2.5 pl-4 pr-2 font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Recent transactions</span>
-        <span class="flex min-w-0 items-center justify-end py-2.5 pl-2 pr-4 text-right text-[11px] text-[var(--text-primary)]">3 entries, 1 blocked transfer</span>
-      </li>
-      <li class="flex items-stretch justify-between gap-2">
-        <span class="flex min-w-0 flex-1 items-center py-2.5 pl-4 pr-2 font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Restriction reason</span>
-        <span class="flex min-w-0 items-center justify-end py-2.5 pl-2 pr-4 text-right text-[11px] text-[var(--text-primary)]">Identity verification required</span>
-      </li>
-      <li class="flex items-stretch justify-between gap-2">
-        <span class="flex min-w-0 flex-1 items-center py-2.5 pl-4 pr-2 font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Request verification</span>
-        <span class="flex min-w-0 items-center justify-end py-2.5 pl-2 pr-4 text-right font-editorial-mono text-[10px] text-[var(--accent)]">Prerequisite for removal</span>
-      </li>
-      <li class="flex items-stretch justify-between gap-2">
-        <span class="flex min-w-0 flex-1 items-center py-2.5 pl-4 pr-2 font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Remove restriction</span>
-        <span class="flex min-w-0 items-center justify-end py-2.5 pl-2 pr-4 text-right font-editorial-mono text-[10px] text-[var(--text-muted)] line-through decoration-[var(--text-muted)]">Blocked: prerequisite unmet</span>
-      </li>
-      <li class="flex items-stretch justify-between gap-2">
-        <span class="flex min-w-0 flex-1 items-center py-2.5 pl-4 pr-2 font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">Escalate to risk</span>
-        <span class="flex min-w-0 items-center justify-end py-2.5 pl-2 pr-4 text-right font-editorial-mono text-[10px] text-[var(--accent)]">Permitted</span>
-      </li>
-    </ul>
-
-    <p class="border-t border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-4 py-2.5 font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">State, authorization, and side effects remain owned by deterministic systems.</p>
-  </section>
 </ResearchFigureFrame>
 
-<style>
-  .composition-figure :global(p),
-  .composition-figure :global(h4) {
-    margin-bottom: 0;
-  }
-</style>
-
 <style is:global>
-  [data-derived-surface-list] {
-    margin: 0 !important;
-    padding: 0 !important;
-    list-style: none !important;
-  }
-
-  [data-derived-surface-list] > li {
-    margin: 0 !important;
-    padding: 0 !important;
+  [data-research-entry="product-knowledge-as-architecture"] figure.composition-figure { border-inline: 0; border-radius: 0 !important; background: transparent; padding: 1.25rem 0; }
+  .composition-figure .composition-layout { display: grid; gap: 1.5rem; }
+  .composition-figure .composition-layout > * { min-width: 0; }
+  .composition-figure .composition-label { margin: 0 !important; font-family: var(--font-mono-ui); font-size: 0.625rem !important; font-weight: 500; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .composition-figure .composition-input-list { margin: 0.7rem 0 0; border-top: 1px solid var(--border-subtle); }
+  .composition-figure .composition-input-list > div { padding: 0.7rem 0; border-bottom: 1px solid var(--border-subtle); }
+  .composition-figure .composition-input-list dt { color: var(--text-primary); font-size: 0.78rem; font-weight: 600; }
+  .composition-figure .composition-input-list dd { margin: 0.2rem 0 0; color: var(--text-secondary); font-size: 0.74rem; line-height: 1.55; }
+  .composition-figure .composition-layer { border-left: 2px solid var(--accent); padding-left: 1rem; }
+  .composition-figure .composition-layer .composition-label { color: var(--accent); }
+  .composition-figure .composition-layer > p:last-child { margin: 0.5rem 0 0 !important; color: var(--text-primary); font-size: 0.8rem !important; line-height: 1.65 !important; }
+  .composition-figure .derived-surface { min-width: 0; margin-top: 1.25rem; border: 1px solid var(--border-subtle); border-radius: 0.2rem; background: var(--bg-card); padding: 1rem; }
+  .composition-figure .derived-surface header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.4rem 1rem; margin: 0 0 0.85rem; padding: 0 !important; }
+  .composition-figure .derived-surface h4 { margin: 0.2rem 0 0; font-family: var(--font-display); font-size: 1rem !important; color: var(--text-primary); font-weight: 600; }
+  .composition-figure .surface-status { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.7rem; }
+  .composition-figure .surface-facts, .composition-figure .surface-actions dl { margin: 0; border-top: 1px solid var(--border-subtle); }
+  .composition-figure .surface-facts > div, .composition-figure .surface-actions dl > div { display: grid; gap: 0.15rem 0.65rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.72rem; line-height: 1.55; }
+  .composition-figure .surface-facts dt, .composition-figure .surface-actions dt { color: var(--text-secondary); }
+  .composition-figure .surface-facts dd, .composition-figure .surface-actions dd { min-width: 0; margin: 0; color: var(--text-primary); font-weight: 600; }
+  .composition-figure .surface-actions { margin-top: 0.7rem; }
+  .composition-figure .surface-actions dl { margin-top: 0.5rem; }
+  .composition-figure .surface-actions dl > div:last-child { border-bottom: 0; }
+  .composition-figure .surface-actions dd.permitted { color: var(--accent); }
+  @media (min-width: 640px) {
+    .composition-figure .composition-layout { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 1.75rem; }
+    .composition-figure .surface-facts > div, .composition-figure .surface-actions dl > div { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr); }
   }
 </style>

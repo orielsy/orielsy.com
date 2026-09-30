@@ -1,34 +1,18 @@
-<div class="composition-formula not-prose" aria-label="UI equals a function of state, capabilities, policy, and context">
-  <code>
-    <span class="formula-scaffold">UI = f(</span><span class="formula-input">state</span><span class="formula-scaffold">, </span><span class="formula-input">capabilities</span><span class="formula-scaffold">, </span><span class="formula-input">policy</span><span class="formula-scaffold">, </span><span class="formula-input">context</span><span class="formula-scaffold">)</span>
-  </code>
+<div class="composition-formula not-prose" role="img" aria-label="UI equals a function of state, capabilities, policy, and context">
+  <code>UI = f(state, capabilities, policy, context)</code>
 </div>
 
 <style>
-  .composition-formula {
-    display: flex;
-    justify-content: center;
-    margin: 2.6rem 0 2.75rem;
-    padding: 0.35rem 0;
-    text-align: center;
-  }
-
-  code {
+  .composition-formula { margin: 2.5rem 0; border-block: 1px solid var(--border-subtle); padding: 1.25rem 0; color: var(--text-primary); }
+  code { padding: 0; background: transparent; font-family: var(--font-mono-ui); font-size: clamp(0.9rem, 2.1vw, 1.2rem); font-weight: 500; line-height: 1.8; overflow-wrap: anywhere; }
+</style>
+<style is:global>
+  [data-research-entry="product-knowledge-as-architecture"] .research-prose .composition-formula code {
+    border: 0;
+    border-radius: 0;
     background: transparent;
     padding: 0;
-    font-family: var(--font-mono-ui);
-    font-size: clamp(1rem, 2.1vw, 1.25rem);
-    font-weight: 500;
-    line-height: 1.6;
-    letter-spacing: 0.01em;
-    white-space: normal;
-  }
-
-  .formula-scaffold {
-    color: var(--text-secondary);
-  }
-
-  .formula-input {
-    color: var(--accent);
+    color: var(--text-primary);
+    font-size: clamp(0.9rem, 2.1vw, 1.2rem);
   }
 </style>
