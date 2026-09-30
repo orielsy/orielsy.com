@@ -48,15 +48,6 @@ import ResearchBreakout from './ResearchBreakout.astro';
   </p>
 
   <div class="pk-overview__section">
-    <h3 id="keep-boundaries-clear">Keep the boundaries clear</h3>
-    <p>
-      Application state owns current facts. Code owns implemented behavior. Governing policy or specification owns intended constraints. Product knowledge owns meaning and explanation. When those artifacts disagree, the conflict should be exposed rather than silently resolved by AI.
-    </p>
-  </div>
-
-  <ClaimAuthorityTable />
-
-  <div class="pk-overview__section">
     <h3 id="interface-composition">What might the interface become?</h3>
     <p>
       If state, policy, available capabilities, and product knowledge are explicit, parts of an interface can potentially be composed from trusted capabilities that already exist instead of being authored as one fixed page every time.
@@ -66,6 +57,15 @@ import ResearchBreakout from './ResearchBreakout.astro';
   <ResearchBreakout mode="wide">
     <DeclarativeProductCompositionVisual />
   </ResearchBreakout>
+
+  <div class="pk-overview__section">
+    <h3 id="keep-boundaries-clear">Keep the boundaries clear</h3>
+    <p>
+      Application state owns current facts. Code owns implemented behavior. Governing policy or specification owns intended constraints. Product knowledge owns meaning and explanation. When those artifacts disagree, the conflict should be exposed rather than silently resolved by AI.
+    </p>
+  </div>
+
+  <ClaimAuthorityTable />
 
   <CompositionFormula />
 
