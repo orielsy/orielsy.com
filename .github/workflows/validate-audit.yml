@@ -28,3 +28,29 @@ jobs:
 
       - name: Build site
         run: npm run build
+
+      - name: Report unreferenced Astro components
+        shell: bash
+        run: |
+          echo 'UNREFERENCED_ASTRO_COMPONENTS_BEGIN'
+          while IFS= read -r file; do
+            name="$(basename "$file")"
+            refs="$(git grep -l -F "$name" -- src ":!$file" 2>/dev/null || true)"
+            if [[ -z "$refs" ]]; then
+              echo "$file"
+            fi
+          done < <(find src/components -type f -name '*.astro' | sort)
+          echo 'UNREFERENCED_ASTRO_COMPONENTS_END'
+
+      - name: Report unreferenced speechBubbles assets
+        shell: bash
+        run: |
+          echo 'UNREFERENCED_SPEECHBUBBLES_ASSETS_BEGIN'
+          while IFS= read -r file; do
+            rel="/${file#public/}"
+            refs="$(git grep -l -F "$rel" -- src 2>/dev/null || true)"
+            if [[ -z "$refs" ]]; then
+              echo "$file"
+            fi
+          done < <(find public/projects/speechbubbles -maxdepth 1 -type f | sort)
+          echo 'UNREFERENCED_SPEECHBUBBLES_ASSETS_END'
