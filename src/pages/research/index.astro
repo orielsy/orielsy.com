@@ -47,8 +47,6 @@ const sortedUnpublishedResearch = unpublishedResearch.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-const allTypes = Array.from(new Set(publishedResearch.map((item) => item.data.type)));
-
 const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: 'short',
@@ -75,37 +73,6 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
       </p>
     </div>
   </header>
-
-  <section hidden class="border-b border-[var(--border-subtle)] py-4">
-    <div class="site-shell flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-      <div class="font-editorial-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)]">
-        Browse by format
-      </div>
-      <div class="flex flex-wrap gap-x-5 gap-y-2" id="filter-container">
-        <button
-          type="button"
-          data-filter="all"
-          aria-pressed="true"
-          class="filter-btn cursor-pointer border-b border-[var(--accent)] py-1 font-editorial-mono text-[10px] uppercase tracking-[0.06em] text-[var(--text-primary)] transition-colors"
-        >
-          All <span class="text-[var(--text-muted)]">({publishedResearch.length})</span>
-        </button>
-        {allTypes.map((type) => {
-          const count = publishedResearch.filter((entry) => entry.data.type === type).length;
-          return (
-            <button
-              type="button"
-              data-filter={type}
-              aria-pressed="false"
-              class="filter-btn cursor-pointer border-b border-transparent py-1 font-editorial-mono text-[10px] uppercase tracking-[0.06em] text-[var(--text-muted)] transition-colors hover:text-[var(--text-primary)]"
-            >
-              {type} <span class="text-[var(--text-muted)]">({count})</span>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  </section>
 
   <section class="site-shell py-12 sm:py-16" aria-label="Published research">
     <div id="articles-list" class="border-y border-[var(--border-subtle)]">
@@ -181,10 +148,6 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
       ))}
     </div>
 
-    <div id="no-filtered-results" class="mt-6 hidden border-y border-[var(--border-subtle)] py-10 text-center">
-      <p class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)]">No articles found matching this format.</p>
-    </div>
-
     {sortedResearch.length === 0 && (
       <div class="border-y border-[var(--border-subtle)] py-10 text-center">
         <p class="font-editorial-mono text-[10px] uppercase tracking-[0.08em] text-[var(--text-muted)]">No published research articles yet.</p>
@@ -215,10 +178,6 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
   )}
 
   <script>
-    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
-    const articles = document.querySelectorAll<HTMLElement>('#articles-list .article-item');
-    const emptyState = document.getElementById('no-filtered-results');
-
     document.querySelectorAll<HTMLButtonElement>('[data-tldr-toggle]').forEach((button) => {
       button.addEventListener('click', () => {
         const panelId = button.getAttribute('aria-controls');
@@ -257,32 +216,6 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             }
           });
         }
-      });
-    });
-
-    filterButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const filter = btn.getAttribute('data-filter');
-
-        filterButtons.forEach((button) => {
-          button.setAttribute('aria-pressed', 'false');
-          button.classList.remove('border-[var(--accent)]', 'text-[var(--text-primary)]');
-          button.classList.add('border-transparent', 'text-[var(--text-muted)]');
-        });
-
-        btn.setAttribute('aria-pressed', 'true');
-        btn.classList.add('border-[var(--accent)]', 'text-[var(--text-primary)]');
-        btn.classList.remove('border-transparent', 'text-[var(--text-muted)]');
-
-        let visibleCount = 0;
-        articles.forEach((article) => {
-          const type = article.getAttribute('data-article-type');
-          const visible = filter === 'all' || type === filter;
-          article.style.display = visible ? '' : 'none';
-          if (visible) visibleCount++;
-        });
-
-        emptyState?.classList.toggle('hidden', visibleCount > 0);
       });
     });
   </script>
