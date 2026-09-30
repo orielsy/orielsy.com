@@ -1,0 +1,68 @@
+---
+const stages = [
+  { state: 'Foundation', name: 'Project Memory', question: 'Make project knowledge durable.' },
+  { state: 'This research direction', name: 'Context Engineering', question: 'Select the relevant durable knowledge for the current task.' },
+  { state: 'Unpublished · proposed / in progress', name: 'Repository Context Engine', question: 'Explore an implementation for delivering that selected context on demand.' },
+];
+---
+
+<div class="context-engineering-lineage not-prose" aria-label="Research lineage: durability, selection, and implementation exploration">
+  <ol>
+    {stages.map((stage) => (
+      <li>
+        <p class="state">{stage.state}</p>
+        <p class="name">{stage.name}</p>
+        <p class="question">{stage.question}</p>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .context-engineering-lineage {
+    margin: 2.25rem 0;
+    border-block: 1px solid var(--border-subtle);
+    padding-block: 1rem;
+    color: var(--text-primary);
+  }
+  .context-engineering-lineage :global(ol) {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .context-engineering-lineage :global(li) {
+    min-width: 0;
+    margin: 0;
+    padding: 0.85rem 0;
+  }
+  .context-engineering-lineage :global(li + li) { border-top: 1px solid var(--border-subtle); }
+  .context-engineering-lineage :global(p) { margin: 0; }
+  .state {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+  .name {
+    margin-top: 0.5rem !important;
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  .question {
+    margin-top: 0.25rem !important;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.65;
+  }
+  @media (min-width: 640px) {
+    .context-engineering-lineage :global(ol) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .context-engineering-lineage :global(li) { padding: 0.25rem 1.25rem; }
+    .context-engineering-lineage :global(li:first-child) { padding-left: 0; }
+    .context-engineering-lineage :global(li + li) { border-top: 0; border-left: 1px solid var(--border-subtle); }
+  }
+</style>
