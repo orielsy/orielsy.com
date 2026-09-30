@@ -1,41 +1,52 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 const operations = [
-  { name: 'Observe', detail: 'Assess context health during ordinary turns.' },
-  { name: 'Distill', detail: 'Reconstruct the state that still governs the work.' },
-  { name: 'Handoff', detail: 'Package that state for a fresh context.' },
+  { name: 'Observe', detail: 'Run opt-in, lightweight context-health checks during ordinary turns.', status: 'Provisional judgment' },
+  { name: 'Distill', detail: 'Reconstruct the state that still governs the work.', status: 'Specified behavior' },
+  { name: 'Handoff', detail: 'Package that state for a fresh context.', status: 'Specified behavior' },
 ];
 ---
 
-<ResearchFigureFrame className="zen-lifecycle" figureNumber="02" title="Observe, distill, hand off" caption="Observe is not background execution without host support. A complete handoff can be copied if clipboard access exists; otherwise one self-contained artifact is returned for the user to copy. No automatic chat creation or navigation is assumed.">
-  <ol aria-label="Three specified Context Zen operations">
-    {operations.map((operation, index) => <li><span class="step">0{index + 1}</span><div><h4>{operation.name}</h4><p>{operation.detail}</p></div></li>)}
-  </ol>
-  <p class="output"><span>Output</span>A continuation artifact, not a new conversation.</p>
+<ResearchFigureFrame className="zen-lifecycle" figureNumber="02" title="Observe, distill, hand off" status="v0.1 operating loop" caption="This loop describes when the skill participates and what it produces. Observe happens during ordinary turns, not as a background daemon. Handoff yields a continuation artifact; clipboard copy and navigation depend on host capabilities.">
+  <div class="loop">
+    <ol aria-label="Context Zen operating loop">
+      {operations.map((operation, index) => (
+        <li>
+          <span class="step">0{index + 1}</span>
+          <div><h4>{operation.name}</h4><p>{operation.detail}</p><span class="status">{operation.status}</span></div>
+          {index < operations.length - 1 && <span class="connector" aria-hidden="true">→</span>}
+        </li>
+      ))}
+    </ol>
+  </div>
+  <div class="host-boundary">
+    <p><strong>If clipboard access exists:</strong> copy the complete handoff.</p>
+    <p><strong>Otherwise:</strong> return one self-contained artifact for the user to copy.</p>
+  </div>
+  <p class="limits">No background daemon · No assumption of creating or navigating chats</p>
 </ResearchFigureFrame>
 
 <style>
   .zen-lifecycle :global(p), .zen-lifecycle :global(h4), .zen-lifecycle :global(ol), .zen-lifecycle :global(li) { margin: 0; }
   .zen-lifecycle :global(ol) { padding: 0; list-style: none; }
-  ol { display: grid; }
-  li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.75rem; padding: 0.75rem 0; }
-  li + li { border-top: 1px solid var(--border-subtle); }
-  .step { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; line-height: 2; }
+  .loop { position: relative; }
+  ol { display: grid; gap: 1rem; }
+  li { position: relative; display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.75rem; background: var(--bg-secondary); padding: 1rem; }
+  .step { position: relative; z-index: 1; display: flex; width: 2rem; height: 2rem; align-items: center; justify-content: center; border: 1px solid var(--accent); border-radius: 999px; color: var(--accent); background: var(--bg-card); font-family: var(--font-mono-ui); font-size: 0.6875rem; }
   h4 { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.45; }
   li p { margin-top: 0.35rem !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  .output { display: grid; gap: 0.35rem 1rem; margin-top: 1rem !important; border-top: 1px solid var(--border-strong); padding-top: 0.85rem; color: var(--text-primary); font-size: 0.875rem; line-height: 1.6; }
-  .output span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; text-transform: uppercase; }
-  @media (min-width: 640px) {
+  .status { display: block; margin-top: 0.55rem; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .connector { position: absolute; left: 1.65rem; bottom: -0.85rem; z-index: 2; transform: rotate(90deg); color: var(--accent); background: var(--bg-card); padding: 0 0.2rem; }
+  .host-boundary { display: grid; gap: 0.6rem; margin-top: 1.25rem; border-left: 2px solid var(--accent); padding-left: 1rem; }
+  .host-boundary p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
+  .host-boundary strong { color: var(--text-primary); font-weight: 500; }
+  .limits { margin-top: 0.8rem !important; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.06em; line-height: 1.5; text-transform: uppercase; }
+  @media (min-width: 760px) {
+    .loop::before { content: ''; position: absolute; left: 12%; right: 12%; top: 2rem; border-top: 1px dashed var(--border-subtle); }
     ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    li { display: block; padding: 0 1rem; }
-    li:first-child { padding-left: 0; }
-    li + li { border-top: 0; border-left: 1px solid var(--border-subtle); }
-    h4 { margin-top: 0.55rem !important; }
-    .output { grid-template-columns: 7rem minmax(0, 1fr); }
+    li { display: block; min-height: 10rem; }
+    h4 { margin-top: 0.8rem !important; }
+    .connector { left: auto; right: -0.85rem; top: 1.5rem; bottom: auto; transform: none; }
+    .host-boundary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
-</style>
-
-<style>
-  :global(.research-reading .research-prose figure.zen-lifecycle) { border-radius: 0 !important; }
-  :global(.research-reading .research-prose figure.zen-lifecycle) li p, :global(.research-reading .research-prose figure.zen-lifecycle) .output { font-size: 0.875rem !important; line-height: 1.6 !important; }
 </style>
