@@ -15,10 +15,7 @@ const rows = [
       ['About Page Spec', 'spec'],
     ],
   },
-  {
-    task: 'Typography change',
-    selected: [['Site Foundation Spec', 'spec']],
-  },
+  { task: 'Typography change', selected: [['Site Foundation Spec', 'spec']] },
   {
     task: 'Coding-agent architecture work',
     selected: [
@@ -27,352 +24,138 @@ const rows = [
     ],
   },
 ];
-
-const unselected = [
-  'speechBubbles implementation history',
-  'Unrelated project specs',
-  'Unrelated ADRs',
-];
 ---
 
-<figure class="context-selection not-prose">
-  <header class="context-header">
-    <div>
-      <p class="eyebrow">Context routing</p>
-      <h3>Context Selection, Not Context Accumulation</h3>
-      <p class="dek">The goal is to surface the right project memory for the task — not load everything.</p>
-    </div>
-    <div class="router-chip">
-      <span>Routing layer</span>
-      <code>AGENTS.md</code>
-    </div>
+<figure class="context-selection not-prose" aria-labelledby="context-selection-title" data-research-diagram>
+  <header>
+    <p class="figure-number">Figure 01</p>
+    <h3 id="context-selection-title">Context Selection, Not Context Accumulation</h3>
+    <p class="dek">The goal is to surface the right project memory for the task — not load everything.</p>
   </header>
 
-  <div class="column-headings" aria-hidden="true">
-    <span>Incoming task</span>
-    <span>Selected project memory</span>
+  <div class="routing-evidence">
+    <p class="label">Current repository · human-authored routing</p>
+    <p><code>AGENTS.md</code> points to documents written and maintained by people. It is not an automated relevance engine.</p>
   </div>
 
-  <ol class="routing-rows" aria-label="Examples of task-specific context selection">
-    {rows.map((row, index) => (
-      <li class="routing-row">
-        <div class="task-cell">
-          <span class="row-number">{String(index + 1).padStart(2, '0')}</span>
-          <strong>{row.task}</strong>
-        </div>
-        <div class="route-mark" aria-hidden="true">
-          <span>→</span>
-        </div>
-        <div class="memory-cell">
-          <span class="mobile-label">Selected project memory</span>
-          <div class="selected-items">
-            {row.selected.map(([file, kind]) => (
-              <div class="selected-item">
-                <code>{file}</code>
-                <span>{kind}</span>
-              </div>
+  <div class="column-headings" aria-hidden="true"><span>Task</span><span>Selected project memory</span></div>
+  <dl class="route-ledger" aria-label="Examples of human-authored task-specific context routing">
+    {rows.map((row) => (
+      <div class="route-row">
+        <dt>{row.task}</dt>
+        <dd>
+          <ul>
+            {row.selected.map(([document, kind]) => (
+              <li><span>{document}</span><small>{kind}</small></li>
             ))}
-          </div>
-        </div>
-      </li>
+          </ul>
+        </dd>
+      </div>
     ))}
-  </ol>
+  </dl>
+
+  <div class="unselected">
+    <p class="label">Present, not selected for this task</p>
+    <p>speechBubbles implementation history · Unrelated project specs · Unrelated ADRs</p>
+  </div>
 
   <div class="working-context">
-    <span class="working-label">Agent working context</span>
-    <strong>task + selected project memory → implementation</strong>
+    <p class="label">Agent working context</p>
+    <p>task + selected project memory <span aria-hidden="true">→</span> implementation</p>
+    <p class="caveat">A selected subset, not the entire repository memory. Reading the right document does not guarantee correct output.</p>
   </div>
 
-  <div class="not-selected">
-    <p>Present in the repository, not selected for this task</p>
-    <div>
-      {unselected.map((item) => <span>{item}</span>)}
-    </div>
+  <div class="delivery">
+    <p class="label">Then deliver <span>— a separate decision, after selection.</span></p>
+    <ul><li>Load directly</li><li>Expose through tools</li><li>Deliver through MCP</li></ul>
+    <p class="caveat">MCP may carry selected context; it does not decide relevance. Project-wide, feature, package, and component scope are selection questions.</p>
   </div>
-
-  <figcaption>
-    Routing here is human-authored: AGENTS.md points to documents a person wrote and maintained. There is no automated relevance engine, and reading the right document does not guarantee correct output.
-  </figcaption>
 </figure>
 
 <style>
   .context-selection {
-    overflow: hidden;
-    margin: 0;
-    border: 1px solid var(--border-subtle);
-    border-radius: 0.75rem;
-    background: var(--bg-card);
+    box-sizing: border-box;
+    min-width: 0;
+    margin: 2.5rem 0;
+    border-block: 1px solid var(--border-subtle);
+    padding: 1.25rem 0;
     color: var(--text-primary);
   }
-
-  .context-selection :global(p),
-  .context-selection :global(h3),
-  .context-selection :global(ol),
-  .context-selection :global(li) {
-    margin: 0;
-  }
-
-  .context-selection :global(ol) {
-    padding-left: 0;
-    list-style: none;
-  }
-
-  .context-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1.5rem;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1.25rem 1.35rem;
-  }
-
-  .eyebrow,
-  .router-chip span,
-  .column-headings,
-  .row-number,
-  .mobile-label,
-  .working-label,
-  .not-selected > p {
+  .context-selection :global(p), .context-selection :global(h3),
+  .context-selection :global(dl), .context-selection :global(dt),
+  .context-selection :global(dd), .context-selection :global(ul),
+  .context-selection :global(li) { margin: 0; padding: 0; }
+  .context-selection :global(ul) { list-style: none; }
+  .context-selection header { padding: 0 !important; }
+  .figure-number, .label, .column-headings {
     font-family: var(--font-mono-ui);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
     text-transform: uppercase;
   }
-
-  .eyebrow {
-    color: var(--accent);
-    font-size: 0.55rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-  }
-
-  .context-header h3 {
-    margin-top: 0.45rem;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: clamp(1.2rem, 2vw, 1.55rem);
-    font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.035em;
-  }
-
-  .dek {
+  .figure-number { color: var(--accent); }
+  .context-selection h3 {
     margin-top: 0.45rem !important;
-    max-width: 38rem;
-    color: var(--text-secondary);
-    font-size: 0.78rem;
-    line-height: 1.6;
-  }
-
-  .router-chip {
-    flex: 0 0 auto;
-    border-left: 2px solid var(--accent);
-    padding: 0.25rem 0 0.25rem 0.7rem;
-  }
-
-  .router-chip span {
-    display: block;
-    color: var(--text-muted);
-    font-size: 0.46rem;
-    letter-spacing: 0.1em;
-  }
-
-  .router-chip code {
-    display: block;
-    margin-top: 0.2rem;
-    border: 0;
-    background: transparent;
-    padding: 0;
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.72rem;
-  }
-
-  .column-headings {
-    display: none;
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.8fr);
-    gap: 2.8rem;
-    border-bottom: 1px solid var(--border-subtle);
-    background: var(--bg-secondary);
-    padding: 0.65rem 1.35rem;
-    color: var(--text-muted);
-    font-size: 0.48rem;
-    letter-spacing: 0.1em;
-  }
-
-  .routing-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    border-bottom: 1px solid var(--border-subtle);
-  }
-
-  .task-cell,
-  .memory-cell {
-    min-width: 0;
-    padding: 0.9rem 1.1rem;
-  }
-
-  .task-cell {
-    position: relative;
-    padding-top: 2rem;
-    background: var(--bg-card);
-  }
-
-  .row-number {
-    position: absolute;
-    top: 0.8rem;
-    left: 1.1rem;
-    color: var(--accent);
-    font-size: 0.5rem;
-    letter-spacing: 0.1em;
-  }
-
-  .task-cell strong {
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 0.78rem;
-    line-height: 1.4;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: 0;
   }
-
-  .route-mark {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-    font-family: var(--font-mono-ui);
-  }
-
-  .memory-cell {
-    background: var(--bg-secondary);
-  }
-
-  .mobile-label {
-    display: block;
-    margin-bottom: 0.55rem;
-    color: var(--text-muted);
-    font-size: 0.46rem;
-    letter-spacing: 0.1em;
-  }
-
-  .selected-items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-  }
-
-  .selected-item {
-    display: inline-flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.4rem;
-    border: 1px solid var(--border-subtle);
-    border-radius: 0.35rem;
-    background: var(--bg-card);
-    padding: 0.45rem 0.55rem;
-  }
-
-  .selected-item code {
+  .dek { margin-top: 0.55rem !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.7; }
+  .label { color: var(--text-muted); }
+  .routing-evidence, .working-context { border-left: 2px solid var(--accent); padding-left: 1rem; }
+  .routing-evidence { margin-top: 1.75rem; }
+  .routing-evidence > p + p, .working-context > p + p { margin-top: 0.3rem; }
+  .routing-evidence > p + p, .working-context > p:nth-child(2) { font-size: 0.875rem; line-height: 1.7; }
+  .routing-evidence code {
     border: 0;
+    border-radius: 0;
     background: transparent;
     padding: 0;
-    color: var(--text-primary);
+    color: inherit;
     font-family: var(--font-mono-ui);
-    font-size: 0.62rem;
-    font-weight: 500;
+    font-size: 0.8125rem;
   }
-
-  .selected-item span {
-    color: var(--text-muted);
-    font-size: 0.56rem;
-    line-height: 1.4;
-  }
-
-  .working-context {
-    display: grid;
-    gap: 0.3rem;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 0.9rem 1.1rem;
-  }
-
-  .working-label,
-  .not-selected > p {
-    color: var(--accent);
-    font-size: 0.48rem;
-    letter-spacing: 0.1em;
-  }
-
-  .working-context strong {
-    color: var(--text-primary);
-    font-family: var(--font-mono-ui);
-    font-size: 0.68rem;
-    font-weight: 500;
-  }
-
-  .not-selected {
-    padding: 0.9rem 1.1rem;
-    background: color-mix(in srgb, var(--bg-secondary) 62%, transparent);
-  }
-
-  .not-selected > p {
-    color: var(--text-muted);
-  }
-
-  .not-selected > div {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.55rem;
-  }
-
-  .not-selected span {
-    border: 1px dashed var(--border-subtle);
-    border-radius: 0.3rem;
-    padding: 0.35rem 0.5rem;
-    color: var(--text-muted);
-    font-family: var(--font-mono-ui);
-    font-size: 0.56rem;
-  }
-
-  figcaption {
-    border-top: 1px solid var(--border-subtle);
-    padding: 0.85rem 1.1rem;
-    color: var(--text-muted);
-    font-size: 0.62rem;
-    line-height: 1.55;
-  }
-
-  @media (min-width: 760px) {
-    .column-headings {
-      display: grid;
-    }
-
-    .routing-row {
-      grid-template-columns: minmax(0, 0.8fr) 2.8rem minmax(0, 1.8fr);
-    }
-
-    .task-cell,
-    .memory-cell {
-      min-height: 5.2rem;
-      display: flex;
-      align-items: center;
-    }
-
-    .task-cell {
-      padding-top: 1.65rem;
-    }
-
-    .route-mark {
-      display: flex;
-      background: var(--bg-card);
-    }
-
-    .mobile-label {
-      display: none;
-    }
-  }
-
-  @media (max-width: 560px) {
-    .context-header {
-      flex-direction: column;
-      gap: 0.8rem;
-    }
+  .column-headings { display: none; color: var(--text-muted); }
+  .route-ledger { margin-top: 1.75rem !important; }
+  .route-row { min-width: 0; border-bottom: 1px solid var(--border-subtle); padding: 1rem 0; }
+  .route-row dt { color: var(--text-primary); font-size: 0.875rem; font-weight: 600; line-height: 1.6; }
+  .route-row dd { min-width: 0; margin-top: 0.5rem; }
+  .route-row li { min-width: 0; margin-top: 0.5rem !important; font-size: 0.875rem; line-height: 1.5; }
+  .route-row li:first-child { margin-top: 0 !important; }
+  .route-row small { display: block; color: var(--text-muted); font-size: 0.75rem; line-height: 1.5; }
+  .unselected { padding-top: 1rem; }
+  .unselected > p + p { margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.8125rem; line-height: 1.65; }
+  .working-context { margin-top: 1.75rem; }
+  .caveat { color: var(--text-secondary); font-size: 0.8125rem; line-height: 1.65; }
+  .delivery { margin-top: 1.75rem; border-top: 1px solid var(--border-subtle); padding-top: 1.25rem; }
+  .delivery .label span { color: var(--text-secondary); font-family: var(--font-body); font-size: 0.8125rem; font-weight: 400; letter-spacing: 0; text-transform: none; }
+  .delivery ul { display: grid; gap: 0.45rem; margin-top: 0.8rem !important; font-size: 0.875rem; line-height: 1.5; }
+  .delivery .caveat { margin-top: 0.75rem; }
+  .context-selection { border-radius: 0 !important; }
+  :global(.research-reading .research-prose) .context-selection > header { padding: 0 !important; }
+  :global(.research-reading .research-prose) .context-selection > header .dek { font-size: 0.875rem !important; line-height: 1.7 !important; }
+  :global(.research-reading .research-prose) .context-selection .routing-evidence p:not(.label),
+  :global(.research-reading .research-prose) .context-selection .working-context p:not(.label):not(.caveat) { font-size: 0.875rem !important; line-height: 1.7 !important; }
+  :global(.research-reading .research-prose) .context-selection .unselected p:not(.label),
+  :global(.research-reading .research-prose) .context-selection .caveat { font-size: 0.8125rem !important; line-height: 1.65 !important; }
+  :global(.research-reading .research-prose) .context-selection .label { font-size: 0.6875rem !important; line-height: 1.5 !important; }
+  @media (min-width: 640px) {
+    .context-selection { padding-block: 1.5rem; }
+    .context-selection header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.75rem; }
+    .context-selection h3 { margin-top: 0 !important; }
+    .dek { flex: 0 0 100%; }
+    .column-headings, .route-row, .unselected { display: grid; grid-template-columns: minmax(0, 0.38fr) minmax(0, 0.62fr); gap: 1.5rem; }
+    .column-headings { margin-top: 1.75rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem; }
+    .route-ledger { margin-top: 0 !important; }
+    .route-row dd { margin-top: 0; }
+    .route-row li { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: 0.25rem !important; }
+    .route-row small { flex: 0 0 auto; text-align: right; }
+    .delivery ul { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; }
+    .delivery li + li::before { content: '/'; margin-right: 1rem; color: var(--text-muted); }
   }
 </style>
