@@ -21,7 +21,7 @@ const actions = [
 
 <ResearchFigureFrame
   className="composition-figure"
-  figureNumber="02"
+  figureNumber="03"
   title="A surface assembled within boundaries"
   caption="Illustrative composition, not an implemented generator. The application owns current state, authorization, validation, and mutation or side effects; composition cannot invent missing behavior."
 >
@@ -55,7 +55,6 @@ const actions = [
 </ResearchFigureFrame>
 
 <style is:global>
-  [data-research-entry="product-knowledge-as-architecture"] figure.composition-figure { border-inline: 0; border-radius: 0 !important; background: transparent; padding: 1.25rem 0; }
   .composition-figure .composition-layout { display: grid; gap: 1.5rem; }
   .composition-figure .composition-layout > * { min-width: 0; }
   .composition-figure .composition-label { margin: 0 !important; font-family: var(--font-mono-ui); font-size: 0.6875rem !important; font-weight: 500; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
@@ -66,7 +65,7 @@ const actions = [
   .composition-figure .composition-layer { border-left: 2px solid var(--accent); padding-left: 1rem; }
   .composition-figure .composition-layer .composition-label { color: var(--accent); }
   .composition-figure .composition-layer > p:last-child { margin: 0.5rem 0 0 !important; color: var(--text-primary); font-size: 0.875rem !important; line-height: 1.65 !important; }
-  .composition-figure .derived-surface { min-width: 0; margin-top: 1.25rem; border: 1px solid var(--border-subtle); border-radius: 0.2rem; background: var(--bg-card); padding: 1rem; }
+  .composition-figure .derived-surface { min-width: 0; margin-top: 1.25rem; border: 1px solid var(--border-subtle); border-radius: 0.2rem; background: var(--bg-secondary); padding: 1rem; }
   .composition-figure .derived-surface header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.4rem 1rem; margin: 0 0 0.85rem; padding: 0 !important; }
   .composition-figure .derived-surface h4 { margin: 0.2rem 0 0; font-family: var(--font-display); font-size: 1rem !important; color: var(--text-primary); font-weight: 600; }
   .composition-figure .surface-status { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.75rem; }
