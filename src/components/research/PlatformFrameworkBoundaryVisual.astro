@@ -23,10 +23,10 @@ const layers = [
 ---
 
 <ResearchFigureFrame
-  eyebrow="Working layer model"
-  title="The interesting question is where the boundary moves."
-  status="Where responsibilities may settle"
-  caption="Platform growth does not imply framework extinction. It can change what frameworks need to implement themselves."
+  className="platform-boundary-figure"
+  figureNumber="01"
+  title="The interesting question is where the boundary moves"
+  caption="Platform growth does not imply framework extinction. Mature, broadly reusable mechanisms can move downward while application coordination and policy remain above them."
 >
   <div class="boundary-map">
     {layers.map((layer, index) => (
@@ -45,7 +45,7 @@ const layers = [
           <div class="moving-boundary">
             <span>Moving boundary</span>
             <div aria-hidden="true"></div>
-            <strong>mature mechanisms can migrate downward</strong>
+            <strong>Mature mechanisms can migrate downward</strong>
           </div>
         )}
       </>
@@ -54,115 +54,47 @@ const layers = [
 </ResearchFigureFrame>
 
 <style>
-  .boundary-map {
-    background: var(--border-subtle);
-  }
-
+  :global(.research-reading .research-prose figure.platform-boundary-figure) { border-radius: 0 !important; }
+  .boundary-map { border-block: 1px solid var(--border-subtle); }
   .layer {
     display: grid;
     gap: 0.8rem;
     border-bottom: 1px solid var(--border-subtle);
-    background: var(--bg-card);
-    padding: 1rem 1.15rem;
+    padding: 1rem 0;
   }
-
-  .layer:last-child {
-    border-bottom: 0;
-  }
-
+  .layer:last-child { border-bottom: 0; }
   .layer-heading {
     display: grid;
     grid-template-columns: 2rem minmax(0, 1fr);
     gap: 0.6rem;
     align-items: baseline;
   }
-
   .layer-heading span,
-  .moving-boundary {
-    font-family: var(--font-mono-ui);
-    text-transform: uppercase;
-  }
-
-  .layer-heading span {
-    color: var(--text-muted);
-    font-size: 0.625rem;
-    letter-spacing: 0.08em;
-  }
-
-  .layer-heading strong {
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.875rem;
-    font-weight: 600;
-  }
-
-  .items {
-    display: grid;
-    gap: 0.35rem 0.9rem;
-  }
-
-  .items span {
-    color: var(--text-secondary);
-    font-family: var(--font-mono-ui);
-    font-size: 0.6875rem;
-    line-height: 1.5;
-  }
-
-  .is-emphasized {
-    border-left: 2px solid var(--accent);
-    background: color-mix(in srgb, var(--accent) 3%, var(--bg-card));
-  }
-
+  .moving-boundary { font-family: var(--font-mono-ui); text-transform: uppercase; }
+  .layer-heading span { color: var(--text-muted); font-size: 0.6875rem; letter-spacing: 0.08em; }
+  .layer-heading strong { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; }
+  .items { display: grid; gap: 0.35rem 0.9rem; }
+  .items span { color: var(--text-secondary); font-size: 0.8125rem; line-height: 1.55; }
+  .is-emphasized { border-left: 2px solid var(--accent); padding-left: 1rem; }
   .is-emphasized .layer-heading span,
-  .is-emphasized .layer-heading strong {
-    color: var(--accent);
-  }
-
+  .is-emphasized .layer-heading strong { color: var(--accent); }
   .moving-boundary {
     display: grid;
     grid-template-columns: auto minmax(2rem, 1fr);
     gap: 0.65rem;
     align-items: center;
     border-bottom: 1px solid var(--border-subtle);
-    background: var(--bg-secondary);
-    padding: 0.62rem 1.15rem;
+    padding: 0.75rem 0;
     color: var(--accent);
-    font-size: 0.625rem;
-    letter-spacing: 0.09em;
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
   }
-
-  .moving-boundary div {
-    height: 1px;
-    background: linear-gradient(90deg, var(--accent), transparent);
-  }
-
-  .moving-boundary strong {
-    grid-column: 1 / -1;
-    color: var(--text-muted);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.07em;
-  }
-
+  .moving-boundary div { height: 1px; background: linear-gradient(90deg, var(--accent), transparent); }
+  .moving-boundary strong { grid-column: 1 / -1; color: var(--text-muted); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.06em; }
   @media (min-width: 760px) {
-    .layer {
-      grid-template-columns: minmax(13rem, 0.72fr) minmax(0, 1.28fr);
-      align-items: start;
-      gap: 1.3rem;
-      padding: 1rem 1.35rem;
-    }
-
-    .items {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .moving-boundary {
-      grid-template-columns: auto minmax(4rem, 1fr) auto;
-      padding-inline: 1.35rem;
-    }
-
-    .moving-boundary strong {
-      grid-column: auto;
-    }
+    .layer { grid-template-columns: minmax(13rem, 0.72fr) minmax(0, 1.28fr); align-items: start; gap: 1.3rem; padding: 1rem 0; }
+    .items { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .moving-boundary { grid-template-columns: auto minmax(4rem, 1fr) auto; }
+    .moving-boundary strong { grid-column: auto; }
   }
 </style>
