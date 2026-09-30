@@ -1,5 +1,6 @@
 ---
 export interface Props {
+  figureNumber?: string;
   eyebrow?: string;
   title: string;
   subtitle?: string;
@@ -10,6 +11,7 @@ export interface Props {
 }
 
 const {
+  figureNumber,
   eyebrow,
   title,
   subtitle,
@@ -23,7 +25,8 @@ const {
 <figure class:list={['research-figure-frame', 'not-prose', className]} data-research-diagram>
   <header>
     <div class="heading">
-      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      {figureNumber && <p class="figure-number">Figure {figureNumber}</p>}
+      {!figureNumber && eyebrow && <p class="eyebrow">{eyebrow}</p>}
       <h3>{title}</h3>
       {subtitle && <p class="subtitle">{subtitle}</p>}
     </div>
@@ -67,6 +70,7 @@ const {
     max-width: 44rem;
   }
 
+  .figure-number,
   .eyebrow,
   .status {
     font-family: var(--font-mono-ui);
@@ -77,6 +81,7 @@ const {
     text-transform: uppercase;
   }
 
+  .figure-number,
   .eyebrow {
     color: var(--accent);
   }
