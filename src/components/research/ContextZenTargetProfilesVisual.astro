@@ -1,15 +1,15 @@
 ---
-import { ArrowDown, ArrowRight, Braces, Code2, Search } from '@lucide/astro';
+import { ArrowDown, ArrowRight, Braces, Code2, PackageCheck, Search } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 const canonical = ['Objective', 'Decisions', 'Constraints', 'Rejected paths', 'Open questions'];
 ---
 
 <ResearchFigureFrame
-  figureNumber="04"
-  eyebrow="v0.1 target profiles · proposal"
-  title="Same state, different emphasis"
-  caption="Coding and research profiles are specified examples. The figure treats a canonical handoff as shared authoritative state and the target profiles as different representations of it. The source proposes that targeting must not omit materially consequential state; that guarantee has not been validated."
+  figureNumber="05"
+  eyebrow="Specified profiles · requirement"
+  title="One state, three target representations"
+  caption="The user explicitly chooses a general-purpose, coding, or research target; the skill need not discover destinations. Profiles may reorganize and emphasize the same canonical state. Material preservation is a requirement, not a demonstrated guarantee. ‘Context recompilation’ is editorial framing."
 >
   <div class="recompile-grid">
     <section class="canonical" aria-labelledby="context-zen-canonical-label">
@@ -28,6 +28,13 @@ const canonical = ['Objective', 'Decisions', 'Constraints', 'Rejected paths', 'O
     </div>
 
     <div class="profiles">
+      <section>
+        <PackageCheck size={16} strokeWidth={1.7} aria-hidden="true" />
+        <div>
+          <span class="profile-label">General-purpose profile</span>
+          <p>Canonical handoff when the user supplies no target.</p>
+        </div>
+      </section>
       <section>
         <Code2 size={16} strokeWidth={1.7} aria-hidden="true" />
         <div>
@@ -120,7 +127,7 @@ const canonical = ['Objective', 'Decisions', 'Constraints', 'Rejected paths', 'O
 
   .profiles {
     display: grid;
-    gap: 1.25rem;
+    gap: 1.1rem;
   }
 
   .profiles section {
@@ -131,7 +138,7 @@ const canonical = ['Objective', 'Decisions', 'Constraints', 'Rejected paths', 'O
 
   .profiles section + section {
     border-top: 1px solid var(--border-subtle);
-    padding-top: 1.25rem;
+    padding-top: 1.1rem;
   }
 
   .profile-label {
@@ -157,7 +164,7 @@ const canonical = ['Objective', 'Decisions', 'Constraints', 'Rejected paths', 'O
 
   @media (min-width: 900px) {
     .recompile-grid {
-      grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1.2fr);
+      grid-template-columns: minmax(0, 0.9fr) 4rem minmax(0, 1.25fr);
       align-items: center;
     }
 
