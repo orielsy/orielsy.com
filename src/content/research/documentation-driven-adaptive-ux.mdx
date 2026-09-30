@@ -25,23 +25,17 @@ socialCard:
 
 import '../../styles/documentation-driven-adaptive-ux.css';
 import ApplicabilityVsPolicyVisual from '../../components/research/ApplicabilityVsPolicyVisual.astro';
-import DocumentationDrivenAdaptiveVisual from '../../components/research/DocumentationDrivenAdaptiveVisual.astro';
 import Phase1DeterministicPipelineVisual from '../../components/research/Phase1DeterministicPipelineVisual.astro';
-import Phase1FindingsVisual from '../../components/research/Phase1FindingsVisual.astro';
+import AdaptiveUxScenarioEvidenceVisual from '../../components/research/AdaptiveUxScenarioEvidenceVisual.astro';
 import Phase1LimitationsVisual from '../../components/research/Phase1LimitationsVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import WhereAiCouldEnterLaterVisual from '../../components/research/WhereAiCouldEnterLaterVisual.astro';
-import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEnterpriseUiLab.astro';
 
 ## The Documentation / Interface Disconnect
 
 Enterprise products accumulate operational knowledge across documentation, release notes, runbooks, support articles, and configuration guidance. Their interfaces often expose only the raw controls.
 
 A field may know that a value is missing. The application may know the current version and valid options. Documentation may explain why the field matters. The user is still expected to assemble that context manually.
-
-<ResearchBreakout mode="publication">
-  <DocumentationDrivenAdaptiveVisual figureNumber="01" />
-</ResearchBreakout>
 
 The opportunity is to **select and surface authored product knowledge according to current application state**, rather than make every user leave the product or receive the same static explanation.
 
@@ -69,9 +63,7 @@ This is a normal enterprise form pattern, not a straw man: expose configuration,
 
 The Adaptive UI keeps the same field and validation rule, then adds authored product knowledge and response policy. It can surface conceptual help, version-specific guidance, and the relevant control while varying its permitted action according to the available evidence.
 
-<ResearchBreakout mode="publication">
-  <AdaptiveEnterpriseUiLab embedded />
-</ResearchBreakout>
+<p className="paper-lab-link"><a href="/projects/adaptive-enterprise-ui-lab#working-phase-1-lab">Open the working Adaptive Enterprise UI Lab</a></p>
 
 The visible decision trace exposes application state, validation, applicable knowledge, and the resulting response policy.
 
@@ -93,7 +85,7 @@ The experiment separates seven concerns:
   <li><strong>Rendering</strong><span>how those structured responses appear in the UI.</span></li>
 </ol>
 
-<Phase1DeterministicPipelineVisual figureNumber="02" />
+<Phase1DeterministicPipelineVisual figureNumber="01" />
 
 Starting deterministically exposes those boundaries and creates a baseline against which later inference can be evaluated.
 
@@ -117,7 +109,7 @@ Response policy asks:
 
 > Given the application state, validation result, available knowledge, and certainty of the evidence, how strongly should the UI intervene?
 
-<ApplicabilityVsPolicyVisual figureNumber="03" />
+<ApplicabilityVsPolicyVisual figureNumber="02" />
 
 Keeping those decisions separate prevents the knowledge layer from becoming an accidental UI controller.
 
@@ -141,13 +133,13 @@ Evidence changes authority; the system does not guess.
 
 ## What Phase 1 Shows
 
-<Phase1FindingsVisual figureNumber="04" />
+<AdaptiveUxScenarioEvidenceVisual />
 
 ## Limitations of the Current Experiment
 
 Phase 1 is a reference experiment, not a production adaptive-UX platform. It excludes:
 
-<Phase1LimitationsVisual figureNumber="05" />
+<Phase1LimitationsVisual />
 
 Product knowledge is fixture data, compatibility scenarios are fixed, and user familiarity is a simulation control.
 
@@ -158,7 +150,7 @@ The experiment also leaves production governance unanswered: review, stale guida
 The deterministic pipeline leaves an explicit seam for optional inference after context filtering and before response policy:
 
 <ResearchBreakout mode="publication">
-  <WhereAiCouldEnterLaterVisual figureNumber="06" />
+  <WhereAiCouldEnterLaterVisual figureNumber="04" />
 </ResearchBreakout>
 
 Potential later uses of that seam remain deliberately narrower than product truth or business policy:
