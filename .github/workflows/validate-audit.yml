@@ -26,9 +26,6 @@ jobs:
       - name: Run Adaptive UI tests
         run: npm run test:adaptive-ui
 
-      - name: Build site
-        run: npm run build
-
       - name: Report unreferenced Astro components
         shell: bash
         run: |
@@ -61,3 +58,6 @@ jobs:
           echo 'PUBLICATION_RADIUS_OVERRIDES_BEGIN'
           git grep -n -F 'border-radius: 0 !important' -- src/components/research || true
           echo 'PUBLICATION_RADIUS_OVERRIDES_END'
+
+      - name: Build site
+        run: npm run build
