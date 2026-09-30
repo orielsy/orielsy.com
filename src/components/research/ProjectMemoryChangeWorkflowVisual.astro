@@ -1,0 +1,69 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const records = [
+  ['Requirement', 'specs/003-content-publication-gating/spec.md', 'Status-interactive unpublished cards'],
+  ['Decision', 'docs/decisions/004-content-publication-gating.md', 'Why the inline notice does not expose body content'],
+  ['Policy', 'docs/decisions/005-github-pages-seo-and-url-policy.md', 'Non-navigating status triggers and URL treatment'],
+  ['Guidance', 'README.md', 'Describes the resulting catalog behavior'],
+];
+---
+
+<ResearchFigureFrame
+  className="project-memory-change"
+  figureNumber="06"
+  title="A changed requirement has several homes"
+  status="Repository history · publication gating"
+  caption="The branch history records updates to the spec, decision record, and SEO policy for the interactive-card change. This is a maintenance example, not a claim that documentation updates alone verify every behavior or always occur in one commit."
+>
+  <div class="change-grid">
+    <section class="change-summary">
+      <p class="label accent">Behavior changed</p>
+      <h4>Unpublished cards: from summaries to inline status interaction</h4>
+      <p>The requirement is more than the card’s current appearance.</p>
+    </section>
+
+    <section>
+      <p class="label">Owning intent and rationale</p>
+      <div class="records">
+        {records.map(([label, path, detail]) => (
+          <div>
+            <p class="record-label">{label}</p>
+            <code>{path}</code>
+            <p>{detail}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="implementation-grid">
+        <div><p class="record-label">Implementation</p><p>Code carries the resulting interaction and publication behavior.</p></div>
+        <div><p class="record-label">Verification</p><p>Tests and review still compare behavior with the owning records.</p></div>
+      </div>
+
+      <p class="history-boundary">Repository history supports the resulting records. It does not establish that every update happened atomically in one commit.</p>
+    </section>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  .project-memory-change :global(p), .project-memory-change :global(h4) { margin: 0; }
+  .change-grid { display: grid; gap: 1.5rem; }
+  .change-summary { border-left: 2px solid var(--accent); padding-left: 1rem; }
+  .label, .record-label { font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); font-weight: 500; letter-spacing: 0.08em; line-height: 1.5; text-transform: uppercase; }
+  .label { color: var(--text-muted); }
+  .label.accent, .record-label { color: var(--accent); }
+  .change-summary h4 { margin-top: 0.8rem !important; color: var(--text-primary); font-family: var(--font-display); font-size: var(--research-diagram-node, 0.875rem); font-weight: 600; line-height: 1.55; }
+  .change-summary h4 + p { margin-top: 0.8rem !important; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
+  .records { display: grid; gap: 1px; margin-top: 0.8rem; border: 1px solid var(--border-subtle); background: var(--border-subtle); }
+  .records > div { min-width: 0; background: var(--bg-card); padding: 0.8rem; }
+  code { display: block; margin-top: 0.4rem; border: 0 !important; background: transparent !important; padding: 0 !important; color: var(--text-primary) !important; font-family: var(--font-mono-ui); font-size: 0.6875rem !important; line-height: 1.5; white-space: normal !important; overflow-wrap: anywhere; }
+  .records > div > p:last-child, .implementation-grid p:last-child { margin-top: 0.45rem !important; color: var(--text-secondary); font-size: var(--research-diagram-caption, 0.75rem); line-height: 1.55; }
+  .implementation-grid { display: grid; gap: 0.8rem; margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 0.9rem; }
+  .history-boundary { margin-top: 0.9rem !important; border-top: 1px dashed var(--border-subtle); padding-top: 0.75rem; color: var(--text-muted); font-size: var(--research-diagram-caption, 0.75rem); line-height: 1.55; }
+
+  @media (min-width: 760px) {
+    .change-grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr); gap: 2rem; }
+    .records { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .implementation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>
