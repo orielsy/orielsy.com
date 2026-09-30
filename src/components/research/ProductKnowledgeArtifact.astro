@@ -1,46 +1,55 @@
 ---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
 const relevantInformation = ['Customer identity', 'Restriction reason', 'Recent activity', 'Verification state'];
 const availableActions = ['Request identity verification', 'Remove the restriction after verification succeeds', 'Escalate to risk review'];
 ---
 
-<section class="product-knowledge-artifact not-prose" aria-labelledby="product-knowledge-artifact-title">
-  <header class="artifact-header">
-    <div>
-      <p class="artifact-kicker">Illustrative product knowledge document</p>
-      <h3 id="product-knowledge-artifact-title">Account Review</h3>
-    </div>
-    <p class="artifact-boundary">Describes the task / implements nothing</p>
-  </header>
-  <div class="artifact-body">
-    <section class="artifact-purpose" aria-labelledby="artifact-purpose-title">
-      <h4 id="artifact-purpose-title">Purpose</h4>
-      <p>Investigate a restricted customer account.</p>
-    </section>
-    <div class="artifact-columns">
-      <section aria-labelledby="artifact-information-title">
-        <h4 id="artifact-information-title">Relevant information</h4>
-        <ul>{relevantInformation.map((item) => <li>{item}</li>)}</ul>
+<ResearchFigureFrame
+  className="product-knowledge-artifact-figure"
+  figureNumber="02"
+  title="Product knowledge describes the task, not the mechanics"
+  caption="Illustrative product knowledge artifact. It expresses intent, relevant information, available actions, and explanatory guidance without retrieving data, granting permission, or executing behavior."
+>
+  <section class="product-knowledge-artifact" aria-labelledby="product-knowledge-artifact-title">
+    <header class="artifact-header">
+      <div>
+        <p class="artifact-kicker">Illustrative product knowledge document</p>
+        <h4 id="product-knowledge-artifact-title" class="artifact-title">Account Review</h4>
+      </div>
+      <p class="artifact-boundary">Describes the task / implements nothing</p>
+    </header>
+    <div class="artifact-body">
+      <section class="artifact-purpose" aria-labelledby="artifact-purpose-title">
+        <h5 id="artifact-purpose-title">Purpose</h5>
+        <p>Investigate a restricted customer account.</p>
       </section>
-      <section aria-labelledby="artifact-actions-title">
-        <h4 id="artifact-actions-title">Available actions</h4>
-        <ul>{availableActions.map((item) => <li>{item}</li>)}</ul>
+      <div class="artifact-columns">
+        <section aria-labelledby="artifact-information-title">
+          <h5 id="artifact-information-title">Relevant information</h5>
+          <ul>{relevantInformation.map((item) => <li>{item}</li>)}</ul>
+        </section>
+        <section aria-labelledby="artifact-actions-title">
+          <h5 id="artifact-actions-title">Available actions</h5>
+          <ul>{availableActions.map((item) => <li>{item}</li>)}</ul>
+        </section>
+      </div>
+      <section class="artifact-guidance" aria-labelledby="artifact-guidance-title">
+        <h5 id="artifact-guidance-title">Guidance</h5>
+        <p>Explain unavailable actions through their unmet prerequisites.</p>
       </section>
     </div>
-    <section class="artifact-guidance" aria-labelledby="artifact-guidance-title">
-      <h4 id="artifact-guidance-title">Guidance</h4>
-      <p>Explain unavailable actions through their unmet prerequisites.</p>
-    </section>
-  </div>
-</section>
+  </section>
+</ResearchFigureFrame>
 
 <style>
-  .product-knowledge-artifact { min-width: 0; margin: 2.5rem 0; border: 1px solid var(--border-subtle); border-radius: 0.2rem; background: var(--bg-card); color: var(--text-primary); }
-  .product-knowledge-artifact :global(p), .product-knowledge-artifact :global(h3), .product-knowledge-artifact :global(h4), .product-knowledge-artifact :global(ul) { margin: 0; }
+  .product-knowledge-artifact { min-width: 0; margin: 0; border: 1px solid var(--border-subtle); border-radius: 0.2rem; background: var(--bg-secondary); color: var(--text-primary); }
+  .product-knowledge-artifact :global(p), .product-knowledge-artifact :global(h4), .product-knowledge-artifact :global(h5), .product-knowledge-artifact :global(ul) { margin: 0; }
   .artifact-header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 0.75rem 1.5rem; padding: 1.25rem 1.5rem; }
-  .artifact-kicker, .artifact-boundary, h4 { font-family: var(--font-mono-ui); font-size: 0.6875rem; font-weight: 500; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; }
-  .artifact-kicker, h4 { color: var(--text-muted); }
+  .artifact-kicker, .artifact-boundary, h5 { font-family: var(--font-mono-ui); font-size: 0.6875rem; font-weight: 500; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; }
+  .artifact-kicker, h5 { color: var(--text-muted); }
   .artifact-boundary { color: var(--accent); max-width: 12rem; }
-  h3 { margin-top: 0.4rem !important; color: var(--text-primary); font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; line-height: 1.35; }
+  .artifact-title { margin-top: 0.4rem !important; color: var(--text-primary); font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; line-height: 1.35; }
   .artifact-body { padding: 0 1.5rem 1.5rem; }
   .artifact-purpose, .artifact-columns, .artifact-guidance { border-top: 1px solid var(--border-subtle); padding-top: 0.9rem; }
   .artifact-purpose p, .artifact-guidance p, .artifact-columns li { color: var(--text-primary); font-size: 0.875rem; line-height: 1.65; }
