@@ -1,0 +1,54 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+---
+
+<ResearchFigureFrame
+  className="project-memory-drift"
+  figureNumber="05"
+  title="Persistence without reconciliation can preserve stale truth"
+  caption="Version control makes drift visible; it does not perform maintenance. This comparison does not assert that either artifact automatically outranks the other."
+>
+  <div class="drift-comparison">
+    <section>
+      <p class="label">Earlier accepted record · ADR 003 · 2026-08-26</p>
+      <strong>Manual publishing model</strong>
+      <p>Centers production publishing on <code>npm run live</code> from <code>main</code> and says a repository-authored Actions workflow is not required.</p>
+    </section>
+    <div class="divergence" aria-label="Documents disagree"><span>Divergence</span></div>
+    <section>
+      <p class="label">Current guidance + implementation</p>
+      <strong>Three supported paths</strong>
+      <ol><li><span>01</span>Local <code>npm run live</code></li><li><span>02</span>GitHub Actions manual dispatch</li><li><span>03</span>Remote trigger branch</li></ol>
+      <p class="source-note">Confirmed in AGENTS.md, README.md, and .github/workflows/deploy-production.yml</p>
+    </section>
+  </div>
+  <div class="drift-outcomes">
+    <div><span>Preserved</span><p>Both accounts remain inspectable.</p></div>
+    <div><span>Not resolved</span><p>The repository does not automatically choose a winner.</p></div>
+    <div><span>Human action</span><p>Amend, supersede, or reconcile the record.</p></div>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-reading .research-prose figure.project-memory-drift) { border-radius:0 !important; }
+  .drift-comparison { display:grid; gap:1rem; }
+  section { min-width:0; }
+  .label,.divergence span,.source-note,.drift-outcomes span,li span,code { font-family:var(--font-mono-ui); }
+  .label,.drift-outcomes span,.divergence span { margin:0 !important; font-size:.6875rem; letter-spacing:.07em; text-transform:uppercase; }
+  .label,.source-note { color:var(--text-muted); }
+  section > strong { display:block; margin-top:.45rem; color:var(--text-primary); font-family:var(--font-display); font-size:1rem; line-height:1.4; }
+  section > p:not(.label) { margin:.45rem 0 0 !important; color:var(--text-secondary); font-size:.875rem; line-height:1.6; }
+  code { border:0 !important; background:transparent !important; padding:0 !important; color:var(--text-primary) !important; font-size:.8125rem !important; }
+  .divergence { display:flex; align-items:center; justify-content:center; }
+  .divergence span { border-block:1px solid var(--accent); padding:.35rem .55rem; color:var(--accent); }
+  ol { display:grid; gap:.45rem; margin:.55rem 0 0; padding:0; list-style:none; }
+  li { margin:0 !important; color:var(--text-secondary); font-size:.875rem; line-height:1.5; }
+  li span { display:inline-block; min-width:1.8rem; color:var(--accent); font-size:.6875rem; }
+  .source-note { font-size:.8125rem !important; }
+  .drift-outcomes { display:grid; margin-top:1.2rem; border-top:1px solid var(--border-strong); }
+  .drift-outcomes > div { padding:.85rem 0; }
+  .drift-outcomes > div + div { border-top:1px solid var(--border-subtle); }
+  .drift-outcomes span { color:var(--accent); }
+  .drift-outcomes p { margin:.25rem 0 0 !important; color:var(--text-secondary); font-size:.875rem; line-height:1.5; }
+  @media (min-width:760px) { .drift-comparison { grid-template-columns:minmax(0,1fr) 7rem minmax(0,1fr); align-items:stretch; } .drift-outcomes { grid-template-columns:repeat(3,minmax(0,1fr)); } .drift-outcomes > div { padding:.85rem; } .drift-outcomes > div:first-child { padding-left:0; } .drift-outcomes > div + div { border-top:0; border-left:1px solid var(--border-subtle); } }
+</style>
