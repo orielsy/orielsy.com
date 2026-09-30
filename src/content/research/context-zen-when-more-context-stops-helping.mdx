@@ -19,6 +19,7 @@ relatedSlugs: ["context-engineering-software-development", "specification-driven
 import ContextZenContinuationLineageVisual from '../../components/research/ContextZenContinuationLineageVisual.astro';
 import ContextZenExperimentBaselineVisual from '../../components/research/ContextZenExperimentBaselineVisual.astro';
 import ContextZenHealthJudgmentVisual from '../../components/research/ContextZenHealthJudgmentVisual.astro';
+import ContextZenLifecycleVisual from '../../components/research/ContextZenLifecycleVisual.astro';
 import ContextZenStateExtractionVisual from '../../components/research/ContextZenStateExtractionVisual.astro';
 import ContextZenTargetProfilesVisual from '../../components/research/ContextZenTargetProfilesVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
@@ -43,17 +44,29 @@ Context Zen uses **context distillation** to mean reconstructing the smallest re
   <ContextZenStateExtractionVisual />
 </ResearchBreakout>
 
-A useful handoff preserves the current objective, decisions still in force, relevant constraints, rejected approaches likely to be rediscovered, active artifacts, unresolved questions, and the immediate next step.
+The handoff contract is intentionally selective. It preserves the current objective, decisions still in force, relevant constraints, rejected approaches likely to be rediscovered, active artifacts, unresolved questions, and the immediate next step.
 
-It can compress chronology, abandoned exploration, obsolete assumptions, repeated explanations, and agent self-commentary.
+Chronology, abandoned exploration, obsolete assumptions, repeated explanations, and agent self-commentary can be compressed when they no longer affect continuation.
 
 The goal is not the shortest summary. It is the smallest handoff that still preserves **correct continuation**.
 
-Context Zen's lifecycle is deliberately simple: **Observe → Distill → Handoff**. Observation asks whether accumulated history is still helping. Distillation reconstructs authoritative state. Handoff packages that state for a fresh context.
+## Operate in Three Steps
+
+The original Context Zen model made the operating loop explicit: **Observe → Distill → Handoff**. That relationship still matters because the three operations have different epistemic roles.
+
+Observation makes a provisional judgment about context health. Distillation reconstructs the state that still governs the work. Handoff packages that state for a fresh context.
+
+<ResearchBreakout mode="wide">
+  <ContextZenLifecycleVisual />
+</ResearchBreakout>
+
+Observation happens while Context Zen is already participating in ordinary turns; it does not imply a background daemon.
+
+If the host exposes clipboard access, Context Zen can copy the complete handoff automatically. Otherwise it returns one self-contained artifact for the user to copy. It does not assume it can create or navigate to a new conversation on the user's behalf.
 
 ## Judge When History Becomes Drag
 
-Context Zen is opt-in. Once enabled, it evaluates context health during ordinary turns; that does not imply background execution. If the host has no background execution model, the skill does not pretend to be a daemon.
+Context Zen is opt-in. Once enabled, it evaluates context health during ordinary turns.
 
 The difficult part is deciding when useful history has become contextual drag.
 
@@ -63,7 +76,7 @@ I do not want to fake precision here. Without a validated scoring model, v0.1 us
   <ContextZenHealthJudgmentVisual />
 </ResearchBreakout>
 
-Hard signals can inform the judgment: context load, turn count, active artifact count, or tool-result volume. None of them should force a handoff by itself.
+Hard signals can inform the judgment: context load, turn count, active artifact count, or tool-result volume.
 
 The more consequential signals are semantic:
 
@@ -74,6 +87,8 @@ The more consequential signals are semantic:
 - the agent acts on obsolete state
 - the user increasingly corrects context drift
 - a shrinking share of the retained conversation materially affects the next action
+
+No single hard or semantic signal forces a handoff by itself.
 
 The current decision heuristic is a counterfactual:
 
@@ -112,11 +127,9 @@ context zen handoff
 
 even when monitoring is off. The artifact can still be a continuation while carrying `enabled: false`. Creating a checkpoint does not silently opt the user into monitoring.
 
-A host does not need durable cross-chat state for this model to work; the handoff itself can carry the continuation state forward. If the host exposes clipboard access, Context Zen can copy the complete handoff automatically. Otherwise it returns one self-contained artifact for the user to copy.
+A host does not need durable cross-chat state for this model to work. If durable host state exists it may help, but the continuation marker in the handoff can carry the activation state forward on its own.
 
-It does not assume it can create or navigate to a new conversation on the user's behalf.
-
-## Compile the Same State for a Receiver
+## Represent the Same State for a Receiver
 
 For v0.1, the user chooses the target.
 
