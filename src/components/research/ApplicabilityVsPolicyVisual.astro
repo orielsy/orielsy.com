@@ -1,13 +1,19 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
+export interface Props {
+  figureNumber?: string;
+}
+
+const { figureNumber } = Astro.props;
+
 const applicabilityFacts = ['Product state', 'Version', 'Audience'];
 const policyFacts = ['Application state', 'Validation result', 'Available knowledge', 'Evidence certainty'];
 ---
 
 <ResearchFigureFrame
   className="applicability-policy-figure"
-  eyebrow="Separation of concerns"
+  {figureNumber}
   title="Knowing something applies does not decide what the UI should do."
   subtitle="Applicability identifies relevance. Response policy controls interface authority."
   caption="The knowledge layer identifies relevance; policy decides whether the UI should explain, highlight, suggest, or offer a user-accepted action."
