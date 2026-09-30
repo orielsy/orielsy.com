@@ -1,102 +1,185 @@
 ---
+import { ArrowDown, ArrowRight } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
-const stages = [
-  { label: 'Observe', detail: 'Context health' },
-  { label: 'Distill', detail: 'Current state' },
-  { label: 'Handoff', detail: 'Fresh context' },
+const operations = [
+  ['Observe', 'Assess context health during ordinary turns', 'Specified operation'],
+  ['Distill', 'Reconstruct the state that still governs the work', 'Specified operation'],
+  ['Handoff', 'Package that state for a fresh context', 'Specified operation'],
 ];
 ---
 
-<ResearchFigureFrame title="Observe → Distill → Handoff">
-  <ol class="lifecycle-flow" aria-label="Context Zen observe, distill, handoff lifecycle">
-    {stages.map((stage, index) => (
-      <li class:list={['stage', index === stages.length - 1 && 'is-output']}>
-        <strong>{stage.label}</strong>
-        <span>{stage.detail}</span>
-        {index < stages.length - 1 && (
-          <>
-            <span class="arrow arrow-mobile" aria-hidden="true">↓</span>
-            <span class="arrow arrow-desktop" aria-hidden="true">→</span>
-          </>
-        )}
-      </li>
-    ))}
-  </ol>
+<ResearchFigureFrame
+  figureNumber="02"
+  eyebrow="v0.1 operating loop"
+  title="Observe, distill, hand off"
+  caption="This loop describes when the skill participates and what it produces. Observe happens during ordinary turns, not as a background daemon. Handoff yields a continuation artifact; clipboard copy and navigation depend on host capabilities."
+>
+  <div class="lifecycle-wrap">
+    <div class="desktop-rail" aria-hidden="true"></div>
+    <ol class="lifecycle-flow" aria-label="Context Zen observe, distill, handoff lifecycle">
+      {operations.map(([name, detail, status], index) => (
+        <li class="stage">
+          <span class="stage-index">0{index + 1}</span>
+          <div>
+            <strong>{name}</strong>
+            <p>{detail}</p>
+            <span class="stage-status">{status}</span>
+          </div>
+          {index < operations.length - 1 && (
+            <>
+              <ArrowDown class="arrow arrow-mobile" size={16} strokeWidth={1.7} aria-hidden="true" />
+              <ArrowRight class="arrow arrow-desktop" size={16} strokeWidth={1.7} aria-hidden="true" />
+            </>
+          )}
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <div class="delivery-grid">
+    <p><strong>If clipboard access exists:</strong> copy the complete handoff.</p>
+    <p><strong>Otherwise:</strong> return one self-contained artifact for the user to copy.</p>
+  </div>
 </ResearchFigureFrame>
 
 <style>
-  .lifecycle-flow {
-    display: grid;
+  :global(.research-figure-frame) :global(p),
+  :global(.research-figure-frame) :global(ol),
+  :global(.research-figure-frame) :global(li) {
     margin: 0;
-    padding: 0;
-    list-style: none;
-    gap: 1px;
-    background: var(--border-subtle);
   }
 
-  .lifecycle-flow > .stage {
-    margin: 0;
+  .lifecycle-wrap {
+    position: relative;
+  }
+
+  .desktop-rail {
+    display: none;
+  }
+
+  .lifecycle-flow {
+    display: grid;
+    gap: 1.25rem;
+    padding: 0;
+    list-style: none;
   }
 
   .stage {
     position: relative;
+    display: grid;
+    grid-template-columns: 2.2rem minmax(0, 1fr);
+    gap: 0.75rem;
     min-width: 0;
-    background: var(--bg-card);
+    background: var(--bg-secondary);
     padding: 1rem;
   }
 
-  .stage.is-output {
-    background: color-mix(in srgb, var(--accent) 6%, var(--bg-card));
-  }
-
-  .stage strong,
-  .stage span:not(.arrow) {
-    display: block;
-    margin: 0;
+  .stage-index {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    background: var(--bg-card);
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
   }
 
   .stage strong {
+    display: block;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 0.875rem;
+    font-size: 1rem;
     font-weight: 600;
-    line-height: 1.35;
+    line-height: 1.4;
   }
 
-  .stage span:not(.arrow) {
-    margin-top: 0.35rem;
+  .stage p {
+    margin-top: 0.45rem !important;
     color: var(--text-secondary);
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  .stage-status {
+    display: block;
+    margin-top: 0.75rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.07em;
     line-height: 1.5;
+    text-transform: uppercase;
   }
 
   .arrow {
     position: absolute;
     z-index: 2;
     background: var(--bg-card);
-    padding: 0.1rem;
     color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.75rem;
   }
 
   .arrow-mobile {
-    left: 50%;
-    bottom: -0.55rem;
-    transform: translateX(-50%);
+    bottom: -0.95rem;
+    left: 1.5rem;
   }
 
   .arrow-desktop {
     display: none;
-    right: -0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
   }
 
-  @media (min-width: 720px) {
+  .delivery-grid {
+    display: grid;
+    gap: 0.8rem 1.5rem;
+    margin-top: 1.5rem;
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+  }
+
+  .delivery-grid p {
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  .delivery-grid strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  @media (min-width: 640px) {
+    .delivery-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 768px) {
+    .desktop-rail {
+      position: absolute;
+      top: 2.15rem;
+      right: 12%;
+      left: 12%;
+      display: block;
+      border-top: 1px dashed var(--border-subtle);
+    }
+
     .lifecycle-flow {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .stage {
+      display: block;
+      min-height: 10rem;
+    }
+
+    .stage > div {
+      margin-top: 1.1rem;
     }
 
     .arrow-mobile {
@@ -104,6 +187,8 @@ const stages = [
     }
 
     .arrow-desktop {
+      top: 1.75rem;
+      right: -0.6rem;
       display: block;
     }
   }
