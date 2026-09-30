@@ -1,4 +1,5 @@
 ---
+import { ArrowDown, ArrowRight, CircleDot } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 const contexts = [
@@ -20,11 +21,16 @@ const contexts = [
       <section>
         <div class="context-heading">
           <h4>{context.name}</h4>
-          <span class="active-dot" aria-hidden="true"></span>
+          <CircleDot class="active-icon" size={16} strokeWidth={1.75} aria-hidden="true" />
         </div>
         <p class="role">{context.role}</p>
         <p class="marker">continuation: {context.continuation}<br />enabled: {context.enabled}</p>
-        {index < contexts.length - 1 && <span class="connector" aria-hidden="true">→</span>}
+        {index < contexts.length - 1 && (
+          <span class="connector" aria-hidden="true">
+            <ArrowDown class="connector-mobile" size={16} strokeWidth={1.75} />
+            <ArrowRight class="connector-desktop" size={16} strokeWidth={1.75} />
+          </span>
+        )}
       </section>
     ))}
   </div>
@@ -41,14 +47,15 @@ const contexts = [
   .lineage { position: relative; display: grid; gap: 1rem; }
   .lineage section { position: relative; min-width: 0; background: var(--bg-secondary); padding: 1rem; }
   .context-heading { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
-  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.45; }
-  .active-dot { width: 0.65rem; height: 0.65rem; border: 1px solid var(--accent); border-radius: 999px; box-shadow: inset 0 0 0 2px var(--bg-secondary); background: var(--accent); }
-  .role { margin-top: 0.2rem !important; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.08em; line-height: 1.5; text-transform: uppercase; }
-  .marker { margin-top: 0.7rem !important; color: var(--text-secondary); font-family: var(--font-mono-ui); font-size: 0.75rem; line-height: 1.55; }
-  .connector { position: absolute; left: 50%; bottom: -1.05rem; z-index: 1; transform: translateX(-50%) rotate(90deg); color: var(--accent); background: var(--bg-card); padding: 0 0.25rem; }
+  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: var(--research-diagram-node, 0.875rem); font-weight: 600; line-height: 1.45; }
+  .context-heading :global(.active-icon) { flex: 0 0 auto; color: var(--accent); }
+  .role { margin-top: 0.2rem !important; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.08em; line-height: 1.5; text-transform: uppercase; }
+  .marker { margin-top: 0.7rem !important; color: var(--text-secondary); font-family: var(--font-mono-ui); font-size: 0.6875rem; line-height: 1.55; }
+  .connector { position: absolute; left: 50%; bottom: -1.05rem; z-index: 1; display: flex; transform: translateX(-50%); align-items: center; justify-content: center; color: var(--accent); background: var(--bg-card); padding: 0.15rem; }
+  .connector-desktop { display: none; }
 
   .meaning { display: grid; gap: 1rem; margin-top: 1.3rem; }
-  .meaning p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
+  .meaning p { color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
   .meaning strong { color: var(--text-primary); font-weight: 500; }
   .meaning code { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.8em; }
   .divider { display: none; }
@@ -58,6 +65,8 @@ const contexts = [
     .lineage::before { content: ''; position: absolute; left: 12%; right: 12%; top: 2rem; border-top: 1px dashed var(--border-subtle); }
     .lineage section { z-index: 1; }
     .connector { left: auto; right: -1.1rem; top: 1.5rem; bottom: auto; transform: none; }
+    .connector-mobile { display: none; }
+    .connector-desktop { display: block; }
     .meaning { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; }
     .divider { display: block; height: 2.5rem; border-left: 1px solid var(--border-subtle); }
   }
