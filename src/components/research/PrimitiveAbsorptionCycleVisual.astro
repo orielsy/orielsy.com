@@ -1,76 +1,367 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
-const beforeMechanisms = ['Reactivity', 'Navigation', 'Transitions', 'DOM machinery'];
-const platformPrimitives = ['Reactive graph primitives', 'Navigation mechanics', 'View transitions', 'DOM update primitives', 'Common controls'];
-const frameworkResponsibilities = ['Scheduling & batching', 'Rendering composition', 'Routing & data', 'Server integration', 'Compilation & DX'];
+const beforeCoordination = ['Application coordination', 'Product & execution policy'];
+const beforeMechanisms = ['Reactivity machinery', 'Navigation machinery', 'Transition machinery', 'DOM-update machinery'];
+const recompositionSteps = [
+  'Ecosystem convergence',
+  'Durable semantics become legible',
+  'Some reusable mechanisms may enter platform work',
+];
+const frameworkResponsibilities = [
+  'Scheduling & batching',
+  'Rendering composition',
+  'Routing & data coordination',
+  'Server integration',
+  'Compilation & developer experience',
+];
+const platformPrimitives = [
+  { label: 'Reactive graph primitives', qualifier: 'Potential' },
+  { label: 'Navigation API mechanics' },
+  { label: 'View Transitions' },
+  { label: 'DOM update primitives', qualifier: 'Exploratory' },
+  { label: 'Common control primitives', qualifier: 'Open UI direction' },
+];
 ---
 
 <ResearchFigureFrame
   className="primitive-absorption-figure"
   figureNumber="03"
   title="The framework's center of gravity can move upward"
-  caption="This is the working recomposition model: durable mechanisms move into the platform while frameworks concentrate on coordination, policy, composition, server integration, compilation, and developer experience."
+  caption="This is a working recomposition model, not an inevitable pipeline: as ecosystems converge, some durable mechanisms may move into shared platform primitives while frameworks remain responsible for coordination, policy, server integration, compilation, and developer experience."
 >
   <div class="recomposition-map">
-    <section class="state before-state">
-      <div class="state-heading"><span>Before</span><strong>Framework owns mechanism and coordination</strong></div>
-      <div class="architecture-layer framework-layer is-full">
-        <div class="layer-heading"><span>Framework</span><strong>Private substrate + application policy</strong></div>
-        <ul class="capabilities">{beforeMechanisms.map((item) => <li>{item}</li>)}</ul>
+    <section class="state before-state" aria-label="Before recomposition">
+      <div class="state-heading">
+        <span>Before</span>
+        <strong>Framework owns substrate and coordination</strong>
+      </div>
+
+      <div class="framework-boundary">
+        <div class="before-stratum coordination-stratum">
+          <div class="layer-heading">
+            <span>Coordination & policy</span>
+            <strong>Application-level decisions</strong>
+          </div>
+          <ul class="capabilities compact-capabilities">
+            {beforeCoordination.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+
+        <div class="before-stratum mechanism-stratum">
+          <div class="layer-heading">
+            <span>Private mechanisms</span>
+            <strong>Framework-specific substrate</strong>
+          </div>
+          <ul class="capabilities">
+            {beforeMechanisms.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
       </div>
     </section>
 
-    <div class="shift">
-      <span>Standardization</span>
-      <strong aria-hidden="true">→</strong>
-    </div>
+    <section class="hinge" aria-label="Possible recomposition">
+      <div class="hinge-heading">
+        <span>Possible recomposition</span>
+        <strong>Selective platform absorption</strong>
+      </div>
 
-    <section class="state after-state">
-      <div class="state-heading"><span>After</span><strong>Mechanism moves down; framework policy stays above it</strong></div>
+      <ol class="hinge-steps">
+        {recompositionSteps.map((step) => <li>{step}</li>)}
+      </ol>
+
+      <p class="hinge-qualifier">Working model · varies by capability</p>
+    </section>
+
+    <section class="state after-state" aria-label="After possible recomposition">
+      <div class="state-heading">
+        <span>After</span>
+        <strong>Responsibility separates across layers</strong>
+      </div>
+
       <div class="architecture-stack">
         <div class="architecture-layer framework-layer">
-          <div class="layer-heading"><span>Framework</span><strong>Coordination + policy</strong></div>
-          <ul class="capabilities">{frameworkResponsibilities.map((item) => <li>{item}</li>)}</ul>
+          <div class="layer-heading layer-heading--framework">
+            <div>
+              <span>Framework / meta-framework</span>
+              <strong>Coordination + policy</strong>
+            </div>
+            <em>Center of gravity</em>
+          </div>
+          <ul class="capabilities">
+            {frameworkResponsibilities.map((item) => <li>{item}</li>)}
+          </ul>
         </div>
+
         <div class="architecture-layer platform-layer">
-          <div class="layer-heading"><span>Platform</span><strong>Durable primitives</strong></div>
-          <ul class="capabilities">{platformPrimitives.map((item) => <li>{item}</li>)}</ul>
+          <div class="layer-heading">
+            <span>Platform</span>
+            <strong>Standardized or emerging primitives</strong>
+          </div>
+          <ul class="capabilities primitive-capabilities">
+            {platformPrimitives.map((item) => (
+              <li>
+                <span>{item.label}</span>
+                {item.qualifier && <small>{item.qualifier}</small>}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
   </div>
+
+  <p class="recomposition-conclusion">
+    The framework remains; its responsibility recomposes above shared primitives.
+  </p>
 </ResearchFigureFrame>
 
 <style>
-  :global(.research-reading .research-prose figure.primitive-absorption-figure) { border-radius: 0 !important; }
-  .recomposition-map { display: grid; gap: 1rem; align-items: start; }
-  .state { min-width: 0; }
-  .state-heading { display: grid; gap: 0.35rem; margin-bottom: 0.7rem; }
+  :global(.research-reading .research-prose figure.primitive-absorption-figure) {
+    border-radius: 0 !important;
+  }
+
+  .recomposition-map {
+    display: grid;
+    gap: 1.35rem;
+    align-items: stretch;
+  }
+
+  .state,
+  .hinge {
+    min-width: 0;
+  }
+
+  .state-heading,
+  .hinge-heading {
+    display: grid;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+  }
+
   .state-heading span,
+  .hinge-heading span,
   .layer-heading span,
-  .shift span { font-family: var(--font-mono-ui); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; line-height: 1.45; text-transform: uppercase; }
-  .state-heading span { color: var(--accent); }
-  .state-heading strong { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.45; }
-  .architecture-stack { display: grid; border-block: 1px solid var(--border-subtle); }
-  .architecture-layer { min-width: 0; border-block: 1px solid var(--border-subtle); padding: 0.95rem 0; }
-  .architecture-stack .architecture-layer { border-top: 0; }
-  .architecture-stack .architecture-layer + .architecture-layer { border-top: 1px solid var(--border-subtle); }
-  .framework-layer { border-left: 2px solid var(--accent); padding-left: 1rem; }
-  .platform-layer { padding-left: 1rem; }
-  .layer-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.35rem 0.75rem; }
-  .layer-heading span { color: var(--text-muted); }
-  .framework-layer .layer-heading span { color: var(--accent); }
-  .layer-heading strong { color: var(--text-primary); font-family: var(--font-display); font-size: 0.875rem; font-weight: 600; line-height: 1.4; }
-  .capabilities { display: grid; gap: 0; margin: 0.75rem 0 0; padding: 0; list-style: none; }
-  .capabilities li { border-top: 1px solid var(--border-subtle); padding: 0.4rem 0; color: var(--text-secondary); font-size: 0.8125rem; line-height: 1.5; }
-  .shift { display: flex; align-items: center; justify-content: center; gap: 0.55rem; color: var(--text-muted); }
-  .shift span { color: var(--text-muted); }
-  .shift strong { color: var(--accent); font-family: var(--font-mono-ui); font-size: 1rem; font-weight: 500; transform: rotate(90deg); }
-  @media (min-width: 780px) {
-    .recomposition-map { grid-template-columns: minmax(0, 0.9fr) 5rem minmax(0, 1.2fr); gap: 0.75rem; }
-    .shift { align-self: center; flex-direction: column; }
-    .shift strong { transform: none; }
-    .capabilities { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1rem; }
+  .layer-heading em,
+  .hinge-qualifier {
+    font-family: var(--font-mono-ui);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.45;
+    text-transform: uppercase;
+  }
+
+  .state-heading span,
+  .hinge-heading span {
+    color: var(--accent);
+  }
+
+  .state-heading strong,
+  .hinge-heading strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .framework-boundary,
+  .architecture-stack {
+    border: 1px solid var(--border-subtle);
+  }
+
+  .before-stratum,
+  .architecture-layer {
+    min-width: 0;
+    padding: 0.95rem 1rem;
+  }
+
+  .before-stratum + .before-stratum,
+  .architecture-layer + .architecture-layer {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .framework-layer {
+    border-left: 2px solid var(--accent);
+  }
+
+  .layer-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.35rem 0.75rem;
+  }
+
+  .layer-heading > div {
+    display: grid;
+    gap: 0.28rem;
+  }
+
+  .layer-heading span {
+    color: var(--text-muted);
+  }
+
+  .layer-heading strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .layer-heading em {
+    color: var(--accent);
+    font-style: normal;
+    white-space: nowrap;
+  }
+
+  .capabilities {
+    display: grid;
+    gap: 0;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .capabilities li {
+    min-width: 0;
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.4rem 0;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .primitive-capabilities li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.2rem 0.7rem;
+  }
+
+  .primitive-capabilities small {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    letter-spacing: 0.06em;
+    line-height: 1.45;
+    text-transform: uppercase;
+  }
+
+  .hinge {
+    position: relative;
+    padding-left: 1.2rem;
+  }
+
+  .hinge::before {
+    position: absolute;
+    inset: 0 auto 0 0;
+    border-left: 1px dashed color-mix(in srgb, var(--accent) 65%, transparent);
+    content: '';
+  }
+
+  .hinge-steps {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hinge-steps li {
+    position: relative;
+    margin: 0;
+    padding-left: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .hinge-steps li::before {
+    position: absolute;
+    top: 0.68em;
+    left: 0;
+    width: 0.35rem;
+    height: 0.35rem;
+    border: 1px solid var(--accent);
+    background: var(--bg-card);
+    content: '';
+    transform: translateY(-50%);
+  }
+
+  .hinge-qualifier {
+    margin: 0.85rem 0 0 !important;
+    color: var(--accent);
+    text-transform: none;
+  }
+
+  .recomposition-conclusion {
+    margin: 1.15rem 0 0 !important;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.85rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 680px) {
+    .capabilities {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 1rem;
+    }
+
+    .compact-capabilities {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .primitive-capabilities li {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-content: start;
+      gap: 0.15rem;
+    }
+  }
+
+  @media (min-width: 980px) {
+    .recomposition-map {
+      grid-template-columns: minmax(0, 0.9fr) minmax(10rem, 0.58fr) minmax(0, 1.2fr);
+      gap: 1rem;
+    }
+
+    .hinge {
+      align-self: stretch;
+      padding: 0 0.35rem;
+    }
+
+    .hinge::before {
+      inset: 2.9rem 0 auto;
+      border-top: 1px dashed color-mix(in srgb, var(--accent) 65%, transparent);
+      border-left: 0;
+    }
+
+    .hinge-heading,
+    .hinge-steps,
+    .hinge-qualifier {
+      position: relative;
+      background: var(--bg-card);
+    }
+
+    .hinge-heading {
+      padding: 0 0.35rem 0.5rem;
+    }
+
+    .hinge-steps {
+      gap: 0.65rem;
+      padding: 0.65rem 0.35rem 0;
+    }
+
+    .hinge-qualifier {
+      padding: 0.6rem 0.35rem 0;
+    }
   }
 </style>
