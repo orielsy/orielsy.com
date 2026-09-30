@@ -11,31 +11,31 @@ const availableActions = ['Request identity verification', 'Remove the restricti
   title="Product knowledge describes the task, not the mechanics"
   caption="Illustrative product knowledge artifact. It expresses intent, relevant information, available actions, and explanatory guidance without retrieving data, granting permission, or executing behavior."
 >
-  <section class="product-knowledge-artifact" aria-labelledby="product-knowledge-artifact-title">
+  <section class="product-knowledge-artifact" aria-label="Illustrative product knowledge document: Account Review">
     <header class="artifact-header">
       <div>
         <p class="artifact-kicker">Illustrative product knowledge document</p>
-        <h4 id="product-knowledge-artifact-title" class="artifact-title">Account Review</h4>
+        <h4 class="artifact-title">Account Review</h4>
       </div>
       <p class="artifact-boundary">Describes the task / implements nothing</p>
     </header>
     <div class="artifact-body">
-      <section class="artifact-purpose" aria-labelledby="artifact-purpose-title">
-        <h5 id="artifact-purpose-title">Purpose</h5>
+      <section class="artifact-purpose">
+        <h5>Purpose</h5>
         <p>Investigate a restricted customer account.</p>
       </section>
       <div class="artifact-columns">
-        <section aria-labelledby="artifact-information-title">
-          <h5 id="artifact-information-title">Relevant information</h5>
+        <section>
+          <h5>Relevant information</h5>
           <ul>{relevantInformation.map((item) => <li>{item}</li>)}</ul>
         </section>
-        <section aria-labelledby="artifact-actions-title">
-          <h5 id="artifact-actions-title">Available actions</h5>
+        <section>
+          <h5>Available actions</h5>
           <ul>{availableActions.map((item) => <li>{item}</li>)}</ul>
         </section>
       </div>
-      <section class="artifact-guidance" aria-labelledby="artifact-guidance-title">
-        <h5 id="artifact-guidance-title">Guidance</h5>
+      <section class="artifact-guidance">
+        <h5>Guidance</h5>
         <p>Explain unavailable actions through their unmet prerequisites.</p>
       </section>
     </div>
