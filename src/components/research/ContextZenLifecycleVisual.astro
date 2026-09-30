@@ -1,110 +1,41 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
-
-const stages = [
-  { label: 'Observe', detail: 'Context health' },
-  { label: 'Distill', detail: 'Current state' },
-  { label: 'Handoff', detail: 'Fresh context' },
+const operations = [
+  { name: 'Observe', detail: 'Assess context health during ordinary turns.' },
+  { name: 'Distill', detail: 'Reconstruct the state that still governs the work.' },
+  { name: 'Handoff', detail: 'Package that state for a fresh context.' },
 ];
 ---
 
-<ResearchFigureFrame title="Observe → Distill → Handoff">
-  <ol class="lifecycle-flow" aria-label="Context Zen observe, distill, handoff lifecycle">
-    {stages.map((stage, index) => (
-      <li class:list={['stage', index === stages.length - 1 && 'is-output']}>
-        <strong>{stage.label}</strong>
-        <span>{stage.detail}</span>
-        {index < stages.length - 1 && (
-          <>
-            <span class="arrow arrow-mobile" aria-hidden="true">↓</span>
-            <span class="arrow arrow-desktop" aria-hidden="true">→</span>
-          </>
-        )}
-      </li>
-    ))}
+<ResearchFigureFrame className="zen-lifecycle" figureNumber="02" title="Observe, distill, hand off" caption="Observe is not background execution without host support. A complete handoff can be copied if clipboard access exists; otherwise one self-contained artifact is returned for the user to copy. No automatic chat creation or navigation is assumed.">
+  <ol aria-label="Three specified Context Zen operations">
+    {operations.map((operation, index) => <li><span class="step">0{index + 1}</span><div><h4>{operation.name}</h4><p>{operation.detail}</p></div></li>)}
   </ol>
+  <p class="output"><span>Output</span>A continuation artifact, not a new conversation.</p>
 </ResearchFigureFrame>
 
 <style>
-  .lifecycle-flow {
-    display: grid;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    gap: 1px;
-    background: var(--border-subtle);
+  .zen-lifecycle :global(p), .zen-lifecycle :global(h4), .zen-lifecycle :global(ol), .zen-lifecycle :global(li) { margin: 0; }
+  .zen-lifecycle :global(ol) { padding: 0; list-style: none; }
+  ol { display: grid; }
+  li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.75rem; padding: 0.75rem 0; }
+  li + li { border-top: 1px solid var(--border-subtle); }
+  .step { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; line-height: 2; }
+  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.45; }
+  li p { margin-top: 0.35rem !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
+  .output { display: grid; gap: 0.35rem 1rem; margin-top: 1rem !important; border-top: 1px solid var(--border-strong); padding-top: 0.85rem; color: var(--text-primary); font-size: 0.875rem; line-height: 1.6; }
+  .output span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; text-transform: uppercase; }
+  @media (min-width: 640px) {
+    ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    li { display: block; padding: 0 1rem; }
+    li:first-child { padding-left: 0; }
+    li + li { border-top: 0; border-left: 1px solid var(--border-subtle); }
+    h4 { margin-top: 0.55rem !important; }
+    .output { grid-template-columns: 7rem minmax(0, 1fr); }
   }
+</style>
 
-  .lifecycle-flow > .stage {
-    margin: 0;
-  }
-
-  .stage {
-    position: relative;
-    min-width: 0;
-    background: var(--bg-card);
-    padding: 1rem;
-  }
-
-  .stage.is-output {
-    background: color-mix(in srgb, var(--accent) 6%, var(--bg-card));
-  }
-
-  .stage strong,
-  .stage span:not(.arrow) {
-    display: block;
-    margin: 0;
-  }
-
-  .stage strong {
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1.35;
-  }
-
-  .stage span:not(.arrow) {
-    margin-top: 0.35rem;
-    color: var(--text-secondary);
-    font-size: 0.75rem;
-    line-height: 1.5;
-  }
-
-  .arrow {
-    position: absolute;
-    z-index: 2;
-    background: var(--bg-card);
-    padding: 0.1rem;
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.75rem;
-  }
-
-  .arrow-mobile {
-    left: 50%;
-    bottom: -0.55rem;
-    transform: translateX(-50%);
-  }
-
-  .arrow-desktop {
-    display: none;
-    right: -0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  @media (min-width: 720px) {
-    .lifecycle-flow {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .arrow-mobile {
-      display: none;
-    }
-
-    .arrow-desktop {
-      display: block;
-    }
-  }
+<style>
+  :global(.research-reading .research-prose figure.zen-lifecycle) { border-radius: 0 !important; }
+  :global(.research-reading .research-prose figure.zen-lifecycle) li p, :global(.research-reading .research-prose figure.zen-lifecycle) .output { font-size: 0.875rem !important; line-height: 1.6 !important; }
 </style>
