@@ -1,35 +1,76 @@
 ---
+import { ArrowDown, ArrowRight, Route } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 ---
 
 <ResearchFigureFrame
   className="project-memory-routing"
-  figureNumber="03"
+  figureNumber="04"
   title="Route, then narrow"
-  caption="The current workflow is explicit and human-authored. AGENTS.md routes an agent toward relevant durable memory; the repository does not detect relevance automatically."
+  status="Current human-authored workflow"
+  caption="A human-authored entry point and task scope guide selection; the repository does not detect relevance automatically. Other project memory remains available for other work."
 >
   <div class="routing-flow">
-    <section><span class="label">Task</span><strong>Change publication behavior</strong><p>The task supplies scope, not every document in the repository.</p></section>
-    <div class="flow-marker" aria-hidden="true">→</div>
-    <section class="router"><span class="label">Routing layer</span><code>AGENTS.md</code><p>Read the constitution, then the relevant spec, plan/tasks, and ADRs before structural changes.</p></section>
-    <div class="flow-marker" aria-hidden="true">→</div>
-    <section class="selected"><span class="label">Selected context</span><ol><li><span>01</span>Project-wide factual guardrails</li><li><span>02</span>Publication-gating specification and decisions</li><li><span>03</span>Relevant implementation surfaces</li></ol></section>
+    <section>
+      <span class="label">Task</span>
+      <strong>Change publication behavior</strong>
+      <p>The task supplies scope—not every document in the repository.</p>
+    </section>
+
+    <div class="flow-marker" aria-hidden="true">
+      <ArrowDown class="arrow-mobile" size={16} strokeWidth={1.6} />
+      <ArrowRight class="arrow-desktop" size={16} strokeWidth={1.6} />
+    </div>
+
+    <section class="router">
+      <Route class="route-icon" size={20} strokeWidth={1.6} aria-hidden="true" />
+      <code>AGENTS.md</code>
+      <p>Read the constitution, relevant spec, plan/tasks, and ADRs; do not fabricate; update durable requirements when they change.</p>
+      <span class="routing-note">Explicit routing</span>
+    </section>
+
+    <div class="flow-marker" aria-hidden="true">
+      <ArrowDown class="arrow-mobile" size={16} strokeWidth={1.6} />
+      <ArrowRight class="arrow-desktop" size={16} strokeWidth={1.6} />
+    </div>
+
+    <section class="selected">
+      <span class="label">Selected context</span>
+      <ol>
+        <li><span>01</span>Project-wide factual guardrails</li>
+        <li><span>02</span>Publication-gating specification and decisions</li>
+        <li><span>03</span>Relevant implementation surfaces</li>
+      </ol>
+      <p class="selection-boundary">Selected by explicit task scope and maintained instructions—not an automated relevance system.</p>
+    </section>
   </div>
 </ResearchFigureFrame>
 
 <style>
-  :global(.research-reading .research-prose figure.project-memory-routing) { border-radius:0 !important; }
-  .routing-flow { display:grid; gap:.8rem; }
-  section { min-width:0; }
-  .label, code, li span { font-family:var(--font-mono-ui); }
-  .label { display:block; color:var(--text-muted); font-size:.6875rem; letter-spacing:.08em; text-transform:uppercase; }
-  section > strong, code { display:block; margin-top:.35rem; color:var(--text-primary); font-size:1rem; line-height:1.4; }
-  code { border:0 !important; background:transparent !important; padding:0 !important; color:var(--accent) !important; font-size:.875rem; }
-  section p { margin:.45rem 0 0 !important; color:var(--text-secondary); font-size:.875rem; line-height:1.6; }
-  .flow-marker { align-self:center; justify-self:center; color:var(--accent); font-family:var(--font-mono-ui); transform:rotate(90deg); }
-  .selected { border-left:2px solid var(--accent); padding-left:1rem; }
-  ol { display:grid; gap:.5rem; margin:.65rem 0 0; padding:0; list-style:none; }
-  li { margin:0 !important; color:var(--text-secondary); font-size:.875rem; line-height:1.5; }
-  li span { display:inline-block; min-width:1.8rem; color:var(--accent); font-size:.6875rem; }
-  @media (min-width:820px) { .routing-flow { grid-template-columns:minmax(0,1fr) 2rem minmax(0,1.1fr) 2rem minmax(0,1.15fr); align-items:center; } .flow-marker { transform:none; } }
+  .project-memory-routing :global(p), .project-memory-routing :global(ol), .project-memory-routing :global(li) { margin: 0; }
+  .project-memory-routing :global(ol) { padding: 0; list-style: none; }
+  .routing-flow { display: grid; gap: 0.9rem; }
+  section { min-width: 0; }
+  .label, code, li span, .routing-note, .selection-boundary { font-family: var(--font-mono-ui); }
+  .label, .routing-note { display: block; color: var(--text-muted); font-size: var(--research-diagram-label, 0.625rem); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+  section > strong, code { display: block; margin-top: 0.6rem; color: var(--text-primary); font-size: var(--research-diagram-node, 0.875rem); line-height: 1.45; }
+  code { border: 0 !important; background: transparent !important; padding: 0 !important; color: var(--text-primary) !important; font-family: var(--font-mono-ui); }
+  section > p:not(.selection-boundary) { margin-top: 0.55rem !important; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
+  .flow-marker { display: flex; align-items: center; justify-content: center; color: var(--accent); }
+  .arrow-desktop { display: none; }
+  .route-icon { color: var(--accent); }
+  .router { position: relative; padding-block: 0.2rem; }
+  .routing-note { margin-top: 0.75rem; }
+  .selected { border-left: 1px solid var(--border-subtle); padding-left: 1rem; }
+  ol { display: grid; gap: 0.7rem; margin-top: 0.8rem !important; }
+  li { color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.5; }
+  li span { display: inline-block; min-width: 1.8rem; color: var(--accent); font-size: var(--research-diagram-label, 0.625rem); }
+  .selection-boundary { margin-top: 0.9rem !important; border-top: 1px dashed var(--border-subtle); padding-top: 0.7rem; color: var(--text-muted); font-size: var(--research-diagram-label, 0.625rem); line-height: 1.55; }
+
+  @media (min-width: 820px) {
+    .routing-flow { grid-template-columns: minmax(0, 1fr) 2.5rem minmax(0, 1.15fr) 2.5rem minmax(0, 1.15fr); align-items: center; gap: 0; }
+    .arrow-mobile { display: none; }
+    .arrow-desktop { display: block; }
+    .routing-note { position: absolute; top: 0; right: -0.25rem; margin-top: 0; }
+  }
 </style>
