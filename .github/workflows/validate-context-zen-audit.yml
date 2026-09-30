@@ -1,0 +1,19 @@
+name: Validate Context Zen Audit
+
+on:
+  push:
+    branches:
+      - fix/context-zen-lovable-reconciliation
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npm run test:adaptive-ui
+      - run: npm run build
