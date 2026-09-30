@@ -1,0 +1,73 @@
+---
+import { ArrowDown, ArrowRight, CircleDot } from '@lucide/astro';
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const contexts = [
+  { name: 'Conversation A', role: 'Initial opt-in context', continuation: '—', enabled: 'true' },
+  { name: 'Conversation B', role: 'Receiving context', continuation: 'true', enabled: 'true' },
+  { name: 'Conversation C', role: 'Receiving context', continuation: 'true', enabled: 'true' },
+];
+---
+
+<ResearchFigureFrame
+  className="zen-continuation"
+  figureNumber="04"
+  title="Activation follows the work, not the chat"
+  status="v0.1 specified behavior"
+  caption="The marker carries continuation state between contexts, so durable cross-chat host state is not required. The view does not claim automatic chat creation or successful propagation when the marker is removed."
+>
+  <div class="lineage" role="group" aria-label="Continuation lineage across conversations">
+    {contexts.map((context, index) => (
+      <section>
+        <div class="context-heading">
+          <h4>{context.name}</h4>
+          <CircleDot class="active-icon" size={16} strokeWidth={1.75} aria-hidden="true" />
+        </div>
+        <p class="role">{context.role}</p>
+        <p class="marker">continuation: {context.continuation}<br />enabled: {context.enabled}</p>
+        {index < contexts.length - 1 && (
+          <span class="connector" aria-hidden="true">
+            <ArrowDown class="connector-mobile" size={16} strokeWidth={1.75} />
+            <ArrowRight class="connector-desktop" size={16} strokeWidth={1.75} />
+          </span>
+        )}
+      </section>
+    ))}
+  </div>
+
+  <div class="meaning">
+    <p><strong>continuation: true</strong> identifies the artifact as part of the lineage; <strong>enabled: true</strong> keeps monitoring active.</p>
+    <span class="divider" aria-hidden="true"></span>
+    <p>A manual handoff can still be a continuation with <code>enabled: false</code>.</p>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  .zen-continuation :global(p), .zen-continuation :global(h4) { margin: 0; }
+  .lineage { position: relative; display: grid; gap: 1rem; }
+  .lineage section { position: relative; min-width: 0; background: var(--bg-secondary); padding: 1rem; }
+  .context-heading { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: var(--research-diagram-node, 0.875rem); font-weight: 600; line-height: 1.45; }
+  .context-heading :global(.active-icon) { flex: 0 0 auto; color: var(--accent); }
+  .role { margin-top: 0.2rem !important; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.08em; line-height: 1.5; text-transform: uppercase; }
+  .marker { margin-top: 0.7rem !important; color: var(--text-secondary); font-family: var(--font-mono-ui); font-size: 0.6875rem; line-height: 1.55; }
+  .connector { position: absolute; left: 50%; bottom: -1.05rem; z-index: 1; display: flex; transform: translateX(-50%); align-items: center; justify-content: center; color: var(--accent); background: var(--bg-card); padding: 0.15rem; }
+  .connector-desktop { display: none; }
+
+  .meaning { display: grid; gap: 1rem; margin-top: 1.3rem; }
+  .meaning p { color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
+  .meaning strong { color: var(--text-primary); font-weight: 500; }
+  .meaning code { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.8em; }
+  .divider { display: none; }
+
+  @media (min-width: 760px) {
+    .lineage { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    .lineage::before { content: ''; position: absolute; left: 12%; right: 12%; top: 2rem; border-top: 1px dashed var(--border-subtle); }
+    .lineage section { z-index: 1; }
+    .connector { left: auto; right: -1.1rem; top: 1.5rem; bottom: auto; transform: none; }
+    .connector-mobile { display: none; }
+    .connector-desktop { display: block; }
+    .meaning { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; }
+    .divider { display: block; height: 2.5rem; border-left: 1px solid var(--border-subtle); }
+  }
+</style>

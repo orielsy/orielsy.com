@@ -1,4 +1,5 @@
 ---
+import { FlaskConical } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 const arms = [
   { letter: 'A', name: 'Full transcript', detail: 'Chronology retained' },
@@ -7,37 +8,36 @@ const arms = [
 ];
 ---
 
-<ResearchFigureFrame className="zen-experiment" figureNumber="05" title="The experiment needs a summary baseline" status="Proposed · no results" caption="These conditions and measures are proposals, not findings. The summary arm separates possible compression benefit from authoritative-state reconstruction; different work may need different amounts of raw history.">
+<ResearchFigureFrame className="zen-experiment" figureNumber="06" title="The experiment needs a summary baseline" status="Proposed experiment · no results" caption="No result is shown. The conventional-summary arm separates possible compression effects from authoritative-state reconstruction. Measures are candidates, and different kinds of work may require different amounts of raw history.">
+  <div class="condition-label"><FlaskConical class="figure-icon" size={16} strokeWidth={1.75} aria-hidden="true" /><span>Three continuation conditions</span></div>
   <ol aria-label="Three proposed continuation conditions">
-    {arms.map((arm) => <li><span>{arm.letter}</span><div><h4>{arm.name}</h4><p>{arm.detail}</p></div></li>)}
+    {arms.map((arm) => <li><span>{arm.letter}</span><h4>{arm.name}</h4><p>{arm.detail}</p></li>)}
   </ol>
-  <div class="measures"><span>Candidate measures</span><p>Missed active constraints · revived rejected decisions · repeated questions · user corrections · task completion quality · token use · latency · target-specific success</p></div>
-  <div class="metaphor"><span>Working metaphor, not a metric</span><p>“State entropy” describes the share of retained context that is superseded, conflicting, or no longer actionable.</p></div>
+  <div class="experiment-notes">
+    <div><span>Candidate measures</span><p>Missed constraints · revived decisions · repeated questions · user corrections · task quality · token use · latency · target-specific success</p></div>
+    <div class="metaphor"><span>Speculative bridge</span><p><strong>State entropy</strong> asks what share of retained context is superseded, conflicting, or no longer actionable. It is a working metaphor—not a metric.</p></div>
+  </div>
 </ResearchFigureFrame>
 
 <style>
   .zen-experiment :global(p), .zen-experiment :global(h4), .zen-experiment :global(ol), .zen-experiment :global(li) { margin: 0; }
   .zen-experiment :global(ol) { padding: 0; list-style: none; }
-  ol { display: grid; border-block: 1px solid var(--border-subtle); }
-  li { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); gap: 0.8rem; padding: 1rem 0; }
+  .condition-label { display: flex; align-items: center; gap: 0.5rem; color: var(--accent); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.08em; text-transform: uppercase; }
+  .condition-label :global(.figure-icon) { flex: 0 0 auto; }
+  ol { display: grid; margin-top: 1rem !important; border: 1px solid var(--border-subtle); }
+  li { padding: 1rem; background: var(--bg-secondary); }
   li + li { border-top: 1px solid var(--border-subtle); }
-  li > span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; line-height: 2; }
-  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.45; }
-  li p, .measures p, .metaphor p { margin-top: 0.35rem !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  .measures, .metaphor { display: grid; gap: 0.35rem 1rem; margin-top: 1.1rem; }
-  .metaphor { border-top: 1px solid var(--border-subtle); padding-top: 1rem; }
-  .measures span, .metaphor span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; line-height: 1.5; text-transform: uppercase; }
-  @media (min-width: 640px) {
+  li > span { color: var(--accent); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); }
+  h4 { margin-top: 0.45rem !important; color: var(--text-primary); font-family: var(--font-display); font-size: var(--research-diagram-node, 0.875rem); font-weight: 600; line-height: 1.45; }
+  li p, .experiment-notes p { margin-top: 0.25rem !important; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
+  .experiment-notes { display: grid; gap: 1rem; margin-top: 1.25rem; }
+  .experiment-notes > div > span { color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.08em; text-transform: uppercase; }
+  .experiment-notes .metaphor { border-left: 2px dashed var(--accent); padding-left: 0.9rem; }
+  .experiment-notes .metaphor > span { color: var(--accent); }
+  .experiment-notes strong { color: var(--text-primary); font-weight: 500; }
+  @media (min-width: 760px) {
     ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    li { display: block; padding: 1rem 1rem 1rem 0; }
-    li + li { border-top: 0; border-left: 1px solid var(--border-subtle); padding-left: 1rem; }
-    h4 { margin-top: 0.6rem !important; }
-    .measures, .metaphor { grid-template-columns: 12rem minmax(0, 1fr); }
-    .measures p, .metaphor p { margin-top: 0 !important; }
+    li + li { border-top: 0; border-left: 1px solid var(--border-subtle); }
+    .experiment-notes { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 1.5rem; }
   }
-</style>
-
-<style>
-  :global(.research-reading .research-prose figure.zen-experiment) { border-radius: 0 !important; }
-  :global(.research-reading .research-prose figure.zen-experiment) li p, :global(.research-reading .research-prose figure.zen-experiment) .measures p, :global(.research-reading .research-prose figure.zen-experiment) .metaphor p { font-size: 0.875rem !important; line-height: 1.6 !important; }
 </style>

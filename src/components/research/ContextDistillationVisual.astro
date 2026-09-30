@@ -1,48 +1,112 @@
 ---
+import { ArrowDown, ArrowRight, Check, Clipboard, History } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
-const retained = ['Current objective', 'Decisions still in force', 'Relevant constraints', 'Rejected paths likely to recur', 'Active artifacts', 'Unresolved questions', 'Immediate next step'];
+
+const history = [
+  ['01', 'Initial objective'],
+  ['02', 'Exploration'],
+  ['03', 'Rejected direction'],
+  ['04', 'Correction'],
+  ['05', 'Superseded decision'],
+  ['06', 'Current implementation'],
+  ['07', 'Unresolved question'],
+];
+
+const retained = [
+  'Current objective',
+  'Decisions still in force',
+  'Relevant constraints',
+  'Rejected paths likely to recur',
+  'Active artifacts',
+  'Unresolved questions',
+  'Immediate next step',
+];
 ---
 
-<ResearchFigureFrame className="zen-distillation" figureNumber="01" title="History records events; a handoff reconstructs state" caption="Selecting what still governs continuation is the proposal, not evidence that reduced context performs better. The transcript sequence is illustrative.">
-  <div class="comparison">
-    <section aria-labelledby="zen-history">
-      <h4 id="zen-history">Accumulated transcript <span>Chronology</span></h4>
+<ResearchFigureFrame
+  className="zen-distillation"
+  figureNumber="01"
+  title="History records events; a handoff reconstructs state"
+  status="Specified payload · editorial form"
+  caption="The transcript sequence is illustrative. The retained payload and compressible material follow the specification. Selection is the proposal; this figure does not establish that reduced context performs better."
+>
+  <div class="distillation-grid">
+    <section class="history-lane" aria-labelledby="zen-history">
+      <div class="lane-label"><History class="figure-icon" size={16} strokeWidth={1.75} aria-hidden="true" /><span id="zen-history">Accumulated transcript</span></div>
       <ol>
-        <li>Initial objective</li><li>Exploration</li><li>Rejected direction</li><li>Correction</li><li>Superseded decision</li><li>Current implementation</li><li>Unresolved question</li>
+        {history.map(([number, text], index) => (
+          <li class:list={[(index === 5 || index === 6) && 'is-current']}>
+            <span class="dot" aria-hidden="true"></span>
+            <span class="step-number">{number}</span>
+            <span>{text}</span>
+          </li>
+        ))}
       </ol>
     </section>
-    <section aria-labelledby="zen-state">
-      <h4 id="zen-state">Authoritative working state <span>Continuation</span></h4>
-      <ul>{retained.map((item) => <li>{item}</li>)}</ul>
+
+    <div class="transform" aria-hidden="true">
+      <span>Distill</span>
+      <ArrowDown class="arrow-mobile" size={20} strokeWidth={1.75} />
+      <ArrowRight class="arrow-desktop" size={20} strokeWidth={1.75} />
+    </div>
+
+    <section class="state-lane" aria-labelledby="zen-state">
+      <div class="accent-bar" aria-hidden="true"></div>
+      <div class="lane-label accent"><Clipboard class="figure-icon" size={16} strokeWidth={1.75} aria-hidden="true" /><span id="zen-state">Authoritative working state</span></div>
+      <ul>
+        {retained.map((item) => <li><Check class="check-icon" size={14} strokeWidth={1.75} aria-hidden="true" /><span>{item}</span></li>)}
+      </ul>
     </section>
   </div>
-  <div class="selection-note"><span>May compress</span><p>Chronology · abandoned exploration · obsolete assumptions · repeated explanations · agent self-commentary</p></div>
+
+  <div class="selection-note">
+    <div><span>Retain for continuation</span><p>Authoritative state with forward value</p></div>
+    <span class="divider" aria-hidden="true"></span>
+    <div><span>May compress</span><p>Chronology · abandoned exploration · obsolete assumptions · repetition · self-commentary</p></div>
+  </div>
 </ResearchFigureFrame>
 
 <style>
-  .zen-distillation :global(p), .zen-distillation :global(h4), .zen-distillation :global(ol), .zen-distillation :global(ul), .zen-distillation :global(li) { margin: 0; }
+  .zen-distillation :global(p),
+  .zen-distillation :global(ol),
+  .zen-distillation :global(ul),
+  .zen-distillation :global(li) { margin: 0; }
   .zen-distillation :global(ol), .zen-distillation :global(ul) { padding: 0; list-style: none; }
-  .comparison { display: grid; gap: 1.5rem; }
-  .comparison section { min-width: 0; }
-  .comparison section + section { border-top: 1px solid var(--border-subtle); padding-top: 1.25rem; }
-  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.5; }
-  h4 span { display: block; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; font-weight: 400; text-transform: uppercase; }
-  .comparison ol, .comparison ul { margin-top: 0.8rem !important; }
-  .comparison li { border-bottom: 1px solid var(--border-subtle); padding: 0.38rem 0; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; }
-  .comparison li:last-child { border-bottom: 0; }
-  .comparison section:last-child li { color: var(--text-primary); }
-  .selection-note { display: grid; gap: 0.35rem 1rem; margin-top: 1.25rem; border-top: 1px solid var(--border-strong); padding-top: 1rem; }
-  .selection-note span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; text-transform: uppercase; }
-  .selection-note p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  @media (min-width: 640px) {
-    .comparison { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
-    .comparison section:first-child { padding-right: 1.5rem; }
-    .comparison section + section { border-top: 0; border-left: 1px solid var(--border-subtle); padding: 0 0 0 1.5rem; }
-    .selection-note { grid-template-columns: 8rem minmax(0, 1fr); }
-  }
-</style>
 
-<style>
-  :global(.research-reading .research-prose figure.zen-distillation) { border-radius: 0 !important; }
-  :global(.research-reading .research-prose figure.zen-distillation) .selection-note p { font-size: 0.875rem !important; line-height: 1.6 !important; }
+  .distillation-grid { display: grid; gap: 1.4rem; }
+  .lane-label { display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.08em; text-transform: uppercase; }
+  .lane-label.accent, .state-lane :global(.check-icon) { color: var(--accent); }
+  .lane-label :global(.figure-icon), .state-lane :global(.check-icon) { flex: 0 0 auto; }
+
+  .history-lane ol { margin-top: 0.8rem !important; border-left: 1px solid var(--border-subtle); padding-left: 1rem; }
+  .history-lane li { position: relative; display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); gap: 0.45rem; padding: 0.34rem 0; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.45; }
+  .history-lane li.is-current { color: var(--text-primary); }
+  .dot { position: absolute; left: -1.18rem; top: 0.78rem; width: 0.35rem; height: 0.35rem; border-radius: 999px; background: var(--border-strong); }
+  .history-lane li.is-current .dot { background: var(--accent); }
+  .step-number { color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); }
+
+  .transform { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem; color: var(--accent); }
+  .transform span { font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.08em; text-transform: uppercase; }
+  .transform :global(svg) { flex: 0 0 auto; }
+  .arrow-desktop { display: none; }
+
+  .state-lane { position: relative; background: var(--bg-secondary); padding: 1rem 1rem 1rem 1.15rem; }
+  .accent-bar { position: absolute; inset-block: 0; left: 0; width: 2px; background: var(--accent); }
+  .state-lane ul { display: grid; gap: 0.5rem; margin-top: 0.8rem !important; }
+  .state-lane li { display: grid; grid-template-columns: 1rem minmax(0, 1fr); gap: 0.4rem; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.45; }
+
+  .selection-note { display: grid; gap: 1rem; margin-top: 1.35rem; border-top: 1px solid var(--border-subtle); padding-top: 1rem; }
+  .selection-note > div > span { color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.08em; text-transform: uppercase; }
+  .selection-note p { margin-top: 0.35rem !important; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
+  .divider { display: none; }
+
+  @media (min-width: 760px) {
+    .distillation-grid { grid-template-columns: minmax(0, 0.9fr) 4.5rem minmax(0, 1.1fr); align-items: center; gap: 0; }
+    .history-lane { padding-right: 1.25rem; }
+    .transform { gap: 0.4rem; }
+    .arrow-mobile { display: none; }
+    .arrow-desktop { display: block; }
+    .selection-note { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 1rem; }
+    .divider { display: block; height: 2.5rem; border-left: 1px solid var(--border-subtle); }
+  }
 </style>
