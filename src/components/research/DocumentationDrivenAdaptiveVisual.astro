@@ -1,6 +1,12 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
+export interface Props {
+  figureNumber?: string;
+}
+
+const { figureNumber } = Astro.props;
+
 const conventionalSteps = [
   { title: 'Work in product', detail: 'Continue the active task.', external: false },
   { title: 'Hit a blocker', detail: 'Meaning or configuration becomes unclear.', external: false },
@@ -12,7 +18,7 @@ const conventionalSteps = [
 
 <ResearchFigureFrame
   className="knowledge-path-figure"
-  eyebrow="Documentation-driven adaptive UX"
+  {figureNumber}
   title="Move the knowledge, not the user."
   subtitle="The same authored product knowledge can produce two very different paths through an enterprise task."
   caption="One task. The difference is where product knowledge meets the workflow."
