@@ -1,0 +1,18 @@
+/* Article-specific hero fit for the long Documentation-Driven Adaptive UX title. */
+[data-research-entry="documentation-driven-adaptive-ux"] > header .site-shell > div:last-child {
+  min-width: 0;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] > header h1 {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+}
+
+@media (max-width: 480px) {
+  [data-research-entry="documentation-driven-adaptive-ux"] > header h1 {
+    font-size: clamp(2.25rem, 10.5vw, 3rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+}
