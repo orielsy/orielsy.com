@@ -1,0 +1,110 @@
+---
+import { ArrowDown, ArrowRight } from '@lucide/astro';
+
+const stages = [
+  {
+    label: 'Working context',
+    title: 'Useful now',
+    detail: 'Conversation · files · tool results · corrections',
+    boundary: 'May not survive the session',
+  },
+  {
+    label: 'Durable project memory',
+    title: 'Version-controlled and scoped',
+    detail: 'Constraints · requirements · execution intent · state · rationale',
+    boundary: 'Different artifacts answer different questions',
+  },
+  {
+    label: 'Later work',
+    title: 'Recover, inspect, verify',
+    detail: 'Routes to relevant addresses · exposes conflicts',
+    boundary: 'Checks intent against implementation and tests',
+  },
+];
+
+const qualifications = [
+  'Addressable ≠ automatically authoritative',
+  'Persistent ≠ necessarily current',
+  'Selected ≠ necessarily interpreted correctly',
+];
+---
+
+<section class="project-memory-overview not-prose" aria-labelledby="project-memory-overview-title">
+  <div class="overview-heading">
+    <div>
+      <p class="meta accent">Article overview · evidence bounded</p>
+      <h2 id="project-memory-overview-title">Project memory gives consequential decisions an address</h2>
+    </div>
+    <span class="meta">Orientation · unnumbered</span>
+  </div>
+
+  <div class="overview-grid">
+    {stages.map((stage, index) => (
+      <>
+        <section class:list={['stage', index === 1 && 'is-memory']}>
+          <span class="stage-bar" aria-hidden="true"></span>
+          <div>
+            <p class="meta">{stage.label}</p>
+            <h3>{stage.title}</h3>
+            <p>{stage.detail}</p>
+            <p class="boundary">{stage.boundary}</p>
+          </div>
+        </section>
+        {index < stages.length - 1 && (
+          <div class="flow" aria-hidden="true">
+            <ArrowDown class="flow-mobile" size={16} strokeWidth={1.6} />
+            <ArrowRight class="flow-desktop" size={16} strokeWidth={1.6} />
+          </div>
+        )}
+      </>
+    ))}
+  </div>
+
+  <div class="qualifications">
+    {qualifications.map((qualification) => <p>{qualification}</p>)}
+  </div>
+
+  <p class="thesis">Durable memory improves recoverability. Maintenance, verification, and human judgment remain necessary.</p>
+</section>
+
+<style>
+  .project-memory-overview {
+    margin: 2.5rem 0 3rem;
+    border-block: 1px solid var(--border-subtle);
+    padding: 1.5rem 0;
+  }
+  .project-memory-overview :global(h2),
+  .project-memory-overview :global(h3),
+  .project-memory-overview :global(p) { margin: 0; }
+  .overview-heading { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 0.75rem 1rem; }
+  .overview-heading > div { min-width: 0; }
+  .meta { color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); font-weight: 500; letter-spacing: 0.1em; line-height: 1.5; text-transform: uppercase; }
+  .meta.accent { color: var(--accent); }
+  h2 { margin-top: 0.65rem !important; max-width: 48rem; color: var(--text-primary); font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.02em; }
+  .overview-grid { display: grid; gap: 0; margin-top: 1.6rem; }
+  .stage { position: relative; min-width: 0; padding: 1.15rem 0; }
+  .stage-bar { position: absolute; inset-block: 0; left: 0; width: 2px; background: var(--border-strong); }
+  .stage.is-memory .stage-bar { background: var(--accent); }
+  .stage > div { padding-left: 1rem; }
+  .stage h3 { margin-top: 0.65rem !important; color: var(--text-primary); font-family: var(--font-display); font-size: var(--research-diagram-node, 0.875rem); font-weight: 600; line-height: 1.4; }
+  .stage h3 + p { margin-top: 0.65rem !important; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
+  .boundary { margin-top: 0.8rem !important; border-top: 1px dashed var(--border-subtle); padding-top: 0.65rem; color: var(--text-muted); font-size: var(--research-diagram-caption, 0.75rem); line-height: 1.5; }
+  .flow { display: flex; align-items: center; justify-content: center; padding: 0.35rem 0; color: var(--accent); }
+  .flow-desktop { display: none; }
+  .qualifications { display: grid; gap: 1px; margin-top: 1.35rem; border-block: 1px solid var(--border-subtle); background: var(--border-subtle); }
+  .qualifications p { background: var(--bg-card); padding: 0.75rem; color: var(--text-secondary); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); line-height: 1.55; }
+  .thesis { margin-top: 1.25rem !important; max-width: 54rem; color: var(--text-primary); font-family: var(--font-display); font-size: 0.875rem; line-height: 1.6; }
+
+  @media (min-width: 760px) {
+    .project-memory-overview { padding: 1.75rem 0; }
+    h2 { font-size: 1.5rem; }
+    .overview-grid { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.08fr) auto minmax(0, 1fr); align-items: stretch; }
+    .stage { padding: 1.25rem 1.5rem 1.25rem 0; }
+    .stage.is-memory { padding-inline: 1.5rem; }
+    .stage:last-of-type { padding: 1.25rem 0 1.25rem 1.5rem; }
+    .flow { padding: 0 0.2rem; }
+    .flow-mobile { display: none; }
+    .flow-desktop { display: block; }
+    .qualifications { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>
