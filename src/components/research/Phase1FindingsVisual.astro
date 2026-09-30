@@ -1,6 +1,12 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
+export interface Props {
+  figureNumber?: string;
+}
+
+const { figureNumber } = Astro.props;
+
 const findings = [
   {
     title: 'Product knowledge can participate in UI behavior without owning business logic',
@@ -23,7 +29,7 @@ const findings = [
 
 <ResearchFigureFrame
   className="phase-one-findings"
-  eyebrow="Phase 1 findings"
+  {figureNumber}
   title="What the experiment supports."
   subtitle="The deterministic prototype clarifies what adaptation can already do and narrows the future role of inference."
   status="Deterministic prototype"
