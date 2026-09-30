@@ -1,6 +1,12 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
+export interface Props {
+  figureNumber?: string;
+}
+
+const { figureNumber } = Astro.props;
+
 const stages = [
   { title: 'Application truth', detail: 'Authoritative state', inference: false, output: false },
   { title: 'Deterministic validation', detail: 'Known requirements', inference: false, output: false },
@@ -14,7 +20,7 @@ const stages = [
 
 <ResearchFigureFrame
   className="ai-seams-figure"
-  eyebrow="Future inference seam"
+  {figureNumber}
   title="Where AI could enter later."
   subtitle="Inference can enter at one explicit boundary without taking ownership of application truth or response policy."
   status="Future · not Phase 1"
