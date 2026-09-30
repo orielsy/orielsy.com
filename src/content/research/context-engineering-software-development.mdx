@@ -13,6 +13,7 @@ originSlug: "specification-driven-ai-development"
 
 import Callout from '../../components/Callout.astro';
 import ContextSelection from '../../components/ContextSelection.astro';
+import ContextEngineeringLineage from '../../components/research/ContextEngineeringLineage.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 
 <Callout type="note" title="DRAFT · REPURPOSED RESEARCH DIRECTION">
@@ -25,16 +26,7 @@ Durable project memory solves only part of the coding-agent context problem. As 
 
 [From Prompts to Project Memory](/research/specification-driven-ai-development) focuses on making engineering intent durable across coding-agent sessions. This draft starts from that foundation rather than repeating it.
 
-```text
-Project Memory
-→ make project knowledge durable
-
-Context Engineering
-→ select the relevant durable knowledge for the current task
-
-Repository Context Engine
-→ explore an implementation for delivering that selected context on demand
-```
+<ContextEngineeringLineage />
 
 The problem changes as durable repository memory grows. A coding task rarely needs every specification, ADR, component contract, convention, and historical implementation detail at once. The useful question becomes: **which context is relevant now, at what scope, and through which delivery mechanism?**
 
