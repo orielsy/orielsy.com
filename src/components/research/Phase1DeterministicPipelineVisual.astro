@@ -1,6 +1,12 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
+export interface Props {
+  figureNumber?: string;
+}
+
+const { figureNumber } = Astro.props;
+
 const stages = [
   { title: 'Application state', detail: 'What the user has selected', emphasis: null },
   { title: 'Deterministic validation', detail: 'Known application requirements', emphasis: null },
@@ -13,7 +19,7 @@ const stages = [
 
 <ResearchFigureFrame
   className="phase-one-pipeline"
-  eyebrow="Phase 1 decision path"
+  {figureNumber}
   title="A deterministic path from state to interface response."
   subtitle="Explicit application facts narrow applicable product knowledge before response policy decides how strongly the interface may act."
   status="Deterministic · no inference"
