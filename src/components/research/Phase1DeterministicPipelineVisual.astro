@@ -1,116 +1,31 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
-
-export interface Props {
-  figureNumber?: string;
-}
-
+export interface Props { figureNumber?: string; }
 const { figureNumber } = Astro.props;
-
 const stages = [
-  { title: 'Application state', detail: 'What the user has selected', emphasis: null },
-  { title: 'Deterministic validation', detail: 'Known application requirements', emphasis: null },
-  { title: 'Product / runtime context', detail: 'Version, familiarity, compatible options', emphasis: null },
-  { title: 'Applicable authored knowledge', detail: 'Only fragments supported by current facts', emphasis: 'knowledge' },
-  { title: 'Response policy', detail: 'Choose explanation, guidance, or safe offer', emphasis: 'policy' },
-  { title: 'Structured UI response', detail: 'Render the authorized intervention', emphasis: 'output' },
-] as const;
+  ['Application state', 'What the user selected'],
+  ['Validation', 'Known requirements'],
+  ['Runtime / user context', 'Version, familiarity, compatible options'],
+  ['Applicable authored knowledge', 'Fragments matching explicit facts'],
+  ['Response policy', 'Evidence bounds intervention'],
+  ['Structured UI response', 'Render permitted guidance or offer'],
+];
 ---
-
-<ResearchFigureFrame
-  className="phase-one-pipeline"
-  {figureNumber}
-  eyebrow="Phase 1 decision path"
-  title="A deterministic path from state to interface response."
-  subtitle="Explicit application facts narrow applicable product knowledge before response policy decides how strongly the interface may act."
-  status="Deterministic · no inference"
-  caption="Known facts remain in code and configuration. Application truth stays authoritative."
->
-  <ol class="pipeline-grid" aria-label="Phase 1 deterministic pipeline">
-    {stages.map((stage, index) => (
-      <li class:list={[stage.emphasis && `is-${stage.emphasis}`]}>
-        <span class="node-number">{String(index + 1).padStart(2, '0')}</span>
-        <strong>{stage.title}</strong>
-        <small>{stage.detail}</small>
-      </li>
-    ))}
-  </ol>
+<ResearchFigureFrame className="adaptive-pipeline" {figureNumber} title="Six stages; seven distinct concerns" status="Phase 1 · deterministic" caption="Domain state, runtime context, validation, product knowledge, knowledge applicability, response policy, and rendering remain distinct. The lab uses authored fixtures, not a document-ingestion pipeline. No inference is required.">
+  <ol aria-label="Deterministic Phase 1 decision path">{stages.map(([title, detail], index) => <li><span>0{index + 1}</span><div><h4>{title}</h4><p>{detail}</p></div></li>)}</ol>
+  <p class="boundary">Application state and validation remain authoritative.</p>
 </ResearchFigureFrame>
-
 <style>
-  .phase-one-pipeline :global(ol),
-  .phase-one-pipeline :global(li) {
-    margin: 0;
-  }
-
-  .phase-one-pipeline :global(ol) {
-    padding: 0;
-    list-style: none;
-  }
-
-  .pipeline-grid {
-    display: grid;
-    border-top: 1px solid var(--border-subtle);
-    border-left: 1px solid var(--border-subtle);
-  }
-
-  .pipeline-grid li {
-    position: relative;
-    min-width: 0;
-    border-right: 1px solid var(--border-subtle);
-    border-bottom: 1px solid var(--border-subtle);
-    background: var(--bg-card);
-    padding: 0.9rem;
-  }
-
-  .node-number {
-    display: block;
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    line-height: 1.4;
-  }
-
-  .pipeline-grid strong,
-  .pipeline-grid small {
-    display: block;
-  }
-
-  .pipeline-grid strong {
-    margin-top: 0.9rem;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    line-height: 1.4;
-  }
-
-  .pipeline-grid small {
-    margin-top: 0.3rem;
-    color: var(--text-secondary);
-    font-size: 0.71875rem;
-    line-height: 1.5;
-  }
-
-  .is-knowledge,
-  .is-policy {
-    box-shadow: inset 2px 0 0 color-mix(in srgb, var(--accent) 28%, transparent);
-  }
-
-  .is-output {
-    background: color-mix(in srgb, var(--accent) 6%, var(--bg-card)) !important;
-    box-shadow: inset 2px 0 0 var(--accent);
-  }
-
-  @media (min-width: 640px) {
-    .pipeline-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .pipeline-grid li {
-      min-height: 8rem;
-    }
-  }
+  .adaptive-pipeline :global(ol), .adaptive-pipeline :global(li), .adaptive-pipeline :global(h4), .adaptive-pipeline :global(p) { margin: 0; }
+  .adaptive-pipeline :global(ol) { padding: 0; list-style: none; }
+  ol { display: grid; border-block: 1px solid var(--border-subtle); }
+  li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: .65rem; padding: .85rem 0; }
+  li + li { border-top: 1px solid var(--border-subtle); }
+  li > span { color: var(--accent); font-family: var(--font-mono-ui); font-size: .6875rem; line-height: 2; }
+  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: .9375rem; font-weight: 600; }
+  li p { margin-top: .25rem !important; color: var(--text-secondary); font-size: .875rem; line-height: 1.55; }
+  .boundary { margin-top: 1rem !important; color: var(--text-primary); font-size: .875rem; line-height: 1.6; }
+  @media (min-width: 640px) { ol { grid-template-columns: repeat(3,minmax(0,1fr)); } li { display: block; padding: 1rem; border-bottom: 1px solid var(--border-subtle); } li + li { border-top: 0; } li:nth-child(3n + 2), li:nth-child(3n + 3) { border-left: 1px solid var(--border-subtle); } li:nth-child(3n + 1) { padding-left: 0; } li:nth-child(n + 4) { border-bottom: 0; } h4 { margin-top: .45rem !important; } }
+  :global(.research-reading .research-prose figure.adaptive-pipeline) { border-radius: 0 !important; }
+  :global(.research-reading .research-prose figure.adaptive-pipeline) li p, :global(.research-reading .research-prose figure.adaptive-pipeline) .boundary { font-size: .875rem !important; line-height: 1.6 !important; }
 </style>

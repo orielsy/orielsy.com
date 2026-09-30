@@ -1,0 +1,26 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+const rows = [
+  ['Several compatible', 'Multiple valid values; intent unknown', 'Explain · focus · guide', 'No guessed selection'],
+  ['Exactly one', 'One compatible value', 'Offer “Use connection”', 'User must accept'],
+  ['New / experienced', 'Familiarity is a demo control', 'Include / omit beginner help', 'Same validation'],
+  ['Version 4.1 / 4.2', 'Version is a demo control', '4.2 note only in 4.2', 'Same validity rule'],
+  ['Valid selection', 'Required field satisfied', 'Remove missing-field intervention', 'Do not keep prompting'],
+];
+---
+<ResearchFigureFrame className="adaptive-evidence" figureNumber="03" title="Five scenarios, five response boundaries" caption="A reading of controlled states in the working project lab, not a measured outcome study. Both forms share the scenario and validation; selection and Continue attempts remain independent. Scenario changes reset both.">
+  <div class="ledger" role="table" aria-label="Scenario evidence and permitted responses">
+    <div class="ledger-head" role="row"><span role="columnheader">Scenario</span><span role="columnheader">Evidence</span><span role="columnheader">Permitted response</span><span role="columnheader">Boundary</span></div>
+    {rows.map(([scenario, evidence, response, boundary]) => <div class="ledger-row" role="row"><strong role="cell">{scenario}</strong><span role="cell" data-label="Evidence">{evidence}</span><span role="cell" data-label="May">{response}</span><span role="cell" data-label="Boundary">{boundary}</span></div>)}
+  </div>
+</ResearchFigureFrame>
+<style>
+  .ledger { border-top: 1px solid var(--border-subtle); }
+  .ledger-head { display: none; }
+  .ledger-row { display: grid; gap: .45rem; border-bottom: 1px solid var(--border-subtle); padding: 1rem 0; }
+  .ledger-row strong { color: var(--text-primary); font-family: var(--font-display); font-size: .9375rem; font-weight: 600; }
+  .ledger-row span { color: var(--text-secondary); font-size: .875rem; line-height: 1.55; }
+  .ledger-row span::before { content: attr(data-label) ' · '; color: var(--accent); font-family: var(--font-mono-ui); font-size: .6875rem; text-transform: uppercase; }
+  @media (min-width: 720px) { .ledger-head, .ledger-row { display: grid; grid-template-columns: 1.1fr 1.4fr 1.25fr 1fr; gap: 1.25rem; align-items: start; } .ledger-head { padding: 0 0 .6rem; color: var(--accent); font-family: var(--font-mono-ui); font-size: .6875rem; text-transform: uppercase; } .ledger-row span::before { display: none; } }
+  :global(.research-reading .research-prose figure.adaptive-evidence) { border-radius: 0 !important; }
+</style>

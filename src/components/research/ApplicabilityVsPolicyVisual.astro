@@ -1,163 +1,34 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
-
-export interface Props {
-  figureNumber?: string;
-}
-
+export interface Props { figureNumber?: string; }
 const { figureNumber } = Astro.props;
-
-const applicabilityFacts = ['Product state', 'Version', 'Audience'];
-const policyFacts = ['Application state', 'Validation result', 'Available knowledge', 'Evidence certainty'];
+const fragments = [
+  ['Required-field help', 'Missing selection', 'Explains the existing requirement'],
+  ['Beginner concept', 'New user + missing selection', 'Omitted for experienced users'],
+  ['4.2 release note', 'Version 4.2 + missing selection', 'Changes explanation, not validity'],
+  ['Selection guidance', 'Missing selection', 'Cannot infer which system the user intends'],
+];
 ---
-
-<ResearchFigureFrame
-  className="applicability-policy-figure"
-  {figureNumber}
-  title="Knowing something applies does not decide what the UI should do."
-  subtitle="Applicability identifies relevance. Response policy controls interface authority."
-  caption="The knowledge layer identifies relevance; policy decides whether the UI should explain, highlight, suggest, or offer a user-accepted action."
->
-  <div class="comparison">
-    <section aria-labelledby="applicability-stage-title">
-      <p class="stage-meta">01 · Applicability</p>
-      <h4 id="applicability-stage-title">Does this knowledge match the current context?</h4>
-
-      <ul class="fact-ledger">
-        {applicabilityFacts.map((fact) => <li>{fact}</li>)}
-      </ul>
-
-      <div class="stage-output">
-        <span>Output</span>
-        <strong>Applicable authored knowledge</strong>
-      </div>
-    </section>
-
-    <div class="divider" aria-hidden="true">→</div>
-
-    <section aria-labelledby="policy-stage-title">
-      <p class="stage-meta">02 · Response policy</p>
-      <h4 id="policy-stage-title">How strongly should the interface intervene?</h4>
-
-      <ul class="fact-ledger">
-        {policyFacts.map((fact) => <li>{fact}</li>)}
-      </ul>
-
-      <div class="stage-output is-policy-output">
-        <span>Possible UI response</span>
-        <strong>Help text · highlight · suggestion · user-accepted action</strong>
-      </div>
-    </section>
+<ResearchFigureFrame className="adaptive-applicability" {figureNumber} title="A fragment may apply without earning an action" caption="These are authored fixture fragments, not discovered documents. Matching a fragment cannot change validity or silently choose a Data Connection. A base field summary also exists.">
+  <div class="decisions">
+    <section aria-labelledby="adaptive-applicability-title"><h4 id="adaptive-applicability-title">Decision A · What knowledge matches?</h4><div class="fragment-list">{fragments.map(([name, condition, effect]) => <div><strong>{name}</strong><p>{condition} · {effect}</p></div>)}</div></section>
+    <section aria-labelledby="adaptive-policy-title"><h4 id="adaptive-policy-title">Decision B · What response is permitted?</h4><p>Application state + validation + compatible options + applicable guidance + certainty.</p><div class="policy-outcome"><span>Several compatible</span><p>Explain, focus, or guide; do not guess a selection.</p></div><div class="policy-outcome"><span>Exactly one</span><p>Offer “Use connection”; acceptance is explicit.</p></div></section>
   </div>
 </ResearchFigureFrame>
-
 <style>
-  .applicability-policy-figure :global(p),
-  .applicability-policy-figure :global(h4),
-  .applicability-policy-figure :global(ul),
-  .applicability-policy-figure :global(li) {
-    margin: 0;
-  }
-
-  .applicability-policy-figure :global(ul) {
-    padding: 0;
-    list-style: none;
-  }
-
-  .comparison {
-    display: grid;
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .comparison section {
-    min-width: 0;
-    padding: 1rem 0.25rem;
-  }
-
-  .comparison section:last-child {
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .stage-meta,
-  .stage-output span {
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    line-height: 1.45;
-    text-transform: uppercase;
-  }
-
-  h4 {
-    margin-top: 0.4rem !important;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.9375rem;
-    font-weight: 600;
-    line-height: 1.4;
-  }
-
-  .fact-ledger {
-    margin-top: 1rem !important;
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .fact-ledger li {
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 0.55rem 0;
-    color: var(--text-secondary);
-    font-family: var(--font-mono-ui);
-    font-size: 0.6875rem;
-    line-height: 1.45;
-  }
-
-  .stage-output {
-    margin-top: 1rem;
-    border-left: 2px solid var(--border-strong);
-    padding-left: 0.75rem;
-  }
-
-  .stage-output strong {
-    display: block;
-    margin-top: 0.25rem;
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    line-height: 1.45;
-  }
-
-  .is-policy-output {
-    border-left-color: var(--accent);
-  }
-
-  .divider {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-    font-family: var(--font-mono-ui);
-    font-size: 0.75rem;
-  }
-
-  @media (min-width: 800px) {
-    .comparison {
-      grid-template-columns: minmax(0, 1fr) 3rem minmax(0, 1fr);
-    }
-
-    .comparison section {
-      padding: 1rem;
-    }
-
-    .comparison section:last-child {
-      border-top: 0;
-    }
-
-    .divider {
-      display: flex;
-      border-right: 1px solid var(--border-subtle);
-      border-left: 1px solid var(--border-subtle);
-    }
-  }
+  .adaptive-applicability :global(p), .adaptive-applicability :global(h4) { margin: 0; }
+  .decisions { display: grid; gap: 1.5rem; }
+  section { min-width: 0; }
+  section + section { border-top: 1px solid var(--border-subtle); padding-top: 1.25rem; }
+  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: .9375rem; font-weight: 600; line-height: 1.45; }
+  .fragment-list { margin-top: .8rem; border-top: 1px solid var(--border-subtle); }
+  .fragment-list > div { border-bottom: 1px solid var(--border-subtle); padding: .7rem 0; }
+  .fragment-list strong { color: var(--text-primary); font-size: .875rem; font-weight: 600; }
+  .fragment-list p, section > p, .policy-outcome p { margin-top: .3rem !important; color: var(--text-secondary); font-size: .875rem; line-height: 1.6; }
+  section > p { margin-top: .8rem !important; }
+  .policy-outcome { border-top: 1px solid var(--border-subtle); margin-top: 1rem; padding-top: .85rem; }
+  .policy-outcome span { color: var(--accent); font-family: var(--font-mono-ui); font-size: .6875rem; text-transform: uppercase; }
+  @media (min-width: 720px) { .decisions { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0; } section:first-child { padding-right: 1.5rem; } section + section { border-top: 0; border-left: 1px solid var(--border-subtle); padding: 0 0 0 1.5rem; } }
+  :global(.research-reading .research-prose figure.adaptive-applicability) { border-radius: 0 !important; }
+  :global(.research-reading .research-prose figure.adaptive-applicability) .fragment-list p, :global(.research-reading .research-prose figure.adaptive-applicability) section > p, :global(.research-reading .research-prose figure.adaptive-applicability) .policy-outcome p { font-size: .875rem !important; line-height: 1.6 !important; }
 </style>
