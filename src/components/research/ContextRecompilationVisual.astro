@@ -1,39 +1,77 @@
 ---
+import { ArrowDown, ArrowRight, Braces, Code2, PackageCheck, Search } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
+const kernel = [
+  'Current objective',
+  'Decisions still in force',
+  'Relevant constraints',
+  'Rejected paths likely to recur',
+  'Active artifacts',
+  'Unresolved questions',
+  'Immediate next step',
+];
 const profiles = [
-  { name: 'General-purpose', details: 'Canonical handoff when no target is supplied.' },
-  { name: 'Coding', details: 'Repository state · branch · files · architecture decisions · tests · failures · next implementation step' },
-  { name: 'Research', details: 'Question · findings · sources · assumptions · unresolved questions · next investigation' },
+  { name: 'General-purpose profile', details: 'Canonical handoff when the user supplies no target.' },
+  { name: 'Coding profile foregrounds', details: 'Repository state · branch · files · architecture decisions · tests · failures · next implementation step' },
+  { name: 'Research profile foregrounds', details: 'Question · findings · sources · assumptions · unresolved questions · next investigation' },
 ];
 ---
 
-<ResearchFigureFrame className="zen-targets" figureNumber="04" title="One state, three target representations" caption="The user chooses the target; no destination discovery is required. Changing organization, emphasis, or compression must not materially change continuation state. Preservation is a requirement, not a demonstrated guarantee; “context recompilation” is architectural framing.">
-  <div class="canonical"><span>Canonical handoff</span><p>Objective · decisions · constraints · rejected paths · active artifacts · open questions · next step</p></div>
-  <div class="profiles" role="group" aria-label="User-selected handoff target profiles">
-    {profiles.map((profile) => <div><h4>{profile.name}</h4><p>{profile.details}</p></div>)}
+<ResearchFigureFrame className="zen-targets" figureNumber="05" title="One state, three target representations" status="Specified profiles · requirement" caption="The user explicitly chooses a general-purpose, coding, or research target; the skill need not discover destinations. Profiles may reorganize and emphasize the same canonical state. Material preservation is a requirement, not a demonstrated guarantee. “Context recompilation” is editorial framing.">
+  <div class="target-grid">
+    <section class="canonical" aria-labelledby="zen-canonical">
+      <div class="lane-label accent"><Braces class="figure-icon" size={16} strokeWidth={1.75} aria-hidden="true" /><span id="zen-canonical">Canonical handoff</span></div>
+      <ul>{kernel.map((item) => <li>{item}</li>)}</ul>
+    </section>
+
+    <div class="transform" aria-hidden="true">
+      <ArrowDown class="arrow-mobile" size={20} strokeWidth={1.75} />
+      <ArrowRight class="arrow-desktop" size={20} strokeWidth={1.75} />
+    </div>
+
+    <section class="profiles" aria-labelledby="zen-target-choice">
+      <div class="target-choice"><span id="zen-target-choice">User-selected target</span><p>Target changes representation, never material state.</p></div>
+      <div class="profile-list">
+        {profiles.map((profile, index) => (
+          <div>
+            <span class="profile-icon" aria-hidden="true">
+              {index === 0 ? <PackageCheck size={16} strokeWidth={1.75} /> : index === 1 ? <Code2 size={16} strokeWidth={1.75} /> : <Search size={16} strokeWidth={1.75} />}
+            </span>
+            <div><h4 class="figure-label">{profile.name}</h4><p>{profile.details}</p></div>
+          </div>
+        ))}
+      </div>
+    </section>
   </div>
-  <p class="boundary">Same authoritative state; different emphasis for the receiving environment.</p>
+  <p class="boundary">Same authoritative state. Different receiving environment.</p>
 </ResearchFigureFrame>
 
 <style>
-  .zen-targets :global(p), .zen-targets :global(h4) { margin: 0; }
-  .canonical { border-left: 2px solid var(--accent); padding-left: 1rem; }
-  .canonical span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; text-transform: uppercase; }
-  .canonical p { margin-top: 0.35rem !important; color: var(--text-primary); font-size: 0.875rem; line-height: 1.65; }
-  .profiles { display: grid; margin-top: 1.25rem; border-top: 1px solid var(--border-subtle); }
-  .profiles > div { padding: 0.9rem 0; }
-  .profiles > div + div { border-top: 1px solid var(--border-subtle); }
-  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.5; }
-  .profiles p { margin-top: 0.35rem !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  .boundary { border-top: 1px solid var(--border-strong); padding-top: 0.9rem; color: var(--text-primary); font-size: 0.875rem; line-height: 1.6; }
-  @media (min-width: 640px) {
-    .profiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .profiles > div { padding: 1rem 1rem 1rem 0; }
-    .profiles > div + div { border-top: 0; border-left: 1px solid var(--border-subtle); padding-left: 1rem; }
+  .zen-targets :global(p), .zen-targets :global(h4), .zen-targets :global(ul), .zen-targets :global(li) { margin: 0; }
+  .zen-targets :global(ul) { padding: 0; list-style: none; }
+  .target-grid { display: grid; gap: 1.2rem; }
+  .canonical { background: var(--bg-secondary); padding: 1rem; }
+  .lane-label { display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.08em; text-transform: uppercase; }
+  .lane-label.accent { color: var(--accent); }
+  .lane-label :global(.figure-icon) { flex: 0 0 auto; }
+  .canonical ul { margin-top: 0.8rem !important; }
+  .canonical li { border-bottom: 1px solid var(--border-subtle); padding: 0.35rem 0; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.45; }
+  .canonical li:last-child { border-bottom: 0; }
+  .transform { display: flex; align-items: center; justify-content: center; color: var(--accent); }
+  .arrow-desktop { display: none; }
+  .target-choice { border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.75rem; }
+  .target-choice span { color: var(--accent); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.08em; text-transform: uppercase; }
+  .target-choice p { margin-top: 0.25rem !important; color: var(--text-muted); font-size: 0.8125rem; line-height: 1.5; }
+  .profile-list > div { display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0.65rem; padding: 0.9rem 0; }
+  .profile-list > div + div { border-top: 1px solid var(--border-subtle); }
+  .profile-icon { display: flex; align-items: flex-start; justify-content: center; color: var(--accent); line-height: 1.5; }
+  h4.figure-label { color: var(--text-primary); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); font-weight: 500; letter-spacing: 0.08em; line-height: 1.5; text-transform: uppercase; }
+  .profile-list p { margin-top: 0.25rem !important; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
+  .boundary { margin-top: 1.2rem !important; border-left: 2px solid var(--accent); padding-left: 0.8rem; color: var(--text-primary); font-family: var(--font-display); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
+  @media (min-width: 760px) {
+    .target-grid { grid-template-columns: minmax(0, 0.9fr) 4rem minmax(0, 1.25fr); align-items: center; gap: 0; }
+    .canonical { padding: 1.1rem; }
+    .arrow-mobile { display: none; }
+    .arrow-desktop { display: block; }
   }
-</style>
-
-<style>
-  :global(.research-reading .research-prose figure.zen-targets) { border-radius: 0 !important; }
-  :global(.research-reading .research-prose figure.zen-targets) .canonical p, :global(.research-reading .research-prose figure.zen-targets) .profiles p, :global(.research-reading .research-prose figure.zen-targets) .boundary { font-size: 0.875rem !important; line-height: 1.6 !important; }
 </style>
