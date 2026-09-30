@@ -19,9 +19,15 @@ relatedSlugs: ["context-engineering-software-development", "specification-driven
 import ContextDistillationVisual from '../../components/research/ContextDistillationVisual.astro';
 import ContextHealthStatesVisual from '../../components/research/ContextHealthStatesVisual.astro';
 import ContextRecompilationVisual from '../../components/research/ContextRecompilationVisual.astro';
+import ContextZenContinuationVisual from '../../components/research/ContextZenContinuationVisual.astro';
 import ContextZenExperimentVisual from '../../components/research/ContextZenExperimentVisual.astro';
 import ContextZenLifecycleVisual from '../../components/research/ContextZenLifecycleVisual.astro';
+import ContextZenOverview from '../../components/research/ContextZenOverview.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+
+<ResearchBreakout mode="wide">
+  <ContextZenOverview />
+</ResearchBreakout>
 
 ## The Problem Is Not Capacity
 
@@ -106,6 +112,10 @@ If the answer becomes clearly yes, Context Zen should hand off.
 If activation belonged only to one conversation, Context Zen would disable itself every time it successfully recommended leaving that conversation.
 
 Instead, activation belongs to a **continuation lineage**: the chain of work that survives across handoffs.
+
+<ResearchBreakout mode="wide">
+  <ContextZenContinuationVisual />
+</ResearchBreakout>
 
 When Context Zen creates a handoff, it carries a small marker:
 
