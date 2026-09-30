@@ -1,11 +1,11 @@
 /*
  * Publication metadata should remain small, but not miniature. Keep the mono
- * system at an 11px floor across research headers, callouts, and embedded
+ * system at a 10px floor across research headers, callouts, and embedded
  * publication graphics so Overview remains approachable as well as compact.
  */
 [data-research-entry] > header .font-editorial-mono,
 .research-reading .font-editorial-mono {
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
 }
 
 /*
@@ -91,7 +91,7 @@
 }
 
 [data-research-entry="specification-driven-ai-development"] .research-prose .research-breakout > figure.not-prose > header .eyebrow {
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
   letter-spacing: 0.13em;
 }
 
@@ -112,7 +112,7 @@
   border-top: 1px solid var(--border-subtle);
   padding: 0.8rem 1rem;
   color: var(--text-muted);
-  font-size: 0.8125rem;
+  font-size: 0.6875rem;
   line-height: 1.55;
 }
 
