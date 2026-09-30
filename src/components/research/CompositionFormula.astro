@@ -1,9 +1,21 @@
-<div class="composition-formula not-prose" role="img" aria-label="UI equals a function of state, capabilities, policy, and context">
-  <code>UI = f(state, capabilities, policy, context)</code>
-</div>
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+---
+
+<ResearchFigureFrame
+  className="composition-formula-figure"
+  figureNumber="05"
+  title="A compact model for bounded composition"
+  caption="State, trusted capabilities, policy, and context are explicit inputs to composition; none of them grants the others authority."
+  bodyMode="padded"
+>
+  <div class="composition-formula" role="img" aria-label="UI equals a function of state, capabilities, policy, and context">
+    <code>UI = f(state, capabilities, policy, context)</code>
+  </div>
+</ResearchFigureFrame>
 
 <style>
-  .composition-formula { margin: 2.5rem 0; border-block: 1px solid var(--border-subtle); padding: 1.25rem 0; color: var(--text-primary); }
+  .composition-formula { color: var(--text-primary); }
   code { padding: 0; background: transparent; font-family: var(--font-mono-ui); font-size: clamp(0.95rem, 2.1vw, 1.2rem); font-weight: 500; line-height: 1.8; overflow-wrap: anywhere; }
 </style>
 <style is:global>
