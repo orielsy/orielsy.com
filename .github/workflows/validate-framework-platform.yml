@@ -1,0 +1,31 @@
+name: Validate Framework Platform Reconciliation
+
+on:
+  push:
+    branches:
+      - review/framework-platform-reconciliation-v2
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Run Adaptive UI tests
+        run: npm run test:adaptive-ui
