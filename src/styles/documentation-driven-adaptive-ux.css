@@ -1,0 +1,7 @@
+[data-research-entry="documentation-driven-adaptive-ux"] > header .site-shell > div:last-child {
+  min-width: 0;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] > header h1 {
+  overflow-wrap: anywhere;
+}
