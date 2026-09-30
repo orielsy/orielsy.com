@@ -1,0 +1,53 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+const rows = [
+  ['Constitution', 'What must remain true?', 'Project-wide', 'Stated invariant'],
+  ['Feature specification', 'What is required here?', 'Feature', 'Intended behavior'],
+  ['Plan', 'How is it intended to be built?', 'Implementation approach', 'Strategy'],
+  ['Tasks', 'What remains or is complete?', 'Current execution', 'Recorded state'],
+  ['ADR', 'Why was this choice made?', 'Decision', 'Rationale'],
+  ['Code + tests', 'What exists; what was checked?', 'Behavior / checks', 'Implementation / verification'],
+];
+---
+
+<ResearchFigureFrame
+  className="project-memory-authority"
+  figureNumber="02"
+  title="Authority depends on the question"
+  caption="This is an editorial model of repository artifact roles, not an automatic precedence engine. When artifacts diverge, expose the conflict rather than flatten it."
+>
+  <div class="authority-head" aria-hidden="true"><span>Artifact</span><span>Question answered</span><span>Scope</span><span>Evidence type</span></div>
+  <div class="authority-table" role="table" aria-label="Project memory authority by concern">
+    {rows.map((row, index) => (
+      <div class="authority-row" role="row">
+        <span class="index">0{index + 1}</span>
+        <strong role="cell">{row[0]}</strong>
+        <span role="cell" data-label="Question">{row[1]}</span>
+        <span role="cell" data-label="Scope">{row[2]}</span>
+        <span role="cell" data-label="Evidence">{row[3]}</span>
+      </div>
+    ))}
+  </div>
+  <p class="authority-rule"><strong>No single artifact answers every concern.</strong> Conflict is evidence that the owning records need reconciliation.</p>
+</ResearchFigureFrame>
+
+<style>
+  :global(.research-reading .research-prose figure.project-memory-authority) { border-radius: 0 !important; }
+  .authority-head { display: none; }
+  .authority-row { display: grid; grid-template-columns: 2rem minmax(0,1fr); gap: .4rem .7rem; padding: .8rem 0; }
+  .authority-row + .authority-row { border-top: 1px solid var(--border-subtle); }
+  .index, .authority-head, [data-label]::before { font-family: var(--font-mono-ui); }
+  .index { color: var(--accent); font-size: .6875rem; }
+  .authority-row strong { color: var(--text-primary); font-size: .9375rem; font-weight: 600; line-height: 1.45; }
+  .authority-row > span:not(.index) { grid-column: 2; color: var(--text-secondary); font-size: .875rem; line-height: 1.5; }
+  [data-label]::before { margin-right: .4rem; color: var(--text-muted); content: attr(data-label) ':'; font-size: .6875rem; text-transform: uppercase; }
+  .authority-rule { margin: 1rem 0 0 !important; border-left: 2px solid var(--accent); padding-left: 1rem; color: var(--text-secondary); font-size: .875rem; line-height: 1.6; }
+  .authority-rule strong { color: var(--text-primary); }
+  @media (min-width:760px) {
+    .authority-head,.authority-row { grid-template-columns: 2rem 1.05fr 1.5fr 1.05fr 1fr; gap: .8rem; align-items: center; }
+    .authority-head { display:grid; border-bottom:1px solid var(--border-subtle); padding:0 0 .65rem; color:var(--text-muted); font-size:.6875rem; letter-spacing:.07em; text-transform:uppercase; }
+    .authority-head span:first-child { grid-column:2; }
+    .authority-row > span:not(.index), .authority-row strong { grid-column:auto; }
+    [data-label]::before { display:none; }
+  }
+</style>
