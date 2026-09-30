@@ -1,0 +1,232 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const scenarios = [
+  {
+    number: '01',
+    scenario: 'Several compatible connections',
+    evidence: 'The field is missing and several compatible values remain.',
+    response: 'Explain the requirement, highlight or focus the field, and guide selection.',
+    boundary: 'Do not choose. User intent is unresolved.',
+  },
+  {
+    number: '02',
+    scenario: 'Exactly one compatible connection',
+    evidence: 'Only one compatible value remains.',
+    response: 'Offer an explicit Use [connection] action.',
+    boundary: 'Do not silently mutate configuration. The user accepts the offer.',
+  },
+  {
+    number: '03',
+    scenario: 'New versus experienced user',
+    evidence: 'Familiarity changes while application truth stays the same.',
+    response: 'Include beginner explanation for a new user and omit it for an experienced user.',
+    boundary: 'Validation remains identical.',
+  },
+  {
+    number: '04',
+    scenario: 'Version 4.1 versus 4.2',
+    evidence: 'The product version changes.',
+    response: 'Surface the authored 4.2 note only in the 4.2 scenario.',
+    boundary: 'Version changes explanation, not validity.',
+  },
+  {
+    number: '05',
+    scenario: 'Valid selection',
+    evidence: 'A valid Data Connection has been selected.',
+    response: 'Remove the missing-field intervention.',
+    boundary: 'Do not keep prompting merely because related knowledge exists.',
+  },
+] as const;
+---
+
+<ResearchFigureFrame
+  className="adaptive-scenario-evidence"
+  eyebrow="Controlled Phase 1 scenarios"
+  title="Five scenarios, five response boundaries."
+  subtitle="The interface changes its response when the evidence changes, while application truth and user authority remain bounded."
+  caption="These are controlled reference scenarios, not a measured outcome study or a required sequence. Ambiguity limits authority; a valid state quiets intervention."
+>
+  <div class="desktop-header" aria-hidden="true">
+    <span>Scenario</span>
+    <span>Evidence</span>
+    <span class="is-accent">Permitted response</span>
+    <span>Boundary</span>
+  </div>
+
+  <ol class="scenario-list" aria-label="Adaptive UI Lab Phase 1 scenario evidence and response boundaries">
+    {scenarios.map(({ number, scenario, evidence, response, boundary }) => (
+      <li>
+        <div class="scenario-name">
+          <span class="row-number">{number}</span>
+          <strong>{scenario}</strong>
+        </div>
+        <div class="scenario-cell">
+          <span class="mobile-label">Evidence</span>
+          <p>{evidence}</p>
+        </div>
+        <div class="scenario-cell response-cell">
+          <span class="mobile-label is-accent">Permitted response</span>
+          <p>{response}</p>
+        </div>
+        <div class="scenario-cell boundary-cell">
+          <span class="mobile-label">Boundary</span>
+          <p>{boundary}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <div class="closing-rule">
+    <span>More deterministic evidence can justify stronger help.</span>
+    <strong>Ambiguity still limits authority.</strong>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  .adaptive-scenario-evidence :global(p),
+  .adaptive-scenario-evidence :global(ol),
+  .adaptive-scenario-evidence :global(li) {
+    margin: 0;
+  }
+
+  .adaptive-scenario-evidence :global(ol) {
+    padding: 0;
+    list-style: none;
+  }
+
+  .desktop-header {
+    display: none;
+  }
+
+  .scenario-list {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .scenario-list > li {
+    display: grid;
+    gap: 0.8rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1rem 0;
+  }
+
+  .scenario-name {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.65rem;
+    align-items: start;
+  }
+
+  .row-number,
+  .mobile-label,
+  .desktop-header {
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .row-number {
+    color: var(--accent);
+  }
+
+  .scenario-name strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .scenario-cell {
+    padding-left: 2.65rem;
+  }
+
+  .mobile-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--text-muted);
+  }
+
+  .is-accent {
+    color: var(--accent);
+  }
+
+  .scenario-cell p {
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  .response-cell {
+    border-left: 2px solid var(--accent);
+    padding-left: calc(2.65rem - 2px);
+  }
+
+  .boundary-cell {
+    border-left: 2px solid var(--border-strong);
+    padding-left: calc(2.65rem - 2px);
+  }
+
+  .closing-rule {
+    display: grid;
+    gap: 0.45rem;
+    margin-top: 1.25rem;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.55;
+  }
+
+  .closing-rule strong {
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  @media (min-width: 860px) {
+    .desktop-header {
+      display: grid;
+      grid-template-columns: 1.1fr 1.25fr 1.4fr 1.25fr;
+      gap: 1rem;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.7rem 0;
+      color: var(--text-muted);
+    }
+
+    .scenario-list {
+      border-top: 0;
+    }
+
+    .scenario-list > li {
+      grid-template-columns: 1.1fr 1.25fr 1.4fr 1.25fr;
+      gap: 1rem;
+      align-items: start;
+      padding: 0.95rem 0;
+    }
+
+    .scenario-name {
+      grid-template-columns: 1.65rem minmax(0, 1fr);
+      gap: 0.45rem;
+    }
+
+    .scenario-cell,
+    .response-cell,
+    .boundary-cell {
+      border-left: 0;
+      padding-left: 0;
+    }
+
+    .mobile-label {
+      display: none;
+    }
+
+    .closing-rule {
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 1.5rem;
+    }
+  }
+</style>
