@@ -6,10 +6,10 @@ const contexts = ['Conversation A', 'Conversation B', 'Conversation C'];
 ---
 
 <ResearchFigureFrame
-  figureNumber="03"
-  eyebrow="v0.1 behavior · continuation lineage"
-  title="Activation follows the work"
-  caption="The source specifies continuation and enabled markers carried by a handoff. This multi-hop view is an editorial illustration of that lineage model; it does not claim durable host state, automatic chat creation, or successful propagation if the marker is removed."
+  figureNumber="04"
+  eyebrow="v0.1 specified behavior"
+  title="Activation follows the work, not the chat"
+  caption="The marker carries continuation state between contexts, so durable cross-chat host state is not required. The view does not claim automatic chat creation or successful propagation when the marker is removed."
 >
   <div class="lineage">
     <div class="desktop-rail" aria-hidden="true"></div>
@@ -31,7 +31,7 @@ const contexts = ['Conversation A', 'Conversation B', 'Conversation C'];
   </div>
 
   <div class="lineage-notes">
-    <p><strong>Monitoring stays active</strong> across the continuation lineage until explicitly disabled.</p>
+    <p><strong>continuation: true</strong> identifies the artifact as part of the lineage; <strong>enabled: true</strong> keeps monitoring active.</p>
     <span class="note-divider" aria-hidden="true"></span>
     <p>A manual handoff can still be a continuation with <code>enabled: false</code>.</p>
   </div>
