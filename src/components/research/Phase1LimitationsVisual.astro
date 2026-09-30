@@ -1,6 +1,12 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
+export interface Props {
+  figureNumber?: string;
+}
+
+const { figureNumber } = Astro.props;
+
 const exclusions = [
   {
     title: 'Inference and retrieval',
@@ -23,7 +29,7 @@ const exclusions = [
 
 <ResearchFigureFrame
   className="phase-one-limitations"
-  eyebrow="Phase 1 scope boundary"
+  {figureNumber}
   title="Intentionally not included."
   subtitle="The reference experiment keeps these capabilities outside Phase 1 so the deterministic architecture can be evaluated on its own terms."
 >
