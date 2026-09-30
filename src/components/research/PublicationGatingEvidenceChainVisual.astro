@@ -56,11 +56,28 @@ const steps = [
   .rationale-note { display: block; margin-top: 0.45rem; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); line-height: 1.55; }
 
   @media (min-width: 760px) {
-    .chain-line { left: 50%; transform: translateX(-50%); }
+    .chain-line {
+      left: 50%;
+      width: 1px;
+      transform: translateX(-50%);
+    }
     .evidence-chain { gap: 1.8rem; }
-    li { grid-template-columns: minmax(0, 1fr) 3rem minmax(0, 1fr); gap: 1rem; align-items: center; }
-    .icon-node { grid-column: 2; justify-self: center; }
-    .step-copy { grid-column: 3; }
+    li {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 4rem;
+      align-items: center;
+    }
+    .icon-node {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      grid-column: auto;
+      grid-row: auto;
+      transform: translate(-50%, -50%);
+    }
+    .step-copy { grid-column: 2; }
     .step-copy.is-left { grid-column: 1; text-align: right; }
     .rationale { grid-template-columns: 9rem minmax(0, 1fr); gap: 1rem; align-items: start; }
   }
