@@ -23,14 +23,13 @@ socialCard:
   description: "Connecting authored product knowledge to current application state."
 ---
 
+import AdaptiveUxScenarioEvidenceVisual from '../../components/research/AdaptiveUxScenarioEvidenceVisual.astro';
 import ApplicabilityVsPolicyVisual from '../../components/research/ApplicabilityVsPolicyVisual.astro';
 import DocumentationDrivenAdaptiveVisual from '../../components/research/DocumentationDrivenAdaptiveVisual.astro';
 import Phase1DeterministicPipelineVisual from '../../components/research/Phase1DeterministicPipelineVisual.astro';
-import Phase1FindingsVisual from '../../components/research/Phase1FindingsVisual.astro';
 import Phase1LimitationsVisual from '../../components/research/Phase1LimitationsVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import WhereAiCouldEnterLaterVisual from '../../components/research/WhereAiCouldEnterLaterVisual.astro';
-import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEnterpriseUiLab.astro';
 
 ## The Documentation / Interface Disconnect
 
@@ -44,35 +43,17 @@ A field may know that a value is missing. The application may know the current v
 
 The opportunity is to **select and surface authored product knowledge according to current application state**, rather than make every user leave the product or receive the same static explanation.
 
-## Phase 1 Experiment: One Field, Two Interface Policies
+That does not mean documentation becomes application logic. The more interesting architectural question is how knowledge can reach the task **without acquiring authority over product truth or user intent**.
+
+## Phase 1 as a Deterministic Baseline
 
 Phase 1 narrows the experiment to one product field: **Data Connection**.
 
-The shared controls vary three pieces of context:
+The reference application varies three controlled inputs: user familiarity, product version, and whether one or several compatible Data Connections remain. Two independently operable forms then receive that same scenario and the same required-field rule.
 
-<ul className="paper-scenario-grid">
-  <li><strong>User familiarity</strong>New or Experienced</li>
-  <li><strong>Product version</strong>4.1 or 4.2</li>
-  <li><strong>Compatible Data Connections</strong>One or Several</li>
-</ul>
+The [Adaptive Enterprise UI Lab](/projects/adaptive-enterprise-ui-lab) is the working artifact for that comparison. The project page owns the complete interaction: scenario controls, validation, the explicit one-option offer, source-labelled guidance, and the inspectable decision trace.
 
-Both interfaces receive the same scenario and application truth.
-
-### Standard UI
-
-The Standard UI exposes the required field and ordinary validation. If the user continues without a Data Connection, it reports the missing value.
-
-This is a normal enterprise form pattern, not a straw man: expose configuration, validate input, and rely on documentation or prior knowledge when interpretation is required.
-
-### Adaptive UI
-
-The Adaptive UI keeps the same field and validation rule, then adds authored product knowledge and response policy. It can surface conceptual help, version-specific guidance, and the relevant control while varying its permitted action according to the available evidence.
-
-<ResearchBreakout mode="publication">
-  <AdaptiveEnterpriseUiLab embedded />
-</ResearchBreakout>
-
-The visible decision trace exposes application state, validation, applicable knowledge, and the resulting response policy.
+This paper uses that artifact as evidence rather than embedding a second copy of the lab. Its job is to extract the architecture and limits that may transfer beyond this one field.
 
 ## Deriving the Architecture
 
@@ -92,7 +73,9 @@ The experiment separates seven concerns:
   <li><strong>Rendering</strong><span>how those structured responses appear in the UI.</span></li>
 </ol>
 
-<Phase1DeterministicPipelineVisual />
+<ResearchBreakout mode="publication">
+  <Phase1DeterministicPipelineVisual />
+</ResearchBreakout>
 
 Starting deterministically exposes those boundaries and creates a baseline against which later inference can be evaluated.
 
@@ -101,6 +84,8 @@ Starting deterministically exposes those boundaries and creates a baseline again
 Phase 1 uses small authored knowledge fragments rather than ingested documentation: a Data Connection summary, required-field help, beginner guidance, version 4.2 guidance, and configuration-selection guidance.
 
 Each fragment carries applicability information such as audience, version, and state conditions, plus simple provenance metadata.
+
+That distinction matters. Phase 1 demonstrates **authored fixture knowledge with explicit conditions**. It does not demonstrate document ingestion, semantic retrieval, stale-content governance, source conflict resolution, or a production publishing workflow for product knowledge.
 
 The design goal is **context selection, not context accumulation**: narrow the available knowledge using deterministic facts before deciding whether any of it should affect the interface.
 
@@ -116,41 +101,41 @@ Response policy asks:
 
 > Given the application state, validation result, available knowledge, and certainty of the evidence, how strongly should the UI intervene?
 
-<ApplicabilityVsPolicyVisual />
+<ResearchBreakout mode="publication">
+  <ApplicabilityVsPolicyVisual />
+</ResearchBreakout>
 
-Keeping those decisions separate prevents the knowledge layer from becoming an accidental UI controller.
+Keeping those decisions separate prevents the knowledge layer from becoming an accidental UI controller. A matching release note can add context; it cannot select a Data Connection or redefine what counts as valid.
 
-## UI Authority Should Follow Evidence
+## Evidence Bounds Interface Authority
 
-The lab uses a simple rule: **the more deterministic the evidence, the more strongly the interface may act.**
+Phase 1 uses a simple architectural preference: **more deterministic evidence can justify stronger help, but ambiguity still limits authority.**
 
-<ol className="paper-authority-scale">
-  <li>no intervention</li>
-  <li>expanded description</li>
-  <li>contextual help</li>
-  <li>current-state explanation</li>
-  <li>highlight the relevant control</li>
-  <li>suggest the next action</li>
-  <li>preconfigure a safe value</li>
-</ol>
+The controlled scenarios make that boundary concrete:
 
-The Data Connection experiment maps directly onto that scale. With several compatible connections, the interface may explain, highlight, and guide, but it cannot choose because user intent is unresolved. With exactly one compatible connection, it may offer that value as a user-accepted action.
+<ResearchBreakout mode="publication">
+  <AdaptiveUxScenarioEvidenceVisual />
+</ResearchBreakout>
 
-Evidence changes authority; the system does not guess.
+The one-versus-several distinction is the clearest example. Several compatible values leave user intent unresolved, so explanation and guidance are appropriate but selection is not. Exactly one compatible value supports an explicit offer, while the user still accepts the preconfiguration rather than the interface silently changing state.
 
-## What Phase 1 Shows
+Familiarity and version demonstrate a different kind of adaptation: they change which explanation is applicable without changing the validation rule. A valid selection demonstrates the inverse boundary: related knowledge may still exist, but the missing-field intervention should disappear once the state no longer requires it.
 
-<Phase1FindingsVisual />
+Taken together, Phase 1 supports four narrower conclusions: product knowledge can participate in UI behavior without owning business logic; useful adaptation can exist before inference; certainty is a practical control on interface authority; and structured response policy can keep the renderer from rediscovering those decisions independently.
+
+Those are architectural observations from this controlled reference implementation, not measured claims about user performance or intervention quality.
 
 ## Limitations of the Current Experiment
 
-Phase 1 is a reference experiment, not a production adaptive-UX platform. It excludes:
+Phase 1 is a reference experiment, not a production adaptive-UX platform.
 
-<Phase1LimitationsVisual />
+<ResearchBreakout mode="publication">
+  <Phase1LimitationsVisual />
+</ResearchBreakout>
 
 Product knowledge is fixture data, compatibility scenarios are fixed, and user familiarity is a simulation control.
 
-The experiment also leaves production governance unanswered: review, stale guidance, conflicting sources, and measurement of intervention quality.
+The experiment also leaves production governance unanswered: review, stale guidance, conflicting sources, measurement of intervention quality, and the operational ownership of product knowledge.
 
 ## Where AI Could Enter Later
 
@@ -168,7 +153,7 @@ Potential later uses of that seam remain deliberately narrower than product trut
 - **Browser-local inference:** run narrow classification or ranking locally when the model and hardware are sufficient.
 - **Runtime routing:** eventually decide whether an inference task belongs in the browser, a local service, or a remote model.
 
-These are future capabilities, not Phase 1 behavior. Any inferred result would still need to be reconciled against application state and approved knowledge before response policy or the UI acts on it.
+These are future capabilities, not Phase 1 behavior. Any inferred result would still need to be reconciled against application state and approved knowledge before response policy or the UI acts on it. No runtime placement strategy has been evaluated or deployed by this experiment.
 
 ## From Documentation to Product Capability
 
