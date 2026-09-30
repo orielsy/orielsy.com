@@ -15,17 +15,17 @@ const steps = [
     detail: 'TC39 can explore a lower-level signal graph that multiple frameworks could build upon.',
   },
   {
-    label: 'Framework layer moves up',
-    detail: 'Scheduling, effects, rendering policy, ownership, and composition remain framework concerns.',
+    label: 'Framework policy remains',
+    detail: 'Scheduling, effects, rendering coordination, ownership, disposal, and composition stay above the primitive.',
   },
 ];
 ---
 
 <ResearchFigureFrame
-  eyebrow="Platformization pattern"
-  title="The primitive can move downward without the framework disappearing."
-  status="Signals as a lower-level substrate"
-  caption="Standardizing a lower-level mechanism changes the implementation boundary; it does not standardize the framework policy above it."
+  className="signal-standardization-figure"
+  figureNumber="02"
+  title="A primitive can move downward without the framework disappearing"
+  caption="Signals illustrates the distinction between standardizing a common low-level mechanism and standardizing the framework policy built above it."
 >
   <ol class="signal-path">
     {steps.map((step, index) => (
@@ -35,100 +35,26 @@ const steps = [
           <strong>{step.label}</strong>
         </div>
         <p>{step.detail}</p>
-        {index < steps.length - 1 && <span class="connector" aria-hidden="true">→</span>}
       </li>
     ))}
   </ol>
 </ResearchFigureFrame>
 
 <style>
-  .signal-path {
-    display: grid;
-    gap: 1px;
-    margin: 0;
-    padding: 0;
-    background: var(--border-subtle);
-    list-style: none;
-  }
-
-  li {
-    position: relative;
-    margin: 0;
-    background: var(--bg-card);
-    padding: 1rem 1.05rem 1.05rem;
-  }
-
-  .step-head {
-    display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr);
-    gap: 0.55rem;
-    align-items: baseline;
-  }
-
-  .step-head span {
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.625rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .step-head strong {
-    color: var(--text-primary);
-    font-family: var(--font-display);
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1.4;
-  }
-
-  li p {
-    margin: 0.45rem 0 0 !important;
-    padding-left: 2.55rem;
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    line-height: 1.55;
-  }
-
-  .connector {
-    display: none;
-  }
-
+  :global(.research-reading .research-prose figure.signal-standardization-figure) { border-radius: 0 !important; }
+  .signal-path { display: grid; margin: 0; padding: 0; border-block: 1px solid var(--border-subtle); list-style: none; }
+  li { margin: 0; padding: 1rem 0; }
+  li + li { border-top: 1px solid var(--border-subtle); }
+  .step-head { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.55rem; align-items: baseline; }
+  .step-head span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .step-head strong { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.4; }
+  li p { margin: 0.45rem 0 0 !important; padding-left: 2.55rem; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
   @media (min-width: 760px) {
-    .signal-path {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    li {
-      min-height: 9rem;
-      padding: 1rem 1.05rem;
-    }
-
-    .step-head {
-      grid-template-columns: 1fr;
-      gap: 0.35rem;
-    }
-
-    li p {
-      padding-left: 0;
-    }
-
-    .connector {
-      position: absolute;
-      top: 50%;
-      right: -0.72rem;
-      z-index: 2;
-      display: flex;
-      width: 1.45rem;
-      height: 1.45rem;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--border-subtle);
-      border-radius: 999px;
-      background: var(--bg-card);
-      color: var(--accent);
-      font-family: var(--font-mono-ui);
-      font-size: 0.75rem;
-      transform: translateY(-50%);
-    }
+    .signal-path { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    li { min-width: 0; padding: 1rem; }
+    li:first-child { padding-left: 0; }
+    li + li { border-top: 0; border-left: 1px solid var(--border-subtle); }
+    .step-head { grid-template-columns: 1fr; gap: 0.35rem; }
+    li p { padding-left: 0; }
   }
 </style>
