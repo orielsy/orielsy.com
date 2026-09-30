@@ -36,25 +36,46 @@ import Phase1DeterministicPipelineVisual from '../../components/research/Phase1D
 
 ## Working Phase 1 Lab
 
-Change the scenario and compare how a conventional interface and an adaptive interface respond to the same application truth.
+Phase 1 is a deterministic comparison, not an AI demo. The scenario controller sets three test conditions outside the user task—familiarity, product version, and the number of compatible Data Connections—then both forms receive the same application truth.
+
+Each form can be operated independently. Both keep the same required field and validation rule. The adaptive form adds only the guidance or action that the resolver's current evidence and response policy allow.
 
 <ProjectBreakout mode="publication">
   <AdaptiveEnterpriseUiLab embedded />
 </ProjectBreakout>
+
+## How to Read the Lab
+
+The controller is part of the experiment, not part of either form. Changing a scenario resets the workbench so the two experiences can be compared from the same starting state.
+
+The **Standard UI** exposes the available values and ordinary required-field validation.
+
+The **Adaptive UI** keeps that same field and validation, then adds authored guidance, source context, and an inspectable decision trace. With several compatible connections it may explain, focus the relevant control, and guide the choice, but it does not know which connection the user intends. With exactly one compatible connection it can offer an explicit **Use [connection]** action, but the user still accepts the preconfiguration rather than the interface silently mutating state.
+
+Once a valid value is selected, the missing-field intervention is no longer needed. The trace makes that change visible rather than leaving the adaptive behavior as hidden component logic.
 
 ## What Phase 1 Demonstrates
 
 1. **Same truth, different interface policy.** Both forms receive the same scenario, validation rule, and compatible options.
 2. **Ambiguity limits authority.** Several compatible Data Connections justify explanation and guidance, but not a guessed selection.
 3. **Deterministic evidence can justify a stronger action.** When exactly one compatible option remains, the resolver may offer it as an explicit user-accepted preconfiguration.
+4. **Adaptive behavior can stay inspectable.** Application state, validation, applicable knowledge, and response policy remain visible as separate inputs to the rendered response.
 
 ## Architecture at a Glance
 
-The implementation separates application truth, authored knowledge, response policy, and rendering so the adaptive behavior remains inspectable.
+The implementation separates application truth, authored knowledge, response policy, and rendering so the adaptive behavior remains inspectable rather than collapsing into scattered conditional UI logic.
 
 <ProjectBreakout mode="publication">
   <Phase1DeterministicPipelineVisual />
 </ProjectBreakout>
+
+## Current Boundary
+
+Phase 1 deliberately uses fixed compatibility scenarios and authored fixture knowledge. User familiarity is a simulation control. The implementation does not ingest documentation, perform semantic retrieval, infer user profiles, persist behavior, or use an LLM or remote inference service.
+
+That makes the current artifact useful as a reference implementation, not evidence of a production adaptive-UX platform or measured UX improvement. The value of Phase 1 is that its decisions can be inspected and challenged before more ambiguous capabilities are introduced.
+
+The companion research paper, [Documentation-Driven Adaptive UX](/research/documentation-driven-adaptive-ux), develops the architectural argument behind those boundaries: how authored knowledge becomes applicable, why applicability is not response policy, and how evidence should constrain interface authority.
 
 ## Next
 
