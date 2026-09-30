@@ -3,40 +3,48 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 const states = [
   { name: 'Healthy', description: 'History still supports the next action.' },
   { name: 'Watch', description: 'Contradictions or buried constraints are appearing.' },
-  { name: 'Handoff', description: 'Faithful compact state would probably be easier to continue from.' },
+  { name: 'Handoff', description: 'A faithful compact state would probably be easier to continue from.' },
 ];
 ---
 
-<ResearchFigureFrame className="zen-health" figureNumber="03" title="Context health is a judgment, not a score" status="Qualitative · provisional" caption="No numeric threshold or validated scoring model exists here. No single signal forces handoff; the fresh-agent counterfactual remains an unvalidated heuristic.">
+<ResearchFigureFrame className="zen-health" figureNumber="03" title="Context health is a judgment, not a score" status="Qualitative heuristic · provisional" caption="The three states are qualitative, not numeric thresholds. Hard and semantic signals inform a judgment; no single signal forces a handoff. The fresh-agent counterfactual remains an unvalidated heuristic.">
+  <div class="health-label"><span class="pulse" aria-hidden="true"></span><span>Material effect on the next action</span></div>
   <div class="states" role="group" aria-label="Three qualitative context-health states">
-    {states.map((state) => <div><h4>{state.name}</h4><p>{state.description}</p></div>)}
+    {states.map((state, index) => (
+      <section class:list={[index === 2 && 'handoff']}>
+        <span class="state-dot" aria-hidden="true"></span>
+        <div><h4>{state.name}</h4><p>{state.description}</p></div>
+      </section>
+    ))}
   </div>
   <div class="signals">
     <div><h4>Hard signals can inform</h4><p>Context load · turn count · artifact count · tool-result volume</p></div>
-    <div><h4>Semantic signals matter more</h4><p>Superseded state · colliding instructions · rediscovery · buried constraints · drift</p></div>
+    <div><h4>Semantic signals are more consequential</h4><p>Superseded decisions · colliding instructions · rediscovery · buried constraints · obsolete state · user corrections · material effect on the next action</p></div>
   </div>
+  <p class="length-rule">Length alone never forces a handoff.</p>
 </ResearchFigureFrame>
 
 <style>
   .zen-health :global(p), .zen-health :global(h4) { margin: 0; }
-  .states { display: grid; border-block: 1px solid var(--border-subtle); }
-  .states > div { padding: 0.9rem 0; }
-  .states > div + div { border-top: 1px solid var(--border-subtle); }
-  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.5; }
-  .states p, .signals p { margin-top: 0.35rem !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  .signals { display: grid; gap: 1rem; margin-top: 1.25rem; }
-  .signals h4 { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; text-transform: uppercase; }
-  @media (min-width: 640px) {
-    .states { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .states > div { padding: 1rem 1rem 1rem 0; }
-    .states > div + div { border-top: 0; border-left: 1px solid var(--border-subtle); padding-left: 1rem; }
-    .signals { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
-    .signals > div:first-child { padding-right: 1rem; }
-    .signals > div + div { border-left: 1px solid var(--border-subtle); padding-left: 1rem; }
+  .health-label { display: flex; align-items: center; gap: 0.5rem; color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .pulse { width: 0.6rem; height: 0.6rem; border: 1px solid var(--accent); border-radius: 999px; }
+  .states { position: relative; display: grid; gap: 1rem; margin-top: 1.15rem; }
+  .states::before { content: ''; position: absolute; left: 0.3rem; top: 0.35rem; bottom: 0.35rem; border-left: 1px dashed var(--border-subtle); }
+  .states section { position: relative; display: grid; grid-template-columns: 0.75rem minmax(0, 1fr); gap: 0.75rem; }
+  .state-dot { position: relative; z-index: 1; width: 0.65rem; height: 0.65rem; margin-top: 0.25rem; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--bg-card); }
+  .states section.handoff .state-dot { border-color: var(--accent); background: var(--accent); }
+  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.45; }
+  .states section.handoff h4 { color: var(--accent); }
+  .states p, .signals p { margin-top: 0.25rem !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
+  .signals { display: grid; gap: 1rem; margin-top: 1.35rem; border-top: 1px solid var(--border-subtle); padding-top: 1rem; }
+  .signals h4 { color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .signals > div:last-child h4 { color: var(--accent); }
+  .length-rule { margin-top: 1rem !important; border-left: 2px solid var(--accent); padding-left: 0.8rem; color: var(--text-primary); font-size: 0.875rem; line-height: 1.6; }
+  @media (min-width: 760px) {
+    .states { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+    .states::before { left: 0.3rem; right: 0; top: 0.3rem; bottom: auto; border-left: 0; border-top: 1px dashed var(--border-subtle); }
+    .states section { display: block; }
+    .state-dot { display: block; margin: 0 0 0.8rem; }
+    .signals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
-</style>
-
-<style>
-  :global(.research-reading .research-prose figure.zen-health) { border-radius: 0 !important; }
-  :global(.research-reading .research-prose figure.zen-health) .states p, :global(.research-reading .research-prose figure.zen-health) .signals p { font-size: 0.875rem !important; line-height: 1.6 !important; }
 </style>
