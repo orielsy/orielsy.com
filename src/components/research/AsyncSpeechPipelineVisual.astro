@@ -1,39 +1,69 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
-const concerns = [
-  { label: 'Transport responsiveness', owner: 'Async service path', detail: 'WebSocket handling and buffering should remain responsive while transcription work runs elsewhere.' },
-  { label: 'Blocking inference', owner: 'Worker thread', detail: 'asyncio.to_thread(model.transcribe) moves Whisper inference away from the async event loop.', accent: true },
-  { label: 'Render timing', owner: 'Electron / Vue renderer', detail: 'nextTick() and requestAnimationFrame() coordinate caption layout and visual transitions.' },
+const lanes = [
+  { title: 'Transport', owner: 'Async service path', detail: 'WebSocket handling + buffering' },
+  { title: 'Inference', owner: 'Worker thread', detail: 'asyncio.to_thread(model.transcribe)', accent: true },
+  { title: 'Rendering', owner: 'Electron / Vue', detail: 'nextTick, geometry reads, requestAnimationFrame' },
 ];
 ---
 
 <ResearchFigureFrame
   className="async-speech-figure"
-  figureNumber="05"
-  title="Transport responsiveness, inference, and rendering are separate problems"
-  caption="Moving blocking model work off the async event loop does not optimize rendering by itself. The current prototype still has geometry-read behavior that deserves a later batching pass."
+  figureNumber="04"
+  title="Three execution paths"
+  status="Source behavior · bounded interpretation"
+  caption="Moving inference off the async event loop separates blocking model work from transport handling. The renderer uses its own scheduling path; the source still shows forced-layout risk worth testing."
 >
-  <div class="concerns" aria-label="runtime responsibility boundaries">
-    {concerns.map((concern) => (
-      <section class:list={['concern', concern.accent && 'is-accent']}>
-        <span class="owner">{concern.owner}</span>
-        <h4>{concern.label}</h4>
-        <p>{concern.detail}</p>
+  <div class="execution-grid" aria-label="speechBubbles execution paths">
+    {lanes.map((lane) => (
+      <section class:list={[lane.accent && 'is-accent']}>
+        <p class:list={['figure-label', lane.accent && 'figure-accent']}>{lane.owner}</p>
+        <h4 class="figure-node">{lane.title}</h4>
+        <p class="figure-copy">{lane.detail}</p>
       </section>
     ))}
   </div>
 </ResearchFigureFrame>
 
 <style>
-  :global(.research-reading .research-prose figure.async-speech-figure) { border-radius: 0 !important; }
-  .concerns { display: grid; border-block: 1px solid var(--border-subtle); }
-  .concern { min-width: 0; margin: 0; padding: 1rem 0; }
-  .concern + .concern { border-top: 1px solid var(--border-subtle); }
-  .concern.is-accent { border-left: 2px solid var(--accent); padding-left: 1rem; }
-  .owner { color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; line-height: 1.45; text-transform: uppercase; }
-  .is-accent .owner { color: var(--accent); }
-  h4 { margin: 0.45rem 0 0; color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.4; }
-  p { margin: 0.5rem 0 0; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  @media (min-width: 760px) { .concerns { grid-template-columns: repeat(3,minmax(0,1fr)); } .concern { padding: 1rem; } .concern:first-child { padding-left: 0; } .concern + .concern { border-top: 0; border-left: 1px solid var(--border-subtle); } .concern.is-accent { border-left: 2px solid var(--accent); } }
+  .async-speech-figure :global(p),
+  .async-speech-figure :global(h4) {
+    margin: 0;
+  }
+
+  .execution-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .execution-grid section {
+    min-width: 0;
+    background: var(--bg-card);
+    padding: 1.25rem;
+  }
+
+  .execution-grid section.is-accent {
+    border-left: 2px solid var(--accent);
+    background: var(--bg-secondary);
+  }
+
+  .execution-grid h4 {
+    margin-top: 0.75rem !important;
+  }
+
+  .execution-grid .figure-copy {
+    margin-top: 0.75rem !important;
+  }
+
+  @media (min-width: 760px) {
+    .execution-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .execution-grid section.is-accent {
+      border-left: 2px solid var(--accent);
+    }
+  }
 </style>
