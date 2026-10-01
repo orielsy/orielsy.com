@@ -14,13 +14,13 @@ const policies = ['Effect scheduling', 'Ownership + disposal', 'Batching policy'
 >
   <div class="signals-grid">
     <section class="substrate-card">
-      <p class="meta">Proposed common substrate</p>
+      <p class="meta figure-meta">Proposed common substrate</p>
       <div class="substrate-core">
         <GitBranch class="signal-icon" size={24} strokeWidth={1.5} aria-hidden="true" />
         <h4>Signal graph</h4>
         <p>Dependency relationships and auto-tracking</p>
       </div>
-      <p class="substrate-note">Potential shared infrastructure</p>
+      <p class="substrate-note figure-meta">Potential shared infrastructure</p>
     </section>
 
     <div class="flow" aria-hidden="true">
@@ -29,7 +29,7 @@ const policies = ['Effect scheduling', 'Ownership + disposal', 'Batching policy'
     </div>
 
     <section class="policy-card">
-      <p class="meta">Above the primitive · still chosen</p>
+      <p class="meta figure-meta">Above the primitive · still chosen</p>
       <div class="policy-grid">
         {policies.map((policy, index) => (
           <div>
@@ -100,9 +100,9 @@ const policies = ['Effect scheduling', 'Ownership + disposal', 'Batching policy'
   .substrate-core h4 {
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: var(--research-diagram-node, 0.875rem);
+    font-size: var(--research-diagram-node-feature, 1.25rem) !important;
     font-weight: 600;
-    line-height: 1.45;
+    line-height: 1.4;
   }
 
   .substrate-core p {
