@@ -55,9 +55,10 @@ const { maxWidth, mode = 'wide' } = Astro.props;
   }
 
   /*
-   * Once the viewport is comfortably wider, allow figures to borrow space
-   * from the left-side article gutter while keeping their right edge aligned
-   * with the prose column.
+   * Once the viewport is comfortably wider, wide figures may borrow some of
+   * the article gutter while remaining visually tied to the prose column.
+   * Publication breakouts instead use the full article-content region to the
+   * right of the TOC; they must not intrude into the navigation column.
    */
   @media (min-width: 1280px) {
     .research-breakout[data-breakout-mode='wide'] {
@@ -70,9 +71,9 @@ const { maxWidth, mode = 'wide' } = Astro.props;
 
     .research-breakout[data-breakout-mode='publication'] {
       left: auto;
-      width: min(var(--research-breakout-max), 150%);
-      max-width: 150%;
-      margin-left: -50%;
+      width: 100%;
+      max-width: 100%;
+      margin-left: 0;
       transform: none;
     }
   }
