@@ -65,50 +65,63 @@
   font-size: .875rem;
 }
 
-/* Preserve the authority progression without making it resemble measured bars. */
-[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale {
-  display: block;
-  overflow: visible;
-  border: 0;
+/* Evidence changes authority: keep the three meaningful intervention levels explicit. */
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-levels {
+  margin: 2.25rem 0;
   border-block: 1px solid var(--border-subtle);
-  border-radius: 0;
-  background: transparent;
-  padding: 0;
 }
-[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale::before,
-[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale::after {
-  content: none;
-  display: none;
-}
-[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li {
-  display: block;
-  width: 100%;
-  margin: 0;
-  border: 0;
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-level {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: .65rem 1rem;
+  align-items: center;
+  padding: 1rem 0;
   border-bottom: 1px solid var(--border-subtle);
-  border-radius: 0;
-  background: transparent !important;
-  box-shadow: none !important;
-  padding: .65rem 0;
-  color: var(--text-secondary);
-  font-size: .875rem;
-  font-weight: 400;
 }
-[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li:last-child {
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-level:last-child {
   border-bottom: 0;
 }
-[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li::before {
-  display: inline;
-  min-height: 0;
-  margin-right: 1rem;
-  border: 0;
-  border-radius: 0;
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-index {
+  align-self: start;
+  padding-top: .15rem;
   color: var(--accent);
-  font-size: .6875rem;
+  font-family: var(--font-mono-ui);
+  font-size: var(--research-figure-label, .625rem);
+  letter-spacing: .08em;
 }
-[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-scale > li::after {
-  content: none !important;
-  display: none;
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-name {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  min-width: 0;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-name svg {
+  flex: none;
+  color: var(--text-muted);
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-level-offer .paper-authority-name svg {
+  color: var(--accent);
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-name strong {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: .9375rem;
+  font-weight: 600;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-level > p {
+  grid-column: 2;
+  margin: 0 !important;
+  color: var(--text-secondary);
+  font-size: .875rem !important;
+  line-height: 1.65 !important;
 }
 
 @media (min-width: 640px) {
@@ -125,5 +138,20 @@
   }
   [data-research-entry="documentation-driven-adaptive-ux"] .paper-concern-grid > li:nth-child(odd) {
     padding-right: 1rem;
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-level {
+    grid-template-columns: 3.5rem 7.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1.15rem 0;
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-index {
+    align-self: center;
+    padding-top: 0;
+  }
+
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-authority-level > p {
+    grid-column: 3;
   }
 }
