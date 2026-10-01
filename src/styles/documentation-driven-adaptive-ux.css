@@ -26,6 +26,15 @@
   display: none !important;
 }
 
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose h3 {
+  padding-left: 0 !important;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .research-prose h3::before {
+  content: none !important;
+  display: none !important;
+}
+
 @media (max-width: 480px) {
   [data-research-entry="documentation-driven-adaptive-ux"] > header h1 {
     font-size: clamp(2.25rem, 10.5vw, 3rem);
