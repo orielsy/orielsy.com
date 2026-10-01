@@ -13,7 +13,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   <div class="drift-comparison">
     <section>
       <div class="section-meta"><p class="label">Earlier accepted record</p><span>ADR 003 · 2026-08-26</span></div>
-      <h4>Manual publishing model</h4>
+      <h4 class="figure-node-feature">Manual publishing model</h4>
       <p>Centers production publishing on <code>npm run live</code> from <code>main</code> and says a repository-authored Actions workflow is not required.</p>
     </section>
 
@@ -21,13 +21,13 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
     <section>
       <div class="section-meta"><p class="label">Current guidance + implementation</p><GitBranch class="branch-icon" size={16} strokeWidth={1.6} aria-hidden="true" /></div>
-      <h4>Three supported paths</h4>
+      <h4 class="figure-node-feature">Three supported paths</h4>
       <ol>
         <li><span>01</span>Local <code>npm run live</code></li>
         <li><span>02</span>GitHub Actions manual dispatch</li>
         <li><span>03</span>Remote trigger branch</li>
       </ol>
-      <p class="source-note">Confirmed in AGENTS.md, README.md, and .github/workflows/deploy-production.yml</p>
+      <p class="source-note figure-meta">Confirmed in AGENTS.md, README.md, and .github/workflows/deploy-production.yml</p>
     </section>
   </div>
 
@@ -48,8 +48,8 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   .label, .drift-outcomes span, .divergence span, .section-meta > span { font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.07em; text-transform: uppercase; }
   .label, .section-meta > span, .source-note { color: var(--text-muted); }
   .branch-icon { color: var(--accent); }
-  h4 { margin-top: 0.75rem !important; color: var(--text-primary); font-family: var(--font-display); font-size: var(--research-diagram-node, 0.875rem); font-weight: 600; line-height: 1.45; }
-  section > p:not(.label) { margin-top: 0.6rem !important; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
+  h4 { margin-top: 0.75rem !important; }
+  section > p:not(.label):not(.source-note) { margin-top: 0.6rem !important; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
   code { border: 0 !important; background: transparent !important; padding: 0 !important; color: var(--text-primary) !important; font-size: 0.6875rem !important; }
   .divergence { display: flex; align-items: center; justify-content: center; }
   .divergence::before, .divergence::after { display: none; content: ''; flex: 1; border-left: 1px dashed var(--border-subtle); }
@@ -57,7 +57,6 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   ol { display: grid; gap: 0.5rem; margin-top: 0.7rem !important; }
   li { color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.5; }
   li span { display: inline-block; min-width: 1.8rem; color: var(--accent); font-size: var(--research-diagram-label, 0.625rem); }
-  .source-note { font-size: var(--research-diagram-label, 0.625rem) !important; line-height: 1.55 !important; }
   .drift-outcomes { display: grid; gap: 1px; margin-top: 1.25rem; border: 1px solid var(--border-subtle); background: var(--border-subtle); }
   .drift-outcomes > div { background: var(--bg-card); padding: 0.85rem; }
   .drift-outcomes span { color: var(--accent); }
