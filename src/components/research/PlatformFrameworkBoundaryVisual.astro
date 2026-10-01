@@ -1,100 +1,204 @@
 ---
+import { ArrowDown } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
-const layers = [
-  {
-    name: 'Application / product architecture',
-    items: ['Domain state', 'Feature composition', 'Data ownership', 'Product policy', 'UX-specific behavior'],
-  },
-  {
-    name: 'Framework / meta-framework',
-    items: ['Rendering coordination', 'Scheduling policy', 'Routing conventions', 'Data loading', 'SSR / hydration', 'Compilation'],
-  },
-  {
-    name: 'Standardized runtime primitives',
-    emphasized: true,
-    items: ['Custom Elements', 'Potential Signals', 'Navigation primitives', 'View Transitions', 'DOM update primitives', 'Common controls'],
-  },
-  {
-    name: 'Browser platform',
-    items: ['HTML / DOM', 'CSS', 'JavaScript', 'Networking', 'Storage', 'Rendering / accessibility APIs'],
-  },
+const responsibilities = [
+  { name: 'Reactive graph', status: 'Potential · TC39 Stage 1' },
+  { name: 'Navigation mechanics', status: 'HTML Living Standard' },
+  { name: 'View Transitions', status: 'Level 2 editor’s draft' },
+  { name: 'DOM update handles', status: 'Exploratory proposal' },
+  { name: 'Control patterns', status: 'Open UI research' },
+  { name: 'Component substrate', status: 'Web Components' },
 ];
 ---
 
 <ResearchFigureFrame
   className="platform-boundary-figure"
   figureNumber="01"
-  title="The interesting question is where the boundary moves"
-  caption="Platform growth does not imply framework extinction. Mature, broadly reusable mechanisms can move downward while application coordination and policy remain above them."
+  title="A responsibility has an address, not a destiny"
+  status="Working boundary · qualitative map"
+  caption="The seam is a question about ownership, not a migration forecast. Items below it differ in maturity; several remain proposals or research directions. Framework and product responsibilities remain above the shared substrate."
 >
-  <div class="boundary-map">
-    {layers.map((layer, index) => (
-      <>
-        <section class:list={['layer', layer.emphasized && 'is-emphasized']}>
-          <div class="layer-heading">
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <strong>{layer.name}</strong>
-          </div>
-          <div class="items">
-            {layer.items.map((item) => <span>{item}</span>)}
-          </div>
-        </section>
+  <div class="boundary-grid">
+    <section class="upper-layers">
+      <p class="meta accent">Application / product · situated choices</p>
+      <h4>What this product needs</h4>
+      <p>Domain state · feature composition · data ownership · product policy · UX-specific behavior</p>
 
-        {index === 1 && (
-          <div class="moving-boundary">
-            <span>Moving boundary</span>
-            <div aria-hidden="true"></div>
-            <strong>Mature mechanisms can migrate downward</strong>
+      <div class="framework-layer">
+        <p class="meta">Framework / meta-framework · coordination</p>
+        <h4>How the application holds together</h4>
+        <p>Rendering and scheduling · routing and data conventions · server rendering and hydration · compilation</p>
+      </div>
+    </section>
+
+    <section class="lower-layers">
+      <div class="boundary-marker">
+        <span>Boundary under investigation</span>
+        <ArrowDown size={16} strokeWidth={1.5} aria-hidden="true" />
+        <p>Only broadly reusable mechanisms are candidates</p>
+      </div>
+
+      <p class="meta">Standardized / emerging primitives · not one maturity level</p>
+      <div class="responsibility-grid">
+        {responsibilities.map((item) => (
+          <div>
+            <strong>{item.name}</strong>
+            <span>{item.status}</span>
           </div>
-        )}
-      </>
-    ))}
+        ))}
+      </div>
+
+      <p class="foundation">Browser foundation · HTML / DOM / CSS / JavaScript · network / storage / rendering / accessibility APIs</p>
+    </section>
   </div>
 </ResearchFigureFrame>
 
 <style>
-  :global(.research-reading .research-prose figure.platform-boundary-figure) { border-radius: 0 !important; }
-  .boundary-map { border-block: 1px solid var(--border-subtle); }
-  .layer {
-    display: grid;
-    gap: 0.8rem;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1rem 0;
+  .platform-boundary-figure :global(p),
+  .platform-boundary-figure :global(h4) {
+    margin: 0;
   }
-  .layer:last-child { border-bottom: 0; }
-  .layer-heading {
+
+  .boundary-grid {
     display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr);
-    gap: 0.6rem;
-    align-items: baseline;
+    gap: 1.5rem;
   }
-  .layer-heading span,
-  .moving-boundary { font-family: var(--font-mono-ui); text-transform: uppercase; }
-  .layer-heading span { color: var(--text-muted); font-size: 0.6875rem; letter-spacing: 0.08em; }
-  .layer-heading strong { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; }
-  .items { display: grid; gap: 0.35rem 0.9rem; }
-  .items span { color: var(--text-secondary); font-size: 0.8125rem; line-height: 1.55; }
-  .is-emphasized { border-left: 2px solid var(--accent); padding-left: 1rem; }
-  .is-emphasized .layer-heading span,
-  .is-emphasized .layer-heading strong { color: var(--accent); }
-  .moving-boundary {
-    display: grid;
-    grid-template-columns: auto minmax(2rem, 1fr);
-    gap: 0.65rem;
-    align-items: center;
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 0.75rem 0;
-    color: var(--accent);
-    font-size: 0.6875rem;
+
+  .upper-layers,
+  .lower-layers {
+    min-width: 0;
+  }
+
+  .upper-layers {
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+  }
+
+  .meta,
+  .foundation,
+  .boundary-marker span,
+  .responsibility-grid span {
+    font-family: var(--font-mono-ui);
+    font-size: var(--research-diagram-label, 0.625rem);
     letter-spacing: 0.08em;
+    line-height: 1.55;
   }
-  .moving-boundary div { height: 1px; background: linear-gradient(90deg, var(--accent), transparent); }
-  .moving-boundary strong { grid-column: 1 / -1; color: var(--text-muted); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.06em; }
-  @media (min-width: 760px) {
-    .layer { grid-template-columns: minmax(13rem, 0.72fr) minmax(0, 1.28fr); align-items: start; gap: 1.3rem; padding: 1rem 0; }
-    .items { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .moving-boundary { grid-template-columns: auto minmax(4rem, 1fr) auto; }
-    .moving-boundary strong { grid-column: auto; }
+
+  .meta,
+  .foundation,
+  .responsibility-grid span {
+    color: var(--text-muted);
+  }
+
+  .meta,
+  .foundation,
+  .boundary-marker span {
+    text-transform: uppercase;
+  }
+
+  .meta.accent,
+  .boundary-marker {
+    color: var(--accent);
+  }
+
+  h4 {
+    margin-top: 0.7rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: var(--research-diagram-node, 0.875rem);
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  h4 + p {
+    margin-top: 0.65rem !important;
+    color: var(--text-secondary);
+    font-size: var(--research-diagram-copy, 0.875rem);
+    line-height: 1.6;
+  }
+
+  .framework-layer {
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1rem;
+  }
+
+  .lower-layers {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1.4rem;
+  }
+
+  .boundary-marker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem 0.75rem;
+    margin-bottom: 1.15rem;
+    border-bottom: 1px dashed var(--accent);
+    padding-bottom: 0.85rem;
+  }
+
+  .boundary-marker p {
+    color: var(--text-secondary);
+    font-size: var(--research-diagram-caption, 0.75rem);
+    line-height: 1.5;
+  }
+
+  .responsibility-grid {
+    display: grid;
+    gap: 1px;
+    margin-top: 0.8rem;
+    background: var(--border-subtle);
+  }
+
+  .responsibility-grid > div {
+    min-width: 0;
+    background: var(--bg-card);
+    padding: 0.8rem;
+  }
+
+  .responsibility-grid strong {
+    display: block;
+    color: var(--text-primary);
+    font-size: var(--research-diagram-copy, 0.875rem);
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .responsibility-grid span {
+    display: block;
+    margin-top: 0.35rem;
+    text-transform: none;
+  }
+
+  .foundation {
+    margin-top: 1rem !important;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.85rem;
+  }
+
+  @media (min-width: 640px) {
+    .responsibility-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 900px) {
+    .boundary-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: 2rem;
+    }
+
+    .upper-layers {
+      padding-left: 1.25rem;
+    }
+
+    .lower-layers {
+      border-top: 0;
+      border-left: 1px solid var(--border-subtle);
+      padding-top: 0;
+      padding-left: 2rem;
+    }
   }
 </style>
