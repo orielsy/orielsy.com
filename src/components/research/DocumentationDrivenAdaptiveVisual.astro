@@ -18,7 +18,7 @@ const conventionalSteps = [
 
 <figure class="adaptive-documentation-visual not-prose" aria-labelledby="adaptive-documentation-visual-title">
   <header class="visual-header">
-    <p class="figure-label figure-accent">Conceptual comparison · not a measured outcome</p>
+    <p class="visual-eyebrow">Conceptual comparison · not a measured outcome</p>
     <h2 id="adaptive-documentation-visual-title">Two paths through the same task</h2>
   </header>
 
@@ -125,18 +125,24 @@ const conventionalSteps = [
     padding: 1rem 1.25rem;
   }
 
-  .figure-label,
-  .track-index {
-    color: var(--text-muted);
+  .visual-eyebrow {
+    color: var(--accent);
     font-family: var(--font-mono-ui);
-    font-size: var(--research-figure-label, 0.625rem) !important;
+    font-size: 0.625rem !important;
     font-weight: 500;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.16em !important;
     line-height: 1.5 !important;
     text-transform: uppercase;
   }
 
-  .figure-accent,
+  .track-index {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem !important;
+    font-weight: 500;
+    line-height: 1.5 !important;
+  }
+
   .accent-title .track-index {
     color: var(--accent) !important;
   }
