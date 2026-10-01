@@ -18,7 +18,6 @@ const steps = [
   caption="The spec defines intended behavior, while the schema, route, and feed show separate implementation surfaces. This is not an exhaustive proof that every gating requirement is met."
 >
   <div class="chain-wrap">
-    <span class="chain-line" aria-hidden="true"></span>
     <ol class="evidence-chain">
       {steps.map(([label, file, text, Icon], index) => (
         <li>
@@ -27,7 +26,9 @@ const steps = [
             <code>{file}</code>
             <p>{text}</p>
           </div>
-          <span class="icon-node" aria-hidden="true"><Icon size={13} strokeWidth={1.6} /></span>
+          <span class="rail-node" aria-hidden="true">
+            <span class="icon-node"><Icon size={13} strokeWidth={1.6} /></span>
+          </span>
         </li>
       ))}
     </ol>
@@ -56,22 +57,12 @@ const steps = [
   }
 
   .chain-wrap {
-    position: relative;
-  }
-
-  .chain-line {
-    position: absolute;
-    top: 0.5rem;
-    bottom: 0.5rem;
-    left: 11px;
-    width: 1px;
-    background: var(--border-subtle);
+    --chain-gap: 2rem;
   }
 
   .evidence-chain {
-    position: relative;
     display: grid;
-    gap: 2rem;
+    gap: var(--chain-gap);
   }
 
   li {
@@ -81,11 +72,30 @@ const steps = [
     align-items: start;
   }
 
+  .rail-node {
+    position: relative;
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    width: 24px;
+    align-self: stretch;
+    justify-content: center;
+  }
+
+  .rail-node::before {
+    position: absolute;
+    top: calc(var(--chain-gap) / -2);
+    bottom: calc(var(--chain-gap) / -2);
+    left: 50%;
+    width: 1px;
+    transform: translateX(-50%);
+    background: var(--border-subtle);
+    content: '';
+  }
+
   .icon-node {
     position: relative;
     z-index: 1;
-    grid-column: 1;
-    grid-row: 1;
     display: flex;
     width: 24px;
     height: 24px;
@@ -156,19 +166,15 @@ const steps = [
   }
 
   @media (min-width: 760px) {
-    .chain-line {
-      left: 50%;
-    }
-
     li {
       grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
       gap: 1.25rem;
       align-items: start;
     }
 
-    .icon-node {
+    .rail-node {
       grid-column: 2;
-      justify-self: center;
+      width: 48px;
     }
 
     .step-copy {
