@@ -77,8 +77,9 @@ const rows = [
 
   .scenario-cell strong {
     color: var(--text-primary);
-    font-size: 0.875rem;
+    font-size: var(--research-figure-detail, 0.8125rem) !important;
     font-weight: 500;
+    line-height: 1.45;
   }
 
   .ledger p::before {
