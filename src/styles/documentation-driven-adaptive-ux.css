@@ -10,7 +10,9 @@
 }
 
 [data-research-entry="documentation-driven-adaptive-ux"] .reading-depth--editorial {
+  margin-bottom: 1.25rem;
   border-bottom: 0 !important;
+  padding-bottom: 0;
 }
 
 /* Keep section hierarchy typographic; figure numbering carries publication labels. */
