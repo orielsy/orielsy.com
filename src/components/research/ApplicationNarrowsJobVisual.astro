@@ -22,7 +22,7 @@ const jobs = [
 >
   <div class="narrowing-layout">
     <section class="broad-request">
-      <p class="figure-meta">Broad request</p>
+      <p class="figure-label">Broad request</p>
       <h4 class="request figure-node-prominent">“Understand the application and do what I mean.”</h4>
 
       <div class="supplies" aria-label="Constraints supplied by the application">
@@ -34,7 +34,7 @@ const jobs = [
         ))}
       </div>
 
-      <p class="supply-note figure-meta">Supplied by the application</p>
+      <p class="supply-note figure-label">Supplied by the application</p>
     </section>
 
     <div class="narrow-arrow" aria-hidden="true">
@@ -43,7 +43,7 @@ const jobs = [
     </div>
 
     <section class="narrow-jobs">
-      <p class="figure-meta figure-accent">Narrow job</p>
+      <p class="figure-label figure-accent">Narrow job</p>
       <ul>
         {jobs.map(([verb, object]) => (
           <li>
@@ -119,7 +119,6 @@ const jobs = [
 
   .supply-note {
     margin-top: 0.75rem !important;
-    text-transform: uppercase;
   }
 
   .narrow-arrow {
@@ -144,7 +143,7 @@ const jobs = [
   }
 
   .narrow-jobs li {
-    background: var(--bg-secondary);
+    background: color-mix(in srgb, var(--text-primary) 3%, var(--bg-card));
     padding: 0.75rem 1rem;
     color: var(--text-secondary);
     font-size: var(--research-figure-copy, 0.875rem);
