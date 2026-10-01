@@ -9,6 +9,10 @@
   hyphens: manual;
 }
 
+[data-research-entry="documentation-driven-adaptive-ux"] .reading-depth--editorial {
+  border-bottom: 0;
+}
+
 /* Keep section hierarchy typographic; figure numbering carries publication labels. */
 [data-research-entry="documentation-driven-adaptive-ux"] .research-prose h2 {
   counter-increment: none !important;
