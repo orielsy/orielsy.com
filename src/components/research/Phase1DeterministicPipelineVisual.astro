@@ -11,21 +11,100 @@ const stages = [
   ['Structured UI response', 'Render permitted guidance or offer'],
 ];
 ---
-<ResearchFigureFrame className="adaptive-pipeline" {figureNumber} title="Six decision stages; seven distinct concerns" status="Phase 1 · deterministic" caption="Domain state, runtime context, validation, product knowledge, knowledge applicability, response policy, and rendering remain distinct. The lab uses authored fixtures, not a document-ingestion pipeline. No inference is required.">
-  <ol aria-label="Deterministic Phase 1 decision path">{stages.map(([title, detail], index) => <li><span>0{index + 1}</span><div><h4>{title}</h4><p>{detail}</p></div></li>)}</ol>
-  <p class="boundary">Application state and validation remain authoritative.</p>
+
+<ResearchFigureFrame
+  className="adaptive-pipeline"
+  {figureNumber}
+  title="Six decision stages; seven distinct concerns"
+  status="Phase 1 · deterministic"
+  caption="Domain state, runtime context, validation, product knowledge, knowledge applicability, response policy, and rendering remain distinct. The lab uses authored fixtures, not a document-ingestion pipeline. No inference is required."
+>
+  <ol aria-label="Deterministic Phase 1 decision path">
+    {stages.map(([title, detail], index) => (
+      <li>
+        <span class="figure-meta figure-accent">0{index + 1}</span>
+        <div>
+          <h4 class="figure-node">{title}</h4>
+          <p class="figure-support">{detail}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+  <p class="boundary figure-copy">Application state and validation remain authoritative.</p>
 </ResearchFigureFrame>
+
 <style>
-  .adaptive-pipeline :global(ol), .adaptive-pipeline :global(li), .adaptive-pipeline :global(h4), .adaptive-pipeline :global(p) { margin: 0; }
-  .adaptive-pipeline :global(ol) { padding: 0; list-style: none; }
-  ol { display: grid; border-block: 1px solid var(--border-subtle); }
-  li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: .65rem; padding: .85rem 0; }
-  li + li { border-top: 1px solid var(--border-subtle); }
-  li > span { color: var(--accent); font-family: var(--font-mono-ui); font-size: .6875rem; line-height: 2; }
-  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: .9375rem; font-weight: 600; }
-  li p { margin-top: .25rem !important; color: var(--text-secondary); font-size: .875rem; line-height: 1.55; }
-  .boundary { margin-top: 1rem !important; color: var(--text-primary); font-size: .875rem; line-height: 1.6; }
-  @media (min-width: 640px) { ol { grid-template-columns: repeat(3,minmax(0,1fr)); } li { display: block; padding: 1rem; border-bottom: 1px solid var(--border-subtle); } li + li { border-top: 0; } li:nth-child(3n + 2), li:nth-child(3n + 3) { border-left: 1px solid var(--border-subtle); } li:nth-child(3n + 1) { padding-left: 0; } li:nth-child(n + 4) { border-bottom: 0; } h4 { margin-top: .45rem !important; } }
-  :global(.research-reading .research-prose figure.adaptive-pipeline) { border-radius: 0 !important; }
-  :global(.research-reading .research-prose figure.adaptive-pipeline) li p, :global(.research-reading .research-prose figure.adaptive-pipeline) .boundary { font-size: .875rem !important; line-height: 1.6 !important; }
+  .adaptive-pipeline :global(ol),
+  .adaptive-pipeline :global(li),
+  .adaptive-pipeline :global(h4),
+  .adaptive-pipeline :global(p) {
+    margin: 0;
+  }
+
+  .adaptive-pipeline :global(ol) {
+    padding: 0;
+    list-style: none;
+  }
+
+  ol {
+    display: grid;
+    border-block: 1px solid var(--border-subtle);
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.65rem;
+    padding: 0.85rem 0;
+  }
+
+  li + li {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  li .figure-meta {
+    line-height: 1.8 !important;
+  }
+
+  li .figure-support {
+    margin-top: 0.25rem !important;
+  }
+
+  .boundary {
+    margin-top: 1rem !important;
+    color: var(--text-primary) !important;
+  }
+
+  @media (min-width: 640px) {
+    ol {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    li {
+      display: block;
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    li + li {
+      border-top: 0;
+    }
+
+    li:nth-child(3n + 2),
+    li:nth-child(3n + 3) {
+      border-left: 1px solid var(--border-subtle);
+    }
+
+    li:nth-child(3n + 1) {
+      padding-left: 0;
+    }
+
+    li:nth-child(n + 4) {
+      border-bottom: 0;
+    }
+
+    li .figure-node {
+      margin-top: 0.45rem !important;
+    }
+  }
 </style>
