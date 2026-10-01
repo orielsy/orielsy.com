@@ -22,12 +22,17 @@ import ContextRecompilationVisual from '../../components/research/ContextRecompi
 import ContextZenContinuationVisual from '../../components/research/ContextZenContinuationVisual.astro';
 import ContextZenExperimentVisual from '../../components/research/ContextZenExperimentVisual.astro';
 import ContextZenLifecycleVisual from '../../components/research/ContextZenLifecycleVisual.astro';
-import ContextZenOverview from '../../components/research/ContextZenOverview.astro';
+import ContextZenReadingOverview from '../../components/research/ContextZenReadingOverview.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+import ResearchReadingDepth from '../../components/research/ResearchReadingDepth.astro';
 
-<ResearchBreakout mode="wide">
-  <ContextZenOverview />
-</ResearchBreakout>
+<ResearchReadingDepth overviewTime="2 min" fullResearchTime="5 min" presentation="editorial" />
+
+<div data-reading-depth-overview>
+  <ContextZenReadingOverview />
+</div>
+
+<div data-reading-depth-marker="full" aria-hidden="true"></div>
 
 ## The Problem Is Not Capacity
 
