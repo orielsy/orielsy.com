@@ -59,21 +59,21 @@ import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 
 Enterprise software usually treats product knowledge and product behavior as separate systems. The application knows its state. Validation knows which values are required. Documentation explains concepts, release notes describe version changes, and implementation guides tell users how to make a choice. Those sources often live outside the interface that needs them.
 
-The familiar result is an external detour: a user reaches a configuration field, encounters uncertainty, leaves the application, searches documentation, interprets what they find, and then returns to the original task.
+One possible detour is familiar in shape: a user reaches a configuration field, encounters uncertainty, leaves the application to consult documentation, interprets what they find, and returns to the task. This is the design problem illustrated below, not a measured journey in this experiment.
 
 <p className="paper-pullquote">Move the knowledge, not the user.</p>
 
 <DocumentationDrivenAdaptiveVisual />
 
-The opportunity is not simply to move documentation into a tooltip. A static tooltip gives every user the same explanation. A context-aware interface can determine whether a note applies to the current version, whether the user needs conceptual help, and whether the available evidence supports an action.
+The opportunity is not simply to move documentation into a tooltip. A static tooltip gives every user the same explanation. Here, explicit conditions select a note for the current version, simulated familiarity, and field state; separate application rules determine whether the interface may explain, guide, or offer a value. This does not determine what an individual user actually needs.
 
-The reference experiment makes this concrete at one required Data Connection field. A standard form and an adaptive form receive the same version, simulated user familiarity, compatible options, and validation rule. The adaptive form can explain a missing choice, vary authored guidance, or offer the sole compatible connection for the user to accept; it cannot choose among several. The working comparison appears below, after the decision boundaries that explain it.
+The reference experiment makes this concrete at one required Data Connection field. A standard form and an adaptive form receive the same version, simulated user familiarity, compatible options, and validation rule. The adaptive form can explain a missing choice, vary authored guidance, or offer the sole compatible connection for the user to accept; it cannot choose among several. The working comparison is linked below, after the decision boundaries that explain it, and lives with the companion project.
 
 ## Start with Application Truth
 
 The first architectural rule is simple: the application remains authoritative. Documentation can explain a rule, but it should not redefine it. Product knowledge can enrich the experience, but deterministic business logic should remain deterministic.
 
-Taking that rule seriously separates the experiment into seven concerns. They fall into three groups, and the groups are also the order in which a decision is made: the application establishes what is true, authored knowledge is selected against that truth, and only then does the interface decide how strongly to respond and how to show it. Every concern reads from the groups before it; none writes back. No step requires inference.
+Taking that rule seriously separates the experiment into seven concerns. They fall into three groups, and the groups are also the order in which a decision is made: the application establishes what is true, authored knowledge is selected against that truth, and only then does the interface decide how strongly to respond and how to show it. The later groups depend on application truth, but they do not redefine it. Phase 1 makes these decisions without inference.
 
 <Phase1DeterministicPipelineVisual figureNumber="01" />
 
@@ -124,7 +124,7 @@ This separation becomes especially important if semantic retrieval is added late
 
 ## UI Authority Should Follow Evidence
 
-The more deterministic the evidence, the more strongly the interface may act. The progression can move from no intervention through expanded description, contextual help, current-state explanation, highlighting, and a suggested next action to preconfiguring a safe value. Phase 1 never performs an autonomous destructive action.
+Stronger intervention needs a narrower, explicitly authorized basis; certainty about compatible options is not certainty about the user's intent. A response policy might range from no intervention through explanation, help, highlighting, and guidance to an offer to use the sole compatible value. In Phase 1, accepting that offer is the user's action; the interface does not silently set the field or perform an autonomous destructive action.
 
 The critical boundary is between guidance and choice.
 
@@ -142,13 +142,13 @@ The critical boundary is between guidance and choice.
   <div className="paper-authority-level paper-authority-level-offer">
     <span className="paper-authority-index">03</span>
     <div className="paper-authority-name"><Gauge size={16} strokeWidth={1.6} aria-hidden="true" /><strong>Offer</strong></div>
-    <p>Present a safe value when exactly one valid option exists.</p>
+    <p>Offer the sole compatible value for the user to accept.</p>
   </div>
 </div>
 
 If several Data Connections are compatible, the system can explain the requirement and guide the user toward the field, but it does not know which connection matches the user’s intent. It must not guess.
 
-If exactly one compatible Data Connection exists, the evidence changes. The interface can safely offer that value as a user-accepted action because no competing valid candidate remains.
+If exactly one compatible Data Connection exists in the controlled scenario, the interface may offer it as an explicit user-accepted action. The candidate count removes ambiguity among the available values; it does not establish the user's intent or guarantee that the connection is appropriate for their task.
 
 <ResearchBreakout mode="publication">
 <div className="paper-reference-section">
@@ -170,7 +170,7 @@ If exactly one compatible Data Connection exists, the evidence changes. The inte
 
 ### Scenario Evidence
 
-The value of the experiment is in the differences between states, not in any single message. Both surfaces start from the same scenario and application truth while maintaining independent interaction state for comparison. Figure 03 records what each state permits—and where the response stops.
+The experiment makes differences between controlled states inspectable; no single message establishes an outcome. Both surfaces start from the same scenario and application truth while maintaining independent interaction state for comparison. Figure 03 records what each state permits—and where the response stops.
 
 <AdaptiveUxScenarioEvidenceVisual />
 
@@ -184,7 +184,7 @@ These are properties demonstrated by the deterministic reference implementation,
     <ul>
       <li>Product knowledge can participate in interface behavior without owning business logic.</li>
       <li>The interface can vary guidance without inference.</li>
-      <li>Evidence certainty can constrain the interface’s permitted action.</li>
+      <li>The count of compatible options constrains whether the interface guides a choice or offers one value for the user to accept.</li>
       <li>Progressive help can be represented as an explicit response policy.</li>
     </ul>
   </section>
@@ -226,7 +226,7 @@ Where such inference would run is a separate, unevaluated question. Browser-loca
 
 The broader direction is not to eliminate documentation. Long-form documentation remains necessary for learning, implementation, troubleshooting, and reference. The opportunity is to stop treating it as useful only after the user leaves the product to search for it.
 
-Some product knowledge can be structured so the application understands what concept it describes, which state makes it relevant, which versions it applies to, which audience needs it, where it came from, and what level of action it can safely support.
+Some product knowledge can be structured with its concept, applicability conditions, audience, version, and provenance. Application state and response policy—not the knowledge fragment alone—determine whether and how the interface may act on it.
 
 At that point, documentation is no longer only a destination. It becomes one input into interface behavior. The strongest version is not an interface that constantly talks: it becomes quieter when context is obvious, more explanatory when uncertainty is predictable, and more helpful only when the available evidence justifies it.
 
