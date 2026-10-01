@@ -1,47 +1,105 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
 const repoScaffolding = ['VADFactory', 'PyAnnote dependencies', 'lazy get_vad() helper'];
 const activePath = [
   'Buffered audio reaches process_buffer()',
-  'model.transcribe() runs without the VAD path being invoked first',
-  'Returned segments reach CaptionControl.vue',
-  'Client keeps text only when no_speech_prob ≤ 0.6 and temperature ≤ 0.8',
+  'Whisper runs without VAD first',
+  'Segments return to CaptionControl.vue',
+  'Client accepts nonempty text when no_speech_prob ≤ 0.6 and temperature ≤ 0.8',
 ];
 ---
 
 <ResearchFigureFrame
   className="filtering-truth-figure"
-  figureNumber="04"
-  title="Repository scaffolding is not the same as active runtime behavior"
+  figureNumber="03"
+  title="Repository presence is not runtime behavior"
   status="Current public source"
-  caption="Available architecture and active behavior are different claims. Client-side probabilistic filtering reduces likely low-confidence output; it does not guarantee all phantom transcription is eliminated."
+  caption="The distinction is source-grounded. Client filtering can reduce likely low-confidence output; it does not guarantee that all undesirable text is eliminated."
 >
   <div class="truth-grid">
-    <section class="present">
-      <p class="section-label">Present in repository · not active in this path</p>
-      <ul>{repoScaffolding.map((item) => <li>{item}</li>)}</ul>
-      <p>These pieces show available VAD scaffolding, not active silence dropping before Whisper in the current public streaming path.</p>
+    <section>
+      <p class="figure-label">Present in repository</p>
+      <ul>
+        {repoScaffolding.map((item) => <li class="figure-support">{item}</li>)}
+      </ul>
+      <p class="repository-note figure-support">Available scaffolding, not active silence dropping.</p>
     </section>
-    <section class="active">
-      <p class="section-label">Active path in current public source</p>
-      <ol>{activePath.map((item, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><p>{item}</p></li>)}</ol>
+
+    <section class="active-path">
+      <p class="figure-label figure-accent">Active path</p>
+      <ol>
+        {activePath.map((item, index) => (
+          <li>
+            <span class="figure-meta figure-accent">0{index + 1}</span>
+            <span class="figure-support">{item}</span>
+          </li>
+        ))}
+      </ol>
     </section>
   </div>
 </ResearchFigureFrame>
 
 <style>
-  :global(.research-reading .research-prose figure.filtering-truth-figure) { border-radius: 0 !important; }
-  .truth-grid { display: grid; border-block: 1px solid var(--border-subtle); }
-  .truth-grid section { min-width: 0; padding: 1rem 0; }
-  .truth-grid section + section { border-top: 1px solid var(--border-subtle); }
-  .active { border-left: 2px solid var(--accent); padding-left: 1rem !important; }
-  .section-label { margin: 0 !important; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; }
-  .active .section-label { color: var(--accent); }
-  ul, ol { margin: 0.8rem 0 0; padding: 0; list-style: none; }
-  .present li { border-top: 1px solid var(--border-subtle); padding: 0.5rem 0; color: var(--text-primary); font-family: var(--font-mono-ui); font-size: 0.8125rem; }
-  .present > p:last-child { margin: 0.75rem 0 0 !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  .active li { display: grid; grid-template-columns: 2rem minmax(0,1fr); gap: 0.65rem; border-top: 1px solid var(--border-subtle); padding: 0.6rem 0; }
-  .active li > span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; }
-  .active li p { margin: 0 !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.55; }
-  @media (min-width: 800px) { .truth-grid { grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); } .truth-grid section { padding: 1rem; } .truth-grid section:first-child { padding-left: 0; padding-right: 1.5rem; } .truth-grid section + section { border-top: 0; } }
+  .filtering-truth-figure :global(p),
+  .filtering-truth-figure :global(ul),
+  .filtering-truth-figure :global(ol),
+  .filtering-truth-figure :global(li) {
+    margin: 0;
+  }
+
+  .filtering-truth-figure :global(ul),
+  .filtering-truth-figure :global(ol) {
+    padding: 0;
+    list-style: none;
+  }
+
+  .truth-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .truth-grid section {
+    min-width: 0;
+    background: var(--bg-card);
+    padding: 1.25rem;
+  }
+
+  .truth-grid .active-path {
+    background: var(--bg-secondary);
+  }
+
+  .truth-grid ul,
+  .truth-grid ol {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 1rem !important;
+  }
+
+  .truth-grid ul li {
+    border-left: 1px dashed var(--border-subtle);
+    padding-left: 0.75rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono-ui);
+  }
+
+  .repository-note {
+    margin-top: 1rem !important;
+    color: var(--text-muted);
+  }
+
+  .active-path ol li {
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: 0.5rem;
+    border-left: 1px solid var(--accent);
+    padding: 0.5rem 0 0.5rem 0.75rem;
+  }
+
+  @media (min-width: 800px) {
+    .truth-grid {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    }
+  }
 </style>
