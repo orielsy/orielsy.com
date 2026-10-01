@@ -45,12 +45,12 @@ const activePath = [
   .filtering-truth-figure :global(ul),
   .filtering-truth-figure :global(ol),
   .filtering-truth-figure :global(li) {
-    margin: 0;
+    margin: 0 !important;
   }
 
   .filtering-truth-figure :global(ul),
   .filtering-truth-figure :global(ol) {
-    padding: 0;
+    padding: 0 !important;
     list-style: none;
   }
 
@@ -79,7 +79,7 @@ const activePath = [
 
   .truth-grid ul li {
     border-left: 1px dashed var(--border-subtle);
-    padding-left: 0.75rem;
+    padding: 0 0 0 0.75rem !important;
     color: var(--text-secondary);
     font-family: var(--font-mono-ui);
   }
@@ -94,7 +94,7 @@ const activePath = [
     grid-template-columns: 1.75rem minmax(0, 1fr);
     gap: 0.5rem;
     border-left: 1px solid var(--accent);
-    padding: 0.5rem 0 0.5rem 0.75rem;
+    padding: 0.5rem 0 0.5rem 0.75rem !important;
   }
 
   @media (min-width: 800px) {
