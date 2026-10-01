@@ -1,12 +1,12 @@
 <section class="pk-overview not-prose" aria-labelledby="product-knowledge-overview-title">
   <div class="pk-overview__intro">
     <p class="pk-overview__eyebrow">Overview · ~2 min</p>
-    <h2 id="product-knowledge-overview-title">Give the “why” a place to live</h2>
+    <h2 id="product-knowledge-overview-title">Can documentation author an experience?</h2>
     <p>
-      Code implements behavior, application state holds current facts, and schemas define valid structure. Why a flow exists, which information matters, and what to explain when an action is unavailable often live in scattered documents and decisions.
+      Given an existing library of trusted components and actions that engineering built, could documentation become the place where experiences are authored from those parts, with authors describing the task and engineering keeping behavior, state, permission, and policy?
     </p>
     <p>
-      This research asks whether that <strong>product knowledge</strong> can become explicit enough to help assemble parts of an interface from capabilities engineers already built—without becoming authority for facts, permission, policy enforcement, or execution.
+      Making that work suggests something larger: the <strong>product knowledge</strong> in such documents—why a flow exists, what matters, and what to explain—may deserve its own explicit place in the architecture.
     </p>
   </div>
 
@@ -38,17 +38,17 @@
   <div class="pk-overview__section">
     <h3 id="product-knowledge-task">A task, not a new power</h3>
     <p>
-      Imagine an account-review surface. A product author can describe its purpose, relevant details, prerequisites, and helpful explanations. The system might select existing customer, verification, and restriction capabilities around that task.
+      Imagine an account-review screen. A product author can describe its purpose, relevant details, prerequisites, and helpful explanations. A system might one day select existing customer, verification, and restriction tools around that task.
     </p>
     <p>
-      But a description cannot retrieve transactions, verify a person, authorize removal, or invent a verification capability that has not been built. Composition can arrange trusted capabilities; it cannot make missing behavior real.
+      But a description cannot retrieve transactions, verify a person, authorize removal, or invent a verification capability that has not been built.
     </p>
   </div>
 
   <div class="pk-overview__section pk-overview__closing">
     <h3 id="product-knowledge-open-question">The question still open</h3>
     <p>
-      This is an architectural proposition, not a working generator or a case for generating every screen. Product knowledge would need clear ownership, conditions for when it applies, synchronization with code and policy, and tests that prove a proposed composition is allowed.
+      This is an architectural proposal, not a working generator or a case for generating every screen. Product knowledge would need clear ownership, conditions for when it applies, and tests against code and policy.
     </p>
     <p>
       If those boundaries hold, how much of a repeated workflow could be composed without giving up deliberate design or deterministic control?
