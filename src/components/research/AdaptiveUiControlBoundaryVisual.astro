@@ -39,6 +39,35 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     margin: 0;
   }
 
+  /* Project pages do not sit inside the research-prose wrapper, so preserve
+     the same semantic figure hierarchy locally instead of falling back to
+     ordinary project typography. */
+  .adaptive-control-boundary :global(.figure-label) {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: var(--research-figure-label, 0.625rem) !important;
+    font-weight: 500;
+    line-height: 1.5 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+  }
+
+  .adaptive-control-boundary :global(.figure-accent) {
+    color: var(--accent) !important;
+  }
+
+  .adaptive-control-boundary :global(.figure-copy) {
+    color: var(--text-secondary);
+    font-size: var(--research-figure-copy, 0.875rem) !important;
+    line-height: 1.6 !important;
+  }
+
+  .adaptive-control-boundary :global(.figure-support) {
+    color: var(--text-muted);
+    font-size: var(--research-figure-support, 0.75rem) !important;
+    line-height: 1.5 !important;
+  }
+
   .operator-conditions {
     border-left: 2px solid var(--accent);
     background: var(--research-figure-surface-emphasis, var(--bg-card-hover));
