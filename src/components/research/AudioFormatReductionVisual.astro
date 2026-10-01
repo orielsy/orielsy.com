@@ -50,7 +50,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   .format-comparison section {
     min-width: 0;
-    background: var(--bg-card);
+    background: var(--research-figure-surface-base, var(--bg-primary));
     padding: 1.25rem;
   }
 
@@ -80,7 +80,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    background: var(--bg-secondary);
+    background: var(--research-figure-surface-emphasis, var(--bg-card-hover));
     padding: 1rem;
     color: var(--text-muted);
     text-align: center;
