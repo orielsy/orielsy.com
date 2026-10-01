@@ -198,7 +198,7 @@ html[data-motion="reduced"] *::after {
 }
 
 .prose h2 {
-  font-size: 1.45rem;
+  font-size: clamp(1.5rem, 2vw, 1.875rem);
   line-height: 1.35;
   margin-top: 2.25rem;
   margin-bottom: 0.75rem;
@@ -207,7 +207,7 @@ html[data-motion="reduced"] *::after {
 }
 
 .prose h3 {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   line-height: 1.4;
   margin-top: 1.75rem;
   margin-bottom: 0.5rem;
@@ -326,7 +326,6 @@ html.dark .astro-code span {
   padding-bottom: 0;
   border-top: 1px solid var(--border-subtle);
   border-bottom: 0;
-  font-size: clamp(1.55rem, 2vw, 2rem);
   line-height: 1.18;
   letter-spacing: -0.035em;
 }
@@ -334,7 +333,6 @@ html.dark .astro-code span {
 .research-prose h3 {
   margin-top: 2.75rem;
   margin-bottom: 0.75rem;
-  font-size: 1.2rem;
   line-height: 1.35;
   letter-spacing: -0.025em;
 }
