@@ -286,7 +286,9 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
       position: sticky;
       top: 6rem;
     }
+  }
 
+  @media (min-width: 1280px) {
     .research-toc-sticky[data-yielding] {
       opacity: 0;
       transform: translateY(-0.5rem);
@@ -302,7 +304,7 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
 </style>
 
 <script>
-  const desktopResearchLayout = window.matchMedia('(min-width: 1024px)');
+  const publicationBreakoutLayout = window.matchMedia('(min-width: 1280px)');
   const tocShell = document.querySelector<HTMLElement>('[data-research-toc-shell]');
   const publicationPlates = Array.from(
     document.querySelectorAll<HTMLElement>('[data-breakout-mode="publication"]'),
@@ -333,7 +335,7 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
     const setupObserver = () => {
       disconnectObserver();
 
-      if (!desktopResearchLayout.matches) return;
+      if (!publicationBreakoutLayout.matches) return;
 
       const stickyTop = 96;
       const tocHeight = Math.max(1, Math.ceil(tocShell.getBoundingClientRect().height));
@@ -367,7 +369,10 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
       resizeTimer = window.setTimeout(setupObserver, 120);
     };
 
-    desktopResearchLayout.addEventListener('change', setupObserver);
+    const tocResizeObserver = new ResizeObserver(scheduleObserverRefresh);
+    tocResizeObserver.observe(tocShell);
+
+    publicationBreakoutLayout.addEventListener('change', setupObserver);
     window.addEventListener('resize', scheduleObserverRefresh, { passive: true });
     setupObserver();
   }
