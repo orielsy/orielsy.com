@@ -2,13 +2,13 @@
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 const established = [
-  { concern: 'Implemented behavior', owner: 'Code', detail: 'Mechanics, side effects, algorithms' },
-  { concern: 'Current facts', owner: 'Application state / data', detail: 'What the application knows now' },
-  { concern: 'Structure & contracts', owner: 'Schemas', detail: 'Valid shapes, fields, interfaces' },
+  { concern: 'Implemented behavior', owner: 'Code' },
+  { concern: 'Current facts', owner: 'Application state / data' },
+  { concern: 'Structure & contracts', owner: 'Schemas' },
 ];
 const proposed = [
-  { concern: 'Meaning / intent / explanation', owner: 'Product knowledge', detail: 'Purpose, relevance, prerequisites, policy rationale' },
-  { concern: 'Composition', owner: 'Context + policy + trusted capabilities', detail: 'What may be selected and arranged for this task' },
+  { concern: 'Meaning / intent / explanation', owner: 'Product knowledge' },
+  { concern: 'Composition', owner: 'Product knowledge + policy + trusted capabilities' },
 ];
 ---
 
@@ -22,10 +22,10 @@ const proposed = [
     <section aria-label="Established architectural homes">
       <p class="map-label figure-meta">Established homes</p>
       <dl class="ownership-list">
-        {established.map(({ concern, owner, detail }) => (
+        {established.map(({ concern, owner }) => (
           <div class="ownership-row">
             <dt>{concern}</dt>
-            <dd><strong>{owner}</strong><span>{detail}</span></dd>
+            <dd><strong>{owner}</strong></dd>
           </div>
         ))}
       </dl>
@@ -33,10 +33,10 @@ const proposed = [
     <section class="proposed-homes" aria-label="Proposed explicit ownership">
       <p class="map-label figure-meta">Proposed explicit ownership</p>
       <dl class="ownership-list">
-        {proposed.map(({ concern, owner, detail }) => (
+        {proposed.map(({ concern, owner }) => (
           <div class="ownership-row proposed-row">
             <dt>{concern}</dt>
-            <dd><strong>{owner}</strong><span>{detail}</span></dd>
+            <dd><strong>{owner}</strong></dd>
           </div>
         ))}
       </dl>
@@ -61,7 +61,6 @@ const proposed = [
   .context-architecture-figure .ownership-row dt { color: var(--text-secondary); }
   .context-architecture-figure .ownership-row dd { min-width: 0; margin: 0; color: var(--text-primary); }
   .context-architecture-figure .ownership-row strong { display: block; font-weight: 600; }
-  .context-architecture-figure .ownership-row dd span { display: block; margin-top: 0.2rem; color: var(--text-muted); font-size: 0.75rem; line-height: 1.5; }
   .context-architecture-figure .proposed-row { display: block; }
   .context-architecture-figure .proposed-row dd { margin-top: 0.3rem; }
   .context-architecture-figure .proposed-row strong { font-family: var(--font-display); font-size: 1rem; line-height: 1.45; }
