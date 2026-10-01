@@ -1,60 +1,198 @@
 ---
+import { ArrowDown, ArrowRight, GitBranch } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
-const steps = [
-  {
-    label: 'Framework-owned capability',
-    detail: 'Multiple frameworks independently maintain reactive graphs and dependency tracking.',
-  },
-  {
-    label: 'Shared ecosystem behavior',
-    detail: 'Enough implementations converge that the common semantics become easier to describe.',
-  },
-  {
-    label: 'Standardizable primitive',
-    detail: 'TC39 can explore a lower-level signal graph that multiple frameworks could build upon.',
-  },
-  {
-    label: 'Framework policy remains',
-    detail: 'Scheduling, effects, rendering coordination, ownership, disposal, and composition stay above the primitive.',
-  },
-];
+const policies = ['Effect scheduling', 'Ownership + disposal', 'Batching policy', 'Rendering coordination'];
 ---
 
 <ResearchFigureFrame
   className="signal-standardization-figure"
   figureNumber="02"
-  title="A primitive can move downward without the framework disappearing"
-  caption="Signals illustrates the distinction between standardizing a common low-level mechanism and standardizing the framework policy built above it."
+  title="A shared graph is not a shared runtime"
+  status="TC39 Signals · Stage 1 proposal"
+  caption="Multiple framework implementations motivate exploration of common semantics; convergence is a hypothesis to investigate, not proof of standardization. A possible standard graph is not a complete reactive framework. Interoperability and tooling benefits remain possibilities."
 >
-  <ol class="signal-path">
-    {steps.map((step, index) => (
-      <li>
-        <div class="step-head">
-          <span>{String(index + 1).padStart(2, '0')}</span>
-          <strong>{step.label}</strong>
-        </div>
-        <p>{step.detail}</p>
-      </li>
-    ))}
-  </ol>
+  <div class="signals-grid">
+    <section class="substrate-card">
+      <p class="meta">Proposed common substrate</p>
+      <div class="substrate-core">
+        <GitBranch class="signal-icon" size={24} strokeWidth={1.5} aria-hidden="true" />
+        <h4>Signal graph</h4>
+        <p>Dependency relationships and auto-tracking</p>
+      </div>
+      <p class="substrate-note">Potential shared infrastructure</p>
+    </section>
+
+    <div class="flow" aria-hidden="true">
+      <ArrowDown class="flow-mobile" size={18} strokeWidth={1.5} />
+      <ArrowRight class="flow-desktop" size={18} strokeWidth={1.5} />
+    </div>
+
+    <section class="policy-card">
+      <p class="meta">Above the primitive · still chosen</p>
+      <div class="policy-grid">
+        {policies.map((policy, index) => (
+          <div>
+            <span>0{index + 1}</span>
+            <strong>{policy}</strong>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <p class="signal-conclusion">Shared graph semantics could support interoperability without enforcing one rendering or scheduling model.</p>
 </ResearchFigureFrame>
 
 <style>
-  :global(.research-reading .research-prose figure.signal-standardization-figure) { border-radius: 0 !important; }
-  .signal-path { display: grid; margin: 0; padding: 0; border-block: 1px solid var(--border-subtle); list-style: none; }
-  li { margin: 0; padding: 1rem 0; }
-  li + li { border-top: 1px solid var(--border-subtle); }
-  .step-head { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.55rem; align-items: baseline; }
-  .step-head span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; }
-  .step-head strong { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.4; }
-  li p { margin: 0.45rem 0 0 !important; padding-left: 2.55rem; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  @media (min-width: 760px) {
-    .signal-path { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    li { min-width: 0; padding: 1rem; }
-    li:first-child { padding-left: 0; }
-    li + li { border-top: 0; border-left: 1px solid var(--border-subtle); }
-    .step-head { grid-template-columns: 1fr; gap: 0.35rem; }
-    li p { padding-left: 0; }
+  .signal-standardization-figure :global(p),
+  .signal-standardization-figure :global(h4) {
+    margin: 0;
+  }
+
+  .signals-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .substrate-card,
+  .policy-card {
+    min-width: 0;
+  }
+
+  .substrate-card {
+    display: flex;
+    flex-direction: column;
+    border-left: 2px solid var(--accent);
+    background: var(--bg-secondary);
+    padding: 1rem;
+  }
+
+  .policy-card {
+    border: 1px solid var(--border-subtle);
+    padding: 1rem;
+  }
+
+  .meta,
+  .substrate-note,
+  .policy-grid span {
+    font-family: var(--font-mono-ui);
+    font-size: var(--research-diagram-label, 0.625rem);
+    letter-spacing: 0.08em;
+    line-height: 1.55;
+    text-transform: uppercase;
+  }
+
+  .meta,
+  .substrate-note {
+    color: var(--text-muted);
+  }
+
+  .substrate-core {
+    padding: 1.35rem 0;
+  }
+
+  .signal-icon {
+    margin-bottom: 0.9rem;
+    color: var(--accent);
+  }
+
+  .substrate-core h4 {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: var(--research-diagram-node, 0.875rem);
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .substrate-core p {
+    margin-top: 0.55rem !important;
+    color: var(--text-secondary);
+    font-size: var(--research-diagram-copy, 0.875rem);
+    line-height: 1.6;
+  }
+
+  .substrate-note {
+    margin-top: auto !important;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.75rem;
+  }
+
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+  }
+
+  .flow-desktop {
+    display: none;
+  }
+
+  .policy-grid {
+    display: grid;
+    gap: 1px;
+    margin-top: 0.8rem;
+    background: var(--border-subtle);
+  }
+
+  .policy-grid > div {
+    min-width: 0;
+    min-height: 5rem;
+    background: var(--bg-card);
+    padding: 0.8rem;
+  }
+
+  .policy-grid span {
+    color: var(--accent);
+  }
+
+  .policy-grid strong {
+    display: block;
+    margin-top: 0.45rem;
+    color: var(--text-primary);
+    font-size: var(--research-diagram-copy, 0.875rem);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .signal-conclusion {
+    margin-top: 1.25rem !important;
+    border-top: 1px dashed var(--border-subtle);
+    padding-top: 0.85rem;
+    color: var(--text-secondary);
+    font-size: var(--research-diagram-copy, 0.875rem);
+    line-height: 1.6;
+  }
+
+  @media (min-width: 640px) {
+    .policy-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 900px) {
+    .signals-grid {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.15fr);
+      align-items: stretch;
+    }
+
+    .substrate-card,
+    .policy-card {
+      padding: 1.1rem;
+    }
+
+    .substrate-core {
+      margin: auto 0;
+      padding-block: 1.5rem;
+    }
+
+    .flow-mobile {
+      display: none;
+    }
+
+    .flow-desktop {
+      display: block;
+    }
   }
 </style>
