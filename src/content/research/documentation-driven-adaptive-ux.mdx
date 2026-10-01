@@ -23,6 +23,7 @@ socialCard:
   description: "Connecting authored product knowledge to current application state."
 ---
 
+import { Gauge } from '@lucide/astro';
 import '../../styles/documentation-driven-adaptive-ux.css';
 import ApplicabilityVsPolicyVisual from '../../components/research/ApplicabilityVsPolicyVisual.astro';
 import Phase1DeterministicPipelineVisual from '../../components/research/Phase1DeterministicPipelineVisual.astro';
@@ -119,21 +120,31 @@ Keeping those decisions separate prevents the knowledge layer from becoming an a
 
 ## UI Authority Should Follow Evidence
 
-The lab uses a simple rule: **the more deterministic the evidence, the more strongly the interface may act.**
+The more deterministic the evidence, the more strongly the interface may act. The progression can move from no intervention through expanded description, contextual help, current-state explanation, highlighting, and a suggested next action to preconfiguring a safe value. Phase 1 never performs an autonomous destructive action.
 
-<ol className="paper-authority-scale">
-  <li>no intervention</li>
-  <li>expanded description</li>
-  <li>contextual help</li>
-  <li>current-state explanation</li>
-  <li>highlight the relevant control</li>
-  <li>suggest the next action</li>
-  <li>preconfigure a safe value</li>
-</ol>
+The critical boundary is between guidance and choice.
 
-The Data Connection experiment maps directly onto that scale. With several compatible connections, the interface may explain, highlight, and guide, but it cannot choose because user intent is unresolved. With exactly one compatible connection, it may offer that value as a user-accepted action.
+<div className="paper-authority-levels">
+  <div className="paper-authority-level">
+    <span className="paper-authority-index">01</span>
+    <div className="paper-authority-name"><Gauge size={16} strokeWidth={1.6} aria-hidden="true" /><strong>Explain</strong></div>
+    <p>Expose the meaning of the field or a relevant version note.</p>
+  </div>
+  <div className="paper-authority-level">
+    <span className="paper-authority-index">02</span>
+    <div className="paper-authority-name"><Gauge size={16} strokeWidth={1.6} aria-hidden="true" /><strong>Guide</strong></div>
+    <p>Highlight the control and clarify the choice that remains.</p>
+  </div>
+  <div className="paper-authority-level paper-authority-level-offer">
+    <span className="paper-authority-index">03</span>
+    <div className="paper-authority-name"><Gauge size={16} strokeWidth={1.6} aria-hidden="true" /><strong>Offer</strong></div>
+    <p>Present a safe value when exactly one valid option exists.</p>
+  </div>
+</div>
 
-Evidence changes authority; the system does not guess.
+If several Data Connections are compatible, the system can explain the requirement and guide the user toward the field, but it does not know which connection matches the user’s intent. It must not guess.
+
+If exactly one compatible Data Connection exists, the evidence changes. The interface can safely offer that value as a user-accepted action because no competing valid candidate remains.
 
 ## What Phase 1 Shows
 
