@@ -56,13 +56,21 @@ const steps = [
     padding: 0 !important;
   }
 
-  .chain-wrap {
-    --chain-gap: 2rem;
+  .evidence-chain {
+    position: relative;
+    display: grid;
+    gap: 2rem;
   }
 
-  .evidence-chain {
-    display: grid;
-    gap: var(--chain-gap);
+  .evidence-chain::before {
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 12px;
+    width: 1px;
+    transform: translateX(-50%);
+    background: var(--border-subtle);
+    content: '';
   }
 
   li {
@@ -74,23 +82,12 @@ const steps = [
 
   .rail-node {
     position: relative;
+    z-index: 1;
     grid-column: 1;
     grid-row: 1;
     display: flex;
     width: 24px;
-    align-self: stretch;
     justify-content: center;
-  }
-
-  .rail-node::before {
-    position: absolute;
-    top: calc(var(--chain-gap) / -2);
-    bottom: calc(var(--chain-gap) / -2);
-    left: 50%;
-    width: 1px;
-    transform: translateX(-50%);
-    background: var(--border-subtle);
-    content: '';
   }
 
   .icon-node {
@@ -166,6 +163,10 @@ const steps = [
   }
 
   @media (min-width: 760px) {
+    .evidence-chain::before {
+      left: 50%;
+    }
+
     li {
       grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
       gap: 1.25rem;
