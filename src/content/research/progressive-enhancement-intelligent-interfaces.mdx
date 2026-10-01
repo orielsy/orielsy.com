@@ -19,6 +19,7 @@ home:
 
 import ChatVsEmbeddedCapabilityVisual from '../../components/research/ChatVsEmbeddedCapabilityVisual.astro';
 import ApplicationNarrowsJobVisual from '../../components/research/ApplicationNarrowsJobVisual.astro';
+import ProgressiveEnhancementExamplesVisual from '../../components/research/ProgressiveEnhancementExamplesVisual.astro';
 import ProgressiveEnhancementTiersVisual from '../../components/research/ProgressiveEnhancementTiersVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 
@@ -107,6 +108,10 @@ Two projects on this site approach the same principle from different directions.
 [speechBubbles](/projects/local-ai-real-time-captioning) uses local Whisper inference for one narrow job—speech recognition—without requiring a cloud transcription service.
 
 [Documentation-Driven Adaptive UX](/research/documentation-driven-adaptive-ux) goes further in the other direction: Phase 1 uses no inference at all. Deterministic application state and authored knowledge handle the baseline, leaving future AI only the ambiguity the application cannot resolve cleanly itself.
+
+<ResearchBreakout mode="wide">
+  <ProgressiveEnhancementExamplesVisual />
+</ResearchBreakout>
 
 Those are different implementations of the same architectural preference: **do not ask the model to own work the interface can already structure.**
 
