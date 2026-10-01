@@ -1,0 +1,294 @@
+---
+const questions = [
+  {
+    label: 'Before transport',
+    title: 'What should travel?',
+    answer: 'Sample format is a choice, not a property of the microphone.',
+  },
+  {
+    label: 'Before display',
+    title: 'What earns a caption?',
+    answer: 'Returned text still passes an explicit client acceptance rule.',
+  },
+  {
+    label: 'Before a performance claim',
+    title: 'What was actually tested?',
+    answer: 'Separate execution paths identify work; they do not measure its speed.',
+  },
+];
+---
+
+<article class="speech-reading-overview not-prose" aria-labelledby="speech-reading-overview-title">
+  <p class="overview-kicker">Overview · ~2 min</p>
+  <h2 id="speech-reading-overview-title">A caption is the last decision in a chain.</h2>
+  <p class="overview-lead">
+    Live transcription is not just a model returning text. Audio must be captured, reduced, accumulated, transcribed, accepted, and rendered while each part operates under a different constraint. This paper begins inside the working speechBubbles system established by the <a href="/projects/local-ai-real-time-captioning">project case study</a>; it inspects what the current public source actually does at four boundaries.
+  </p>
+
+  <figure class="orientation" aria-labelledby="speech-orientation-title">
+    <div class="orientation-heading">
+      <h3 id="speech-orientation-title">Three questions at the hand-offs</h3>
+      <p class="figure-label">An editorial lens, not a system map</p>
+    </div>
+
+    <ol class="orientation-grid">
+      {questions.map((item) => (
+        <li>
+          <p class="figure-label figure-accent">{item.label}</p>
+          <h4>{item.title}</h4>
+          <p>{item.answer}</p>
+        </li>
+      ))}
+    </ol>
+
+    <figcaption>
+      These are inspection questions, not measured outcomes. The companion project owns the complete system boundary and broadcast workflow.
+    </figcaption>
+  </figure>
+
+  <section class="overview-section" aria-labelledby="speech-overview-shape">
+    <h3 id="speech-overview-shape">Reduce the data; choose the wait</h3>
+    <p>
+      The capture format need not be the transport format. In the source, client-side downsampling and Int16 conversion change a 48 kHz stereo Float32 example from about 384 KB/sec of raw samples to 16 kHz mono Int16 at about 32 KB/sec before WebSocket overhead. That ~91.7% difference is arithmetic, not a measured bandwidth result. The service then accumulates fixed-duration chunks: shorter ones can return updates earlier with less linguistic context; longer ones offer more context but arrive later. Three seconds is the public backend default without an override, not an established optimum or a sliding window.
+    </p>
+  </section>
+
+  <section class="overview-section ruled" aria-labelledby="speech-overview-truth">
+    <h3 id="speech-overview-truth">Follow the active path, not the repository inventory</h3>
+    <p>
+      VAD scaffolding exists, but the current public transcription path does not run it before Whisper. Instead, returned segments reach client-side filtering, which accepts nonempty text only when <code>no_speech_prob ≤ 0.6</code> and <code>temperature ≤ 0.8</code>. This can suppress likely low-confidence text; it cannot promise that all phantom captions disappear.
+    </p>
+  </section>
+
+  <section class="overview-section ruled" aria-labelledby="speech-overview-open">
+    <h3 id="speech-overview-open">Separation makes the next tests legible</h3>
+    <p>
+      Whisper inference runs through <code>asyncio.to_thread()</code> rather than blocking the service event loop. Caption layout and transitions follow their own Electron/Vue scheduling path, which still includes geometry reads worth investigating. Neither separation proves low latency, reliability, or smooth rendering. The next experiments are to wire and evaluate VAD, compare chunk strategies, and batch geometry reads before DOM writes.
+    </p>
+  </section>
+
+  <div class="overview-transition">
+    <p>Inspect source behavior, the four reconciled figures, and the qualifications behind each boundary.</p>
+    <button type="button" data-reading-depth-open="full">
+      Full Research · ~9 min <span aria-hidden="true">→</span>
+    </button>
+  </div>
+</article>
+
+<style>
+  .speech-reading-overview {
+    color: var(--text-secondary);
+  }
+
+  .speech-reading-overview :global(h2),
+  .speech-reading-overview :global(h3),
+  .speech-reading-overview :global(h4),
+  .speech-reading-overview :global(p),
+  .speech-reading-overview :global(figure),
+  .speech-reading-overview :global(ol),
+  .speech-reading-overview :global(li),
+  .speech-reading-overview :global(figcaption) {
+    margin: 0;
+  }
+
+  .speech-reading-overview :global(a) {
+    color: var(--text-primary);
+    text-decoration-color: var(--accent);
+    text-underline-offset: 0.2em;
+  }
+
+  .overview-kicker,
+  .figure-label {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: var(--research-figure-label, 0.625rem) !important;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.5 !important;
+    text-transform: uppercase;
+  }
+
+  .overview-kicker,
+  .figure-accent {
+    color: var(--accent) !important;
+  }
+
+  .speech-reading-overview > h2 {
+    margin-top: 0.7rem !important;
+    max-width: 42rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.65rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+  }
+
+  .overview-lead {
+    max-width: 46rem;
+    margin-top: 1.1rem !important;
+    color: var(--text-secondary);
+    font-size: 1rem !important;
+    line-height: 1.8 !important;
+  }
+
+  .orientation {
+    margin-top: 2.5rem !important;
+    border-block: 1px solid var(--border-subtle);
+    padding-block: 1.75rem;
+  }
+
+  .orientation-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.65rem 1rem;
+  }
+
+  .orientation-heading h3,
+  .overview-section h3 {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.025em;
+  }
+
+  .orientation-grid {
+    display: grid;
+    margin-top: 1.5rem !important;
+    border-top: 1px solid var(--border-subtle);
+    padding: 0;
+    list-style: none;
+  }
+
+  .orientation-grid li {
+    min-width: 0;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.25rem 0;
+  }
+
+  .orientation-grid h4 {
+    margin-top: 0.7rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: var(--research-figure-node-prominent, 1.125rem);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+  }
+
+  .orientation-grid h4 + p {
+    margin-top: 0.5rem !important;
+    color: var(--text-secondary);
+    font-size: var(--research-figure-copy, 0.875rem) !important;
+    line-height: 1.65 !important;
+  }
+
+  .orientation figcaption {
+    margin-top: 1rem !important;
+    color: var(--text-muted);
+    font-size: var(--research-figure-caption, 0.75rem) !important;
+    line-height: 1.65 !important;
+  }
+
+  .overview-section {
+    max-width: 46rem;
+    margin-top: 2.5rem;
+  }
+
+  .overview-section.ruled {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 2rem;
+  }
+
+  .overview-section > p {
+    margin-top: 0.8rem !important;
+    color: var(--text-secondary);
+    font-size: 0.95rem !important;
+    line-height: 1.8 !important;
+  }
+
+  .overview-section code {
+    color: var(--text-primary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.9em;
+  }
+
+  .overview-transition {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1.5rem;
+  }
+
+  .overview-transition > p {
+    max-width: 28rem;
+    color: var(--text-muted);
+    font-size: 0.875rem !important;
+    line-height: 1.65 !important;
+  }
+
+  .overview-transition button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 1px solid var(--border-subtle);
+    background: transparent;
+    padding: 0.65rem 0.9rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+
+  .overview-transition button:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-secondary);
+  }
+
+  .overview-transition button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (min-width: 640px) {
+    .orientation-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .orientation-grid li {
+      border-bottom: 0;
+      padding-right: 1.25rem;
+    }
+
+    .orientation-grid li + li {
+      border-left: 1px solid var(--border-subtle);
+      padding-left: 1.25rem;
+    }
+  }
+
+  @media (min-width: 760px) {
+    .orientation {
+      padding-block: 2rem;
+    }
+
+    .orientation-heading h3 {
+      font-size: 1.3rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .overview-transition button {
+      transition: none;
+    }
+  }
+</style>
