@@ -24,8 +24,9 @@ import { ArrowDown, ArrowRight } from '@lucide/astro';
     <section class="stage is-memory">
       <span class="stage-bar" aria-hidden="true"></span>
       <p class="figure-label figure-accent">Durable, scoped addresses</p>
-      <p class="figure-node-prominent">Record what governs the work</p>
-      <p class="figure-copy">Constitution · specification · plan · tasks · decision record · implementation and tests</p>
+      <p class="figure-node-prominent">Record intent; inspect evidence</p>
+      <p class="figure-copy">Memory: constitution · specification · plan · tasks · decision record</p>
+      <p class="evidence-line figure-meta">Evidence: implementation · tests</p>
       <p class="boundary figure-support">Each answers a different question. No universal precedence is implied.</p>
     </section>
 
@@ -37,7 +38,7 @@ import { ArrowDown, ArrowRight } from '@lucide/astro';
     <section class="stage">
       <p class="figure-label">Later task</p>
       <p class="figure-node-prominent">Route, inspect, reconcile</p>
-      <p class="figure-copy">Select relevant records, expose disagreement, verify behavior, and maintain the owning artifacts.</p>
+      <p class="figure-copy">Select relevant records, inspect implementation evidence, expose disagreement, and maintain each owner.</p>
       <p class="boundary figure-support">Selection is explicit today—not an automated relevance engine.</p>
     </section>
   </div>
@@ -49,7 +50,7 @@ import { ArrowDown, ArrowRight } from '@lucide/astro';
   </div>
 
   <figcaption>
-    Repository memory improves recoverability. It does not make an artifact correct, current, authoritative for every question, or automatically read by every agent.
+    Project memory improves recoverability; implementation and tests provide adjacent evidence of what exists and what was checked. None is automatically correct, current, universally authoritative, or read by every agent.
   </figcaption>
 </figure>
 
@@ -98,6 +99,13 @@ import { ArrowDown, ArrowRight } from '@lucide/astro';
 
   .stage > .figure-copy {
     margin-top: 0.55rem !important;
+  }
+
+  .evidence-line {
+    margin-top: 0.55rem !important;
+    color: var(--text-muted);
+    letter-spacing: 0;
+    text-transform: none;
   }
 
   .stage.is-memory {
