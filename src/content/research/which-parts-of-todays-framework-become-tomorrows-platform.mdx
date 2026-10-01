@@ -1,7 +1,7 @@
 ---
 title: "Which Parts of Today’s Framework Become Tomorrow’s Platform?"
 description: "A preliminary investigation into how Signals, Web Components, native navigation, View Transitions, DOM primitives, and Open UI may shift responsibilities from frameworks into the web platform."
-tldr: "Browsers are absorbing capabilities that frameworks once had to implement themselves. My working conclusion: the platform will keep taking on reusable primitives, while frameworks remain responsible for application-level coordination, policy, server integration, and developer experience."
+tldr: "The web platform is absorbing—and standards work is exploring—capabilities that frameworks once had to implement themselves. My working conclusion: the platform will keep taking on reusable primitives, while frameworks remain responsible for application-level coordination, policy, server integration, and developer experience."
 tldrLabel: "TL;DR — WORKING CONCLUSION"
 pubDate: 2026-09-17
 researchNumber: 5
@@ -15,12 +15,13 @@ readingTime: "8 min read"
 ---
 
 import FrameworkPlatformOverview from '../../components/research/FrameworkPlatformOverview.astro';
+import PlatformEffortsMatrixVisual from '../../components/research/PlatformEffortsMatrixVisual.astro';
 import PlatformFrameworkBoundaryVisual from '../../components/research/PlatformFrameworkBoundaryVisual.astro';
-import PrimitiveAbsorptionCycleVisual from '../../components/research/PrimitiveAbsorptionCycleVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import ResearchReadingDepth from '../../components/research/ResearchReadingDepth.astro';
 import ResearchSourceNote from '../../components/research/ResearchSourceNote.astro';
 import SignalStandardizationPathVisual from '../../components/research/SignalStandardizationPathVisual.astro';
+import WebComponentsBoundaryVisual from '../../components/research/WebComponentsBoundaryVisual.astro';
 
 <ResearchReadingDepth overviewTime="4 min" fullResearchTime="8 min" presentation="editorial" />
 
@@ -46,7 +47,7 @@ The investigation is therefore about where responsibilities move, not whether fr
 
 ## A Working Boundary Between Platform and Framework
 
-The web platform tends to absorb **capabilities whose semantics have become broadly understood across many architectures**. Frameworks can coordinate those primitives and impose application policy above them:
+The web platform tends to absorb **capabilities whose semantics have become broadly understood across many architectures**. Frameworks can coordinate those primitives and impose application policy above them.
 
 <ResearchBreakout mode="publication">
   <PlatformFrameworkBoundaryVisual />
@@ -74,6 +75,10 @@ A component can have browser-recognized identity, lifecycle, encapsulation, styl
 
 That was a key correction to my original mental model: **standard components establish portable component identity without defining how an application should be coordinated around those components.**
 
+<ResearchBreakout mode="wide">
+  <WebComponentsBoundaryVisual />
+</ResearchBreakout>
+
 ## Additional Signals From the Platform
 
 Looking across TC39, WHATWG, CSSWG, WICG, the Web Components community, and Open UI, I do not see one unified roadmap whose stated destination is "make frameworks unnecessary." I see multiple efforts moving different mechanisms into durable platform contracts.
@@ -83,6 +88,10 @@ Looking across TC39, WHATWG, CSSWG, WICG, the Web Components community, and Open
 **DOM update primitives.** Proposals such as [DOM Parts](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/DOM-Parts.md) explore efficient handles to mutable positions in the DOM, while earlier [template-instantiation work](https://github.com/WICG/webcomponents/blob/gh-pages/proposals/Template-Instantiation.md) explored more reusable templating infrastructure. These remain exploratory, but they show continued interest in moving DOM-update machinery beneath framework-specific template systems.
 
 **Control primitives.** [Open UI](https://open-ui.org/) studies common controls, component anatomy, state, behavior, styling, and accessibility patterns already repeated across frameworks and design systems, then considers which pieces may belong in HTML, CSS, JavaScript, ARIA, or related platform work.
+
+<ResearchBreakout mode="wide">
+  <PlatformEffortsMatrixVisual />
+</ResearchBreakout>
 
 ## What Frameworks Still Own: Coordination and Policy
 
@@ -96,11 +105,7 @@ These are not all missing standards. Many are **policy choices**: the platform s
 
 ## The Likely Recomposition
 
-As lower-level capabilities mature, repeated framework behavior can become legible enough to standardize, letting frameworks reorganize around the new primitive:
-
-<ResearchBreakout mode="wide">
-  <PrimitiveAbsorptionCycleVisual />
-</ResearchBreakout>
+If repeated private mechanisms converge on durable semantics, some may become candidates for shared platform primitives. Frameworks can then reorganize around those primitives rather than privately rebuilding the substrate underneath them.
 
 If that pattern continues:
 
