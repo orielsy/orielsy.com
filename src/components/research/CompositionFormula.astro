@@ -16,7 +16,8 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 <style>
   .composition-formula { color: var(--text-primary); }
-  code { padding: 0; background: transparent; font-family: var(--font-mono-ui); font-size: clamp(0.95rem, 2.1vw, 1.2rem); font-weight: 500; line-height: 1.8; overflow-wrap: anywhere; }
+  code { padding: 0; background: transparent; font-family: var(--font-mono-ui); font-size: 1.125rem; font-weight: 500; line-height: 1.8; overflow-wrap: anywhere; }
+  @media (min-width: 640px) { code { font-size: 1.5rem; } }
 </style>
 <style is:global>
   [data-research-entry="product-knowledge-as-architecture"] .research-prose .composition-formula code {
@@ -25,6 +26,12 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
     background: transparent;
     padding: 0;
     color: var(--text-primary);
-    font-size: clamp(0.95rem, 2.1vw, 1.2rem);
+    font-size: 1.125rem;
+  }
+
+  @media (min-width: 640px) {
+    [data-research-entry="product-knowledge-as-architecture"] .research-prose .composition-formula code {
+      font-size: 1.5rem;
+    }
   }
 </style>
