@@ -167,12 +167,6 @@
   letter-spacing: 0.1em;
 }
 
-.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header > p:not(.font-editorial-mono):not(.figure-number):not(.eyebrow):not(.status),
-.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header > div > p:not(.font-editorial-mono):not(.figure-number):not(.eyebrow):not(.status) {
-  font-size: var(--research-figure-subtitle) !important;
-  line-height: 1.6 !important;
-}
-
 /* Backward-compatible fallback for older figures that have not adopted roles yet. */
 .research-reading .research-prose figure.not-prose:not(.research-source-excerpt) h4:not(.figure-label):not(.figure-node):not(.figure-node-medium):not(.figure-node-prominent):not(.figure-node-feature) {
   padding-left: 0;
@@ -209,11 +203,6 @@
 
   .research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header h3 {
     font-size: var(--research-figure-title-wide) !important;
-  }
-
-  .research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header > p:not(.font-editorial-mono):not(.figure-number):not(.eyebrow):not(.status),
-  .research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > header > div > p:not(.font-editorial-mono):not(.figure-number):not(.eyebrow):not(.status) {
-    font-size: var(--research-figure-subtitle-wide) !important;
   }
 
   .research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > figcaption {
