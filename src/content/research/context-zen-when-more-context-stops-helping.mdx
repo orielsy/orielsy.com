@@ -54,7 +54,7 @@ I use *context distillation* to mean reconstructing the smallest reliable state 
 
 A good handoff preserves the current objective, decisions still in force, relevant constraints, rejected approaches likely to be rediscovered, active artifacts, unresolved questions, and the immediate next step. It compresses chronology, abandoned exploration, obsolete assumptions, repeated explanations, and agent self-commentary.
 
-The goal is the smallest reliable handoff intended to preserve the material state required for faithful continuation.
+The goal is a compact handoff that preserves the material state needed for faithful continuation—not a guarantee that the next step will be correct.
 
 ## Observe, Distill, Handoff
 
@@ -110,7 +110,7 @@ The final test is deliberately simple:
 
 > **Would a fresh capable agent with a faithful compact handoff probably have an easier time continuing correctly than the current agent has reasoning over the entire accumulated conversation?**
 
-If the answer becomes clearly yes, v0.1 treats that as the proposed handoff boundary.
+In v0.1, a clear ‘yes’ is a proposed reason to hand off, not a validated threshold.
 
 ## Activation Follows the Work
 
@@ -147,7 +147,7 @@ even when monitoring is off. In that case the handoff is still a continuation, b
 
 The user can therefore opt in once for a chain of work and remain opted in until explicitly turning Context Zen off.
 
-A host does not need durable cross-chat state for this model to work; the handoff itself can carry the state forward when the marker remains present and the receiving agent honors it. The model does not guarantee propagation if that marker is removed or ignored.
+The handoff can carry continuation state without durable cross-chat host storage, provided its marker survives and the receiving agent honors it; removing or ignoring the marker breaks that chain.
 
 ## Target-Aware Handoffs
 
@@ -167,7 +167,7 @@ A coding profile can foreground repository state, branch, current files, archite
 
 A research profile can foreground the research question, established findings, sources, assumptions, unresolved questions, and the next investigation.
 
-Targeting may change organization, emphasis, and compression, but its design requirement is to preserve any state that could materially alter continuation. That is a requirement of the transformation, not a demonstrated guarantee of perfect preservation.
+Targeting may change organization, emphasis, and compression. Preserving state that could materially alter continuation is a design requirement, not an observed guarantee.
 
 Context Zen does not need to discover installed agents or infer destinations it cannot see.
 
@@ -217,9 +217,7 @@ Context Zen explores the complementary question:
 
 Retrieval brings relevant state in. Distillation decides what deserves to stay. Handoff creates a clean boundary at which to reset the rest.
 
-The working design principle is:
-
-> **A healthy agent context is not the one that remembers the most. It is the one that preserves the right state with the least ambiguity.**
+The design principle is to preserve the state needed for the next step with as little ambiguity as possible—not to retain the longest possible history.
 
 The experimental skill, handoff schema, health heuristic, lifecycle model, and examples are available in the companion repository:
 
