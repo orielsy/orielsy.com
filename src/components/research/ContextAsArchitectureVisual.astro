@@ -20,7 +20,7 @@ const proposed = [
 >
   <div class="ownership-map">
     <section aria-label="Established architectural homes">
-      <p class="map-label">Established homes</p>
+      <p class="map-label figure-meta">Established homes</p>
       <dl class="ownership-list">
         {established.map(({ concern, owner, detail }) => (
           <div class="ownership-row">
@@ -31,7 +31,7 @@ const proposed = [
       </dl>
     </section>
     <section class="proposed-homes" aria-label="Proposed explicit ownership">
-      <p class="map-label">Proposed explicit ownership</p>
+      <p class="map-label figure-meta">Proposed explicit ownership</p>
       <dl class="ownership-list">
         {proposed.map(({ concern, owner, detail }) => (
           <div class="ownership-row proposed-row">
@@ -43,7 +43,7 @@ const proposed = [
     </section>
   </div>
   <div class="progression">
-    <p class="map-label">Research progression</p>
+    <p class="map-label figure-meta">Research progression</p>
     <ol aria-label="Durable, then selectable, then applicable, then composable">
       <li>Durable</li><li>Selectable</li><li>Applicable</li><li>Composable</li>
     </ol>
