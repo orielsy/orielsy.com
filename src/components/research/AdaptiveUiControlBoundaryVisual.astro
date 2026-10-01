@@ -1,0 +1,103 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+---
+
+<ResearchFigureFrame
+  className="adaptive-control-boundary"
+  figureNumber="01"
+  title="The controls are outside the task"
+  status="Project · interaction anatomy"
+  caption="The scenario controls set demo conditions, not user input in either form. Each form has its own selection and Continue attempt; changing the scenario resets both. The working lab, rather than this schematic, is the evidence of the behavior."
+>
+  <div class="operator-conditions">
+    <p class="figure-label figure-accent">Operator / test conditions</p>
+    <p class="figure-copy">New or experienced · version 4.1 or 4.2 · one or three compatible connections</p>
+  </div>
+
+  <div class="connector" aria-hidden="true"></div>
+
+  <div class="shared-rule">
+    <p class="figure-label">One shared scenario + required Data Connection rule</p>
+  </div>
+
+  <div class="form-grid">
+    <section>
+      <p class="figure-label">Standard form</p>
+      <p class="figure-copy">Select a connection or receive required-field validation on Continue.</p>
+    </section>
+    <section>
+      <p class="figure-label figure-accent">Adaptive form</p>
+      <p class="figure-copy">Same field and validation; applicable guidance and bounded policy add a response.</p>
+    </section>
+  </div>
+
+  <p class="independent-state figure-support">Selections and validation attempts stay independent; the demo resets them on a scenario change.</p>
+</ResearchFigureFrame>
+
+<style>
+  .adaptive-control-boundary :global(p) {
+    margin: 0;
+  }
+
+  .operator-conditions {
+    border-left: 2px solid var(--accent);
+    background: var(--research-figure-surface-emphasis, var(--bg-card-hover));
+    padding: 1rem 1.25rem;
+  }
+
+  .operator-conditions .figure-copy {
+    margin-top: 0.5rem !important;
+    color: var(--text-primary);
+  }
+
+  .connector {
+    width: 1px;
+    height: 1.25rem;
+    margin-inline: auto;
+    background: var(--border-subtle);
+  }
+
+  .shared-rule {
+    border-block: 1px solid var(--border-subtle);
+    padding: 0.75rem 0;
+    text-align: center;
+  }
+
+  .form-grid {
+    display: grid;
+  }
+
+  .form-grid section {
+    min-width: 0;
+    padding: 1.25rem 0;
+  }
+
+  .form-grid section + section {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .form-grid .figure-copy {
+    margin-top: 0.5rem !important;
+  }
+
+  .independent-state {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .form-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .form-grid section:first-child {
+      padding-right: 1.25rem;
+    }
+
+    .form-grid section + section {
+      border-top: 0;
+      border-left: 1px solid var(--border-subtle);
+      padding-left: 1.25rem;
+    }
+  }
+</style>
