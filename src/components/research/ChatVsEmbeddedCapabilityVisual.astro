@@ -27,7 +27,7 @@ const embedded = [
     <section aria-labelledby="conversation-path-title">
       <div class="path-heading muted">
         <MessageSquare size={16} strokeWidth={1.75} aria-hidden="true" />
-        <h4 id="conversation-path-title" class="figure-meta">Chat surface</h4>
+        <p id="conversation-path-title" class="figure-meta path-label">Chat surface</p>
       </div>
       <ol>
         {chat.map((step, index) => (
@@ -45,7 +45,7 @@ const embedded = [
     <section aria-labelledby="embedded-path-title">
       <div class="path-heading accent">
         <Table2 size={16} strokeWidth={1.75} aria-hidden="true" />
-        <h4 id="embedded-path-title" class="figure-meta figure-accent">Embedded capability</h4>
+        <p id="embedded-path-title" class="figure-meta figure-accent path-label">Embedded capability</p>
       </div>
       <ol>
         {embedded.map((step, index) => (
@@ -67,7 +67,6 @@ const embedded = [
 
 <style>
   .interaction-path-figure :global(p),
-  .interaction-path-figure :global(h4),
   .interaction-path-figure :global(ol),
   .interaction-path-figure :global(li) {
     margin: 0;
@@ -101,8 +100,7 @@ const embedded = [
     color: var(--accent);
   }
 
-  .path-heading h4 {
-    padding-left: 0;
+  .path-label {
     text-transform: uppercase;
   }
 
