@@ -41,8 +41,8 @@ const groups = [
   className="adaptive-pipeline"
   {figureNumber}
   title="Seven concerns, decided in one direction"
-  status="Phase 1 · deterministic"
-  caption="Arrows show the order of decision and the direction of dependency: knowledge is selected against application truth and never redefines it; response policy and rendering remain distinct even though they act together. Phase 1 uses explicit authored conditions only—no inference."
+  status="Research · deterministic Phase 1"
+  caption="Arrows show the order of decision and the direction of dependency: knowledge is selected against application truth and never redefines it; policy and rendering stay separate even though they act together. Phase 1 uses explicit authored conditions only — no inference."
 >
   <div class="group-flow" aria-label="Seven concerns grouped by decision order">
     {groups.map((group, index) => (
@@ -54,8 +54,8 @@ const groups = [
         )}
         <section class:list={['concern-group', group.emphasized && 'is-emphasized']}>
           <div class="group-heading">
-            <h4 class="figure-node">{group.title}</h4>
-            <span class="figure-label figure-accent">{group.role}</span>
+            <h4 class="figure-copy group-title">{group.title}</h4>
+            <span class="group-role figure-accent">{group.role}</span>
           </div>
           <dl>
             {group.concerns.map(([name, detail]) => (
@@ -102,7 +102,20 @@ const groups = [
     border-bottom: 1px solid var(--border-subtle);
   }
 
-  .group-heading .figure-label {
+  .group-title {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .group-role {
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.5625rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
     white-space: nowrap;
   }
 
