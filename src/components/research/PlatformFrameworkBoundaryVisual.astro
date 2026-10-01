@@ -21,12 +21,12 @@ const responsibilities = [
 >
   <div class="boundary-grid">
     <section class="upper-layers">
-      <p class="meta accent">Application / product · situated choices</p>
+      <p class="meta figure-meta">Application / product · situated choices</p>
       <h4>What this product needs</h4>
       <p>Domain state · feature composition · data ownership · product policy · UX-specific behavior</p>
 
       <div class="framework-layer">
-        <p class="meta">Framework / meta-framework · coordination</p>
+        <p class="meta figure-meta">Framework / meta-framework · coordination</p>
         <h4>How the application holds together</h4>
         <p>Rendering and scheduling · routing and data conventions · server rendering and hydration · compilation</p>
       </div>
@@ -36,10 +36,10 @@ const responsibilities = [
       <div class="boundary-marker">
         <span>Boundary under investigation</span>
         <ArrowDown size={16} strokeWidth={1.5} aria-hidden="true" />
-        <p>Only broadly reusable mechanisms are candidates</p>
+        <p class="figure-support">Only broadly reusable mechanisms are candidates</p>
       </div>
 
-      <p class="meta">Standardized / emerging primitives · not one maturity level</p>
+      <p class="meta figure-meta">Standardized / emerging primitives · not one maturity level</p>
       <div class="responsibility-grid">
         {responsibilities.map((item) => (
           <div>
@@ -49,7 +49,7 @@ const responsibilities = [
         ))}
       </div>
 
-      <p class="foundation">Browser foundation · HTML / DOM / CSS / JavaScript · network / storage / rendering / accessibility APIs</p>
+      <p class="foundation figure-meta">Browser foundation · HTML / DOM / CSS / JavaScript · network / storage / rendering / accessibility APIs</p>
     </section>
   </div>
 </ResearchFigureFrame>
@@ -97,7 +97,6 @@ const responsibilities = [
     text-transform: uppercase;
   }
 
-  .meta.accent,
   .boundary-marker {
     color: var(--accent);
   }
@@ -106,7 +105,7 @@ const responsibilities = [
     margin-top: 0.7rem !important;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: var(--research-diagram-node, 0.875rem);
+    font-size: var(--research-diagram-node-prominent, 1.125rem) !important;
     font-weight: 600;
     line-height: 1.45;
   }
@@ -141,7 +140,7 @@ const responsibilities = [
 
   .boundary-marker p {
     color: var(--text-secondary);
-    font-size: var(--research-diagram-caption, 0.75rem);
+    font-size: var(--research-diagram-support, 0.75rem);
     line-height: 1.5;
   }
 
