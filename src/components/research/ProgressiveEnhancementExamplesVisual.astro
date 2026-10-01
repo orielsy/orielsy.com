@@ -10,8 +10,8 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   caption="The axis distinguishes whether these examples use inference, not how capable they are. speechBubbles uses local Whisper for speech recognition; Documentation-Driven Adaptive UX Phase 1 uses authored knowledge and deterministic state. This is an illustration, not a measured comparison."
 >
   <div class="axis-labels">
-    <span class="figure-meta">No inference</span>
-    <span class="figure-meta">Inference for one narrow job</span>
+    <span class="figure-label">No inference</span>
+    <span class="figure-label">Inference for one narrow job</span>
   </div>
 
   <div class="axis" aria-hidden="true">
@@ -21,12 +21,12 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   <div class="examples-grid">
     <section>
-      <p class="figure-meta">Documentation-Driven Adaptive UX · Phase 1</p>
+      <p class="figure-label">Documentation-Driven Adaptive UX · Phase 1</p>
       <p class="figure-copy">Deterministic state and authored knowledge handle the current phase. Future inference is proposed for ambiguity the application cannot resolve cleanly itself.</p>
     </section>
 
     <section class="inference-example">
-      <p class="figure-meta figure-accent">speechBubbles</p>
+      <p class="figure-label figure-accent">speechBubbles</p>
       <p class="figure-copy">Local Whisper inference for speech recognition, without requiring a cloud transcription service.</p>
     </section>
   </div>
@@ -78,14 +78,15 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
   .examples-grid {
     display: grid;
-    gap: 1.5rem;
+    gap: 1rem;
     margin-top: 1.5rem;
   }
 
   .examples-grid section {
     min-width: 0;
+    border: 1px solid color-mix(in srgb, var(--border-subtle) 75%, transparent);
     border-radius: 0.2rem;
-    background: var(--bg-secondary);
+    background: color-mix(in srgb, var(--text-primary) 2.5%, var(--bg-card));
     padding: 1rem;
   }
 
