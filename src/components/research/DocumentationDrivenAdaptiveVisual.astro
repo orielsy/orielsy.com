@@ -18,7 +18,7 @@ const conventionalSteps = [
 
 <figure class="adaptive-documentation-visual not-prose" aria-labelledby="adaptive-documentation-visual-title">
   <header class="visual-header">
-    <p class="visual-eyebrow">Conceptual comparison · not a measured outcome</p>
+    <p class="eyebrow">Conceptual comparison · not a measured outcome</p>
     <h2 id="adaptive-documentation-visual-title">Two paths through the same task</h2>
   </header>
 
@@ -26,7 +26,7 @@ const conventionalSteps = [
     <section class="track conventional" aria-labelledby="conventional-track-title">
       <div class="track-heading">
         <div class="track-title">
-          <span class="track-index">01</span>
+          <span class="figure-meta">01</span>
           <h3 id="conventional-track-title">Conventional</h3>
         </div>
         <span class="track-badge">External detour</span>
@@ -44,7 +44,7 @@ const conventionalSteps = [
               <div class="step-copy">
                 <div class="step-heading">
                   <strong>{label}</strong>
-                  {outside && <span>Outside app</span>}
+                  {outside && <span class="figure-label">Outside app</span>}
                 </div>
                 <p>{detail}</p>
               </div>
@@ -57,7 +57,7 @@ const conventionalSteps = [
     <section class="track adaptive" aria-labelledby="adaptive-track-title">
       <div class="track-heading">
         <div class="track-title accent-title">
-          <span class="track-index">02</span>
+          <span class="figure-meta">02</span>
           <h3 id="adaptive-track-title">Adaptive</h3>
         </div>
         <span class="track-badge accent-badge">In-product path</span>
@@ -71,18 +71,18 @@ const conventionalSteps = [
 
       <div class="decision-grid">
         <section>
-          <p class="decision-label">Decision one</p>
+          <p class="figure-label">Decision one</p>
           <h4>Applicability</h4>
           <p>Does this fragment apply to the current version, user, and field state?</p>
         </section>
         <section>
-          <p class="decision-label">Decision two</p>
+          <p class="figure-label">Decision two</p>
           <h4>Response policy</h4>
           <p>If it applies, what may the interface do — explain, guide, or offer?</p>
         </section>
       </div>
 
-      <p class="separation-label">Two decisions · kept separate</p>
+      <p class="figure-label separation-label">Two decisions · kept separate</p>
 
       <div class="authority-note">
         <p>Guidance may explain or guide. An offer appears only when exactly one valid option exists — and the user still accepts it. The note cannot choose a value.</p>
@@ -125,25 +125,11 @@ const conventionalSteps = [
     padding: 1rem 1.25rem;
   }
 
-  .visual-eyebrow {
+  .visual-header .eyebrow {
     color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: 0.625rem !important;
-    font-weight: 400;
-    letter-spacing: 0.16em !important;
-    line-height: 1.5 !important;
-    text-transform: uppercase;
   }
 
-  .track-index {
-    color: var(--text-muted);
-    font-family: var(--font-mono-ui);
-    font-size: 0.625rem !important;
-    font-weight: 400;
-    line-height: 1.5 !important;
-  }
-
-  .accent-title .track-index {
+  .accent-title .figure-meta {
     color: var(--accent) !important;
   }
 
@@ -283,16 +269,6 @@ const conventionalSteps = [
     line-height: 1.25rem;
   }
 
-  .step-heading > span {
-    color: var(--text-muted);
-    font-family: var(--font-mono-ui);
-    font-size: 0.5625rem !important;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    line-height: 1.5 !important;
-    text-transform: uppercase;
-  }
-
   .step-copy > p {
     margin-top: 0.125rem !important;
     color: var(--text-muted);
@@ -341,17 +317,6 @@ const conventionalSteps = [
 
   .decision-grid > section + section {
     border-top: 1px solid var(--border-subtle);
-  }
-
-  .decision-label,
-  .separation-label {
-    color: var(--text-muted);
-    font-family: var(--font-mono-ui);
-    font-size: 0.5625rem !important;
-    font-weight: 400;
-    letter-spacing: 0.14em;
-    line-height: 1.5 !important;
-    text-transform: uppercase;
   }
 
   .decision-grid h4 {
