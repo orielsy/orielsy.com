@@ -57,20 +57,9 @@ const steps = [
   }
 
   .evidence-chain {
-    position: relative;
+    --chain-gap: 2rem;
     display: grid;
-    gap: 2rem;
-  }
-
-  .evidence-chain::before {
-    position: absolute;
-    top: 12px;
-    bottom: 12px;
-    left: 12px;
-    width: 1px;
-    transform: translateX(-50%);
-    background: var(--border-subtle);
-    content: '';
+    gap: var(--chain-gap);
   }
 
   li {
@@ -82,12 +71,24 @@ const steps = [
 
   .rail-node {
     position: relative;
-    z-index: 1;
     grid-column: 1;
     grid-row: 1;
     display: flex;
     width: 24px;
+    height: 100%;
+    align-self: stretch;
     justify-content: center;
+  }
+
+  li:not(:last-child) .rail-node::after {
+    position: absolute;
+    top: 12px;
+    bottom: calc((var(--chain-gap) + 12px) * -1);
+    left: 50%;
+    width: 1px;
+    transform: translateX(-50%);
+    background: var(--border-subtle);
+    content: '';
   }
 
   .icon-node {
@@ -96,6 +97,7 @@ const steps = [
     display: flex;
     width: 24px;
     height: 24px;
+    flex: 0 0 24px;
     align-items: center;
     justify-content: center;
     border: 1px solid var(--accent);
@@ -163,10 +165,6 @@ const steps = [
   }
 
   @media (min-width: 760px) {
-    .evidence-chain::before {
-      left: 50%;
-    }
-
     li {
       grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
       gap: 1.25rem;
