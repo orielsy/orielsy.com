@@ -1,64 +1,175 @@
 ---
+import { MessageSquare, Table2 } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const chat = [
+  'Describe the desired state in prose',
+  'Conversational interpretation',
+  'Action or result',
+  'If the reply is only text, the user carries it back',
+];
+
+const embedded = [
+  'Act inside the table',
+  'Capability receives a narrow job',
+  'Table updates in place',
+];
 ---
 
 <ResearchFigureFrame
   className="interaction-path-figure"
   figureNumber="01"
   title="Same intent, different interface path"
-  caption="Conversation can also trigger an action directly. The handoff only applies if its result remains outside the table. Neither path is inherently faster, more capable, or more accurate."
+  status="Conceptual comparison · source + historical figure"
+  caption="Conversation can also trigger an action directly. The conditional handoff applies when chat returns a result outside the table; embedded capability makes the table itself the result surface. Neither path is inherently faster, more capable, or more accurate."
 >
   <div class="paths">
     <section aria-labelledby="conversation-path-title">
-      <h4 id="conversation-path-title">Conversation-mediated</h4>
+      <div class="path-heading muted">
+        <MessageSquare size={16} strokeWidth={1.75} aria-hidden="true" />
+        <h4 id="conversation-path-title" class="figure-meta">Chat surface</h4>
+      </div>
       <ol>
-        <li><span class="step">01</span><span>Describe the desired state in prose</span></li>
-        <li><span class="step">02</span><span>Conversational interpretation</span></li>
-        <li><span class="step">03</span><span>Action or result</span></li>
-        <li class="conditional"><span class="step">IF</span><span>When the result lives outside the table, the user carries it back</span></li>
+        {chat.map((step, index) => (
+          <li class:list={[index === chat.length - 1 && 'is-final']}>
+            <span class="step figure-meta">0{index + 1}</span>
+            <span>{step}</span>
+          </li>
+        ))}
       </ol>
+      <p class="path-note figure-meta">Handoff depends on the integration</p>
     </section>
+
+    <div class="path-divider" aria-hidden="true"></div>
+
     <section aria-labelledby="embedded-path-title">
-      <h4 id="embedded-path-title">Embedded capability</h4>
+      <div class="path-heading accent">
+        <Table2 size={16} strokeWidth={1.75} aria-hidden="true" />
+        <h4 id="embedded-path-title" class="figure-meta figure-accent">Embedded capability</h4>
+      </div>
       <ol>
-        <li><span class="step">01</span><span>Act inside the table</span></li>
-        <li><span class="step">02</span><span>Capability receives a narrow job</span></li>
-        <li><span class="step">03</span><span>Table updates in place</span></li>
+        {embedded.map((step, index) => (
+          <li class:list={[index === embedded.length - 1 && 'is-final']}>
+            <span class="step figure-meta figure-accent">0{index + 1}</span>
+            <span>{step}</span>
+          </li>
+        ))}
       </ol>
+      <p class="path-note figure-meta figure-accent is-accent">Result lives in the interface</p>
     </section>
   </div>
+
   <div class="shared-result">
-    <span>Shared end state</span>
-    <p>The table reflects the requested state if either path is integrated to reach it.</p>
+    <span class="figure-meta">Shared end state</span>
+    <p class="figure-copy">The table reflects the requested state, if either path is integrated to reach it.</p>
   </div>
 </ResearchFigureFrame>
 
 <style>
-  .interaction-path-figure :global(p), .interaction-path-figure :global(h4),
-  .interaction-path-figure :global(ol), .interaction-path-figure :global(li) { margin: 0; }
-  .interaction-path-figure :global(ol) { padding: 0; list-style: none; }
-  .paths { display: grid; gap: 1.75rem; }
-  .paths section { min-width: 0; }
-  .paths section + section { border-top: 1px solid var(--border-subtle); padding-top: 1.5rem; }
-  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.45; }
-  .paths ol { margin-top: 1rem !important; }
-  .paths li { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); gap: 0.75rem; padding: 0.55rem 0; color: var(--text-primary); font-size: 0.875rem; line-height: 1.55; }
-  .paths li + li { border-top: 1px solid var(--border-subtle); }
-  .step { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; line-height: 2; }
-  .conditional { color: var(--text-secondary) !important; }
-  .conditional .step { color: var(--text-muted); }
-  .shared-result { display: grid; gap: 0.35rem 1.5rem; margin-top: 1.5rem; border-top: 1px solid var(--border-strong); padding-top: 1rem; }
-  .shared-result span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; }
-  .shared-result p { color: var(--text-primary); font-size: 0.875rem; line-height: 1.6; }
-  @media (min-width: 640px) {
-    .paths { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
-    .paths section:first-child { padding-right: 1.5rem; }
-    .paths section + section { border-top: 0; border-left: 1px solid var(--border-subtle); padding: 0 0 0 1.5rem; }
-    .shared-result { grid-template-columns: 10rem minmax(0, 1fr); }
+  .interaction-path-figure :global(p),
+  .interaction-path-figure :global(h4),
+  .interaction-path-figure :global(ol),
+  .interaction-path-figure :global(li) {
+    margin: 0;
+  }
+
+  .interaction-path-figure :global(ol) {
+    padding: 0;
+    list-style: none;
+  }
+
+  .paths {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .paths section {
+    min-width: 0;
+  }
+
+  .path-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .path-heading.muted {
+    color: var(--text-muted);
+  }
+
+  .path-heading.accent {
+    color: var(--accent);
+  }
+
+  .path-heading h4 {
+    padding-left: 0;
+    text-transform: uppercase;
+  }
+
+  .paths ol {
+    display: grid;
+    gap: 0.625rem;
+    margin-top: 1rem !important;
+  }
+
+  .paths li {
+    display: grid;
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: var(--research-figure-copy, 0.875rem);
+    line-height: 1.7;
+  }
+
+  .paths li.is-final {
+    color: var(--text-primary);
+  }
+
+  .step {
+    line-height: 1.7 !important;
+  }
+
+  .path-note {
+    margin-top: 1rem !important;
+    border-left: 2px solid var(--border-strong);
+    padding-left: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .path-note.is-accent {
+    border-left-color: var(--accent);
+  }
+
+  .path-divider {
+    display: none;
+  }
+
+  .shared-result {
+    margin-top: 1.75rem;
+    border-radius: 0.2rem;
+    background: var(--bg-secondary);
+    padding: 0.75rem 1rem;
+  }
+
+  .shared-result p {
+    margin-top: 0.375rem !important;
+    color: var(--text-primary);
+  }
+
+  @media (min-width: 760px) {
+    .paths {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: stretch;
+      gap: 1.5rem;
+    }
+
+    .path-divider {
+      display: block;
+      border-left: 1px dashed var(--border-subtle);
+    }
   }
 </style>
 
 <style>
   :global(.research-reading .research-prose figure.interaction-path-figure) { border-radius: 0 !important; }
-  :global(.research-reading .research-prose figure.interaction-path-figure) .shared-result p { font-size: 0.875rem !important; line-height: 1.6 !important; }
 </style>
