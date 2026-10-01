@@ -1,50 +1,104 @@
 ---
+import { FlaskConical } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
-const strategies = [
-  { label: 'Shorter chunks', delay: 'Lower perceived delay', context: 'Less linguistic context', tradeoff: 'Faster updates, with more risk of unstable or incomplete phrases.' },
-  { label: 'Longer chunks', delay: 'Higher perceived delay', context: 'More linguistic context', tradeoff: 'More context for decoding, but the transcript arrives later.' },
-];
 ---
 
 <ResearchFigureFrame
   className="chunk-tradeoff-figure"
-  figureNumber="03"
-  title="Chunk duration trades responsiveness for decoding context"
-  status="Current default · 3 seconds"
-  caption="The 3-second threshold is an implementation default when no client override is supplied, not evidence of an optimal latency/accuracy point."
+  figureNumber="02"
+  title="Chunk duration changes the trade-off"
+  status="Current default + proposed experiment"
+  caption="Three seconds is the public backend default when no client override is supplied. The comparison describes a qualitative trade-off; it does not identify an optimum."
 >
-  <div class="strategies">
-    {strategies.map((strategy, index) => (
-      <section>
-        <span class="index">{String(index + 1).padStart(2, '0')}</span>
-        <strong>{strategy.label}</strong>
-        <dl><div><dt>Delay</dt><dd>{strategy.delay}</dd></div><div><dt>Context</dt><dd>{strategy.context}</dd></div></dl>
-        <p>{strategy.tradeoff}</p>
-      </section>
-    ))}
+  <div class="tradeoff-grid">
+    <section>
+      <p class="figure-label">Shorter chunks</p>
+      <h4 class="figure-node">Earlier updates</h4>
+      <p class="figure-copy">Less linguistic context; greater risk of unstable or incomplete phrases.</p>
+    </section>
+    <section class="longer">
+      <p class="figure-label figure-accent">Longer chunks</p>
+      <h4 class="figure-node">Later updates</h4>
+      <p class="figure-copy">More decoding context; transcript arrives later.</p>
+    </section>
   </div>
-  <div class="implementation-note">
-    <span>Current public backend</span>
-    <strong>Fixed-duration chunk accumulator</strong>
-    <p>Processed samples are cleared after transcription; the current source should not be described as an overlapping sliding window.</p>
+
+  <div class="current-implementation">
+    <p class="figure-label">Current implementation</p>
+    <p class="figure-copy">Fixed-duration accumulator · default 3 seconds · processed samples cleared after transcription · not an overlapping sliding window</p>
+  </div>
+
+  <div class="next-experiment">
+    <FlaskConical size={16} strokeWidth={1.75} aria-hidden="true" />
+    <p class="figure-copy"><strong>Next experiment:</strong> compare chunk-duration strategies rather than treating the default as validated.</p>
   </div>
 </ResearchFigureFrame>
 
 <style>
-  :global(.research-reading .research-prose figure.chunk-tradeoff-figure) { border-radius: 0 !important; }
-  .strategies { display: grid; border-block: 1px solid var(--border-subtle); }
-  .strategies section { position: relative; padding: 1rem 0 1rem 2.5rem; }
-  .strategies section + section { border-top: 1px solid var(--border-subtle); }
-  .index { position: absolute; top: 1rem; left: 0; color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; }
-  .strategies strong { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; }
-  dl { display: grid; gap: 0.5rem; margin: 0.8rem 0 0; }
-  dl > div { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); gap: 0.6rem; border-top: 1px solid var(--border-subtle); padding-top: 0.5rem; }
-  dt { color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; text-transform: uppercase; }
-  dd, .strategies p { margin: 0; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.55; }
-  .strategies p { margin-top: 0.75rem !important; }
-  .implementation-note { display: grid; gap: 0.35rem; border-top: 1px solid var(--border-strong); margin-top: 1rem; padding-top: 1rem; }
-  .implementation-note > span { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; text-transform: uppercase; }
-  .implementation-note strong { color: var(--text-primary); font-size: 0.875rem; }
-  .implementation-note p { margin: 0; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  @media (min-width: 720px) { .strategies { grid-template-columns: repeat(2,minmax(0,1fr)); } .strategies section { padding: 1rem; } .strategies section:first-child { padding-left: 2.5rem; } .strategies section + section { border-top: 0; border-left: 1px solid var(--border-subtle); } .strategies section + section .index { left: 1rem; } }
+  .chunk-tradeoff-figure :global(p),
+  .chunk-tradeoff-figure :global(h4) {
+    margin: 0;
+  }
+
+  .tradeoff-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .tradeoff-grid section {
+    min-width: 0;
+    background: var(--bg-card);
+    padding: 1.25rem;
+  }
+
+  .tradeoff-grid section.longer {
+    background: var(--bg-secondary);
+  }
+
+  .tradeoff-grid h4 {
+    margin-top: 0.75rem !important;
+  }
+
+  .tradeoff-grid .figure-copy {
+    margin-top: 0.75rem !important;
+  }
+
+  .current-implementation {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1px;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1rem;
+  }
+
+  .next-experiment {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    border-top: 1px dashed var(--border-subtle);
+    padding-top: 1rem;
+  }
+
+  .next-experiment :global(svg) {
+    margin-top: 0.2rem;
+    flex: 0 0 auto;
+    color: var(--accent);
+  }
+
+  .next-experiment strong {
+    color: var(--text-primary);
+  }
+
+  @media (min-width: 640px) {
+    .tradeoff-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .current-implementation {
+      grid-template-columns: 10rem minmax(0, 1fr);
+      align-items: start;
+    }
+  }
 </style>
