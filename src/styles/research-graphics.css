@@ -12,6 +12,7 @@
   --research-diagram-subtitle: 0.875rem;
   --research-diagram-subtitle-wide: 0.875rem;
   --research-diagram-node: 0.875rem;
+  --research-diagram-node-medium: 1rem;
   --research-diagram-node-prominent: 1.125rem;
   --research-diagram-node-feature: 1.25rem;
   --research-diagram-copy: 0.875rem;
@@ -58,11 +59,26 @@
   line-height: 1.6 !important;
 }
 
-.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) h4:not(.figure-label) {
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) h4:not(.figure-label):not(.figure-node-medium):not(.figure-node-prominent):not(.figure-node-feature) {
   padding-left: 0;
   font-size: var(--research-diagram-node) !important;
   line-height: 1.4 !important;
   letter-spacing: -0.015em;
+}
+
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) h4.figure-node-medium {
+  font-size: var(--research-diagram-node-medium) !important;
+  line-height: 1.4 !important;
+}
+
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) h4.figure-node-prominent {
+  font-size: var(--research-diagram-node-prominent) !important;
+  line-height: 1.4 !important;
+}
+
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) h4.figure-node-feature {
+  font-size: var(--research-diagram-node-feature) !important;
+  line-height: 1.4 !important;
 }
 
 .research-reading .research-prose figure.not-prose:not(.research-source-excerpt) h4.figure-label,
@@ -78,7 +94,7 @@
   display: none;
 }
 
-.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > :not(header):not(figcaption) p:not(.font-editorial-mono):not(.figure-meta):not(.figure-support) {
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > :not(header):not(figcaption) p:not(.font-editorial-mono):not(.figure-meta):not(.figure-support):not(.figure-local) {
   font-size: var(--research-diagram-copy) !important;
   line-height: 1.6 !important;
 }
