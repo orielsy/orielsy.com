@@ -1,9 +1,11 @@
 ---
+import { Cpu, Globe, ListChecks } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
 const implementations = [
-  { title: 'Deterministic baseline', condition: 'Useful without inference', example: 'Indexed filtering + synonyms' },
-  { title: 'Local inference', condition: 'Optional when viable', example: 'Local embeddings' },
-  { title: 'Remote inference', condition: 'Optional when justified', example: 'Remote reranker' },
+  { icon: ListChecks, title: 'Deterministic', condition: 'Useful baseline', example: 'Indexed filtering + synonyms' },
+  { icon: Cpu, title: 'Local inference', condition: 'Optional, when viable', example: 'Local embeddings' },
+  { icon: Globe, title: 'Remote inference', condition: 'Optional, when justified', example: 'Remote reranker' },
 ];
 ---
 
@@ -11,49 +13,159 @@ const implementations = [
   className="optional-implementation-figure"
   figureNumber="03"
   title="Optional capability, stable boundaries"
-  caption="These are possible search implementations, not a mandatory ladder, a runtime router, or a claim of equivalent results. Graceful degradation requires a fallback that has actually been designed and implemented."
+  status="Source model · example from source"
+  caption="These are possible implementations for search, not a mandatory ladder or a claim of equivalent results. The baseline must work without inference; any fallback requires deliberate implementation. Runtime selection is unspecified. “Application truth” and “action boundaries” are this editorial’s architectural framing."
 >
-  <p class="surface"><span>User interaction</span>Search</p>
   <div class="implementation-options" role="group" aria-label="Illustrative implementation options for search">
-    {implementations.map((item) => (
-      <div>
-        <p class="condition">{item.condition}</p>
-        <h4>{item.title}</h4>
-        <p class="example">{item.example}</p>
-      </div>
-    ))}
+    {implementations.map((item, index) => {
+      const Icon = item.icon;
+      return (
+        <section class:list={['implementation-option', index > 0 && 'has-divider']}>
+          <span class="mobile-node" aria-hidden="true"></span>
+          <Icon class="option-icon" size={16} strokeWidth={1.75} aria-hidden="true" />
+          <h4>{item.title}</h4>
+          <p class="condition figure-meta">{item.condition}</p>
+          <p class="example figure-copy">{item.example}</p>
+        </section>
+      );
+    })}
   </div>
-  <div class="invariant">
-    <span>Application-owned boundaries</span>
-    <p>State · Validation · Permitted actions</p>
+
+  <div class="user-surface">
+    <p class="figure-meta">User experiences</p>
+    <p class="figure-node">Search</p>
   </div>
+
+  <div class="stable-boundary">
+    <p class="figure-meta figure-accent">Stable across implementations</p>
+    <p class="figure-node">Application truth · action boundaries</p>
+  </div>
+
+  <p class="fallback-note figure-copy">
+    Capability may degrade gracefully <span>when fallback is built</span>. Authority should remain bounded by what the application can establish.
+  </p>
 </ResearchFigureFrame>
 
 <style>
-  .optional-implementation-figure :global(p), .optional-implementation-figure :global(h4) { margin: 0; }
-  .surface { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 0.9rem; }
-  .surface span, .invariant span, .condition { color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; line-height: 1.5; text-transform: uppercase; }
-  .surface { color: var(--text-primary); font-family: var(--font-display); font-size: 1rem; font-weight: 600; }
-  .implementation-options { display: grid; border-block: 1px solid var(--border-subtle); }
-  .implementation-options > div { min-width: 0; padding: 1rem 0; }
-  .implementation-options > div + div { border-top: 1px solid var(--border-subtle); }
-  .condition { color: var(--accent); }
-  h4 { margin-top: 0.45rem !important; color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.45; }
-  .example { margin-top: 0.45rem !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  .invariant { display: grid; gap: 0.35rem 1rem; padding-top: 1rem; }
-  .invariant span { color: var(--accent); }
-  .invariant p { color: var(--text-primary); font-size: 0.875rem; line-height: 1.6; }
-  @media (min-width: 640px) {
-    .implementation-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .implementation-options > div { padding: 1.15rem 1.15rem 1.15rem 0; }
-    .implementation-options > div + div { border-top: 0; border-left: 1px solid var(--border-subtle); padding-left: 1.15rem; }
-    .invariant { grid-template-columns: 12rem minmax(0, 1fr); }
+  .optional-implementation-figure :global(p),
+  .optional-implementation-figure :global(h4) {
+    margin: 0;
+  }
+
+  .implementation-options {
+    display: grid;
+    gap: 0;
+    border-left: 1px solid var(--border-subtle);
+    padding-left: 1rem;
+  }
+
+  .implementation-option {
+    position: relative;
+    min-width: 0;
+    padding: 1rem 0;
+  }
+
+  .implementation-option.has-divider {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .mobile-node {
+    position: absolute;
+    top: 1.25rem;
+    left: -1.3125rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    background: var(--bg-card);
+  }
+
+  .option-icon {
+    color: var(--accent);
+  }
+
+  .implementation-option h4 {
+    margin-top: 0.5rem !important;
+    padding-left: 0;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: var(--research-figure-copy, 0.875rem) !important;
+    font-weight: 600;
+    line-height: 1.45 !important;
+  }
+
+  .condition {
+    margin-top: 0.25rem !important;
+    text-transform: uppercase;
+  }
+
+  .example {
+    margin-top: 0.75rem !important;
+  }
+
+  .user-surface {
+    margin-top: 1rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1rem;
+    text-align: center;
+  }
+
+  .user-surface .figure-node {
+    margin-top: 0.25rem !important;
+  }
+
+  .stable-boundary {
+    margin-top: 1rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--border-subtle));
+    border-radius: 0.2rem;
+    background: color-mix(in srgb, var(--accent) 10%, var(--bg-card));
+    padding: 0.875rem 1rem;
+  }
+
+  .stable-boundary .figure-node {
+    margin-top: 0.375rem !important;
+    font-weight: 500;
+  }
+
+  .fallback-note {
+    margin-top: 1.25rem !important;
+    color: var(--text-secondary);
+  }
+
+  .fallback-note span {
+    color: var(--text-primary);
+  }
+
+  @media (min-width: 760px) {
+    .implementation-options {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-left: 0;
+      padding-left: 0;
+    }
+
+    .implementation-option {
+      padding: 0.25rem 1rem;
+    }
+
+    .implementation-option:first-child {
+      padding-left: 0;
+    }
+
+    .implementation-option:last-child {
+      padding-right: 0;
+    }
+
+    .implementation-option.has-divider {
+      border-top: 0;
+      border-left: 1px solid var(--border-subtle);
+    }
+
+    .mobile-node {
+      display: none;
+    }
   }
 </style>
 
 <style>
   :global(.research-reading .research-prose figure.optional-implementation-figure) { border-radius: 0 !important; }
-  :global(.research-reading .research-prose figure.optional-implementation-figure) .surface { font-size: 1rem !important; line-height: 1.5 !important; }
-  :global(.research-reading .research-prose figure.optional-implementation-figure) .example,
-  :global(.research-reading .research-prose figure.optional-implementation-figure) .invariant p { font-size: 0.875rem !important; line-height: 1.6 !important; }
 </style>
