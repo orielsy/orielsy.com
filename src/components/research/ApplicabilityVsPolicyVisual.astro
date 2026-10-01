@@ -34,8 +34,8 @@ const fragments = [
     <section class="policy">
       <p class="figure-label figure-accent">Decision B · permitted response</p>
       <div class="policy-rule">
-        <p class="figure-copy">Validation asks whether the selected value meets the application requirement.</p>
-        <p class="figure-copy">Policy considers that result, the compatible options, applicable guidance, and certainty before deciding to explain, guide, or offer.</p>
+        <p class="policy-primary">Validation asks whether the selected value meets the application requirement.</p>
+        <p class="policy-secondary">Policy considers that result, the compatible options, applicable guidance, and certainty before deciding to explain, guide, or offer.</p>
       </div>
       <div class="policy-note">
         <LockKeyhole size={16} strokeWidth={1.75} aria-hidden="true" />
@@ -46,6 +46,31 @@ const fragments = [
 </ResearchFigureFrame>
 
 <style>
+  .adaptive-applicability :global(.figure-number),
+  .adaptive-applicability :global(.status),
+  .adaptive-applicability :global(.figure-label) {
+    font-size: 0.625rem !important;
+    font-weight: 400;
+    letter-spacing: 0 !important;
+    line-height: 1.25rem !important;
+  }
+
+  .adaptive-applicability :global(.heading h3) {
+    font-size: 1.125rem !important;
+    line-height: 1.75rem !important;
+    letter-spacing: 0 !important;
+  }
+
+  .adaptive-applicability :global(figcaption) {
+    font-size: 0.75rem !important;
+    line-height: 1.5rem !important;
+  }
+
+  .adaptive-applicability :global(.figure-support) {
+    font-size: 0.75rem !important;
+    line-height: 1.25rem !important;
+  }
+
   .adaptive-applicability :global(p),
   .adaptive-applicability :global(span),
   .adaptive-applicability :global(strong) {
@@ -85,6 +110,7 @@ const fragments = [
     color: var(--text-primary);
     font-size: 0.75rem;
     font-weight: 500;
+    line-height: 1.25rem;
   }
 
   .policy-rule {
@@ -93,8 +119,19 @@ const fragments = [
     padding-left: 1rem;
   }
 
-  .policy-rule .figure-copy + .figure-copy {
+  .policy-primary,
+  .policy-secondary {
+    font-size: 0.875rem !important;
+    line-height: 1.5rem !important;
+  }
+
+  .policy-primary {
+    color: var(--text-primary);
+  }
+
+  .policy-secondary {
     margin-top: 0.75rem !important;
+    color: var(--text-secondary);
   }
 
   .policy-note {
