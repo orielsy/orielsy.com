@@ -30,7 +30,7 @@ const profiles = [
     </div>
 
     <section class="profiles" aria-labelledby="zen-target-choice">
-      <div class="target-choice"><span id="zen-target-choice">User-selected target</span><p>Target changes representation, never material state.</p></div>
+      <div class="target-choice"><span id="zen-target-choice">User-selected target</span><p class="figure-support">Target changes representation, never material state.</p></div>
       <div class="profile-list">
         {profiles.map((profile, index) => (
           <div>
@@ -61,7 +61,7 @@ const profiles = [
   .arrow-desktop { display: none; }
   .target-choice { border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.75rem; }
   .target-choice span { color: var(--accent); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.08em; text-transform: uppercase; }
-  .target-choice p { margin-top: 0.25rem !important; color: var(--text-muted); font-size: 0.8125rem; line-height: 1.5; }
+  .target-choice p { margin-top: 0.25rem !important; color: var(--text-muted); line-height: 1.5; }
   .profile-list > div { display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0.65rem; padding: 0.9rem 0; }
   .profile-list > div + div { border-top: 1px solid var(--border-subtle); }
   .profile-icon { display: flex; align-items: flex-start; justify-content: center; color: var(--accent); line-height: 1.5; }
