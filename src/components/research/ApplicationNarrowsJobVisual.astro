@@ -23,7 +23,7 @@ const jobs = [
   <div class="narrowing-layout">
     <section class="broad-request">
       <p class="figure-meta">Broad request</p>
-      <p class="request figure-node-prominent">“Understand the application and do what I mean.”</p>
+      <h4 class="request figure-node-prominent">“Understand the application and do what I mean.”</h4>
 
       <div class="supplies" aria-label="Constraints supplied by the application">
         {supplies.map((item, index) => (
@@ -62,6 +62,7 @@ const jobs = [
 
 <style>
   .narrow-job-figure :global(p),
+  .narrow-job-figure :global(h4),
   .narrow-job-figure :global(ul),
   .narrow-job-figure :global(li) {
     margin: 0;
