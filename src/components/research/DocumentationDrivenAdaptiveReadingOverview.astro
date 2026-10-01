@@ -1,0 +1,270 @@
+<section class="adaptive-reading-overview not-prose" aria-labelledby="adaptive-reading-overview-title">
+  <p class="overview-kicker">Overview · ~2 min</p>
+  <h2 id="adaptive-reading-overview-title">Move the knowledge, not the user</h2>
+  <p class="overview-lead">
+    A user at a configuration field may need an explanation that already exists in documentation or release notes. The opportunity is to bring applicable product knowledge into that task without letting the knowledge source decide what is true or which action is allowed. The application still owns state and validation.
+  </p>
+
+  <section class="overview-section" aria-labelledby="adaptive-overview-model">
+    <h3 id="adaptive-overview-model">Adaptation before inference</h3>
+    <p>
+      Phase 1 uses explicit context, authored fragments, and deterministic rules. A standard form and an adaptive form share the same scenario and required Data Connection rule; the adaptive policy adds context only when it applies. First ask whether guidance matches the current state, version, and audience. Then, separately, ask whether the evidence permits an explanation, guidance, or an offer. A matching note alone never authorizes an action.
+    </p>
+  </section>
+
+  <figure class="overview-boundary" aria-labelledby="adaptive-overview-boundary-title">
+    <header>
+      <p class="figure-label">Overview · decision boundary</p>
+      <h3 id="adaptive-overview-boundary-title">Relevant knowledge is not permission to choose</h3>
+    </header>
+
+    <div class="boundary-grid">
+      <section>
+        <p class="figure-label">Several compatible connections</p>
+        <h4>The intent is unresolved.</h4>
+        <p class="boundary-copy">Applicable guidance may explain, highlight, focus, or guide. It cannot identify which connection the user means.</p>
+        <p class="boundary-rule">Do not guess a value.</p>
+      </section>
+
+      <section class="boundary-emphasis">
+        <p class="figure-label figure-accent">Exactly one compatible connection</p>
+        <h4>The candidate is unambiguous.</h4>
+        <p class="boundary-copy">The interface may offer “Use connection” because only one compatible value remains.</p>
+        <p class="boundary-rule accent-rule">The user still accepts the offer.</p>
+      </section>
+    </div>
+
+    <figcaption>
+      Illustrative Phase 1 rule, not a measured UX result. Both cases retain the same application validation; authored guidance cannot change it or silently select a value.
+    </figcaption>
+  </figure>
+
+  <section class="overview-section overview-limits" aria-labelledby="adaptive-overview-limits">
+    <h3 id="adaptive-overview-limits">A bounded demonstration</h3>
+    <p>
+      The example uses fixed scenarios, authored fixtures, and simulated familiarity—not a documentation-ingestion system, learned user profile, or validated improvement in UX. No LLM, semantic retrieval, or remote inference runs in Phase 1. Future inference could help interpret intent or rank candidates after deterministic filtering, but its output would still pass through application truth and response policy.
+    </p>
+  </section>
+
+  <div class="overview-continue">
+    <p>Continue for the seven concerns, six decision stages, five controlled scenarios, limitations, and proposed inference seam.</p>
+    <button type="button" data-reading-depth-open="full">
+      Full Research · ~8 min <span aria-hidden="true">→</span>
+    </button>
+  </div>
+</section>
+
+<style>
+  .adaptive-reading-overview {
+    color: var(--text-secondary);
+  }
+
+  .adaptive-reading-overview :global(h2),
+  .adaptive-reading-overview :global(h3),
+  .adaptive-reading-overview :global(h4),
+  .adaptive-reading-overview :global(p),
+  .adaptive-reading-overview :global(figure) {
+    margin: 0;
+  }
+
+  .overview-kicker,
+  .figure-label {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: var(--research-figure-label, 0.625rem) !important;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.5 !important;
+    text-transform: uppercase;
+  }
+
+  .overview-kicker,
+  .figure-accent {
+    color: var(--accent) !important;
+  }
+
+  .adaptive-reading-overview > h2 {
+    margin-top: 0.7rem !important;
+    max-width: 42rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.65rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+  }
+
+  .overview-lead {
+    max-width: 46rem;
+    margin-top: 1.1rem !important;
+    color: var(--text-secondary);
+    font-size: 1rem !important;
+    line-height: 1.8 !important;
+  }
+
+  .overview-section {
+    max-width: 46rem;
+    margin-top: 2.5rem;
+  }
+
+  .overview-section h3 {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+  }
+
+  .overview-section p {
+    margin-top: 0.8rem !important;
+    color: var(--text-secondary);
+    font-size: 0.95rem !important;
+    line-height: 1.8 !important;
+  }
+
+  .overview-boundary {
+    margin-top: 2.5rem !important;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.2rem;
+    background: var(--bg-card);
+  }
+
+  .overview-boundary > header {
+    padding: 1.15rem 1.25rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .overview-boundary > header h3 {
+    margin-top: 0.45rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: var(--research-figure-node-prominent, 1.125rem);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+  }
+
+  .boundary-grid {
+    display: grid;
+  }
+
+  .boundary-grid > section {
+    min-width: 0;
+    padding: 1.25rem;
+    background: var(--research-figure-surface-base, var(--bg-primary));
+  }
+
+  .boundary-grid > section + section {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .boundary-grid > .boundary-emphasis {
+    background: var(--research-figure-surface-emphasis, var(--bg-card-hover));
+  }
+
+  .boundary-grid h4 {
+    margin-top: 0.8rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: var(--research-figure-node, 1rem);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.015em;
+  }
+
+  .boundary-copy {
+    margin-top: 0.55rem !important;
+    color: var(--text-secondary);
+    font-size: var(--research-figure-copy, 0.875rem) !important;
+    line-height: 1.65 !important;
+  }
+
+  .boundary-rule {
+    margin-top: 1rem !important;
+    border-left: 2px solid var(--border-strong);
+    padding-left: 0.75rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: var(--research-figure-copy, 0.875rem) !important;
+    font-weight: 600;
+    line-height: 1.5 !important;
+  }
+
+  .accent-rule {
+    border-left-color: var(--accent);
+  }
+
+  .overview-boundary > figcaption {
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.9rem 1.25rem;
+    color: var(--text-muted);
+    font-size: var(--research-figure-caption, 0.75rem) !important;
+    line-height: 1.65 !important;
+  }
+
+  .overview-limits {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 2rem;
+  }
+
+  .overview-continue {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1.5rem;
+  }
+
+  .overview-continue > p {
+    max-width: 26rem;
+    color: var(--text-muted);
+    font-size: 0.875rem !important;
+    line-height: 1.65 !important;
+  }
+
+  .overview-continue button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 1px solid var(--border-subtle);
+    background: transparent;
+    padding: 0.65rem 0.9rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+
+  .overview-continue button:hover {
+    border-color: var(--border-strong);
+  }
+
+  .overview-continue button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (min-width: 720px) {
+    .boundary-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .boundary-grid > section + section {
+      border-top: 0;
+      border-left: 1px solid var(--border-subtle);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .overview-continue button {
+      transition: none;
+    }
+  }
+</style>
