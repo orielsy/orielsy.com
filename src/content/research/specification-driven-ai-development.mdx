@@ -36,7 +36,7 @@ import ResearchSourceExcerpt from '../../components/research/ResearchSourceExcer
 
 Here, **spec-driven** names a repository practice in which specifications own product requirements within a broader authority-by-concern system. It does not make a specification universally authoritative: constitutions preserve project-wide constraints, ADRs preserve rationale, plans and tasks preserve approach and execution state, code shows implementation, and tests show what was checked.
 
-Version-controlled memory improves recoverability, not correctness by default. A future agent must still find and interpret the relevant records, inspect implementation evidence, and verify behavior.
+Version control gives consequential decisions an address a later agent can recover. It does not make those decisions correct or current. The agent still has to find the relevant records, interpret them against the task, inspect the implementation, and verify the resulting behavior.
 
 ## The Claim Came Back
 
@@ -104,7 +104,7 @@ Project memory records and implementation evidence are related but not interchan
 
 **ADR / decision record** — Why was a consequential product or architectural choice made?
 
-**Code and tests (adjacent evidence)** — What behavior exists, and what has been checked?
+**Code and tests (adjacent evidence)** — What has been implemented, and what behavior has been checked?
 
 <ResearchBreakout mode="wide">
   <ProjectMemoryAuthorityMapVisual />
@@ -137,7 +137,7 @@ It is a routing layer, not a mega-prompt.
 
 Routing can bring both project memory and adjacent implementation evidence into the task. Selecting code or tests does not turn them into records of intent; it makes comparison possible.
 
-The point is not to load every artifact into every task. The useful context is the smallest set that can expose the applicable constraints, rationale, and current behavior.
+The point is not to load every artifact into every task. Start with the records and implementation surfaces the task makes relevant; follow their references and disagreements when that first selection is not enough. The aim is a bounded, inspectable selection—not a claim that the repository can identify a uniquely minimal context.
 
 A positioning change begins with project-wide factual guardrails and the site-foundation specification. A publication change narrows into the publication-gating specification and its related decisions. Only then does the agent need the implementation surfaces that realize those requirements.
 
@@ -187,7 +187,7 @@ The maintenance rule is a coordinated workflow across owning artifacts: update t
 
 ## Durable Memory Can Drift Too
 
-Version control solves persistence. It does not solve maintenance.
+Version control preserves a record. It does not keep that record aligned with the system it describes.
 
 The deployment documentation in this repository provides a useful example.
 
@@ -199,7 +199,7 @@ Current `AGENTS.md`, however, documents three supported production paths: local 
   <ProjectMemoryDriftVisual />
 </ResearchBreakout>
 
-The important point is not which document should win automatically. The important point is that **durable memory can preserve an earlier truth after the operating model has changed**.
+The important point is not which document should win automatically. The important point is that **durable memory can preserve an earlier account after the operating model has changed**.
 
 That inconsistency is inspectable because both artifacts survive. It still requires someone to reconcile them.
 
@@ -220,9 +220,7 @@ Version-controlled memory still has failure modes:
 - **Implementation does not explain every decision.** Code can show what exists without preserving why a choice was made.
 - **Human judgment remains necessary.** Engineers still decide what becomes durable, which artifact owns a concern, and how conflicts are resolved.
 
-The practical gain is narrower than determinism: consequential decisions have an address, later work can recover that address, and silent regression becomes less likely.
-
-"Less likely" is intentional. Guarantee is not the claim.
+The practical gain is narrower than determinism: consequential decisions have an address that later work can inspect. That creates an opportunity to catch a repeated mistake; it does not establish that the mistake will be caught or become less frequent.
 
 ## The Next Problem Is Relevance
 
