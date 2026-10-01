@@ -27,7 +27,7 @@ const embedded = [
     <section aria-labelledby="conversation-path-title">
       <div class="path-heading muted">
         <MessageSquare size={16} strokeWidth={1.75} aria-hidden="true" />
-        <p id="conversation-path-title" class="figure-meta path-label">Chat surface</p>
+        <p id="conversation-path-title" class="figure-label">Chat surface</p>
       </div>
       <ol>
         {chat.map((step, index) => (
@@ -37,7 +37,7 @@ const embedded = [
           </li>
         ))}
       </ol>
-      <p class="path-note figure-meta">Handoff depends on the integration</p>
+      <p class="path-note figure-label">Handoff depends on the integration</p>
     </section>
 
     <div class="path-divider" aria-hidden="true"></div>
@@ -45,7 +45,7 @@ const embedded = [
     <section aria-labelledby="embedded-path-title">
       <div class="path-heading accent">
         <Table2 size={16} strokeWidth={1.75} aria-hidden="true" />
-        <p id="embedded-path-title" class="figure-meta figure-accent path-label">Embedded capability</p>
+        <p id="embedded-path-title" class="figure-label figure-accent">Embedded capability</p>
       </div>
       <ol>
         {embedded.map((step, index) => (
@@ -55,12 +55,12 @@ const embedded = [
           </li>
         ))}
       </ol>
-      <p class="path-note figure-meta figure-accent is-accent">Result lives in the interface</p>
+      <p class="path-note figure-label figure-accent is-accent">Result lives in the interface</p>
     </section>
   </div>
 
   <div class="shared-result">
-    <span class="figure-meta">Shared end state</span>
+    <span class="figure-label">Shared end state</span>
     <p class="figure-copy">The table reflects the requested state, if either path is integrated to reach it.</p>
   </div>
 </ResearchFigureFrame>
@@ -100,14 +100,10 @@ const embedded = [
     color: var(--accent);
   }
 
-  .path-label {
-    text-transform: uppercase;
-  }
-
   .paths ol {
     display: grid;
-    gap: 0.625rem;
-    margin-top: 1rem !important;
+    gap: 0.3rem;
+    margin-top: 0.85rem !important;
   }
 
   .paths li {
@@ -116,7 +112,7 @@ const embedded = [
     gap: 0.5rem;
     color: var(--text-secondary);
     font-size: var(--research-figure-copy, 0.875rem);
-    line-height: 1.7;
+    line-height: 1.55;
   }
 
   .paths li.is-final {
@@ -124,14 +120,13 @@ const embedded = [
   }
 
   .step {
-    line-height: 1.7 !important;
+    line-height: 1.55 !important;
   }
 
   .path-note {
-    margin-top: 1rem !important;
+    margin-top: 0.85rem !important;
     border-left: 2px solid var(--border-strong);
     padding-left: 0.75rem;
-    text-transform: uppercase;
   }
 
   .path-note.is-accent {
@@ -143,9 +138,9 @@ const embedded = [
   }
 
   .shared-result {
-    margin-top: 1.75rem;
+    margin-top: 1.5rem;
     border-radius: 0.2rem;
-    background: var(--bg-secondary);
+    background: color-mix(in srgb, var(--text-primary) 3%, var(--bg-card));
     padding: 0.75rem 1rem;
   }
 
