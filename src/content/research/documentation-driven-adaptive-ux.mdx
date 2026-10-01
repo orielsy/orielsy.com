@@ -30,6 +30,8 @@ import AdaptiveUxScenarioEvidenceVisual from '../../components/research/Adaptive
 import Phase1LimitationsVisual from '../../components/research/Phase1LimitationsVisual.astro';
 import WhereAiCouldEnterLaterVisual from '../../components/research/WhereAiCouldEnterLaterVisual.astro';
 import DocumentationDrivenAdaptiveReadingOverview from '../../components/research/DocumentationDrivenAdaptiveReadingOverview.astro';
+import DocumentationDrivenAdaptiveVisual from '../../components/research/DocumentationDrivenAdaptiveVisual.astro';
+import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import ResearchReadingDepth from '../../components/research/ResearchReadingDepth.astro';
 
 <ResearchReadingDepth overviewTime="2 min" fullResearchTime="8 min" presentation="editorial" />
@@ -47,6 +49,12 @@ Enterprise products accumulate operational knowledge across documentation, relea
 A field may know that a value is missing. The application may know the current version and valid options. Documentation may explain why the field matters. The user is still expected to assemble that context manually.
 
 The opportunity is to **select and surface authored product knowledge according to current application state**, rather than make every user leave the product or receive the same static explanation.
+
+<ResearchBreakout mode="wide">
+  <DocumentationDrivenAdaptiveVisual />
+</ResearchBreakout>
+
+This is a conceptual comparison of where product knowledge meets the task, not evidence that the adaptive path produces better outcomes. The working lab below provides the actual Phase 1 behavior.
 
 ## Phase 1 Experiment: One Field, Two Interface Policies
 
