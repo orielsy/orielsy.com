@@ -1,110 +1,162 @@
 ---
+import { ArrowRight } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
 export interface Props { figureNumber?: string; }
 const { figureNumber } = Astro.props;
-const stages = [
-  ['Application state', 'What the user selected'],
-  ['Validation', 'Known requirements'],
-  ['Runtime / user context', 'Version, familiarity, compatible options'],
-  ['Applicable authored knowledge', 'Fragments matching explicit facts'],
-  ['Response policy', 'Evidence bounds intervention'],
-  ['Structured UI response', 'Render permitted guidance or offer'],
+
+const groups = [
+  {
+    title: 'Application truth',
+    role: 'Authoritative',
+    emphasized: true,
+    concerns: [
+      ['Domain state', 'What the user has selected.'],
+      ['Runtime and user context', 'Product version, familiarity, and compatible options.'],
+      ['Validation', 'Deterministic application requirements.'],
+    ],
+  },
+  {
+    title: 'Applicable knowledge',
+    role: 'Reads truth',
+    emphasized: false,
+    concerns: [
+      ['Product knowledge', 'Authored explanation and configuration guidance.'],
+      ['Knowledge applicability', 'Whether a specific item applies to the current state.'],
+    ],
+  },
+  {
+    title: 'Structured response',
+    role: 'Bounded by evidence',
+    emphasized: false,
+    concerns: [
+      ['Response policy', 'How strongly the interface may intervene.'],
+      ['Rendering', 'How the structured response appears.'],
+    ],
+  },
 ];
 ---
 
 <ResearchFigureFrame
   className="adaptive-pipeline"
   {figureNumber}
-  title="Six decision stages; seven distinct concerns"
+  title="Seven concerns, decided in one direction"
   status="Phase 1 · deterministic"
-  caption="Domain state, runtime context, validation, product knowledge, knowledge applicability, response policy, and rendering remain distinct. The lab uses authored fixtures, not a document-ingestion pipeline. No inference is required."
+  caption="Arrows show the order of decision and the direction of dependency: knowledge is selected against application truth and never redefines it; response policy and rendering remain distinct even though they act together. Phase 1 uses explicit authored conditions only—no inference."
 >
-  <ol aria-label="Deterministic Phase 1 decision path">
-    {stages.map(([title, detail], index) => (
-      <li>
-        <span class="figure-meta figure-accent">0{index + 1}</span>
-        <div>
-          <h4 class="figure-node">{title}</h4>
-          <p class="figure-support">{detail}</p>
-        </div>
-      </li>
+  <div class="group-flow" aria-label="Seven concerns grouped by decision order">
+    {groups.map((group, index) => (
+      <>
+        {index > 0 && (
+          <div class="flow-arrow" aria-hidden="true">
+            <ArrowRight size={16} strokeWidth={1.6} />
+          </div>
+        )}
+        <section class:list={['concern-group', group.emphasized && 'is-emphasized']}>
+          <div class="group-heading">
+            <h4 class="figure-node">{group.title}</h4>
+            <span class="figure-label figure-accent">{group.role}</span>
+          </div>
+          <dl>
+            {group.concerns.map(([name, detail]) => (
+              <div>
+                <dt class="figure-copy">{name}</dt>
+                <dd class="figure-support">{detail}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      </>
     ))}
-  </ol>
-  <p class="boundary figure-copy">Application state and validation remain authoritative.</p>
+  </div>
 </ResearchFigureFrame>
 
 <style>
-  .adaptive-pipeline :global(ol),
-  .adaptive-pipeline :global(li),
   .adaptive-pipeline :global(h4),
-  .adaptive-pipeline :global(p) {
+  .adaptive-pipeline :global(dl),
+  .adaptive-pipeline :global(dt),
+  .adaptive-pipeline :global(dd) {
     margin: 0;
   }
 
-  .adaptive-pipeline :global(ol) {
-    padding: 0;
-    list-style: none;
-  }
-
-  ol {
+  .group-flow {
     display: grid;
     border-block: 1px solid var(--border-subtle);
   }
 
-  li {
+  .concern-group {
+    padding: 1rem 0;
+  }
+
+  .concern-group.is-emphasized {
+    background: var(--research-figure-surface-emphasis, var(--bg-card-hover));
+  }
+
+  .group-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .group-heading .figure-label {
+    white-space: nowrap;
+  }
+
+  dl {
     display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr);
-    gap: 0.65rem;
-    padding: 0.85rem 0;
+    gap: 0.9rem;
+    margin-top: 0.9rem !important;
   }
 
-  li + li {
+  dt {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  dd {
+    margin-top: 0.2rem !important;
+    color: var(--text-secondary);
+  }
+
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.5rem 0;
+    color: var(--accent);
   }
 
-  li .figure-meta {
-    line-height: 1.8 !important;
+  .flow-arrow :global(svg) {
+    transform: rotate(90deg);
   }
 
-  li .figure-support {
-    margin-top: 0.25rem !important;
-  }
-
-  .boundary {
-    margin-top: 1rem !important;
-    color: var(--text-primary) !important;
-  }
-
-  @media (min-width: 640px) {
-    ol {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+  @media (min-width: 760px) {
+    .group-flow {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: stretch;
     }
 
-    li {
-      display: block;
-      padding: 1rem;
-      border-bottom: 1px solid var(--border-subtle);
+    .concern-group {
+      padding: 1.15rem 1rem;
     }
 
-    li + li {
-      border-top: 0;
+    .concern-group:first-child {
+      padding-left: 1rem;
     }
 
-    li:nth-child(3n + 2),
-    li:nth-child(3n + 3) {
-      border-left: 1px solid var(--border-subtle);
+    .flow-arrow {
+      border: 0;
+      padding: 0 0.35rem;
     }
 
-    li:nth-child(3n + 1) {
-      padding-left: 0;
-    }
-
-    li:nth-child(n + 4) {
-      border-bottom: 0;
-    }
-
-    li .figure-node {
-      margin-top: 0.45rem !important;
+    .flow-arrow :global(svg) {
+      transform: none;
     }
   }
 </style>
