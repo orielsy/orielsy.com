@@ -18,7 +18,6 @@ const steps = [
   caption="The spec defines intended behavior, while the schema, route, and feed show separate implementation surfaces. This is not an exhaustive proof that every gating requirement is met."
 >
   <div class="chain-wrap">
-    <span class="chain-line" aria-hidden="true"></span>
     <ol class="evidence-chain">
       {steps.map(([label, file, text, Icon], index) => (
         <li>
@@ -27,7 +26,9 @@ const steps = [
             <code>{file}</code>
             <p>{text}</p>
           </div>
-          <span class="icon-node" aria-hidden="true"><Icon size={13} strokeWidth={1.6} /></span>
+          <span class="rail-node" aria-hidden="true">
+            <span class="icon-node"><Icon size={13} strokeWidth={1.6} /></span>
+          </span>
         </li>
       ))}
     </ol>
@@ -40,45 +41,154 @@ const steps = [
 </ResearchFigureFrame>
 
 <style>
-  .publication-evidence :global(p), .publication-evidence :global(ol), .publication-evidence :global(li) { margin: 0; }
-  .publication-evidence :global(ol) { padding: 0; list-style: none; }
-  .chain-wrap { position: relative; }
-  .chain-line { position: absolute; top: 0.5rem; bottom: 0.5rem; left: 0.75rem; width: 1px; background: var(--border-subtle); }
-  .evidence-chain { position: relative; display: grid; gap: 1.5rem; }
-  li { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); gap: 0.8rem; align-items: start; }
-  .icon-node { position: relative; z-index: 1; grid-column: 1; grid-row: 1; display: flex; width: 1.5rem; height: 1.5rem; align-items: center; justify-content: center; border: 1px solid var(--accent); border-radius: 999px; color: var(--accent); background: var(--bg-card); }
-  .step-copy { grid-column: 2; min-width: 0; }
-  .label { display: block; color: var(--accent); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
-  code { display: block; margin-top: 0.4rem; border: 0 !important; background: transparent !important; padding: 0 !important; color: var(--text-primary) !important; font-family: var(--font-mono-ui); font-size: 0.6875rem !important; line-height: 1.5; white-space: normal !important; overflow-wrap: anywhere; }
-  .step-copy p, .rationale p { margin-top: 0.45rem !important; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
-  .rationale { display: grid; gap: 0.8rem; margin-top: 1.35rem; border-top: 1px solid var(--border-subtle); padding-top: 0.9rem; }
-  .rationale .accent { color: var(--accent); }
-  .rationale-note { display: block; margin-top: 0.45rem; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); line-height: 1.55; }
+  .publication-evidence :global(p),
+  .publication-evidence :global(ol),
+  .publication-evidence :global(li) {
+    margin: 0;
+  }
+
+  .publication-evidence :global(ol) {
+    padding: 0;
+    list-style: none;
+  }
+
+  .publication-evidence :global(li) {
+    padding: 0 !important;
+  }
+
+  .evidence-chain {
+    --chain-gap: 2rem;
+    display: grid;
+    gap: var(--chain-gap);
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .rail-node {
+    position: relative;
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    width: 24px;
+    height: 100%;
+    align-self: stretch;
+    justify-content: center;
+  }
+
+  li:not(:last-child) .rail-node::after {
+    position: absolute;
+    top: 12px;
+    bottom: calc((var(--chain-gap) + 12px) * -1);
+    left: 50%;
+    width: 1px;
+    transform: translateX(-50%);
+    background: var(--border-subtle);
+    content: '';
+  }
+
+  .icon-node {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    color: var(--accent);
+    background: var(--bg-card);
+  }
+
+  .step-copy {
+    grid-column: 2;
+    min-width: 0;
+  }
+
+  .label {
+    display: block;
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: var(--research-diagram-label, 0.625rem);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  code {
+    display: block;
+    margin-top: 0.4rem;
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    color: var(--text-primary) !important;
+    font-family: var(--font-mono-ui);
+    font-size: 0.6875rem !important;
+    line-height: 1.5;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+  }
+
+  .step-copy p,
+  .rationale p {
+    margin-top: 0.45rem !important;
+    color: var(--text-secondary);
+    font-size: var(--research-diagram-copy, 0.875rem);
+    line-height: 1.6;
+  }
+
+  .rationale {
+    display: grid;
+    gap: 0.8rem;
+    margin-top: 1.35rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.9rem;
+  }
+
+  .rationale .accent {
+    color: var(--accent);
+  }
+
+  .rationale-note {
+    display: block;
+    margin-top: 0.45rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: var(--research-diagram-label, 0.625rem);
+    line-height: 1.55;
+  }
 
   @media (min-width: 760px) {
-    .chain-line {
-      left: 50%;
-      width: 1px;
-      transform: translateX(-50%);
-    }
-    .evidence-chain { gap: 1.8rem; }
     li {
-      position: relative;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      column-gap: 4rem;
-      align-items: center;
+      grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
+      gap: 1.25rem;
+      align-items: start;
     }
-    .icon-node {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      grid-column: auto;
-      grid-row: auto;
-      transform: translate(-50%, -50%);
+
+    .rail-node {
+      grid-column: 2;
+      width: 48px;
     }
-    .step-copy { grid-column: 2; }
-    .step-copy.is-left { grid-column: 1; text-align: right; }
-    .rationale { grid-template-columns: 9rem minmax(0, 1fr); gap: 1rem; align-items: start; }
+
+    .step-copy {
+      grid-column: 3;
+    }
+
+    .step-copy.is-left {
+      grid-column: 1;
+      text-align: right;
+    }
+
+    .rationale {
+      grid-template-columns: 9rem minmax(0, 1fr);
+      gap: 1rem;
+      align-items: start;
+    }
   }
 </style>
