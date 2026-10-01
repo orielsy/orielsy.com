@@ -81,10 +81,10 @@ import { MoveRight } from '@lucide/astro';
   .figure-label {
     color: var(--text-muted);
     font-family: var(--font-mono-ui);
-    font-size: var(--research-figure-label, 0.625rem) !important;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    line-height: 1.5 !important;
+    font-size: 0.625rem !important;
+    font-weight: 400;
+    letter-spacing: 0 !important;
+    line-height: 1.25rem !important;
     text-transform: uppercase;
   }
 
@@ -96,18 +96,18 @@ import { MoveRight } from '@lucide/astro';
     max-width: 42rem;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: clamp(1.65rem, 3vw, 2rem);
+    font-size: 1.5rem;
     font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.035em;
+    line-height: 1.375;
+    letter-spacing: 0;
   }
 
   .overview-lead {
     max-width: 46rem;
-    margin-top: 1.1rem !important;
+    margin-top: 1.25rem !important;
     color: var(--text-secondary);
     font-size: 1rem !important;
-    line-height: 1.8 !important;
+    line-height: 2rem !important;
   }
 
   .overview-orientation {
@@ -129,8 +129,8 @@ import { MoveRight } from '@lucide/astro';
     font-family: var(--font-display);
     font-size: 1.25rem;
     font-weight: 600;
-    line-height: 1.4;
-    letter-spacing: -0.025em;
+    line-height: 1.75rem;
+    letter-spacing: 0;
   }
 
   .orientation-grid {
@@ -155,16 +155,16 @@ import { MoveRight } from '@lucide/astro';
     font-family: var(--font-display);
     font-size: 1.125rem;
     font-weight: 600;
-    line-height: 1.5;
-    letter-spacing: -0.02em;
+    line-height: 1.75rem;
+    letter-spacing: 0;
   }
 
   .knowledge-side h4 + p,
   .authority-side h4 + p {
     margin-top: 0.5rem !important;
     color: var(--text-secondary);
-    font-size: var(--research-figure-copy, 0.875rem) !important;
-    line-height: 1.65 !important;
+    font-size: 0.875rem !important;
+    line-height: 1.5rem !important;
   }
 
   .knowledge-side :global(svg) {
@@ -182,9 +182,9 @@ import { MoveRight } from '@lucide/astro';
   .authority-rule {
     margin-top: 1rem !important;
     color: var(--text-primary);
-    font-size: var(--research-figure-support, 0.75rem) !important;
-    font-weight: 600;
-    line-height: 1.6 !important;
+    font-size: 0.75rem !important;
+    font-weight: 500;
+    line-height: 1.25rem !important;
   }
 
   .overview-orientation figcaption {
@@ -192,8 +192,8 @@ import { MoveRight } from '@lucide/astro';
     border-top: 1px solid var(--border-subtle);
     padding-top: 1rem;
     color: var(--text-muted);
-    font-size: var(--research-figure-caption, 0.75rem) !important;
-    line-height: 1.65 !important;
+    font-size: 0.75rem !important;
+    line-height: 1.5rem !important;
   }
 
   .overview-section {
@@ -206,15 +206,15 @@ import { MoveRight } from '@lucide/astro';
     font-family: var(--font-display);
     font-size: 1.25rem;
     font-weight: 600;
-    line-height: 1.3;
-    letter-spacing: -0.025em;
+    line-height: 1.75rem;
+    letter-spacing: 0;
   }
 
   .overview-section p {
-    margin-top: 0.8rem !important;
+    margin-top: 0.75rem !important;
     color: var(--text-secondary);
-    font-size: 0.95rem !important;
-    line-height: 1.8 !important;
+    font-size: 0.9375rem !important;
+    line-height: 2rem !important;
   }
 
   .overview-section em {
@@ -234,14 +234,14 @@ import { MoveRight } from '@lucide/astro';
     gap: 1rem 2rem;
     margin-top: 2.5rem;
     border-top: 1px solid var(--border-subtle);
-    padding-top: 1.5rem;
+    padding-top: 1.75rem;
   }
 
   .overview-continue > p {
     max-width: 24rem;
     color: var(--text-muted);
     font-size: 0.875rem !important;
-    line-height: 1.65 !important;
+    line-height: 1.5rem !important;
   }
 
   .overview-continue button {
@@ -269,6 +269,10 @@ import { MoveRight } from '@lucide/astro';
   }
 
   @media (min-width: 640px) {
+    .adaptive-reading-overview > h2 {
+      font-size: 1.875rem;
+    }
+
     .overview-orientation {
       padding-block: 2.25rem;
     }
