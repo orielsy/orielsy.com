@@ -131,6 +131,35 @@
   text-decoration: none;
 }
 
+/* Lovable treats the working project as the payoff to the architectural argument. */
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-reference-kicker {
+  margin: 5rem 0 0 !important;
+  border-top: 1px solid var(--accent);
+  padding-top: 1.5rem;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-reference-kicker + h2 {
+  margin-top: .75rem !important;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-reference-grid {
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;
+  margin: 1.25rem 0 3rem;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-reference-summary {
+  margin: 0 !important;
+  color: var(--text-muted);
+  font-size: .75rem !important;
+  line-height: 1.75 !important;
+}
+
+[data-research-entry="documentation-driven-adaptive-ux"] .paper-reference-grid .paper-lab-link {
+  margin: 0;
+}
+
 /* Deterministic rationale rows. */
 [data-research-entry="documentation-driven-adaptive-ux"] .paper-reason-list,
 [data-research-entry="documentation-driven-adaptive-ux"] .paper-future-capabilities {
@@ -316,5 +345,12 @@
 
   [data-research-entry="documentation-driven-adaptive-ux"] .paper-findings-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 760px) {
+  [data-research-entry="documentation-driven-adaptive-ux"] .paper-reference-grid {
+    grid-template-columns: minmax(10rem, .65fr) minmax(0, 1.35fr);
+    gap: 2rem;
   }
 }
