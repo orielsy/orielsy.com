@@ -23,7 +23,7 @@ const architecture = ['State + scheduling', 'Routing + data', 'Server / client e
       <ul>
         {substrate.map((item) => <li>{item}</li>)}
       </ul>
-      <p class="footer-note">Custom Elements · Shadow DOM · templates · slots</p>
+      <p class="footer-note figure-meta">Custom Elements · Shadow DOM · templates · slots</p>
     </section>
 
     <section class="architecture-side">
@@ -35,7 +35,7 @@ const architecture = ['State + scheduling', 'Routing + data', 'Server / client e
       <ul>
         {architecture.map((item) => <li>{item}</li>)}
       </ul>
-      <p class="footer-note">Policy remains a framework / application concern</p>
+      <p class="footer-note figure-meta">Policy remains a framework / application concern</p>
     </section>
   </div>
 </ResearchFigureFrame>
@@ -86,7 +86,7 @@ const architecture = ['State + scheduling', 'Routing + data', 'Server / client e
     margin-top: 0.85rem !important;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: var(--research-diagram-node, 0.875rem);
+    font-size: var(--research-diagram-node-prominent, 1.125rem) !important;
     font-weight: 600;
     line-height: 1.45;
   }
