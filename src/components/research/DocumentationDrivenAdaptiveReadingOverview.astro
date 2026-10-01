@@ -3,7 +3,6 @@ import { MoveRight } from '@lucide/astro';
 ---
 
 <section class="adaptive-reading-overview not-prose" aria-labelledby="adaptive-reading-overview-title">
-  <p class="overview-kicker">Overview · ~2 min</p>
   <h2 id="adaptive-reading-overview-title">The interface knows the state. The guidance knows the why.</h2>
   <p class="overview-lead">
     A user configuring a Data Connection may need an explanation scattered across documentation or release notes. This research asks what happens when the application selects applicable authored knowledge at that point of need—without letting documentation, or a future AI layer, decide product truth.
@@ -79,7 +78,6 @@ import { MoveRight } from '@lucide/astro';
     margin: 0;
   }
 
-  .overview-kicker,
   .figure-label {
     color: var(--text-muted);
     font-family: var(--font-mono-ui);
@@ -90,13 +88,11 @@ import { MoveRight } from '@lucide/astro';
     text-transform: uppercase;
   }
 
-  .overview-kicker,
   .figure-accent {
     color: var(--accent) !important;
   }
 
   .adaptive-reading-overview > h2 {
-    margin-top: 0.7rem !important;
     max-width: 42rem;
     color: var(--text-primary);
     font-family: var(--font-display);
