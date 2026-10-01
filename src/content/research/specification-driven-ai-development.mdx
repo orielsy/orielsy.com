@@ -1,7 +1,7 @@
 ---
 title: "From Prompts to Project Memory: Spec-Driven Development for Coding Agents"
 description: "A repository-grounded look at using version-controlled specs, decisions, and project rules as durable memory for coding agents across long-running software work."
-tldr: "Conversation is working context, not project memory. This article examines a repository pattern for giving consequential decisions a durable address, routing agents toward relevant context, and keeping that memory aligned with implementation. This makes silent regression less likely; it does not make agent output deterministic or correct."
+tldr: "Conversation is working context, not project memory. This article examines a repository pattern for giving consequential decisions a durable address, routing agents toward relevant context, and keeping that memory aligned with implementation. This makes silent regression recoverable rather than invisible; it does not make agent output deterministic or correct."
 tldrLabel: "TL;DR — WORKING PATTERN"
 pubDate: 2026-09-11
 researchNumber: 4
@@ -50,7 +50,7 @@ What I could support was substantial experience with reusable UI components, com
 
 I treat that mistake as a context-persistence failure. A distinction we had already made did not survive into a later piece of generated copy.
 
-Correcting the sentence fixed the page. Recording the constraint in the repository made the same silent regression less likely.
+Correcting the sentence fixed the page. Recording the constraint in the repository gave the same mistake a durable address a later agent could recover before repeating it.
 
 <ResearchBreakout mode="wide">
   <ProjectMemoryIncidentEvidenceVisual />
