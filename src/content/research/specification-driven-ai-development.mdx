@@ -4,6 +4,7 @@ description: "A repository-grounded look at using version-controlled specs, deci
 tldr: "Conversation is working context, not project memory. This article examines a repository pattern for giving consequential decisions a durable address, routing agents toward relevant context, and keeping that memory aligned with implementation. This makes silent regression less likely; it does not make agent output deterministic or correct."
 tldrLabel: "TL;DR — WORKING PATTERN"
 pubDate: 2026-09-11
+updatedDate: 2026-10-01
 researchNumber: 4
 type: "Research Note"
 tags: ["coding-agents", "context-engineering", "specifications", "software-architecture"]
@@ -24,7 +25,6 @@ import ProjectMemoryRoutingVisual from '../../components/research/ProjectMemoryR
 import PublicationGatingEvidenceChainVisual from '../../components/research/PublicationGatingEvidenceChainVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import ResearchReadingDepth from '../../components/research/ResearchReadingDepth.astro';
-import ResearchSourceExcerpt from '../../components/research/ResearchSourceExcerpt.astro';
 
 <ResearchReadingDepth overviewTime="2 min" fullResearchTime="8 min" presentation="editorial" />
 
@@ -34,193 +34,98 @@ import ResearchSourceExcerpt from '../../components/research/ResearchSourceExcer
 
 <div data-reading-depth-marker="full" aria-hidden="true"></div>
 
-## The Claim Came Back
+A conversation can hold a correction while an agent is working. A later session may see the repository without that conversation. The useful question is not how to keep every prompt alive, but which consequential decisions should be written beside the work they govern.
 
-A sentence on my homepage once claimed:
+Here, **spec-driven** names a repository practice in which specifications own product requirements. It does not make a specification universally authoritative: constitutions preserve project-wide constraints, ADRs preserve rationale, plans and tasks preserve approach and execution state, code shows implementation, and tests show what was checked.
 
-> "15+ years of experience designing scalable web architectures, design systems, and enterprise platforms."
+Version-controlled memory improves recoverability, not correctness by default. A future agent must still find and interpret the relevant records, inspect implementation evidence, and verify behavior.
 
-It sounded credible. It was also broader than the evidence I had established.
+## The Unsupported Claim Came Back
 
-What I could support was substantial experience with reusable UI components, component architecture, frontend patterns and systems, UI architecture, and engineering standards. Formal design-system ownership was different, and the repository did not establish it.
+A sentence on my homepage once described my experience as including **design systems**, a broader claim than the evidence established.
 
-I treat that mistake as a context-persistence failure. A distinction we had already made did not survive into a later piece of generated copy.
+Correcting the sentence fixed the visible output. Recording the boundary in the repository created two durable addresses for later work: the [project constitution](https://github.com/orielsy/orielsy.com/blob/main/.specify/memory/constitution.md) blocks unsupported project-wide positioning, while the [site-foundation specification](https://github.com/orielsy/orielsy.com/blob/main/specs/001-site-foundation/spec.md) applies that boundary to this site.
 
-Correcting the sentence fixed the page. Recording the constraint in the repository made the same silent regression less likely.
+The current branch shows those guardrails. It does not, by itself, prove the complete earlier conversation or every step in the correction's chronology. A later agent now has a durable address for the distinction; that makes recurrence less likely, not impossible.
 
 <ResearchBreakout mode="wide">
   <ProjectMemoryIncidentEvidenceVisual />
 </ResearchBreakout>
 
-That second fix is the subject of this article.
-
 ## Conversation Context Is Not Project Memory
 
-Conversation remains useful for the work in front of us: goals, tradeoffs, corrections, and discoveries.
+Working context is useful while a task is in progress, but later work cannot assume that the same conversation remains available. Consequential constraints, requirements, implementation plans, execution state, and rationale need durable addresses at the scopes they govern.
 
-The problem is that a later session, agent, or tool cannot be assumed to inherit all of it. A new session may see the repository without the discussion that produced its current decisions.
+Code and tests remain adjacent evidence of implementation and verification rather than records of that intent.
 
-In this repository, the durable substrate is version-controlled project memory: a small set of artifacts that record constraints, requirements, implementation intent, execution state, and decision rationale at different scopes.
-
-This does not make an agent correct. It gives the next agent something more stable than recollection to inspect, challenge, and follow.
-
-**A project should not depend on one conversation remaining available forever.**
+The claim remains deliberately narrow: a repository can make intent recoverable without making an agent correct.
 
 <ResearchBreakout mode="wide">
   <ProjectMemoryContinuityVisual />
 </ResearchBreakout>
 
-## What Became Durable
+## Different Questions Need Different Evidence
 
-The wording incident eventually produced two durable guardrails at different scopes.
+A constitution states project-wide constraints. A feature specification states required behavior. A plan describes an approach. Tasks record execution state. An ADR preserves rationale. Code exposes current behavior, and tests show what has been checked.
 
-The project constitution now says not to describe my professional experience as **design systems** unless that experience is explicitly established. It gives grounded alternatives such as reusable UI components, component architecture, frontend patterns and systems, UI architecture, and engineering standards.
-
-The site-foundation specification carries the same positioning constraint inside the requirements for the site itself.
-
-That duplication is deliberate because the artifacts answer different questions.
-
-The constitution establishes a project-wide invariant. The site specification narrows that invariant into the requirements of this product.
-
-The important change is not that a correction exists somewhere in the repository. It is that the correction now has an address that later work can recover.
-
-## A Small Authority Model for Project Memory
-
-These files are not interchangeable documentation. Each answers a different question.
-
-**Constitution** — What must remain true across the project?
-
-**Feature specification** — What behavior or outcome is required in this scope?
-
-**Plan** — How does the repository intend to implement that requirement?
-
-**Tasks** — What work remains or has been completed in the current execution sequence?
-
-**ADR / decision record** — Why was a consequential product or architectural choice made?
-
-**Implementation and tests** — What behavior exists, and what has been checked?
+These sources are related, but they are not interchangeable. There is no automatic universal precedence order. When a requirement, decision, and implementation disagree, name the conflict and investigate it rather than treating whichever file looks most recent as the winner.
 
 <ResearchBreakout mode="wide">
   <ProjectMemoryAuthorityMapVisual />
 </ResearchBreakout>
 
-That separation matters when sources disagree. Durability alone does not make an artifact authoritative for every concern.
+## Route Into Memory Instead of Copying It All
 
-A requirement can outlive a particular implementation strategy. Code can reveal that an old plan was never completed. A decision record can preserve useful reasoning while its operational details become stale. When artifacts diverge, the conflict has to be exposed rather than silently flattened into one story.
+[AGENTS.md](https://github.com/orielsy/orielsy.com/blob/main/AGENTS.md) stays deliberately thin. It routes the agent toward the constitution, relevant feature specification, plan and tasks, and ADRs before structural changes. It also says to update durable requirements when they change.
 
-## The Agent Entry Point: Route, Then Narrow
+Its role is routing, not storing every rule as a mega-prompt.
 
-[AGENTS.md](https://github.com/orielsy/orielsy.com/blob/main/AGENTS.md) stays deliberately thin. Its job is to route an agent into the repository's existing memory:
+Routing can bring both project memory and adjacent implementation evidence into the task. Selecting code or tests does not turn them into records of intent; it makes comparison possible.
 
-<ResearchSourceExcerpt file="AGENTS.md">
-
-```text
-1. Read the constitution.
-2. Consult the relevant feature specification.
-3. Review the plan and tasks.
-4. Consult ADRs before structural changes.
-5. Never fabricate content.
-6. Update durable specs when requirements change.
-```
-
-</ResearchSourceExcerpt>
-
-It is a routing layer, not a mega-prompt.
-
-The point is not to load every artifact into every task. The useful context is the smallest set that can expose the applicable constraints, rationale, and current behavior.
-
-A positioning change begins with project-wide factual guardrails and the site-foundation specification. A publication change narrows into the publication-gating specification and its related decisions. Only then does the agent need the implementation surfaces that realize those requirements.
-
-Today, that routing is mostly explicit and human-authored. The repository does not contain an automated relevance engine.
+For a publication task, the relevant gating requirements and decisions matter more than every unrelated document in the repository. This selection is deliberate reading, not an automated relevance engine.
 
 <ResearchBreakout mode="wide">
   <ProjectMemoryRoutingVisual />
 </ResearchBreakout>
 
-This is **context selection rather than context accumulation**.
+## Publication Gating Crosses Artifact Boundaries
 
-## Worked Example: Publication Gating
+The [publication-gating specification](https://github.com/orielsy/orielsy.com/blob/main/specs/003-content-publication-gating/spec.md) requires new entries to fail closed. The content schema defaults `published` to `false`. The detail route conditions unpublished body preview on development plus an explicit preview mode. The RSS feed selects published entries.
 
-Publication gating makes the pattern more concrete because the same concern exists at several layers.
+These are complementary observations, not four interchangeable proofs.
 
-The feature specification says new Research and Project entries must fail closed until deliberately published. The content schema implements part of that rule directly:
-
-```ts
-published: z.boolean().default(false)
-```
-
-The specification then defines what unpublished state means across public listings, detail pages, indexing, RSS, and local preview behavior. The publication-gating decision record preserves why publication state is separate from lifecycle status.
+The same concern also covers collection cards, direct status pages, indexing, and local preview. The figure samples the evidence chain rather than certifying that every acceptance criterion is met.
 
 <ResearchBreakout mode="wide">
   <PublicationGatingEvidenceChainVisual />
 </ResearchBreakout>
 
-Those are different forms of evidence.
+## Updating the Rule Is Part of the Change
 
-The specification establishes intended behavior. The schema establishes one implementation default. The route and feed implementations expose additional implementation surfaces. The figure samples that chain; it does not certify every publication-gating acceptance criterion.
+When unpublished cards moved from non-clickable summaries to inline status interactions, the requirement did not live in the component alone. The feature specification, publication decision, README, and URL/SEO policy came to describe the new behavior. Repository history supports these updates; it should not be flattened into a claim that all artifacts changed in a single commit.
 
-That distinction prevents repository memory from becoming self-validating documentation. A requirement is not proof that the implementation satisfies it.
-
-## When the Requirement Changes
-
-Durable memory only helps if the records that own a requirement change when the requirement changes.
-
-The historical account for publication gating is that unpublished collection cards moved from non-clickable summaries to inline status interactions. The current branch records the resulting behavior across the feature specification, the publication-gating decision, the URL/SEO policy, and maintainer guidance in the README.
-
-The current branch shows that these artifacts now describe the same interaction model. It does not, by itself, establish that every record changed in one atomic step.
-
-The maintenance rule is narrower: update the durable artifacts that own intent and rationale with the implementation, then verify what the implementation actually does. Documentation is not a passing test, and code alone does not preserve why a choice was made.
+This is a **coordinated maintenance workflow across owners**: update the records that own the changed requirement and rationale, update the implementation, then inspect and verify the resulting behavior. A specification is authoritative for the requirement, not a passing test; code shows what exists, but does not retain every reason behind the choice.
 
 <ResearchBreakout mode="wide">
   <ProjectMemoryChangeWorkflowVisual />
 </ResearchBreakout>
 
-## Durable Memory Can Drift Too
+## Durable Memory Can Preserve a Disagreement
 
-Version control solves persistence. It does not solve maintenance.
+The [manual-production-publishing ADR](https://github.com/orielsy/orielsy.com/blob/main/docs/decisions/003-manual-production-publishing.md) centers a local `npm run live` path and says a repository-authored GitHub Actions workflow was not required for that model.
 
-The deployment documentation in this repository provides a useful example.
+Current guidance and the workflow file document additional paths. Both accounts are inspectable, but persistence did not reconcile them.
 
-ADR 003 records an explicit manual publishing model centered on `npm run live` from `main`, and it says no repository-authored GitHub Actions workflow is required for that model.
-
-Current `AGENTS.md`, however, documents three supported production paths: local `npm run live`, a GitHub Actions workflow, and a remote trigger branch. The repository now contains the workflow that the earlier ADR said was unnecessary.
+The current operational guidance and historical decision record answer different questions. The conflict should be surfaced for human review; this article does not silently declare which document supersedes the other.
 
 <ResearchBreakout mode="wide">
   <ProjectMemoryDriftVisual />
 </ResearchBreakout>
 
-The important point is not which document should win automatically. The important point is that **durable memory can preserve an earlier truth after the operating model has changed**.
+## Memory Needs Maintenance; Relevance Remains Open
 
-That inconsistency is inspectable because both artifacts survive. It still requires someone to reconcile them.
+Wrong specifications remain wrong. Documents can drift, agents can misread explicit context, and overlapping guidance can create noise. Implementation evidence can also be incomplete: code shows what exists on inspected paths, while tests show only what was checked.
 
-Project memory therefore has a lifecycle: create it, scope it, consult it, update it, and retire or amend it when the system changes.
+The defensible conclusion is narrow: durable records let later work recover intent and rationale, then compare them with implementation and verification evidence. Tests and review are still needed. The practical gain is that consequential decisions have an address and silent regression becomes less likely.
 
-When a durable requirement changes, the artifact that owns that requirement should change with the implementation.
-
-## What This Does Not Solve
-
-Version-controlled memory still has failure modes:
-
-- **Wrong specs stay wrong.** Durability does not make an assumption true.
-- **Specs and ADRs can become stale.** The deployment example above is evidence of that maintenance problem.
-- **Agents can misread explicit context.** Documentation reduces ambiguity; it does not eliminate interpretation errors.
-- **Documentation can become noise.** Overlapping or redundant artifacts make retrieval harder and can disagree.
-- **Specifications do not replace tests.** Requirements and passing behavior are different evidence.
-- **Implementation does not explain every decision.** Code can show what exists without preserving why a choice was made.
-- **Human judgment remains necessary.** Engineers still decide what becomes durable, which artifact owns a concern, and how conflicts are resolved.
-
-The practical gain is narrower than determinism: consequential decisions have an address, later work can recover that address, and silent regression becomes less likely.
-
-"Less likely" is intentional. Guarantee is not the claim.
-
-## The Next Problem Is Relevance
-
-Once a project can remember, the next question is not how to accumulate more context.
-
-It is how to select the context relevant to the task without hiding conflicts or overwhelming the agent.
-
-An unpublished **Repository Context Engine for Coding Agents** concept explores that direction: task-aware selection of relevant specs, decisions, and repository patterns, plus explicit context delivery through MCP or another mechanism.
-
-That is proposed work, not an implemented system.
-
-For now, this repository supports a smaller conclusion: project memory becomes useful when it is scoped, inspectable, connected to implementation, and maintained as the system changes.
+An unpublished **Repository Context Engine for Coding Agents** concept proposes task-aware selection and explicit delivery of repository context. That is a future research direction, not an implemented engine. For now, the selection pictured here is explicit and human-authored.
