@@ -19,15 +19,20 @@ import ProjectMemoryChangeWorkflowVisual from '../../components/research/Project
 import ProjectMemoryContinuityVisual from '../../components/research/ProjectMemoryContinuityVisual.astro';
 import ProjectMemoryDriftVisual from '../../components/research/ProjectMemoryDriftVisual.astro';
 import ProjectMemoryIncidentEvidenceVisual from '../../components/research/ProjectMemoryIncidentEvidenceVisual.astro';
-import ProjectMemoryOverview from '../../components/research/ProjectMemoryOverview.astro';
+import ProjectMemoryReadingOverview from '../../components/research/ProjectMemoryReadingOverview.astro';
 import ProjectMemoryRoutingVisual from '../../components/research/ProjectMemoryRoutingVisual.astro';
 import PublicationGatingEvidenceChainVisual from '../../components/research/PublicationGatingEvidenceChainVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+import ResearchReadingDepth from '../../components/research/ResearchReadingDepth.astro';
 import ResearchSourceExcerpt from '../../components/research/ResearchSourceExcerpt.astro';
 
-<ResearchBreakout mode="wide">
-  <ProjectMemoryOverview />
-</ResearchBreakout>
+<ResearchReadingDepth overviewTime="2 min" fullResearchTime="8 min" presentation="editorial" />
+
+<div data-reading-depth-overview>
+  <ProjectMemoryReadingOverview />
+</div>
+
+<div data-reading-depth-marker="full" aria-hidden="true"></div>
 
 ## The Claim Came Back
 
