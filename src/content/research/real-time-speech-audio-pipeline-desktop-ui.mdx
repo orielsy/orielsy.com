@@ -20,9 +20,19 @@ import AsyncSpeechPipelineVisual from '../../components/research/AsyncSpeechPipe
 import AudioFormatReductionVisual from '../../components/research/AudioFormatReductionVisual.astro';
 import ChunkingTradeoffVisual from '../../components/research/ChunkingTradeoffVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+import ResearchReadingDepth from '../../components/research/ResearchReadingDepth.astro';
 import ResearchSourceExcerpt from '../../components/research/ResearchSourceExcerpt.astro';
 import ResearchSourceNote from '../../components/research/ResearchSourceNote.astro';
+import SpeechPipelineReadingOverview from '../../components/research/SpeechPipelineReadingOverview.astro';
 import TranscriptionFilteringTruthVisual from '../../components/research/TranscriptionFilteringTruthVisual.astro';
+
+<ResearchReadingDepth overviewTime="2 min" fullResearchTime="9 min" presentation="editorial" />
+
+<div data-reading-depth-overview>
+  <SpeechPipelineReadingOverview />
+</div>
+
+<div data-reading-depth-marker="full" aria-hidden="true"></div>
 
 <ResearchSourceNote>
   This exploration is grounded in the current public `speechBubbles` and `whisper-api` source. Format calculations below are arithmetic derived from the stated sample formats, not measured runtime benchmarks.
