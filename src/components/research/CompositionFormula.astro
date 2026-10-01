@@ -1,37 +1,75 @@
----
-import ResearchFigureFrame from './ResearchFigureFrame.astro';
----
-
-<ResearchFigureFrame
-  className="composition-formula-figure"
-  figureNumber="05"
-  title="A compact model for bounded composition"
-  caption="State, trusted capabilities, policy, and context are explicit inputs to composition; none of them grants the others authority."
-  bodyMode="padded"
->
+<div class="composition-model not-prose" role="group" aria-labelledby="composition-model-label">
+  <p id="composition-model-label" class="composition-model__label">Thinking model · bounded composition</p>
   <div class="composition-formula" role="img" aria-label="UI equals a function of state, capabilities, policy, and context">
     <code>UI = f(state, capabilities, policy, context)</code>
   </div>
-</ResearchFigureFrame>
+  <p class="composition-model__note">
+    State, trusted capabilities, policy, and context are explicit inputs to composition; none of them grants the others authority.
+  </p>
+</div>
 
 <style>
-  .composition-formula { color: var(--text-primary); }
-  code { padding: 0; background: transparent; font-family: var(--font-mono-ui); font-size: 1.125rem; font-weight: 500; line-height: 1.8; overflow-wrap: anywhere; }
-  @media (min-width: 640px) { code { font-size: 1.5rem; } }
+  .composition-model {
+    margin: 2.25rem 0;
+    border-block: 1px solid var(--border-subtle);
+    padding: 1.5rem 0;
+  }
+
+  .composition-model__label,
+  .composition-model__note {
+    margin: 0;
+  }
+
+  .composition-model__label {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: var(--research-figure-label, 0.625rem);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .composition-formula {
+    margin-top: 0.9rem;
+    color: var(--text-primary);
+  }
+
+  code {
+    padding: 0;
+    background: transparent;
+    font-family: var(--font-mono-ui);
+    font-size: var(--research-figure-equation, 1.125rem);
+    font-weight: 500;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+  }
+
+  .composition-model__note {
+    margin-top: 0.9rem;
+    max-width: 46rem;
+    color: var(--text-muted);
+    font-size: var(--research-figure-support, 0.75rem);
+    line-height: 1.65;
+  }
+
+  @media (min-width: 640px) {
+    .composition-model {
+      padding-block: 1.75rem;
+    }
+
+    code {
+      font-size: 1.5rem;
+    }
+  }
 </style>
+
 <style is:global>
-  [data-research-entry="product-knowledge-as-architecture"] .research-prose .composition-formula code {
+  [data-research-entry="product-knowledge-as-architecture"] .research-prose .composition-model code {
     border: 0;
     border-radius: 0;
     background: transparent;
     padding: 0;
     color: var(--text-primary);
-    font-size: 1.125rem;
-  }
-
-  @media (min-width: 640px) {
-    [data-research-entry="product-knowledge-as-architecture"] .research-prose .composition-formula code {
-      font-size: 1.5rem;
-    }
   }
 </style>
