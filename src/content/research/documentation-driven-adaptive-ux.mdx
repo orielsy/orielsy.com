@@ -87,21 +87,11 @@ The visible decision trace exposes application state, validation, applicable kno
 
 Documentation can explain a rule, but it should not redefine it. Known constraints belong in testable code or configuration; future inference can help with ambiguity without becoming the source of product truth.
 
-The experiment separates seven concerns:
-
-<ol className="paper-concern-grid">
-  <li><strong>Domain state</strong><span>what the user has selected.</span></li>
-  <li><strong>Runtime and user context</strong><span>product version, user familiarity, and available compatible options.</span></li>
-  <li><strong>Validation</strong><span>deterministic application requirements.</span></li>
-  <li><strong>Product knowledge</strong><span>authored explanatory material and configuration guidance.</span></li>
-  <li><strong>Knowledge applicability</strong><span>whether a specific knowledge item applies to the current state.</span></li>
-  <li><strong>Response policy</strong><span>how strongly the interface should intervene given the available evidence.</span></li>
-  <li><strong>Rendering</strong><span>how those structured responses appear in the UI.</span></li>
-</ol>
+Taking that rule seriously separates the experiment into seven concerns. They fall into three groups, and those groups are also the order in which a decision is made: the application establishes what is true, authored knowledge is selected against that truth, and only then does the interface decide how strongly to respond and how to show it. Every concern reads from the groups before it; none writes back. No step requires inference.
 
 <Phase1DeterministicPipelineVisual figureNumber="01" />
 
-Starting deterministically exposes those boundaries and creates a baseline against which later inference can be evaluated.
+That separation creates a deterministic baseline for later inference without asking it to replace validation, compatibility rules, or product state.
 
 ## Structured Product Knowledge
 
