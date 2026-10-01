@@ -27,26 +27,26 @@ const actions = [
 >
   <div class="composition-layout">
     <section class="composition-inputs" aria-label="Inputs to a possible composition">
-      <p class="composition-label">Inputs to a possible composition</p>
+      <p class="composition-label figure-meta">Inputs to a possible composition</p>
       <dl class="composition-input-list">
         {inputs.map(({ label, detail }) => <div><dt>{label}</dt><dd>{detail}</dd></div>)}
       </dl>
     </section>
     <div class="composition-result">
       <section class="composition-layer" aria-label="Proposed composition and context layer">
-        <p class="composition-label">Proposed composition / context layer</p>
-        <p>Select relevant capabilities, order the task, apply guidance, respect state and policy.</p>
+        <p class="composition-label figure-meta">Proposed composition / context layer</p>
+        <p class="figure-local">Select relevant capabilities, order the task, apply guidance, respect state and policy.</p>
       </section>
       <section class="derived-surface" aria-label="Illustrative derived surface: Account Review">
         <header>
-          <div><p class="composition-label">Illustrative derived surface</p><h4>Account Review</h4></div>
+          <div><p class="composition-label figure-meta">Illustrative derived surface</p><h4 class="figure-node-medium">Account Review</h4></div>
           <span class="surface-status">Restricted</span>
         </header>
         <dl class="surface-facts">
           {facts.map(({ label, value }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
         </dl>
         <div class="surface-actions">
-          <p class="composition-label">Next steps under current policy</p>
+          <p class="composition-label figure-meta">Next steps under current policy</p>
           <dl>{actions.map(({ label, value, permitted }) => <div><dt>{label}</dt><dd class:list={{ permitted }}>{value}</dd></div>)}</dl>
         </div>
       </section>
