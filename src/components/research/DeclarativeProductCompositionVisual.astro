@@ -2,10 +2,10 @@
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 const inputs = [
-  { label: 'Current state', detail: 'Restricted account · identity verification missing · no active risk review' },
-  { label: 'Trusted capabilities', detail: 'Customer profile / account status · transactions · identity verification · restriction action · risk escalation' },
-  { label: 'Authored product knowledge', detail: 'Purpose · relevance · prerequisites · explanation / composition guidance' },
-  { label: 'Deterministic policy', detail: 'Removal requires verified identity · risk escalation remains permitted while restricted' },
+  { label: 'Current state', detail: 'Restricted · identity unverified · no active risk review' },
+  { label: 'Trusted capabilities', detail: 'Profile / status · transactions · verification · restriction action · risk escalation' },
+  { label: 'Product knowledge', detail: 'Purpose · relevance · prerequisites · explanation / composition guidance' },
+  { label: 'Deterministic policy', detail: 'Removal requires verification · escalation permitted while restricted' },
 ];
 const facts = [
   { label: 'Customer profile', value: 'Jordan Rivera' },
@@ -21,9 +21,9 @@ const actions = [
 
 <ResearchFigureFrame
   className="composition-figure"
-  figureNumber="03"
+  figureNumber="02"
   title="A surface assembled within boundaries"
-  caption="Illustrative composition, not an implemented generator. The application owns current state, authorization, validation, and mutation or side effects; composition cannot invent missing behavior."
+  caption="Illustrative composition, not an implemented generator. The application owns current state, authorization, validation, and side effects; the composition layer cannot invent a missing capability."
 >
   <div class="composition-layout">
     <section class="composition-inputs" aria-label="Inputs to a possible composition">
