@@ -70,7 +70,7 @@ Traditional progressive enhancement keeps the baseline useful and adds capabilit
 
 Progressive enhancement does not require every tier to produce an identical experience. Here, the **baseline** is useful application behavior; the **environment** includes hardware, connectivity, privacy constraints, and available inference; and **intelligence is the enhancement**. Capability may vary substantially across those tiers. **Application truth and action boundaries should not.**
 
-A capability might begin with deterministic behavior, gain lightweight or local inference when available, and use additional or remote inference when the task justifies the extra capability or cost.
+A capability might begin with deterministic behavior, gain lightweight or local inference when available, or use remote inference when its capabilities fit the task and environment.
 
 Semantic search, for example, might begin with indexed filtering and synonyms, add local embeddings, or use a remote reranker. The user still experiences **search**.
 
@@ -82,15 +82,17 @@ Semantic search, for example, might begin with indexed filtering and synonyms, a
 
 The goal is not to force every feature through every tier. It is to avoid making the interface dependent on the most expensive or powerful tier when the task does not require it.
 
+Graceful degradation here is a design goal: it holds only where a fallback has been deliberately built, and no runtime selection between tiers is specified.
+
 ## The Access Consequence
 
 That flexibility matters because users do not share the same constraints.
 
 Some do not have paid AI subscriptions. Some do not want application data sent to a model provider. Some lack reliable connectivity or hardware capable of running large local models.
 
-A narrow capability creates more implementation options: deterministic logic where it is sufficient, smaller local models where privacy or offline use matters, and stronger remote inference where its additional capability earns the cost.
+A narrow capability creates more implementation options: deterministic logic where it is sufficient, smaller local models where privacy or offline use matters, and remote inference where its capabilities fit the task and justify the cost.
 
-The constraint becomes architectural discipline. Designing for weaker models and weaker machines can encourage a team to make application truth, capability boundaries, and fallback behavior explicit; those boundaries still have to be authored and verified.
+The constraint becomes architectural discipline. Designing for constrained models and machines can encourage a team to make application truth, capability boundaries, and fallback behavior explicit—but those boundaries still have to be authored and verified.
 
 **The experience can improve with better models, hardware, or connectivity without requiring them as the baseline.**
 
