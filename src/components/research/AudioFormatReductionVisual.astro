@@ -1,50 +1,120 @@
 ---
+import { ArrowDown, ArrowRight } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
-const source = { label: 'Source example', format: '48 kHz · stereo · Float32', math: '48,000 × 2 × 4 bytes', rate: '≈ 384 KB/sec' };
-const target = { label: 'Transmitted format', format: '16 kHz · mono · Int16', math: '16,000 × 1 × 2 bytes', rate: '≈ 32 KB/sec' };
 ---
 
 <ResearchFigureFrame
   className="audio-format-figure"
-  figureNumber="02"
-  title="Reduce the audio format before transport"
-  caption="These values are derived from sample-format arithmetic before WebSocket overhead; they are not measured runtime benchmarks."
+  figureNumber="01"
+  title="Reduce before transport"
+  status="Source arithmetic · not a benchmark"
+  caption="The 91.7% reduction is arithmetic derived from the two stated sample formats before protocol overhead, not a measured bandwidth result."
 >
-  <div class="comparison">
+  <div class="format-comparison">
     <section>
-      <span class="label">{source.label}</span>
-      <strong>{source.format}</strong>
-      <code>{source.math}</code>
-      <span class="rate">{source.rate}</span>
+      <p class="figure-label">Source example</p>
+      <h4 class="figure-node">48 kHz · stereo · Float32</h4>
+      <code class="figure-support">48,000 × 2 × 4 bytes</code>
+      <p class="rate figure-detail figure-accent">≈ 384 KB/sec</p>
     </section>
-    <div class="transform"><span>Downsample</span><span aria-hidden="true">→</span><span>Clamp + Int16</span></div>
-    <section class="target">
-      <span class="label">{target.label}</span>
-      <strong>{target.format}</strong>
-      <code>{target.math}</code>
-      <span class="rate">{target.rate}</span>
+
+    <div class="transform" aria-label="Format transformation">
+      <span class="figure-label">Downsample</span>
+      <ArrowDown class="arrow-mobile" size={16} strokeWidth={1.75} aria-hidden="true" />
+      <ArrowRight class="arrow-desktop" size={16} strokeWidth={1.75} aria-hidden="true" />
+      <span class="figure-label">Clamp + Int16</span>
+    </div>
+
+    <section>
+      <p class="figure-label">Transmitted format</p>
+      <h4 class="figure-node">16 kHz · mono · Int16</h4>
+      <code class="figure-support">16,000 × 1 × 2 bytes</code>
+      <p class="rate figure-detail figure-accent">≈ 32 KB/sec</p>
     </section>
   </div>
-  <div class="result"><span class="result-value">≈ 91.7%</span><span>less raw sample data in this format comparison</span></div>
+
+  <p class="reduction figure-copy"><strong>≈ 91.7%</strong> less raw sample data in this comparison</p>
 </ResearchFigureFrame>
 
 <style>
-  :global(.research-reading .research-prose figure.audio-format-figure) { border-radius: 0 !important; }
-  .comparison { display: grid; border-block: 1px solid var(--border-subtle); }
-  .comparison section { display: grid; gap: 0.45rem; padding: 1rem 0; }
-  .comparison section.target { border-left: 2px solid var(--accent); padding-left: 1rem; }
-  .label, .transform, .result-value { font-family: var(--font-mono-ui); text-transform: uppercase; }
-  .label { color: var(--text-muted); font-size: 0.6875rem; letter-spacing: 0.08em; }
-  .comparison strong { color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; }
-  .comparison code { border: 0; background: transparent; padding: 0; color: var(--text-secondary); font-family: var(--font-mono-ui); font-size: 0.8125rem; }
-  .rate { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.8125rem; }
-  .transform { display: flex; align-items: center; justify-content: center; gap: 0.55rem; border-block: 1px solid var(--border-subtle); padding: 0.75rem; color: var(--text-muted); font-size: 0.6875rem; letter-spacing: 0.07em; }
-  .result { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.75rem; padding-top: 0.95rem; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.55; }
-  .result-value { color: var(--accent); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; }
+  .audio-format-figure :global(p),
+  .audio-format-figure :global(h4) {
+    margin: 0;
+  }
+
+  .format-comparison {
+    display: grid;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+
+  .format-comparison section {
+    min-width: 0;
+    background: var(--bg-card);
+    padding: 1.25rem;
+  }
+
+  .format-comparison h4 {
+    margin-top: 0.75rem !important;
+  }
+
+  .format-comparison code {
+    display: block;
+    margin-top: 1rem;
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    color: var(--text-secondary) !important;
+    font-family: var(--font-mono-ui);
+    white-space: normal;
+  }
+
+  .rate {
+    margin-top: 0.5rem !important;
+    font-family: var(--font-mono-ui);
+  }
+
+  .transform {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--bg-secondary);
+    padding: 1rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  .transform :global(svg) {
+    color: var(--accent);
+  }
+
+  .arrow-desktop {
+    display: none;
+  }
+
+  .reduction {
+    margin-top: 1.25rem !important;
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+  }
+
+  .reduction strong {
+    color: var(--text-primary);
+  }
+
   @media (min-width: 720px) {
-    .comparison { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
-    .comparison section { padding: 1rem; }
-    .comparison section:first-child { padding-left: 0; }
-    .transform { flex-direction: column; min-width: 7.5rem; border-block: 0; border-inline: 1px solid var(--border-subtle); }
+    .format-comparison {
+      grid-template-columns: minmax(0, 1fr) 7.5rem minmax(0, 1fr);
+    }
+
+    .arrow-mobile {
+      display: none;
+    }
+
+    .arrow-desktop {
+      display: block;
+    }
   }
 </style>
