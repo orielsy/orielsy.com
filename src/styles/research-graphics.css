@@ -41,6 +41,16 @@
 }
 
 /*
+ * Diagram components own list rhythm. Neutralize article/prose list margins
+ * inside research figures so each diagram can set its own spacing explicitly.
+ */
+.research-reading .research-prose figure[data-research-diagram] ul,
+.research-reading .research-prose figure[data-research-diagram] ol,
+.research-reading .research-prose figure[data-research-diagram] li {
+  margin: 0;
+}
+
+/*
  * Semantic figure roles.
  *
  * Figure components choose the role; this shared system chooses the scale.
