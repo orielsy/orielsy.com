@@ -19,7 +19,7 @@ const records = [
   <div class="change-grid">
     <section class="change-summary">
       <p class="label accent">Behavior changed</p>
-      <h4>Unpublished cards: from summaries to inline status interaction</h4>
+      <h4 class="figure-node-prominent">Unpublished cards: from summaries to inline status interaction</h4>
       <p>The requirement is more than the card’s current appearance.</p>
     </section>
 
@@ -29,7 +29,7 @@ const records = [
         {records.map(([label, path, detail]) => (
           <div>
             <p class="record-label">{label}</p>
-            <code>{path}</code>
+            <code class="figure-meta">{path}</code>
             <p>{detail}</p>
           </div>
         ))}
@@ -52,11 +52,11 @@ const records = [
   .label, .record-label { font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); font-weight: 500; letter-spacing: 0.08em; line-height: 1.5; text-transform: uppercase; }
   .label { color: var(--text-muted); }
   .label.accent, .record-label { color: var(--accent); }
-  .change-summary h4 { margin-top: 0.8rem !important; color: var(--text-primary); font-family: var(--font-display); font-size: var(--research-diagram-node, 0.875rem); font-weight: 600; line-height: 1.55; }
+  .change-summary h4 { margin-top: 0.8rem !important; }
   .change-summary h4 + p { margin-top: 0.8rem !important; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
   .records { display: grid; gap: 1px; margin-top: 0.8rem; border: 1px solid var(--border-subtle); background: var(--border-subtle); }
   .records > div { min-width: 0; background: var(--bg-card); padding: 0.8rem; }
-  code { display: block; margin-top: 0.4rem; border: 0 !important; background: transparent !important; padding: 0 !important; color: var(--text-primary) !important; font-family: var(--font-mono-ui); font-size: 0.6875rem !important; line-height: 1.5; white-space: normal !important; overflow-wrap: anywhere; }
+  code { display: block; margin-top: 0.4rem; border: 0 !important; background: transparent !important; padding: 0 !important; color: var(--text-primary) !important; white-space: normal !important; overflow-wrap: anywhere; }
   .records > div > p:last-child, .implementation-grid p:last-child { margin-top: 0.45rem !important; color: var(--text-secondary); font-size: var(--research-diagram-caption, 0.75rem); line-height: 1.55; }
   .implementation-grid { display: grid; gap: 0.8rem; margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 0.9rem; }
   .history-boundary { margin-top: 0.9rem !important; border-top: 1px dashed var(--border-subtle); padding-top: 0.75rem; color: var(--text-muted); font-size: var(--research-diagram-caption, 0.75rem); line-height: 1.55; }
