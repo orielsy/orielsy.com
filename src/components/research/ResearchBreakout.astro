@@ -57,8 +57,9 @@ const { maxWidth, mode = 'wide' } = Astro.props;
   /*
    * Once the viewport is comfortably wider, wide figures may borrow some of
    * the article gutter while remaining visually tied to the prose column.
-   * Publication breakouts instead use the full article-content region to the
-   * right of the TOC; they must not intrude into the navigation column.
+   * Publication plates span the full 12-column publication canvas; the sticky
+   * contents rail yields while a publication plate occupies the same vertical
+   * region.
    */
   @media (min-width: 1280px) {
     .research-breakout[data-breakout-mode='wide'] {
@@ -71,9 +72,9 @@ const { maxWidth, mode = 'wide' } = Astro.props;
 
     .research-breakout[data-breakout-mode='publication'] {
       left: auto;
-      width: 100%;
-      max-width: 100%;
-      margin-left: 0;
+      width: min(var(--research-breakout-max), 150%);
+      max-width: 150%;
+      margin-left: -50%;
       transform: none;
     }
   }
