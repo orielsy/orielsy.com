@@ -33,6 +33,7 @@ import WhereAiCouldEnterLaterVisual from '../../components/research/WhereAiCould
 import DocumentationDrivenAdaptiveReadingOverview from '../../components/research/DocumentationDrivenAdaptiveReadingOverview.astro';
 import DocumentationDrivenAdaptiveVisual from '../../components/research/DocumentationDrivenAdaptiveVisual.astro';
 import ResearchReadingDepth from '../../components/research/ResearchReadingDepth.astro';
+import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 
 <ResearchReadingDepth overviewTime="2 min" fullResearchTime="8 min" presentation="editorial" />
 
@@ -149,17 +150,23 @@ If several Data Connections are compatible, the system can explain the requireme
 
 If exactly one compatible Data Connection exists, the evidence changes. The interface can safely offer that value as a user-accepted action because no competing valid candidate remains.
 
-<p className="paper-reference-kicker paper-meta paper-meta-accent">Section 07 · Reference implementation</p>
+<ResearchBreakout mode="publication">
+<div className="paper-reference-section">
+<div className="paper-reference-grid">
+<div className="paper-reference-intro">
+<p className="paper-reference-kicker paper-meta paper-meta-accent">Reference implementation</p>
 
 ## One Field. One Truth. Two Interface Policies.
 
-<div className="paper-reference-grid">
-  <p className="paper-reference-summary">Change familiarity, version, and compatibility. Both interfaces receive the same scenario.</p>
-  <div className="paper-lab-link">
-    <p>The working comparison belongs to the companion project. Open the lab to inspect the two forms, validation attempts, and decision trace.</p>
-    <a href="/projects/adaptive-enterprise-ui-lab#working-phase-1-lab">Open the working lab ↗</a>
-  </div>
+<p className="paper-reference-summary">Change familiarity, version, and compatibility. Both interfaces receive the same scenario.</p>
 </div>
+<div className="paper-lab-link">
+  <p>The working comparison belongs to the companion project. Open the lab to inspect the two forms, validation attempts, and decision trace.</p>
+  <a href="/projects/adaptive-enterprise-ui-lab#working-phase-1-lab">Open the working lab ↗</a>
+</div>
+</div>
+</div>
+</ResearchBreakout>
 
 ### Scenario Evidence
 
