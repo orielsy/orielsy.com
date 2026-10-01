@@ -54,16 +54,17 @@ const proposed = [
   .context-architecture-figure .ownership-map { display: grid; gap: 1.5rem; }
   .context-architecture-figure .ownership-map > section { min-width: 0; }
   .context-architecture-figure .proposed-homes { border-left: 2px solid var(--accent); padding-left: 1rem; }
-  .context-architecture-figure .map-label { margin: 0 !important; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem !important; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+  .context-architecture-figure .map-label { margin: 0 !important; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.625rem !important; font-weight: 500; letter-spacing: 0.1em; line-height: 1.5 !important; text-transform: uppercase; }
   .context-architecture-figure .proposed-homes .map-label { color: var(--accent); }
   .context-architecture-figure .ownership-list { margin: 0.7rem 0 0; border-top: 1px solid var(--border-subtle); }
   .context-architecture-figure .ownership-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0.75rem; border-bottom: 1px solid var(--border-subtle); padding: 0.75rem 0; font-size: 0.8125rem; line-height: 1.55; }
   .context-architecture-figure .ownership-row dt { color: var(--text-secondary); }
   .context-architecture-figure .ownership-row dd { min-width: 0; margin: 0; color: var(--text-primary); }
   .context-architecture-figure .ownership-row strong { display: block; font-weight: 600; }
-  .context-architecture-figure .ownership-row dd span { display: block; margin-top: 0.2rem; color: var(--text-muted); font-size: 0.75rem; }
+  .context-architecture-figure .ownership-row dd span { display: block; margin-top: 0.2rem; color: var(--text-muted); font-size: 0.75rem; line-height: 1.5; }
   .context-architecture-figure .proposed-row { display: block; }
   .context-architecture-figure .proposed-row dd { margin-top: 0.3rem; }
+  .context-architecture-figure .proposed-row strong { font-family: var(--font-display); font-size: 1rem; line-height: 1.45; }
   .context-architecture-figure .progression { margin-top: 1.5rem; padding-top: 0.85rem; border-top: 1px solid var(--border-subtle); }
   .context-architecture-figure .progression ol { display: flex; flex-wrap: wrap; gap: 0.35rem 0; margin: 0.65rem 0 0; padding: 0; list-style: none; font-family: var(--font-mono-ui); font-size: 0.75rem; color: var(--text-primary); }
   .context-architecture-figure .progression li { display: inline-flex; align-items: center; }
@@ -72,5 +73,6 @@ const proposed = [
   @media (min-width: 640px) {
     .context-architecture-figure .ownership-map { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 1.75rem; }
     .context-architecture-figure .proposed-homes { padding-left: 1.25rem; }
+    .context-architecture-figure .progression ol { font-size: 0.875rem; }
   }
 </style>
