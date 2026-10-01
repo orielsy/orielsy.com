@@ -30,6 +30,31 @@ const { figureNumber } = Astro.props;
 </ResearchFigureFrame>
 
 <style>
+  .adaptive-future :global(.figure-number),
+  .adaptive-future :global(.status),
+  .adaptive-future :global(.figure-label) {
+    font-size: 0.625rem !important;
+    font-weight: 400;
+    letter-spacing: 0 !important;
+    line-height: 1.25rem !important;
+  }
+
+  .adaptive-future :global(.heading h3) {
+    font-size: 1.125rem !important;
+    line-height: 1.75rem !important;
+    letter-spacing: 0 !important;
+  }
+
+  .adaptive-future :global(figcaption) {
+    font-size: 0.75rem !important;
+    line-height: 1.5rem !important;
+  }
+
+  .adaptive-future :global(.figure-copy) {
+    font-size: 0.875rem !important;
+    line-height: 1.5rem !important;
+  }
+
   .adaptive-future :global(ol),
   .adaptive-future :global(li),
   .adaptive-future :global(p) {
