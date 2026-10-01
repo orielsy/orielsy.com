@@ -29,7 +29,7 @@ const operations = [
     <p><strong>If clipboard access exists:</strong> copy the complete handoff.</p>
     <p><strong>Otherwise:</strong> return one self-contained artifact for the user to copy.</p>
   </div>
-  <p class="limits">No background daemon · No assumption of creating or navigating chats</p>
+  <p class="limits figure-meta">No background daemon · No assumption of creating or navigating chats</p>
 </ResearchFigureFrame>
 
 <style>
@@ -47,7 +47,7 @@ const operations = [
   .host-boundary { display: grid; gap: 0.6rem; margin-top: 1.25rem; border-left: 2px solid var(--accent); padding-left: 1rem; }
   .host-boundary p { color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
   .host-boundary strong { color: var(--text-primary); font-weight: 500; }
-  .limits { margin-top: 0.8rem !important; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); letter-spacing: 0.06em; line-height: 1.5; text-transform: uppercase; }
+  .limits { margin-top: 0.8rem !important; text-transform: uppercase; }
   @media (min-width: 760px) {
     .loop::before { content: ''; position: absolute; left: 12%; right: 12%; top: 2rem; border-top: 1px dashed var(--border-subtle); }
     ol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
