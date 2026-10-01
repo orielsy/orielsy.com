@@ -56,6 +56,22 @@
   letter-spacing: 0.08em;
 }
 
+/*
+ * Diagram/editorial labels are a distinct semantic role from technical meta.
+ * Labels use the same 10px mono tier, but are always rendered in uppercase.
+ * Paths, source notes, and other literal metadata should remain figure-meta only.
+ */
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) .figure-label {
+  padding-left: 0;
+  color: var(--text-muted);
+  font-family: var(--font-mono-ui);
+  font-size: var(--research-figure-label) !important;
+  font-weight: 500;
+  line-height: 1.5 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
 .research-reading .research-prose figure.not-prose:not(.research-source-excerpt) .figure-support {
   color: var(--text-muted);
   font-size: var(--research-figure-support) !important;
@@ -155,14 +171,6 @@
   letter-spacing: -0.015em;
 }
 
-.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) h4.figure-label,
-.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) .figure-label {
-  padding-left: 0;
-  font-size: var(--research-figure-label) !important;
-  line-height: 1.5 !important;
-  letter-spacing: 0.08em !important;
-}
-
 .research-reading .research-prose figure.not-prose:not(.research-source-excerpt) h4::before {
   content: none;
   display: none;
@@ -172,7 +180,7 @@
  * Untyped paragraphs retain normal diagram copy. Explicit semantic roles are
  * excluded so local figure intent is not flattened back to the default tier.
  */
-.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > :not(header):not(figcaption) p:not(.font-editorial-mono):not(.figure-meta):not(.figure-support):not(.figure-detail):not(.figure-copy):not(.figure-local):not(.figure-equation) {
+.research-reading .research-prose figure.not-prose:not(.research-source-excerpt) > :not(header):not(figcaption) p:not(.font-editorial-mono):not(.figure-meta):not(.figure-label):not(.figure-support):not(.figure-detail):not(.figure-copy):not(.figure-local):not(.figure-equation) {
   font-size: var(--research-figure-copy) !important;
   line-height: 1.6 !important;
 }
