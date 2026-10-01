@@ -1,0 +1,153 @@
+---
+import ContextZenOverview from './ContextZenOverview.astro';
+---
+
+<section class="zen-reading-overview not-prose" aria-labelledby="context-zen-reading-overview-title">
+  <p class="overview-kicker">Overview · ~2 min</p>
+  <h2 id="context-zen-reading-overview-title">What should the next conversation inherit?</h2>
+  <p class="overview-lead">
+    A conversation may still fit inside a large context window while carrying abandoned directions, replaced decisions, and instructions that no longer agree. That does not make long context inherently bad. It makes room for a different question: would the next step be clearer from a faithful account of what is true now than from the entire chronology?
+  </p>
+
+  <ContextZenOverview />
+
+  <section class="overview-section" aria-labelledby="context-zen-overview-state">
+    <h3 id="context-zen-overview-state">Keep the state, not every turn</h3>
+    <p>
+      Context Zen proposes an opt-in, turn-time judgment followed, when useful, by distillation: reconstruct the current objective, decisions still in force, constraints, rejected paths likely to recur, active artifacts, unresolved questions, and immediate next step. The handoff carries that state into a fresh receiving context. It does not assume it can navigate to a new chat, and clipboard copying depends on the host. The complete operating loop and payload are in Full Research.
+    </p>
+  </section>
+
+  <section class="overview-section overview-open" aria-labelledby="context-zen-overview-proof">
+    <h3 id="context-zen-overview-proof">The continuation question is still open</h3>
+    <p>
+      The handoff specification is public and implemented; the Healthy / Watch / Handoff judgment is provisional. Length alone cannot trigger it, and no improvement has been established. To find out whether reconstructing state helps beyond simply shortening a conversation, the proposal needs a comparison against both the full transcript <em>and</em> a conventional summary. Different work may need different amounts of history.
+    </p>
+  </section>
+
+  <div class="overview-continue">
+    <p>Continue for the six figures, continuation markers, target-specific handoffs, and proposed experiment.</p>
+    <button type="button" data-reading-depth-open="full">
+      Full Research · ~5 min <span aria-hidden="true">→</span>
+    </button>
+  </div>
+</section>
+
+<style>
+  .zen-reading-overview {
+    color: var(--text-secondary);
+  }
+
+  .zen-reading-overview :global(h2),
+  .zen-reading-overview :global(h3),
+  .zen-reading-overview :global(p) {
+    margin: 0;
+  }
+
+  .overview-kicker {
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: var(--research-figure-label, 0.625rem) !important;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.5 !important;
+    text-transform: uppercase;
+  }
+
+  .zen-reading-overview > h2 {
+    margin-top: 0.7rem !important;
+    max-width: 42rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.65rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+  }
+
+  .overview-lead {
+    max-width: 46rem;
+    margin-top: 1.1rem !important;
+    color: var(--text-secondary);
+    font-size: 1rem !important;
+    line-height: 1.8 !important;
+  }
+
+  .overview-section {
+    max-width: 46rem;
+    margin-top: 2.5rem;
+  }
+
+  .overview-section h3 {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+  }
+
+  .overview-section p {
+    margin-top: 0.8rem !important;
+    color: var(--text-secondary);
+    font-size: 0.95rem !important;
+    line-height: 1.8 !important;
+  }
+
+  .overview-section em {
+    color: var(--text-primary);
+  }
+
+  .overview-open {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 2rem;
+  }
+
+  .overview-continue {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1.5rem;
+  }
+
+  .overview-continue > p {
+    max-width: 24rem;
+    color: var(--text-muted);
+    font-size: 0.875rem !important;
+    line-height: 1.65 !important;
+  }
+
+  .overview-continue button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 1px solid var(--border-subtle);
+    background: transparent;
+    padding: 0.65rem 0.9rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+
+  .overview-continue button:hover {
+    border-color: var(--border-strong);
+  }
+
+  .overview-continue button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .overview-continue button {
+      transition: none;
+    }
+  }
+</style>
