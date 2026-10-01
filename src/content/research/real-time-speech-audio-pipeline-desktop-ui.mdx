@@ -22,21 +22,15 @@ import ChunkingTradeoffVisual from '../../components/research/ChunkingTradeoffVi
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
 import ResearchSourceExcerpt from '../../components/research/ResearchSourceExcerpt.astro';
 import ResearchSourceNote from '../../components/research/ResearchSourceNote.astro';
-import SpeechArchitectureTakeawaysVisual from '../../components/research/SpeechArchitectureTakeawaysVisual.astro';
-import SpeechStreamingPipelineVisual from '../../components/research/SpeechStreamingPipelineVisual.astro';
 import TranscriptionFilteringTruthVisual from '../../components/research/TranscriptionFilteringTruthVisual.astro';
 
 <ResearchSourceNote>
   This exploration is grounded in the current public `speechBubbles` and `whisper-api` source. Format calculations below are arithmetic derived from the stated sample formats, not measured runtime benchmarks.
 </ResearchSourceNote>
 
+The [speechBubbles project case study](/projects/local-ai-real-time-captioning) establishes the working prototype, creator role, broadcast workflow, and system-level responsibility boundary. This paper begins inside that boundary and inspects four implementation paths: audio-format reduction, chunking, transcription filtering, and async inference/render scheduling.
+
 Real-time speech UI is a pipeline problem. Capture, format reduction, buffering, inference, filtering, state, and rendering introduce different constraints, so the architecture is easier to reason about when those responsibilities remain separate.
-
-The current public system boundary looks like this:
-
-<ResearchBreakout mode="publication">
-  <SpeechStreamingPipelineVisual />
-</ResearchBreakout>
 
 ## The Audio Sample Rate Dilemma
 
@@ -180,12 +174,8 @@ The current prototype still performs synchronous geometry reads when captions mo
 
 ## Architectural Takeaways & Future Directions
 
-Building on-device intelligent UI systems suggests several useful design principles:
+The most defensible principle is specific: capture, blocking inference, acceptance policy, and rendering are easier to inspect when their ownership remains explicit. That separation does not establish a latency or reliability improvement by itself; it makes the different failure modes and optimization targets easier to locate.
 
-<ResearchBreakout mode="wide">
-  <SpeechArchitectureTakeawaysVisual />
-</ResearchBreakout>
-
-The next experiments are implied by the current boundaries: wire the existing VAD path into the active transcription flow, test chunk-duration strategies, and batch caption geometry reads before DOM writes.
+The next experiments follow those boundaries: wire the existing VAD path into the active transcription flow, compare chunk-duration strategies rather than treating the current default as optimal, and batch caption geometry reads before DOM writes.
 
 For the practical implementation and video demonstration of this architecture in action, visit the [speechBubbles Project Case Study](/projects/local-ai-real-time-captioning).
