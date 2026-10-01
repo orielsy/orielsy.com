@@ -1,157 +1,64 @@
----
-import ClaimAuthorityTable from './ClaimAuthorityTable.astro';
-import CompositionFormula from './CompositionFormula.astro';
-import ContextAsArchitectureVisual from './ContextAsArchitectureVisual.astro';
-import DeclarativeProductCompositionVisual from './DeclarativeProductCompositionVisual.astro';
-import ProductKnowledgeArtifact from './ProductKnowledgeArtifact.astro';
-import ResearchBreakout from './ResearchBreakout.astro';
----
-
 <section class="pk-overview not-prose" aria-labelledby="product-knowledge-overview-title">
   <div class="pk-overview__intro">
-    <h2 id="product-knowledge-overview-title">
-      Software has clear homes for behavior and state. Product meaning usually has no equivalent home.
-    </h2>
-    <p class="pk-overview__lead">
-      Code owns implemented behavior. Application state owns current facts. Schemas define valid structure.
+    <p class="pk-overview__eyebrow">Overview · ~2 min</p>
+    <h2 id="product-knowledge-overview-title">Give the “why” a place to live</h2>
+    <p>
+      Code implements behavior, application state holds current facts, and schemas define valid structure. Why a flow exists, which information matters, and what to explain when an action is unavailable often live in scattered documents and decisions.
     </p>
     <p>
-      But why a workflow exists, when a capability is relevant, what should be explained, and how capabilities fit together is often scattered across documentation, UI copy, tickets, and institutional memory.
-    </p>
-    <p>
-      The proposition is that <strong>product knowledge can become an explicit architectural input</strong> without replacing deterministic state, policy, authorization, or execution.
+      This research asks whether that <strong>product knowledge</strong> can become explicit enough to help assemble parts of an interface from capabilities engineers already built—without becoming authority for facts, permission, policy enforcement, or execution.
     </p>
   </div>
+
+  <figure class="overview-boundary" aria-labelledby="product-knowledge-boundary-title">
+    <div class="overview-boundary__heading">
+      <h3 id="product-knowledge-boundary-title">An explanation is not a permission</h3>
+      <p>Account review · identity verification has not succeeded</p>
+    </div>
+
+    <div class="overview-boundary__grid">
+      <section class="overview-boundary__knowledge">
+        <p class="overview-boundary__label accent">Product knowledge · may guide</p>
+        <h4>Explain the next step</h4>
+        <p>Show why verification matters and when a removal action is relevant.</p>
+      </section>
+
+      <section class="overview-boundary__authority">
+        <p class="overview-boundary__label">State · policy · code · retain authority</p>
+        <h4>Keep removal unavailable</h4>
+        <p>State records verification; policy requires it; code enforces the action.</p>
+      </section>
+    </div>
+
+    <figcaption>
+      Illustrative boundary, not an implemented interface. Guidance cannot change a fact, grant access, or perform an action.
+    </figcaption>
+  </figure>
 
   <div class="pk-overview__section">
-    <h3 id="product-meaning-home">Give product meaning an architectural home</h3>
+    <h3 id="product-knowledge-task">A task, not a new power</h3>
     <p>
-      The goal is not a new universal source of truth. It is explicit ownership for the meaning around a product so that intent, relevance, prerequisites, explanation, and composition guidance are represented deliberately.
+      Imagine an account-review surface. A product author can describe its purpose, relevant details, prerequisites, and helpful explanations. The system might select existing customer, verification, and restriction capabilities around that task.
+    </p>
+    <p>
+      But a description cannot retrieve transactions, verify a person, authorize removal, or invent a verification capability that has not been built. Composition can arrange trusted capabilities; it cannot make missing behavior real.
     </p>
   </div>
-
-  <ResearchBreakout mode="wide">
-    <ContextAsArchitectureVisual />
-  </ResearchBreakout>
-
-  <div class="pk-overview__section">
-    <h3 id="account-review-example">A concrete example: account review</h3>
-    <p>
-      Engineering already provides trusted capabilities such as customer identity, transaction history, verification, restriction management, and risk escalation. Product knowledge can describe why the task exists, what information matters, which prerequisites apply, and what should be explained.
-    </p>
-  </div>
-
-  <ProductKnowledgeArtifact />
-
-  <p class="pk-overview__plain-boundary">
-    The document describes the task. It does not retrieve transactions, verify identity, grant permission, remove restrictions, or execute escalation.
-  </p>
-
-  <div class="pk-overview__section">
-    <h3 id="interface-composition">What might the interface become?</h3>
-    <p>
-      If state, policy, available capabilities, and product knowledge are explicit, parts of an interface can potentially be composed from trusted capabilities that already exist instead of being authored as one fixed page every time.
-    </p>
-  </div>
-
-  <ResearchBreakout mode="wide">
-    <DeclarativeProductCompositionVisual />
-  </ResearchBreakout>
-
-  <div class="pk-overview__section">
-    <h3 id="keep-boundaries-clear">Keep the boundaries clear</h3>
-    <p>
-      Application state owns current facts. Code owns implemented behavior. Governing policy or specification owns intended constraints. Product knowledge owns meaning and explanation. When those artifacts disagree, the conflict should be exposed rather than silently resolved by AI.
-    </p>
-  </div>
-
-  <ClaimAuthorityTable />
-
-  <CompositionFormula />
-
-  <p class="pk-overview__model-note">
-    This is a thinking model, not an executable formula, not a proposal to generate every screen, and not permission for AI to invent behavior the product does not actually provide.
-  </p>
 
   <div class="pk-overview__section pk-overview__closing">
-    <h3 id="what-remains-open">What remains open</h3>
+    <h3 id="product-knowledge-open-question">The question still open</h3>
     <p>
-      The hard problem is making this knowledge trustworthy: establishing who owns it, keeping it aligned with code and policy, and proving that a proposed composition is allowed. This remains an architectural hypothesis, not proof that the model is reliable.
+      This is an architectural proposition, not a working generator or a case for generating every screen. Product knowledge would need clear ownership, conditions for when it applies, synchronization with code and policy, and tests that prove a proposed composition is allowed.
+    </p>
+    <p>
+      If those boundaries hold, how much of a repeated workflow could be composed without giving up deliberate design or deterministic control?
     </p>
 
     <button class="pk-overview__continue" type="button" data-reading-depth-open="full">
-      Read full research <span aria-hidden="true">→</span>
+      Full Research · ~8 min <span aria-hidden="true">→</span>
     </button>
   </div>
 </section>
-
-<script>
-  const article = document.querySelector<HTMLElement>('[data-research-entry="product-knowledge-as-architecture"]');
-  const overview = article?.querySelector<HTMLElement>('[data-reading-depth-overview] .pk-overview');
-  const tocAside = article?.querySelector<HTMLElement>('aside[aria-label="Research navigation"]');
-  const tocShell = tocAside?.querySelector<HTMLElement>('[data-research-toc-shell]');
-  const fullToc = tocShell?.querySelector<HTMLElement>('.research-toc');
-  const desktopResearchLayout = window.matchMedia('(min-width: 1024px)');
-
-  if (article && overview && tocAside && tocShell && fullToc) {
-    const headings = Array.from(
-      overview.querySelectorAll<HTMLHeadingElement>('.pk-overview__section > h3[id]'),
-    );
-
-    if (headings.length > 2 && !tocShell.querySelector('[data-reading-depth-toc="overview"]')) {
-      fullToc.dataset.readingDepthToc = 'full';
-
-      const overviewToc = fullToc.cloneNode(true) as HTMLElement;
-      overviewToc.dataset.readingDepthToc = 'overview';
-      overviewToc.setAttribute('aria-label', 'Overview contents');
-      overviewToc.classList.add('hidden', 'lg:block');
-
-      const list = overviewToc.querySelector<HTMLOListElement>('ol');
-      list?.replaceChildren();
-
-      headings.forEach((heading, index) => {
-        if (!list) return;
-
-        const item = document.createElement('li');
-        item.className = 'm-0 p-0 leading-5';
-
-        const link = document.createElement('a');
-        link.href = `#${heading.id}`;
-        link.className = 'group -ml-px grid grid-cols-[26px_minmax(0,1fr)] gap-2 border-l border-transparent py-2.5 pl-4 no-underline transition-colors hover:border-[var(--accent)]';
-
-        const number = document.createElement('span');
-        number.className = 'font-editorial-mono text-[9px] text-[var(--accent)]';
-        number.textContent = String(index + 1).padStart(2, '0');
-
-        const label = document.createElement('span');
-        label.className = 'text-[12px] leading-5 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--text-primary)]';
-        label.textContent = heading.textContent?.trim() ?? '';
-
-        link.append(number, label);
-        item.append(link);
-        list.append(item);
-      });
-
-      tocShell.append(overviewToc);
-
-      const syncToc = () => {
-        const overviewActive = article.dataset.readingDepth !== 'full';
-        tocAside.hidden = overviewActive && !desktopResearchLayout.matches;
-        overviewToc.hidden = !overviewActive;
-        fullToc.hidden = overviewActive;
-      };
-
-      const observer = new MutationObserver(syncToc);
-      observer.observe(article, {
-        attributes: true,
-        attributeFilter: ['data-reading-depth'],
-      });
-
-      desktopResearchLayout.addEventListener('change', syncToc);
-      queueMicrotask(syncToc);
-    }
-  }
-</script>
 
 <style>
   :global([data-research-entry='product-knowledge-as-architecture'] .reading-depth--editorial) {
@@ -159,19 +66,28 @@ import ResearchBreakout from './ResearchBreakout.astro';
   }
 
   .pk-overview {
+    max-width: 46rem;
     color: var(--text-secondary);
   }
 
-  .pk-overview__intro,
-  .pk-overview__section,
-  .pk-overview__plain-boundary,
-  .pk-overview__model-note {
-    max-width: 46rem;
+  .pk-overview__eyebrow,
+  .overview-boundary__label {
+    margin: 0;
+    font-family: var(--font-mono-ui);
+    font-size: var(--research-diagram-label, 0.625rem) !important;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .pk-overview__eyebrow,
+  .overview-boundary__label.accent {
+    color: var(--accent);
   }
 
   .pk-overview__intro h2 {
-    max-width: 46rem;
-    margin: 0 0 1.25rem;
+    margin: 0.75rem 0 1.25rem;
     border-top: 0;
     padding-top: 0;
     color: var(--text-primary);
@@ -182,13 +98,15 @@ import ResearchBreakout from './ResearchBreakout.astro';
     letter-spacing: -0.04em;
   }
 
-  .pk-overview p {
+  .pk-overview__intro > p:not(.pk-overview__eyebrow),
+  .pk-overview__section > p {
     margin: 0;
     font-size: 1rem;
     line-height: 1.8;
   }
 
-  .pk-overview p + p {
+  .pk-overview__intro > p + p,
+  .pk-overview__section > p + p {
     margin-top: 0.9rem;
   }
 
@@ -197,43 +115,97 @@ import ResearchBreakout from './ResearchBreakout.astro';
     font-weight: 600;
   }
 
-  .pk-overview__lead {
-    color: var(--text-primary);
-    font-size: 1.06rem !important;
-    line-height: 1.7 !important;
+  .overview-boundary {
+    margin: 2.75rem 0 0;
+    border-block: 1px solid var(--border-subtle);
+    padding: 1.75rem 0;
   }
 
-  .pk-overview h3 {
+  .overview-boundary :global(h3),
+  .overview-boundary :global(h4),
+  .overview-boundary :global(p) {
+    margin: 0;
+  }
+
+  .overview-boundary__heading h3 {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.025em;
+  }
+
+  .overview-boundary__heading p {
+    margin-top: 0.4rem !important;
+    color: var(--text-muted);
+    font-size: 0.75rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .overview-boundary__grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1.75rem;
+  }
+
+  .overview-boundary__knowledge {
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+  }
+
+  .overview-boundary__authority {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1.4rem;
+  }
+
+  .overview-boundary__label {
+    color: var(--text-muted);
+  }
+
+  .overview-boundary h4 {
+    margin-top: 0.65rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .overview-boundary h4 + p {
+    margin-top: 0.55rem !important;
+    color: var(--text-secondary);
+    font-size: 0.875rem !important;
+    line-height: 1.65 !important;
+  }
+
+  .overview-boundary figcaption {
+    margin-top: 1.6rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.9rem;
+    color: var(--text-muted);
+    font-size: var(--research-diagram-caption, 0.75rem);
+    line-height: 1.6;
+  }
+
+  .pk-overview__section {
+    margin-top: 2.75rem;
+  }
+
+  .pk-overview__section h3 {
     margin: 0 0 0.75rem;
     scroll-margin-top: 6rem;
     color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-weight: 600;
-    line-height: 1.25;
-    letter-spacing: -0.03em;
-  }
-
-  .pk-overview__section {
-    margin-top: 3.25rem;
-  }
-
-  .pk-overview__plain-boundary {
-    margin-top: 1.25rem !important;
-    color: var(--text-primary);
-  }
-
-  .pk-overview__model-note {
-    margin-top: -0.35rem !important;
-    color: var(--text-muted);
-    font-size: 0.925rem !important;
-    line-height: 1.7 !important;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
   }
 
   .pk-overview__closing {
-    margin-top: 3.75rem;
     border-top: 1px solid var(--border-subtle);
-    padding-top: 2rem;
+    padding-top: 1.75rem;
   }
 
   .pk-overview__continue {
@@ -241,32 +213,54 @@ import ResearchBreakout from './ResearchBreakout.astro';
     align-items: center;
     gap: 0.4rem;
     margin-top: 1.4rem;
-    border: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.2rem;
     background: transparent;
-    padding: 0;
-    color: var(--accent);
+    padding: 0.65rem 0.9rem;
+    color: var(--text-primary);
     font-family: var(--font-display);
-    font-size: 0.95rem;
+    font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.5;
-    letter-spacing: -0.01em;
     cursor: pointer;
-    text-decoration: underline;
-    text-decoration-color: transparent;
-    text-underline-offset: 0.22em;
     transition:
-      color 160ms ease,
-      text-decoration-color 160ms ease;
+      border-color 160ms ease,
+      background-color 160ms ease,
+      color 160ms ease;
   }
 
   .pk-overview__continue:hover {
-    color: var(--accent-hover);
-    text-decoration-color: currentColor;
+    border-color: var(--border-strong);
+    background: var(--bg-secondary);
   }
 
   .pk-overview__continue:focus-visible {
     outline: 2px solid var(--accent);
-    outline-offset: 4px;
+    outline-offset: 3px;
+  }
+
+  @media (min-width: 760px) {
+    .overview-boundary {
+      padding-block: 2rem;
+    }
+
+    .overview-boundary__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      margin-top: 2rem;
+    }
+
+    .overview-boundary__knowledge {
+      padding-right: 1.75rem;
+      padding-left: 1.25rem;
+    }
+
+    .overview-boundary__authority {
+      border-top: 0;
+      border-left: 1px solid var(--border-subtle);
+      padding-top: 0;
+      padding-left: 1.75rem;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
