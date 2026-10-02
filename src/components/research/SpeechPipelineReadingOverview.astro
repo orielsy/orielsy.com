@@ -19,7 +19,6 @@ const questions = [
 ---
 
 <article class="speech-reading-overview not-prose" aria-labelledby="speech-reading-overview-title">
-  <p class="overview-kicker">Overview · ~2 min</p>
   <h2 id="speech-reading-overview-title">A caption is the last decision in a chain.</h2>
   <p class="overview-lead">
     Live transcription is not just a model returning text. Audio must be captured, reduced, accumulated, transcribed, accepted, and rendered while each part operates under a different constraint. This paper begins inside the working speechBubbles system established by the <a href="/projects/local-ai-real-time-captioning">project case study</a>; it inspects what the current public source actually does at four boundaries.
@@ -97,7 +96,6 @@ const questions = [
     text-underline-offset: 0.2em;
   }
 
-  .overview-kicker,
   .figure-label {
     color: var(--text-muted);
     font-family: var(--font-mono-ui);
@@ -108,13 +106,11 @@ const questions = [
     text-transform: uppercase;
   }
 
-  .overview-kicker,
   .figure-accent {
     color: var(--accent) !important;
   }
 
   .speech-reading-overview > h2 {
-    margin-top: 0.7rem !important;
     max-width: 42rem;
     color: var(--text-primary);
     font-family: var(--font-display);
