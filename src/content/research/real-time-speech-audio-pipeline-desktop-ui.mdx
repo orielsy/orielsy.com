@@ -13,6 +13,7 @@ featured: false
 github: "https://github.com/orielsy/whisper-api"
 readingTime: "9 min read"
 demo: "/projects/local-ai-real-time-captioning"
+demoLabel: "speechBubbles case study"
 relatedSlugs: ["progressive-enhancement-intelligent-interfaces"]
 ---
 
@@ -41,6 +42,8 @@ import TranscriptionFilteringTruthVisual from '../../components/research/Transcr
 The [speechBubbles project case study](/projects/local-ai-real-time-captioning) establishes the working prototype, creator role, broadcast workflow, and system-level responsibility boundary. This paper begins inside that boundary and inspects four implementation paths: audio-format reduction, chunking, transcription filtering, and async inference/render scheduling.
 
 Real-time speech UI is a pipeline problem. Capture, format reduction, buffering, inference, filtering, state, and rendering introduce different constraints, so the architecture is easier to reason about when those responsibilities remain separate.
+
+<p className="paper-companion-link"><a href="/projects/local-ai-real-time-captioning">Open the speechBubbles project case study</a></p>
 
 ## The Audio Sample Rate Dilemma
 
