@@ -3,7 +3,6 @@ import ProjectMemoryOverview from './ProjectMemoryOverview.astro';
 ---
 
 <section class="project-memory-reading-overview not-prose" aria-labelledby="project-memory-reading-overview-title">
-  <p class="overview-kicker">Overview · ~2 min</p>
   <h2 id="project-memory-reading-overview-title">Make the correction recoverable</h2>
   <p class="overview-lead">
     A homepage once described my experience as including “design systems,” a broader claim than the evidence established. Correcting the sentence fixed the visible output. Recording that boundary in the repository gave later work somewhere durable to find it.
@@ -51,18 +50,7 @@ import ProjectMemoryOverview from './ProjectMemoryOverview.astro';
     margin: 0;
   }
 
-  .overview-kicker {
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: var(--research-figure-label, 0.625rem) !important;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    line-height: 1.5 !important;
-    text-transform: uppercase;
-  }
-
   .project-memory-reading-overview > h2 {
-    margin-top: 0.7rem !important;
     max-width: 42rem;
     color: var(--text-primary);
     font-family: var(--font-display);
