@@ -18,7 +18,7 @@ const conventionalSteps = [
 
 <figure class="adaptive-documentation-visual not-prose" aria-labelledby="adaptive-documentation-visual-title">
   <header class="visual-header">
-    <p class="eyebrow">Conceptual comparison · not a measured outcome</p>
+    <p class="eyebrow figure-label figure-accent">Conceptual comparison · not a measured outcome</p>
     <h2 id="adaptive-documentation-visual-title">Two paths through the same task</h2>
   </header>
 
@@ -31,7 +31,7 @@ const conventionalSteps = [
         </div>
         <span class="track-badge">External detour</span>
       </div>
-      <p class="track-description">The task crosses the product boundary before it can continue.</p>
+      <p class="track-description figure-support">The task crosses the product boundary before it can continue.</p>
 
       <div class="timeline">
         <div class="timeline-line" aria-hidden="true"></div>
@@ -46,7 +46,7 @@ const conventionalSteps = [
                   <strong>{label}</strong>
                   {outside && <span class="figure-label">Outside app</span>}
                 </div>
-                <p>{detail}</p>
+                <p class="figure-local">{detail}</p>
               </div>
             </li>
           ))}
@@ -62,30 +62,30 @@ const conventionalSteps = [
         </div>
         <span class="track-badge accent-badge">In-product path</span>
       </div>
-      <p class="track-description">The task stays in place while applicable knowledge reaches the interface.</p>
+      <p class="track-description figure-support">The task stays in place while applicable knowledge reaches the interface.</p>
 
       <div class="stay-panel">
         <LayoutPanelTop size={14} strokeWidth={1.6} aria-hidden="true" />
-        <p><strong>User stays in the product</strong> — authored guidance meets them at the field.</p>
+        <p class="figure-support"><strong>User stays in the product</strong> — authored guidance meets them at the field.</p>
       </div>
 
       <div class="decision-grid">
         <section>
           <p class="figure-label">Decision one</p>
           <h4>Applicability</h4>
-          <p>Does this fragment apply to the current version, user, and field state?</p>
+          <p class="figure-local">Does this fragment apply to the current version, user, and field state?</p>
         </section>
         <section>
           <p class="figure-label">Decision two</p>
           <h4>Response policy</h4>
-          <p>If it applies, what may the interface do — explain, guide, or offer?</p>
+          <p class="figure-local">If it applies, what may the interface do — explain, guide, or offer?</p>
         </section>
       </div>
 
       <p class="figure-label separation-label">Two decisions · kept separate</p>
 
       <div class="authority-note">
-        <p>Guidance may explain or guide. An offer appears only when exactly one valid option exists — and the user still accepts it. The note cannot choose a value.</p>
+        <p class="figure-local">Guidance may explain or guide. An offer appears only when exactly one valid option exists — and the user still accepts it. The note cannot choose a value.</p>
       </div>
     </section>
   </div>
@@ -127,6 +127,7 @@ const conventionalSteps = [
 
   .visual-header .eyebrow {
     color: var(--accent);
+    letter-spacing: 0.16em !important;
   }
 
   .accent-title .figure-meta {
@@ -134,13 +135,22 @@ const conventionalSteps = [
   }
 
   .visual-header h2 {
-    margin-top: 0.375rem !important;
+    position: static;
+    margin: 0.375rem 0 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
     color: var(--text-primary);
     font-family: var(--font-display);
     font-size: 1.125rem;
     font-weight: 600;
     line-height: 1.35;
     letter-spacing: -0.02em;
+    counter-increment: none !important;
+  }
+
+  .visual-header h2::before {
+    content: none !important;
+    display: none !important;
   }
 
   .tracks {
@@ -174,12 +184,21 @@ const conventionalSteps = [
   }
 
   .track-title h3 {
+    position: static;
+    margin: 0 !important;
+    padding: 0 !important;
     color: var(--text-primary);
     font-family: var(--font-display);
     font-size: var(--research-figure-copy, 0.875rem);
     font-weight: 600;
+    line-height: 1.25rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+  }
+
+  .track-title h3::before {
+    content: none !important;
+    display: none !important;
   }
 
   .track-badge {
@@ -202,7 +221,7 @@ const conventionalSteps = [
 
   .track-description {
     margin-top: 0.75rem !important;
-    color: var(--text-secondary);
+    color: var(--text-secondary) !important;
     font-size: 0.75rem !important;
     line-height: 1.25rem !important;
   }
@@ -291,7 +310,7 @@ const conventionalSteps = [
   }
 
   .stay-panel p {
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
     font-size: 0.75rem !important;
     font-weight: 500;
     line-height: 1.25rem !important;
@@ -322,9 +341,9 @@ const conventionalSteps = [
   .decision-grid h4 {
     margin-top: 0.375rem !important;
     color: var(--text-primary);
-    font-size: 0.75rem;
+    font-size: 0.75rem !important;
     font-weight: 600;
-    line-height: 1rem;
+    line-height: 1rem !important;
   }
 
   .decision-grid section > p:last-child {
@@ -356,8 +375,8 @@ const conventionalSteps = [
     border-top: 1px solid var(--border-subtle);
     padding: 0.875rem 1.25rem;
     color: var(--text-muted);
-    font-size: 0.6875rem;
-    line-height: 1.25rem;
+    font-size: 0.75rem !important;
+    line-height: 1.6 !important;
   }
 
   @media (min-width: 640px) {
