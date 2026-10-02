@@ -3,7 +3,6 @@ import ContextZenOverview from './ContextZenOverview.astro';
 ---
 
 <section class="zen-reading-overview not-prose" aria-labelledby="context-zen-reading-overview-title">
-  <p class="overview-kicker">Overview · ~2 min</p>
   <h2 id="context-zen-reading-overview-title">What should the next conversation inherit?</h2>
   <p class="overview-lead">
     A conversation may still fit inside a large context window while carrying abandoned directions, replaced decisions, and instructions that no longer agree. That does not make long context inherently bad. It makes room for a different question: would the next step be clearer from a faithful account of what is true now than from the entire chronology?
@@ -44,18 +43,7 @@ import ContextZenOverview from './ContextZenOverview.astro';
     margin: 0;
   }
 
-  .overview-kicker {
-    color: var(--accent);
-    font-family: var(--font-mono-ui);
-    font-size: var(--research-figure-label, 0.625rem) !important;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    line-height: 1.5 !important;
-    text-transform: uppercase;
-  }
-
   .zen-reading-overview > h2 {
-    margin-top: 0.7rem !important;
     max-width: 42rem;
     color: var(--text-primary);
     font-family: var(--font-display);
