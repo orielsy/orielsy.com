@@ -62,6 +62,7 @@ const formattedUpdateDate = data.updatedDate
   : null;
 
 const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
+const demoIsExternal = data.demo ? /^https?:\/\//.test(data.demo) : false;
 ---
 
 <BaseLayout
@@ -147,8 +148,13 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
                     </a>
                   )}
                   {data.demo && (
-                    <a href={data.demo} target="_blank" rel="noopener noreferrer" class="text-[var(--accent)] hover:text-[var(--accent-hover)]">
-                      Live implementation ↗
+                    <a
+                      href={data.demo}
+                      target={demoIsExternal ? '_blank' : undefined}
+                      rel={demoIsExternal ? 'noopener noreferrer' : undefined}
+                      class="text-[var(--accent)] hover:text-[var(--accent-hover)]"
+                    >
+                      {data.demoLabel ?? (demoIsExternal ? 'Live implementation ↗' : 'Live implementation')}
                     </a>
                   )}
                 </div>
