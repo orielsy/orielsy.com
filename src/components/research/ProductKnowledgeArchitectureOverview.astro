@@ -1,6 +1,5 @@
 <section class="pk-overview not-prose" aria-labelledby="product-knowledge-overview-title">
   <div class="pk-overview__intro">
-    <p class="pk-overview__eyebrow">Overview · ~2 min</p>
     <h2 id="product-knowledge-overview-title">Can documentation author an experience?</h2>
     <p>
       Given an existing library of trusted components and actions that engineering built, could documentation become the place where experiences are authored from those parts, with authors describing the task and engineering keeping behavior, state, permission, and policy?
@@ -70,7 +69,6 @@
     color: var(--text-secondary);
   }
 
-  .pk-overview__eyebrow,
   .overview-boundary__label {
     margin: 0;
     font-family: var(--font-mono-ui);
@@ -81,13 +79,12 @@
     text-transform: uppercase;
   }
 
-  .pk-overview__eyebrow,
   .overview-boundary__label.accent {
     color: var(--accent);
   }
 
   .pk-overview__intro h2 {
-    margin: 0.75rem 0 1.25rem;
+    margin: 0 0 1.25rem;
     border-top: 0;
     padding-top: 0;
     color: var(--text-primary);
@@ -98,7 +95,7 @@
     letter-spacing: -0.04em;
   }
 
-  .pk-overview__intro > p:not(.pk-overview__eyebrow),
+  .pk-overview__intro > p,
   .pk-overview__section > p {
     margin: 0;
     font-size: 1rem;
