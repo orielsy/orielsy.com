@@ -81,8 +81,8 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
           data-article-type={entry.data.type}
           class="article-item group grid gap-6 border-b border-[var(--border-subtle)] py-7 last:border-b-0 md:grid-cols-12 md:gap-8"
         >
-          <div class="min-w-0 md:col-span-3 lg:col-span-2">
-            <div class="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2">
+          <div class="min-w-0 md:col-span-4 lg:col-span-3">
+            <div class="flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1">
               <span class="font-editorial-mono text-[10px] text-[var(--accent)]">{String(entry.data.researchNumber ?? publishedResearch.length - index).padStart(2, '0')}</span>
               <time datetime={entry.data.pubDate.toISOString()} class="font-editorial-mono text-[10px] uppercase tracking-[0.06em] text-[var(--text-muted)]">
                 {formatDate(entry.data.pubDate)}
@@ -107,7 +107,7 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
             </div>
           </div>
 
-          <div class="grid min-w-0 gap-6 md:col-span-9 md:grid-cols-[minmax(0,1fr)_auto] md:items-start lg:col-span-10">
+          <div class="grid min-w-0 gap-6 md:col-span-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-start lg:col-span-9">
             <div class="min-w-0">
               <div class="flex flex-wrap gap-x-4 gap-y-1 font-editorial-mono text-[10px] uppercase tracking-[0.06em] text-[var(--text-muted)]">
                 <span>{entry.data.type}</span>
