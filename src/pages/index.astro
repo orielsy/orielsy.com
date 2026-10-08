@@ -128,20 +128,9 @@ const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
           </div>
 
           <div class="flex flex-col items-start gap-3 sm:items-end">
-            {(researchOrigins.get(featuredResearch.id) ||
-              (researchProjectEntries.get(featuredResearch.id)?.length ?? 0) > 0) && (
+            {researchOrigins.get(featuredResearch.id) && (
               <div class="flex flex-wrap items-center gap-x-4 gap-y-2 sm:justify-end">
-                {researchOrigins.get(featuredResearch.id) && (
-                  <ResearchFollowsBadge {...researchOrigins.get(featuredResearch.id)!} />
-                )}
-                {(researchProjectEntries.get(featuredResearch.id)?.length ?? 0) > 0 && (
-                  <ResearchProjectBadge
-                    href={researchProjectEntries.get(featuredResearch.id)!.length === 1
-                      ? `/projects/${researchProjectEntries.get(featuredResearch.id)![0].id}`
-                      : `/research/${featuredResearch.id}#research-lineage`}
-                    count={researchProjectEntries.get(featuredResearch.id)!.length}
-                  />
-                )}
+                <ResearchFollowsBadge {...researchOrigins.get(featuredResearch.id)!} />
               </div>
             )}
             <a
