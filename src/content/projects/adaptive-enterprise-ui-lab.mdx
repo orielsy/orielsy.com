@@ -32,8 +32,8 @@ associatedResearch:
 
 import '../../styles/adaptive-enterprise-ui-lab.css';
 import AdaptiveEnterpriseUiLab from '../../components/adaptive-ui-lab/AdaptiveEnterpriseUiLab.astro';
+import AdaptiveUiControlBoundaryVisual from '../../components/research/AdaptiveUiControlBoundaryVisual.astro';
 import ProjectBreakout from '../../components/projects/ProjectBreakout.astro';
-import Phase1DeterministicPipelineVisual from '../../components/research/Phase1DeterministicPipelineVisual.astro';
 
 ## Working Phase 1 Lab
 
@@ -43,19 +43,21 @@ Change the scenario and compare how a conventional interface and an adaptive int
   <AdaptiveEnterpriseUiLab embedded />
 </ProjectBreakout>
 
+## Interaction Boundary
+
+The scenario controller sits outside the user task. It changes familiarity, version, and compatible options for both forms; each form then keeps its own selection and validation attempt.
+
+<ProjectBreakout mode="publication">
+  <AdaptiveUiControlBoundaryVisual />
+</ProjectBreakout>
+
 ## What Phase 1 Demonstrates
 
 1. **Same truth, different interface policy.** Both forms receive the same scenario, validation rule, and compatible options.
 2. **Ambiguity limits authority.** Several compatible Data Connections justify explanation and guidance, but not a guessed selection.
 3. **Deterministic evidence can justify a stronger action.** When exactly one compatible option remains, the resolver may offer it as an explicit user-accepted preconfiguration.
 
-## Architecture at a Glance
-
-The implementation separates application truth, authored knowledge, response policy, and rendering so the adaptive behavior remains inspectable.
-
-<ProjectBreakout mode="publication">
-  <Phase1DeterministicPipelineVisual />
-</ProjectBreakout>
+The companion [Documentation-Driven Adaptive UX](/research/documentation-driven-adaptive-ux) paper owns the fuller architectural model: state, validation, runtime context, authored knowledge, applicability, response policy, and rendering.
 
 ## Next
 

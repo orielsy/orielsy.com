@@ -11,9 +11,9 @@ const rows = [
 
 <ResearchFigureFrame
   className="claim-authority-figure"
-  figureNumber="04"
+  figureNumber="03"
   title="Neither code nor docs always wins"
-  caption="Authority is assigned by kind of claim. A disagreement between representations is a defect to investigate, not permission to silently override the responsible artifact."
+  caption="Authority is assigned by kind of claim. A conflict between representations is a defect to investigate, not permission for one layer to silently override another."
 >
   <div class="authority-head"><span>Claim about</span><span>Responsible artifact</span></div>
   <dl class="authority-rows">
@@ -24,12 +24,12 @@ const rows = [
 
 <style is:global>
   .claim-authority-figure .authority-head, .claim-authority-figure .authority-rows > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0.75rem; }
-  .claim-authority-figure .authority-head { border-top: 1px solid var(--border-subtle); padding: 0.6rem 0; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .claim-authority-figure .authority-head { border-top: 1px solid var(--border-subtle); padding: 0.6rem 0; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.625rem; letter-spacing: 0.1em; line-height: 1.5; text-transform: uppercase; }
   .claim-authority-figure .authority-rows { margin: 0; }
-  .claim-authority-figure .authority-rows > div { border-top: 1px solid var(--border-subtle); padding: 0.7rem 0; font-size: 0.875rem; line-height: 1.55; }
+  .claim-authority-figure .authority-rows > div { border-top: 1px solid var(--border-subtle); padding: 0.7rem 0; font-size: 0.8125rem; line-height: 1.55; }
   .claim-authority-figure .authority-rows dt { color: var(--text-secondary); }
   .claim-authority-figure .authority-rows dd { margin: 0; color: var(--text-primary); font-weight: 600; }
   .claim-authority-figure .authority-conflict { margin: 0.9rem 0 0 !important; border-left: 2px solid var(--accent); padding: 0 0 0 1rem; }
-  .claim-authority-figure .authority-conflict strong { display: block; color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; }
-  .claim-authority-figure .authority-conflict span { display: block; margin-top: 0.35rem; color: var(--text-secondary); font-size: 0.8125rem; line-height: 1.6; }
+  .claim-authority-figure .authority-conflict strong { display: block; color: var(--text-primary); font-family: var(--font-display); font-size: 0.875rem; font-weight: 600; line-height: 1.5; }
+  .claim-authority-figure .authority-conflict span { display: block; margin-top: 0.35rem; color: var(--text-secondary); font-size: 0.75rem; line-height: 1.6; }
 </style>

@@ -1,20 +1,83 @@
 ---
+import { CircleAlert } from '@lucide/astro';
+
 const exclusions = [
-  ['Inference and retrieval', 'Document ingestion, semantic search, embeddings, natural-language intent resolution, generated guidance'],
-  ['Production infrastructure', 'Backend services, persistence, authentication'],
-  ['Learning and personalization', 'Telemetry, behavioral learning, inferred user profiles'],
-  ['Runtime integrations', 'WebLLM, MCP, remote AI APIs'],
+  'Document ingestion',
+  'Semantic search',
+  'Embeddings or vector retrieval',
+  'Natural-language intent resolution',
+  'Generated guidance',
+  'Telemetry or behavioral learning',
+  'Backend services or persistence',
+  'Authentication',
+  'WebLLM or MCP',
+  'Remote AI APIs',
 ];
 ---
-<dl class="adaptive-limitations not-prose" aria-label="Capabilities outside Phase 1">
-  {exclusions.map(([title, detail]) => <div><dt>{title}</dt><dd>{detail}</dd></div>)}
-</dl>
+
+<div class="adaptive-limitations not-prose" aria-label="Capabilities intentionally not included in Phase 1">
+  <div class="limitations-heading">
+    <CircleAlert size={16} strokeWidth={1.6} aria-hidden="true" />
+    <p>Intentionally not included</p>
+  </div>
+  <ul>
+    {exclusions.map((item) => <li>{item}</li>)}
+  </ul>
+</div>
+
 <style>
-  .adaptive-limitations { margin: 1.5rem 0 2rem; border-block: 1px solid var(--border-subtle); }
-  .adaptive-limitations :global(dt), .adaptive-limitations :global(dd) { margin: 0; }
-  .adaptive-limitations > div { display: grid; gap: .25rem; padding: .75rem 0; }
-  .adaptive-limitations > div + div { border-top: 1px solid var(--border-subtle); }
-  dt { color: var(--text-primary); font-family: var(--font-display); font-size: .875rem; font-weight: 600; }
-  dd { color: var(--text-secondary); font-size: .875rem; line-height: 1.6; }
-  @media (min-width: 640px) { .adaptive-limitations > div { grid-template-columns: 13rem minmax(0,1fr); gap: 1rem; } }
+  .adaptive-limitations {
+    margin: 2.5rem 0;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    padding: 1.5rem;
+  }
+
+  .adaptive-limitations :global(p),
+  .adaptive-limitations :global(ul),
+  .adaptive-limitations :global(li) {
+    margin: 0;
+  }
+
+  .limitations-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .limitations-heading :global(svg) {
+    color: var(--text-muted);
+  }
+
+  .limitations-heading p {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    font-size: 0.6875rem !important;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  ul {
+    display: grid;
+    gap: 0 2rem;
+    margin-top: 1.25rem !important;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    border-top: 1px solid var(--border-subtle);
+    padding: 0.75rem 0;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.75rem;
+  }
+
+  @media (min-width: 640px) {
+    ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
 </style>

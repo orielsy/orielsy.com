@@ -55,9 +55,11 @@ const { maxWidth, mode = 'wide' } = Astro.props;
   }
 
   /*
-   * Once the viewport is comfortably wider, allow figures to borrow space
-   * from the left-side article gutter while keeping their right edge aligned
-   * with the prose column.
+   * Once the viewport is comfortably wider, wide figures may borrow some of
+   * the article gutter while remaining visually tied to the prose column.
+   * Publication plates span the full 12-column publication canvas; the sticky
+   * contents rail yields while a publication plate occupies the same vertical
+   * region.
    */
   @media (min-width: 1280px) {
     .research-breakout[data-breakout-mode='wide'] {

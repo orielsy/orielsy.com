@@ -1,28 +1,28 @@
-<section class="zen-overview not-prose" aria-labelledby="context-zen-overview-title">
+<figure class="zen-overview not-prose" aria-labelledby="context-zen-overview-title">
   <div class="overview-heading">
-    <h2 id="context-zen-overview-title">Capacity is not continuation quality</h2>
-    <span>Paper overview · evidence bounded</span>
+    <h3 id="context-zen-overview-title">Capacity is not continuation quality</h3>
+    <span class="figure-meta">Overview · decision boundary</span>
   </div>
 
   <div class="overview-grid">
     <section>
-      <span class="label">Accumulated context</span>
-      <h3>The context still fits.</h3>
+      <span class="label figure-meta">Accumulated context</span>
+      <h4 class="figure-node-prominent">The context still fits.</h4>
       <p>Useful state accumulates beside chronology, superseded state, and conflicting residue.</p>
     </section>
 
     <section class="judgment">
-      <span class="label accent">Provisional context-health judgment</span>
-      <h3>Would a faithful compact handoff be easier to continue from?</h3>
+      <span class="label accent figure-meta">Provisional context-health judgment</span>
+      <h4 class="figure-node-medium">Would a faithful compact handoff be easier to continue from?</h4>
       <div class="decisions">
-        <div><span>If no</span><p>Continue</p></div>
-        <div class="yes"><span>If yes</span><p>Distill + hand off</p></div>
+        <div><span class="figure-meta">If no</span><p>Continue</p></div>
+        <div class="yes"><span class="figure-meta">If yes</span><p>Distill + hand off</p></div>
       </div>
     </section>
 
     <section>
-      <span class="label">Specified handoff behavior</span>
-      <h3>Continuation state</h3>
+      <span class="label figure-meta">Specified handoff behavior</span>
+      <h4 class="figure-node-prominent">Continuation state</h4>
       <ol>
         <li>Authoritative state</li>
         <li><span aria-hidden="true">→</span>Canonical handoff</li>
@@ -32,55 +32,210 @@
   </div>
 
   <dl class="evidence-ledger">
-    <div><dt>Implemented</dt><dd>Public handoff specification</dd></div>
-    <div><dt>Provisional</dt><dd>Context-health heuristic</dd></div>
-    <div><dt>Unvalidated</dt><dd>Continuation benefit</dd></div>
+    <div><dt class="figure-meta figure-accent">Implemented</dt><dd>Public handoff specification</dd></div>
+    <div><dt class="figure-meta">Provisional</dt><dd>Context-health heuristic</dd></div>
+    <div><dt class="figure-meta">Unvalidated</dt><dd>Continuation benefit</dd></div>
   </dl>
 
-  <p class="context-line">Retrieval brings relevant state in · Distillation decides what stays · Handoff resets the rest</p>
-</section>
+  <figcaption>The judgment is a proposal, not a validated trigger. A handoff preserves state for a fresh context; it does not establish that continuing there is better.</figcaption>
+</figure>
 
 <style>
-  .zen-overview { margin: 2.5rem 0 3rem; border-block: 1px solid var(--border-subtle); padding: 1.5rem 0; }
-  .zen-overview :global(h2), .zen-overview :global(h3), .zen-overview :global(p), .zen-overview :global(ol), .zen-overview :global(dl), .zen-overview :global(dd) { margin: 0; }
-  .zen-overview :global(ol) { padding: 0; list-style: none; }
-  .overview-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.6rem 1rem; }
-  .overview-heading h2 { color: var(--text-primary); font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.02em; }
-  .overview-heading > span, .label, .evidence-ledger dt { font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.09em; line-height: 1.5; text-transform: uppercase; }
-  .overview-heading > span, .label { color: var(--text-muted); }
-  .label.accent, .evidence-ledger div:first-child dt { color: var(--accent); }
+  .zen-overview {
+    margin: 2.5rem 0 3rem;
+    border-block: 1px solid var(--border-subtle);
+    padding: 1.5rem 0;
+  }
 
-  .overview-grid { display: grid; gap: 1.35rem; margin-top: 1.4rem; }
-  .overview-grid > section { min-width: 0; }
-  .overview-grid h3 { margin-top: 0.55rem !important; color: var(--text-primary); font-family: var(--font-display); font-size: 1rem; font-weight: 600; line-height: 1.45; }
-  .overview-grid p, .overview-grid li, .evidence-ledger dd { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  .overview-grid > section > p { margin-top: 0.4rem !important; }
+  .zen-overview :global(h3),
+  .zen-overview :global(h4),
+  .zen-overview :global(p),
+  .zen-overview :global(ol),
+  .zen-overview :global(dl),
+  .zen-overview :global(dd) {
+    margin: 0;
+  }
 
-  .judgment { border-block: 1px solid var(--border-subtle); padding-block: 1.15rem; }
-  .decisions { display: grid; gap: 0.7rem; margin-top: 1rem; }
-  .decisions > div { border-left: 1px solid var(--border-subtle); padding-left: 0.75rem; }
-  .decisions > div.yes { border-left: 2px solid var(--accent); }
-  .decisions span { color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; }
-  .decisions .yes span { color: var(--accent); }
-  .decisions p { margin-top: 0.1rem !important; color: var(--text-primary); }
+  .zen-overview :global(ol) {
+    padding: 0;
+    list-style: none;
+  }
 
-  .overview-grid ol { display: grid; gap: 0.3rem; margin-top: 0.6rem !important; }
-  .overview-grid li { display: flex; align-items: center; gap: 0.45rem; }
-  .overview-grid li span { color: var(--accent); }
+  .overview-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.6rem 1rem;
+  }
 
-  .evidence-ledger { display: grid; gap: 0.85rem; margin-top: 1.4rem !important; border-top: 1px solid var(--border-subtle); padding-top: 1rem; }
-  .evidence-ledger dt { color: var(--text-muted); }
-  .evidence-ledger dd { margin-top: 0.2rem !important; }
-  .context-line { margin-top: 1rem !important; border-top: 1px dashed var(--border-subtle); padding-top: 0.8rem; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; line-height: 1.6; }
+  .overview-heading h3 {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  .overview-heading > span,
+  .label,
+  .evidence-ledger dt {
+    font-family: var(--font-mono-ui);
+    letter-spacing: 0.09em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .overview-heading > span,
+  .label,
+  .evidence-ledger dt {
+    color: var(--text-muted);
+  }
+
+  .label.accent,
+  .evidence-ledger div:first-child dt {
+    color: var(--accent);
+  }
+
+  .overview-grid {
+    display: grid;
+    gap: 1.35rem;
+    margin-top: 1.4rem;
+  }
+
+  .overview-grid > section {
+    min-width: 0;
+  }
+
+  .overview-grid h4 {
+    margin-top: 0.55rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .overview-grid p,
+  .overview-grid li,
+  .evidence-ledger dd {
+    color: var(--text-secondary);
+    font-size: var(--research-figure-copy, 0.875rem);
+    line-height: 1.6;
+  }
+
+  .overview-grid > section > p {
+    margin-top: 0.4rem !important;
+  }
+
+  .judgment {
+    border-block: 1px solid var(--border-subtle);
+    padding-block: 1.15rem;
+  }
+
+  .decisions {
+    display: grid;
+    gap: 0.7rem;
+    margin-top: 1rem;
+  }
+
+  .decisions > div {
+    border-left: 1px solid var(--border-subtle);
+    padding-left: 0.75rem;
+  }
+
+  .decisions > div.yes {
+    border-left: 2px solid var(--accent);
+  }
+
+  .decisions span {
+    color: var(--text-muted);
+    font-family: var(--font-mono-ui);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .decisions .yes span {
+    color: var(--accent);
+  }
+
+  .decisions p {
+    margin-top: 0.1rem !important;
+    color: var(--text-primary);
+  }
+
+  .overview-grid ol {
+    display: grid;
+    gap: 0.3rem;
+    margin-top: 0.6rem !important;
+  }
+
+  .overview-grid li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .overview-grid li span {
+    color: var(--accent);
+  }
+
+  .evidence-ledger {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 1.4rem !important;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1rem;
+  }
+
+  .evidence-ledger dd {
+    margin-top: 0.2rem !important;
+  }
+
+  .zen-overview > figcaption {
+    margin-top: 1rem;
+    border-top: 1px dashed var(--border-subtle);
+    padding: 0.8rem 0 0 !important;
+    color: var(--text-muted);
+    font-size: var(--research-figure-caption, 0.75rem) !important;
+    line-height: 1.6 !important;
+  }
 
   @media (min-width: 760px) {
-    .zen-overview { padding: 1.75rem 0; }
-    .overview-heading h2 { font-size: 1.5rem; }
-    .overview-grid { grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.15fr) minmax(0, 0.93fr); gap: 0; }
-    .overview-grid > section:first-child { padding-right: 1.5rem; }
-    .overview-grid > section:last-child { padding-left: 1.5rem; }
-    .judgment { border-block: 0; border-inline: 1px solid var(--border-subtle); padding: 0 1.5rem; }
-    .decisions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .evidence-ledger { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    .zen-overview {
+      padding: 1.75rem 0;
+    }
+
+    .overview-heading h3 {
+      font-size: 1.5rem;
+    }
+
+    .overview-grid {
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.15fr) minmax(0, 0.93fr);
+      gap: 0;
+    }
+
+    .overview-grid > section:first-child {
+      padding-right: 1.5rem;
+    }
+
+    .overview-grid > section:last-child {
+      padding-left: 1.5rem;
+    }
+
+    .judgment {
+      border-block: 0;
+      border-inline: 1px solid var(--border-subtle);
+      padding: 0 1.5rem;
+    }
+
+    .decisions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .evidence-ledger {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
   }
 </style>

@@ -1,0 +1,138 @@
+---
+import { Layers3, Split } from '@lucide/astro';
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const substrate = ['Identity + lifecycle', 'Encapsulation', 'Slots + templates', 'Reusable markup'];
+const architecture = ['State + scheduling', 'Routing + data', 'Server / client execution', 'Compilation + conventions'];
+---
+
+<ResearchFigureFrame
+  className="web-components-boundary-figure"
+  figureNumber="03"
+  title="Portable component identity stops short of application architecture"
+  status="Web Components · standardized substrate"
+  caption="The dividing line is conceptual, not an incompatibility: applications may build on standard components, but those standards do not prescribe their coordinating architecture."
+>
+  <div class="components-grid">
+    <section>
+      <div class="section-meta accent">
+        <Layers3 size={18} strokeWidth={1.5} aria-hidden="true" />
+        <span>Browser-recognized component</span>
+      </div>
+      <h4>A portable unit</h4>
+      <ul>
+        {substrate.map((item) => <li>{item}</li>)}
+      </ul>
+      <p class="footer-note figure-meta">Custom Elements · Shadow DOM · templates · slots</p>
+    </section>
+
+    <section class="architecture-side">
+      <div class="section-meta">
+        <Split size={18} strokeWidth={1.5} aria-hidden="true" />
+        <span>Not specified by the component model</span>
+      </div>
+      <h4>A coordinated application</h4>
+      <ul>
+        {architecture.map((item) => <li>{item}</li>)}
+      </ul>
+      <p class="footer-note figure-meta">Policy remains a framework / application concern</p>
+    </section>
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  .web-components-boundary-figure :global(h4),
+  .web-components-boundary-figure :global(p),
+  .web-components-boundary-figure :global(ul),
+  .web-components-boundary-figure :global(li) {
+    margin: 0;
+  }
+
+  .web-components-boundary-figure :global(ul) {
+    padding: 0;
+    list-style: none;
+  }
+
+  .components-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .components-grid section {
+    min-width: 0;
+  }
+
+  .section-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--text-muted);
+  }
+
+  .section-meta.accent {
+    color: var(--accent);
+  }
+
+  .section-meta span,
+  .footer-note {
+    font-family: var(--font-mono-ui);
+    font-size: var(--research-diagram-label, 0.625rem);
+    letter-spacing: 0.08em;
+    line-height: 1.55;
+    text-transform: uppercase;
+  }
+
+  h4 {
+    margin-top: 0.85rem !important;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: var(--research-diagram-node-prominent, 1.125rem) !important;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  ul {
+    margin-top: 1rem !important;
+    border-block: 1px solid var(--border-subtle);
+  }
+
+  li {
+    padding: 0.55rem 0 !important;
+    color: var(--text-secondary);
+    font-size: var(--research-diagram-copy, 0.875rem);
+    line-height: 1.5;
+  }
+
+  li + li {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .footer-note {
+    margin-top: 0.85rem !important;
+    color: var(--text-muted);
+    text-transform: none;
+  }
+
+  .architecture-side {
+    border-top: 1px dashed var(--border-subtle);
+    padding-top: 1.4rem;
+  }
+
+  @media (min-width: 760px) {
+    .components-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+    }
+
+    .components-grid section:first-child {
+      padding-right: 2rem;
+    }
+
+    .architecture-side {
+      border-top: 0;
+      border-left: 1px solid var(--border-subtle);
+      padding-top: 0;
+      padding-left: 2rem;
+    }
+  }
+</style>

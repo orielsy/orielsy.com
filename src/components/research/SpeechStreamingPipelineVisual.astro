@@ -1,78 +1,128 @@
 ---
+import { ArrowRight, AudioLines, Captions, Check, Server } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
-const domains = [
-  {
-    kicker: 'Electron client',
-    title: 'Capture + caption policy',
-    steps: ['Capture', 'Downsample', 'Caption policy'],
-    detail: 'The client owns microphone capture and decides which returned transcript segments enter caption state.',
-  },
-  {
-    kicker: 'Local transcription service',
-    title: 'Buffer + Whisper inference',
-    steps: ['Buffer', 'Infer'],
-    detail: 'The local service owns audio accumulation and speech-to-text inference.',
-  },
-  {
-    kicker: 'Broadcast rendering',
-    title: 'Caption state + overlay + OBS',
-    steps: ['Caption state', 'Electron overlay', 'OBS'],
-    detail: 'The rendering layer owns caption presentation and live broadcast compositing.',
-  },
+const stages = [
+  { icon: AudioLines, name: 'Capture', detail: 'Microphone audio', owner: 'Electron client' },
+  { icon: ArrowRight, name: 'Transport', detail: 'PCM: client → local service', owner: 'Process boundary' },
+  { icon: Server, name: 'Inference', detail: 'Segments + metadata: service → client policy', owner: 'Local FastAPI service' },
+  { icon: Check, name: 'Acceptance', detail: 'Returned segment evaluated before queue entry', owner: 'Client policy', accent: true },
+  { icon: Captions, name: 'Presentation', detail: 'Accepted state → overlay → OBS composition', owner: 'Electron overlay / OBS' },
 ];
 ---
 
 <ResearchFigureFrame
-  className="speech-topology-figure"
+  className="speech-boundary-figure"
   figureNumber="01"
-  title="Capture, inference, and broadcast rendering stay separate"
-  subtitle="One broadcast workstation contains three architectural domains. Later sections examine the format, chunking, filtering, and render details inside those boundaries."
-  status="Current public architecture"
-  caption="The overview establishes ownership and transport boundaries without duplicating the implementation details examined later in the article."
+  title="The system boundary"
+  status="Shared bridge · project-level topology"
+  caption="The project keeps enough topology to explain ownership and the bidirectional hand-off. Exact formats, thresholds, chunk duration, and render scheduling are delegated to the companion research paper."
 >
-  <div class="domain-grid" aria-label="speechBubbles architectural domains">
-    {domains.map((domain, index) => (
-      <section class="domain">
-        <span class="domain-index">{String(index + 1).padStart(2, '0')}</span>
-        <p class="domain-kicker">{domain.kicker}</p>
-        <h4>{domain.title}</h4>
-        <p class="steps">{domain.steps.join(' → ')}</p>
-        <p class="detail">{domain.detail}</p>
-      </section>
-    ))}
-  </div>
-
-  <div class="transport-map" aria-label="transport between speechBubbles architectural domains">
-    <div><span>Client ↔ local service</span><strong>PCM → · transcript segments ←</strong></div>
-    <div><span>Client → renderer</span><strong>Accepted caption state → broadcast overlay</strong></div>
-  </div>
+  <ol class="boundary-path" aria-label="speechBubbles system responsibility boundary">
+    {stages.map((stage, index) => {
+      const Icon = stage.icon;
+      return (
+        <li class:list={[stage.accent && 'is-accent']}>
+          <span class="path-node" aria-hidden="true"></span>
+          <div class="stage-heading">
+            <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
+            <span class:list={['figure-meta', stage.accent && 'figure-accent']}>0{index + 1}</span>
+          </div>
+          <h4 class="figure-node">{stage.name}</h4>
+          <p class="figure-support">{stage.detail}</p>
+          <p class="figure-label owner">{stage.owner}</p>
+        </li>
+      );
+    })}
+  </ol>
 </ResearchFigureFrame>
 
 <style>
-  :global(.research-reading .research-prose figure.speech-topology-figure) { border-radius: 0 !important; }
-  .domain-grid { display: grid; border-block: 1px solid var(--border-subtle); }
-  .domain { position: relative; min-width: 0; margin: 0; padding: 1rem 0; }
-  .domain + .domain { border-top: 1px solid var(--border-subtle); }
-  .domain:nth-child(2) { border-left: 2px solid var(--accent); padding-left: 1rem; }
-  .domain-index, .domain-kicker, .transport-map span { font-family: var(--font-mono-ui); }
-  .domain-index { position: absolute; top: 1rem; right: 0; color: var(--accent); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; }
-  .domain-kicker { margin: 0; padding-right: 2.2rem; color: var(--text-muted); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; line-height: 1.45; text-transform: uppercase; }
-  h4 { margin: 0.4rem 0 0; color: var(--text-primary); font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.4; }
-  .steps { margin: 0.75rem 0 0 !important; color: var(--text-primary); font-family: var(--font-mono-ui); font-size: 0.8125rem; line-height: 1.55; }
-  .detail { margin: 0.65rem 0 0 !important; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  .transport-map { display: grid; margin-top: 1rem; border-top: 1px solid var(--border-subtle); }
-  .transport-map > div { display: grid; gap: 0.3rem; padding: 0.75rem 0; }
-  .transport-map > div + div { border-top: 1px solid var(--border-subtle); }
-  .transport-map span { color: var(--text-muted); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; line-height: 1.45; text-transform: uppercase; }
-  .transport-map strong { color: var(--text-primary); font-family: var(--font-mono-ui); font-size: 0.8125rem; font-weight: 500; line-height: 1.5; }
+  .speech-boundary-figure :global(p),
+  .speech-boundary-figure :global(h4),
+  .speech-boundary-figure :global(ol),
+  .speech-boundary-figure :global(li) {
+    margin: 0;
+  }
+
+  .speech-boundary-figure :global(ol) {
+    padding: 0;
+    list-style: none;
+  }
+
+  .boundary-path {
+    display: grid;
+  }
+
+  .boundary-path li {
+    position: relative;
+    min-width: 0;
+    border-left: 1px solid var(--border-subtle);
+    padding: 1rem 0 1rem 1.25rem;
+  }
+
+  .boundary-path li.is-accent {
+    border-left: 2px solid var(--accent);
+    background: var(--research-figure-surface-emphasis, var(--bg-card-hover));
+  }
+
+  .path-node {
+    position: absolute;
+    top: 1.5rem;
+    left: -0.25rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--border-strong);
+  }
+
+  .is-accent .path-node {
+    background: var(--accent);
+  }
+
+  .stage-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+  }
+
+  .is-accent .stage-heading {
+    color: var(--accent);
+  }
+
+  .figure-node {
+    margin-top: 0.5rem !important;
+  }
+
+  .figure-support {
+    margin-top: 0.5rem !important;
+    color: var(--text-secondary);
+  }
+
+  .owner {
+    margin-top: 1rem !important;
+  }
+
   @media (min-width: 760px) {
-    .domain-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .domain { padding: 1rem; }
-    .domain:first-child { padding-left: 0; }
-    .domain + .domain { border-top: 0; border-left: 1px solid var(--border-subtle); }
-    .domain:nth-child(2) { border-left: 2px solid var(--accent); }
-    .transport-map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .transport-map > div + div { border-top: 0; border-left: 1px solid var(--border-subtle); padding-left: 1rem; }
+    .boundary-path {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .boundary-path li {
+      border-left: 0;
+      border-top: 1px solid var(--border-subtle);
+      padding: 1.5rem 0.75rem 1rem;
+    }
+
+    .boundary-path li.is-accent {
+      border-left: 0;
+      border-top: 2px solid var(--accent);
+    }
+
+    .path-node {
+      top: -0.25rem;
+      left: 1rem;
+    }
   }
 </style>

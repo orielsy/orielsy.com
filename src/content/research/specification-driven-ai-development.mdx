@@ -1,7 +1,7 @@
 ---
 title: "From Prompts to Project Memory: Spec-Driven Development for Coding Agents"
 description: "A repository-grounded look at using version-controlled specs, decisions, and project rules as durable memory for coding agents across long-running software work."
-tldr: "Conversation is working context, not project memory. This article examines a repository pattern for giving consequential decisions a durable address, routing agents toward relevant context, and keeping that memory aligned with implementation. This makes silent regression less likely; it does not make agent output deterministic or correct."
+tldr: "Conversation is working context, not project memory. This article examines a repository pattern for giving consequential decisions a durable address, routing agents toward relevant context, and keeping that memory aligned with implementation. This makes silent regression recoverable rather than invisible; it does not make agent output deterministic or correct."
 tldrLabel: "TL;DR — WORKING PATTERN"
 pubDate: 2026-09-11
 researchNumber: 4
@@ -19,15 +19,24 @@ import ProjectMemoryChangeWorkflowVisual from '../../components/research/Project
 import ProjectMemoryContinuityVisual from '../../components/research/ProjectMemoryContinuityVisual.astro';
 import ProjectMemoryDriftVisual from '../../components/research/ProjectMemoryDriftVisual.astro';
 import ProjectMemoryIncidentEvidenceVisual from '../../components/research/ProjectMemoryIncidentEvidenceVisual.astro';
-import ProjectMemoryOverview from '../../components/research/ProjectMemoryOverview.astro';
+import ProjectMemoryReadingOverview from '../../components/research/ProjectMemoryReadingOverview.astro';
 import ProjectMemoryRoutingVisual from '../../components/research/ProjectMemoryRoutingVisual.astro';
 import PublicationGatingEvidenceChainVisual from '../../components/research/PublicationGatingEvidenceChainVisual.astro';
 import ResearchBreakout from '../../components/research/ResearchBreakout.astro';
+import ResearchReadingDepth from '../../components/research/ResearchReadingDepth.astro';
 import ResearchSourceExcerpt from '../../components/research/ResearchSourceExcerpt.astro';
 
-<ResearchBreakout mode="wide">
-  <ProjectMemoryOverview />
-</ResearchBreakout>
+<ResearchReadingDepth overviewTime="2 min" fullResearchTime="8 min" presentation="editorial" />
+
+<div data-reading-depth-overview>
+  <ProjectMemoryReadingOverview />
+</div>
+
+<div data-reading-depth-marker="full" aria-hidden="true"></div>
+
+Here, **spec-driven** names a repository practice in which specifications own product requirements within a broader authority-by-concern system. It does not make a specification universally authoritative: constitutions preserve project-wide constraints, ADRs preserve rationale, plans and tasks preserve approach and execution state, code shows implementation, and tests show what was checked.
+
+Version control gives consequential decisions an address a later agent can recover. It does not make those decisions correct or current. The agent still has to find the relevant records, interpret them against the task, inspect the implementation, and verify the resulting behavior.
 
 ## The Claim Came Back
 
@@ -41,7 +50,7 @@ What I could support was substantial experience with reusable UI components, com
 
 I treat that mistake as a context-persistence failure. A distinction we had already made did not survive into a later piece of generated copy.
 
-Correcting the sentence fixed the page. Recording the constraint in the repository made the same silent regression less likely.
+Correcting the sentence fixed the page. Recording the constraint in the repository gave the same mistake a durable address a later agent could recover before repeating it.
 
 <ResearchBreakout mode="wide">
   <ProjectMemoryIncidentEvidenceVisual />
@@ -56,6 +65,8 @@ Conversation remains useful for the work in front of us: goals, tradeoffs, corre
 The problem is that a later session, agent, or tool cannot be assumed to inherit all of it. A new session may see the repository without the discussion that produced its current decisions.
 
 In this repository, the durable substrate is version-controlled project memory: a small set of artifacts that record constraints, requirements, implementation intent, execution state, and decision rationale at different scopes.
+
+Code and tests are adjacent implementation and verification evidence. They are durable and necessary to inspect, but they are not interchangeable with records of intent.
 
 This does not make an agent correct. It gives the next agent something more stable than recollection to inspect, challenge, and follow.
 
@@ -79,9 +90,9 @@ The constitution establishes a project-wide invariant. The site specification na
 
 The important change is not that a correction exists somewhere in the repository. It is that the correction now has an address that later work can recover.
 
-## A Small Authority Model for Project Memory
+## A Small Authority Model for Project Memory and Evidence
 
-These files are not interchangeable documentation. Each answers a different question.
+Project memory records and implementation evidence are related but not interchangeable. Each answers a different question.
 
 **Constitution** — What must remain true across the project?
 
@@ -93,11 +104,13 @@ These files are not interchangeable documentation. Each answers a different ques
 
 **ADR / decision record** — Why was a consequential product or architectural choice made?
 
-**Implementation and tests** — What behavior exists, and what has been checked?
+**Code and tests (adjacent evidence)** — What has been implemented, and what behavior has been checked?
 
 <ResearchBreakout mode="wide">
   <ProjectMemoryAuthorityMapVisual />
 </ResearchBreakout>
+
+The first five preserve intent, requirements, rationale, constraints, or execution state. Code and tests provide adjacent implementation and verification evidence; selecting them does not turn them into records of intent.
 
 That separation matters when sources disagree. Durability alone does not make an artifact authoritative for every concern.
 
@@ -122,7 +135,9 @@ A requirement can outlive a particular implementation strategy. Code can reveal 
 
 It is a routing layer, not a mega-prompt.
 
-The point is not to load every artifact into every task. The useful context is the smallest set that can expose the applicable constraints, rationale, and current behavior.
+Routing can bring both project memory and adjacent implementation evidence into the task. Selecting code or tests does not turn them into records of intent; it makes comparison possible.
+
+The point is not to load every artifact into every task. Start with the records and implementation surfaces the task makes relevant; follow their references and disagreements when that first selection is not enough. The aim is a bounded, inspectable selection—not a claim that the repository can identify a uniquely minimal context.
 
 A positioning change begins with project-wide factual guardrails and the site-foundation specification. A publication change narrows into the publication-gating specification and its related decisions. Only then does the agent need the implementation surfaces that realize those requirements.
 
@@ -164,7 +179,7 @@ The historical account for publication gating is that unpublished collection car
 
 The current branch shows that these artifacts now describe the same interaction model. It does not, by itself, establish that every record changed in one atomic step.
 
-The maintenance rule is narrower: update the durable artifacts that own intent and rationale with the implementation, then verify what the implementation actually does. Documentation is not a passing test, and code alone does not preserve why a choice was made.
+The maintenance rule is a coordinated workflow across owning artifacts: update the durable records that own the changed requirement and rationale with the implementation, then verify what the implementation actually does. A specification is authoritative for the requirement within its concern, not a passing test; code shows what exists, but does not preserve every reason behind a choice.
 
 <ResearchBreakout mode="wide">
   <ProjectMemoryChangeWorkflowVisual />
@@ -172,7 +187,7 @@ The maintenance rule is narrower: update the durable artifacts that own intent a
 
 ## Durable Memory Can Drift Too
 
-Version control solves persistence. It does not solve maintenance.
+Version control preserves a record. It does not keep that record aligned with the system it describes.
 
 The deployment documentation in this repository provides a useful example.
 
@@ -184,7 +199,7 @@ Current `AGENTS.md`, however, documents three supported production paths: local 
   <ProjectMemoryDriftVisual />
 </ResearchBreakout>
 
-The important point is not which document should win automatically. The important point is that **durable memory can preserve an earlier truth after the operating model has changed**.
+The important point is not which document should win automatically. The important point is that **durable memory can preserve an earlier account after the operating model has changed**.
 
 That inconsistency is inspectable because both artifacts survive. It still requires someone to reconcile them.
 
@@ -201,12 +216,11 @@ Version-controlled memory still has failure modes:
 - **Agents can misread explicit context.** Documentation reduces ambiguity; it does not eliminate interpretation errors.
 - **Documentation can become noise.** Overlapping or redundant artifacts make retrieval harder and can disagree.
 - **Specifications do not replace tests.** Requirements and passing behavior are different evidence.
+- **Implementation evidence can be incomplete.** Code shows what exists on inspected paths; tests show only what was checked.
 - **Implementation does not explain every decision.** Code can show what exists without preserving why a choice was made.
 - **Human judgment remains necessary.** Engineers still decide what becomes durable, which artifact owns a concern, and how conflicts are resolved.
 
-The practical gain is narrower than determinism: consequential decisions have an address, later work can recover that address, and silent regression becomes less likely.
-
-"Less likely" is intentional. Guarantee is not the claim.
+The practical gain is narrower than determinism: consequential decisions have an address that later work can inspect. That creates an opportunity to catch a repeated mistake; it does not establish that the mistake will be caught or become less frequent.
 
 ## The Next Problem Is Relevance
 

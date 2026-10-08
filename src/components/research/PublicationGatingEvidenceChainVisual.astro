@@ -23,7 +23,7 @@ const steps = [
         <li>
           <div class:list={['step-copy', index % 2 === 0 && 'is-left']}>
             <span class="label">{label}</span>
-            <code>{file}</code>
+            <code class="figure-meta">{file}</code>
             <p>{text}</p>
           </div>
           <span class="rail-node" aria-hidden="true">
@@ -35,7 +35,7 @@ const steps = [
   </div>
 
   <div class="rationale">
-    <div><span class="label accent">Adjacent rationale</span><code>Publication-gating ADR</code></div>
+    <div><span class="label accent">Adjacent rationale</span><code class="figure-meta">Publication-gating ADR</code></div>
     <div><p>Preserves why publication state remains separate from lifecycle status.</p><span class="rationale-note">Related decision evidence · not an interchangeable fifth implementation checkpoint</span></div>
   </div>
 </ResearchFigureFrame>
@@ -128,9 +128,6 @@ const steps = [
     background: transparent !important;
     padding: 0 !important;
     color: var(--text-primary) !important;
-    font-family: var(--font-mono-ui);
-    font-size: 0.6875rem !important;
-    line-height: 1.5;
     white-space: normal !important;
     overflow-wrap: anywhere;
   }

@@ -7,7 +7,6 @@ import ResearchFollowsBadge from '../components/ResearchFollowsBadge.astro';
 import ResearchContinuationBadge from '../components/ResearchContinuationBadge.astro';
 import ResearchProjectBadge from '../components/ResearchProjectBadge.astro';
 import ResearchLineageSummary from '../components/ResearchLineageSummary.astro';
-import Callout from '../components/Callout.astro';
 import '../styles/research-article.css';
 import '../styles/research-publication.css';
 import '../styles/research-graphics.css';
@@ -63,6 +62,7 @@ const formattedUpdateDate = data.updatedDate
   : null;
 
 const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
+const demoIsExternal = data.demo ? /^https?:\/\//.test(data.demo) : false;
 ---
 
 <BaseLayout
@@ -116,7 +116,7 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
                 {data.readingTime && <span>{data.readingTime}</span>}
               </div>
 
-              <h1 class="font-display mt-6 max-w-5xl text-5xl font-semibold leading-[1.02] tracking-[-0.05em] text-[var(--text-primary)] sm:text-6xl lg:text-7xl">
+              <h1 class="font-display mt-6 max-w-5xl text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-[var(--text-primary)] sm:text-6xl">
                 {data.title}
               </h1>
 
@@ -148,8 +148,13 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
                     </a>
                   )}
                   {data.demo && (
-                    <a href={data.demo} target="_blank" rel="noopener noreferrer" class="text-[var(--accent)] hover:text-[var(--accent-hover)]">
-                      Live implementation ↗
+                    <a
+                      href={data.demo}
+                      target={demoIsExternal ? '_blank' : undefined}
+                      rel={demoIsExternal ? 'noopener noreferrer' : undefined}
+                      class="text-[var(--accent)] hover:text-[var(--accent-hover)]"
+                    >
+                      {data.demoLabel ?? (demoIsExternal ? 'Live implementation ↗' : 'Live implementation')}
                     </a>
                   )}
                 </div>
@@ -184,7 +189,7 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
               <p class="font-editorial-mono text-[9px] uppercase tracking-[0.1em] text-[var(--accent)] sm:text-[10px]">
                 {statusTitle}
               </p>
-              <h1 class="font-display mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-[-0.04em] text-[var(--text-primary)] sm:text-5xl">
+              <h1 class="font-display mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-[-0.04em] text-[var(--text-primary)] sm:text-6xl">
                 {data.title}
               </h1>
             </>
@@ -195,14 +200,9 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
     {published ? (
       <>
         <div class="site-shell py-10 sm:py-14 lg:py-16">
-          {(isConceptDraft || data.tldr) && (
+          {isConceptDraft && (
             <div class="research-reading mx-auto w-full min-w-0 lg:hidden">
-              {data.tldr && (
-                <Callout type="note" title={data.tldrLabel ?? 'TL;DR'}>
-                  {data.tldr}
-                </Callout>
-              )}
-              {isConceptDraft && <ConceptDraftNotice kind="research" />}
+              <ConceptDraftNotice kind="research" />
             </div>
           )}
 
@@ -214,14 +214,6 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
             </aside>
 
             <div class="research-reading mx-auto w-full min-w-0 lg:col-span-8 lg:col-start-5 lg:mx-0">
-              {data.tldr && (
-                <div class="hidden lg:block">
-                  <Callout type="note" title={data.tldrLabel ?? 'TL;DR'}>
-                    {data.tldr}
-                  </Callout>
-                </div>
-              )}
-
               {isConceptDraft && (
                 <div class="hidden lg:block">
                   <ConceptDraftNotice kind="research" />
@@ -300,7 +292,9 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
       position: sticky;
       top: 6rem;
     }
+  }
 
+  @media (min-width: 1280px) {
     .research-toc-sticky[data-yielding] {
       opacity: 0;
       transform: translateY(-0.5rem);
@@ -316,7 +310,7 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
 </style>
 
 <script>
-  const desktopResearchLayout = window.matchMedia('(min-width: 1024px)');
+  const publicationBreakoutLayout = window.matchMedia('(min-width: 1280px)');
   const tocShell = document.querySelector<HTMLElement>('[data-research-toc-shell]');
   const publicationPlates = Array.from(
     document.querySelectorAll<HTMLElement>('[data-breakout-mode="publication"]'),
@@ -347,7 +341,7 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
     const setupObserver = () => {
       disconnectObserver();
 
-      if (!desktopResearchLayout.matches) return;
+      if (!publicationBreakoutLayout.matches) return;
 
       const stickyTop = 96;
       const tocHeight = Math.max(1, Math.ceil(tocShell.getBoundingClientRect().height));
@@ -381,7 +375,10 @@ const seoTitle = data.subtitle ? `${data.title}: ${data.subtitle}` : data.title;
       resizeTimer = window.setTimeout(setupObserver, 120);
     };
 
-    desktopResearchLayout.addEventListener('change', setupObserver);
+    const tocResizeObserver = new ResizeObserver(scheduleObserverRefresh);
+    tocResizeObserver.observe(tocShell);
+
+    publicationBreakoutLayout.addEventListener('change', setupObserver);
     window.addEventListener('resize', scheduleObserverRefresh, { passive: true });
     setupObserver();
   }

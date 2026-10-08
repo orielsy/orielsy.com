@@ -1,0 +1,115 @@
+---
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+---
+
+<ResearchFigureFrame
+  className="progressive-examples-figure"
+  figureNumber="04"
+  title="Two implementations, one preference"
+  status="Site projects as described in source"
+  caption="The axis distinguishes whether these examples use inference, not how capable they are. speechBubbles uses local Whisper for speech recognition; Documentation-Driven Adaptive UX Phase 1 uses authored knowledge and deterministic state. This is an illustration, not a measured comparison."
+>
+  <div class="axis-labels">
+    <span class="figure-label">No inference</span>
+    <span class="figure-label">Inference for one narrow job</span>
+  </div>
+
+  <div class="axis" aria-hidden="true">
+    <span class="axis-point start"></span>
+    <span class="axis-point end"></span>
+  </div>
+
+  <div class="examples-grid">
+    <section>
+      <p class="figure-label">Documentation-Driven Adaptive UX · Phase 1</p>
+      <p class="figure-copy">Deterministic state and authored knowledge handle the current phase. Future inference is proposed for ambiguity the application cannot resolve cleanly itself.</p>
+    </section>
+
+    <section class="inference-example">
+      <p class="figure-label figure-accent">speechBubbles</p>
+      <p class="figure-copy">Local Whisper inference for speech recognition, without requiring a cloud transcription service.</p>
+    </section>
+  </div>
+
+  <p class="shared-preference figure-copy">Shared preference: do not ask the model to own work the interface can already structure.</p>
+</ResearchFigureFrame>
+
+<style>
+  .progressive-examples-figure :global(p) {
+    margin: 0;
+  }
+
+  .axis-labels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .axis-labels span:last-child {
+    text-align: right;
+  }
+
+  .axis {
+    position: relative;
+    height: 1px;
+    margin-top: 0.75rem;
+    background: var(--border-subtle);
+  }
+
+  .axis-point {
+    position: absolute;
+    top: 50%;
+    width: 0.625rem;
+    height: 0.625rem;
+    transform: translateY(-50%);
+    border-radius: 999px;
+  }
+
+  .axis-point.start {
+    left: 0;
+    border: 1px solid var(--accent);
+    background: var(--bg-card);
+  }
+
+  .axis-point.end {
+    right: 0;
+    background: var(--accent);
+  }
+
+  .examples-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .examples-grid section {
+    min-width: 0;
+    border: 1px solid color-mix(in srgb, var(--border-subtle) 75%, transparent);
+    border-radius: 0.2rem;
+    background: color-mix(in srgb, var(--text-primary) 2.5%, var(--bg-card));
+    padding: 1rem;
+  }
+
+  .examples-grid .figure-copy {
+    margin-top: 0.5rem !important;
+  }
+
+  .shared-preference {
+    margin-top: 1.5rem !important;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    text-align: center;
+  }
+
+  @media (min-width: 640px) {
+    .examples-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .inference-example {
+      text-align: right;
+    }
+  }
+</style>

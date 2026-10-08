@@ -1,0 +1,150 @@
+---
+import ProjectMemoryOverview from './ProjectMemoryOverview.astro';
+---
+
+<section class="project-memory-reading-overview not-prose" aria-labelledby="project-memory-reading-overview-title">
+  <h2 id="project-memory-reading-overview-title">Make the correction recoverable</h2>
+  <p class="overview-lead">
+    A homepage once described my experience as including “design systems,” a broader claim than the evidence established. Correcting the sentence fixed the visible output. Recording that boundary in the repository gave later work somewhere durable to find it.
+  </p>
+
+  <ProjectMemoryOverview />
+
+  <section class="overview-section" aria-labelledby="project-memory-overview-scope">
+    <h3 id="project-memory-overview-scope">Store decisions at the scope they govern</h3>
+    <p>
+      Project memory preserves project-wide constraints, feature requirements, implementation plans, task state, and decision rationale. Code and tests are adjacent implementation and verification evidence: related, durable, and necessary to inspect, but not interchangeable with records of intent. A thin <code>AGENTS.md</code> can route a person or agent toward the relevant records and evidence instead of accumulating every rule in one prompt. When they disagree, the conflict is evidence to investigate—not a reason to silently pick a winner.
+    </p>
+  </section>
+
+  <section class="overview-section overview-bordered" aria-labelledby="project-memory-overview-maintenance">
+    <h3 id="project-memory-overview-maintenance">Persistence creates maintenance work</h3>
+    <p>
+      A durable record can still be wrong, stale, noisy, or misread. Requirements should change with their owning intent and rationale, then implementation still needs verification. The repository in this study even preserves an unresolved disagreement between earlier deployment rationale and current operating guidance: version control makes the drift visible; it does not reconcile it.
+    </p>
+  </section>
+
+  <section class="overview-section overview-bordered" aria-labelledby="project-memory-overview-relevance">
+    <h3 id="project-memory-overview-relevance">The next problem is relevance</h3>
+    <p>
+      Once decisions persist, later work still has to find the right subset without hiding conflicts or loading the whole archive. Selection here is explicit and human-authored. A Repository Context Engine is an unpublished direction for future research, not a capability this project has today.
+    </p>
+  </section>
+
+  <div class="overview-continue">
+    <p>Continue for the incident evidence, artifact authority, routing workflow, publication-gating example, requirement maintenance, and documented drift.</p>
+    <button type="button" data-reading-depth-open="full">
+      Full Research · ~8 min <span aria-hidden="true">→</span>
+    </button>
+  </div>
+</section>
+
+<style>
+  .project-memory-reading-overview {
+    color: var(--text-secondary);
+  }
+
+  .project-memory-reading-overview :global(h2),
+  .project-memory-reading-overview :global(h3),
+  .project-memory-reading-overview :global(p) {
+    margin: 0;
+  }
+
+  .project-memory-reading-overview > h2 {
+    max-width: 42rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.65rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+  }
+
+  .overview-lead {
+    max-width: 46rem;
+    margin-top: 1.1rem !important;
+    color: var(--text-secondary);
+    font-size: 1rem !important;
+    line-height: 1.8 !important;
+  }
+
+  .overview-section {
+    max-width: 46rem;
+    margin-top: 2.5rem;
+  }
+
+  .overview-section h3 {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+  }
+
+  .overview-section p {
+    margin-top: 0.8rem !important;
+    color: var(--text-secondary);
+    font-size: 0.95rem !important;
+    line-height: 1.8 !important;
+  }
+
+  .overview-section code {
+    color: var(--text-primary);
+    font-family: var(--font-mono-ui);
+    font-size: 0.9em;
+  }
+
+  .overview-bordered {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 2rem;
+  }
+
+  .overview-continue {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1.5rem;
+  }
+
+  .overview-continue > p {
+    max-width: 26rem;
+    color: var(--text-muted);
+    font-size: 0.875rem !important;
+    line-height: 1.65 !important;
+  }
+
+  .overview-continue button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 1px solid var(--border-subtle);
+    background: transparent;
+    padding: 0.65rem 0.9rem;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+
+  .overview-continue button:hover {
+    border-color: var(--border-strong);
+  }
+
+  .overview-continue button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .overview-continue button {
+      transition: none;
+    }
+  }
+</style>

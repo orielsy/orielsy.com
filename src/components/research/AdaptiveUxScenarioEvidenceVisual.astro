@@ -1,26 +1,149 @@
 ---
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
 const rows = [
-  ['Several compatible', 'Multiple valid values; intent unknown', 'Explain · focus · guide', 'No guessed selection'],
-  ['Exactly one', 'One compatible value', 'Offer “Use connection”', 'User must accept'],
-  ['New / experienced', 'Familiarity is a demo control', 'Include / omit beginner help', 'Same validation'],
-  ['Version 4.1 / 4.2', 'Version is a demo control', '4.2 note only in 4.2', 'Same validity rule'],
+  ['Several compatible', 'Multiple valid values; intent unknown', 'Explain, highlight or focus, guide', 'No guessed selection'],
+  ['Exactly one', 'Only one compatible value', 'Offer “Use connection”', 'User must accept; no silent mutation'],
+  ['New / experienced', 'Familiarity is a demo control', 'Include / omit beginner explanation', 'Same validation'],
+  ['Version 4.1 / 4.2', 'Version is a demo control', 'Include 4.2 note only in 4.2', 'Same validity rule'],
   ['Valid selection', 'Required field satisfied', 'Remove missing-field intervention', 'Do not keep prompting'],
 ];
 ---
-<ResearchFigureFrame className="adaptive-evidence" figureNumber="03" title="Five scenarios, five response boundaries" caption="A reading of controlled states in the working project lab, not a measured outcome study. Both forms share the scenario and validation; selection and Continue attempts remain independent. Scenario changes reset both.">
-  <div class="ledger" role="table" aria-label="Scenario evidence and permitted responses">
-    <div class="ledger-head" role="row"><span role="columnheader">Scenario</span><span role="columnheader">Evidence</span><span role="columnheader">Permitted response</span><span role="columnheader">Boundary</span></div>
-    {rows.map(([scenario, evidence, response, boundary]) => <div class="ledger-row" role="row"><strong role="cell">{scenario}</strong><span role="cell" data-label="Evidence">{evidence}</span><span role="cell" data-label="May">{response}</span><span role="cell" data-label="Boundary">{boundary}</span></div>)}
+
+<ResearchFigureFrame
+  className="adaptive-evidence"
+  figureNumber="03"
+  title="Five scenarios, five response boundaries"
+  status="Bridge · observed lab scenarios"
+  caption="A compact reading of the controlled lab states, not an outcome study or a required sequence. The one-versus-several distinction changes permission to act; familiarity and version change applicable explanation; valid selection quiets the missing-field response."
+>
+  <div class="ledger-head" aria-hidden="true">
+    <span class="figure-label">Scenario</span>
+    <span class="figure-label">Evidence</span>
+    <span class="figure-label figure-accent">Permitted response</span>
+    <span class="figure-label">Boundary</span>
   </div>
+
+  <ol class="ledger" aria-label="Scenario evidence and permitted responses">
+    {rows.map(([scenario, evidence, response, boundary], index) => (
+      <li>
+        <div class="scenario-cell">
+          <span class="figure-meta figure-accent">0{index + 1}</span>
+          <strong>{scenario}</strong>
+        </div>
+        <p class="figure-support" data-label="Evidence">{evidence}</p>
+        <p class="response figure-support" data-label="May do">{response}</p>
+        <p class="boundary figure-support" data-label="Boundary">{boundary}</p>
+      </li>
+    ))}
+  </ol>
 </ResearchFigureFrame>
+
 <style>
-  .ledger { border-top: 1px solid var(--border-subtle); }
-  .ledger-head { display: none; }
-  .ledger-row { display: grid; gap: .45rem; border-bottom: 1px solid var(--border-subtle); padding: 1rem 0; }
-  .ledger-row strong { color: var(--text-primary); font-family: var(--font-display); font-size: .9375rem; font-weight: 600; }
-  .ledger-row span { color: var(--text-secondary); font-size: .875rem; line-height: 1.55; }
-  .ledger-row span::before { content: attr(data-label) ' · '; color: var(--accent); font-family: var(--font-mono-ui); font-size: .6875rem; text-transform: uppercase; }
-  @media (min-width: 720px) { .ledger-head, .ledger-row { display: grid; grid-template-columns: 1.1fr 1.4fr 1.25fr 1fr; gap: 1.25rem; align-items: start; } .ledger-head { padding: 0 0 .6rem; color: var(--accent); font-family: var(--font-mono-ui); font-size: .6875rem; text-transform: uppercase; } .ledger-row span::before { display: none; } }
-  :global(.research-reading .research-prose figure.adaptive-evidence) { border-radius: 0 !important; }
+  .adaptive-evidence :global(.figure-number),
+  .adaptive-evidence :global(.status),
+  .adaptive-evidence :global(.figure-label),
+  .adaptive-evidence :global(.figure-meta) {
+    font-size: 0.625rem !important;
+    font-weight: 400;
+    letter-spacing: 0 !important;
+    line-height: 1.25rem !important;
+  }
+
+  .adaptive-evidence :global(.heading h3) {
+    font-size: 1.125rem !important;
+    line-height: 1.75rem !important;
+    letter-spacing: 0 !important;
+  }
+
+  .adaptive-evidence :global(figcaption) {
+    font-size: 0.75rem !important;
+    line-height: 1.5rem !important;
+  }
+
+  .adaptive-evidence :global(.figure-support) {
+    font-size: 0.75rem !important;
+    line-height: 1.25rem !important;
+  }
+
+  .adaptive-evidence :global(ol),
+  .adaptive-evidence :global(li),
+  .adaptive-evidence :global(p),
+  .adaptive-evidence :global(strong) {
+    margin: 0;
+  }
+
+  .adaptive-evidence :global(ol) {
+    padding: 0;
+    list-style: none;
+  }
+
+  .ledger-head {
+    display: none;
+  }
+
+  .ledger {
+    border-block: 1px solid var(--border-subtle);
+  }
+
+  .ledger li {
+    display: grid;
+    gap: 0.7rem;
+    padding: 1rem 0;
+  }
+
+  .ledger li + li {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .scenario-cell {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .scenario-cell strong {
+    color: var(--text-primary);
+    font-size: 0.875rem !important;
+    font-weight: 500;
+    line-height: 1.25rem;
+  }
+
+  .ledger p::before {
+    content: attr(data-label) ' · ';
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .boundary {
+    border-left: 1px solid var(--accent);
+    padding-left: 0.75rem;
+  }
+
+  @media (min-width: 720px) {
+    .ledger-head,
+    .ledger li {
+      display: grid;
+      grid-template-columns: 1.1fr 1.4fr 1.5fr 1.2fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .ledger-head {
+      border-block: 1px solid var(--border-subtle);
+      padding: 0.65rem 0;
+    }
+
+    .ledger {
+      border-top: 0;
+    }
+
+    .ledger p::before {
+      display: none;
+    }
+  }
 </style>

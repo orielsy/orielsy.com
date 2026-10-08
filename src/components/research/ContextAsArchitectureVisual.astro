@@ -2,13 +2,13 @@
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
 const established = [
-  { concern: 'Implemented behavior', owner: 'Code', detail: 'Mechanics, side effects, algorithms' },
-  { concern: 'Current facts', owner: 'Application state / data', detail: 'What the application knows now' },
-  { concern: 'Structure & contracts', owner: 'Schemas', detail: 'Valid shapes, fields, interfaces' },
+  { concern: 'Implemented behavior', owner: 'Code' },
+  { concern: 'Current facts', owner: 'Application state / data' },
+  { concern: 'Structure & contracts', owner: 'Schemas' },
 ];
 const proposed = [
-  { concern: 'Meaning / intent / explanation', owner: 'Product knowledge', detail: 'Purpose, relevance, prerequisites, policy rationale' },
-  { concern: 'Composition', owner: 'Context + policy + trusted capabilities', detail: 'What may be selected and arranged for this task' },
+  { concern: 'Meaning / intent / explanation', owner: 'Product knowledge' },
+  { concern: 'Composition', owner: 'Product knowledge + policy + trusted capabilities' },
 ];
 ---
 
@@ -20,30 +20,30 @@ const proposed = [
 >
   <div class="ownership-map">
     <section aria-label="Established architectural homes">
-      <p class="map-label">Established homes</p>
+      <p class="map-label figure-meta">Established homes</p>
       <dl class="ownership-list">
-        {established.map(({ concern, owner, detail }) => (
+        {established.map(({ concern, owner }) => (
           <div class="ownership-row">
             <dt>{concern}</dt>
-            <dd><strong>{owner}</strong><span>{detail}</span></dd>
+            <dd><strong>{owner}</strong></dd>
           </div>
         ))}
       </dl>
     </section>
     <section class="proposed-homes" aria-label="Proposed explicit ownership">
-      <p class="map-label">Proposed explicit ownership</p>
+      <p class="map-label figure-meta">Proposed explicit ownership</p>
       <dl class="ownership-list">
-        {proposed.map(({ concern, owner, detail }) => (
+        {proposed.map(({ concern, owner }) => (
           <div class="ownership-row proposed-row">
             <dt>{concern}</dt>
-            <dd><strong>{owner}</strong><span>{detail}</span></dd>
+            <dd><strong>{owner}</strong></dd>
           </div>
         ))}
       </dl>
     </section>
   </div>
   <div class="progression">
-    <p class="map-label">Research progression</p>
+    <p class="map-label figure-meta">Research progression</p>
     <ol aria-label="Durable, then selectable, then applicable, then composable">
       <li>Durable</li><li>Selectable</li><li>Applicable</li><li>Composable</li>
     </ol>
@@ -54,16 +54,16 @@ const proposed = [
   .context-architecture-figure .ownership-map { display: grid; gap: 1.5rem; }
   .context-architecture-figure .ownership-map > section { min-width: 0; }
   .context-architecture-figure .proposed-homes { border-left: 2px solid var(--accent); padding-left: 1rem; }
-  .context-architecture-figure .map-label { margin: 0 !important; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem !important; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+  .context-architecture-figure .map-label { margin: 0 !important; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.625rem !important; font-weight: 500; letter-spacing: 0.1em; line-height: 1.5 !important; text-transform: uppercase; }
   .context-architecture-figure .proposed-homes .map-label { color: var(--accent); }
   .context-architecture-figure .ownership-list { margin: 0.7rem 0 0; border-top: 1px solid var(--border-subtle); }
   .context-architecture-figure .ownership-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0.75rem; border-bottom: 1px solid var(--border-subtle); padding: 0.75rem 0; font-size: 0.8125rem; line-height: 1.55; }
   .context-architecture-figure .ownership-row dt { color: var(--text-secondary); }
   .context-architecture-figure .ownership-row dd { min-width: 0; margin: 0; color: var(--text-primary); }
   .context-architecture-figure .ownership-row strong { display: block; font-weight: 600; }
-  .context-architecture-figure .ownership-row dd span { display: block; margin-top: 0.2rem; color: var(--text-muted); font-size: 0.75rem; }
   .context-architecture-figure .proposed-row { display: block; }
   .context-architecture-figure .proposed-row dd { margin-top: 0.3rem; }
+  .context-architecture-figure .proposed-row strong { font-family: var(--font-display); font-size: 1rem; line-height: 1.45; }
   .context-architecture-figure .progression { margin-top: 1.5rem; padding-top: 0.85rem; border-top: 1px solid var(--border-subtle); }
   .context-architecture-figure .progression ol { display: flex; flex-wrap: wrap; gap: 0.35rem 0; margin: 0.65rem 0 0; padding: 0; list-style: none; font-family: var(--font-mono-ui); font-size: 0.75rem; color: var(--text-primary); }
   .context-architecture-figure .progression li { display: inline-flex; align-items: center; }
@@ -72,5 +72,6 @@ const proposed = [
   @media (min-width: 640px) {
     .context-architecture-figure .ownership-map { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 1.75rem; }
     .context-architecture-figure .proposed-homes { padding-left: 1.25rem; }
+    .context-architecture-figure .progression ol { font-size: 0.875rem; }
   }
 </style>

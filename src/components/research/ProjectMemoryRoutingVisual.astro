@@ -13,7 +13,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   <div class="routing-flow">
     <section>
       <span class="label">Task</span>
-      <strong>Change publication behavior</strong>
+      <strong class="figure-node-feature">Change publication behavior</strong>
       <p>The task supplies scope—not every document in the repository.</p>
     </section>
 
@@ -24,7 +24,7 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 
     <section class="router">
       <Route class="route-icon" size={20} strokeWidth={1.6} aria-hidden="true" />
-      <code>AGENTS.md</code>
+      <code class="figure-support">AGENTS.md</code>
       <p>Read the constitution, relevant spec, plan/tasks, and ADRs; do not fabricate; update durable requirements when they change.</p>
       <span class="routing-note">Explicit routing</span>
     </section>
@@ -53,8 +53,8 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
   section { min-width: 0; }
   .label, code, li span, .routing-note, .selection-boundary { font-family: var(--font-mono-ui); }
   .label, .routing-note { display: block; color: var(--text-muted); font-size: var(--research-diagram-label, 0.625rem); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
-  section > strong, code { display: block; margin-top: 0.6rem; color: var(--text-primary); font-size: var(--research-diagram-node, 0.875rem); line-height: 1.45; }
-  code { border: 0 !important; background: transparent !important; padding: 0 !important; color: var(--text-primary) !important; font-family: var(--font-mono-ui); }
+  section > strong, code { display: block; margin-top: 0.6rem; }
+  code { border: 0 !important; background: transparent !important; padding: 0 !important; color: var(--text-primary) !important; white-space: normal !important; overflow-wrap: anywhere; }
   section > p:not(.selection-boundary) { margin-top: 0.55rem !important; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
   .flow-marker { display: flex; align-items: center; justify-content: center; color: var(--accent); }
   .arrow-desktop { display: none; }

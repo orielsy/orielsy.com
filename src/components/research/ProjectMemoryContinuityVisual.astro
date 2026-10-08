@@ -20,7 +20,7 @@ const sessions = [
     <section>
       <p class="label">Working context</p>
       <div class="sessions">
-        {sessions.map((session, index) => <p class:list={[index === 0 ? 'current' : 'faded']}>{session}</p>)}
+        {sessions.map((session, index) => <p class:list={['figure-support', index === 0 ? 'current' : 'faded']}>{session}</p>)}
       </div>
       <p class="note">Goals, corrections, and trade-offs are useful while they are visible.</p>
     </section>
@@ -33,14 +33,15 @@ const sessions = [
     <section class="memory">
       <span class="accent-bar" aria-hidden="true"></span>
       <p class="label accent">Durable project memory</p>
-      <h4>An address for the next task</h4>
+      <h4 class="figure-node-prominent">An address for the next task</h4>
       <div class="memory-grid">
         <span>constitution · spec</span>
         <span>plan · tasks</span>
         <span>decision records</span>
-        <span>implementation · tests</span>
+        <span>maintained guidance</span>
       </div>
-      <p class="note">Different artifacts preserve different kinds of intent and evidence.</p>
+      <p class="note">These records preserve intent, requirements, rationale, constraints, and execution state.</p>
+      <p class="evidence-note">Adjacent evidence · code shows implementation · tests show what was checked</p>
     </section>
   </div>
 </ResearchFigureFrame>
@@ -51,17 +52,18 @@ const sessions = [
   .label { color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); font-weight: 500; letter-spacing: 0.08em; line-height: 1.5; text-transform: uppercase; }
   .label.accent { color: var(--accent); }
   .sessions { margin-top: 0.8rem; border-left: 1px dashed var(--border-subtle); padding-left: 1rem; }
-  .sessions p { border-bottom: 1px solid var(--border-subtle); padding: 0.65rem 0; font-family: var(--font-mono-ui); font-size: 0.75rem; line-height: 1.5; }
+  .sessions p { border-bottom: 1px solid var(--border-subtle); padding: 0.65rem 0; font-family: var(--font-mono-ui); }
   .sessions .current { color: var(--text-primary); }
   .sessions .faded { color: var(--text-muted); }
   .note { margin-top: 0.8rem !important; color: var(--text-secondary); font-size: var(--research-diagram-copy, 0.875rem); line-height: 1.6; }
+  .evidence-note { margin-top: 0.75rem !important; border-top: 1px dashed var(--border-subtle); padding-top: 0.65rem; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: var(--research-diagram-label, 0.625rem); line-height: 1.6; }
   .flow { display: flex; align-items: center; justify-content: center; color: var(--accent); }
   .flow-desktop { display: none; }
   .memory { position: relative; background: var(--bg-secondary); padding: 1rem 1rem 1rem 1.15rem; }
   .accent-bar { position: absolute; inset-block: 0; left: 0; width: 2px; background: var(--accent); }
-  .memory h4 { margin-top: 0.75rem !important; color: var(--text-primary); font-family: var(--font-display); font-size: var(--research-diagram-node, 0.875rem); font-weight: 600; line-height: 1.45; }
+  .memory h4 { margin-top: 0.75rem !important; }
   .memory-grid { display: grid; gap: 0.45rem; margin-top: 0.8rem; border-top: 1px solid var(--border-subtle); padding-top: 0.75rem; }
-  .memory-grid span { color: var(--text-secondary); font-family: var(--font-mono-ui); font-size: 0.75rem; line-height: 1.5; }
+  .memory-grid span { color: var(--text-secondary); font-family: var(--font-mono-ui); font-size: var(--research-diagram-support, 0.75rem); line-height: 1.5; }
 
   @media (min-width: 760px) {
     .continuity-grid { grid-template-columns: minmax(0, 1fr) 3rem minmax(0, 1.15fr); align-items: center; gap: 0; }

@@ -42,11 +42,17 @@ const {
 
 <style>
   .research-figure-frame {
+    /* Three shared diagram surfaces, matching the publication studies:
+       figure shell, base diagram panel, and emphasized/raised panel. */
+    --research-figure-surface: var(--bg-card);
+    --research-figure-surface-base: var(--bg-primary);
+    --research-figure-surface-emphasis: var(--bg-card-hover);
+
     overflow: hidden;
     margin: 2.75rem 0;
     border: 1px solid var(--border-subtle);
     border-radius: 0.2rem;
-    background: var(--bg-card);
+    background: var(--research-figure-surface);
     padding: 1.25rem 1rem;
   }
 

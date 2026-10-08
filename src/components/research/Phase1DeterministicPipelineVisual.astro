@@ -1,31 +1,203 @@
 ---
+import { ArrowRight } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
 export interface Props { figureNumber?: string; }
 const { figureNumber } = Astro.props;
-const stages = [
-  ['Application state', 'What the user selected'],
-  ['Validation', 'Known requirements'],
-  ['Runtime / user context', 'Version, familiarity, compatible options'],
-  ['Applicable authored knowledge', 'Fragments matching explicit facts'],
-  ['Response policy', 'Evidence bounds intervention'],
-  ['Structured UI response', 'Render permitted guidance or offer'],
+
+const groups = [
+  {
+    title: 'Application truth',
+    role: 'Authoritative',
+    emphasized: true,
+    concerns: [
+      ['Domain state', 'What the user has selected.'],
+      ['Runtime and user context', 'Product version, familiarity, and compatible options.'],
+      ['Validation', 'Deterministic application requirements.'],
+    ],
+  },
+  {
+    title: 'Applicable knowledge',
+    role: 'Reads truth',
+    emphasized: false,
+    concerns: [
+      ['Product knowledge', 'Authored explanation and configuration guidance.'],
+      ['Knowledge applicability', 'Whether a specific item applies to the current state.'],
+    ],
+  },
+  {
+    title: 'Structured response',
+    role: 'Bounded by evidence',
+    emphasized: false,
+    concerns: [
+      ['Response policy', 'How strongly the interface may intervene.'],
+      ['Rendering', 'How the structured response appears.'],
+    ],
+  },
 ];
 ---
-<ResearchFigureFrame className="adaptive-pipeline" {figureNumber} title="Six decision stages; seven distinct concerns" status="Phase 1 · deterministic" caption="Domain state, runtime context, validation, product knowledge, knowledge applicability, response policy, and rendering remain distinct. The lab uses authored fixtures, not a document-ingestion pipeline. No inference is required.">
-  <ol aria-label="Deterministic Phase 1 decision path">{stages.map(([title, detail], index) => <li><span>0{index + 1}</span><div><h4>{title}</h4><p>{detail}</p></div></li>)}</ol>
-  <p class="boundary">Application state and validation remain authoritative.</p>
+
+<ResearchFigureFrame
+  className="adaptive-pipeline"
+  {figureNumber}
+  title="Seven concerns, decided in one direction"
+  status="Research · deterministic Phase 1"
+  caption="Arrows show the order of decision and the direction of dependency: knowledge is selected against application truth and never redefines it; policy and rendering stay separate even though they act together. Phase 1 uses explicit authored conditions only — no inference."
+>
+  <div class="group-flow" aria-label="Seven concerns grouped by decision order">
+    {groups.map((group, index) => (
+      <>
+        {index > 0 && (
+          <div class="flow-arrow" aria-hidden="true">
+            <ArrowRight size={16} strokeWidth={1.6} />
+          </div>
+        )}
+        <section class:list={['concern-group', group.emphasized && 'is-emphasized']}>
+          <div class="group-heading">
+            <h4 class="figure-copy group-title">{group.title}</h4>
+            <span class="group-role figure-accent">{group.role}</span>
+          </div>
+          <dl>
+            {group.concerns.map(([name, detail]) => (
+              <div>
+                <dt class="figure-copy">{name}</dt>
+                <dd class="figure-support">{detail}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      </>
+    ))}
+  </div>
 </ResearchFigureFrame>
+
 <style>
-  .adaptive-pipeline :global(ol), .adaptive-pipeline :global(li), .adaptive-pipeline :global(h4), .adaptive-pipeline :global(p) { margin: 0; }
-  .adaptive-pipeline :global(ol) { padding: 0; list-style: none; }
-  ol { display: grid; border-block: 1px solid var(--border-subtle); }
-  li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: .65rem; padding: .85rem 0; }
-  li + li { border-top: 1px solid var(--border-subtle); }
-  li > span { color: var(--accent); font-family: var(--font-mono-ui); font-size: .6875rem; line-height: 2; }
-  h4 { color: var(--text-primary); font-family: var(--font-display); font-size: .9375rem; font-weight: 600; }
-  li p { margin-top: .25rem !important; color: var(--text-secondary); font-size: .875rem; line-height: 1.55; }
-  .boundary { margin-top: 1rem !important; color: var(--text-primary); font-size: .875rem; line-height: 1.6; }
-  @media (min-width: 640px) { ol { grid-template-columns: repeat(3,minmax(0,1fr)); } li { display: block; padding: 1rem; border-bottom: 1px solid var(--border-subtle); } li + li { border-top: 0; } li:nth-child(3n + 2), li:nth-child(3n + 3) { border-left: 1px solid var(--border-subtle); } li:nth-child(3n + 1) { padding-left: 0; } li:nth-child(n + 4) { border-bottom: 0; } h4 { margin-top: .45rem !important; } }
-  :global(.research-reading .research-prose figure.adaptive-pipeline) { border-radius: 0 !important; }
-  :global(.research-reading .research-prose figure.adaptive-pipeline) li p, :global(.research-reading .research-prose figure.adaptive-pipeline) .boundary { font-size: .875rem !important; line-height: 1.6 !important; }
+  .adaptive-pipeline :global(.figure-number),
+  .adaptive-pipeline :global(.status) {
+    font-size: 0.625rem !important;
+    font-weight: 400;
+    letter-spacing: 0 !important;
+    line-height: 1.25rem !important;
+  }
+
+  .adaptive-pipeline :global(.heading h3) {
+    font-size: 1.125rem !important;
+    line-height: 1.75rem !important;
+    letter-spacing: 0 !important;
+  }
+
+  .adaptive-pipeline :global(figcaption) {
+    font-size: 0.75rem !important;
+    line-height: 1.5rem !important;
+  }
+
+  .adaptive-pipeline :global(.figure-copy) {
+    font-size: 0.875rem !important;
+    line-height: 1.5rem !important;
+  }
+
+  .adaptive-pipeline :global(.figure-support) {
+    font-size: 0.75rem !important;
+    line-height: 1.25rem !important;
+  }
+
+  .adaptive-pipeline :global(h4),
+  .adaptive-pipeline :global(dl),
+  .adaptive-pipeline :global(dt),
+  .adaptive-pipeline :global(dd) {
+    margin: 0;
+  }
+
+  .group-flow {
+    display: grid;
+    border-block: 1px solid var(--border-subtle);
+  }
+
+  .concern-group {
+    padding: 1rem 0;
+  }
+
+  .concern-group.is-emphasized {
+    background: var(--research-figure-surface-emphasis, var(--bg-card-hover));
+  }
+
+  .group-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .group-title {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .group-role {
+    color: var(--accent);
+    font-family: var(--font-mono-ui);
+    font-size: 0.5625rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  dl {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: 0.9rem !important;
+  }
+
+  dt {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  dd {
+    margin-top: 0.2rem !important;
+    color: var(--text-secondary);
+  }
+
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.5rem 0;
+    color: var(--accent);
+  }
+
+  .flow-arrow :global(svg) {
+    transform: rotate(90deg);
+  }
+
+  @media (min-width: 760px) {
+    .group-flow {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: stretch;
+    }
+
+    .concern-group {
+      padding: 1.15rem 1rem;
+    }
+
+    .concern-group:first-child {
+      padding-left: 1rem;
+    }
+
+    .flow-arrow {
+      border: 0;
+      padding: 0 0.35rem;
+    }
+
+    .flow-arrow :global(svg) {
+      transform: none;
+    }
+  }
 </style>

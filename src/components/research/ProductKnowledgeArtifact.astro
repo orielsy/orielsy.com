@@ -1,62 +1,197 @@
 ---
-import ResearchFigureFrame from './ResearchFigureFrame.astro';
-
+const frontmatter = [
+  ['task', 'account-review'],
+  ['audience', 'support-operator'],
+  ['status', 'published'],
+  ['implements', 'nothing'],
+];
 const relevantInformation = ['Customer identity', 'Restriction reason', 'Recent activity', 'Verification state'];
-const availableActions = ['Request identity verification', 'Remove the restriction after verification succeeds', 'Escalate to risk review'];
 ---
 
-<ResearchFigureFrame
-  className="product-knowledge-artifact-figure"
-  figureNumber="02"
-  title="Product knowledge describes the task, not the mechanics"
-  caption="Illustrative product knowledge artifact. It expresses intent, relevant information, available actions, and explanatory guidance without retrieving data, granting permission, or executing behavior."
->
-  <section class="product-knowledge-artifact" aria-label="Illustrative product knowledge document: Account Review">
-    <header class="artifact-header">
-      <div>
-        <p class="artifact-kicker">Illustrative product knowledge document</p>
-        <h4 class="artifact-title">Account Review</h4>
-      </div>
-      <p class="artifact-boundary">Describes the task / implements nothing</p>
-    </header>
-    <div class="artifact-body">
-      <section class="artifact-purpose">
-        <h5>Purpose</h5>
-        <p>Investigate a restricted customer account.</p>
+<section class="product-knowledge-artifact not-prose" aria-labelledby="account-review-artifact">
+  <header class="artifact-filebar">
+    <span class="artifact-path">knowledge/tasks/account-review.md</span>
+    <span class="artifact-status">Authored task spec · implements nothing</span>
+  </header>
+
+  <div class="artifact-frontmatter" aria-label="Illustrative document metadata">
+    <span aria-hidden="true">---</span>
+    {frontmatter.map(([key, value]) => (
+      <span><span class="artifact-key">{key}:</span> <span class="artifact-value">{value}</span></span>
+    ))}
+    <span aria-hidden="true">---</span>
+  </div>
+
+  <div class="artifact-content">
+    <span class="artifact-kicker">Illustrative documentation-authored task</span>
+    <h3 id="account-review-artifact">Account Review</h3>
+    <p class="artifact-purpose">
+      Investigate a restricted customer account. Show why the account is restricted, what has happened recently, and what the operator may do next under current policy.
+    </p>
+
+    <div class="artifact-columns">
+      <section>
+        <h4>Relevant information</h4>
+        <ul>{relevantInformation.map((item) => <li>{item}</li>)}</ul>
       </section>
-      <div class="artifact-columns">
-        <section>
-          <h5>Relevant information</h5>
-          <ul>{relevantInformation.map((item) => <li>{item}</li>)}</ul>
-        </section>
-        <section>
-          <h5>Available actions</h5>
-          <ul>{availableActions.map((item) => <li>{item}</li>)}</ul>
-        </section>
-      </div>
-      <section class="artifact-guidance">
-        <h5>Guidance</h5>
-        <p>Explain unavailable actions through their unmet prerequisites.</p>
+      <section>
+        <h4>Available actions</h4>
+        <ul>
+          <li>Request identity verification</li>
+          <li>Remove the restriction <strong>after verification succeeds</strong></li>
+          <li>Escalate to risk review</li>
+        </ul>
       </section>
     </div>
-  </section>
-</ResearchFigureFrame>
+
+    <div class="artifact-guidance">
+      <p><strong>Guidance.</strong> Explain unavailable actions through their unmet prerequisites. Never imply an action completed that the application did not confirm.</p>
+    </div>
+  </div>
+</section>
 
 <style>
-  .product-knowledge-artifact { min-width: 0; margin: 0; border: 1px solid var(--border-subtle); border-radius: 0.2rem; background: var(--bg-secondary); color: var(--text-primary); }
-  .product-knowledge-artifact :global(p), .product-knowledge-artifact :global(h4), .product-knowledge-artifact :global(h5), .product-knowledge-artifact :global(ul) { margin: 0; }
-  .artifact-header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 0.75rem 1.5rem; padding: 1.25rem 1.5rem; }
-  .artifact-kicker, .artifact-boundary, h5 { font-family: var(--font-mono-ui); font-size: 0.6875rem; font-weight: 500; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; }
-  .artifact-kicker, h5 { color: var(--text-muted); }
-  .artifact-boundary { color: var(--accent); max-width: 12rem; }
-  .artifact-title { margin-top: 0.4rem !important; color: var(--text-primary); font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; line-height: 1.35; }
-  .artifact-body { padding: 0 1.5rem 1.5rem; }
-  .artifact-purpose, .artifact-columns, .artifact-guidance { border-top: 1px solid var(--border-subtle); padding-top: 0.9rem; }
-  .artifact-purpose p, .artifact-guidance p, .artifact-columns li { color: var(--text-primary); font-size: 0.875rem; line-height: 1.65; }
-  .artifact-purpose p, .artifact-guidance p { margin-top: 0.45rem !important; }
-  .artifact-columns { display: grid; gap: 0.75rem 2rem; margin-top: 1.1rem; }
-  .artifact-columns ul { display: grid; gap: 0.35rem; padding: 0; margin-top: 0.65rem !important; list-style: none; }
-  .artifact-guidance { margin-top: 1.1rem; }
-  @media (min-width: 640px) { .artifact-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); } .artifact-boundary { text-align: right; } }
-  @media (max-width: 390px) { .artifact-header, .artifact-body { padding-inline: 1rem; } }
+  .product-knowledge-artifact {
+    min-width: 0;
+    margin: 2.5rem 0;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.25rem;
+    background: var(--bg-card);
+    color: var(--text-primary);
+  }
+
+  .artifact-filebar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.3rem 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-primary);
+    padding: 0.65rem 1rem;
+  }
+
+  .artifact-path,
+  .artifact-status,
+  .artifact-frontmatter,
+  .artifact-kicker {
+    font-family: var(--font-mono-ui);
+  }
+
+  .artifact-path {
+    color: var(--text-secondary);
+    font-size: 0.6875rem;
+    letter-spacing: 0.02em;
+  }
+
+  .artifact-status {
+    color: var(--accent);
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .artifact-frontmatter {
+    display: grid;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.6875rem;
+    line-height: 1.7;
+  }
+
+  .artifact-key { color: var(--text-muted); }
+  .artifact-value { color: var(--text-primary); }
+
+  .artifact-content {
+    padding: 1.25rem 1rem 1.5rem;
+  }
+
+  .artifact-kicker {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .artifact-content h3 {
+    margin: 0.5rem 0 0;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.025em;
+  }
+
+  .artifact-purpose {
+    margin: 0.75rem 0 0;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    line-height: 1.75;
+  }
+
+  .artifact-columns {
+    display: grid;
+    gap: 0 2.5rem;
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .artifact-columns section {
+    padding: 1rem 0;
+  }
+
+  .artifact-columns section + section {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .artifact-columns h4 {
+    margin: 0;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .artifact-columns ul {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0.65rem 0 0;
+    padding-left: 1.15rem;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.65;
+  }
+
+  .artifact-columns li { margin: 0; }
+  .artifact-columns strong { color: var(--text-primary); font-weight: 600; }
+
+  .artifact-guidance {
+    border-left: 2px solid var(--accent);
+    background: var(--bg-primary);
+    padding: 0.75rem 1rem;
+  }
+
+  .artifact-guidance p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.7;
+  }
+
+  .artifact-guidance strong { color: var(--text-primary); font-weight: 600; }
+
+  @media (min-width: 640px) {
+    .artifact-filebar { padding-inline: 1.5rem; }
+    .artifact-frontmatter { padding-inline: 1.5rem; }
+    .artifact-content { padding: 1.5rem 1.75rem 1.75rem; }
+    .artifact-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .artifact-columns section + section { border-top: 0; }
+  }
 </style>

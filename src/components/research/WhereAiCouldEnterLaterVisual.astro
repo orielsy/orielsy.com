@@ -3,19 +3,120 @@ import ResearchFigureFrame from './ResearchFigureFrame.astro';
 export interface Props { figureNumber?: string; }
 const { figureNumber } = Astro.props;
 ---
-<ResearchFigureFrame className="adaptive-future" {figureNumber} title="Inference has a place, not a mandate" status="Future only · not Phase 1" caption="No LLM, remote inference, semantic retrieval, or runtime placement was implemented in Phase 1. Any future inference must be reconciled with approved knowledge and authoritative state before response policy permits a UI action.">
-  <div class="stage"><span>Implemented · deterministic client-side</span><p>State + validation → explicit context filtering → applicable authored fragments</p></div>
-  <div class="stage future"><span>Optional future stage · not implemented</span><p>Intent mapping · candidate ranking · explanation adaptation</p></div>
-  <div class="stage"><span>Authority boundary</span><p>Evidence reconciliation → response policy → structured UI response</p></div>
-  <p class="runtime">Browser, machine-local, server, edge, or cloud placement is a later decision, not an active runtime router.</p>
+
+<ResearchFigureFrame
+  className="adaptive-future"
+  {figureNumber}
+  title="Inference has a place, not a mandate"
+  status="Research · future only"
+  caption="The dashed stage is not implemented in Phase 1. Any future inferred candidate must be reconciled with approved knowledge and authoritative application state before deterministic response policy authorizes a UI response. No runtime tier has been evaluated or deployed here."
+>
+  <ol class="future-seam" aria-label="Future inference seam">
+    <li>
+      <p class="figure-label">01 · Implemented</p>
+      <p class="figure-copy">State + validation → explicit context filtering → applicable authored fragments</p>
+    </li>
+    <li class="future-stage">
+      <p class="figure-label figure-accent">02 · Optional, proposed</p>
+      <p class="figure-copy">Intent mapping, candidate ranking, or explanation adaptation</p>
+    </li>
+    <li>
+      <p class="figure-label">03 · Authority boundary</p>
+      <p class="figure-copy">Evidence reconciliation → response policy → structured UI response</p>
+    </li>
+  </ol>
+
+  <p class="runtime figure-label">Browser / machine-local / server / edge / cloud: later placement question, not active runtime routing</p>
 </ResearchFigureFrame>
+
 <style>
-  .adaptive-future :global(p) { margin: 0; }
-  .stage { border-top: 1px solid var(--border-subtle); padding: 1rem 0; }
-  .stage span { color: var(--accent); font-family: var(--font-mono-ui); font-size: .6875rem; line-height: 1.5; text-transform: uppercase; }
-  .stage p { margin-top: .3rem !important; color: var(--text-primary); font-size: .875rem; line-height: 1.6; }
-  .future { border: 1px dashed var(--accent-border); border-inline-width: 0; padding-left: 1rem; }
-  .runtime { border-top: 1px solid var(--border-strong); padding-top: 1rem; color: var(--text-secondary); font-size: .875rem; line-height: 1.6; }
-  :global(.research-reading .research-prose figure.adaptive-future) { border-radius: 0 !important; }
-  :global(.research-reading .research-prose figure.adaptive-future) .stage p, :global(.research-reading .research-prose figure.adaptive-future) .runtime { font-size: .875rem !important; line-height: 1.6 !important; }
+  .adaptive-future :global(.figure-number),
+  .adaptive-future :global(.status),
+  .adaptive-future :global(.figure-label) {
+    font-size: 0.625rem !important;
+    font-weight: 400;
+    letter-spacing: 0 !important;
+    line-height: 1.25rem !important;
+  }
+
+  .adaptive-future :global(.heading h3) {
+    font-size: 1.125rem !important;
+    line-height: 1.75rem !important;
+    letter-spacing: 0 !important;
+  }
+
+  .adaptive-future :global(figcaption) {
+    font-size: 0.75rem !important;
+    line-height: 1.5rem !important;
+  }
+
+  .adaptive-future :global(.figure-copy) {
+    font-size: 0.875rem !important;
+    line-height: 1.5rem !important;
+  }
+
+  .adaptive-future :global(ol),
+  .adaptive-future :global(li),
+  .adaptive-future :global(p) {
+    margin: 0;
+  }
+
+  .adaptive-future :global(ol) {
+    padding: 0;
+    list-style: none;
+  }
+
+  .future-seam {
+    display: grid;
+  }
+
+  .future-seam li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .future-seam .future-stage {
+    border-bottom-style: dashed;
+    border-bottom-color: var(--accent);
+  }
+
+  .future-seam .figure-copy {
+    margin-top: 0.5rem !important;
+    color: var(--text-primary);
+  }
+
+  .future-stage .figure-copy {
+    color: var(--text-secondary);
+  }
+
+  .runtime {
+    margin-top: 1.25rem !important;
+    color: var(--text-muted);
+  }
+
+  @media (min-width: 640px) {
+    .future-seam {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .future-seam li {
+      border-bottom: 0;
+      border-right: 1px solid var(--border-subtle);
+      padding: 1rem 1.25rem 1rem 0;
+    }
+
+    .future-seam li + li {
+      padding-left: 1.25rem;
+    }
+
+    .future-seam li:last-child {
+      border-right: 0;
+      padding-right: 0;
+    }
+
+    .future-seam .future-stage {
+      border-right-style: dashed;
+      border-right-color: var(--accent);
+    }
+  }
 </style>

@@ -21,6 +21,44 @@
   margin-top: 1.5rem;
 }
 
+/* Shared companion-project artifact treatment from the publication studies. */
+.research-reading .research-prose .paper-companion-artifact {
+  margin: 2rem 0 4rem;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  padding: 1.5rem;
+}
+
+.research-reading .research-prose .paper-companion-artifact .paper-companion-meta {
+  margin: 0;
+  color: var(--accent);
+  font-family: var(--font-mono-ui);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.research-reading .research-prose .paper-companion-artifact .paper-companion-copy {
+  margin: 1rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.75rem;
+}
+
+.research-reading .research-prose .paper-companion-artifact a {
+  color: var(--text-primary);
+  text-decoration-color: var(--accent);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  transition: color 160ms ease;
+}
+
+.research-reading .research-prose .paper-companion-artifact a:hover {
+  color: var(--accent);
+}
+
 /*
  * Code is evidence in many Research entries, but not every fenced block is a
  * repository source excerpt. Keep the baseline treatment global and neutral;

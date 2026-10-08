@@ -109,6 +109,32 @@ const {
     });
   };
 
+  const positionSwitcherBeforeStackedToc = (article: HTMLElement, switcher: HTMLElement) => {
+    const toc = article.querySelector<HTMLElement>('aside[aria-label="Research navigation"]');
+    const grid = toc?.parentElement;
+    const originalParent = switcher.parentElement;
+    const originalNextSibling = switcher.nextSibling;
+    if (!toc || !grid || !originalParent) return;
+
+    const stackedLayout = window.matchMedia('(max-width: 1023px)');
+    const updatePosition = () => {
+      if (stackedLayout.matches) {
+        if (switcher.parentElement !== grid) grid.insertBefore(switcher, toc);
+        return;
+      }
+
+      if (switcher.parentElement === originalParent) return;
+      if (originalNextSibling && originalNextSibling.parentNode === originalParent) {
+        originalParent.insertBefore(switcher, originalNextSibling);
+      } else {
+        originalParent.appendChild(switcher);
+      }
+    };
+
+    stackedLayout.addEventListener('change', updatePosition);
+    updatePosition();
+  };
+
   const updateHeroReadingTime = (
     article: HTMLElement,
     switcher: HTMLElement,
@@ -184,6 +210,7 @@ const {
     switcher.dataset.readingDepthBound = 'true';
 
     positionDepthSummaryAfterSwitcher(article, switcher);
+    positionSwitcherBeforeStackedToc(article, switcher);
 
     const { marker, elements: fullResearch } = getFullResearchElements(article);
     let initialDepth: 'overview' | 'full' = new URL(window.location.href).searchParams.get('depth') === 'full'
@@ -225,7 +252,6 @@ const {
 <style>
   .reading-depth {
     margin-bottom: 2.5rem;
-    border-bottom: 1px solid var(--border-subtle);
     padding-bottom: 1.25rem;
   }
 

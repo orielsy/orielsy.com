@@ -1,0 +1,136 @@
+---
+import { CornerDownRight } from '@lucide/astro';
+import ResearchFigureFrame from './ResearchFigureFrame.astro';
+
+const efforts = [
+  { family: 'Navigation', mechanism: 'Navigation + session-history mechanics', status: 'HTML Living Standard', continuation: 'Route matching · data loading · layouts' },
+  { family: 'Transitions', mechanism: 'Visual state-transition mechanics', status: 'Level 2 editor’s draft', continuation: 'Coordinate application state' },
+  { family: 'DOM updates', mechanism: 'DOM Parts / earlier Template Instantiation', status: 'Exploratory proposals', continuation: 'Templating + update strategy' },
+  { family: 'Controls', mechanism: 'Open UI · anatomy, behavior, styling + accessibility', status: 'W3C Community Group', continuation: 'Product-specific control policy' },
+];
+---
+
+<ResearchFigureFrame
+  className="platform-efforts-figure"
+  figureNumber="04"
+  title="Different efforts, different contracts"
+  status="Status as of 17 September 2026"
+  caption="These efforts do not form one unified roadmap. Status labels describe the cited work, not browser coverage or equivalent maturity. DOM Parts explores mutable positions in the DOM; earlier Template Instantiation explored reusable templating. Open UI considers what might belong in platform contracts."
+>
+  <div class="efforts-head" aria-hidden="true">
+    <span>Area</span>
+    <span>Mechanism in view</span>
+    <span>Evidence status</span>
+    <span>Policy above</span>
+  </div>
+
+  <div class="efforts-table">
+    {efforts.map((effort, index) => (
+      <section>
+        <div class="area">
+          <span>0{index + 1}</span>
+          <strong>{effort.family}</strong>
+        </div>
+        <p class="mechanism">{effort.mechanism}</p>
+        <p class="status figure-meta">{effort.status}</p>
+        <div class="continuation">
+          <CornerDownRight size={15} strokeWidth={1.5} aria-hidden="true" />
+          <span>{effort.continuation}</span>
+        </div>
+      </section>
+    ))}
+  </div>
+</ResearchFigureFrame>
+
+<style>
+  .platform-efforts-figure :global(p) {
+    margin: 0;
+  }
+
+  .efforts-head {
+    display: none;
+  }
+
+  .efforts-table section {
+    display: grid;
+    gap: 0.65rem;
+    padding: 1rem 0;
+  }
+
+  .efforts-table section + section {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .area {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+  }
+
+  .area span,
+  .status,
+  .efforts-head {
+    font-family: var(--font-mono-ui);
+    font-size: var(--research-diagram-label, 0.625rem);
+    letter-spacing: 0.07em;
+    line-height: 1.55;
+  }
+
+  .area span,
+  .status {
+    color: var(--accent);
+  }
+
+  .area strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: var(--research-diagram-node, 0.875rem);
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .mechanism,
+  .continuation {
+    color: var(--text-secondary);
+    font-size: var(--research-diagram-copy, 0.875rem);
+    line-height: 1.6;
+  }
+
+  .status {
+    border-left: 1px solid var(--accent);
+    padding-left: 0.65rem;
+  }
+
+  .continuation {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .continuation :global(svg) {
+    flex: 0 0 auto;
+    margin-top: 0.3rem;
+    color: var(--text-muted);
+  }
+
+  @media (min-width: 800px) {
+    .efforts-head,
+    .efforts-table section {
+      grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: 1rem;
+    }
+
+    .efforts-head {
+      display: grid;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .efforts-table section {
+      align-items: start;
+      padding: 1rem 0;
+    }
+  }
+</style>

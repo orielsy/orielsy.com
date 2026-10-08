@@ -1,54 +1,195 @@
 ---
+import { ArrowDown, ArrowRight } from '@lucide/astro';
 import ResearchFigureFrame from './ResearchFigureFrame.astro';
-const constraints = ['State', 'Validation', 'Schemas', 'Available actions', 'Product rules'];
-const jobs = ['Classify this intent', 'Rank these items', 'Extract these fields', 'Transform this selection', 'Transcribe this audio', 'Route this command'];
+
+const supplies = ['State', 'Validation', 'Schemas', 'Available actions', 'Product rules'];
+const jobs = [
+  ['Classify', 'this intent'],
+  ['Rank', 'these items'],
+  ['Extract', 'these fields'],
+  ['Transform', 'this selection'],
+  ['Transcribe', 'this audio'],
+  ['Route', 'this command'],
+];
 ---
 
 <ResearchFigureFrame
   className="narrow-job-figure"
   figureNumber="02"
   title="The application narrows the job"
-  caption="The application can supply constraints so a capability receives a smaller task. This framing does not guarantee a correct result."
+  status="Source-stated lists · arrangement is editorial"
+  caption="Application-owned constraints can reduce the ambiguity given to inference; they do not guarantee a correct result. The six narrow jobs are source-stated; the wedge is an editorial arrangement."
 >
-  <div class="question-shift">
-    <p><span>Broad question</span>Which model can run the whole experience?</p>
-    <p><span>Better question</span>What is the smallest capability this interaction actually needs?</p>
-  </div>
-  <div class="narrowing-model">
-    <div class="inputs">
-      <h4>Application supplies</h4>
-      <p>{constraints.join(' · ')}</p>
+  <div class="narrowing-layout">
+    <section class="broad-request">
+      <p class="figure-label">Broad request</p>
+      <h4 class="request figure-node-prominent">“Understand the application and do what I mean.”</h4>
+
+      <div class="supplies" aria-label="Constraints supplied by the application">
+        {supplies.map((item, index) => (
+          <div class="supply-row" style={`--supply-indent: ${index * 0.875}rem`}>
+            <span class="supply-line" aria-hidden="true"></span>
+            <span class="figure-support">{item}</span>
+          </div>
+        ))}
+      </div>
+
+      <p class="supply-note figure-label">Supplied by the application</p>
+    </section>
+
+    <div class="narrow-arrow" aria-hidden="true">
+      <ArrowDown class="arrow-mobile" size={20} strokeWidth={1.75} />
+      <ArrowRight class="arrow-desktop" size={20} strokeWidth={1.75} />
     </div>
-    <div class="jobs">
-      <h4>Capability receives a narrow job</h4>
-      <ul>{jobs.map((job) => <li>{job}</li>)}</ul>
-    </div>
+
+    <section class="narrow-jobs">
+      <p class="figure-label figure-accent">Narrow job</p>
+      <ul>
+        {jobs.map(([verb, object]) => (
+          <li>
+            <strong>{verb}</strong>
+            <span>{object}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
   </div>
+
+  <p class="question-shift figure-copy">
+    <span>Question shift · </span>“Which model can run the whole experience?” becomes “What is the smallest capability this interaction actually needs?”
+  </p>
 </ResearchFigureFrame>
 
 <style>
-  .narrow-job-figure :global(p), .narrow-job-figure :global(h4),
-  .narrow-job-figure :global(ul), .narrow-job-figure :global(li) { margin: 0; }
-  .narrow-job-figure :global(ul) { padding: 0; list-style: none; }
-  .question-shift { display: grid; gap: 0.5rem; border-left: 2px solid var(--accent); padding-left: 1rem; }
-  .question-shift p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-  .question-shift p:last-child { color: var(--text-primary); font-weight: 600; }
-  .question-shift span { display: block; color: var(--text-muted); font-family: var(--font-mono-ui); font-size: 0.6875rem; font-weight: 400; text-transform: uppercase; }
-  .narrowing-model { display: grid; gap: 1.35rem; margin-top: 1.75rem; border-top: 1px solid var(--border-subtle); padding-top: 1.25rem; }
-  .narrowing-model h4 { color: var(--accent); font-family: var(--font-mono-ui); font-size: 0.6875rem; font-weight: 600; line-height: 1.5; text-transform: uppercase; }
-  .inputs p { margin-top: 0.65rem !important; color: var(--text-primary); font-size: 0.875rem; line-height: 1.75; }
-  .jobs ul { display: grid; margin-top: 0.55rem !important; }
-  .jobs li { border-bottom: 1px solid var(--border-subtle); padding: 0.4rem 0; color: var(--text-primary); font-size: 0.875rem; line-height: 1.5; }
-  .jobs li:last-child { border-bottom: 0; }
-  @media (min-width: 640px) {
-    .narrowing-model { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 2rem; }
-    .jobs { border-left: 1px solid var(--border-subtle); padding-left: 2rem; }
-    .jobs ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1rem; }
+  .narrow-job-figure :global(p),
+  .narrow-job-figure :global(h4),
+  .narrow-job-figure :global(ul),
+  .narrow-job-figure :global(li) {
+    margin: 0;
+  }
+
+  .narrow-job-figure :global(ul) {
+    padding: 0;
+    list-style: none;
+  }
+
+  .narrowing-layout {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .broad-request,
+  .narrow-jobs {
+    min-width: 0;
+  }
+
+  .request {
+    margin-top: 0.5rem !important;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .supplies {
+    display: grid;
+    gap: 0.375rem;
+    margin-top: 1.5rem;
+  }
+
+  .supply-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-left: var(--supply-indent);
+  }
+
+  .supply-line {
+    width: 1.25rem;
+    height: 1px;
+    flex: 0 0 auto;
+    background: var(--accent);
+  }
+
+  .supply-row .figure-support {
+    color: var(--text-primary);
+    font-family: var(--font-mono-ui);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .supply-note {
+    margin-top: 0.75rem !important;
+  }
+
+  .narrow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+  }
+
+  .arrow-desktop {
+    display: none;
+  }
+
+  .narrow-jobs ul {
+    display: grid;
+    gap: 1px;
+    margin-top: 0.75rem !important;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.2rem;
+    background: var(--border-subtle);
+  }
+
+  .narrow-jobs li {
+    background: color-mix(in srgb, var(--text-primary) 3%, var(--bg-card));
+    padding: 0.75rem 1rem;
+    color: var(--text-secondary);
+    font-size: var(--research-figure-copy, 0.875rem);
+    line-height: 1.55;
+  }
+
+  .narrow-jobs strong {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .narrow-jobs span {
+    margin-left: 0.25rem;
+  }
+
+  .question-shift {
+    margin-top: 1.75rem !important;
+    color: var(--text-secondary);
+  }
+
+  .question-shift span {
+    color: var(--text-primary);
+  }
+
+  @media (min-width: 760px) {
+    .narrowing-layout {
+      grid-template-columns: minmax(0, 1fr) 3.5rem minmax(0, 1.15fr);
+      align-items: center;
+      gap: 0;
+    }
+
+    .arrow-mobile {
+      display: none;
+    }
+
+    .arrow-desktop {
+      display: block;
+    }
+
+    .narrow-jobs ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 </style>
 
 <style>
   :global(.research-reading .research-prose figure.narrow-job-figure) { border-radius: 0 !important; }
-  :global(.research-reading .research-prose figure.narrow-job-figure) .question-shift p,
-  :global(.research-reading .research-prose figure.narrow-job-figure) .inputs p { font-size: 0.875rem !important; line-height: 1.65 !important; }
 </style>
