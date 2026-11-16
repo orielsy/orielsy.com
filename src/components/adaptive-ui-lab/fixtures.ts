@@ -10,16 +10,19 @@ export const DATA_CONNECTIONS = {
     id: 'salesforce-production',
     name: 'Salesforce Production',
     system: 'Salesforce',
+    purpose: 'Customer and opportunity records in the production CRM.',
   },
   snowflakeAnalytics: {
     id: 'snowflake-analytics',
     name: 'Snowflake Analytics',
     system: 'Snowflake',
+    purpose: 'Warehouse tables used for reporting and analytics.',
   },
   erpProduction: {
     id: 'erp-production',
     name: 'ERP Production',
     system: 'ERP',
+    purpose: 'Orders, inventory, and finance records in the production ERP.',
   },
 } satisfies Record<string, DataConnection>;
 

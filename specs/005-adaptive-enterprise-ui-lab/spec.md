@@ -214,6 +214,20 @@ Phase 1 is complete when:
 - meaningful user-triggered scenario, selection, and successful continuation changes are announced through one concise polite status region without making the entire adaptive guidance panel live
 - Phase 1 contains no AI, backend, or production deployment
 
+## 12a. Comprehension Aids (2026-11-16)
+
+Visitors could previously change familiarity or version without any visible change, and Continue gave no clear outcome, so the demo could read as broken. Phase 1 therefore also requires:
+
+- every scenario control produces a visible change in the Adaptive surface, or a visible lab note explaining why it holds back:
+  - new users see the beginner explanation and authored per-option descriptions (several options only); experienced users do not
+  - v4.2 shows a visible "New in 4.2" notice; v4.1 does not
+- one-click example scenarios (New user / several options; Only one valid option; Experienced user on 4.1) alongside the individual controls
+- a short "try this" sequence above the lab
+- a visible notice after each scenario change stating what changed and that both forms were reset, plus a brief, reduced-motion-safe highlight of the adaptive guidance
+- a plain-language lab note on each surface (instrumentation, not product UI) describing why the surface looks the way it does, marking the line affected by the latest change
+- explicit Continue outcomes: "Blocked · selection required" after an empty attempt and a visible completion panel after a valid one; the Adaptive error names the available options, the Standard error stays generic
+- per-option descriptions are authored fixtures (`DataConnection.purpose`) surfaced through the `data-connection-option-overview` knowledge item and response; they never imply or preselect a choice
+
 ## 13. Phase 2 Boundary
 
 The first Phase 2 capability is specified in `specs/005-adaptive-enterprise-ui-lab/phase-2.md`.

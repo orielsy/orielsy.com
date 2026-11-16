@@ -7,6 +7,8 @@ export interface DataConnection {
   id: string;
   name: string;
   system: string;
+  /** Authored demo description of what the connection is used for. */
+  purpose?: string;
 }
 
 export interface AutomationConfiguration {
@@ -103,6 +105,8 @@ export interface UIResponse {
   knowledgeIds?: string[];
   validationIds?: string[];
   actions?: UIAction[];
+  /** Optional authored detail lines rendered with the response (e.g. per-option descriptions). */
+  items?: string[];
 }
 
 export interface ResolveInput {

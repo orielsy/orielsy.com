@@ -53,6 +53,7 @@ test('Scenario A: new user on v4.1 with three connections gets beginner and sele
     'data-connection-required-explanation',
     'data-connection-highlight',
     'data-connection-beginner-help',
+    'data-connection-option-overview',
     'data-connection-selection-guidance',
   ]);
   assert.equal(result.validation[0]?.id, 'data-connection-required');
@@ -70,6 +71,7 @@ test('Scenario B: new user on v4.2 also gets version-specific guidance', () => {
     'data-connection-highlight',
     'data-connection-beginner-help',
     'data-connection-version-guidance',
+    'data-connection-option-overview',
     'data-connection-selection-guidance',
   ]);
 });
@@ -136,4 +138,24 @@ test('Scenario F: selecting a valid Data Connection removes the missing-connecti
 
   assert.deepEqual(result.validation, []);
   assert.deepEqual(result.responses, []);
+});
+
+test('Scenario G: option descriptions are surfaced for new users only, and only when several options exist', () => {
+  const newUser = resolveScenario({ familiarity: 'new', version: '4.1', connections: THREE_DATA_CONNECTIONS });
+  const overview = newUser.responses.find((response) => response.id === 'data-connection-option-overview');
+  assert.equal(overview?.items?.length, THREE_DATA_CONNECTIONS.length);
+  assert.ok(overview?.items?.[0]?.startsWith('Salesforce Production:'));
+
+  const experienced = resolveScenario({ familiarity: 'experienced', version: '4.1', connections: THREE_DATA_CONNECTIONS });
+  assert.equal(responseIds(experienced).includes('data-connection-option-overview'), false);
+
+  const single = resolveScenario({ familiarity: 'new', version: '4.1', connections: ONE_DATA_CONNECTION });
+  assert.equal(responseIds(single).includes('data-connection-option-overview'), false);
+});
+
+test('Scenario H: several-option guidance states the count and never carries a set-value action', () => {
+  const result = resolveScenario({ familiarity: 'experienced', version: '4.1', connections: THREE_DATA_CONNECTIONS });
+  const guidance = result.responses.find((response) => response.id === 'data-connection-selection-guidance');
+  assert.match(guidance?.message ?? '', /^3 compatible connections/);
+  assert.equal(result.responses.some((response) => response.actions?.some((action) => action.type === 'set-value')), false);
 });

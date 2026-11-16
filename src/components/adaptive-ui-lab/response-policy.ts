@@ -74,6 +74,23 @@ export function resolveResponses(input: ResolveResponsesInput): UIResponse[] {
     });
   }
 
+  if (
+    input.facts.availableDataConnectionCount > 1 &&
+    hasKnowledge(input.applicableKnowledge, 'data-connection-option-overview')
+  ) {
+    responses.push({
+      id: 'data-connection-option-overview',
+      type: 'help',
+      authority: 2,
+      field: 'dataConnection',
+      message: 'Each compatible connection points to a different system. Pick the one whose data this workflow needs.',
+      knowledgeIds: ['data-connection-option-overview'],
+      items: input.runtime.availableDataConnections
+        .filter((connection) => Boolean(connection.purpose))
+        .map((connection) => `${connection.name}: ${connection.purpose}`),
+    });
+  }
+
   if (input.facts.hasSingleDataConnectionCandidate) {
     const candidate = input.runtime.availableDataConnections[0];
 
@@ -104,7 +121,7 @@ export function resolveResponses(input: ResolveResponsesInput): UIResponse[] {
       type: 'suggestion',
       authority: 5,
       field: 'dataConnection',
-      message: 'Choose the connection for the system this workflow needs to access.',
+      message: `${input.facts.availableDataConnectionCount} compatible connections are available. Choose the one for the system this workflow needs to access.`,
       knowledgeIds: ['data-connection-selection-guidance'],
       actions: [
         {

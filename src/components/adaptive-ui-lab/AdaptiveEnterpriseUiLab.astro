@@ -10,6 +10,12 @@ export interface Props {
 }
 
 const { embedded = false } = Astro.props;
+
+const presets = [
+  { id: 'new-several', label: 'New user, several options', hint: 'new · 4.2 · 3 matches', pressed: true },
+  { id: 'one-option', label: 'Only one valid option', hint: 'new · 4.2 · 1 match', pressed: false },
+  { id: 'expert', label: 'Experienced user on 4.1', hint: 'experienced · 4.1 · 3 matches', pressed: false },
+];
 ---
 
 <section
@@ -40,8 +46,13 @@ const { embedded = false } = Astro.props;
       "max-w-3xl text-sm leading-7 text-[var(--text-secondary)] sm:text-base",
       embedded ? "mt-3" : "mt-4",
     ]}>
-      Set the scenario outside the demo, then compare how two Data Connection forms respond to that same application truth. No AI, inference, or semantic retrieval is used.
+      Pick a scenario, then try both forms. The left form is a conventional baseline. The right form adjusts its help to the same facts using fixed, authored rules. No AI, inference, or semantic retrieval is used.
     </p>
+    <ol data-lab-try-this class="mt-4 mb-0 grid max-w-3xl list-none gap-2 p-0 text-xs leading-5 text-[var(--text-secondary)] sm:grid-cols-3">
+      <li class="m-0 rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3 py-2"><span class="font-mono text-[10px] text-[var(--accent)]">1</span> Press <strong class="font-medium text-[var(--text-primary)]">Continue</strong> on both forms without choosing anything.</li>
+      <li class="m-0 rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3 py-2"><span class="font-mono text-[10px] text-[var(--accent)]">2</span> Load <strong class="font-medium text-[var(--text-primary)]">Only one valid option</strong> and accept the offer.</li>
+      <li class="m-0 rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3 py-2"><span class="font-mono text-[10px] text-[var(--accent)]">3</span> Load <strong class="font-medium text-[var(--text-primary)]">Experienced user on 4.1</strong> and watch the help shrink.</li>
+    </ol>
   </header>
 
   <div class="py-8">
@@ -50,12 +61,35 @@ const { embedded = false } = Astro.props;
         <div>
           <LabSectionHeading number="01" title="Scenario controller" {embedded} />
           <p class="mt-3 max-w-2xl text-xs leading-5 text-[var(--text-secondary)]">
-            These controls set the test conditions. They are not part of either Data Connection form.
+            These controls set the facts both forms receive. They are not part of either form, and changing one resets both forms.
           </p>
         </div>
         <span class="w-fit rounded border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">
-          Controls demo state
+          Test conditions
         </span>
+      </div>
+
+      <div data-scenario-presets class="mt-5">
+        <p class="m-0 text-xs text-[var(--text-secondary)]">Start with an example scenario</p>
+        <div class="mt-2 grid gap-1.5 sm:grid-cols-3" role="group" aria-label="Example scenarios">
+          {presets.map((preset) => (
+            <button
+              type="button"
+              data-preset={preset.id}
+              aria-pressed={String(preset.pressed)}
+              class:list={[
+                "flex h-auto flex-col items-start rounded-sm border px-3 py-2 text-left text-xs transition",
+                preset.pressed
+                  ? "border-[var(--accent-border)] bg-[var(--accent-subtle)] font-medium text-[var(--accent)]"
+                  : "border-[var(--border-subtle)] bg-[var(--bg-primary)] text-[var(--text-secondary)] hover:bg-[var(--bg-card-hover)] hover:text-[var(--text-primary)]",
+              ]}
+            >
+              <span>{preset.label}</span>
+              <span class="mt-0.5 font-mono text-[10px] font-normal opacity-75">{preset.hint}</span>
+            </button>
+          ))}
+        </div>
+        <p class="mt-4 mb-0 text-xs text-[var(--text-secondary)]">Or set each condition yourself</p>
       </div>
 
       <div data-scenario-grid class="mt-5 grid gap-px overflow-hidden rounded-md border border-[var(--border-subtle)] bg-[var(--border-subtle)] md:grid-cols-3">
@@ -83,6 +117,11 @@ const { embedded = false } = Astro.props;
         </div>
       </LabScenarioControl>
       </div>
+
+      <p data-scenario-notice class="mt-4 mb-0 flex items-start gap-2 text-xs leading-5 text-[var(--text-secondary)]">
+        <span aria-hidden="true" class="font-mono text-[var(--accent)]">→</span>
+        <span data-scenario-notice-text>Change any condition and watch the adaptive form and its lab note update. The conventional form stays the same.</span>
+      </p>
     </div>
   </div>
 
@@ -97,7 +136,7 @@ const { embedded = false } = Astro.props;
           <p data-truth-summary class="mt-1 text-sm text-[var(--text-primary)]">3 compatible connections · product 4.2 · new user</p>
         </div>
       </div>
-      <span class="font-mono text-[11px] text-[var(--text-secondary)]">ONE STATE → TWO DEMO FORMS</span>
+      <span class="font-mono text-[11px] text-[var(--text-secondary)]">Both forms read these same facts</span>
     </div>
   </div>
 
@@ -106,11 +145,11 @@ const { embedded = false } = Astro.props;
       <div>
         <LabSectionHeading number="02" title="Demo workbench" {embedded} />
         <p class="mt-3 max-w-2xl text-xs leading-5 text-[var(--text-secondary)]">
-          Both forms receive the same application truth. The adaptive form adds only the intervention authorized by the resolver's evidence and response policy.
+          Both forms get the same facts. The adaptive form only adds help the rules can justify, and holds back when they can't.
         </p>
       </div>
       <span class="w-fit rounded border border-[var(--accent-border)] bg-[var(--bg-primary)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--accent)]">
-        Actual user task
+        Try both forms
       </span>
     </div>
 
@@ -118,7 +157,7 @@ const { embedded = false } = Astro.props;
       <article class="flex min-h-[32rem] flex-col rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 sm:p-6">
         <LabExperienceHeader
           eyebrow="Conventional experience"
-          description="The form exposes the available values and leaves interpretation to the user."
+          description="Shows the same field in every scenario and only reacts after you press Continue."
           {embedded}
         />
 
@@ -133,6 +172,20 @@ const { embedded = false } = Astro.props;
             <p id="standard-data-connection-error" data-standard-error class="mt-3 hidden text-xs text-red-600 dark:text-red-400" role="alert">Select a Data Connection to continue.</p>
           </div>
 
+          <div data-lab-note class="mt-5 rounded-md border border-dashed border-[var(--border-subtle)] px-3 py-2.5">
+            <p class="m-0 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Lab note · baseline behavior</p>
+            <ul class="mt-1.5 mb-0 list-none space-y-1 p-0 text-xs leading-5 text-[var(--text-secondary)]">
+              <li class="m-0">Same field and options in every scenario.</li>
+              <li class="m-0">Doesn't explain what the options are for or mention the 4.2 rule.</li>
+              <li class="m-0">Only reacts after you press Continue.</li>
+            </ul>
+          </div>
+
+          <div data-standard-success class="mt-5 hidden rounded-md border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3 py-2.5 text-xs leading-5">
+            <p class="m-0 font-medium text-[var(--text-primary)]"><span aria-hidden="true">✓ </span><span data-standard-success-label>Configured</span></p>
+            <p class="mt-1 mb-0 text-[var(--text-muted)]">Step complete. In a real product, Continue would open the next step.</p>
+          </div>
+
           <div class="mt-auto flex flex-col-reverse gap-3 border-t border-[var(--border-subtle)] pt-6 sm:flex-row sm:items-center sm:justify-between">
             <button type="button" data-standard-continue class="inline-flex items-center justify-center gap-2 rounded-md border border-[var(--border-subtle)] bg-[var(--bg-card)] px-3 py-2 text-xs font-medium text-[var(--text-primary)] transition hover:bg-[var(--bg-card-hover)]">Continue <span aria-hidden="true">→</span></button>
             <span data-standard-outcome class="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Awaiting selection</span>
@@ -143,7 +196,7 @@ const { embedded = false } = Astro.props;
       <article class="flex min-h-[32rem] flex-col rounded-md border border-[var(--accent-border)] bg-[var(--bg-card)] p-5 sm:p-6">
         <LabExperienceHeader
           eyebrow="Adaptive experience"
-          description="The form adds only the intervention supported by the current evidence."
+          description="Adds help when the facts justify it, and stays quiet when they don't."
           adaptive
           {embedded}
         />
@@ -155,14 +208,16 @@ const { embedded = false } = Astro.props;
               <div class="min-w-0 flex-1">
                 <div class="flex flex-wrap items-center gap-2">
                   <p data-adaptive-headline class="m-0 text-sm font-medium text-[var(--text-primary)]">Choose among compatible connections</p>
-                  <span data-adaptive-authority class="rounded border border-[var(--accent-border)] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--accent)]">EXPLAIN</span>
+                  <span data-adaptive-authority class="rounded border border-[var(--accent-border)] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--accent)]">guide</span>
                 </div>
-                <p data-adaptive-guidance class="mt-2 text-xs leading-5 text-[var(--text-secondary)]">Choose the connection for the system this workflow needs to access.</p>
-                <p data-adaptive-source class="mt-3 border-t border-[var(--border-subtle)] pt-3 font-mono text-[10px] leading-5 text-[var(--text-muted)]">DOCUMENTATION · Choosing a Data Connection</p>
-                <details data-guidance-details class="mt-3 border-t border-[var(--border-subtle)] pt-3">
-                  <summary class="cursor-pointer text-xs font-medium text-[var(--text-secondary)] transition hover:text-[var(--text-primary)]">Why this guidance?</summary>
-                  <ul data-guidance-details-list class="mt-2 space-y-1.5 text-xs leading-5 text-[var(--text-muted)]"></ul>
-                </details>
+                <p data-adaptive-guidance class="mt-2 mb-0 text-xs leading-5 text-[var(--text-secondary)]">3 compatible connections are available. Choose the one for the system this workflow needs to access.</p>
+                <p data-adaptive-beginner class="mt-2 mb-0 hidden text-xs leading-5 text-[var(--text-secondary)]"></p>
+                <ul data-adaptive-options class="mt-2 mb-0 hidden list-none space-y-1 p-0 text-xs leading-5 text-[var(--text-secondary)]"></ul>
+                <p data-adaptive-version class="mt-3 mb-0 hidden items-start gap-2 text-xs leading-5 text-[var(--text-secondary)]">
+                  <span class="shrink-0 rounded border border-[var(--accent-border)] px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-[var(--accent)]">New in 4.2</span>
+                  <span data-adaptive-version-text></span>
+                </p>
+                <p data-adaptive-source class="mt-3 mb-0 border-t border-[var(--border-subtle)] pt-3 font-mono text-[10px] leading-5 text-[var(--text-muted)]">Sources (authored fixtures) · Choosing a Data Connection</p>
               </div>
             </div>
           </div>
@@ -176,6 +231,16 @@ const { embedded = false } = Astro.props;
             </select>
             <button type="button" data-use-sole-connection class="mt-3 hidden w-fit rounded-md border border-[var(--accent-border)] bg-[var(--bg-primary)] px-3 py-1.5 text-xs font-medium text-[var(--accent)] transition hover:bg-[var(--accent-subtle)]"></button>
             <p id="adaptive-data-connection-error" data-adaptive-error class="mt-3 hidden text-xs text-red-600 dark:text-red-400" role="alert">Select a Data Connection to continue.</p>
+          </div>
+
+          <div data-lab-note class="mt-5 rounded-md border border-dashed border-[var(--border-subtle)] px-3 py-2.5">
+            <p class="m-0 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">Lab note · why it looks like this</p>
+            <ul data-adaptive-lab-note-list class="mt-1.5 mb-0 list-none space-y-1 p-0 text-xs leading-5 text-[var(--text-secondary)]"></ul>
+          </div>
+
+          <div data-adaptive-success class="mt-5 hidden rounded-md border border-[var(--accent-border)] bg-[var(--bg-primary)] px-3 py-2.5 text-xs leading-5">
+            <p class="m-0 font-medium text-[var(--text-primary)]"><span aria-hidden="true">✓ </span><span data-adaptive-success-label>Configured</span></p>
+            <p class="mt-1 mb-0 text-[var(--text-muted)]">Step complete. In a real product, Continue would open the next step.</p>
           </div>
 
           <div class="mt-auto flex flex-col-reverse gap-3 border-t border-[var(--border-subtle)] pt-6 sm:flex-row sm:items-center sm:justify-between">
@@ -223,6 +288,7 @@ const { embedded = false } = Astro.props;
   </div>
 </section>
 
+
 <script>
   import { trackPortfolioEvent } from '../../lib/analytics';
   import { ONE_DATA_CONNECTION, THREE_DATA_CONNECTIONS } from './fixtures.ts';
@@ -230,38 +296,72 @@ const { embedded = false } = Astro.props;
   import { resolveInterface } from './resolver.ts';
   import type { AutomationConfiguration, ProductVersion, RuntimeContext, UIAction, UIResponse, UserFamiliarity } from './types.ts';
 
+  type ConnectionCount = 1 | 3;
+  type ScenarioKey = 'familiarity' | 'version' | 'connections';
+
+  interface Scenario {
+    familiarity: UserFamiliarity;
+    productVersion: ProductVersion;
+    connectionCount: ConnectionCount;
+  }
+
+  interface SurfaceState {
+    dataConnectionId: string;
+    attempted: boolean;
+    completed: boolean;
+  }
+
+  const PRESETS: Record<string, { label: string; scenario: Scenario }> = {
+    'new-several': { label: 'New user, several options', scenario: { familiarity: 'new', productVersion: '4.2', connectionCount: 3 } },
+    'one-option': { label: 'Only one valid option', scenario: { familiarity: 'new', productVersion: '4.2', connectionCount: 1 } },
+    expert: { label: 'Experienced user on 4.1', scenario: { familiarity: 'experienced', productVersion: '4.1', connectionCount: 3 } },
+  };
+
   let labInteractionTracked = false;
+
+  const prefersReducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
   document.querySelectorAll<HTMLElement>('[data-adaptive-enterprise-ui-lab]').forEach((lab) => {
     if (lab.dataset.bound === 'true') return;
     lab.dataset.bound = 'true';
 
-    const standardDataConnection = lab.querySelector<HTMLSelectElement>('[data-standard-data-connection]');
-    const adaptiveDataConnection = lab.querySelector<HTMLSelectElement>('[data-adaptive-data-connection]');
-    const standardError = lab.querySelector<HTMLElement>('[data-standard-error]');
-    const adaptiveError = lab.querySelector<HTMLElement>('[data-adaptive-error]');
-    const standardContinue = lab.querySelector<HTMLButtonElement>('[data-standard-continue]');
-    const adaptiveContinue = lab.querySelector<HTMLButtonElement>('[data-adaptive-continue]');
-    const standardOutcome = lab.querySelector<HTMLElement>('[data-standard-outcome]');
-    const adaptiveOutcome = lab.querySelector<HTMLElement>('[data-adaptive-outcome]');
-    const adaptiveHeadline = lab.querySelector<HTMLElement>('[data-adaptive-headline]');
-    const adaptiveAuthority = lab.querySelector<HTMLElement>('[data-adaptive-authority]');
-    const adaptiveGuidance = lab.querySelector<HTMLElement>('[data-adaptive-guidance]');
-    const adaptiveSource = lab.querySelector<HTMLElement>('[data-adaptive-source]');
-    const guidanceDetails = lab.querySelector<HTMLDetailsElement>('[data-guidance-details]');
-    const guidanceDetailsList = lab.querySelector<HTMLUListElement>('[data-guidance-details-list]');
-    const useSoleConnection = lab.querySelector<HTMLButtonElement>('[data-use-sole-connection]');
-    const truthSummary = lab.querySelector<HTMLElement>('[data-truth-summary]');
-    const scenarioFamiliarity = lab.querySelector<HTMLElement>('[data-scenario-familiarity]');
-    const scenarioVersion = lab.querySelector<HTMLElement>('[data-scenario-version]');
-    const scenarioConnections = lab.querySelector<HTMLElement>('[data-scenario-connections]');
-    const traceState = lab.querySelector<HTMLElement>('[data-trace-state]');
-    const traceValidation = lab.querySelector<HTMLElement>('[data-trace-validation]');
-    const traceKnowledge = lab.querySelector<HTMLElement>('[data-trace-knowledge]');
-    const tracePolicy = lab.querySelector<HTMLElement>('[data-trace-policy]');
-    const decisionTrace = lab.querySelector<HTMLDetailsElement>('[data-decision-trace]');
-    const traceToggleLabel = lab.querySelector<HTMLElement>('[data-trace-toggle-label]');
-    const labStatus = lab.querySelector<HTMLElement>('[data-lab-status]');
+    const $ = <T extends Element = HTMLElement>(selector: string) => lab.querySelector<T>(selector);
+
+    const standardDataConnection = $<HTMLSelectElement>('[data-standard-data-connection]');
+    const adaptiveDataConnection = $<HTMLSelectElement>('[data-adaptive-data-connection]');
+    const standardError = $('[data-standard-error]');
+    const adaptiveError = $('[data-adaptive-error]');
+    const standardContinue = $<HTMLButtonElement>('[data-standard-continue]');
+    const adaptiveContinue = $<HTMLButtonElement>('[data-adaptive-continue]');
+    const standardOutcome = $('[data-standard-outcome]');
+    const adaptiveOutcome = $('[data-adaptive-outcome]');
+    const standardSuccess = $('[data-standard-success]');
+    const adaptiveSuccess = $('[data-adaptive-success]');
+    const standardSuccessLabel = $('[data-standard-success-label]');
+    const adaptiveSuccessLabel = $('[data-adaptive-success-label]');
+    const adaptiveIntervention = $('[data-adaptive-intervention]');
+    const adaptiveHeadline = $('[data-adaptive-headline]');
+    const adaptiveAuthority = $('[data-adaptive-authority]');
+    const adaptiveGuidance = $('[data-adaptive-guidance]');
+    const adaptiveBeginner = $('[data-adaptive-beginner]');
+    const adaptiveOptions = $<HTMLUListElement>('[data-adaptive-options]');
+    const adaptiveVersion = $('[data-adaptive-version]');
+    const adaptiveVersionText = $('[data-adaptive-version-text]');
+    const adaptiveSource = $('[data-adaptive-source]');
+    const adaptiveLabNoteList = $<HTMLUListElement>('[data-adaptive-lab-note-list]');
+    const useSoleConnection = $<HTMLButtonElement>('[data-use-sole-connection]');
+    const truthSummary = $('[data-truth-summary]');
+    const scenarioFamiliarity = $('[data-scenario-familiarity]');
+    const scenarioVersion = $('[data-scenario-version]');
+    const scenarioConnections = $('[data-scenario-connections]');
+    const scenarioNoticeText = $('[data-scenario-notice-text]');
+    const traceState = $('[data-trace-state]');
+    const traceValidation = $('[data-trace-validation]');
+    const traceKnowledge = $('[data-trace-knowledge]');
+    const tracePolicy = $('[data-trace-policy]');
+    const decisionTrace = $<HTMLDetailsElement>('[data-decision-trace]');
+    const traceToggleLabel = $('[data-trace-toggle-label]');
+    const labStatus = $('[data-lab-status]');
 
     if (!standardDataConnection || !adaptiveDataConnection) return;
 
@@ -273,7 +373,7 @@ const { embedded = false } = Astro.props;
 
     lab.addEventListener('click', (event) => {
       if (!(event.target instanceof Element)) return;
-      if (event.target.closest('[data-familiarity], [data-version], [data-connection-count], [data-standard-continue], [data-adaptive-continue], [data-use-sole-connection]')) {
+      if (event.target.closest('[data-preset], [data-familiarity], [data-version], [data-connection-count], [data-standard-continue], [data-adaptive-continue], [data-use-sole-connection]')) {
         trackFirstMeaningfulInteraction();
       }
     });
@@ -285,16 +385,16 @@ const { embedded = false } = Astro.props;
       }
     });
 
-    let familiarity: UserFamiliarity = 'new';
-    let productVersion: ProductVersion = '4.2';
-    let connectionCount: 1 | 3 = 3;
-    let standardDataConnectionId = '';
-    let adaptiveDataConnectionId = '';
-    let standardAttempted = false;
-    let adaptiveAttempted = false;
+    const scenario: Scenario = { familiarity: 'new', productVersion: '4.2', connectionCount: 3 };
+    const standard: SurfaceState = { dataConnectionId: '', attempted: false, completed: false };
+    const adaptive: SurfaceState = { dataConnectionId: '', attempted: false, completed: false };
+    let changedKeys: ScenarioKey[] = [];
+    let flashTimer: number | undefined;
     const uiState = { expandedHelp: [], highlightedField: null, dismissedGuidance: [] };
 
-    const currentConnections = () => connectionCount === 1 ? ONE_DATA_CONNECTION : THREE_DATA_CONNECTIONS;
+    const currentConnections = () => scenario.connectionCount === 1 ? ONE_DATA_CONNECTION : THREE_DATA_CONNECTIONS;
+    const plural = (count: number, one: string, many: string) => `${count} ${count === 1 ? one : many}`;
+    const scenarioSummary = () => `${scenario.familiarity} user · ${scenario.productVersion} · ${plural(currentConnections().length, 'match', 'matches')}`;
 
     const announce = (message: string) => {
       if (!labStatus) return;
@@ -304,30 +404,35 @@ const { embedded = false } = Astro.props;
       });
     };
 
-    const announceScenarioUpdate = () => {
-      const connections = currentConnections();
-      announce(`Scenario updated: ${connections.length} compatible ${connections.length === 1 ? 'connection' : 'connections'}, product ${productVersion}, ${familiarity} user. Form selections reset.`);
+    const setPressed = (button: HTMLButtonElement, active: boolean) => {
+      button.setAttribute('aria-pressed', String(active));
+      button.classList.toggle('border-[var(--accent-border)]', active);
+      button.classList.toggle('bg-[var(--accent-subtle)]', active);
+      button.classList.toggle('font-medium', active);
+      button.classList.toggle('text-[var(--accent)]', active);
+      button.classList.toggle('border-[var(--border-subtle)]', !active);
+      button.classList.toggle('bg-[var(--bg-primary)]', !active);
+      button.classList.toggle('text-[var(--text-secondary)]', !active);
     };
 
-    const setPressedState = (selector: string, activeValue: string, attribute: string) => {
-      lab.querySelectorAll<HTMLButtonElement>(selector).forEach((button) => {
-        const active = button.dataset[attribute] === activeValue;
-        button.setAttribute('aria-pressed', String(active));
-        button.classList.toggle('border-[var(--accent-border)]', active);
-        button.classList.toggle('bg-[var(--accent-subtle)]', active);
-        button.classList.toggle('font-medium', active);
-        button.classList.toggle('text-[var(--accent)]', active);
-        button.classList.toggle('border-[var(--border-subtle)]', !active);
-        button.classList.toggle('bg-[var(--bg-primary)]', !active);
-        button.classList.toggle('text-[var(--text-secondary)]', !active);
+    const syncScenarioButtons = () => {
+      lab.querySelectorAll<HTMLButtonElement>('[data-familiarity]').forEach((button) => setPressed(button, button.dataset.familiarity === scenario.familiarity));
+      lab.querySelectorAll<HTMLButtonElement>('[data-version]').forEach((button) => setPressed(button, button.dataset.version === scenario.productVersion));
+      lab.querySelectorAll<HTMLButtonElement>('[data-connection-count]').forEach((button) => setPressed(button, button.dataset.connectionCount === String(scenario.connectionCount)));
+      lab.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach((button) => {
+        const preset = PRESETS[button.dataset.preset ?? ''];
+        const active = Boolean(preset)
+          && preset.scenario.familiarity === scenario.familiarity
+          && preset.scenario.productVersion === scenario.productVersion
+          && preset.scenario.connectionCount === scenario.connectionCount;
+        setPressed(button, active);
       });
     };
 
-    const resetSurfaceState = () => {
-      standardDataConnectionId = '';
-      adaptiveDataConnectionId = '';
-      standardAttempted = false;
-      adaptiveAttempted = false;
+    const resetSurface = (surface: SurfaceState) => {
+      surface.dataConnectionId = '';
+      surface.attempted = false;
+      surface.completed = false;
     };
 
     const rebuildOptions = () => {
@@ -339,8 +444,10 @@ const { embedded = false } = Astro.props;
       });
     };
 
+    const connectionName = (id: string) => currentConnections().find((connection) => connection.id === id)?.name ?? 'the selected connection';
+
     const authorityLabel = (response?: UIResponse) => {
-      if (!response) return 'none';
+      if (!response) return 'no action';
       switch (response.type) {
         case 'preconfiguration': return 'offer';
         case 'suggestion': return 'guide';
@@ -349,7 +456,7 @@ const { embedded = false } = Astro.props;
         case 'help': return 'help';
         case 'warning': return 'warn';
       }
-      return 'none';
+      return 'no action';
     };
 
     const interventionHeadline = (response?: UIResponse) => {
@@ -378,75 +485,156 @@ const { embedded = false } = Astro.props;
       return 'Keep the current interface state unchanged.';
     };
 
+    const outcomeText = (surface: SurfaceState) => {
+      if (surface.completed) return '✓ Step complete';
+      if (surface.dataConnectionId) return 'Ready to continue';
+      if (surface.attempted) return 'Blocked · selection required';
+      return 'Awaiting selection';
+    };
+
+    const setOutcome = (element: HTMLElement | null, surface: SurfaceState) => {
+      if (!element) return;
+      element.textContent = outcomeText(surface);
+      element.classList.toggle('text-red-600', surface.attempted && !surface.dataConnectionId);
+      element.classList.toggle('dark:text-red-400', surface.attempted && !surface.dataConnectionId);
+      element.classList.toggle('text-[var(--accent)]', surface.completed);
+      element.classList.toggle('text-[var(--text-muted)]', !surface.completed && !(surface.attempted && !surface.dataConnectionId));
+    };
+
+    const flashIntervention = () => {
+      if (!adaptiveIntervention || prefersReducedMotion()) return;
+      adaptiveIntervention.removeAttribute('data-flash');
+      void adaptiveIntervention.offsetWidth;
+      adaptiveIntervention.setAttribute('data-flash', 'true');
+      window.clearTimeout(flashTimer);
+      flashTimer = window.setTimeout(() => adaptiveIntervention.removeAttribute('data-flash'), 1200);
+    };
+
     let pendingSetValueAction: UIAction | undefined;
 
     const render = () => {
       const connections = currentConnections();
-      const config: AutomationConfiguration = { dataConnectionId: adaptiveDataConnectionId || null };
-      const runtime: RuntimeContext = { productVersion, userFamiliarity: familiarity, availableDataConnections: connections };
+      const config: AutomationConfiguration = { dataConnectionId: adaptive.dataConnectionId || null };
+      const runtime: RuntimeContext = { productVersion: scenario.productVersion, userFamiliarity: scenario.familiarity, availableDataConnections: connections };
       const result = resolveInterface({ config, runtime, ui: uiState, knowledge: KNOWLEDGE });
       const primaryResponse = result.responses.reduce<UIResponse | undefined>(
         (selected, response) => !selected || response.authority > selected.authority ? response : selected,
         undefined,
       );
-      const supportingResponses = result.responses.filter(
-        (response) => response !== primaryResponse && (response.type === 'help' || response.type === 'explanation'),
-      );
+      const byId = (id: string) => result.responses.find((response) => response.id === id);
+      const beginnerResponse = byId('data-connection-beginner-help');
+      const optionsResponse = byId('data-connection-option-overview');
+      const versionResponse = byId('data-connection-version-guidance');
       pendingSetValueAction = primaryResponse?.actions?.find((action) => action.type === 'set-value');
 
-      if (scenarioFamiliarity) scenarioFamiliarity.textContent = familiarity;
-      if (scenarioVersion) scenarioVersion.textContent = `v${productVersion}`;
-      if (scenarioConnections) scenarioConnections.textContent = `${connections.length} ${connections.length === 1 ? 'match' : 'matches'}`;
-      if (truthSummary) truthSummary.textContent = `${connections.length} compatible ${connections.length === 1 ? 'connection' : 'connections'} · product ${productVersion} · ${familiarity} user`;
+      if (scenarioFamiliarity) scenarioFamiliarity.textContent = scenario.familiarity;
+      if (scenarioVersion) scenarioVersion.textContent = `v${scenario.productVersion}`;
+      if (scenarioConnections) scenarioConnections.textContent = plural(connections.length, 'match', 'matches');
+      if (truthSummary) truthSummary.textContent = `${plural(connections.length, 'compatible connection', 'compatible connections')} · product ${scenario.productVersion} · ${scenario.familiarity} user`;
 
-      const standardInvalid = standardAttempted && !standardDataConnectionId;
-      const adaptiveInvalid = adaptiveAttempted && !adaptiveDataConnectionId;
+      // Surfaces: validation, outcomes, completion.
+      const standardInvalid = standard.attempted && !standard.dataConnectionId;
+      const adaptiveInvalid = adaptive.attempted && !adaptive.dataConnectionId;
 
-      if (standardError) standardError.classList.toggle('hidden', !standardInvalid);
-      if (adaptiveError) adaptiveError.classList.toggle('hidden', !adaptiveInvalid);
+      standardError?.classList.toggle('hidden', !standardInvalid);
+      adaptiveError?.classList.toggle('hidden', !adaptiveInvalid);
+      if (adaptiveError) {
+        adaptiveError.textContent = pendingSetValueAction
+          ? `Select a Data Connection to continue, or use the suggested ${connections[0]?.name ?? 'connection'}.`
+          : `Pick one of the ${connections.length} compatible connections${optionsResponse ? ' described above' : ''} to continue.`;
+      }
       standardDataConnection.setAttribute('aria-invalid', String(standardInvalid));
       adaptiveDataConnection.setAttribute('aria-invalid', String(adaptiveInvalid));
-      if (standardOutcome) standardOutcome.textContent = standardDataConnectionId ? 'Ready to continue' : 'Awaiting selection';
-      if (adaptiveOutcome) adaptiveOutcome.textContent = adaptiveDataConnectionId ? 'Ready to continue' : 'Awaiting selection';
+      setOutcome(standardOutcome, standard);
+      setOutcome(adaptiveOutcome, adaptive);
 
+      standardSuccess?.classList.toggle('hidden', !standard.completed);
+      adaptiveSuccess?.classList.toggle('hidden', !adaptive.completed);
+      if (standardSuccessLabel) standardSuccessLabel.textContent = `Configured with ${connectionName(standard.dataConnectionId)}`;
+      if (adaptiveSuccessLabel) adaptiveSuccessLabel.textContent = `Configured with ${connectionName(adaptive.dataConnectionId)}`;
+
+      // Adaptive intervention panel.
       if (adaptiveHeadline) adaptiveHeadline.textContent = interventionHeadline(primaryResponse);
       if (adaptiveAuthority) adaptiveAuthority.textContent = authorityLabel(primaryResponse);
       if (adaptiveGuidance) {
         adaptiveGuidance.textContent = primaryResponse?.message
-          ?? 'The selected Data Connection satisfies the current requirement.';
+          ?? 'The selected Data Connection satisfies the current requirement, so the guidance steps aside.';
+      }
+
+      if (adaptiveBeginner) {
+        adaptiveBeginner.textContent = beginnerResponse?.message ?? '';
+        adaptiveBeginner.classList.toggle('hidden', !beginnerResponse);
+      }
+
+      if (adaptiveOptions) {
+        adaptiveOptions.replaceChildren();
+        (optionsResponse?.items ?? []).forEach((line) => {
+          const [name, ...rest] = line.split(': ');
+          const item = document.createElement('li');
+          item.className = 'm-0';
+          const strong = document.createElement('strong');
+          strong.className = 'font-medium text-[var(--text-primary)]';
+          strong.textContent = name;
+          item.append(strong, rest.length ? ` — ${rest.join(': ')}` : '');
+          adaptiveOptions.append(item);
+        });
+        adaptiveOptions.classList.toggle('hidden', !optionsResponse);
+      }
+
+      if (adaptiveVersion) {
+        if (adaptiveVersionText) adaptiveVersionText.textContent = versionResponse?.message ?? '';
+        adaptiveVersion.classList.toggle('hidden', !versionResponse);
+        adaptiveVersion.classList.toggle('flex', Boolean(versionResponse));
       }
 
       if (adaptiveSource) {
-        const knowledgeSources = (primaryResponse?.knowledgeIds ?? [])
+        const shown = [primaryResponse, beginnerResponse, optionsResponse, versionResponse].filter((response): response is UIResponse => Boolean(response));
+        const knowledgeLabels = shown
+          .flatMap((response) => response.knowledgeIds ?? [])
           .map((knowledgeId) => result.applicableKnowledge.find((item) => item.id === knowledgeId)?.source.label)
           .filter((label): label is string => Boolean(label));
-        const sourceLabels = [...new Set(knowledgeSources)];
-        if ((primaryResponse?.validationIds?.length ?? 0) > 0) sourceLabels.unshift('Application validation');
-        if (primaryResponse?.type === 'preconfiguration') sourceLabels.unshift('Application state');
-        adaptiveSource.textContent = sourceLabels.length > 0
-          ? sourceLabels.join(' · ')
-          : 'Application state';
-      }
-
-      if (guidanceDetails && guidanceDetailsList) {
-        guidanceDetailsList.replaceChildren();
-        supportingResponses.forEach((response) => {
-          const item = document.createElement('li');
-          item.textContent = response.message;
-          guidanceDetailsList.append(item);
-        });
-        const showDetails = supportingResponses.length > 0;
-        guidanceDetails.classList.toggle('hidden', !showDetails);
-        if (!showDetails) guidanceDetails.open = false;
+        const labels = [...new Set(knowledgeLabels)];
+        if (primaryResponse?.type === 'preconfiguration') labels.unshift('Application state');
+        adaptiveSource.textContent = labels.length > 0
+          ? `Sources (authored fixtures) · ${labels.join(' · ')}`
+          : 'Source · Application state';
       }
 
       if (useSoleConnection) {
-        const show = Boolean(pendingSetValueAction?.value && !adaptiveDataConnectionId);
+        const show = Boolean(pendingSetValueAction?.value && !adaptive.dataConnectionId);
         useSoleConnection.classList.toggle('hidden', !show);
         if (pendingSetValueAction) useSoleConnection.textContent = `✓ ${pendingSetValueAction.label}`;
       }
 
-      if (traceState) traceState.textContent = `${productVersion} · ${familiarity} · ${connections.length} ${connections.length === 1 ? 'match' : 'matches'}`;
+      // Plain-language lab note explaining the adaptive decision.
+      if (adaptiveLabNoteList) {
+        const notes: { key: ScenarioKey | 'selection'; text: string }[] = [];
+        if (adaptive.dataConnectionId) {
+          notes.push({ key: 'selection', text: 'A valid connection is selected, so the guidance steps aside.' });
+        } else {
+          notes.push(scenario.familiarity === 'new'
+            ? { key: 'familiarity', text: optionsResponse ? 'New user: adds a plain-language explanation and what each option is for.' : 'New user: adds a plain-language explanation.' }
+            : { key: 'familiarity', text: 'Experienced user: skips the beginner explanation and option descriptions.' });
+          notes.push(scenario.productVersion === '4.2'
+            ? { key: 'version', text: 'Version 4.2: shows the new explicit-selection rule.' }
+            : { key: 'version', text: 'Version 4.1: no version notice, because the 4.2 rule does not apply.' });
+          notes.push(connections.length === 1
+            ? { key: 'connections', text: 'One compatible option: offers it as a button, but only you can apply it.' }
+            : { key: 'connections', text: `${connections.length} valid options: guides you, but will not choose one for you.` });
+        }
+        adaptiveLabNoteList.replaceChildren();
+        notes.forEach((note) => {
+          const item = document.createElement('li');
+          item.className = 'm-0';
+          const changed = note.key !== 'selection' && changedKeys.includes(note.key);
+          item.dataset.changed = String(changed);
+          item.textContent = changed ? `Changed · ${note.text}` : note.text;
+          adaptiveLabNoteList.append(item);
+        });
+      }
+
+      // Decision trace.
+      if (traceState) traceState.textContent = `${scenario.productVersion} · ${scenario.familiarity} · ${plural(connections.length, 'match', 'matches')}`;
       if (traceValidation) {
         traceValidation.textContent = result.validation.length > 0
           ? 'Data Connection is required.'
@@ -459,44 +647,76 @@ const { embedded = false } = Astro.props;
       if (tracePolicy) tracePolicy.textContent = policySummary(primaryResponse);
     };
 
-    standardDataConnection.addEventListener('change', () => {
-      standardDataConnectionId = standardDataConnection.value;
-      standardAttempted = false;
+    const applyScenario = (next: Scenario, notice: string) => {
+      const previous = { ...scenario };
+      Object.assign(scenario, next);
+      changedKeys = [];
+      if (previous.familiarity !== scenario.familiarity) changedKeys.push('familiarity');
+      if (previous.productVersion !== scenario.productVersion) changedKeys.push('version');
+      if (previous.connectionCount !== scenario.connectionCount) changedKeys.push('connections');
+
+      resetSurface(standard);
+      resetSurface(adaptive);
+      syncScenarioButtons();
+      rebuildOptions();
       render();
-      announce(standardDataConnectionId
-        ? 'Standard UI: Data Connection selected. Ready to continue.'
-        : 'Standard UI: Data Connection cleared.');
+      if (changedKeys.length > 0) flashIntervention();
+
+      const fullNotice = changedKeys.length > 0
+        ? `${notice} Both forms were reset.`
+        : `${notice} Nothing changed in the scenario; both forms were reset.`;
+      if (scenarioNoticeText) scenarioNoticeText.textContent = fullNotice;
+      announce(`${fullNotice} Scenario: ${scenarioSummary()}.`);
+    };
+
+    standardDataConnection.addEventListener('change', () => {
+      standard.dataConnectionId = standardDataConnection.value;
+      standard.attempted = false;
+      standard.completed = false;
+      render();
+      announce(standard.dataConnectionId
+        ? 'Conventional form: Data Connection selected. Ready to continue.'
+        : 'Conventional form: Data Connection cleared.');
     });
 
     adaptiveDataConnection.addEventListener('change', () => {
-      adaptiveDataConnectionId = adaptiveDataConnection.value;
-      adaptiveAttempted = false;
+      adaptive.dataConnectionId = adaptiveDataConnection.value;
+      adaptive.attempted = false;
+      adaptive.completed = false;
       render();
-      announce(adaptiveDataConnectionId
-        ? 'Adaptive UI: Data Connection selected. Ready to continue.'
-        : 'Adaptive UI: Data Connection cleared.');
+      announce(adaptive.dataConnectionId
+        ? 'Adaptive form: Data Connection selected. Guidance removed. Ready to continue.'
+        : 'Adaptive form: Data Connection cleared.');
     });
 
     standardContinue?.addEventListener('click', () => {
-      standardAttempted = true;
+      standard.attempted = true;
+      standard.completed = Boolean(standard.dataConnectionId);
       render();
-      if (standardDataConnectionId) announce('Standard UI: configuration is ready to continue.');
+      announce(standard.completed
+        ? `Conventional form: step complete with ${connectionName(standard.dataConnectionId)}.`
+        : 'Conventional form: blocked. Select a Data Connection to continue.');
     });
 
     adaptiveContinue?.addEventListener('click', () => {
-      adaptiveAttempted = true;
+      adaptive.attempted = true;
+      adaptive.completed = Boolean(adaptive.dataConnectionId);
       render();
-      if (adaptiveDataConnectionId) announce('Adaptive UI: configuration is ready to continue.');
+      announce(adaptive.completed
+        ? `Adaptive form: step complete with ${connectionName(adaptive.dataConnectionId)}.`
+        : 'Adaptive form: blocked. Select a Data Connection to continue.');
     });
 
     useSoleConnection?.addEventListener('click', () => {
       if (!pendingSetValueAction?.value) return;
-      adaptiveDataConnectionId = pendingSetValueAction.value;
+      adaptive.dataConnectionId = pendingSetValueAction.value;
       adaptiveDataConnection.value = pendingSetValueAction.value;
-      adaptiveAttempted = false;
+      adaptive.attempted = false;
+      adaptive.completed = false;
       const selectedLabel = adaptiveDataConnection.selectedOptions[0]?.textContent?.trim();
       render();
-      announce(`Adaptive UI: ${selectedLabel || 'compatible Data Connection'} selected. Ready to continue.`);
+      adaptiveContinue?.focus();
+      announce(`Adaptive form: ${selectedLabel || 'compatible Data Connection'} selected. Ready to continue.`);
     });
 
     decisionTrace?.addEventListener('toggle', () => {
@@ -504,33 +724,28 @@ const { embedded = false } = Astro.props;
       traceToggleLabel.innerHTML = decisionTrace.open ? 'Hide trace <span aria-hidden="true">⌃</span>' : 'Show trace <span aria-hidden="true">⌄</span>';
     });
 
+    lab.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach((button) => button.addEventListener('click', () => {
+      const preset = PRESETS[button.dataset.preset ?? ''];
+      if (!preset) return;
+      applyScenario({ ...preset.scenario }, `Loaded “${preset.label}” (${preset.scenario.familiarity} user · ${preset.scenario.productVersion} · ${plural(preset.scenario.connectionCount, 'match', 'matches')}).`);
+    }));
+
     lab.querySelectorAll<HTMLButtonElement>('[data-familiarity]').forEach((button) => button.addEventListener('click', () => {
-      familiarity = button.dataset.familiarity as UserFamiliarity;
-      setPressedState('[data-familiarity]', familiarity, 'familiarity');
-      resetSurfaceState();
-      rebuildOptions();
-      render();
-      announceScenarioUpdate();
+      const familiarity = button.dataset.familiarity as UserFamiliarity;
+      applyScenario({ ...scenario, familiarity }, `Changed user familiarity to ${familiarity === 'new' ? 'New' : 'Experienced'}.`);
     }));
 
     lab.querySelectorAll<HTMLButtonElement>('[data-version]').forEach((button) => button.addEventListener('click', () => {
-      productVersion = button.dataset.version as ProductVersion;
-      setPressedState('[data-version]', productVersion, 'version');
-      resetSurfaceState();
-      rebuildOptions();
-      render();
-      announceScenarioUpdate();
+      const productVersion = button.dataset.version as ProductVersion;
+      applyScenario({ ...scenario, productVersion }, `Changed product version to ${productVersion}.`);
     }));
 
     lab.querySelectorAll<HTMLButtonElement>('[data-connection-count]').forEach((button) => button.addEventListener('click', () => {
-      connectionCount = button.dataset.connectionCount === '1' ? 1 : 3;
-      setPressedState('[data-connection-count]', String(connectionCount), 'connectionCount');
-      resetSurfaceState();
-      rebuildOptions();
-      render();
-      announceScenarioUpdate();
+      const connectionCount: ConnectionCount = button.dataset.connectionCount === '1' ? 1 : 3;
+      applyScenario({ ...scenario, connectionCount }, `Changed compatible connections to ${connectionCount === 1 ? 'One' : 'Several'}.`);
     }));
 
+    syncScenarioButtons();
     rebuildOptions();
     render();
   });

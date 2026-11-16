@@ -43,6 +43,15 @@ export const KNOWLEDGE: KnowledgeItem[] = [
     source: { type: 'release-note', label: 'Version 4.2 connection changes' },
   },
   {
+    id: 'data-connection-option-overview',
+    concept: 'data-connection',
+    kind: 'configuration-guidance',
+    text: 'Each compatible connection points to a different system. Pick the one whose data this workflow needs.',
+    audience: 'new',
+    conditions: { dataConnectionMissing: true },
+    source: { type: 'documentation', label: 'Choosing a Data Connection' },
+  },
+  {
     id: 'data-connection-selection-guidance',
     concept: 'data-connection',
     kind: 'configuration-guidance',
