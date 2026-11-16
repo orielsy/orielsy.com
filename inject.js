@@ -352,26 +352,8 @@ function resolveInterface(input              )                {
 }
 
 
-  import { trackPortfolioEvent } from '../../lib/analytics';
-  import { ONE_DATA_CONNECTION, THREE_DATA_CONNECTIONS } from './fixtures.ts';
-  import { KNOWLEDGE } from './knowledge.ts';
-  import { resolveInterface } from './resolver.ts';
-                                                                                                                                   
 
-                               
-                                                               
 
-                      
-                                 
-                                   
-                                     
-   
-
-                          
-                             
-                       
-                       
-   
 
   const PRESETS                                                        = {
     'new-several': { label: 'New user, several options', scenario: { familiarity: 'new', productVersion: '4.2', connectionCount: 3 } },
