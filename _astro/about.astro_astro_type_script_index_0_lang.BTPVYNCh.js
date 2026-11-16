@@ -1,0 +1,1 @@
+import{t as e}from"./analytics.BYERs4jP.js";document.getElementById(`email-contact`)?.addEventListener(`click`,()=>{e(`contact_email`,{source:`about`}),window.location.href=`mailto:contact@orielsy.com`});
