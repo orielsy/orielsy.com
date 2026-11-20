@@ -3,6 +3,11 @@
   max-width: 46rem;
 }
 
+/* Size container for .project-breakout below the lg breakpoint. */
+.project-publication-grid {
+  container-type: inline-size;
+}
+
 .project-hero-facts dt,
 .project-hero-brief dt,
 .project-brief dt {

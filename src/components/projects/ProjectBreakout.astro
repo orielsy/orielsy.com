@@ -38,6 +38,22 @@ const { maxWidth, mode = 'wide' } = Astro.props;
     }
   }
 
+  /*
+   * Below 1024px the reading column is capped (46rem) and left-aligned inside
+   * the publication grid, so centering on the column with 100vw pushed the
+   * breakout off the left edge once the viewport exceeded ~800px. Size against
+   * the grid's content box (a size container) and align to its left edge.
+   */
+  @media (max-width: 1023px) {
+    .project-breakout {
+      left: 0;
+      width: min(var(--project-breakout-max), 100cqw);
+      max-width: 100cqw;
+      margin-left: max(0px, calc((100cqw - min(var(--project-breakout-max), 100cqw)) / 2));
+      transform: none;
+    }
+  }
+
   @media (min-width: 1024px) {
     .project-breakout[data-project-breakout='publication'] {
       left: auto;
